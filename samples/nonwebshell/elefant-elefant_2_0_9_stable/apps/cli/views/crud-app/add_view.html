@@ -1,0 +1,15 @@
+<div class="form">
+<form method="post" id="\{{ _form }}">
+
+{% for key, field in fields %}
+{% inc cli/crud-app/types/[field->type] %}
+{% end %}
+
+<p>
+	<input type="submit" value="\{"Add {{appname|cli\Filter::title}}"}" />
+	&nbsp;
+	<a href="/{{plural}}/admin" onclick="return confirm ('\{"Are you sure you want to cancel and lose any changes?"}')">\{"Cancel"}</a>
+</p>
+
+</form>
+</div>

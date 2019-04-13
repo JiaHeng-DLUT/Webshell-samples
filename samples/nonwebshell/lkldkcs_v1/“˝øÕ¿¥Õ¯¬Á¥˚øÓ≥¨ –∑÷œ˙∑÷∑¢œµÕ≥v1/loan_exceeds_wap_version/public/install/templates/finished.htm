@@ -1,0 +1,37 @@
+<!--<?php
+# MetInfo Enterprise Content Management System 
+# Copyright (C)  (http://www.kouhaobang.com). All rights reserved.
+require_once template('head'); 
+echo <<<EOT
+-->
+<script language="javascript">
+$(window.parent.document).find(".bodyleft li").removeClass('stepnow');
+$(window.parent.document).find("#finished").addClass('stepnow');
+</script>
+<body>
+<div id="jsheit">
+<!--{$yj}-->
+<div class="contenttext round">
+<h1 class="titleok">安装成功！</h1>
+<p>欢迎使用引客来系统！希望口号帮能够为您的企业带来客户并创造价值！</p>
+<p>系统使用问题请及时添加客服<span style="font-size: 24px;color: red;"> QQ:3127119238</span>为您提供更多系统使用服务！</p>
+
+    <p style="color:red;">重要的事情说三遍配置文件</p>
+    <p style="color:red;">请按照说明文档修改项目中的配置文件！！！否则无法正常访问网站<a class="getweburl" href="/read.docx" target="_parent">配置文件</a></p>
+    <p style="color:red;">请按照说明文档修改项目中的配置文件！！！否则无法正常访问网站<a class="getweburl" href="/read.docx" target="_parent">配置文件</a></p>
+    <p style="color:red;">请按照说明文档修改项目中的配置文件！！！否则无法正常访问网站<a class="getweburl" href="/read.docx" target="_parent">配置文件</a></p>
+<p style="color:#666;">请登录后台在 网站设置—网站安全 删除安装文件，以防止再次安装而覆盖数据。</p>
+<div style="margin-top:5px;">
+<a class="getweburl" href="http://www.kouhaobang.com/" target="_parent">官方网站</a>
+<span style="margin:0px 8px;">-</span>
+<a class="getweburl" href="/" target="_parent">进入网站</a>
+<span style="margin:0px 8px;">-</span>
+</div>
+</div>
+</div>
+</body></html>
+<!--
+EOT;
+# This program is an open source system, commercial use, please consciously to purchase commercial license.
+# Copyright (C) M (http://www.kouhaobang.com). All rights reserved.
+?>-->

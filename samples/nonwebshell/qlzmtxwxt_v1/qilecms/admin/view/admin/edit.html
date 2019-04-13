@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>管理员编辑</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<blockquote class="layui-elem-quote">说明：管理员编辑</blockquote>
+<div class=""  style="padding:20px">
+<form class="layui-form" method="post" >
+ <input type="hidden" name="id" lay-verify="id" autocomplete="off" placeholder="" class="layui-input"  value="{$Request.param.id}">
+
+
+       <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">管理员名称</label>
+                <div class="layui-input-inline">
+                 
+       
+                  <div class="layui-form-mid layui-word-aux">{$admin.username}</div>
+                </div>
+                 <div class="layui-form-mid layui-word-aux " ></div>
+        </div>
+       <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">登陆密码</label>
+                <div class="layui-input-inline">
+                 
+                 <input type="password" name="password" lay-verify="password" autocomplete="off" placeholder="" class="layui-input"  value="">
+                </div>
+                 <div class="layui-form-mid layui-word-aux " ></div>
+        </div>
+       <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">重复密码</label>
+                <div class="layui-input-inline">
+                 
+                 <input type="password" name="repassword" lay-verify="password" autocomplete="off" placeholder="" class="layui-input"  value="">
+                </div>
+                 <div class="layui-form-mid layui-word-aux " >{:about('登陆密码若存在,重复密码必填')}</div>
+        </div>
+       <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">角色</label>
+                <div class="layui-input-inline">
+                {if $admin.role_id !=1}
+                  <select name="role_id" >
+                  {volist name="list" id="vo"}
+                  <option value="{$vo.role_id}" {if $admin.role_id == $vo.role_id } selected {/if}>{$vo.role_name}</option>
+                  {/volist}
+                   </select> 
+                {else}
+                 <div class="layui-form-mid layui-word-aux " >超级管理员</div>
+                
+                {/if}  
+                </div>
+        </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">状态</label>
+                <div class="layui-input-inline" style="width:80px">
+          <input type="checkbox" checked="" name="status" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用" >
+                </div>
+              </div>
+             
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                  <button class="layui-btn layui-btn-normal" lay-submit lay-filter="form">确 定 </button>
+                </div>
+              </div>          
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element','upload', 'layer','form'], function(){
+   var  upload = layui.upload,element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('admin/edit')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            layer.msg(json.msg);
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+   return false;
+  });
+
+});
+
+</script>
+
+</body>
+
+</html>

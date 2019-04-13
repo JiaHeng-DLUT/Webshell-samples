@@ -1,0 +1,99 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <form method="post" action="{if $Request.action eq 'plate_add'}{:url('Sellerplate/plate_add')}{else/}{:url('Sellerplate/plate_edit',['p_id'=>$Request.param.p_id])}{/if}" id="plate_form">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.format_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="text w200" name="p_name" value="{$plate_info.storeplate_name}" id="p_name" />
+                <p class="hint">{$Think.lang.format_name_description}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.layout_position}{$Think.lang.ds_colon}</dt>
+            <dd id="gcategory">
+                <ul class="dssc-form-radio-list">
+                    <li><label><input type="radio" name="p_position" id="p_position" value="1" class="radio" {if empty($plate_info) || $plate_info['storeplate_position'] == 1}checked="checked"{/if} />{$Think.lang.top}</label></li>
+                    <li><label><input type="radio" name="p_position" id="p_position" value="0" class="radio" {if !empty($plate_info) && $plate_info['storeplate_position'] == 0}checked="checked"{/if}/>{$Think.lang.bottom}</label></li>
+                </ul>
+                <p class="hint">{$Think.lang.insert_description}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.format_content}{$Think.lang.ds_colon}</dt>
+            <dd>
+                {:build_editor(['name'=>'p_content','content'=>htmlspecialchars_decode($plate_info.storeplate_content)])}
+                <textarea id="p_content" name="p_content"></textarea>
+                <p class="hr8">
+                    <a class="dssc-btn" dstype="show_desc" href="{:url('Selleralbum/pic_list',['item'=>'des'])}"><i class="fa fa-picture-o"></i>{$Think.lang.insert_photo_album}</a>
+                    <a href="javascript:void(0);" dstype="del_desc" class="dssc-btn ml5" style="display: none;"><i class=" fa fa-arrow-circle-up"></i>{$Think.lang.close_album}</a>
+                </p>
+                <p id="des_demo"></p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_submit}"/></label>
+        </div>
+    </form>
+</div>
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<style type="text/css">
+    .dssc-form-default dl dt { width: 16%;}
+    .dssc-form-default dl dd { width: 82%;}
+</style>
+<script>
+    $(function () {
+        $('#plate_form').validate({
+            submitHandler: function (form) {
+                ds_ajaxpost('plate_form', 'url', "{:url('Sellerplate/index')}");
+            },
+            rules: {
+                p_name: {
+                    required: true,
+                    maxlength: 10
+                },
+                p_content: {
+                    required: true
+                }
+            },
+            messages: {
+                p_name: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.fill_format_name}',
+                    maxlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.format_name_limit}'
+                },
+                p_content: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.fill_format_content}'
+                }
+            }
+        });
+
+        // 版式内容使用
+        $('a[dstype="show_desc"]').ajaxContent({
+            event: 'click', //mouseover
+            loaderType: "img",
+            loadingMsg: "{$Think.HOME_SITE_ROOT}/images/loading.gif",
+            target: '#des_demo'
+        }).click(function () {
+            $(this).hide();
+            $('a[dstype="del_desc"]').show();
+        });
+        $('a[dstype="del_desc"]').click(function () {
+            $(this).hide();
+            $('a[dstype="show_desc"]').show();
+            $('#des_demo').html('');
+        });
+    });
+    /* 插入编辑器 */
+    function insert_editor(file_path) {
+        ue.execCommand('insertimage', {src: file_path});
+    }
+</script> 
+
+
+
+</div>
+
+
+{/block}
+

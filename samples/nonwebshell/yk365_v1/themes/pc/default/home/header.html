@@ -1,0 +1,73 @@
+<div class="wrapper">
+	<div class="clearfix sobox">
+    	<a href="<{$site_url}>" class="logo" title="<{$site_title}>"><h1><{$site_name}></h1></a>
+
+			<!-- 搜索开始-->
+	<div class="search">
+		<form action="" data-type="baidu"  target="_blank" name="search_form1" class="search_form1" method="get">
+		<ul class="search-head" >
+		    <li data-cate="webpage" ><a href="javascript: void(0);" class="blue-bg">网页</a></li>
+		    <li data-cate="news"><a href="javascript: void(0);" >新闻</a></li>
+		    <li data-cate="video"><a href="javascript: void(0);" >视频</a></li>
+		    <!-- <li data-cate="image"><a href="javascript: void(0);" >图片</a></li> -->
+		    <li data-cate="music"><a href="javascript: void(0);" >音乐</a></li>
+		    <li data-cate="zhidao"><a href="javascript: void(0);" >知道</a></li>
+		    <li data-cate="wenku"><a href="javascript: void(0);" >文库</a></li>
+		</ul>
+			<!-- 搜索主要部分 -->
+		   <div class="search-main">
+		        <div class="search-title">
+		          <h4 data-name="baidu">百度</h4>
+		          <ul class="search-other">
+	
+				      <li data-name="360">360搜索</li>
+				      <li data-name="sogo">搜狗搜索</li>
+				     <li data-name="baidu">百度</li>
+				      <li data-name="site">站内搜索</li>
+				  </ul>
+				</div>
+		    <div class="search-keywords">
+				<input name="word" class="keywords" type="text" autocomplete="off" ><input type="submit" class="submit" value="搜索">
+
+				<div class="hot-search">
+
+				</div>
+		    </div>
+		        <div class="right-txt">
+	 		<div class="txtScroll-top">
+				<div class="bd">
+
+				<!-- 文字广告 -->
+					<ul class="infoList" style="overflow:hidden">
+					<{foreach $ad_text as $v}>
+						<li><a href="<{$v.url}>" target="_blank"><{$v.title}></a></li>
+                     <{/foreach}>
+					</ul>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+jQuery(".txtScroll-top").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"topLoop",autoPlay:true});
+			</script>
+    </div>
+		   </div>
+		</form>
+    </div>
+	<!-- 搜索结束-->
+
+	</div>
+</div>
+	<div class="navbox">
+		<ul class="navbar">
+			<li class="navcur"><a href="/"><span></span><i class="fa fa-home" aria-hidden="true"></i> 首页</a></li>
+
+		<{$cfg.home_nav}>
+
+		<{if $cfg.is_enabled_submit_collect=='yes'}>	
+			<li ><a href="<{url('member/website',['act'=>'add'])}>"><i class="fa fa-plus" aria-hidden="true"></i> 提交收录</a>
+			</li>
+          <{/if}>
+		</ul>
+	</div>
+<div class="blank10"></div>
+

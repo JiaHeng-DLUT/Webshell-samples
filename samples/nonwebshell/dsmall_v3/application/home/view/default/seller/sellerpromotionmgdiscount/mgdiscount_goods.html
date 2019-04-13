@@ -1,0 +1,79 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a class="dssc-btn dssc-btn-green" href="{:url('Sellerpromotionmgdiscount/mgdiscount_goods_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.mgdiscount_goods_add}</a>
+{/block}
+{block name="seller_main"}
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w180">{$Think.lang.goods_name}</th>
+            <th class="w180">{$Think.lang.level_discount}</th>
+            <th class="w150">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="goods_list"}
+        {foreach name="goods_list" item="goods"}
+        <tr class="bd-line">
+            <td>{$goods.goods_name}</td>
+            <td>
+                {foreach name="$goods.goods_mgdiscount_arr" item="goods_mgdiscount"}
+                {$goods_mgdiscount.level_name}/{$goods_mgdiscount.level_discount}{$Think.lang.ds_xianshi_flag}<br/>
+                {/foreach}
+            </td>
+            <td class="dscs-table-handle tr">
+                <span>
+                    <a href="{:url('Sellerpromotionmgdiscount/mgdiscount_goods_edit',['goods_commonid'=>$goods.goods_commonid])}" class="btn-green">
+                        <i class="fa fa-cog"></i>
+                        <p>{$Think.lang.ds_edit}</p>
+                    </a>
+                </span>
+                <span>
+                    <a href="javascript:;" dstype="btn_del_mgdiscount" data_goods_commonid={$goods.goods_commonid} class="btn-red">
+                        <i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_delete}</p>
+                    </a>
+                </span>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td class="norecord" colspan="20">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="goods_list"}
+        <tr>
+            <td colspan="20">
+                <div class="pagination">{$show_page}</div>
+            </td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+<form id="submit_form" action="" method="post">
+    <input type="hidden" id="goods_commonid" name="goods_commonid" value="">
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[dstype="btn_del_mgdiscount"]').on('click', function () {
+            var action = "{:url('Sellerpromotionmgdiscount/mgdiscount_del')}";
+            var goods_commonid = $(this).attr('data_goods_commonid');
+            layer.confirm('{$Think.lang.ds_ensure_del}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#submit_form').attr('action', action);
+                $('#goods_commonid').val(goods_commonid);
+                ds_ajaxpost('submit_form', 'url', "{:url('Sellerpromotionmgdiscount/mgdiscount_goods')}");
+            });
+        });
+    });
+</script>
+{/block}

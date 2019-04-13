@@ -1,0 +1,185 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>闲置市场首页幻灯片</h3>
+                <h5></h5>
+            </div>
+            
+        </div>
+    </div>
+
+  <div class="fixed-empty"></div>
+  
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>闲置首页幻灯片广告，建议图片大小 240px * 220px</li>
+        </ul>
+    </div>
+  
+  <form id="form1" method="post" enctype="multipart/form-data" name="form1">
+    <input type="hidden" name="old_adv_pic1" value="{notempty name="$adv_list[1]['pic']"}{$adv_list[1]['pic']}{/notempty}" />
+    <input type="hidden" name="old_adv_pic2" value="{notempty name="$adv_list[2]['pic']"}{$adv_list[2]['pic']}{/notempty}" />
+    <input type="hidden" name="old_adv_pic3" value="{notempty name="$adv_list[3]['pic']"}{$adv_list[3]['pic']}{/notempty}" />
+    <input type="hidden" name="old_adv_pic4" value="{notempty name="$adv_list[4]['pic']"}{$adv_list[4]['pic']}{/notempty}" />
+    <input type="hidden" name="old_adv_pic5" value="{notempty name="$adv_list[5]['pic']"}{$adv_list[5]['pic']}{/notempty}" />
+    <table class="ds-default-table">
+      <tbody>
+        <tr>
+          <td class="required"><label>闲置市场首页幻灯片广告-01:</label></td><td>连接地址:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform">{notempty name="$adv_list[1]['pic']"}<span class="type-file-show"><a data-lightbox="lightbox-image" href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$adv_list[1]['pic']}"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>{/notempty}<span class="type-file-box">
+            <input name="adv_pic1" type="file" class="type-file-file" id="adv_pic1" size="30" hidefocus="true">
+            <input type='text' name='textfield' id='textfield1' class='type-file-text' />
+            <input type='button' name='button' id='button1' value='' class='type-file-button' />
+            </span></td>
+          <td class="vatop tips"><input id="adv_url1" class="txt" type="text" name="adv_url1" value="{notempty name="$adv_list[1]['url']"}{$adv_list[1]['url']}{/notempty}" style=" width:300px;">
+          </td>
+        </tr>
+        <tr>
+          <td class="required"><label>闲置市场首页幻灯片广告-02:</label></td><td>连接地址:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform">{notempty name="$adv_list[2]['pic']"}<span class="type-file-show"><a data-lightbox="lightbox-image" href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$adv_list[2]['pic']}"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>{/notempty}<span class="type-file-box">
+            <input name="adv_pic2" type="file" class="type-file-file" id="adv_pic2" size="30" hidefocus="true">
+            <input type='text' name='textfield' id='textfield2' class='type-file-text' />
+            <input type='button' name='button' id='button2' value='' class='type-file-button' />
+            </span></td>
+          <td class="vatop tips"><input id="adv_url2" class="txt" type="text" name="adv_url2" value="{notempty name="$adv_list[2]['url']"}{$adv_list[2]['url']}{/notempty}" style=" width:300px;">
+          </td>
+        </tr>
+        <tr>
+          <td class="required"><label>闲置市场首页幻灯片广告-03:</label></td><td>连接地址:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform">{notempty name="$adv_list[3]['pic']"}<span class="type-file-show"><a data-lightbox="lightbox-image" href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$adv_list[3]['pic']}"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>{/notempty}<span class="type-file-box">
+            <input name="adv_pic3" type="file" class="type-file-file" id="adv_pic3" size="30" hidefocus="true">
+            <input type='text' name='textfield' id='textfield3' class='type-file-text' />
+            <input type='button' name='button' id='button3' value='' class='type-file-button' />
+            </span></td>
+          <td class="vatop tips">
+            <input id="adv_url3" class="txt" type="text" name="adv_url3" value="{notempty name="$adv_list[3]['url']"}{$adv_list[3]['url']}{/notempty}" style=" width:300px;">
+          </td>
+        </tr>
+        <tr>
+          <td class="required"><label>闲置市场首页幻灯片广告-04:</label></td><td>连接地址:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform">{notempty name="$adv_list[4]['pic']"}<span class="type-file-show"><a data-lightbox="lightbox-image" href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$adv_list[4]['pic']}"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>{/notempty}<span class="type-file-box">
+            <input name="adv_pic4" type="file" class="type-file-file" id="adv_pic4" size="30" hidefocus="true">
+            <input type='text' name='textfield' id='textfield4' class='type-file-text' />
+            <input type='button' name='button' id='button4' value='' class='type-file-button' />
+            </span></td>
+          <td class="vatop tips">
+            <input id="adv_url4" class="txt" type="text" name="adv_url4" value="{notempty name="$adv_list[4]['url']"}{$adv_list[4]['url']}{/notempty}" style=" width:300px;">
+          </td>
+        </tr>  
+                <tr>
+          <td class="required"><label>闲置市场首页幻灯片广告-05:</label></td><td>连接地址:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform">{notempty name="$adv_list[5]['pic']"}<span class="type-file-show"><a data-lightbox="lightbox-image" href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$adv_list[5]['pic']}"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>{/notempty}<span class="type-file-box">
+            <input name="adv_pic5" type="file" class="type-file-file" id="adv_pic5" size="30" hidefocus="true">
+            <input type='text' name='textfield' id='textfield5' class='type-file-text' />
+            <input type='button' name='button' id='button5' value='' class='type-file-button' />
+            </span></td>
+          <td class="vatop tips">
+            <input id="adv_url5" class="txt" type="text" name="adv_url5" value="{notempty name="$adv_list[5]['url']"}{$adv_list[5]['url']}{/notempty}" style=" width:300px;">
+          </td>
+        </tr>                      
+      </tbody>
+      <tfoot>
+        <tr class="tfoot">
+          <td colspan="2" ><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+// 模拟网站LOGO上传input type='file'样式
+$(function(){
+    $("#adv_pic1").change(function(){$("#textfield1").val($(this).val());});
+    $("#adv_pic2").change(function(){$("#textfield2").val($(this).val());});
+    $("#adv_pic3").change(function(){$("#textfield3").val($(this).val());});
+    $("#adv_pic4").change(function(){$("#textfield4").val($(this).val());});
+    $("#adv_pic5").change(function(){$("#textfield5").val($(this).val());});
+// 上传图片类型
+    $('input[class="type-file-file"]').change(function(){
+        var filepatd=$(this).val();
+        var extStart=filepatd.lastIndexOf(".");
+        var ext=filepatd.substring(extStart,filepatd.lengtd).toUpperCase();
+        if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+            layer.alert("{$Think.lang.circle_setting_adv_img_check}");
+            $(this).attr('value','');
+            return false;
+        }
+    });
+});
+</script>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    $(function() {
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function() {
+            if ($("#form1").valid()) {
+                $("#form1").submit();
+            }
+        });
+        $('#form1').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent());
+            },
+            rules: {
+                adv_url1 : {
+                    url:true
+                },
+                adv_url2 : {
+                    url:true
+                },
+                adv_url3 : {
+                    url:true
+                },
+                adv_url4 : {
+                    url:true
+                },
+                adv_url5 : {
+                    url:true
+                }
+            },
+            messages: {
+                adv_url1 : {
+                    url : '请输入有效的连接' 
+                },
+                adv_url2 : {
+                    url : '请输入有效的连接' 
+                },
+                adv_url3 : {
+                    url : '请输入有效的连接' 
+                },
+                adv_url4 : {
+                    url : '请输入有效的连接' 
+                },
+                adv_url5 : {
+                    url : '请输入有效的连接' 
+                }
+
+            }
+        });
+    });
+</script>

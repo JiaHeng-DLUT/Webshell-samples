@@ -1,0 +1,36 @@
+{include file="index/header" /}
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-comment"></span>&nbsp;{:lang('My comments')}</a></li>
+</ul>
+<div class="tab-content"><br>
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{:lang('Comments')}</th>
+                    <th>{:lang('Comment time')}</th>
+                    <th>{:lang('View original')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.createtime}</td>
+                    <td><a href="{$domain}{$root}{$vo.url}" target="_blank"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{:lang('Original')}</a></td>
+                    <td>
+                        <input type="hidden" value="{$vo.id}">
+                        <a href="#!" class="shanchu">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div><br><br>
+<script src="{$domain}public/common/js/user/pinglun.js"></script>
+{include file="index/footer" /}

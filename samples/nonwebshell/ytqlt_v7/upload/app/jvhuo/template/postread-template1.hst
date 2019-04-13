@@ -1,0 +1,18 @@
+<div id="postread-template1" style="font-size:14px">
+	<h4 style="margin-bottom:5px;font-size:16px">{$_G['TEMP']['title']}</h4>
+	<div style="margin-bottom:5px"><img src="{$_G['TEMP']['image'][0]}"></div>
+	<div style="color:#999;background-color:#f4f4f4;font-size:12px;padding:5px 10px;border-radius:2px;margin-bottom:5px">
+		<p style="margin-bottom:2px">{$_G['TEMP']['subtitle']}</p>
+		<p style="font-weight:bold">{$_G['TEMP']['label']}</p>
+	</div>
+	<div style="margin-bottom:5px">类型：{$_G['TEMP']['type']}</div>
+	<div style="margin-bottom:5px">运费：{$_G['TEMP']['freight']}元</div>
+	<div style="margin-bottom:5px">{$_G['TEMP']['class']}</div>
+	<div style="padding-bottom:10px">
+		<button class="pk-btn pk-btn-danger" onclick="window.open('http://{$_G[TEMP][domain]}/{$_G[TEMP][id]}.html','_blank')">立即购买</button>
+	</div>
+	<div style="padding-bottom:5px">{$_G['TEMP']['content']}</div>
+	<div style="padding-bottom:10px">
+		<button class="pk-btn pk-btn-danger" onclick="window.open('http://{$_G[TEMP][domain]}/{$_G[TEMP][id]}.html','_blank')">立即购买</button>
+	</div>
+</div>

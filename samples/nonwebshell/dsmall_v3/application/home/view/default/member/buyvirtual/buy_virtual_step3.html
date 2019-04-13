@@ -1,0 +1,78 @@
+{include file="default/base/mall_top" /}
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+<div class="dsc-header">
+    <div class="logo">
+        <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+    </div>
+</div>
+<div class="dsc-main">
+  <div class="dsc-title">
+    <h3>{$Think.lang.cart_step2_online_pay}</h3>
+    <h5><a href="{:url('Membervrorder/show_order',['order_id'=>$order_info.order_id])}" target="_blank">{$Think.lang.view_order_details}</a></h5>
+  </div>
+  <form action="{:url('Payment/vr_order')}" method="POST" id="buy_form">
+    <input type="hidden" name="order_sn" value="{$order_info.order_sn}">
+    <input type="hidden" id="payment_code" name="payment_code" value="">
+    <div class="dsc-receipt-info">
+      <div class="dsc-receipt-info-title">
+        <h3>{$Think.lang.please_pay_time}<strong>￥{$diff_pay_amount}</strong></h3>
+      </div>
+      <table class="dsc-table-style">
+        <thead>
+          <tr>
+            <th class="w50"></th>
+            <th class="w150 tc">{$Think.lang.order_number}</th>
+            <th class="w250 tc">{$Think.lang.cart_index_store_goods}</th>
+            <th class="tc">{$Think.lang.cart_index_price}</th>
+            <th class="w150 tc">{$Think.lang.cart_index_amount}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td class="tc">{$order_info.order_sn}</td>
+            <td class="tc">{$order_info.goods_name}</td>
+            <td class="tc">￥{$order_info.goods_price}</td>
+            <td class="tc">{$order_info.goods_num}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dsc-receipt-info">
+        {empty name="payment_list"}
+      <div class="nopay">{$Think.lang.cart_step2_paymentnull_1} <a href="{:url('Membermessage/sendmsg',['member_id'=>$order.seller_id])}">{$Think.lang.cart_step2_paymentnull_2}</a> {$Think.lang.cart_step2_paymentnull_3}</div>
+      {else /}
+      <div class="dsc-receipt-info-title">
+        <h3>{$Think.lang.payment_option}</h3>
+      </div>
+      <ul class="dsc-payment-list">
+          {foreach name="payment_list" item="val"}
+        <li payment_code="{$val.payment_code}">
+          <label for="pay_{$val.payment_code}">
+          <i></i>
+          <div class="logo" for="pay_{$val.payment_code}"> <img src="{$Think.HOME_SITE_ROOT}/images/payment/{$val.payment_code}_logo.gif" /> </div>
+          </label>
+        </li>
+       {/foreach}
+      </ul>
+      {/empty}
+    </div>
+    <div class="dsc-bottom tc mb50"><a href="javascript:void(0);" id="next_button" class="dsc-btn dsc-btn-green"><i class="fa fa-shield"></i>{$Think.lang.cart_step2_ensure_pay}</a></div>
+  </form>
+</div>
+{include file="default/base/mall_footer" /}
+<script type="text/javascript">
+$(function(){
+    $('.dsc-payment-list > li').on('click',function(){
+        $('.dsc-payment-list > li').removeClass('using');
+        $(this).addClass('using');
+        $('#payment_code').val($(this).attr('payment_code'));
+    });
+    $('#next_button').on('click',function(){
+        if ($('#payment_code').val() == '') {
+            layer.alert('{$Think.lang.cart_step2_choose_pay_method}');return false;
+        }
+        $('#buy_form').submit();
+    });
+});
+</script>

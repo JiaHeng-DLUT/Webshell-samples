@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<head lang="en">
+<meta charset="UTF-8">
+<title>{@SL_网站标题}</title>
+<link href="{@SL_安装目录}{@SL_网站ico}" rel="shortcut icon" />
+<meta name="description" content="{@SL_网站描述}">
+<meta name="keywords" content="{@SL_网站关键字}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="stylesheet" href="{@SL_安装目录}template/s95/style/css/amazeui.css">
+<link rel="stylesheet" href="{@SL_安装目录}template/s95/style/css/main.css">
+ 
+<script src="{@SL_安装目录}template/s95/style/js/jquery.min.js"></script> 
+</head>
+<body>
+{@SL_网站顶部}
+<div data-am-widget="slider" class="am-slider am-slider-a1 w-sli" data-am-slider="{directionNav:false}">
+  <ul class="am-slides">
+{$getslide(<li>
+      <div class="centered"><a href="%幻灯链接%" title="%幻灯标题%"><img src="{@SL_安装目录}%图片路径%" alt="%幻灯标题%" title="%幻灯标题%"></a></div>
+    </li>)}
+</ul>
+</div>
+<div class="site-news">
+  <div class="am-container">
+    <div class="am-g am-g-collapse">
+
+
+    {$text_intro(<div class="am-u-sm-12 am-u-md-5 x-mess x-title" data-am-scrollspy="｛animation: 'slide-left'，delay: 300，repeat: false｝">
+        <h2>
+        %简介英文标题%
+        </h2>
+        <h4>%简介标题%</h4>
+        <div class="x-mess-nr am-cf" style="min-height:370px;"> <img src="{@SL_安装目录}%简介图片%" alt="" title="">
+          <div class="x-mess-nrtxt"> %简介内容%<a href="%简介链接%">+more</a></div>
+          
+        </div>
+      </div>,a,150)}
+
+      
+
+      <div class="am-u-sm-12 am-u-md-7 x-news x-title" data-am-scrollspy="{animation: 'slide-right', delay: 300,repeat: false}">
+        <h2>
+        Campus News
+        </h2>
+        <h4>Campus News</h4>
+        <div class="x-news-list" style="padding-top:0px;">
+          <ul style="padding:0px;">
+{$news_list2(,<li class="not" style="margin:4px 0">
+              <time>%发表日期%</time>
+              <a href="%新闻链接%" title="%新闻标题%">%新闻标题%</a>
+              <p style="margin:0px;"> %新闻简述%</p>
+            </li>,3,0,hot)}
+</ul>
+          <div class="txtScroll-top">
+            <div class="bd">
+              <ul class="infoList">
+{$news_list2(,<li class="am-text-truncate">
+                  <time>%发表日期%</time>
+                  <a href="%新闻链接%" title="%新闻标题%">%新闻标题%</a> </li>,10,0,normal)}
+</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="site-info" style="background:#ffffff;">
+  
+  
+  
+  
+  <div class="site-info" style="background:#ffffff;">
+  
+  
+  
+  
+  <div class="am-container info-pd">
+    <div class="info-dib">
+      <div class="info-top">
+        
+        
+{$news_list2(<a href="%新闻分类链接%"><div class="info-tit"> <span class="am-text-truncate">%新闻分类英文标题%</span>
+          <h2>%新闻分类标题%</h2>
+        </div>
+        </a>
+        <a href="%新闻分类链接%"><img src="{@SL_安装目录}%新闻分类图片%" alt="%新闻分类标题%"> </a>
+      </div>
+      <ul class="info-list">,<li class="am-text-truncate"><a href="%新闻链接%" title="%新闻标题%">%新闻标题%</a></li>,3,A,normal)}
+</ul>
+    </div>
+    
+    
+    <div class="info-dib info-mb">
+      <div class="info-top">
+        {$news_list2(<a href="%新闻分类链接%"><div class="info-tit"> <span class="am-text-truncate">%新闻分类英文标题%</span>
+          <h2>%新闻分类标题%</h2>
+        </div>
+        </a>
+        <a href="%新闻分类链接%"><img src="{@SL_安装目录}%新闻分类图片%" alt="%新闻分类标题%"> </a>
+      </div>
+      <ul class="info-list">,<li class="am-text-truncate"><a href="%新闻链接%" title="%新闻标题%">%新闻标题%</a></li>,3,B,normal)}
+      </ul>
+    </div>
+    
+    
+    <div class="info-dib">
+      <div class="info-top">
+        {$news_list2(<a href="%新闻分类链接%"><div class="info-tit"> <span class="am-text-truncate">%新闻分类英文标题%</span>
+          <h2>%新闻分类标题%</h2>
+        </div>
+        </a>
+        <a href="%新闻分类链接%"><img src="{@SL_安装目录}%新闻分类图片%" alt="%新闻分类标题%"> </a>
+      </div>
+      <ul class="info-list">,<li class="am-text-truncate"><a href="%新闻链接%" title="%新闻标题%">%新闻标题%</a></li>,3,C,normal)}
+      </ul>
+    </div>
+    
+    
+  </div>
+</div>
+</div>
+<div class="site-middle">
+  <div class="am-container info-midpd">
+    <div class="am-g am-g-collapse">
+
+    {$product_sort_list(<div class="am-u-md-6 am-u-sm-12" style="margin: 10px 0">
+        <div class="am-g">
+          <div class="am-u-lg-11 am-u-sm-12">
+            <div class="mid-nr" data-am-scrollspy="｛animation: 'fade'，repeat: false｝"><a href="%产品分类链接%" class="mid-img"><img src="{@SL_安装目录}%产品分类图片%" alt="国际交流"><span class="mid-ms">
+              <h4>%产品分类英文标题%</h4>
+              <h2>%产品分类标题%</h2>
+              </span></a></div>
+          </div>
+        </div>
+      </div>,0)}
+
+     
+    </div>
+  </div>
+</div>
+{@SL_网站底部}</body>
+</html>

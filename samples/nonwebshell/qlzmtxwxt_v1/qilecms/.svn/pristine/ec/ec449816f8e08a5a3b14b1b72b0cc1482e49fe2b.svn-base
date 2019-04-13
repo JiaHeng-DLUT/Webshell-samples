@@ -1,0 +1,1033 @@
+<?php
+use think\Db;
+// 应用公共文件
+error_reporting(0);
+//删除目录
+function deldir($dir) {
+        $dh = opendir($dir);
+        while ($file = readdir($dh)) {
+            if ($file != "." && $file != "..") {
+                $fullpath = $dir . "/" . $file;
+                if (!is_dir($fullpath)) {
+                    unlink($fullpath);
+                } else {
+                    deldir($fullpath);
+                }
+            }
+		}
+}
+
+function error_json($msg,$data='',$code='-1'){
+   $param = array(
+     'code' => $code, //默认 -1 有异常
+     'msg'  => $msg,
+     'data' => $data,
+    );
+   return json($param);
+}
+
+function success_json($msg,$data='',$code='0'){
+   $param = array(
+     'code' => $code, //默认 0 成功
+     'msg'  => $msg,
+     'data' => $data,
+    );
+   return json($param);
+}
+
+function alert($title){
+  return '<script>parent.alert("'.$title.'")</script>';
+
+}
+
+function checkFields($data = array(), $fields = array())
+    {  
+        foreach ($data as $k => $val) {
+            if (!in_array($k,$fields)) {
+                
+                unset($data[$k]);
+            }
+        }
+        return $data;
+    }
+function format_date($dateformat, $date='',$format=0) {
+   
+   $time = NowTime() - $date;
+   $result = '';
+   if($format) {
+     if($time > 24*3600) {
+       $result = @date($dateformat,$date);
+     } elseif ($time > 3600) {
+       $result = intval($time/3600).'小时前';
+     } elseif ($time > 60) {
+       $result = intval($time/60).'分钟前';
+     } elseif ($time > 0) {
+       $result = $time.'秒前';
+     } else {
+       $result = '刚刚';
+     }
+    }else{
+     $result = @date($dateformat,$date);
+   }
+   return $result;
+}
+/**
+ * 强制下载
+ * @author 
+ *
+ * @param string $filename 文件名称
+ * @param string $content //文件内容
+ */
+function force_download($filename, $content)
+{
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Content-Type: application/force-download");
+    header("Content-Transfer-Encoding: binary");
+    header("Content-Disposition: attachment; filename=$filename");
+    echo $content;
+    exit ();
+}
+//获取 文件内容
+function GetFile($filedir){
+  if ($open_file = @fopen($filedir, "rb")){      
+    $filecontent=fread($open_file,filesize($filedir));      
+    fclose($open_file);
+    return $filecontent;
+  }else{
+     return false;
+  }
+}
+//删除文件夹及其文件夹下的所有文件
+function del_dir($dir) {
+  //先删除目录下的文件：
+  $dh=opendir($dir);
+  while ($file=readdir($dh)) {
+    if($file!="." && $file!="..") {
+      $fullpath=$dir."/".$file;
+      if(!is_dir($fullpath)) {
+          unlink($fullpath);
+      } else {
+          del_dir($fullpath);
+      }
+    }
+  }
+ 
+   closedir($dh);
+  //删除当前文件夹：
+  if(rmdir($dir)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function write_file($wfile,$cfile,$wr='w'){
+
+    if($openwrite =  @fopen($wfile, $wr)){
+     fwrite($openwrite,$cfile);
+     fclose($openwrite);
+     return true;
+    }else{
+     return false;
+    }
+}
+
+//是否超级管理员
+function IsAdmin($uid = 0){
+  if($uid > 0){
+    if(intval($uid)==1){
+      return true;
+    }
+  }
+  return false;
+}
+ //删除文件
+function del_file($filepath){
+  @unlink($filepath);
+}
+//将对象转换成数组
+function to_array($obj){
+ return json_decode(json_encode($obj),true);
+}
+//生成随机码
+function random_text($count,$lowercase='0'){
+
+  srand((double)microtime()*1000000);
+  $doublenum=mt_rand(10000,1000000);
+  srand((double)microtime()*$doublenum); 
+ 
+  if($lowercase==1){
+    $numrand=array_flip(array_merge(range(1,9),range('A','N'),range('P','Z'),range('a','n'),range('p','z')));
+  }elseif($lowercase==2){
+    $numrand=array_flip(range(1,9));
+  }else{
+    $numrand=array_flip(array_merge(range(1,9),range('A','N'),range('P','Z'))); 
+  }
+   
+  $textkey='';
+  for($i=0;$i<$count;$i++){
+      $textkey .= array_rand($numrand);
+  } 
+  return $textkey; 
+}
+
+//账号登陆加密码 
+function password_key($username,$password,$passsalt){
+  return md5(md5($password.$powercode).$username);
+}
+
+//支付加密码 更复杂
+function pay_key($username,$payword,$paysalt){
+  return md5(md5(md5($password).$powercode).$username);
+}
+
+/**
+ * 生成流水号
+ *
+ * @return string
+ */
+
+function get_serial_no()
+{
+    $no_base = date("ymdhis", time());
+    $serial_no = $no_base . rand(111, 999);
+    return $serial_no;
+}
+
+/**
+ * 删除图片文件
+ *
+ * @param unknown $img_path            
+ */
+function removeImageFile($img_path)
+{
+    // 检查图片文件是否存在
+    if (file_exists($img_path)) {
+        return unlink($img_path);
+    } else {
+        return false;
+    }
+}
+
+//获取文件大小并格式化
+function formatSize($size) {
+    $sizes = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
+    if ($size == 0) { 
+	   	return('0'); 
+	} else {
+      return (round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $sizes[$i]); 
+	}
+}
+
+function get_settings($isCache=''){
+ // $isCache  true 开启缓存控制   false 或者为空则不受缓存控制 
+     $lists =  Db::name('settings')->select();
+     $data = [];
+     foreach($lists as $k=>$v){
+           if(!empty($v['value'])){
+              $value = unserialize($v['value']);
+           }else{
+              $value ='';
+           }
+             $data[$v['groupname']] = $value;
+
+     }
+       config($data);
+       if($isCache){
+            if(config('site.global_cache_status') == 1){   
+               if(cache('settings') ==''){
+                  cache('settings',config()); 
+               }
+                $settings = cache('settings');
+            }else{
+               $settings = config();
+            }
+       }else{
+          $settings = config();
+       }     
+       if($settings){
+         return $settings;
+       }else{
+         return false;
+       }
+}
+
+
+//发邮件
+function send_email($to_email,$subject = '',$body = '',$debug='0'){
+                           $settings = settings();
+
+                           //  $smtp_host     //smtp服务器地址
+                           //  $smtp_port        //端口
+                           //  $smtp_user        //邮件服务器登录账号
+                           //  $smtp_pass        //邮件服务器登陆密码
+                           //  $to_email 表示收件人地址 
+                            //$subject 表示邮件标题 
+                            //$body表示邮件正文
+                            //error_reporting(E_ALL);
+                           require_once EXTEND_PATH.'phpmailer/PHPMailerAutoload.php';
+                            // date_default_timezone_set('Asia/Shanghai'); //设定时区东八区
+                            $mail             = new PHPMailer(); //new一个PHPMailer对象出来
+                            $mail->CharSet ="ISO-8859-1";   //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+                            $mail->IsSMTP(); // 设定使用SMTP服务
+                            $mail->SMTPDebug  = 0;                     // 启用SMTP调试功能
+                            // 1 = errors and messages
+                            // 2 = messages only
+                            $mail->SMTPAuth   = true;                  // 启用 SMTP 验证功能
+                            //$mail->SMTPSecure = "ssl";                 // 安全协议，可以注释掉
+
+                            $mail->Host       = $settings['email']['smtp_host'];      // SMTP 服务器 如：smtp.qq.com smtp.163.com
+                            $mail->Port       = $settings['email']['smtp_port'];                   // SMTP服务器的端口号  默认：25
+                            $mail->Username   = $settings['email']['smtp_user'];  // SMTP服务器用户名，一般为邮箱地址
+                            $mail->Password   = $settings['email']['smtp_pass'];           // SMTP服务器密码
+                            $mail->SetFrom($mail->Username, '系统邮件');   //寄件人邮箱和用户名
+                            //$mail->AddReplyTo('xxx@xxx.xxx','who');
+                            $mail->Subject    = $subject;
+                            $mail->AltBody    = 'To view the message, please use an HTML compatible email viewer!'; // optional, comment out and test
+                            $mail->MsgHTML($body);
+                            $address = $to_email; //收件人邮箱
+                            $mail->AddAddress($address, ''); //收件人地址
+                            //$mail->AddAttachment("images/phpmailer.gif");      // attachment
+                            //$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+                            if(!$mail->Send()) {
+                                // return '邮件发送失败！' . $mail->ErrorInfo;
+                                return $mail->ErrorInfo;
+                            } else {
+                                // return "恭喜，邮件发送成功！";
+                                return 'success';
+                            }
+}
+
+
+
+/**
+ * 发送短信
+ */
+function send_sms($mobile,$Code,$Params=array()){
+
+// 默认使用阿里云短信，后期可以扩展更多短信接口
+  $result =  send_aliyun_sms($mobile,$Code,$Params);
+  if($result =='success'){
+     return 'success';
+   }else{
+     return $result; 
+   }
+}
+
+//阿里云短信,不建议直接使用
+function send_aliyun_sms($mobile,$Code,$Params=array()){
+    // 格式 $Params=array('sendcode'=>'123456');
+         require_once EXTEND_PATH."aliyunsms/SignatureHelper.php"; 
+         $settings = settings();
+         $params = array ();
+        if($settings['sms']['aliyun_status'] != 1){
+          return '阿里云短信接口未开启';
+        }
+        // *** 需用户填写部分 ***
+        // fixme 必填: 请参阅 https://ak-console.aliyun.com/ 取得您的AK信息
+        $accessKeyId = $settings['sms']['AccessKeyId'];
+        // "LTAIKmcWRZQIRBDf";
+        $accessKeySecret = $settings['sms']['AccessKeySecret'];
+        // "QuaF4u7cs0kgw5NlPIp4TvPzYrkuaB";
+
+        // fixme 必填: 短信接收号码
+        $params["PhoneNumbers"] = $mobile;
+
+        // fixme 必填: 短信签名，应严格按"签名名称"填写，请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/sign
+        $params["SignName"] =  $settings['sms']['SignName'];
+
+        // fixme 必填: 短信模板Code，应严格按"模板CODE"填写, 请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/template
+        $params["TemplateCode"] = $Code;
+
+        // fixme 可选: 设置模板参数, 假如模板中存在变量需要替换则为必填项
+        $params['TemplateParam'] = $Params;
+
+        // fixme 可选: 设置发送短信流水号
+        $params['OutId'] = "12345";
+
+        // fixme 可选: 上行短信扩展码, 扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段
+        $params['SmsUpExtendCode'] = "1234567";
+
+
+        // *** 需用户填写部分结束, 以下代码若无必要无需更改 ***
+        if(!empty($params["TemplateParam"]) && is_array($params["TemplateParam"])) {
+            $params["TemplateParam"] = json_encode($params["TemplateParam"]);
+        }
+
+        // 初始化SignatureHelper实例用于设置参数，签名以及发送请求
+        $helper = new Aliyun\DySDKLite\SignatureHelper();
+        // 此处可能会抛出异常，注意catch
+        $content = $helper->request(
+            $accessKeyId,
+            $accessKeySecret,
+            "dysmsapi.aliyuncs.com",
+            array_merge($params, array(
+                "RegionId" => "cn-hangzhou",
+                "Action" => "SendSms",
+                "Version" => "2017-05-25",
+            ))
+        );
+        $res_arr = json_decode(json_encode($content),true);
+        if($res_arr['Code'] == 'ok'){
+           return 'success';
+        }else{
+           return '短信发送接口错误码: '.$res_arr['Code'].',错误消息：'.$res_arr['Message']; 
+        }
+}
+
+/**
+ * 查询快递
+ * @param $postcom  快递公司编码
+ * @param $getNu  快递单号
+ * @return array  物流跟踪信息数组
+ */
+function queryExpress($postcom , $getNu) {
+/*    $url = "http://wap.kuaidi100.com/wap_result.jsp?rand=".time()."&id={$postcom}&fromWeb=null&postid={$getNu}";
+    //$resp = httpRequest($url,'GET');
+    $resp = file_get_contents($url);
+    if (empty($resp)) {
+        return array('status'=>0, 'message'=>'物流公司网络异常，请稍后查询');
+    }
+    preg_match_all('/\\<p\\>&middot;(.*)\\<\\/p\\>/U', $resp, $arr);
+    if (!isset($arr[1])) {
+        return array( 'status'=>0, 'message'=>'查询失败，参数有误' );
+    }else{
+        foreach ($arr[1] as $key => $value) {
+            $a = array();
+            $a = explode('<br /> ', $value);
+            $data[$key]['time'] = $a[0];
+            $data[$key]['context'] = $a[1];
+        }
+        return array( 'status'=>1, 'message'=>'1','data'=> array_reverse($data));
+    }*/
+    $url = "https://m.kuaidi100.com/query?type=".$postcom."&postid=".$getNu."&id=1&valicode=&temp=0.49738534969422676";
+    $resp = httpRequest($url,"GET");
+    return json_decode($resp,true);
+}
+
+
+/**
+ * 记录帐户变动
+ * @param   int     $user_id        用户id
+ * @param   float   $user_money     可用余额变动
+ * @param   int     $pay_points     消费积分变动
+ * @param   string  $desc    变动说明
+ * @param   float   distribut_money 分佣金额
+ * @return  bool
+ */
+function account_log($user_id, $user_money = 0,$pay_points = 0, $desc = '',$distribut_money = 0){
+//     /* 插入帐户变动记录 */
+//     $account_log = array(
+//         'user_id'       => $user_id,
+//         'user_money'    => $user_money,
+//         'pay_points'    => $pay_points,
+//         'change_time'   => time(),
+//         'desc'   => $desc,
+//     );
+//     /* 更新用户信息 */
+// //    $sql = "UPDATE __PREFIX__users SET user_money = user_money + $user_money," .
+// //        " pay_points = pay_points + $pay_points, distribut_money = distribut_money + $distribut_money WHERE user_id = $user_id";
+//     $update_data = array(
+//         'user_money'        => ['exp','user_money+'.$user_money],
+//         'pay_points'        => ['exp','pay_points+'.$pay_points],
+//         'distribut_money'   => ['exp','distribut_money+'.$distribut_money],
+//     );
+//     if(($user_money+$pay_points+$distribut_money) == 0)
+//         return false;   
+//     $update = Db::name('member')->where('user_id',$user_id)->update($update_data);
+//     if($update){
+//         M('account_log')->add($account_log);
+//         return true;
+//     }else{
+//         return false;
+//     }
+}
+
+function search($addname='',$select=array(),$one_where=array(),$two_where=array(),$date=array(),$url=""){
+// $one_where  单字段组显示查询 自定义显示查询 
+// $one_where = array(array('field'=>'status','data'=>array('0'=>'支付成功','1'=>'支付失败')));
+// $two_where  2字段组 需要数据库 
+// 格式：$two_where =array(array('table'=>'member_group','field_id'=>'group_id','field_name'=>'group_name'));
+// 
+// $date    时间区域筛选
+// 
+$post = request()->param(); // 获取所有请求参数
+
+$name = isset($post['keywords']['name'])?$post['keywords']['name']:'';
+$value = isset($post['keywords']['value'])?$post['keywords']['value']:'';
+
+$start = isset($post['date']['start'])?$post['date']['start']:'';
+$end = isset($post['date']['end'])?$post['date']['end']:'';
+
+$html = '<div class="search" id="search">'; 
+$html.= '<form action="'.$url.'"  class="layui-form" method="post">';
+
+if(!empty($addname)){
+    $html .= '<div class="layui-input-inline" style="margin-right:10px">';
+  $html .= '<a class="layui-btn layui-btn-normal" id="add"><i class="layui-icon">&#xe608;</i>'.$addname.'</a></div>';
+}
+
+
+// 多字段关键词搜索
+$html.= '<div class="layui-input-inline" style="width:110px;margin-right:10px;">';
+$html.= '<select name="keywords[name]" lay-filter="aihao" class="select_name" id="select_name">';
+$html.= '<option value=""></option>';
+    foreach($select as $k=>$v){
+      $html.= '<option value="'.$k.'" ';
+       if($name == $k){
+         $html.='selected';
+        }
+      $html.= '>'.$v.'</option>'; 
+    }
+$html.= '</select>';
+$html.= '</div>';
+
+$html .='<div class="layui-input-inline" style="width:160px;margin-right:10px;" >
+          <input type="text" name="keywords[value]" id="keywords"  class="layui-input keywords" autocomplete="off" placeholder="关键词" value="'.$value.'">
+        </div>';
+
+
+//2字段 查询一个表中的2个字段实现多选
+if(!empty($two_where)){
+foreach($two_where as $key=>$value){
+     $field_id   = $value['field_id'];
+     $field_name = $value['field_name'];
+     $data = DB::name($value['table'])->field("$field_id,$field_name")->select();
+     $field = array(
+        array('field_id'=>$value['field_id'],'field_name'=>$value['field_name'],'data'=>$data),
+       );
+     foreach($field as $k=>$v){
+    $sname = isset($post[$v['field_id']])?$post[$v['field_id']]:'';
+    $html.= '<div class="layui-input-inline" style="width:110px;margin-right:10px;">';
+    $html.= '<select name="'.$v["field_id"].'" lay-filter="aihao" class="select_name" id="select_name">';
+    $html.= '<option value=""></option>';
+        foreach($v['data'] as $k2=>$v2){
+          $html.= '<option value="'.$v2[$v['field_id']].'" ';
+           if($sname == $v2[$v['field_id']]){
+             $html.='selected';
+            }
+          $html.= '>'.$v2[$v['field_name']].'</option>'; 
+        }
+    $html.= '</select>';
+    $html.= '</div>';
+
+     }
+  }
+
+}
+
+//单字段组选 $one_where  不需要查询数据库自定义数组即可
+if(!empty($one_where)){
+   foreach($one_where as $k=>$v){
+  $dname = !empty($post[$v['field']])?$post[$v['field']]:'null';
+    $html.= '<div class="layui-input-inline" style="width:110px;margin-right:10px;">';
+    $html.= '<select name="'.$v["field"].'" lay-filter="aihao" class="select_name" id="select_name">';
+    $html.= '<option value="" ';
+    if($dname == 'null'){
+      $html.='selected';
+    }
+    $html .=' >请选择</option>';
+        foreach($v['data'] as $k2 => $v2){
+          $html.= '<option value="'.$k2.'" ';
+
+           if($dname == $k2 ){
+             $html.='selected';
+            }
+          $html.= '>'.$v2.'</option>'; 
+        }
+    $html.= '</select>';
+    $html.= '</div>';
+
+   }
+}
+//排序搜索
+
+
+//区间字段查询
+foreach($date as $k=>$v){
+  //日期查询
+$html.='<div class="layui-inline">
+        <label class="layui-form-label" style="width:60px">'.$v["title"].'</label>
+        <div class="layui-input-inline" style="width:160px" >
+          <input type="text" name="date[start]" id="start_date" lay-verify="date" placeholder="'.$v['start_name'].'" autocomplete="off" class="layui-input" value="'.$start .'">
+        </div>
+      </div>
+      <div class="layui-inline"></div>
+      <div class="layui-inline">
+        <div class="layui-input-inline" style="width:160px" >
+          <input type="text" name="date[end]" id="end_date" lay-verify="date" placeholder="'.$v['end_name'].'" autocomplete="off" class="layui-input" value="'.$end .'">
+        </div>
+      </div>';
+}    
+
+$html .= ' <div class="layui-inline">
+        <div class="layui-input-inline">
+           <button class="layui-btn layui-btn-normal" type="submit" style="float:right"><i class="layui-icon">&#xe615;</i>  搜索</button>
+        </div>
+      </div>
+    </div>';
+
+$html .='</form>';
+$html .='</div>';
+
+
+//js
+$html .="<script>
+layui.use(['element','layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+  laydate.render({
+    elem: '#start_date'
+  });
+  laydate.render({
+    elem: '#end_date'
+  });
+   });</script>";
+return $html;
+}
+
+//树状分类 将数据库（$items）二维度数组 转换成 无限级分类数组 
+//pid 数据中父类ID
+function get_tree($items,$cid="cid",$pid ="pid") {
+    $map  = [];
+    $tree = [];    
+    foreach ($items as &$it){ $map[$it[$cid]] = &$it; }  //数据的ID名生成新的引用索引树
+    foreach ($items as &$it){
+        $parent = &$map[$it[$pid]];
+        if($parent) {
+            $parent['children'][] = &$it;
+        }else{
+            $tree[] = &$it;
+        }
+    }
+    return $tree;
+}
+// 显示星级
+function show_star($value=0){
+  $value=number_format($value,2);
+  $star='<div class="star_background"><div class="star_show" style="width:'.($value*20).'%"></div></div>';
+  return $star;
+}
+
+function area($provId="",$cityId="",$distId=""){
+// $prov 默认省份Id
+// $city 默认城市Id
+// $dist 默认地区Id
+$path = "/public/static/js/city.min.js";
+$html.='<div id="area"> 
+ <div class="layui-input-inline" id="prov-box" style="width:150px;float:left">
+      <select class="prov" lay-filter="prov" ></select>  
+</div>
+ <div class="layui-input-inline" id="city-box" style="width:150px;float:left">
+      <select class="city"  lay-filter="city"  ></select> 
+</div>
+ <div class="layui-input-inline" id="dist-box" style="width:150px;float:left">
+      <select class="dist"  lay-filter="dist"></select>
+</div>
+      </div>';
+$html .='<style>select{padding: 6px 0px 6px 0px !important;border: 1px solid #e2e2e2;}</style>';
+$html .='<script>var setting = {
+  url:"'.$path.'", //地址
+            prov:"'.$provId.'",
+            city:"'.$cityId.'",
+            dist:"'.$distId.'",
+            nodata:null, 
+            required:false 
+}; </script>';
+$html .='<script src="/public/static/js/jquery.cityselect.js"></script>'; 
+return $html;
+}
+
+
+function get_cate($table='',$path=[]){
+//$table 表名
+//$path []   一级 二级 三级 
+$DB = DB::name($table);
+$arr = cache($table);
+  if(empty($arr)){
+     $arr = $DB->where('status = 1')->select();  
+     cache($table,$arr);
+  }
+
+$tree = get_tree($arr); 
+$onearr=[];$twoarr = [];$three =[];
+  foreach($tree as $v){    
+     array_push($onearr,$v);
+     foreach($v['children'] as $v2){
+       array_push($twoarr,$v2);
+       foreach($v2['children'] as $v3){
+         array_push($threearr,$v3);
+       }
+     }
+  }
+
+  $html ='<div class="layui-input-inline" style="width:100px;float:left;">';
+  $html .='<select name="cate[one]" lay-filter="one">';
+  $html .='<option value="">请选择</option>';
+  foreach($onearr as $k=>$v){
+    $html .='<option value="'.$v["cid"].'"';
+    if($one == $v["cid"]){
+        $html .=' selected ';
+     }   
+    $html .= ' >'.$v["cname"].'</option>';
+  }
+  $html .='</select>';
+  $html .='</div>';
+  //获得二级分类
+
+
+  $html .='<div class="layui-input-inline" id="two-box" style="width:100px;float:left;display:none">';
+  $html .='<select name="cate[two]" class="two"  lay-filter="two" >';
+  $html .='<option value="">请选择</option>';
+  foreach($twoarr as $k=>$v){
+    $html .='<option value="'.$v["cid"].'"';
+    if($two == $v["cid"]){
+        $html .=' selected ';
+     }   
+    $html .= ' >'.$v["cname"].'</option>';
+  }
+
+  $html .='</select>';
+  $html .='</div>';
+  $html .='<div class="layui-input-inline" id="three-box" style="width:100px;float:left;display:none">';
+  $html .='<select name="cate[three]" class="three" >';
+  $html .='<option value="">请选择</option>';
+  foreach($threearr as $k=>$v){
+    $html .='<option value="'.$v["cid"].'"';
+    if($three == $v["cid"]){
+        $html .=' selected ';
+     }   
+    $html .= ' >'.$v["cname"].'</option>';
+  } 
+  $html .='</select>';
+  $html .='</div>';
+ $html .='<script>
+layui.use(["element", "layer","form","upload"], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;upload = layui.upload;
+  form.on("select(one)",function(data){
+
+    $.post("'.url("api/category/getCategory").'",{"pid":data.value,"type":"'.$table.'"},function(json){
+        if(json.code ==0){
+        $(".two").html(json.data);
+        $("#two-box").show();
+        form.render();
+      }else{
+          $("#two-box").hide();
+          $("#three-box").hide();
+          form.render();
+       }
+    });
+
+  });
+  form.on("select(two)",function(data){
+    $.post("'.url("api/category/getCategory").'",{"pid":data.value,"type":"'.$table.'"},function(json){
+       if(json.code ==0){
+            $(".three").html(json.data);
+            $("#three-box").show();
+            form.render();
+       }else{
+           $("#three-box").hide();
+       }
+    });
+
+  });
+});
+</script>'; 
+ return $html;
+}
+
+function get_cate22($table='',$cid=1){
+//$table 表名
+//$pid 父类ID 
+$pid =0;
+$DB = DB::name($table);
+$arr = cache($table);
+  if(empty($arr)){
+     // $where['pid'] = $pid;
+     $arr = $DB->where('status = 1')->select();  
+     cache($table,$arr);
+  }
+
+  $cateArr= [];
+  foreach($arr as $v){
+     if($v['pid'] == $pid){
+       array_push($cateArr,$v);
+     }
+  }
+// $cid
+$arr1 =$DB->where('cid = "$cid"')->find();
+if($arr1['pid'] !=0){
+  $pid1 = $arr1['pid'];
+  $arr2 =$DB->where('cid = "$pid1"')->find();
+  if($arr2['pid'] !=0){
+    $pid2 = $arr2['pid'];
+    $arr3 =$DB->where('cid = "$pid2"')->find();
+    if($arr3['pid'] ==0 ){
+      $three = $pid3;
+      $two = $pid2;
+      $three = $cid;
+
+    }
+   }else{
+    $two = $cid;
+    $one = $pid1;
+   }
+}else{
+  $DB->where('pid = "0"')->select();
+  //当前分类为一级
+  $one = $cid;
+} 
+  $html ='<div class="layui-input-inline" style="width:100px;float:left;">';
+  $html .='<select name="cate[one]" lay-filter="one">';
+  $html .='<option value="">请选择</option>';
+  foreach($cateArr as $k=>$v){
+
+    $html .='<option value="'.$v["cid"].'"';
+    if($one == $v["cid"]){
+        $html .=' selected ';
+     }   
+    $html .= ' >'.$v["cname"].'</option>';
+  }
+  $html .='</select>';
+  $html .='</div>';
+  //获得二级分类
+
+
+  $html .='<div class="layui-input-inline" id="two-box" style="width:100px;float:left;display:none">';
+  $html .='<select name="cate[two]" class="two"  lay-filter="two" >';
+  $html .='<option value="">请选择</option>';
+  // $tree = get_tree($arr); 
+  // print_r($tree);
+
+  // foreach($cateArr as $k=>$v){
+
+  //   $html .='<option value="'.$v["cid"].'"';
+  //   if($one == $v["cid"]){
+  //       $html .=' selected ';
+  //    }   
+  //   $html .= ' >'.$v["cname"].'</option>';
+  // }
+  $html .='</select>';
+  $html .='</div>';
+  $html .='<div class="layui-input-inline" id="three-box" style="width:100px;float:left;display:none">';
+  $html .='<select name="cate[three]" class="three" >';
+  $html .='<option value="">请选择</option>';
+  $html .='</select>';
+  $html .='</div>';
+ $html .='<script>
+layui.use(["element", "layer","form","upload"], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;upload = layui.upload;
+  form.on("select(one)",function(data){
+
+    $.post("'.url("api/category/getCategory").'",{"pid":data.value,"type":"'.$table.'"},function(json){
+        if(json.code ==0){
+        $(".two").html(json.data);
+        $("#two-box").show();
+        form.render();
+      }else{
+          $("#two-box").hide();
+          $("#three-box").hide();
+          form.render();
+       }
+    });
+
+  });
+  form.on("select(two)",function(data){
+    $.post("'.url("api/category/getCategory").'",{"pid":data.value,"type":"'.$table.'"},function(json){
+       if(json.code ==0){
+            $(".three").html(json.data);
+            $("#three-box").show();
+            form.render();
+       }else{
+           $("#three-box").hide();
+       }
+    });
+
+  });
+});
+</script>'; 
+ return $html;
+}
+function get_dir_size($dir)
+{
+    $size = 0;
+    $dirs = [$dir];
+     
+    while(@$dir=array_shift($dirs)){
+        $fd = opendir($dir);
+        while(@$file=readdir($fd)){
+            if($file=='.' && $file=='..'){
+                continue;
+            }
+            $file = $dir.DIRECTORY_SEPARATOR.$file;
+            if(is_dir($file)){
+                array_push($dirs, $file);
+            }else{
+                $size += filesize($file);
+            }
+        }
+        closedir($fd);
+    }
+    return $size;
+}
+
+/**
+ * 列出本地目录的文件
+ * @author rainfer <81818832@qq.com>
+ * @param string $path
+ * @param string $pattern
+ * @return array
+ */
+function list_file($path, $pattern = '*')
+{
+    if (strpos($pattern, '|') !== false) {
+        $patterns = explode('|', $pattern);
+    } else {
+        $patterns [0] = $pattern;
+    }
+    $i = 0;
+    $dir = array();
+    if (is_dir($path)) {
+        $path = rtrim($path, '/') . '/';
+    }
+    foreach ($patterns as $pattern) {
+        $list = glob($path . $pattern);
+        if ($list !== false) {
+            foreach ($list as $file) {
+                $dir [$i] ['filename'] = basename($file);
+                $dir [$i] ['path'] = dirname($file);
+                $dir [$i] ['pathname'] = realpath($file);
+                $dir [$i] ['owner'] = fileowner($file);
+                $dir [$i] ['perms'] = substr(base_convert(fileperms($file), 10, 8), -4);
+                $dir [$i] ['atime'] = fileatime($file);
+                $dir [$i] ['ctime'] = filectime($file);
+                $dir [$i] ['mtime'] = filemtime($file);
+                $dir [$i] ['size'] = filesize($file);
+                $dir [$i] ['type'] = filetype($file);
+                $dir [$i] ['ext'] = is_file($file) ? strtolower(substr(strrchr(basename($file), '.'), 1)) : '';
+                $dir [$i] ['isDir'] = is_dir($file);
+                $dir [$i] ['isFile'] = is_file($file);
+                $dir [$i] ['isLink'] = is_link($file);
+                $dir [$i] ['isReadable'] = is_readable($file);
+                $dir [$i] ['isWritable'] = is_writable($file);
+                $i++;
+            }
+        }
+    }
+    $cmp_func = create_function('$a,$b', '
+    if( ($a["isDir"] && $b["isDir"]) || (!$a["isDir"] && !$b["isDir"]) ){
+      return  $a["filename"]>$b["filename"]?1:-1;
+    }else{
+      if($a["isDir"]){
+        return -1;
+      }else if($b["isDir"]){
+        return 1;
+      }
+      if($a["filename"]  ==  $b["filename"])  return  0;
+      return  $a["filename"]>$b["filename"]?-1:1;
+    }
+    ');
+    usort($dir, $cmp_func);
+    return $dir;
+}
+
+/**
+ * 获取客户端IP地址
+ * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
+ * @param boolean $adv 是否进行高级模式获取（有可能被伪装） 
+ * @return mixed
+ */
+function get_client_ip($type = 0,$adv=false) {
+    $type       =  $type ? 1 : 0;
+    static $ip  =   NULL;
+    if ($ip !== NULL) return $ip[$type];
+    if($adv){
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $pos    =   array_search('unknown',$arr);
+            if(false !== $pos) unset($arr[$pos]);
+            $ip     =   trim($arr[0]);
+        }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip     =   $_SERVER['HTTP_CLIENT_IP'];
+        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip     =   $_SERVER['REMOTE_ADDR'];
+        }
+    }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+        $ip     =   $_SERVER['REMOTE_ADDR'];
+    }
+    // IP地址合法验证
+    $long = sprintf("%u",ip2long($ip));
+    $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+    return $ip[$type];
+}
+
+function upload_images($button="上传图片",$name="thumb",$value="",$width="100px",$height="70px"){
+  if(!$value){
+    $value = '/public/images/nopic.png';
+  }
+  $html ='<div class="layui-upload">
+                  <button type="button" class="layui-btn layui-btn-danger" id="button_'.$name.'">'.$button.'</button>
+                  <div class="layui-upload-list">
+                    <input type="hidden" name="'.$name.'" id="'.$name.'" value="'.$value.'" >
+                    <img class="layui-upload-img" id="images" src="'.$value.'" style="width:'.$width.';">
+                    <p id="show_text_'.$name.'"></p>
+                  </div>
+                </div>';
+$append ="<span >上传失败</span>";
+$html .='<script>
+layui.use(["element", "layer","form","upload"], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;upload = layui.upload;
+       //普通图片上传
+  var uploadInst = upload.render({
+    elem: "#button_'.$name.'"
+    ,url: "'.url("upload/images").'"
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        $("#images").attr("src", result); //图片链接（base64）
+       
+      });
+    }
+    ,done: function(res){
+      //如果上传失败
+      if(res.code == -1){
+           //上传失败
+        return layer.msg(res.msg);
+      }else if(res.code ==0){
+           //上传成功
+       $("#'.$name.'").attr("value",res.data);
+        return layer.msg(res.msg);
+      }
+   
+    },field:"images[]"
+    ,error: function(){
+      // //演示失败状态，并实现重传
+      var show_text_'.$name.' = $("show_text_'.$name.'");
+     show_text_'.$name.'.html("'.$append.'");
+      show_text_'.$name.'.find(".'.$name.'_reload").on("click",function(){
+        uploadInst.upload();
+      });
+    }
+});
+form.render();
+});
+</script>';
+return $html;            
+}
+
+/** 获取所有顶级父类id 字符串  
+ * @param  [type] $cid [分类ID] 
+ * @return [type] $pid    [分类父类ID] 
+ */  
+function get_top_pid($table,$cid){  
+    $r = DB::name($table)->where('cid = '.$cid)->field('cid,pid')->find();
+    if($r['pid'] != 0){
+     $data .= get_top_pid($table,$r['pid']).',';   
+    } 
+     $data .= $r['cid'];     
+    return  $data; 
+}  
+
+
+

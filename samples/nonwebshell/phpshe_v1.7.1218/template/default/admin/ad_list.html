@@ -1,0 +1,58 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=ad" <!--{if(!$_g_type):}-->class="sel"<!--{endif;}-->>广告列表（{$tongji['all']}）<i></i></a>
+		<!--{foreach($ini['ad_type'] as $k=>$v):}-->
+		<a href="admin.php?mod=ad&type={$k}" <!--{if($_g_type==$k):}-->class="sel"<!--{endif;}-->>{$v['name']}（{$tongji[$k]}）<i></i></a>
+		<!--{endforeach;}-->
+		<a href="admin.php?mod=ad&act=add" id="fabu">添加广告</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'ad_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="40">排序</th>
+			<th class="bgtt" width="220">广告图片</th>
+			<th class="bgtt" width="200">广告位置</th>
+			<th class="bgtt">广告链接</th>
+			<th class="bgtt" width="80">显示</th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr height="60">
+			<td><input type="checkbox" name="ad_id[]" value="{$v['ad_id']}" /></td>
+			<td>{$v['ad_id']}</td>
+			<td><input type="text" name="ad_order[{$v['ad_id']}]" value="{$v['ad_order']}" class="inputtext input30 center" /></td>
+			<td><a href="{$v['ad_url']}" target="_blank"><img src="{pe_thumb($v['ad_logo'])}" style="width:160px; height:55px; border:1px solid #F2F2F2" /></a></td>
+			<td>{$ini['ad_type'][$v['ad_type']]['list'][$v['ad_position']]['name']}<p>{$cache_category[$v['category_id']]['category_name']}</p></td>
+			<td class="aleft"><a href="{$v['ad_url']}" target="_blank">{$v['ad_url']}</a></td>
+			<td>
+				<!--{if($v['ad_state']==1):}-->
+				<a href="admin.php?mod=ad&act=state&state=0&id={$v['ad_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/dui.png" /></a>
+				<!--{else:}-->
+				<a href="admin.php?mod=ad&act=state&state=1&id={$v['ad_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/cuo.png" /></a>
+				<!--{endif;}-->
+			</td>
+			<td>
+				<a href="admin.php?mod=ad&act=edit&id={$v['ad_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=ad&act=del&id={$v['ad_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'ad_id')" />
+			<button href="admin.php?mod=ad&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'ad_id', 'form', '批量删除')">批量删除</button>
+			<button href="admin.php?mod=ad&act=order&token={$pe_token}" onclick="pe_doall(this,'form')">更新排序</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,16 @@
+<link href="{$Think.HOME_SITE_ROOT}/css/base.css" rel="stylesheet" type="text/css">
+<table style="width:800px;font-size:15px;line-height:40px;margin-top:50px;" align="center">
+    <tr><td colspan="2"><img height="32" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"></td></tr>
+    <tr><td colspan="4" style="border-bottom:1px solid #ccc"><h3 style="font-size:20px;line-height:60px">{$Think.config.site_name} - {$Think.lang.business_settlement_physical_orders}</h3></td></tr>
+    <tr>
+        <td width="80px">{$Think.lang.business}</td><td colspan="3">{$bill_info.ob_store_name}</td>
+    </tr>
+    <tr><td>{$Think.lang.settlement_number}</td><td width="130px">{$bill_info.ob_no}</td><td width="100px">{$Think.lang.settlement_range}</td><td>{$bill_info.ob_startdate|date="Y-m-d",###} &nbsp;{$Think.lang.sellerbill_to}&nbsp; {$bill_info.ob_enddate|date="Y-m-d",###}</td></tr>
+    <tr><td>{$Think.lang.chuzhang_time}</td><td>{$bill_info.ob_createdate|date="Y-m-d",###}</td>
+        <td>{$Think.lang.settlement_status}</td><td>{:get_bill_state($bill_info['ob_state'])}</td>
+    </tr>
+
+    <tr><td>{$Think.lang.merchants_receivable}</td><td colspan="3">{$bill_info.ob_result_totals}</td></tr>
+    <tr><td>{$Think.lang.settlement_details}</td><td colspan="3"></td></tr>
+    <tr><td colspan="4">{$bill_info.ob_order_totals} ({$Think.lang.order_amount}) - {$bill_info.ob_commis_totals} ({$Think.lang.commission_amount}) - {$bill_info.ob_order_return_totals} ({$Think.lang.refund_amount}) + {$bill_info.ob_commis_return_totals} ({$Think.lang.return_commission}) - {$bill_info.ob_inviter_totals} ({$Think.lang.distribution_commission}) + {$bill_info.ob_vr_order_totals} ({$Think.lang.ob_vr_order_totals}) - {$bill_info.ob_vr_order_return_totals} ({$Think.lang.ob_vr_order_return_totals}) - {$bill_info.ob_vr_commis_totals} ({$Think.lang.ob_vr_commis_totals}) + {$bill_info.ob_vr_commis_return_totals} ({$Think.lang.ob_vr_commis_return_totals}) - {$bill_info.ob_vr_inviter_totals} ({$Think.lang.ob_vr_inviter_totals}) - {$bill_info.ob_store_cost_totals} ({$Think.lang.promotional_expenses})</td></tr>
+</table>

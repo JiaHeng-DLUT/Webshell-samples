@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title><{$site_title}></title>
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By www.youke365.site" />
+<{include file="base.html"}>
+</head>
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div class="wrapper">
+	<div class="subbox">
+    	<div class="subbox-title">意见/建议反馈</div>
+    	<div class="subbox-form">
+			<form name="fbfrom" id="fbfrom" method="post" action="">
+            	<ul class="formbox">
+					<li class="clearfix"><strong>用户昵称：</strong><p><input type="text" name="nick" id="nick" class="fipt" size="50" maxlength="50" /></p></li>
+					<li class="clearfix"><strong>电子邮件：</strong><p><input type="text" name="email" id="email" class="fipt" size="50" maxlength="50" /></p></li>
+					<li class="clearfix"><strong>意见内容：</strong><p><textarea name="content" id="content" cols="60" rows="8" class="fipt"></textarea></p></li>
+					<li class="clearfix"><strong>验证代码：</strong><p><input type="text" name="checkcode" id="checkcode" class="fipt" size="6" maxlength="6"
+					  /><span id="mycode" class="tips"><img  title="点击刷新" src="<{url('member/code')}>" align="absbottom" 
+					onclick="this.src='<{url("member/code",['type'=>'code'])}>?'+Math.random();"></img></span></p></li>
+					<li class="clearfix"><strong>&nbsp;</strong><p><input type="hidden" name="action" id="action" value="send"><input type="submit" name="submit" class="fbtn" value="提 交">&nbsp; <input type="reset" name="reset" class="fbtn" value="重 填"></p></li>
+            	</ul>
+			</form>
+		</div>
+	</div>
+</div>
+<{include file="footer.html"}>
+</body>
+</html>

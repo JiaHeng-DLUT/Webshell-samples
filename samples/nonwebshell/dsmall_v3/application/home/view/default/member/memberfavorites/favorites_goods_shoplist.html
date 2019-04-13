@@ -1,0 +1,99 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+
+
+<table class="dsm-default-table">
+            <thead>
+            <tr>
+            <td colspan="20"><input type="checkbox" id="all" class="checkall"/>
+                <label for="all">{$Think.lang.ds_select_all}</label>
+                <a href="javascript:void(0);" class="dsm-btn-mini" uri="{:url('Memberfavorites/delfavorites','type=goods')}" name="fav_id" confirm="{$Think.lang.ds_ensure_del}" ds_type="batchbutton"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a>
+                <div class="model-switch-btn">{$Think.lang.favorite_view_mode}{$Think.lang.ds_colon}
+                    <a href="{:url('Memberfavorites/fglist','show=list')}" title="{$Think.lang.favorite_view_mode_list}"><i class="fa fa-list"></i></a>
+                    <a href="{:url('Memberfavorites/fglist','show=pic')}" title="{$Think.lang.favorite_view_mode_pic}"><i class="fa fa-picture-o"></i></a>
+                    <a href="{:url('Memberfavorites/fglist','show=store')}" class="current" title="{$Think.lang.favorite_view_mode_shop}"><i class="fa fa-home"></i></a>
+                </div>
+            </td>
+            </tr>
+            <tr ds_type="table_header">
+                <th class="w30"></th>
+                <th colspan="2">{$Think.lang.favorite_product_name}</th>
+                <th class="w150"></th>
+                <th class="w100">{$Think.lang.favorite_product_price}</th>
+                <th class="w150">{$Think.lang.favorite_date}</th>
+                <th class="w100">{$Think.lang.favorite_popularity}</th>
+                <th class="w110">{$Think.lang.favorite_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="store_goods_list"}
+           {foreach name="store_goods_list" item="goods_list"}
+            <tr>
+                <th colspan="20"><span class="ml5">{$Think.lang.favorite_store_name}{$Think.lang.ds_colon}<a href="{:url('Store/index',['store_id'=>$goods_list[0]['goods']['store_id']])}" >{$goods_list[0]['goods']['store_name']}</a>
+                    {if !empty($store_favorites) && in_array($goods_list[0]['goods']['store_id'],$store_favorites)}
+                    <i class="fa fa-check-circle green" title="{$Think.lang.favorite_collected_store}"></i>
+                    {else/}
+                    <a href="javascript:collect_store('{$goods_list[0]['goods']['store_id']}','store','')" title="{$Think.lang.favorite_collect_store}" ds_store=" {$goods_list[0]['goods']['store_id']}"><i class=" fa fa-plus-square"></i></a>
+                    {/if}
+          </span><span class="ml5">{$Think.lang.favorite_message}{$Think.lang.ds_colon}<i member_id="{$goods_list[0]['goods']['member_id']}"></i>
+                    {if !empty($goods_list[0]['goods']['store_qq'])}
+                    <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$goods_list[0]['goods']['store_qq']}&site=qq&menu=yes" title="QQ: {$goods_list[0]['goods']['store_qq']}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$goods_list[0]['goods']['store_qq']}:52" style=" vertical-align: middle;"/></a>
+                    {/if}
+                    {if !empty($goods_list[0]['goods']['store_ww'])}
+                    <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$goods_list[0]['goods']['store_ww']}&site=cntaobao&s=2" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$goods_list[0]['goods']['store_ww']}&site=cntaobao&s=2" alt="Wang Wang"  style=" vertical-align: middle;"/></a>
+                    {/if}
+          </span> </th>
+            </tr>
+            {foreach name="goods_list" item="value"}
+            <tr class="bd-line">
+                <td style="vertical-align: middle;"><input type="checkbox" class="checkitem" value="{$value.goods.goods_id}"/></td>
+                <td class="w50"><div class="pic-thumb"><a href="{:url('Goods/index',['goods_id'=>$value.goods.goods_id])}" target="_blank"><img src="{:goods_thumb($value.goods,240)}" /></a></div></td>
+                <td class="tl"><dl class="goods-name">
+                    <dt><a href="{:url('Goods/index',['goods_id'=>$value.goods.goods_id])}" target="_blank">{$value.goods.goods_name}</a></dt>
+                    <dd>{$Think.lang.favorite_selled}{$Think.lang.ds_colon}<em>{$value.goods.goods_salenum}</em>{$Think.lang.piece}(<em>{$value.goods.evaluation_count}</em>{$Think.lang.favorite_number_of_consult})</dd>
+                </dl></td>
+                <td>&nbsp;</td>
+                <td><span class="goods-price">{:ds_price_format($value.goods.goods_price)}</span></td>
+                <td class="goods-time">{:date('Y-m-d',$value.fav_time)}</td>
+                <td>{$value.goods.goods_collect}</td>
+                <td class="dsm-table-handle"><span><a href="javascript:void(0)" class="btn-red" onclick="ds_ajaxget_confirm('{:url('Memberfavorites/delfavorites',['fav_id'=>$value.fav_id,'type=goods'])}','{$Think.lang.ds_ensure_del}');"><i class="fa fa-trash-o"></i>
+          <p>{$Think.lang.ds_del}&nbsp</p>
+          </a></span></td>
+            </tr>
+            {/foreach}
+            {/foreach}
+            {else /}
+            <tr>
+                <td colspan="20" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="favorites_list"}
+            <tr>
+                <td colspan="20"><div class="pagination">{$show_page}</div></td>
+            </tr>
+            {/notempty}
+            </tfoot>
+        </table>
+        <!-- 猜你喜欢 -->
+        <div id="guesslike_div" style="width:980px;"></div>
+
+<script>
+    //鼠标经过弹出图片信息
+    $(document).ready(function() {
+        //猜你喜欢
+        $('#guesslike_div').load("{:url('Search/get_guesslike')}", function(){
+            $(this).show();
+        });
+    });
+</script>
+
+
+
+{/block}
+
+

@@ -1,0 +1,53 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <form method="post" action="{:url('Sellerdeliverset/print_set')}" enctype="multipart/form-data" id="my_store_form">
+        <dl class="setup">
+            <dt>{$Think.lang.store_printsetup_desc}{$Think.lang.ds_colon}</dt>
+            <dd><textarea name="store_printexplain" cols="150" rows="3" class="textarea w400" id="store_printexplain">{$store_info.store_printexplain}</textarea>
+                <p class="hint">{$Think.lang.store_printsetup_tip1}</p>
+            </dd>
+        </dl>
+        <dl class="setup">
+            <dt>{$Think.lang.store_printsetup_stampimg}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="hidden" name="store_stamp_old" value="{$store_info.store_seal}" />
+                <div class="dssc-upload-thumb watermark-pic">
+                    <p><img src="{if !empty($store_info['store_seal'])}{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_STORE}/{$store_info.store_seal}{/if}" ds_type="store_seal" /></p>
+                </div>
+                <p>
+                    <input name="store_seal" type="file"  hidefocus="true" ds_type="change_store_stamp"/>
+                </p>
+                <p class="hint">{$Think.lang.store_printsetup_tip2}
+                </p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.store_goods_class_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('input[ds_type="change_store_stamp"]').change(function () {
+            var src = getFullPath($(this)[0]);
+            $('img[ds_type="store_seal"]').attr('src', src);
+        });
+        $('#my_store_form').validate({
+            rules: {
+                store_printexplain: {
+                    required: true,
+                    rangelength: [0, 100]
+                },
+            },
+            messages: {
+                store_printexplain: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_printsetup_desc_error}',
+                    rangelength: '{$Think.lang.store_printsetup_desc_error}'
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

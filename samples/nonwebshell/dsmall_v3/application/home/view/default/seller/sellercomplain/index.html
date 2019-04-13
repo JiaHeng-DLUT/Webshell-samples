@@ -1,0 +1,86 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+ <form method="get" action="">
+            <table class="search-form">
+                <tr>
+                    <td>&nbsp;</td>
+                    <th>{$Think.lang.complain_datetime}</th>
+                    <td class="w240"><input name="add_time_from" id="add_time_from" type="text" class="text w70" value="{$Request.get.add_time_from}" /><label class="add-on"><i class="fa fa-calendar"></i></label> &#8211; <input name="add_time_to" id="add_time_to" type="text" class="text w70" value="{$Request.get.add_time_to}" /><label class="add-on"><i class="fa fa-calendar"></i></label></td>
+                    <th class="w60">{$Think.lang.processing_status}</th>
+                    <td class="w80"><select name="state">
+                        <option value="" {if $Request.get.state == ''}selected{/if}>{$Think.lang.ds_all}</option>
+                        <option value="1" {if $Request.get.state == '1'}selected{/if}>{$Think.lang.complain_state_inprogress}</option>
+                        <option value="2" {if $Request.get.state == '2'}selected{/if}>{$Think.lang.complain_state_finish}</option>
+                    </select></td>
+                    <th class="w120"><select name="type">
+                        <option value="accuser_name" {if $Request.get.type == 'accuser_name'}selected{/if}>{$Think.lang.complain_accuser}</option>
+                        <option value="complain_subject" {if $Request.get.type == 'complain_subject'}selected{/if}>{$Think.lang.complain_subject_content}</option>
+                        <option value="complain_id" {if $Request.get.type == 'complain_id'}selected{/if}>{$Think.lang.complaint_number}</option>
+                    </select></th>
+                    <td class="w160"><input type="text" class="text" name="key" value="{$Request.get.key}" /></td>
+                    <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+                </tr>
+            </table>
+        </form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="w80 tl">{$Think.lang.complaint_number}</th>
+            <th class="tl" colspan="2">{$Think.lang.complaint_goods}</th>
+            <th class="tl">{$Think.lang.complain_subject_content}</th>
+            <th class="w160">{$Think.lang.complain_datetime}</th>
+            <th class="w80">{$Think.lang.complain_state}</th>
+            <th class="w100">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $complain_list}
+        {foreach name="complain_list" item="val" key="key" }
+        {php}$goods = $goods_list[$val['order_goods_id']];{/php}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">{$val.complain_id}</td>
+            <td class="w50"><div class="pic-thumb"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}"><img src="{:goods_thumb($goods, 240)}" /></a></div></td>
+            <td class="tl"><dl class="goods-name">
+                    <dt><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">{$goods.goods_name}</a></dt>
+                    <dd>{$Think.lang.complain_accuser}：{$val.accuser_name}</dd>
+                </dl></td>
+            <td class="tl">{$val.complain_subject_content}</td>
+            <td class="goods-time">{$val.complain_datetime|date="Y-m-d H:i:s",###}</td>
+            <td>
+                {if $val.complain_state eq '10'}{$Think.lang.complain_state_new}
+                {elseif $val.complain_state eq '20'}{$Think.lang.complain_state_appeal}
+                {elseif $val.complain_state eq '30'}{$Think.lang.complain_state_talk}
+                {elseif $val.complain_state eq '40'}{$Think.lang.complain_state_handle}
+                {elseif $val.complain_state eq '99'}{$Think.lang.complain_state_finish}{/if}
+            </td>
+            <td class="dssc-table-handle"><span><a href="{:url('Sellercomplain/complain_show',['complain_id'=>$val.complain_id])}" class="btn-orange"><i class="fa fa-eye"></i>
+                        <p>{$Think.lang.complain_text_detail}</p>
+                    </a></span>
+            </td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/if}
+    </tbody>
+    <tfoot>
+        {if $complain_list}
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/if}
+    </tfoot>
+</table>
+
+<script>
+    $(function(){
+        $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+</script>
+{/block}
+

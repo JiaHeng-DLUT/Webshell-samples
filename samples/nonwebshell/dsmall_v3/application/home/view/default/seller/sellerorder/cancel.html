@@ -1,0 +1,66 @@
+<div class="eject_con">
+  <div id="warning"></div>
+  <form method="post" id="order_cancel_form" action="{:url('Sellerorder/change_state',['state_type'=>'order_cancel','order_id'=>$order_info.order_id])}">
+    <dl>
+      <dt>{$Think.lang.store_order_order_sn}{$Think.lang.ds_colon}</dt>
+      <dd><span class="num">{$Request.param.order_sn}</span></dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.store_order_cancel_reason}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <ul class="checked">
+          <li>
+            <input type="radio" checked name="state_info" id="d1" value="{$Think.lang.store_order_lose_goods}" />
+            <label for="d1">{$Think.lang.store_order_lose_goods}</label>
+          </li>
+          <li>
+            <input type="radio" name="state_info" id="d2" value="{$Think.lang.store_order_invalid_order}" />
+            <label for="d2">{$Think.lang.store_order_invalid_order}</label>
+          </li>
+          <li>
+            <input type="radio" name="state_info" id="d3" value="{$Think.lang.store_order_buy_apply}" />
+            <label for="d3">{$Think.lang.store_order_buy_apply}</label>
+          </li>
+          <li>
+            <input type="radio" name="state_info" flag="other_reason" id="d4" value="" />
+            <label for="d4">{$Think.lang.store_order_other_reason}</label>
+          </li>
+          <li id="other_reason" style="display:none; height:48px;">
+            <textarea name="state_info1" rows="2"  id="other_reason_input" style="width:200px;"></textarea>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+    <dl class="bottom">
+      <dt>&nbsp;</dt>
+      <dd>
+        <input type="submit" class="submit" id="confirm_button" value="{$Think.lang.ds_ok}" />
+      </dd>
+    </dl>
+  </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#order_cancel_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('order_cancel_form');
+            }
+        });
+    });
+
+    $(function(){
+        $('#cancel_button').click(function(){
+            DialogManager.close('seller_order_cancel_order');
+         });
+       $("input[name='state_info']").click(function(){
+        if ($(this).attr('flag') == 'other_reason')
+        {
+            $('#other_reason').show();
+        }
+        else
+        {
+            $('#other_reason').hide();
+        }
+    });
+});
+</script>

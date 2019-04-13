@@ -1,0 +1,62 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.dis_dump}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data" name="form1" action="">
+        <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.allowed_visitors_consult}</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="guest_comment_show1" class="cb-enable {if condition="$list_config.guest_comment eq 1"}selected{/if}">{$Think.lang.open_kefu_yes}</label>
+                                <label for="guest_comment_show0" class="cb-disable {if condition="$list_config.guest_comment eq 0"}selected{/if}">{$Think.lang.open_kefu_no}</label>
+                                <input id="guest_comment_show1" name="guest_comment" value="1" type="radio" {if condition="$list_config.guest_comment eq 1"} checked="checked"{/if} />
+                                <input id="guest_comment_show0" name="guest_comment" value="0" type="radio" {if condition="$list_config.guest_comment eq 0"} checked="checked"{/if} />
+                                <span class="err"></span>
+                            </div>
+                        </td>
+			<td class="vatop tips">{$Think.lang.allowed_visitors_consult_notice}</td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.open_checkcode}</td>
+                        <td class="vatop rowform">
+                            <ul class="nofloat">
+                                <li>
+                                    <input type="checkbox" value="1" name="captcha_status_login" id="captcha_status1" {if condition="$list_config.captcha_status_login eq 1"}checked="checked"{/if} />
+                                    <label for="captcha_status1">{$Think.lang.front_login}</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="1" name="captcha_status_register" id="captcha_status2" {if condition="$list_config.captcha_status_register eq 1"}checked="checked"{/if} />
+                                    <label for="captcha_status2">{$Think.lang.front_regist}</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" value="1" name="captcha_status_goodsqa" id="captcha_status3" {if condition="$list_config.captcha_status_goodsqa eq 1"}checked="checked"{/if} />
+                                    <label for="captcha_status3">{$Think.lang.front_goodsqa}</label>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td colspan="15"><a href="JavaScript:void(0);" class="btn" onclick="document.form1.submit()">{$Think.lang.ds_confirm_submit}</a></td>
+                    </tr>					
+                </tfoot>
+            </table>
+    </form>
+</div>

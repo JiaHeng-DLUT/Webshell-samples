@@ -1,0 +1,210 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+        <form id="add_form" method="post" enctype="multipart/form-data" action="{if $type == 'add'}{:url('Sellervoucher/templateadd')}{else}{:url('Sellervoucher/templateedit',['tid'=>$t_info.vouchertemplate_id])}{/if}">
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_title}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="w300 text" name="txt_template_title" value="{present name='t_info'}{$t_info.vouchertemplate_title}{/present}">
+                    <span></span>
+                </dd>
+            </dl>
+            {if !$isPlatformStore}
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.store_classification}</dt>
+                <dd>
+                    <select name="storeclass_id">
+                        <option value="0">{$Think.lang.store_classification}</option>
+                        {foreach name="store_class" item="v"}
+                        <option value="{$v.storeclass_id}" {present name='t_info'}{if $t_info.vouchertemplate_sc_id == $v.storeclass_id}selected{/if}{/present}>{$v.storeclass_name}</option>
+                       {/foreach}
+                    </select>
+                    <span></span>
+                </dd>
+            </dl>
+            {else /}
+            <input type="hidden" name="storeclass_id" value="{$store_info.storeclass_id}"/>
+           {/if}
+            <dl>
+                <dt><em class="pngFix"></em>{$Think.lang.voucher_template_enddate}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="text w70" id="txt_template_enddate" name="txt_template_enddate" value="" readonly><em class="add-on"><i class="fa fa-calendar"></i></em>
+                    <span></span><p class="hint">
+                    {if $isPlatformStore}
+                    {$Think.lang.blank_defaults}
+                    {else /}
+                    {$Think.lang.voucher_template_enddate_tip}{$quotainfo.voucherquota_starttime|date="Y-m-d",###} ~ {$quotainfo.voucherquota_endtime|date="Y-m-d",###}
+                   {/if}
+                </p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.voucher_template_price}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <select id="select_template_price" name="select_template_price" class="w80 vt">
+                        {notempty name="pricelist"}
+                        {foreach name="pricelist" item="val"}
+                        <option value="{$val.voucherprice}" {present name='t_info'}{$t_info.vouchertemplate_price == $val.voucherprice ?'selected':''}{/present}>{$val.voucherprice}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select>
+                    <em class="add-on"><i class="fa fa-cny"></i></em>
+                    <span></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_total}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="w70 text" name="txt_template_total" value="{present name='t_info'}{$t_info.vouchertemplate_total}{/present}">
+                    <span></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_eachlimit}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <select name="eachlimit" class="w80">
+                        <option value="0">{$Think.lang.voucher_template_eachlimit_item}</option>
+                        {for start="0" end="config('voucher_buyertimes_limit')"}
+                        <option value="{$i}" {$t_info.vouchertemplate_eachlimit == $i ? 'selected':''}>{$i}{$Think.lang.voucher_template_eachlimit_unit}</option>
+                        {/for}
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_orderpricelimit}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" name="txt_template_limit" class="text w70" value="{present name='t_info'}{$t_info.vouchertemplate_limit}{/present}"><em class="add-on"><i class="fa fa-cny"></i></em>
+                    <span></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_describe}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <textarea  name="txt_template_describe" class="textarea w400 h600">{present name='t_info'}{$t_info.vouchertemplate_desc}{/present}</textarea>
+                    <span></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.voucher_template_image}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <div id="customimg_preview" class="dssc-upload-thumb voucher-pic"><p>
+                        {present name='t_info'}
+                        {if $t_info.vouchertemplate_customimg}
+                        <img src="{$t_info.vouchertemplate_customimg}"/>
+                        {else}
+                        <i class="fa fa-picture-o"></i>
+                        {/if}
+                    {/present}</p>
+                    </div>
+                    <div class="dssc-upload-btn"><a href="javascript:void(0);"><span>
+          <input type="file" hidefocus="true" size="1" class="input-file" name="customimg" id="customimg" ds_type="customimg"/>
+          </span>
+                        <p><i class="fa fa-upload"></i>{$Think.lang.image_upload}</p>
+                    </a> </div>
+                    <p class="hint">{$Think.lang.voucher_template_image_tip}</p>
+                </dd>
+            </dl>
+            {if $type== 'edit'}
+            <dl>
+                <dt><em class="pngFix"></em>{$Think.lang.ds_status}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="radio" value="{$templatestate_arr.usable.0}" name="tstate" {$t_info.vouchertemplate_state == $templatestate_arr.usable.0?'checked':''}> {$templatestate_arr.usable.1}
+                    <input type="radio" value="{$templatestate_arr.disabled.0}" name="tstate" {$t_info.vouchertemplate_state == $templatestate_arr.disabled.0 ?'checked':''}> {$templatestate_arr.disabled.1}
+                </dd>
+            </dl>
+            {/if}
+            <div class="bottom">
+                <label class="submit-border"><input id='btn_add' type="submit" class="submit" value="{$Think.lang.ds_submit}" /></label>
+            </div>
+        </form>
+    </div>
+
+
+<script>
+    //判断是否显示预览模块
+    {present name='t_info'}
+    {notempty name='t_info.vouchertemplate_customimg'}
+        $('#customimg_preview').show();
+   {/notempty}
+    {/present}
+        {if !$isPlatformStore}
+    var year = {:date('Y',$quotainfo.voucherquota_endtime)};
+    var month = {:date('m',$quotainfo.voucherquota_endtime)};
+    var day = {:date('d',$quotainfo.voucherquota_endtime)};
+        {/if}
+    $(document).ready(function(){
+        //日期控件
+        $('#txt_template_enddate').datepicker({dateFormat: 'yy-mm-dd'});
+
+        var currDate = new Date();
+        var date = currDate.getDate();
+        date = date + 1;
+        currDate.setDate(date);
+        
+        $('#txt_template_enddate').datepicker( "option", "minDate", currDate);
+            {if !$isPlatformStore}
+            $('#txt_template_enddate').datepicker( "option", "maxDate", new Date(year,month-1,day));
+        {/if}
+
+
+        $('#txt_template_enddate').val("{present name='t_info'}{if $t_info.vouchertemplate_enddate}{:date('Y-m-d',$t_info.vouchertemplate_enddate)}{/if}{/present}");
+        $('#customimg').change(function(){
+            var src = getFullPath($(this)[0]);
+            if(navigator.userAgent.indexOf("Firefox")>0){
+                $('#customimg_preview').show();
+                $('#customimg_preview').children('p').html('<img src="'+src+'">');
+            }
+        });
+        $("#btn_add").click(function(){
+            if($('#add_form').valid()){
+                $('#add_form').submit();
+            }
+        });
+        //表单验证
+        $('#add_form').validate({
+            errorPlacement: function(error, element){
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            rules : {
+                txt_template_title: {
+                    required : true,
+                    rangelength:[0,100]
+                },
+                txt_template_total: {
+                    required : true,
+                    digits : true
+                },
+                txt_template_limit: {
+                    required : true,
+                    number : true
+                },
+                txt_template_describe: {
+                    required : true
+                }
+            },
+            messages : {
+                txt_template_title: {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_title_error}',
+                    rangelength : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_title_error}'
+                },
+                txt_template_total: {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_total_error}',
+                    digits : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_total_error}'
+                },
+                txt_template_limit: {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_limit_error}',
+                    number : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_limit_error}'
+                },
+                txt_template_describe: {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_template_describe_error}'
+                }
+            }
+        });
+    });
+</script>
+
+
+
+{/block}

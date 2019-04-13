@@ -1,0 +1,96 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-flow-layout">
+    <div class="dssc-flow-container">
+        <div class="title">
+            <h3>{$Think.lang.refund_service}</h3>
+        </div>
+        <div id="saleRefund">
+            <div class="dssc-flow-step">
+                <dl class="step-first current">
+                    <dt>{$Think.lang.buyer_application_refund}</dt>
+                    <dd class="bg"></dd>
+                </dl>
+                <dl class="{if $refund.seller_time>0}current{/if}">
+                    <dt>{$Think.lang.merchant_process_refund_application}</dt>
+                    <dd class="bg"> </dd>
+                </dl>
+                <dl class="{if $refund.admin_time}current{/if}">
+                    <dt>{$Think.lang.refund_complete}</dt>
+                    <dd class="bg"> </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="dssc-form-default">
+            <h3>{$Think.lang.buyer_refund_application}</h3>
+            <dl>
+                <dt>{$Think.lang.refund_order_refundsn}：</dt>
+                <dd>{$refund.refund_sn}</dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.applicant_buyers}：</dt>
+                <dd>{$refund.buyer_name}</dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_buyer_message}{$Think.lang.ds_colon}</dt>
+                <dd> {$refund.reason_info} </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_order_refund}{$Think.lang.ds_colon}</dt>
+                <dd><strong class="red">{$Think.lang.currency}{$refund.refund_amount}</strong></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_instructions}：</dt>
+                <dd> {$refund.buyer_message} </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.credentials_upload}：</dt>
+                <dd>
+                    {notempty name="pic_list"}
+                    <ul class="dssc-evidence-pic">
+                        {foreach name="pic_list" item="val" key="key" }
+                        {notempty name="val"}
+                        <li><a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}" data-lightbox="lightbox-image"> <img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}"></a></li>
+                        {/notempty}
+                        {/foreach}
+                    </ul>
+                    {/notempty}
+                </dd>
+            </dl>
+            <h3>{$Think.lang.business_processing}</h3>
+            <dl>
+                <dt>{$Think.lang.processing_state}{$Think.lang.ds_colon}</dt>
+                <dd>{$state_array[$refund['seller_state']]}</dd>
+            </dl>
+            {if $refund.seller_time > 0}
+            <dl>
+                <dt>{$Think.lang.refund_seller_message}{$Think.lang.ds_colon}</dt>
+                <dd> {$refund.seller_message} </dd>
+            </dl>
+            {/if}
+            {if $refund.seller_state == 2}
+            <h3>{$Think.lang.refund_check_mall_platform}</h3>
+            <dl>
+                <dt>{$Think.lang.platform_confirm}{$Think.lang.ds_colon}</dt>
+                <dd>{$admin_array[$refund['refund_state']]}</dd>
+            </dl>
+            {/if}
+            {if $refund.admin_time > 0}
+            <dl>
+                <dt>{$Think.lang.platform_note}{$Think.lang.ds_colon}</dt>
+                <dd> {$refund.admin_message} </dd>
+            </dl>
+            {/if}
+            <div class="bottom">
+                <label class=""><a href="javascript:history.go(-1);" class="dssc-btn"><i class="fa fa-reply"></i>{$Think.lang.returns_list}</a></label>
+            </div>
+        </div>
+    </div>
+    {include file="default/seller/sellerrefund/seller_refund_right" /}
+</div>
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+{/block}
+

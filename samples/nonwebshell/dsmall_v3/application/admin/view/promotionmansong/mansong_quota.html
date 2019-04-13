@@ -1,0 +1,69 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>满即送</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_name}</dt>
+                <dd><input type="text" value="{$Request.get.store_name}" name="store_name" id="store_name" class="txt" style="width:100px;"></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('/Promotionmansong/mansong_quota')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    <!-- 帮助 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.mansong_quota_list_help1}</li>
+        </ul>
+    </div>
+    
+    <!-- 列表 -->
+    <form id="list_form" method="post">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th class="w24"></th>
+                <th class="align-left"><span>{$Think.lang.store_name}</span></th>
+                <th class="align-center"><span>{$Think.lang.mansong_quota_start_time}</span></th>
+                <th class="align-center"><span>{$Think.lang.mansong_quota_end_time}</span></th>
+            </tr>
+            </thead>
+            <tbody id="treet1">
+            {notempty name="mansongquota_list"}
+            {foreach name="mansongquota_list" item="val"}
+            <tr class="hover">
+                <td></td>
+                <td class="align-left"><a href="{:url('home/Store/index',['store_id'=>$val.store_id])}" ><span>{$val.store_name}</span></a></td>
+                <td class="align-center"><span>{$val.mansongquota_starttime|date="Y-m-d",###}</span></td>
+                <td class="align-center"><span>{$val.mansongquota_endtime|date="Y-m-d",###}</span></td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="16">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+
+</div>

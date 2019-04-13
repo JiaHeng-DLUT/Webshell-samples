@@ -1,0 +1,21 @@
+<?php
+namespace app\index\controller;
+use  think\Controller;
+class Index extends Controller
+{
+    public function index()
+    {
+            
+
+
+
+//        echo config('cache.path');
+//        // echo $this->request->time();
+//        cache('name', '212112', 3600);
+// // 获取缓存数据
+// var_dump(cache('name'));
+
+        $this->assign('demo_time',$this->request->time());
+        return $this->fetch();
+    }
+}

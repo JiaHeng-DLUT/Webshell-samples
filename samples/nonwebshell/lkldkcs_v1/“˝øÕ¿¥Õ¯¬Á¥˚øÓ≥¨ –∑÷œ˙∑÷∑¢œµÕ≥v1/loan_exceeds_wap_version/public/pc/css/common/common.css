@@ -1,0 +1,836 @@
+@charset "UTF-8";
+
+body {
+	min-width: 1200px;
+	font-size: 14px;
+	color: #202124;
+}
+
+#main {
+	width: 1280px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 头部 */
+.topNav {
+	box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.03);
+}
+/* 登陆注册 */
+.loginBg{
+	width:100%;
+	height: 916px;
+	background: url('../../images/背景.png') no-repeat center center;
+}
+.login_box{
+	width: 585px;
+	box-shadow: 0px 14px 30px 0px 
+		rgba(0, 0, 0, 0.14);
+	border-radius: 12px;
+	padding: 50px 83px 30px;
+	box-sizing: border-box;
+}
+.login_box .title h2{
+	font-size: 22px;
+	color: #202124;
+	line-height: 48px;
+}
+.login_box .title h2.active{
+	font-size: 26px;
+	font-weight: bold;
+}
+.login_box .title>div{
+	position: relative;
+}
+.login_box_line{
+	width: 80px;
+	height: 4px;
+	background-color: #202124;
+	border-radius: 2px;
+	position: absolute;
+	left: 30%;
+}
+.form_name{
+	width: 419px;
+	height: 42px;
+	background-color: #f6f6f6;
+	border-radius: 5px;
+	text-indent: 4em;
+	color: #202124;
+}
+.form_password{
+	width: 419px;
+	height: 42px;
+	background-color: #f6f6f6;
+	border-radius: 5px;
+	text-indent: 1.5em;
+	color: #202124;
+}
+.form_input{
+	width: 235px;
+	height: 42px;
+	background-color: #f6f6f6;
+	border-radius: 5px;
+	text-indent: 1.5em;
+}
+.form_pic_code{
+	width: 154px;
+	height: 42px;
+	background-color: #f6f6f6;
+	border-radius: 5px;
+	color: #202124;
+	line-height: 42px;
+	cursor: pointer;
+}
+.form_group{
+	position: relative;
+}
+.input_icon{
+	position: absolute;
+	bottom: 13px;
+	left: 24px;
+}
+.input_text{
+	font-size: 12px;
+	letter-spacing: 1px;
+	color: #acacac;
+	margin-bottom: 10px;
+}
+.loginBtn{
+	width: 320px;
+	height: 62px;
+	line-height: 62px;
+	background-color: #2f75ec;
+	box-shadow: 0px 6px 18px 0px 
+		rgba(0, 0, 0, 0.12);
+	border-radius: 31px;
+	color: #fff;
+	font-size: 18px;
+	display: block;
+	margin: 0 auto;
+	cursor: pointer;
+	
+}
+.to_register{
+	font-size: 14px;
+	color: #202124;
+	margin-top: 25px;
+}
+.safety{
+	margin-bottom: 18px;
+}
+.safety span{
+	display: inline-block;
+	width: 30px;
+	height: 6px;
+	border: solid 1px #f6f6f6;
+	margin-right: 10px;
+}
+.safety span.active{
+	background-color: #f63f45;
+	border: none;
+}
+/* 扫码框 */
+.code_box{
+	width: 487px;
+	height: 513px;
+	border-radius: 10px;
+	border: solid 2px #d4d3d3;
+	padding: 50px 124px 90px;
+}
+.code_box h2{
+	font-size: 32px;
+	font-weight: bold;
+	line-height: 42px;
+	color: #ffffff;
+}
+.code_box .line{
+	width: 41px;
+	height: 3px;
+	background-color: #2f75ec;
+	margin-top: 25px;
+}
+.code_box .code img{
+	width: 139px;
+	height: 139px;
+}
+/* 輸入口顏色 */
+input::-webkit-input-placeholder {
+	color: #808080;
+}
+
+input:-moz-placeholder {
+	color: #808080;
+}
+
+input::-moz-placeholder {
+	color: #808080;
+}
+
+input:-ms-input-placeholder {
+	color: #808080;
+}
+
+body {
+	background: #f5f7fa;
+}
+
+/* logo部分 */
+
+.top-logo {
+	height: 90px;
+}
+
+.logo-img {
+	width: 102px;
+	height: 42px;
+}
+
+.logo-nav-li {
+	line-height: 90px;
+	color: #acacac;
+}
+
+.logo-nav-li.active {
+	color: #2f75ec;
+	border-bottom: 4px solid #2f75ec;
+	;
+}
+
+.tel {
+	font-size: 14px;
+	color: #acacac;
+	letter-spacing: .5px;
+	margin-left: 8px;
+}
+
+/* 客服 */
+.service {
+	width: 230px;
+	height: 40px;
+	background-color: #2f75ec;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: auto;
+}
+
+/* 对话框 */
+#talk {
+	z-index: 99;
+	position: fixed;
+	bottom: 351px;
+	right: 0;
+	width: 321px;
+}
+
+#talk .top {
+	padding: 10px;
+	width: 100%;
+	height: 60px;
+	background-color: #2f75ec;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#talk .top .right img:first-child {
+	margin-right: 10px;
+}
+
+#talk .main {
+	width: 100%;
+	height: 439px;
+	background-color: #fcfcfc;
+	box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.03);
+}
+
+/* 页脚 */
+
+footer {
+	width: 100%;
+	height: 351px;
+	background-color: #202124;
+	box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.03);
+	padding: 55px 320px 31px;
+	color: #fff;
+	font-size: 14px;
+	min-width: 1300px;
+	box-sizing: border-box;
+}
+
+footer a {
+	color: #fff;
+}
+
+footer ul {
+	display: flex;
+	justify-content: space-between;
+}
+
+footer li:last-child {
+	margin-right: 0 !important;
+
+}
+
+footer .code {
+	width: 110px;
+	height: 110px;
+}
+
+footer li p {
+	margin-bottom: 24px;
+}
+
+footer li h2 {
+	font-size: 30px;
+	font-weight: bold;
+	color: #fff;
+	margin-top: 0;
+	margin-bottom: 18px;
+}
+
+footer .text {
+	text-align: center;
+	padding-top: 30px;
+	width: 1141px;
+	margin-top: 45px;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* 极速贷款详情-产品列表 */
+.product_condition{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30px 40px 0;
+	font-size: 20px;
+	line-height: 18px;
+	color: #202124;
+}
+.proName {
+	margin-top: 13px;
+	font-size: 14px;
+	color: #202124;
+}
+
+.proCost {
+	font-size: 16px;
+	color: #f2752e;
+	font-weight: bold;
+}
+
+.product_title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 20px;
+	line-height: 18px;
+	color: #202124;
+}
+
+.product_list li{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 19px 40px 17px;
+}
+.product_pic {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+.proText {
+	font-size: 16px;
+	color: #3d3d3f;
+}
+
+.lookBtn {
+	width: 156px;
+	height: 39px;
+	line-height: 39px;
+	text-align: center;
+	background-color: #2f75ec;
+	border-radius: 19px;
+	color: #fff;
+}
+
+/* 贷款、信用卡详情 */
+#content {
+	display: flex;
+	justify-content: space-between;
+}
+#left{
+	width: 938px;
+}
+#left>div{
+	background-color: #fff;
+}
+#left .one,
+.two,
+.three {
+	width: 938px;
+	background-color: #fff;
+}
+
+#left .one {
+	padding: 40px 40px 30px;
+}
+
+/* 申请条件 */
+.aptitude h3 {
+	font-size: 16px;
+	color: #202124;
+	font-weight: bold;
+	line-height: 32px;
+}
+
+.aptitude li {
+	float: left;
+}
+
+.aptitude p {
+	font-size: 14px;
+	line-height: 32px;
+	color: #202124;
+}
+
+/* 猜你喜欢 */
+.two {
+	padding: 39px 0 50px;
+	margin-bottom: 30px;
+}
+
+/* 热门攻略 */
+.three {
+	padding: 40px 40px 30px;
+}
+
+.strategy_list {
+	padding: 30px;
+}
+/* .strategy_list:first-child{
+	padding-top: 0;
+}
+.strategy_list:last-child {
+	padding-bottom: 0;
+} */
+
+.hot_left img {
+	width: 216px;
+	height: 131px;
+	border-radius: 5px;
+}
+/* 已下架 */
+.hot_left img.off{
+	opacity: .5;
+}
+.hot_right.off{
+	opacity: .5;
+}
+
+.hot_right {
+	width: 70%;
+	position: relative;
+}
+
+.hot_right h3 {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 18px;
+	color: #3d3d3f;
+}
+
+.hot_right .hot_right_text {
+	font-size: 14px;
+	line-height: 22px;
+	color: #202124;
+}
+
+.hot_right .hot_right_date {
+	position: absolute;
+	bottom: 0;
+}
+
+.hot_right .hot_right_date span {
+	line-height: 18px;
+	color: #acacac;
+	font-size: 14px;
+}
+
+/* 右侧(贷款排行榜、信用卡申请) */
+#right .navOne,
+.navTwo {
+	width: 312px;
+	background-color: #ffffff;
+}
+
+.nameRight {
+	position: relative;
+}
+
+.nameRight .price {
+	font-size: 20px;
+	font-weight: bold;
+	color: #f63f45;
+}
+
+.nameRight div {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	height: 21px;
+	vertical-align: middle;
+}
+
+.nameRight div .collect {
+	display: inline-block;
+	font-size: 16px;
+	color: #202124;
+	position: relative;
+	bottom: 2px;
+}
+
+.navTop {
+	height: 26px;
+}
+
+.nav_pic img {
+	width: 60px;
+	height: 60px;
+}
+
+.navOne li {
+	padding: 30px 0 30px 0;
+	border-bottom: 1px solid #ededed;
+}
+
+.navOne li:last-child {
+	padding-bottom: 0;
+	border: none;
+}
+
+.right_title {
+	font-size: 20px;
+	letter-spacing: 2px;
+	color: #3d3d3f;
+}
+
+.more {
+	font-size: 14px;
+	line-height: 65px;
+	letter-spacing: 1px;
+	color: #2f75ec;
+}
+
+.nav_text {
+	width: 65%;
+	position: relative;
+}
+
+.nav_text .product_slogn {
+	position: absolute;
+	bottom: 0;
+}
+
+.cardBox {
+	padding-left: 28px;
+	padding-right: 28px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #ededed;
+}
+
+.navTwo .cardBox:last-child {
+	border: none;
+	padding-bottom: 0;
+}
+
+.cardBox img {
+	width: 199px;
+	height: 113px;
+	padding-bottom: 16px;
+}
+
+.cardBox h3 {
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #3d3d3f;
+	margin-bottom: 10px;
+}
+
+.cardBox p {
+	font-size: 14px;
+	line-height: 18px;
+	letter-spacing: 1px;
+	color: #3d3d3f;
+}
+
+/* 产品有表头 */
+#product {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.protuct_top {
+	padding: 0 40px;
+}
+
+.protuct_top h3 {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 65px;
+	letter-spacing: 4px;
+	color: #3d3d3f;
+}
+
+.protuct_top span {
+	font-size: 16px;
+	line-height: 18px;
+	letter-spacing: 1px;
+	color: #3d3d3f;
+	margin-right: 60px;
+}
+
+#product table {
+	width: 100%;
+	text-align: center;
+	
+}
+
+#product table thead th {
+	font-size: 20px;
+	color: #202124;
+	text-align: center;
+}
+
+#product table tr td {
+	text-align: center;
+	padding: 20px 0;
+}
+#product table tbody tr td:first-child {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+#product table tbody p {
+	font-size: 16px;
+	color: #3d3d3f;
+}
+/* 面包屑 */
+.crumb {
+	margin-top: 24px;
+	margin-bottom: 19px;
+}
+
+.crumb span {
+	font-size: 16px;
+	color: #acacac;
+}
+
+/* 查看详情按钮 */
+.btn {
+	width: 156px;
+	height: 39px;
+	background-color: #2f75ec;
+	border-radius: 19px;
+	color: #fff;
+	cursor: pointer;
+}
+
+/* 贷款优选图片 */
+.priorityPic {
+	width: 1280px;
+	height: 100px;
+	margin: 40px 0 52px 0;
+}
+
+.priorityPic img {
+	width: 100%;
+	height: 100%;
+}
+
+/* 精彩评价 */
+.this_title {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 18px;
+	color: #202124;
+	letter-spacing: 4px;
+}
+
+.score {
+	font-size: 18px;
+	line-height: 40px;
+	letter-spacing: 1px;
+	color: #ff812d;
+	margin-left: 15px;
+}
+
+.evaluate_main .evaluate_main_top {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 32px;
+}
+
+.date {
+	line-height: 42px;
+	color: #a1a8b2;
+}
+
+.evaluate_main li {
+	border-bottom: 1px solid #ededed;
+}
+
+.evaluate_main li:last-child {
+	border: none;
+}
+
+.evaluate_content {
+	width: 793px;
+	height: 86px;
+	background-color: #f8f8f9;
+	border-radius: 6px;
+	padding: 19px 12px 16px 16px;
+	margin-left: auto;
+
+}
+
+.evaluate_content p {
+	font-size: 16px;
+	line-height: 24px;
+	color: #101d37;
+}
+
+.total_target {
+	display: block;
+	font-size: 16px;
+	letter-spacing: 1px;
+	color: #2f75ec;
+}
+/* 筛选 */
+.screen{
+    width: 1283px;
+	min-height: 189px;
+	max-height: auto;
+    padding: 40px;
+}
+.screen li{
+    /* float: left; */
+    margin-bottom: 30px;
+}
+.screen li:last-child{
+    margin-bottom: 0;
+}
+.screenList{
+    display: flex;
+    align-items: center;
+}
+.screenList .cate{
+width: 9%;
+}
+.screenList input[type="checkbox"]{
+    width:14px;
+    height:14px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle; 
+    line-height: 14px;
+    position: relative;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+.screenList input[type="checkbox"]::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border: solid 1px #d4d3d3;
+}
+.screenList input[type="checkbox"]:checked::before{
+    content: "\2713";
+    background-color: #2f75ec;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    color:#fff;
+    font-size: .5px;
+    font-weight: normal;
+    border: none;
+}
+.screenList  label{
+    margin-right: 50px;
+    font-size: 14px;
+	line-height: 18px;
+	color: #565e66;
+}
+.screenList label:last-child{
+    margin-right: 0;
+}
+.term{
+    width: 1283px;
+    height: 60px;
+    padding: 18px 40px;
+}
+.term li{
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    background-color:rgba(47, 117, 236, .1);
+    border-radius: 4px;
+    margin-right: 10px;
+    color: #2f75ec;
+}
+.term li:last-child{
+    margin-right: 0;
+    background-color: #2f75ec;
+    color: #fff;
+}
+.term li span{
+    font-size: 14px;
+    margin-right: 8px;
+}
+/* 关于我们、个人中心左侧 */
+.sideMenu {
+    width: 228px;
+    height: 252px;
+    background-color: #fff;
+    padding: 30px 20px;
+}
+.h430{
+	height: 430px !important;
+}
+.sideMenu li {
+    font-size: 18px;
+    line-height: 18px;
+    color: #acacac;
+    padding: 20px 0;
+    border-bottom: 1px solid #ededed;
+    cursor: pointer;
+}
+
+.sideMenu li:first-child {
+    padding-top: 0;
+}
+
+.sideMenu li:last-child {
+    padding-bottom: 0;
+    border: none;
+}
+
+.sideMenu li.active {
+    font-weight: bold;
+    color: #2f75ec;
+}
+/* 已下架 */
+.sold_out{
+	width: 60px;
+    height: 60px;
+}

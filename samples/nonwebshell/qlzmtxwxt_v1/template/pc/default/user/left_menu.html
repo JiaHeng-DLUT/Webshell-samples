@@ -1,0 +1,62 @@
+<!-- 用户信息 -->
+{include file="public/userinfo"}
+<ul class="layui-nav layui-nav-tree  user-nav" lay-filter="user" >
+    <li class="layui-nav-item {if $Request.controller == 'home'}layui-this{/if}">
+      <a href="/u/{$user.uid}"><i class="layui-icon">&#xe609;</i> 我的主页 </a>
+    </li>
+
+    <li class="layui-nav-item {if $Request.controller == 'Index'} layui-this {/if}">
+     <a href="{:url('index/index')}"><i class="layui-icon">&#xe612;</i> 用户中心</a>
+    </li>
+
+
+   <li class="layui-nav-item  {if $Request.controller == 'Rights'}layui-nav-itemed {/if}">
+      <a href="javascript:;">
+        <i class="layui-icon layui-icon-cart"></i>
+         交易维权
+      </a>
+      <dl class="layui-nav-child">
+
+           <dd class="{if $Request.controller == 'Rights'  && $Request.param.type =='1' } layui-this {/if}"><a href="{:url('rights/rightsRecord',['type'=>1])}">
+           我发起的维权</a></dd>
+           <dd class="{if $Request.controller == 'Rights' && $Request.param.type =='2' } layui-this {/if}"><a href="{:url('rights/rightsRecord',['type'=>2])}">
+           收到的维权</a></dd>
+    </dl>
+
+    </li>
+    <li class="layui-nav-item  {if $Request.controller == 'Finance'} layui-nav-itemed {/if}">
+      <a href="javascript:;">
+        <i class="layui-icon layui-icon-rmb"></i>
+        财产中心
+      </a>
+
+      <dl class="layui-nav-child">
+      <dd {if $Request.controller == 'Finance' &&  $Request.action== 'record'}class="layui-this"{/if}><a href="{:url('@user/finance/record')}"> 交易记录</a></dd>
+      <dd {if $Request.controller == 'Finance' &&  $Request.action== 'rechargerecord'}class="layui-this"{/if}><a href="{:url('@user/finance/rechargeRecord')}"> 充值记录</a></dd>
+      <dd {if $Request.controller == 'Finance' &&  $Request.action== 'withdrawrecord'}class="layui-this"{/if}><a href="{:url('@user/finance/withdrawRecord')}"> 提现记录</a></dd>
+ 
+       </dl>
+    </li>
+
+
+    <li class="layui-nav-item  {if $Request.controller == 'Bank' || $Request.controller == 'Info'}  layui-nav-itemed {/if}">
+      <a href="javascript:;">
+        <i class="layui-icon layui-icon-set"></i>
+        基本信息
+      </a>
+       <dl class="layui-nav-child">
+        <dd {if $Request.controller == 'Set' &&  $Request.action== 'index'}class="layui-this"{/if}><a href="{:url('@user/set/index')}"> 账号设置 </a></dd>
+
+        <dd {if $Request.controller == 'Bank' &&  $Request.action== 'index'}class="layui-this"{/if}><a href="{:url('@user/bank/index')}"> 银行卡管理</a></dd>
+
+
+
+       </dl>
+    </li>
+    <li class="layui-nav-item {if $Request.controller == 'Message'} layui-this {/if}">
+      <a href="{:url('message/index')}">
+        <i class="layui-icon">&#xe611;</i>
+        我的消息
+      </a>
+    </li>
+  </ul>

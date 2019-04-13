@@ -1,0 +1,21 @@
+<?php
+namespace app\index\controller;
+use  think\Controller;
+use think\Auth;
+use think\facade\Config;
+class Index extends Common
+{
+    public function index()
+    {
+          include EXTEND_PATH.'Auth.php';
+          // print_r(Config::get('auth.'));
+          
+		  $controller = request()->controller();
+		  $action = request()->action();
+			$auth = new Auth();
+
+			if(!$auth->check($controller .'/'.$action,2)){
+				$this->error('你没有权限访问');
+			}
+    }
+}

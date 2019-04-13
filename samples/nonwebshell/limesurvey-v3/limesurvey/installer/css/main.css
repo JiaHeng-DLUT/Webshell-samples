@@ -1,0 +1,128 @@
+.on {
+    color: #000000 !important;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 1.6em;
+}
+
+.off {
+    color: #A7A7A7;
+    font-size: 15px;
+    line-height: 1.6em;
+}
+
+.body {
+    color: #536482;
+    font-size: 13px;
+
+
+}
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+
+
+}
+
+.table {
+    border-radius: 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+
+
+}
+
+.content-table{
+    background-color: #FFFFFF;
+    border-color: #D7D7D7 #CCCCCC #CCCCCC #D7D7D7;
+    border-style: solid;
+    border-width: 1px;
+    margin: 15px 0;
+    padding: 10px;
+    position: relative;
+    font-size: 11px;
+}
+
+.content-table-heading {
+    color: #536482;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+
+.description-field {
+    font-size: 10px;
+
+}
+
+hr {
+    background: none repeat scroll 0 0 #D2E0F2;
+    border: 0 none;
+    height: 1px;
+    width: 100%;
+}
+
+div.messagebox {
+    width: 550px;
+    margin:10px auto;
+    border: 1px solid;
+    border-color: #D2E0F2 #8195BA #8195BA #D2E0F2;
+    background-color: #F8F8FF;
+    text-align: center;
+    padding:10px;
+}
+
+div.messagebox .header{
+    padding:10px;
+}
+
+.header {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: #D2E0F2;
+    color: #328637;
+}
+
+h1 {
+    font-size: 36px;
+}
+h2 {
+    color: #328637;
+}
+table {
+    width: 100%;
+}
+
+table td + td {
+    text-align: center;
+}
+table td, table th {
+    width: 33%;
+    padding: 1px;
+}
+table th {
+    text-align: center;
+}
+div.navigator {
+    margin-top: 30px;
+}
+
+div.navigator > div {
+    text-align: center;
+}
+div.navigator > div:first-child {
+    text-align: left;
+}
+div.navigator > div:last-child {
+    text-align: right;
+}
+
+.form-horizontal .controls {
+    margin-left: 220px;
+    margin-top: -1.5em;
+}
+
+.form-horizontal .control-label {
+    width: 200px;
+}

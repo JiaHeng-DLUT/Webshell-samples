@@ -1,0 +1,137 @@
+<{include file="header.html"}>
+    
+    <{if $action == 'backup'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>备份类型：</th>
+				<td><input name="baktype" type="radio" id="baktype1" value="full" checked="checked" onclick="$('#table').hide();"><label for="baktype1">全部备份(推荐) - 备份数据库所有表</label><br /><input name="baktype" type="radio" id="baktype2" value="custom" onclick="$('#table').show();"><label for="baktype2">自定义备份 - 根据自行选择备份数据表</label></td>
+			</tr>
+			<tr id="table" style="display: none;">
+				<th>数 据 表：</th>
+				<td>
+                	<table cellpadding="0" cellspacing="1">
+                   	  <tr>
+                      	<{foreach from=$tables item=item}>
+						<td style="padding: 3px 10px;"><input name="table[]" type="checkbox" id="<{$item}>" size="50" maxlength="255" value="<{$item}>" /><label for="<{$item}>"><{$item}></label></td>
+                      	<{if $item@iteration is div by 4}></tr><tr><{/if}>
+                        <{/foreach}>
+                      </tr>
+                  </table>      
+              </td>
+			</tr>
+			<tr>
+				<th>分卷文件大小：</th>
+				<td><input name="volsize" type="text" class="ipt" id="volsize" size="10" maxlength="10" value="2048" /> KB</td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="数据库备份">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+    <{if $action == 'restore'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="listbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>文件名称</th>
+				<th>文件大小</th>
+				<th>修改时间</th>
+				<th>操作选项</th>
+			</tr>
+            <{foreach from=$files item=item}>
+            <tr>
+            	<td><{$item.filename}></td>
+                <td><{$item.filesize}></td>
+                <td><{$item.filemtime}></td>
+                <td><a href="<{url('database',['act'=>'import','file'=>$item.filename])}>" onClick="return confirm('确认导入此文件吗？')">导入</a>&nbsp;|&nbsp;<a href="<{url('database',['act'=>'delete','file'=>$item.filename])}>" onClick="return confirm('确认删除此文件吗？注：删除后将无法恢复！')">删除</a></td>
+            </tr>
+            <{/foreach}>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+
+    <{if $action == 'maintain'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>选择操作：</th>
+				<td><input name="do[]" type="checkbox" id="check" value="check" checked="checked"><label for="check">检查表</label></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input name="do[]" type="checkbox" id="repair" value="repair" checked="checked"><label for="repair">修复表</label></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input name="do[]" type="checkbox" id="analyze" value="analyze" checked="checked"><label for="analyze">分析表</label></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input name="do[]" type="checkbox" id="optimize" value="optimize" checked="checked"><label for="optimize">优化表</label></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="数据库维护">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>    
+	<{/if}>
+    
+    <{if $action == 'dbinfo'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="listbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+ 		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>数据表名称</th>
+                <th>数据表类型</th>
+				<th>创建时间</th>
+				<th>最后更新时间</th>
+				<th>记录数</th>
+                <th>数据</th>
+                <th>索引</th>
+                <th>碎片</th>
+			</tr>
+            <{foreach from=$tables item=item}>
+            <tr>
+            	<td><{$item.Name}></td>
+                <td><{$item.Engine}></td>
+                <td><{$item.Create_time}></td>
+                <td><{$item.Update_time}></td>
+                <td><{$item.Rows}></td>
+                <td><{$item.Data_length}></td>
+                <td><{$item.Index_length}></td>
+                <td><{$item.Data_free}></td>
+            </tr>
+            <{/foreach}>
+            <tr>
+            	<td colspan="4">共 <{$table_num}> 个数据表</td>
+                <td><{$table_rows}></td>
+                <td><{$data_size}></td>
+                <td><{$index_size}></td>
+                <td><{$free_size}></td>
+            </tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+<{include file="footer.html"}>

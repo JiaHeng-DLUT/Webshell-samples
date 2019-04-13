@@ -1,0 +1,61 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">积分相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">积分中文名称</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox " name="jifenname" value="{$_G['SET']['JIFENNAME']}">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">天豆中文名称</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox " name="tiandouname" value="{$_G['SET']['TIANDOUNAME']}">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发帖奖励{$_G['SET']['JIFENNAME']}</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="postreadjifen" value="{$_G['SET']['POSTREADJIFEN']}" min="0">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发帖奖励{$_G['SET']['TIANDOUNAME']}</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="postreadtiandou" value="{$_G['SET']['POSTREADTIANDOU']}" min="0">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">回复奖励{$_G['SET']['JIFENNAME']}</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="postreplyjifen" value="{$_G['SET']['POSTREPLYJIFEN']}" min="0">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">回复奖励{$_G['SET']['TIANDOUNAME']}</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="postreplytiandou" value="{$_G['SET']['POSTREPLYTIANDOU']}" min="0">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

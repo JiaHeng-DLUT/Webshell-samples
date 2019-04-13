@@ -1,0 +1,54 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('tongji_menu.html'));}-->	
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				<input type="hidden" name="act" value="{$_g_act}" />
+				日期从：<input type="text" name="date1" value="{$_g_date1}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="height:22px" class="Wdate inputtext input100" />
+				至 <input type="text" name="date2" value="{$_g_date2}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="height:22px" class="Wdate inputtext input100" />
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<td class="bgtt" rowspan="2" style="border-left:0">统计日期<p class="mat5 cblue font13">（{pe_date($time1, 'Y-m-d')} 至 {pe_date($time2, 'Y-m-d')}）</p></td>
+			<td class="bgtt" colspan="2">新增订单</td>
+			<td class="bgtt" colspan="2">付款订单</td>
+			<td class="bgtt" colspan="2">发货订单</td>
+			<td class="bgtt" colspan="2" style="border-right:0">成交订单</td>
+		</tr>
+		<tr>
+			<td class="bgtt" width="100">数量<br/>（{$all['num_new']}笔）</td>
+			<td class="bgtt" width="100">金额<br/>（{$all['money_new']}元）</td>
+			<td class="bgtt" width="100">数量<br/>（{$all['num_pay']}笔）</td>
+			<td class="bgtt" width="100">金额<br/>（{$all['money_pay']}元）</td>
+			<td class="bgtt" width="100">数量<br/>（{$all['num_send']}笔）</td>
+			<td class="bgtt" width="100">金额<br/>（{$all['money_send']}元）</td>
+			<td class="bgtt" width="100">数量<br/>（{$all['num_success']}笔）</td>
+			<td class="bgtt" width="100" style="border-right:0">金额<br/>（{$all['money_success']}元）</td>
+		</tr>
+		<!--{foreach((array)$order_list as $k=>$v):}-->
+		<tr>
+			<td style="border-left:0">{$k}</td>
+			<td><span style="color:green">{$v['num_new']?$v['num_new']:'-'}</span></td>
+			<td><span style="color:red">{$v['money_new']?$v['money_new']:'-'}</span></td>
+			<td><span style="color:green">{$v['num_pay']?$v['num_pay']:'-'}</span></td>
+			<td><span style="color:red">{$v['money_pay']?$v['money_pay']:'-'}</span></td>
+			<td><span style="color:green">{$v['num_send']?$v['num_send']:'-'}</span></td>
+			<td><span style="color:red">{$v['money_send']?$v['money_send']:'-'}</span></td>
+			<td><span style="color:green">{$v['num_success']?$v['num_success']:'-'}</span></td>
+			<td style="border-right:0"><span style="color:red">{$v['money_success']?$v['money_success']:'-'}</span></td>
+		</tr>
+		<!--{endforeach}-->
+		</table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/my97/WdatePicker.js"></script>
+<style type="text/css">
+td {border-top:1px solid #f1f1f1 !important; border-right:1px solid #f1f1f1}
+</style>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,31 @@
+{include file="public/blog/header.html" /}
+<div class="container">
+    <div class="row">
+        <div>
+            <ol class="breadcrumb">
+                <li><a href="{$url.href}">首页</a></li>
+                <li class="active">{$page.biaoti|subtext=28}</li>
+            </ol>
+            {$page_top}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {empty name="page"}
+                    <h4 class="text-center"><span class="glyphicon glyphicon-send"></span>&nbsp;您查看的内容已经搬家了!</h4>
+                    {else /}
+                    <h3 class="text-center">{$page.biaoti}</h3>
+                    {/empty}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                {$page_mid}
+                {notempty name="page"}
+                <div class="panel-body">
+                    <h4 style="line-height: 1.5em">{$page.zhengwen}</h4>
+                </div>
+                {/notempty}
+                {$page_bottom}
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/blog/footer.html" /}

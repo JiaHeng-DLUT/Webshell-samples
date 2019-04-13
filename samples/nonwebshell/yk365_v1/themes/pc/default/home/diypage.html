@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By www.youke365.site" />
+<{include file="base.html"}>
+</head>
+
+<body>
+<{include file="topbar.html"}>
+<div id="wrapper">
+	<{include file="header.html"}>
+    <div id="pagebox" class="clearfix">
+    	<div id="pagebox-left">
+        	<ul class="pagenav">
+            	<{foreach from=get_pages() item=item}>
+            	<li><a href="<{$item.page_link}>"><{$item.page_name}></a></li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <div id="pagebox-right">
+        	<div id="artinfo">
+            	<h1 class="atitle"><{$page.page_name}></h1>
+				<div class="content"><{htmlspecialchars_decode($page.page_content)}>
+                </div>
+            </div>
+        </div>
+    </div>
+    <{include file="footer.html"}>
+</div>
+</body>
+</html>

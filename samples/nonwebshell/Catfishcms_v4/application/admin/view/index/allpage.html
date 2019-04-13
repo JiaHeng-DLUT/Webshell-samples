@@ -1,0 +1,80 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet">
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All pages')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="well">
+            <form class="form-inline" role="form" method="get" action="searchpage">
+                <div class="form-group">
+                    <label>{:lang('Time')}：</label>
+                    <input type="text" class="form-control" readonly id="fromdatetime" name="start">&nbsp;—
+                    <input type="text" class="form-control" readonly id="todatetime" name="end">
+                </div>&nbsp;&nbsp;
+                <div class="form-group">
+                    <label>{:lang('Keyword')}：</label>
+                    <input type="text" name="key" class="form-control" placeholder="{:lang('Keyword')}">
+                </div>
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;{:lang('Search')}</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <p>
+            <label>{:lang('Batch operation')}：</label>
+            <button type="button" id="pshanchu" class="btn btn-primary btn-sm">{:lang('Delete')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="zxuan">
+                    </th>
+                    <th>{:lang('Title')}</th>
+                    <th>{:lang('Author')}</th>
+                    <th>{:lang('Release time')}</th>
+                    <th>{:lang('Template')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>
+                        <input class="gouxuan" type="checkbox" value="{$vo.id}">
+                    </td>
+                    <td>{if condition="$vo.thumbnail neq ''"}<img src="{$vo.thumbnail}" width="50">&nbsp;{/if}<a href="{:Url('/page/'.$vo.id)}" target="_blank">{$vo.post_title}</a></td>
+                    <td>{$vo.user_login}</td>
+                    <td>{$vo.post_date}</td>
+                    <td>{$vo.template}</td>
+                    <td>
+                        <a href="{:Url('editpage')}?art={$vo.id}" target="_blank">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="#!">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div><br>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="shanchuyemian">{:lang('Are you sure you want to delete the page?')}</div>
+<div class="hidden" id="wufahuifu">{:lang('Can not be restored after deletion!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="jinggao">{:lang('Warning!')}</div>
+<div class="hidden" id="zhishaoxuanyixiang">{:lang('Please select at least one!')}</div>
+<div class="hidden" id="queding">{:lang('Ok')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script type="text/javascript" src="{$domain}public/common/datetimepicker/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/allpage.js"></script>
+{include file="index/footer" /}

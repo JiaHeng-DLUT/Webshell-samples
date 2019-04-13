@@ -1,0 +1,206 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.notes_district_settings1}</li>
+        <li>{$Think.lang.notes_district_settings2}</li>
+    </ul>
+</div>
+
+<style>
+    #table_area_box td {text-align:left;}
+    .area-list {display:inline-block;width:200px;padding:5px 0px;}
+</style>
+
+<form id="area_form" method="post">
+    <input type="hidden" name="county" id="county" value="" />
+
+    <table class="dssc-default-table order" id="table_area_box">
+        <tbody>
+            <?php foreach ($areas['children'][0] as $provinceId) { ?>
+            <tr>
+                <td class="w120">
+                    <label>
+                        <input type="checkbox"<?php if (array_key_exists($provinceId, $province_checked_array)) echo ' checked="checked"'; ?> value="{$provinceId}" name="province[]" />
+                               <strong><?php echo $areas['name'][$provinceId]; ?></strong>
+                    </label>
+                </td>
+                <td>
+                    <?php foreach ($areas['children'][$provinceId] as $cityId) { ?>
+                    <div class="area-list">
+                        <label>
+                            <input type="checkbox" ds_province="{$provinceId}" {present name="city_checked_array[$cityId]"}checked="checked"{/present} value="{$cityId}" name="city[]" />
+                                   {$areas['name'][$cityId]}
+                        </label>
+                        (<span city_id="{$cityId}" title="{$Think.lang.selected_lower_region}">{present name="city_checked_child_array[$cityId]"}{:count($city_checked_child_array[$cityId])}{/present}</span>)
+                        <a city_id="{$cityId}" ds_title="" province_id="{$provinceId}" ds_type="edit" href="javascript:void(0);" title="{$Think.lang.choose_lower_region}"><i class="fa fa-pencil"></i></a>
+                    </div>
+                    <?php } ?>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+        <tfoot>
+            <tr class="tfoot">
+                <td colspan="15">
+                    <div class="tc mt10 mb10">
+                        <a href="javascript:void(0);" class="dssc-btn dssc-btn-green" id="submitBtn"><span>{$Think.lang.submit_save}</span></a>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+
+<script type="text/javascript">
+    var ds_a = $.parseJSON('{$area_array_json}');
+    //将系统已选择的县ID放入JS数组
+    var CUR_COUNTY = new Array();
+    {notempty name="city_checked_child_array"}
+    {foreach name="city_checked_child_array" item="county_ids" key="city_id"}
+            CUR_COUNTY[{$city_id}] = new Array();
+    {foreach name="county_ids" item="v"}
+            CUR_COUNTY[{$city_id}][{$v}] = true;
+    {/foreach}
+    {/foreach}
+    {/notempty}
+
+    $(function(){
+        //省点击事件
+        $('input[name="province[]"]').on('click',function(){
+            if ($(this).prop('checked')){
+                $('input[ds_province="' + $(this).val() + '"]').each(function(){
+                    $(this).prop('checked','checked');
+                    if (typeof ds_a[$(this).val()] == 'object') {
+                        county_array = ds_a[$(this).val()];
+                    } else {
+                        county_array = new Array();
+                    }
+                    CUR_COUNTY[$(this).val()] = new Array();
+                    for(i = 0; i < county_array.length; i++) {
+                        CUR_COUNTY[$(this).val()][county_array[i][0]] = true;
+                    }
+                    count = county_array.length;
+                    $('span[city_id="'+$(this).val()+'"]').html(count);
+                });
+            }else{
+                $('input[ds_province="' + $(this).val() + '"]').each(function(){
+                    $(this).prop('checked',false);
+                    CUR_COUNTY[$(this).val()] = undefined;
+                    $('span[city_id="'+$(this).val()+'"]').html(0);
+                });
+            }
+        });
+
+        //点击编辑事件
+        $('a[ds_type="edit"]').on('click',function(){
+            if (typeof CUR_COUNTY[$(this).attr('city_id')] == 'object'){
+                cur_county = CUR_COUNTY[$(this).attr('city_id')];
+            }else{
+                cur_county = new Array();
+            }
+            var province_array = ds_a[$(this).attr('city_id')];
+            if (typeof ds_a[$(this).attr('city_id')] == 'object'){
+                county_array = ds_a[$(this).attr('city_id')];
+            }else{
+                county_array = new Array();
+            }
+            if (county_array.length == 0) {
+                layer.msg('{$Think.lang.no_editing_required}');
+                return;
+            }
+            county_html = '<table id="table_area_box_edit" class="ds-default-table"><tbody><tr class="noborder"><td city_id="'+$(this).attr('city_id')+'" province_id="'+$(this).attr('province_id')+'">';
+            for(i = 0; i < county_array.length; i++){
+                county_html += '<label style="display:inline-block;width:100px;padding:5px 10px;"><input type="checkbox"';
+                if (typeof(cur_county[county_array[i][0]]) != 'undefined') {
+                    county_html += ' checked ' ;
+                }
+                county_html += (' value="'+county_array[i][0]+'" name="county[]">' + county_array[i][1] + '</label>');
+            }
+            county_html += '</td></tr><tr><td style="padding:5px;"><a id="county_submit" class="dssc-btn dssc-btn-green" href="javascript:void(0);"><span>{$Think.lang.ds_common_button_confirm}</span></a> <span style="color:#f30;">{$Think.lang.complete_save_operation}</span></td></tr></tbody></table>';
+            html_form('select_county', '{$Think.lang.ds_common_button_select} '+ $(this).attr('ds_title') +' {$Think.lang.sub_region}', county_html, 500,1);
+        });
+
+        //选择市级事件
+        $('input[name="city[]"]').on('click',function(){
+            if ($(this).prop('checked')) {
+                if (typeof ds_a[$(this).val()] == 'object') {
+                    county_array = ds_a[$(this).val()];
+                } else {
+                    county_array = new Array();
+                }
+                CUR_COUNTY[$(this).val()] = new Array();
+                for(i = 0; i < county_array.length; i++) {
+                    CUR_COUNTY[$(this).val()][county_array[i][0]] = true;
+                }
+                count = county_array.length;
+                if ($('input[ds_province="'+$(this).attr('ds_province')+'"]').size() == $('input[ds_province="'+$(this).attr('ds_province')+'"]:checked').size()) {
+                    $('input[value="'+$(this).attr('ds_province')+'"]').prop('checked',true);
+                } else {
+                    $('input[value="'+$(this).attr('ds_province')+'"]').prop('checked',false);
+                }
+            } else {
+                CUR_COUNTY[$(this).val()] = undefined;
+                count = 0;
+                $('input[value="'+$(this).attr('ds_province')+'"]').prop('checked',false);
+            }
+            $('span[city_id="'+$(this).val()+'"]').html(count);
+        });
+
+        //弹出县编辑确认事件
+        $('body').on('click','#county_submit',function(){
+            cur_td = $('.dialog_content > table > tbody > tr > td');
+            cur_checkbox = cur_td.find('input[type="checkbox"]');
+            cur_checkbox.each(function(){
+                if ($(this).prop('checked')) {
+                    if (typeof CUR_COUNTY[cur_td.attr('city_id')] != 'object') {
+                        CUR_COUNTY[cur_td.attr('city_id')] = new Array();
+                    }
+                    CUR_COUNTY[cur_td.attr('city_id')][$(this).val()] = true;
+                } else {
+                    if (typeof CUR_COUNTY[cur_td.attr('city_id')] == 'object') {
+                        if (typeof CUR_COUNTY[cur_td.attr('city_id')][$(this).val()] != 'undefined') {
+                            CUR_COUNTY[cur_td.attr('city_id')][$(this).val()] = undefined;
+                        }
+                    }
+                }
+            });
+            cur_new_county = cur_td.find('input[type="checkbox"]:checked').size();
+            $('span[city_id="'+cur_td.attr('city_id')+'"]').html(cur_new_county);
+            if (cur_checkbox.size() == cur_new_county) {
+                v = true;
+            } else {
+                v = false;
+            }
+            $('input[value="'+cur_td.attr('city_id')+'"]').prop('checked',v);
+
+            if ($('input[ds_province="'+cur_td.attr('province_id')+'"]').size() == $('input[ds_province="'+cur_td.attr('province_id')+'"]:checked').size()) {
+                $('input[value="'+cur_td.attr('province_id')+'"]').prop('checked',true);
+            } else {
+                $('input[value="'+cur_td.attr('province_id')+'"]').prop('checked',false);
+            }
+
+            DialogManager.close('select_county');
+        });
+
+        //表单提交事件
+        $("#submitBtn").click(function(){
+            var county_id_str = '';
+            for(var city_id in CUR_COUNTY) {
+                for(var county_d in CUR_COUNTY[city_id]) {
+                    if (typeof(CUR_COUNTY[city_id][county_d]) != 'undefined') {
+                        county_id_str += county_d + ',';
+                    }
+                }
+            }
+            $("#county").val(county_id_str);
+            ds_ajaxpost('area_form')
+        });
+    });
+</script>
+
+{/block}
+

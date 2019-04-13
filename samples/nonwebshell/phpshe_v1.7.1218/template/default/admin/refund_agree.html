@@ -1,0 +1,71 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="120">退款单号：</td>
+	<td>{$info['refund_id']} </td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">退款类型：</td>
+	<td>{$ini['refund_type'][$info['refund_type']]}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">商品退款：</td>
+	<td>{$info['refund_product_money']} 元 <span class="cbbb mal10">（最多可退{$refund_maxmoney['product']}元）</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">运费退款：</td>
+	<td>{$info['refund_wl_money']} 元 <span class="cbbb mal10">（最多可退{$refund_maxmoney['wl']}元）</span></td>
+</tr>
+<!--<tr>
+	<td class="bgtt aright c888">商品退款：</td>
+	<td><input type="text" name="refund_product_money" value="{$info['refund_product_money']}" class="inputall input200" /> 元 <span class="c999 mal10">(最多可退{$refund_maxmoney['product']}元)</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">运费退款：</td>
+	<td><input type="text" name="refund_wl_money" value="{$info['refund_wl_money']}" class="inputall input200" /> 元 <span class="c999 mal10">(最多可退{$refund_maxmoney['wl']}元)</span></td>
+</tr>-->
+<!--{if($info['refund_type'] == 2):}-->
+<tr>
+	<td class="bgtt aright c888">退货地址：</td>
+	<td>
+		<select name="address_id" class="inputselect" style="width:350px">
+		<option value="0">请选择..</option>
+		<!--{$num=1;}-->
+		<!--{foreach($address_list as $v):}-->
+		<option value="{$v['address_id']}">{$num++}) {$v['refund_tname']}, {$v['refund_phone']}, {$v['refund_address']}</option>
+		<!--{endforeach;}-->
+		</select>
+		<a href="javascript:address_btn();" class="admin_edit mal5">管理</a>
+		<a href="javascript:pe_open('reload');" class="admin_btn mal5">刷新</a>
+	</td>
+</tr>
+<!--{endif;}-->
+</table>
+<div class="acenter mat30">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="button" value="同意申请" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		pe_submit('{pe_nowurl()}', function(json){
+			if (json.result) pe_open('dialog', 1000);
+		})
+	})
+})
+function address_btn() {
+	window.parent.layer.open({
+		type: 2,
+		title: '退货地址管理',
+		area: ['800px', '500px'],
+		fixed: false, //不固定
+		shadeClose: true,
+		shade: 0.5,
+		content: 'admin.php?mod=refund_addr'
+	});
+}
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

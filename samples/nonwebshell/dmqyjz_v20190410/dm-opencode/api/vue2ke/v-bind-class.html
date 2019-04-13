@@ -1,0 +1,111 @@
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>bind class专题 - vue2入门与提高视频教程 </title>
+ 
+<script src="vue.js" type="text/javascript"></script>
+ 
+
+</head>
+<body  >
+
+
+<div id="app">
+
+   <input type="text" v-model="message" />
+    <div  v-text="message"> </div>
+ 
+
+
+<div >
+<a v-bind:href="link">www.tvdrupal.com</a>
+
+ 
+</div>
+
+
+
+<hr>
+
+<div>
+  test class:
+  <br />
+  <div :class="[class1,class2]">class ..............</div>
+
+ <br />
+  <div :style="[style1,style2]">style ..............</div>
+
+
+</div>
+
+
+
+<hr>
+
+firstname:
+<input type="text" v-model="firstname" />
+<br />
+lastname:
+<input type="text" v-model="lastname" />
+
+<button v-on:click="clickme">click me</button>
+<br/>
+fullname: {{ fullname  }}
+<br/>
+fullname2: {{ fullname2  }}
+
+
+
+
+
+
+
+</div>
+
+
+<style>
+.red{color:red;}
+.bg{background:gray;}
+</style>
+
+<script type="text/javascript">
+  var vm = new Vue({
+       el:'#app',
+       data:{
+         message:'<strong>afdasfasf122222111</strong>',
+         link:'http://www.tvdruppal.com',
+         logo:'vue.jpg',
+         class1:{red:true,bg:true},
+         class2:{blue:true,bg2:true},
+         style1:{color:'blue',fontSize:'25px'},
+         style2:{background:'green'},
+         firstname:'',
+         lastname:'',
+         fullname:''
+         
+          
+       },
+       methods:{
+
+          clickme:function(){
+
+            this.fullname =  this.firstname+'-'+this.lastname 
+          }
+       },
+       computed:{
+
+            fullname2 : function(){
+
+              return this.firstname+'-'+this.lastname
+            }
+       }
+
+})
+
+
+</script>
+</body>
+</html>
+ 
+ 
+
+

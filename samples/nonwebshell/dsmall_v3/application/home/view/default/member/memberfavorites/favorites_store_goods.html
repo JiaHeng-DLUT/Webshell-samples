@@ -1,0 +1,5 @@
+{notempty name="goods_list"}
+{foreach name="goods_list" item="val"}
+<li> <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank"> <span class="thumb size120"><i></i> <img src="{:goods_thumb($val,240)}" onload="javascript:ResizeImage(this,120,120);" title="{$val.goods_name}"/> </span> </a> </li>
+{/foreach}
+{/notempty}

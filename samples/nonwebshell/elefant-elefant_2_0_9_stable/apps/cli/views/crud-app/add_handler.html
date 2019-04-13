@@ -1,0 +1,35 @@
+{{open_tag|none}}
+
+
+$this->require_acl ('admin', '{{plural}}', 'admin/add');
+
+$page->layout = 'admin';
+$page->title = __ ('Add {{appname|cli\Filter::title}}');
+
+$form = new Form ('post', $this);
+
+echo $form->handle (function ($form) {
+	// Create and save a new {{appname}} 
+	${{appname}} = new {{plural}}{{backslash}}{{appname|cli\Filter::camel}} (array (
+{% for key, field in fields %}
+{% if field->name !== $data->pkey %}
+		'{{field->name}}' => $_POST['{{field->name}}']{{field->comma}} 
+{% end %}
+{% end %}
+	));
+	${{appname}}->put ();
+
+	if (${{appname}}->error) {
+		// Failed to save
+		error_log ('Error adding {{appname}}: ' . DB::error ());
+		$form->controller->add_notification (__ ('Unable to save {{appname|cli\Filter::spaces}}.'));
+		return false;
+	}
+
+	// Save a version of the {{appname}} 
+	Versions::add (${{appname}});
+
+	// Notify the user and redirect on success
+	$form->controller->add_notification (__ ('{{appname|cli\Filter::label}} added.'));
+	$form->controller->redirect ('/{{plural}}/admin');
+});

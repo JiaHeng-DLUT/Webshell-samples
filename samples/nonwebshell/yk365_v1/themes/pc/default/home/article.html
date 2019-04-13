@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<{include file="base.html"}>
+</head>
+
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div class="wrapper">
+
+    <div class="mainbox" class="clearfix">
+    	<div class="mainbox-left">
+	
+        	<div class="subcate" class="clearfix">
+            	<h3>分类</h3>
+                <ul class="scatbox-list">
+                	<{foreach from=$categories item=sub}>
+                    <{if $sub.cate_mod != 'webdir'}>
+                    <li><a href="<{$sub.cate_link}>"><{$sub.cate_name}><em>(<{$sub.cate_postcount}>)</em></a></li>
+                    <{/if}>
+                    <{/foreach}>
+                </ul>
+            </div>
+<div class="blank10"></div>
+<!-- 广告开始 930*90-->
+<{get_adcode(7)}>
+<!-- 广告结束  930*90-->
+            <div class="blank10"></div>
+            <div class="listbox" class="clearfix">
+            	<h2><{$cate_name}></h2>
+
+            	<ul class="artlist">
+					<{foreach from=$articles item=a name=list}>
+					 
+                	<li> 
+					<{if $a.art_content|get_img }><div class="article-cover">
+					    <img src="<{$a.art_content|get_img}>" style="width:250px;height:160px"></div>
+						<{/if}>
+					<div class="article-right" <{if !$a.art_content|get_img }> style="width:99%;float:none" <{/if}> ><h3><a href="<{$a.art_link}>" title="<{$a.art_title}>"><{$a.art_title}></a>
+
+                        <{if $a.art_istop == 1}>
+                            <span class="top" title="置顶"><i class="fa fa-long-arrow-up" aria-hidden="true"></i> 顶</span>
+                        <{/if}> 
+                        <{if $a.art_isbest == 1}>
+                         <span class="recommend" title="推荐">
+                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 推</span>
+                         <{/if}>
+
+                          <{if $a.art_ispay == 1}>
+                         <span class="fasttrial" title="快审">
+                         <i class="fa fa-rmb" aria-hidden="true"></i> 快审</span>
+                         <{/if}>
+
+
+                    </h3>
+					<{assign var=artstr value=$a.art_content|get_str}>
+					<p><{$artstr|mb_substr:0:100}></p>
+					<div class="art-bottom"><span class="cate-cname"><{$a.cate_name}></span><span><{$a.art_ctime|show_time}></span></div></div></li>
+                	<{foreachelse}>
+                	<li>暂无内容！</li>
+                	<{/foreach}>
+				</ul>
+            	<div class="showpage"><{$showpage}></div>
+            </div>
+        </div>
+        <div class="mainbox-right">
+
+            <div class="blank10"></div>
+            <div class="bestart">
+            	<h3>推荐资讯</h3>
+                <ul class="artlist_b">
+                	<{foreach from=get_articles(0, 10)  key=k item=art}>
+                	<li>
+					<span <{if $k+1>4}>style="background:#ccc"<{/if}>><{$k+1}></span><a href="<{$art.art_link}>" class="best-art-title"><{$art.art_title}></a></li>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <div class="blank10"></div>
+            <!-- 广告开始 250x200-->
+           <div class="ad250x200">
+           <{get_adcode(8)}>
+           </div>
+          <!-- 广告结束 250x200-->
+            <div class="blank10"></div>
+            <div class="art-hot" class="mag">
+            	<h3>热门资讯</h3>
+                <ul class="art-hot-b">
+                   	<{foreach from=get_articles(0, 5,false,'views') key=k item=hot}>
+				
+                   	<li><span <{if $k+1>4}>style="background:#ccc"<{/if}>><{$k+1}></span><a href="<{$hot.art_link}>" title="<{$hot.art_title}>"><{$hot.art_title}></a></li>
+                   	<{/foreach}>
+               	</ul>
+            </div>
+          <div class="blank10"></div>
+           <div class="ad250x200"><{get_adcode(9)}></div>
+            <div class="blank10"></div>
+        </div>
+    </div>
+ 
+</div>
+   <{include file="footer.html"}>
+</body>
+</html>

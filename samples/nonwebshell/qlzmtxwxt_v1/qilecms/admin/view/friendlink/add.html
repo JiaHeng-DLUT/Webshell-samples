@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加友链</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<!-- 后台面包屑导航 -->
+{:get_admin_breadcrumb()}
+
+<blockquote class="layui-elem-quote">添加友链</blockquote>
+<div class=""  style="padding:20px">
+<form class="layui-form" action="" method="post" >
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span> 友链名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+              </div> 
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span> 站点logo</label>
+                <div class="layui-input-inline">
+                  {:upload_images("上传LOGO","logo")}
+                </div>
+              </div>
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span> 友链URL</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">排序</label>
+                <div class="layui-input-inline" style="width:50px;">
+                  <input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="" class="layui-input" value="0">
+                </div>
+              </div>
+
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">状态</label>
+                <div class="layui-input-inline">
+                <input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget" lay-text="显示|隐藏" checked>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="form">确 定</button>
+                <button class="layui-btn layui-btn-primary"  onclick="javascript:history.go(-1);">返 回</button>
+                </div>
+              </div>
+</form>
+</div>
+
+<script>
+// 默认必须存在的
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('friendlink/add')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            $("form")[0].reset();
+            layer.msg(json.msg);
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+    return false; //阻止表单跳转
+  });
+});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<div id="chatLogList" class="dssc-chat-log-list">
+    {notempty name="webchat_list"}
+    <ul>
+        {foreach name="webchat_list" item="val"}
+        <li class="{$val.f_id == $seller.member_id ? 'store_log':'user_log'}">
+            <div class="member">
+                {if $val.f_id == $seller.member_id}
+                {$Think.lang.customer_service}：{$seller.seller_name}<em>( {$Think.lang.members}ID：{$val.f_name})</em>
+                {else /}
+                {$Think.lang.members}：{$val.f_name}
+                {/if}<span class="time">{:date('Y-m-d H:i:s',$val.chatlog_addtime)}</span></div>
+            <div class="content">{:parsesmiles($val.t_msg)}</div>
+        </li>
+        {/foreach}
+    </ul>
+    {else /}
+    <div class="warning-option"><i class="fa fa-warning">&nbsp;</i><span>{$Think.lang.no_record}</span></div>
+   {/notempty}
+</div>
+{notempty name="webchat_list"}
+<div class="pagination">{$show_page}</div>
+{/notempty}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.css">
+<script type="text/javascript">
+    $('#store_chat_log ul.pagination li a').ajaxContent({
+        target:'#store_chat_log'
+    });
+    //自定义滚定条
+    $('#chatLogList').perfectScrollbar();
+</script>

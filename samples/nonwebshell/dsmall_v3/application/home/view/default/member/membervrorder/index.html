@@ -1,0 +1,138 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+
+
+<form method="get" action="{:url('Membervrorder/index')}" target="_self">
+    <table class="dsm-search-table">
+      <tr>
+        <td>&nbsp;</td>
+        <th>{$Think.lang.member_order_state}</th>
+        <td class="w100"><select name="state_type">
+            <option value="">{$Think.lang.member_order_all}</option>
+            <option value="state_new" {if $Request.param.state_type=='state_new'}selected{/if}>{$Think.lang.store_pending_payment}</option>
+            <option value="state_pay" {if $Request.param.state_type=='state_pay'}selected{/if}>{$Think.lang.store_paid_payment}</option>
+            <option value="state_success" {if $Request.param.state_type=='state_success'}selected{/if}>{$Think.lang.store_done_payment}</option>
+            <option value="state_cancel" {if $Request.param.state_type=='state_cancel'}selected{/if}>{$Think.lang.store_cancelled}</option>
+          </select></td>
+        <th>{$Think.lang.member_order_time}</th>
+        <td class="w240">
+            <input type="text" class="text w70" name="query_start_date" id="query_start_date" value="{$Request.param.query_start_date}"/><label class="add-on"><i class="fa fa-calendar"></i></label>&nbsp;&#8211;&nbsp;
+            <input type="text" class="text w70" name="query_end_date" id="query_end_date" value="{$Request.param.query_end_date}"/>
+            <label class="add-on"><i class="fa fa-calendar"></i></label></td>
+        <th>{$Think.lang.member_order_sn}</th>
+        <td class="w160"><input type="text" class="text w150" name="order_sn" value="{$Request.param.order_sn}"></td>
+        <td class="w70 tc"><label class="submit-border">
+            <input type="submit" class="submit" value="{$Think.lang.ds_search}"/>
+          </label></td>
+      </tr>
+    </table>
+  </form>
+  <table class="dsm-default-table order">
+    <thead>
+      <tr>
+        <th class="w10"></th>
+        <th colspan="2">{$Think.lang.store_order_goods_detail}</th>
+        <th class="w100">{$Think.lang.store_order_goods_single_price}</th>
+        <th class="w40">{$Think.lang.store_show_order_amount}</th>
+        <th class="w100">{$Think.lang.store_order_sell_back}</th>
+        <th class="w120">{$Think.lang.store_order_sum}</th>
+        <th class="w100">{$Think.lang.store_trading_status}</th>
+        <th class="w120">{$Think.lang.store_trading_operations}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {notempty name="order_list"}
+    {foreach name="order_list" item="order_info"}
+      <tr>
+		<td class="sep-row" colspan="19"></td>
+	  </tr>
+      <tr>
+        <th colspan="20"><span class="ml10">{$Think.lang.store_order_sn}：{$order_info.order_sn}&nbsp;{if $order_info.order_from == '2'}<i class="fa fa-mobile-phone"></i>{/if}</span><span>{$Think.lang.store_order_add_time}：{:date('Y-m-d H:i',$order_info.add_time)}</span><span><a
+                href="{:url('Store/index',['store_id'=>$order_info.store_id])}"
+                title="{$order_info.store_name}">{$order_info.store_name}</a></span>
+
+            <!-- QQ -->
+          <span member_id="{$order_info.extend_store.member_id}">
+              {notempty name="order_info.extend_store.store_qq"}
+              <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$order_info.extend_store.store_qq}&site=qq&menu=yes" title="QQ: {$order_info.extend_store.store_qq}">
+                  <img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$order_info.extend_store.store_qq}:52" style=" vertical-align: middle;"/></a>
+             {/notempty}
+
+              <!-- wang wang -->
+              {notempty name="order_info.extend_store.store_ww"}
+              <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$order_info.extend_store.store_ww}&site=cntaobao&s=2" class="vm">
+                  <img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$order_info.extend_store.store_ww}&site=cntaobao&s=2" alt="Wang Wang" style=" vertical-align: middle;"/></a>
+            {/notempty}
+          </span>
+          </th>
+      </tr>
+      <tr>
+        <td class="bdl"></td>
+        <td class="w70"><div class="dsm-goods-thumb">
+            <a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank"/><img src="{:goods_thumb($order_info)}"/></a></div></td>
+        <td class="tl"><dl class="goods-name">
+            <dt>
+                <a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank" title="{$order_info.goods_name}">{$order_info.goods_name}</a></dt>
+            <dd>
+                {if $order_info.order_promotion_type == 1}
+                <span class="sale-type">{$Think.lang.store_order_group}</span>
+                {/if}
+                {$Think.lang.store_validity}：{:date('Y-m-d',$order_info.vr_indate)}</dd>
+          </dl></td>
+        <td>{$order_info.goods_price}</td>
+        <td>{$order_info.goods_num}</td>
+        <td> 
+            {if $order_info.if_refund}
+            <a href="{:url('Membervrrefund/add_refund',['order_id'=>$order_info.order_id])}">{$Think.lang.store_order_refund}</a>
+           {/if}
+        </td>
+        <td class="bdl"><strong>{$order_info.order_amount}</strong>
+            <p title="{$Think.lang.member_order_pay_method}{$Think.lang.ds_colon}{$order_info.payment_name}">{$order_info.payment_name}</p></td>
+        <td class="bdl"><p>{$order_info.state_desc}</p>
+          <p><a href="{:url('Membervrorder/show_order',['order_id'=>$order_info.order_id])}">{$Think.lang.store_order_view_order}</a></p></td>
+        <td class="bdl bdr">
+            {if $order_info.if_pay}
+            <p><a class="dsm-btn dsm-btn-orange" href="{:url('Buyvirtual/pay',['order_id'=>$order_info.order_id])}"><i class="fa fa-shield"></i>{$Think.lang.store_order_payment}</a></p>
+           {/if}
+
+            <!--取消订单-->
+            {if $order_info.if_cancel}
+            <p class="mt5">
+                <a href="javascript:void(0)" class="dsm-btn dsm-btn-red" ds_type="dialog" dialog_width="480" dialog_title="{$Think.lang.store_order_cancel_order}" dialog_id="buyer_order_cancel_order" uri="{:url('Membervrorder/change_state',['state_type'=>'order_cancel','order_id'=>$order_info.order_id])}" id="order{$order_info.order_id}_action_cancel"><i class="fa fa-ban"></i>{$Think.lang.store_order_cancel_order}</a></p>
+           {/if}
+            <!-- 评价 -->
+            {if $order_info.if_evaluation}
+            <p><a class="dsm-btn dsm-btn-acidblue" href="{:url('Memberevaluate/add_vr',['order_id'=>$order_info.order_id])}"><i class="fa fa-thumbs-o-up"></i>{$Think.lang.member_order_want_evaluate}</a></p>
+            {/if}
+            {if $order_info.evaluation_state == '1'}{$Think.lang.store_have_evaluation}{/if}
+		  </td>
+      </tr>
+   {/foreach}
+   {else /}
+    <tr>
+        <td colspan="20" class="norecord"><div class="warning-option"><i></i><span>{$Think.lang.no_record}</span></div></td>
+      </tr>
+   {/notempty}
+    </tbody>
+    <tfoot>
+    {notempty name="order_list"}
+      <tr>
+        <td colspan="20"><div class="pagination">{$show_page}</div></td>
+      </tr>
+     {/notempty}
+    </tfoot>
+  </table>
+<script type="text/javascript">
+$(function(){
+    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+
+
+
+
+{/block}

@@ -1,0 +1,61 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+
+<div class="dssc-form-default">
+  <form id="add_form" action="" method="post">
+    <input name="seller_id" value="{$seller_info.seller_id}" type="hidden" />
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.seller_account_name}{$Think.lang.ds_colon}</dt>
+      <dd> {$seller_info.seller_name} <span></span>
+        <p class="hint"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.account_group}{$Think.lang.ds_colon}</dt>
+      <dd><select name="group_id">
+          {foreach name="seller_group_list" item="value"  }
+          <option value="{$value.sellergroup_id}" {if $seller_info.sellergroup_id == $value.sellergroup_id}selected{/if}>{$value.sellergroup_name}</option>
+          {/foreach}
+        </select>
+        <span></span>
+        <p class="hint"></p>
+      </dd>
+    </dl>
+    <div class="bottom">
+      <label class="submit-border">
+        <input type="submit" class="submit" value="{$Think.lang.ds_submit}">
+      </label>
+    </div>
+  </form>
+</div>
+<script>
+$(document).ready(function(){
+    $('#add_form').validate({
+        onkeyup: false,
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+    	submitHandler:function(form){
+    		ds_ajaxpost('add_form', 'url', "{:url('Selleraccount/account_list')}");
+    	},
+        rules: {
+            group_id: {
+                required: true
+            }
+        },
+        messages: {
+            group_id: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.select_account_group}'
+            }
+        }
+    });
+});
+</script> 
+        
+        
+
+
+
+{/block}

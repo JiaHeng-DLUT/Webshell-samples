@@ -1,0 +1,212 @@
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登陆 - {$settings.site.sitename}</title>
+
+  {include file="public/css"}
+
+  {load href="__STATIC__/user/css/login.css" /}
+  </head>
+  <body>
+
+
+  <!-- 主体内容 -->
+  <section class="login-section" style="background:url(__STATIC__/portal/img/loginbg.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+   background-size: cover;">
+        <div class="layui-main login-main">  
+          <!-- 登陆盒子 开始-->
+          <div class="layui-field-box login-box">
+              <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+
+                <ul class="layui-tab-title">
+                  <li class="layui-this">账号密码登陆</li>
+                  <li>手机动态登陆</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                          <form class="layui-form layui-form-pane" method="post">
+                               <input type="hidden" name="type" value="account" >
+                              <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="username" required  lay-verify="required" placeholder="用户名/邮箱/手机" autocomplete="off"  class="layui-input" >
+                                </div>
+                              </div>
+                              <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                                <div class="layui-input-inline">
+                                  <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                                </div>
+                              
+                              </div>
+                              <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-auz"></i></label>
+                                <div class="layui-input-inline" style="width:135px;">
+                                  <input type="text" name="verify_code" required lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input" style="width:135px;">
+                                </div>
+                                  <div class="layui-input-inline" style="width:80px;">
+                                 <img src="{:captcha_src()}"   alt="captcha" style="height:40px;" onclick="this.src='{:captcha_src()}?'+Math.random()" id="captcha"/>
+                                  </div> 
+                              </div>
+
+
+                              <div class="layui-form-item">
+       
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid submit-btn" lay-submit lay-filter="formLogin1" >登 陆</button>
+                         
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-tab-item">
+                          <form class="layui-form layui-form-pane" method="post">
+                          <input type="hidden" name="type" value="sms" >
+                              <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-cellphone"></i>  </label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="mobile" required  lay-verify="required" placeholder="您的手机号" autocomplete="off" class="layui-input mobile" >
+                                </div>
+                              </div>
+                              <div class="layui-form-item">
+
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-auz"></i></label>
+                                <div class="layui-input-inline" style="width:135px;">
+                                  <input type="text" name="smscode"  placeholder="动态码" autocomplete="off" class="layui-input"  style="width:135px;"">
+
+                                </div>
+                               <div class="layui-input-inline" style="width:80px;">
+                                   <button class="layui-btn layui-btn-normal" id="sendcode" >获取动态码</button>
+                                 
+                                </div>                            
+
+                              </div>
+                              <div class="layui-form-item">
+                      
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid submit-btn" lay-submit lay-filter="formLogin2" >登 陆</button>
+                             
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+              </div>    
+             <div class="other-login" style="text-align:center">
+                            <!-- qq登陆 -->
+           <!--      {if $settings.oauth.qq_status ==1}
+                <a href="{:url('oauth/qq')}" class="login-qq"><i class="layui-icon layui-icon-login-qq" title="QQ登陆"></i> </a>{/if}
+
+            
+                 {if $settings.oauth.wechat_status ==1}<a href="{:url('oauth/weixin')}" class="login-weixin"><i class="layui-icon layui-icon-login-wechat" title="微信登陆"></i> </a>{/if} -->
+             </div>
+
+              <!-- 其他登陆方式 -->
+              <div style="text-align:right;margin-top:10px;">
+
+                <a href="{:url('/user/register')}" class="login-register-account">注册新账号</a>
+                 <a href="{:url('/user/forget/')}" class="login-register-account">找回密码</a>
+              </div>
+
+          </div>
+          <!-- 登陆盒子结束 -->
+
+  </section>
+
+
+
+  {include file="public/js"}
+
+  <script>
+  layui.use('form', function(){
+    var form = layui.form;
+    
+    // 监听登陆按钮1
+    form.on('submit(formLogin1)',function(data){
+       $.post("{:url('login/index')}",data.field,function(json){
+              if(json.code == 0){
+                location.href="{:url('/user/index')}";
+            }else{
+                qile.error(json.msg);
+            }
+       });
+       return false;
+    });
+
+//发送验证码
+
+
+
+// 监听登陆按钮2
+
+    form.on('submit(formLogin2)',function(data){
+       $.post("{:url('login/index')}",data.field,function(json){
+              if(json.code == 0){
+                location.href="{:url('/user/index')}";
+            }else{
+                qile.error(json.msg);
+            
+            }
+       });
+       return false;
+    });
+
+// 发送验证码
+ var id = "#sendcode"; //发送验证码按钮id
+$(id).on('click',function(){
+  $.post("{:url('login/sendcode')}",{"mobile":$(".mobile").val()},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                            layer.msg(json.msg, {icon: 1,
+                            skin: 'layui-layer-molv',});
+                        
+                    }else{
+                     
+                            time(id,0)
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});
+                       
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).removeClass('layui-btn-disabled').addClass('layui-btn-primary');
+      $(id).addClass('layui-btn-primary');
+      $(id).html("发送验证码");
+      $(id).removeAttr("disabled",false);
+     
+    } else { 
+   // 倒计时中 禁用按钮
+      $(id).attr("disabled", true);
+      $(id).removeClass('layui-btn-primary').addClass('layui-btn-disabled')
+      $(id).html("重新发送(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+
+
+  });
+  </script>
+
+
+  </body>
+  </html>

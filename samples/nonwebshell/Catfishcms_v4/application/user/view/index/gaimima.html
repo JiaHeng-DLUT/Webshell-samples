@@ -1,0 +1,26 @@
+{include file="index/header" /}
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-lock"></span>&nbsp;{:lang('Change password')}</a></li>
+</ul>
+<div class="tab-content"><br>
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <div>
+            <form method="post" action="">
+                <div class="form-group">
+                    <label>{:lang('Old password')}</label>
+                    <input type="password" class="form-control" value="" name="yuanmima" placeholder="{:lang('Old password')}">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('New password')}</label>
+                    <input type="password" class="form-control" value="" name="xinmima" placeholder="{:lang('New password')}">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('Confirm the new password')}</label>
+                    <input type="password" class="form-control" value="" name="cfxinmima" placeholder="{:lang('Confirm the new password')}">
+                </div>
+                <button type="submit" class="btn btn-default">{:lang('Save')}</button>
+            </form>
+        </div>
+    </div>
+</div><br><br>
+{include file="index/footer" /}

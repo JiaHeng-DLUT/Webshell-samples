@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>编辑用户</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<blockquote class="layui-elem-quote">基本信息</blockquote>
+<div  style="padding-top:20px">
+
+<form class="layui-form" method="post" >
+<input type="hidden"  name="id" value="{$Request.param.id}">
+
+
+<div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">头像</label>
+                <div class="layui-input-inline" >
+                  {:upload_images('上传头像',"avatar",$user['avatar'])}
+                </div>
+  </div>
+
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">用户名</label>
+                <div class="layui-input-inline" >
+                 <input type="text" name="username" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input layui-bg-gray" value="{$user['username']}" readonly style>
+                </div>
+                <div class="layui-form-mid layui-word-aux"><span class="orange">*</span></div>
+              </div>
+                 <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">昵称</label>
+                <div class="layui-input-inline" >
+                 <input type="text" name="nickname"  placeholder="" autocomplete="off" class="layui-input" value="{$user.nickname}">
+                </div>
+              </div>            
+ 
+
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">真实姓名</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="realname"  placeholder="" autocomplete="off" class="layui-input" value="{$user.realname}">
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">性别</label>
+                <div class="layui-input-inline" >
+                     <input type="radio" name="gender" value="0" title="男" {if $user.gender == 0} checked {/if}>
+                     <input type="radio" name="gender" value="1" title="女" {if $user.gender == 1} checked {/if}>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">登陆密码</label>
+                <div class="layui-input-inline">
+                <input type="password" name="password"  lay-verify="password" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux"><span class="orange">*</span> {:about('登陆密码必须6到32位，且不能出现空格,建议数字字母结合使用')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">重复登陆密码</label>
+                <div class="layui-input-inline" >
+                     <input type="password" name="repassword"  lay-verify="password" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+                 <div class="layui-form-mid layui-word-aux"><span class="orange">*</span></div>
+              </div>
+   
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">所在地区</label>
+                <div class="layui-input-block">
+                 {:area($user['provid'],$user['cityid'],$user['distid'])}
+                </div>
+              </div>                     
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">手机号码</label>
+                <div class="layui-input-inline">
+                <input type="text" name="mobile"  placeholder="" autocomplete="off" class="layui-input" value="{$user.mobile}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">邮件</label>
+                <div class="layui-input-inline">
+                 <input type="text" name="email"  placeholder="" autocomplete="off" class="layui-input" value="{$user.email}">
+                </div>
+              </div>
+
+
+          <div class="layui-form-item">
+                  <label class="layui-form-label"  style="width:100px;">状态</label>
+                  <div class="layui-input-block">
+                    <input type="radio" name="status" value="0" title="待审" {if $user.status == 0}checked="checked"{/if}>
+                    <input type="radio" name="status" value="1" title="正常" {if $user.status == 1}checked="checked"{/if}>
+                    <input type="radio" name="status" value="-1" title="禁止访问"  {if $user.status == -1}checked="checked"{/if}>
+                  </div>
+           </div>        
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                   <button class="layui-btn layui-btn-normal"  lay-submit lay-filter="form">确 定</button>
+
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('user/edit')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            layer.msg(json.msg);
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+    return false; //阻止表单跳转
+  });
+});
+
+
+</script>
+
+</body>
+
+</html>

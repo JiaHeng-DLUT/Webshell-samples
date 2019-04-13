@@ -1,0 +1,75 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.sellerdeposit_apply_withdraw}" uri="{:url('Sellerdeposit/withdraw_add')}"> <i class="fa fa-money"></i>{$Think.lang.sellerdeposit_apply_withdraw} </a>
+
+<a class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.sellerdeposit_recharge_deposit}" uri="{:url('Sellerdeposit/recharge_add')}"> <i class="fa fa-money"></i>{$Think.lang.sellerdeposit_recharge_deposit} </a>
+{/block}
+{block name="seller_main"}
+
+
+
+
+<div class="alert"><span class="mr30">{$Think.lang.sellerdeposit_avaliable_money}{$Think.lang.ds_colon}<strong class="mr5 red" style="font-size: 18px;">{$store_info.store_avaliable_deposit}</strong>{$Think.lang.currency_zh}</span><span class='mr30'>{$Think.lang.sellerdeposit_freeze_money}{$Think.lang.ds_colon}<strong class="mr5 blue" style="font-size: 18px;">{$store_info.store_freeze_deposit}</strong>{$Think.lang.currency_zh}</span><span class="mr30">{$Think.lang.sellerdeposit_payable_money}{$Think.lang.ds_colon}<strong class="mr5 red" style="font-size: 18px;">{$store_info.store_payable_deposit}</strong>{$Think.lang.currency_zh}</span></div>
+<form method="get" action="">
+    <table class="dsm-search-table">
+        <tr>
+            <th></th><td></td>
+            <th>{$Think.lang.sellerdeposit_state}{$Think.lang.ds_colon}</th>
+            <td class="w90">
+                <select id="paystate_search" name="paystate_search">
+                    <option value="">{$Think.lang.ds_please_choose}</option>
+                    <option value="2" {if condition="$Request.param.paystate_search eq '2'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_wait}</option>
+                        <option value="3" {if condition="$Request.param.paystate_search eq '3'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_agree}</option>
+                        <option value="4" {if condition="$Request.param.paystate_search eq '4'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_reject}</option>
+                        <option value="5" {if condition="$Request.param.paystate_search eq '5'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_payed}</option>
+                        <option value="6" {if condition="$Request.param.paystate_search eq '6'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_cancel}</option>
+                        <option value="7" {if condition="$Request.param.paystate_search eq '7'"}selected="selected"{/if}>{$Think.lang.sellerdeposit_paying}</option>
+                </select>
+            </td>
+            
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th>{$Think.lang.sellerdeposit_createtime}</th>
+            <th>{$Think.lang.sellerdeposit_withdraw_money}({$Think.lang.currency_zh})</th>
+            <th>{$Think.lang.sellerdeposit_log_desc}</th>
+            <th class="w150">{$Think.lang.sellerdeposit_state}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="withdraw_list"}
+        {foreach name="withdraw_list" item="v"  }
+        <tr class="bd-line">
+                <td class="nowrap align-center">{notempty name="$v.storedepositlog_add_time"}{$v.storedepositlog_add_time|date='Y-m-d H:i:s',###}{/notempty}</td>
+                <td class="align-center">{if $v.storedepositlog_state == '2' || $v.storedepositlog_state == '3' || $v.storedepositlog_state == '4'}{$v.store_freeze_deposit}{else}{$v.store_payable_deposit}{/if}</td>
+                <td>{$v.storedepositlog_desc}</td>
+                <td class="align-center">{if $v.storedepositlog_state==2}{$Think.lang.sellerdeposit_wait}{elseif $v.storedepositlog_state==3}{$Think.lang.sellerdeposit_agree}{elseif $v.storedepositlog_state==4}{$Think.lang.sellerdeposit_reject}{elseif $v.storedepositlog_state==5}{$Think.lang.sellerdeposit_payed}{elseif $v.storedepositlog_state==6}{$Think.lang.sellerdeposit_cancel}{elseif $v.storedepositlog_state==7}{$Think.lang.sellerdeposit_paying}{/if}</td>
+                
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="4" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="withdraw_list"}
+        <tr>
+            <td colspan="4"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+
+
+
+
+
+
+{/block}

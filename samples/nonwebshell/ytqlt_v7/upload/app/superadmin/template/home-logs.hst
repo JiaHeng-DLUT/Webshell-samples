@@ -1,0 +1,22 @@
+<form name="form_save" method="post" action="">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">后台日志</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">选择日志</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" onchange="window.open('app/superadmin/logs/'+this.value+'?rnd='+Math.random(),'_blank');this.value=''">
+				<option value="">日志列表</option>
+				{$_G['TEMP']['LOGHTML']}
+			</select>
+		</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-danger pk-text-xs">
+			日志保存目录：{str_replace('\\','/',$_G['SYSTEM']['PATH'])}app/superadmin/logs/，若需删除请进入自行删除。
+		</div>
+	</div>
+</form>

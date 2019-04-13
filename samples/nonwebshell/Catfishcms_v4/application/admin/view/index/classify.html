@@ -1,0 +1,45 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All categories')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <h4>{:lang('The category that exists')}&nbsp;<small>[<a href="{:Url('/admin/Index/addclassify')}">{:lang('Add a new category')}</a>]</small></h4>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>{:lang('Category name')}</th>
+                    <th>{:lang('Category description')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.term_name}</td>
+                    <td>{$vo.description}</td>
+                    <td>
+                        <a href="{:Url('addclassify')}?c={$vo.id}">{:lang('Add subcategories')}</a>
+                        &nbsp;|&nbsp;
+                        <a href="{:Url('modifyclassify')}?c={$vo.id}">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="{:Url('classify')}?d={$vo.id}&f={$vo.parent_id}&verification={$verification}">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete the category? Can not be restored after deletion!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/classify.js"></script>
+{include file="index/footer" /}

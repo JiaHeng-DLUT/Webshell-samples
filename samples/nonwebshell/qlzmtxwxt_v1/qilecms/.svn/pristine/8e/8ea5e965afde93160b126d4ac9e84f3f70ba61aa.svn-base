@@ -1,0 +1,183 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\Db;
+use think\facade\Request;
+use Qlbackup\backup;
+class Sql extends Common
+{
+    protected $beforeActionList = [
+        'load_backup',
+    ];
+
+    protected function load_backup()
+    {
+       include(EXTEND_PATH.'Backup.php');
+    }
+    public  function dataConfig(){
+        $path = QL_ROOT.'data/backup/';
+      return  $data =array(
+          'path'     => $path ,//数据库备份路径
+          'part'     => 20971520,//数据库备份卷大小
+          'compress' => 0,//数据库备份文件是否启用压缩 0不压缩 1 压缩
+          'level'    => 9 //数据库备份文件压缩级别 1普通 4 一般  9最高
+        ); 
+    }
+
+	public function index(){
+
+     $sql ="SHOW TABLE STATUS FROM ".config('database.database');
+     $list = Db::query($sql);
+     $total = count($list);
+     // $page = $list->render();
+     $this->assign('total',$total);
+     $this->assign('list', $list);
+	  return $this->fetch();
+	}
+
+   public function backup(){
+   	if(!request()->isPost()){ return error_json('非法请求');}
+   	$post = input();
+    // $path = $this->dataConfig();
+    $path = QL_ROOT.'data/backup/';
+    $data =array(
+          'path'     =>QL_ROOT.'data/backup/'.date("YmdHis",time()).'/',//数据库备份路径
+          'part'     => 971520,//数据库备份卷大小
+          'compress' => 0,//数据库备份文件是否启用压缩 0不压缩 1 压缩
+          'level'    => 9 //数据库备份文件压缩级别 1普通 4 一般  9最高
+        ); 
+
+   	$Backup= new Backup($data);
+    $Backup->Backup_Init();
+   	if($post['id']){
+      foreach($post['id'] as $k=>$table){
+
+	     	$start =  $Backup->setFile()->backup($table,$start);
+
+      }
+
+   	}
+
+    return success_json('备份成功');
+   }
+//优化
+   public function optimize(){
+   	   	if(!request()->isPost()){ return error_json('非法请求');}
+   	$post = input();
+   	    $Backup= new Backup($this->dataConfig());
+   	if($post['id']){
+      foreach($post['id'] as $k=>$table){
+	       $Backup->optimize($table);
+      }
+
+   	}  
+   	return success_json('优化成功');
+   }
+// 修复
+   public function repair(){
+    if(!request()->isPost()){ return error_json('非法请求');}
+		$post = input();
+		  $Backup= new Backup($this->dataConfig());
+		  if($post['id']){
+				      foreach($post['id'] as $k=>$table){
+					     $Backup->repair($table);
+			   }
+			}
+    
+   	return success_json('修复成功');
+   }
+// 还原数据库页面
+   public function restore(){
+    $path = QL_ROOT."data/backup/";
+    $get = input(); 
+    $pname =$get['pname'];//父文件夹名称
+    $list = list_file($path.$pname);
+    // print_r($list);
+    foreach($list as $k => $v){
+               $sql = glob($v['pathname'].'/*.sql');
+               $list[$k]['num'] = count($sql);
+               $list[$k]['size'] = formatSize($v['size']);
+    
+    }
+
+    $this->assign('pname',$pname);
+    $this->assign('list',$list);
+    return $this->fetch();
+   }
+// 删除备份文件
+   public function delBackup(){
+    $post = input();
+    if(!$post['id']){ return error_json('请求参数错误');}
+
+          $path = QL_ROOT.'data/backup/';
+          if(is_array($post['id'])){
+            foreach($post['id'] as $k=>$table){   
+                if(is_dir($path.$table)){
+                    del_dir($path.$table);
+                }else{
+                    del_file($path.$table);
+                }     
+              }
+          }else{
+              if(is_dir($path.$table)){
+                    del_dir($path.$table);
+                }else{
+                    del_file($path.$table);
+                } 
+          }
+   return success_json('备份文件删除成功');
+
+   }
+
+// 删除数据表
+   public function del(){
+   	if(!request()->isPost()){ return error_json('非法请求');}
+        	$post = input();
+     	    $Backup= new Backup($this->dataConfig());
+  		   	if($post['id']){
+  		      foreach($post['id'] as $k=>$table){
+  			       Db::query('drop table '.$table);
+  		      }
+          }
+
+       return success_json('数据表删除成功');
+
+   }
+
+   public function importBackup(){
+    // 导入备份
+     $post = input();
+      if(empty($post['name'])){
+        return error_json('非法请求');
+     }
+        $path = QL_ROOT.'data/backup/'.$post['name'];  
+        $list = list_file($path.'/');
+    
+        $data =array(
+          'path'     => $path ,//数据库备份路径
+          'part'     => 20971520,//数据库备份卷大小
+          'compress' => 0,//数据库备份文件是否启用压缩 0不压缩 1 压缩
+          'level'    => 9 //数据库备份文件压缩级别 1普通 4 一般  9最高
+      ); 
+     $Backup= new Backup($data);
+     // print_r($list);
+     $start =0;
+     foreach($list as $v){
+            $filename = $v['filename'];
+            $file = ['name'=>$filename,'part'=>1];
+            $start= $Backup->setFile($file)->import($start);
+     }
+
+     // return success_json('导入成功');
+    
+   }
+   public function download(){
+     $post = input();
+      if(empty($post['name'])){
+        return error_json('非法请求');
+     }
+   $path = QL_ROOT.'data/backup/'.$post['pname'].'/'.$post['name'];
+   $content = file_get_contents($path);
+   force_download($post['name'],$content);
+   }
+}

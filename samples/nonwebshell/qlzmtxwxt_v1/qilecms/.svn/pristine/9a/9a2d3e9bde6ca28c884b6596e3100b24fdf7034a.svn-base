@@ -1,0 +1,31 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class RuleCategory extends Common
+{
+	public function index(){
+      $result  = model('rule_category')->getRuleCategoryList();
+      $arr = json_decode(json_encode($result),true);
+      $list =  get_tree($arr,'pid');
+      $this->assign('list',$list);
+    
+	  return $this->fetch();
+	}
+	public function add(){
+      $result = model('rule_category')->getCategoryAll();
+      $arr = json_decode(json_encode($result),true);
+      $list =  get_tree($arr,'pid');
+      // print_r($list);
+      $this->assign('list',$list);
+      return $this->fetch();
+	}
+	public function edit(){
+
+      return $this->fetch();
+	}
+	public function del(){
+
+      return $this->fetch();
+	}
+
+}

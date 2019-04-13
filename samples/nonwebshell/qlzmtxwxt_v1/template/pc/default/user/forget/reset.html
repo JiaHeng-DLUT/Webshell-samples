@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>重置密码 - {$settings.site.sitename}</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+    {include file="../common/css"}
+    {include file="../common/js"}
+    {load href="__STATIC__/community/css/global.css"}
+    {load href="__PLUGIN__/steps/steps.css"}
+  <!-- 模块CSS -->
+  {load href="__STATIC__/portal/css/index.css" /}
+
+</head>
+<body>
+
+{include file="../portal/public/header"}
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel fly-panel-user" pad20>
+        <div class="ui-steps-round" style="width:540px;margin:0 auto;padding: 70px 0px 22px 0px;">
+          <div class="finished">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>账号验证</label>
+          </div>
+          <div class="finished">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>重置密码</label>
+          </div>
+
+          <div class="todo last">
+            <div class="wrap">
+              <div class="round">3</div>
+            </div>
+            <label>找回成功</label>
+          </div>
+        </div>
+          <div class="layui-tab layui-tab-brief" style="width:500px;margin:0 auto">
+     <!--        <ul class="layui-tab-title">
+             <li class="layui-this">邮箱找回</li>
+                  <li >短信找回</li>
+            </ul> -->
+            <div class="layui-tab-content" style="padding: 20px 0;">
+              <div class="layui-tab-item layui-show">
+              <div class="layui-form " style="padding: 20px 0;">
+                    <form method="post" class="layui-form" >
+                    <input type="hidden" name="type"  value="1">
+                        <div class="layui-form-item">
+                          <label for="email" class="layui-form-label">新密码</label>
+                          <div class="layui-input-block">
+                            <input type="password" id="password" name="password"  autocomplete="off" class="layui-input" placeholder="请输入新密码">
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <label for="vercode" class="layui-form-label">确认密码</label>
+                                <div class="layui-input-block" >
+                                  <input type="password" name="repassword"  placeholder="请输入确认密码" autocomplete="off" class="layui-input" >
+                                </div>
+                                  
+                          <div class="layui-form-mid">
+                            <span style="color: #c00;"></span>
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <button class="layui-btn layui-btn-normal"  lay-filter="form1" style="width:100%;" lay-submit>提交</button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+    </div>
+  </div>
+
+  
+</div>
+{include file="../portal/public/footer"}
+<script>
+//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+layui.use(['element','form'], function(){
+  var form = layui.form;
+  var element = layui.element;
+//监听邮件找回提交
+form.on("submit(form1)",function(data){
+
+  $.post("{:url('forget/reset')}",data.field,function(json){
+    if(json.code == 0){
+        location.href="{:url('forget/success')}";
+    }else{
+      qile.error(json.msg);
+    }
+  });
+  return false;
+});
+
+
+
+});
+</script>
+
+
+</body>
+</html>

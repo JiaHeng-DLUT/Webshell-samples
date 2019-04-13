@@ -1,0 +1,20 @@
+<?php
+//配置文件
+return [
+    //模块名
+    'module' => 'bbs',
+    //别名
+    'name' => '论坛',
+    //版本号
+    'version' => '1.0.0',
+
+    //模块描述
+    'description' => '论坛模块，创建一个轻巧的社区论坛',
+    //开发者
+    'author' => '合肥奇乐网络科技有限公司',
+    //作者网站
+    'website' => 'http://www.baidu.com',
+
+//是否可以卸载
+    'uninstall' => 1
+];

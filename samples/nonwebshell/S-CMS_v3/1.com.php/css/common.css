@@ -1,0 +1,90 @@
+@charset "utf-8";
+/* CSS Document */
+/*reset CSS*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acyonym,address,big,cite,code,del,dfn,em,img,ins,kdb,q,s,samp,small,strong,var,b,i,
+dl,dt,dd,ol,ul,li,fieldset,form,label,legend,caption,tbody,tfoot,thead,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;}
+*{margin:0; padding:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+body{font:12px/1.5 "微软雅黑",arial,tahoma,\5b8b\4f53; color:#333;}
+body{-webkit-text-size-adjust:none;}
+textarea{resize:none;}
+ol,ul,li{list-style:none;}
+img{border:0 none; display:block;}
+del{text-decoration:line-through;}
+table{border-collapse:collapse;}
+hr{display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:''; content:none;}
+input,select,img{vertical-align:middle;}
+input, textarea{padding:2px; line-height:normal;}
+a:link,a:visited{text-decoration:none; }
+a:hover,a:active{text-decoration: none; color:#71a424;}
+a{text-decoration:none; color:#333;}
+
+/*text-transform:uppercase 英文强制弄成大写*/
+
+/*container*/
+.container{width:1002px; display:block; margin:0 auto;}
+/*container*/
+
+.fl{float:left;}
+
+.design_banner{height:874px;width:100%;background:url(../images/design_banner.jpg) no-repeat center top;overflpw:hide;}
+.ds_container{width:1000px;margin:0 auto;display:block;position:relative;}
+.design_banner a{display:block;background:url(../images/enroll.png) no-repeat left top;width:222px;height:76px;position:absolute;top:620px;left:386px;}
+.design_banner img{display:block;position:absolute;left:213px;bottom:-53px;z-index:10;}
+.design_left{float:left;margin-left:180px;}
+.design_right{float:right;margin-right:180px;}
+.design_tit{background:url(../images/ds_txt.png) no-repeat left top;}
+.design_cont{font-size:16px;color:#fff;line-height:35px;}
+.design_box1{height:400px;background:url(../images/ds_box1.png) no-repeat right top #ffbe0d;}
+.design_txt1{width:381px;height:70px;margin:85px 0 43px;}
+.design_pic1{margin-top:114px;}
+.design_box2{height:400px;background:url(../images/ds_box2.png) no-repeat left top #138fc5;}
+.design_pic2{margin-top:73px;}
+.design_txt2{width:448px;height:34px;background-position:75px -75px;margin:100px 0 75px;}
+.design_box3{height:558px;background:url(http://www.tubaobao.com/images/ds_box3.png) no-repeat right 78px #454c52;}
+.design_txt3{width:283px;height:34px;background-position:0 -122px;margin:144px 0 42px 13px;}
+.design_awards ul{overflow:hidden;margin-left:15px;width:650px;}
+.design_awards ul li{float:left;width:130px;height:130px;background:url(http://www.tubaobao.com/images/dsli_icon.png) no-repeat left top;margin:0 30px 20px 0;text-align:center;}
+.awards_txt{margin-top:31px;line-height:20px;font-size:16px;color:#fff;}
+.awards_txt span{font-size:14px;}
+.design_box4{height:400px;background:url(http://www.tubaobao.com/images/ds_box4.png) no-repeat left 33px #a6cc24;}
+.design_txt4{width:640px;height:34px;background-position:right -167px;margin:107px 0 50px;}
+.design_way{font-size:16px;color:#fff;line-height:25px;}
+.design_way p{color:#cb4808;margin-top:6px;}
+.design_way span{padding-left:14px;}
+.design_box5{height:400px;background:url(http://www.tubaobao.com/images/ds_box5.png) no-repeat right top #159892;}
+.design_txt5{width:530px;height:34px;background-position:0 -215px;margin:106px 0 62px 180px;}
+.design_schedule{margin-left:165px;}
+.design_date{width:220px;float:left;margin-right:20px;}
+.date_tit{font-size:16px;color:#fcd500;text-align:center;margin-bottom:9px;}
+.date_txt{font-size:14px;color:#fff;height:39px;line-height:18px;}
+.schedule_line{background:url(http://www.tubaobao.com/images/ds_schedule.png) no-repeat left top;width:834px;height:11px;margin-left:80px;}
+.design_box6{height:200px;background:url(http://www.tubaobao.com/images/ds_box6.png) no-repeat left 30px #bfbfbf;}
+.design_txt6{width:419px;height:28px;background-position:0 -267px;margin:65px 0 28px 180px;}
+.design_contact{font-size:16px;color:#535353;margin-left:180px;}
+.design_bot{height:48px;background:#fff;font-size:14px;color:#999;line-height:48px;text-align:center;}
+.design_bot a{color:#999;}
+.design_bot a:hover{text-decoration:underline;}
+
+.regist_container{width:1003px;margin:0 auto;}
+.regist_toppic{width:84px;height:84px;margin:46px auto 23px;}
+.regist_tit h1{font-size:32px;color:#333;font-weight:bolder;text-align:center;margin-bottom:12px;}
+.regist_tit h2{font-size:20px;color:#858585;font-weight:bolder;text-align:center;margin-bottom:48px;}
+.regist_cont{margin-bottom:231px;background:#fff;border-top:2px solid #006651;border-left:1px solid #90b877;border-right:1px solid #90b877;}
+.regist_left{float:left;position:relative;}
+.regist_ltpic{position:absolute;left:20px;top:-12px;background:url(http://www.tubaobao.com/images/regist_toppic1.png) no-repeat left top;width:79px;height:69px;}
+.regist_rtline{position:absolute;bottom:0;right:-551px;height:3px;width:551px;background:#dedede;}
+.regist_right{float:left;margin:95px 0 0 125px;}
+.regist_right table td{height:42px;padding-left:40px;}
+.regist_td1,.regist_td2,.regist_td3,.regist_td4{background:url(http://www.tubaobao.com/images/regist_icon.png) no-repeat left top;}
+.regist_td1{background-position:0 7px;} 
+.regist_td2{background-position:0 -50px;} 
+.regist_td3{background-position:0 -107px;} 
+.regist_td4{background-position:0 -164px;} 
+.regist_right table input{width:240px;height:42px;background:url(http://www.tubaobao.com/images/regist_icon.png) no-repeat left -272px;border:none;color:#dadada;font-size:14px;padding-left:11px;}
+.regist_upload{margin:38px 0 0 57px;}
+.regist_upload input{color:#fdfdfd;font-size:22px;font-weight:bolder;text-align:center;width:191px;height:45px;background:url(http://www.tubaobao.com/images/regist_icon.png) no-repeat left -213px;border:none;cursor:pointer;}
+.download{color:#cb4808;}
+.download:hover{text-decoration:underline;color:#cb4808;}

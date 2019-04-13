@@ -1,0 +1,41 @@
+<div class="banner exchange-banner">
+        <div class="relative">
+            <div class="banner" >
+                <div class="act-banner-wp">
+                    </div>
+                <div class="w w1200 relative">
+                    <div class="exchange-score">
+                        {if $Think.session.member_id}
+                        <div class="u-info">
+                            <a href="{:url('Member/index')}" class="u-avatar"><img class="lazyload"  data-original="{:get_member_avatar($Think.session.avatar)}"></a>
+                            <div class="u-name"><a href="{:url('Member/index')}">{$Think.session.member_name}</a></div>
+                        </div>
+                        <div class="score-info">
+                            <div class="item">
+                                <p>{$Think.lang.available_credit}</p>
+                                <div class="num">{$member_info.member_points}</div>
+                            </div>
+                            <div class="item">
+                                <p>{$Think.lang.balance}{$Think.lang.ds_yuan}）</p>
+                                <div class="num">{$member_info.available_predeposit}</div>
+                            </div>
+                        </div>
+                        {else}
+                        <div class="u-info">
+                            <a href="javascript:void(0)" class="u-avatar"><img class="lazyload"  data-original="{:get_member_avatar($Think.session.avatar)}"></a>
+                            <div class="u-name"><strong>{$Think.lang.welcome_to}{$Think.config.site_name}</strong></div>
+                        </div>
+                        <div class="score-info">
+                            <a href="{:url('Login/login')}" class="login-button">{$Think.lang.please_log}</a>
+                            <a href="{:url('Login/register')}" class="register_button">{$Think.lang.free_registration}</a>
+                        </div>
+                        {/if}
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+

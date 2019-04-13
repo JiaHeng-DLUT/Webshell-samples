@@ -1,0 +1,14 @@
+<ul>
+{% foreach tweets as tweet %}
+	<li>
+		{% if show_dates == 'yes' %}
+			{{tweet->created_at|strtotime|I18n::short_date}} -
+		{% end %}
+		{% if parse_links == 'yes' %}
+			{{tweet->text|social\Filter::tweet}}
+		{% else %}
+			{{tweet->text}}
+		{% end %}
+	</li>
+{% end %}
+</ul>

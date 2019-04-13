@@ -1,0 +1,61 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+ <form method="get">
+            <table class="search-form">
+                <tr>
+                    <td>&nbsp;</td>
+                    <th>{$Think.lang.cost_consumption_content}</th>
+                    <td class="w160"><input type="text" class="text w150" name="storecost_remark" value="{$Request.param.storecost_remark}" /></td>
+                    <th>{$Think.lang.cost_time}</th>
+                    <td class="w240">
+                        <input name="add_time_from" id="add_time_from" type="text" class="text w70" value="{$Request.param.add_time_from}" /><label class="add-on"><i class="fa fa-calendar"></i></label>
+                        &nbsp;&#8211;&nbsp;
+                        <input name="add_time_to" id="add_time_to" type="text" class="text w70" value="{$Request.param.add_time_to}" /><label class="add-on"><i class="fa fa-calendar"></i></label></td>     
+                    <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+                </tr>
+            </table>
+        </form>
+        
+        <table class="dssc-default-table">
+            <thead>
+                <tr>
+                    <th class="w120">{$Think.lang.cost_consumption_amount}</th>
+                    <th class="tl">{$Think.lang.cost_consumption_content}</th>
+                    <th class="w80">{$Think.lang.cost_status}</th>
+                    <th class="w130">{$Think.lang.cost_time}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {notempty name="cost_list"}
+                {foreach name="cost_list" item="value" key="key" }
+                <tr class="bd-line">
+                    <td>{$value.storecost_price}</td>
+                    <td class="tl">{$value.storecost_remark}</td>
+                    <td>{if $value.storecost_state}{$Think.lang.cost_settled}{else/}{$Think.lang.cost_not_settled}{/if}</td>
+                    <td>{$value.storecost_time|date="Y-m-d H:s",###}</td>
+                </tr>
+                {/foreach}
+                {else /}
+                <tr>
+                    <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+                </tr>
+                {/notempty}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="20"><div class="pagination">{$show_page}</div></td>
+                </tr>
+            </tfoot>
+        </table>
+
+
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+                $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+            });
+        </script>
+
+{/block}

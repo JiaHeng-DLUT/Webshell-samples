@@ -1,0 +1,77 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_chatlog}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get"  name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.chatlog_keywords}</dt>
+                <dd><input type="text" class="text" name="msg" value="{$Request.get.msg}" /></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.chatlog_start_to_stop_time}</dt>
+                <dd><input class="txt date" type="text" value="{$final_time_from}" id="add_time_from" name="add_time_from">
+                    ~
+                    <input class="txt date" type="text" value="{$final_time_to}" id="add_time_to" name="add_time_to"/>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Chatlog/msglog')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>      
+    </form>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.chatlog_msglog_help1}</li>
+            <li>{$Think.lang.chatlog_index_help3}“{$minDate}”{$Think.lang.chatlog_index_help4}“{$maxDate}”{$Think.lang.chatlog_index_help5}。</li>
+        </ul>
+    </div>
+
+    <div class="chat-log">
+        <ul class="chat-log-list">
+            {notempty name="log_list"}
+            {foreach name="log_list" item="val"}
+            <li class="from_log"><span class="avatar"><img src="{:get_member_avatar_for_id($val.f_id)}"/></span>
+                <dl>
+                    <dt class="store_log">{$Think.lang.chatlog_f_name_member}：{$val.f_name} <span>({$Think.lang.chatlog_t_name_member}：{$val.t_name})</span></span>
+                    </dt>
+                    <dd class="time">{:date('Y-m-d H:i:s',$val.chatlog_addtime)}
+                        <a href="{:url('Chatlog/chatlog')}?f_name={$val.f_name}&t_name={$val.t_name}&add_time_from={:date('Y-m-d',$val.chatlog_addtime)}&add_time_to={:date('Y-m-d',$val.chatlog_addtime)}">{$Think.lang.chatlog_detail}</a></dd>
+                    <dd class="content">{:parsesmiles($val.t_msg)}</dd>
+                </dl>
+            </li>
+            {/foreach}
+            {else /}
+            <div class="no_data">{$Think.lang.no_record}</div>
+            {/notempty}
+        </ul>
+        {notempty name="log_list"}
+        {$show_page}
+        {/notempty}
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd',minDate: '{$minDate}'});
+        $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd',maxDate: '{$maxDate}'});
+    });
+</script>

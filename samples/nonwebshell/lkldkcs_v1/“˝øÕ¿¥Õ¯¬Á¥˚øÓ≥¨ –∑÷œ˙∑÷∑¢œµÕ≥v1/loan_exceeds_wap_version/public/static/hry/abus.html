@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>关于我们</title>
+</head>
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  /* 弹出框 */
+  .overflowhide {
+    overflow: hidden;
+  }
+
+  /* 遮罩层 */
+  .msgbox-shadow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .4;
+    background-color: #000;
+    z-index: 10000;
+  }
+
+  /* 弹出层父级 */
+  #mask {
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=5);
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+  }
+
+  /* #login {
+    position: fixed;
+    left: 30%;
+    top: 30%;
+    z-index: 1001;
+  } */
+
+  .maskbox {
+    /* width: 100vw; */
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: .2rem;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: 0 3.5%;
+  }
+
+  .maskbox p {
+    width: 93%;
+    height: 1rem;
+    font-size: .36rem;
+    line-height: 1rem;
+    border-radius: .16rem;
+    letter-spacing: .01rem;
+    color: #2e6eec;
+    text-align: center;
+    /* margin: .1rem; */
+    background-color: #fff;
+    z-index: 10;
+  }
+
+  .maskbox a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    color: #2e6eec;
+  }
+
+  .maskbox #close {
+    font-size: .4rem;
+    font-weight: 600;
+    letter-spacing: .02rem;
+    margin: 0;
+  }
+
+  .main {
+    /* padding: 0 .4rem; */
+    padding: .2rem .4rem 0;
+  }
+
+  .content p {
+    font-size: .28rem;
+    line-height: .42rem;
+    letter-spacing: .01rem;
+    color: #101d37;
+  }
+
+  .tel {
+    font-size: .28rem;
+    letter-spacing: .01rem;
+    color: #7f8799;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .tel #callBtn {
+    color: #2e6eec;
+    font-size: .28rem;
+  }
+
+  .maskbox .block {
+    display: block;
+  }
+
+  .none {
+    display: none;
+  }
+
+</style>
+
+<body>
+  <div class="main">
+    <div class="content">
+      <p style="box-sizing: border-box; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); margin-top: 0px !important;"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">&nbsp;</span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><span style="box-sizing: border-box;">&nbsp;
+            &nbsp; &nbsp; &nbsp; 我们平台是御顺金融旗下一款全新的线上贷款平台，于</span>2018年</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">8</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">月开始上线运营。</span><br style="box-sizing: border-box; margin: 0px; padding: 0px;" /></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><br style="box-sizing: border-box; margin: 0px; padding: 0px;" /></span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; 御顺金融</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">成立于</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">2005年，</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><span style="box-sizing: border-box;">是成都最早从事贷款咨询服务的机构之一，为了顺应互联网金融的市场发展，</span>2018年</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">，</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">御顺金融</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">组建了一支</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">40余人规模的</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">专业技术团队，</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><span
+            style="box-sizing: border-box;">开始了</span>贷款超市项目</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">的开发，</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">2018年8月，平台正式上线运营。</span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">&nbsp;</span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; 御顺金融</span><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">与交通银行、农业银行、中国银行、招商银行、成都银行等三十多家银行达成深入合作关系，连续多年被多家银行评为入围担保机构及优质合作单位。</span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;">&nbsp;</span></p>
+      <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 15px; padding: 0px; color: rgb(51, 51, 51); word-wrap: break-word; font-family: arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);"><span
+          style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><span style="box-sizing: border-box;">&nbsp;
+            &nbsp; &nbsp; &nbsp; 多年来御顺一直秉承服务至上和严谨细致的经营理念，根据每一位客户的情况和需求，量身定制专属贷款方案，使客户以更低的成本获得最合适的贷款产品，让客户</span>&quot;放心、省心、顺心&quot;！</span></p>
+      <p><span style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: 12pt;"><br /></span></p>
+      <p><br /></p>
+    </div>
+    <p class="tel">联系电话：<span id="callBtn">02886783282</span></p>
+    <div class='maskbox' style="display:none">
+      <p class="call">
+        <a href='tel:02886783282' class="callnum"> 呼叫</a>
+      </p>
+      <p id='close'>取消</p>
+    </div>
+  </div>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px'
+
+    function openNew() {
+      //获取页面的高度和宽度
+      var sHeight = document.documentElement.scrollHeight;
+      var sWidth = document.documentElement.scrollWidth;
+      //获取可视区域高度，宽度与页面内容的宽度一样
+      var wHeight = document.documentElement.clientHeight;
+      //创建遮罩层div并插入body
+      var oMask = document.createElement("div");
+      oMask.id = "mask";
+      oMask.style.height = sHeight + "px";
+      //宽度直接用100%在样式里
+      document.body.appendChild(oMask);
+      var maskbox = document.getElementsByClassName('maskbox')[0]
+      maskbox.style.display = "block";
+      //获取关闭按钮
+      var oClose = document.getElementById("close");
+      oMask.onclick = oClose.onclick = function () {
+        document.body.removeChild(oMask);
+        maskbox.style.display = "none";
+      }
+    }
+    window.onload = function () {
+      var oBtn = document.getElementById("callBtn");
+      oBtn.onclick = function () {
+        openNew();
+      }
+    }
+  </script>
+</body>
+
+</html>

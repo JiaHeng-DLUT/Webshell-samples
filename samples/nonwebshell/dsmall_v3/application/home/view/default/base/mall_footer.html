@@ -1,0 +1,34 @@
+{if $Think.config.node_site_use eq '1' && !isset($wait)}
+{:get_chat()}
+{/if}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.cookie.js"></script>
+<script src="{$Think.HOME_SITE_ROOT}/js/compare.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/qtip/jquery.qtip.min.js"></script>
+<link href="{$Think.PLUGINS_SITE_ROOT}/js/qtip/jquery.qtip.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery.lazyload.min.js"></script>
+<script>
+    //懒加载
+    $("img.lazyload").lazyload({
+//        placeholder : "{$Think.HOME_SITE_ROOT}/images/loading.gif",
+        effect: "fadeIn",
+        skip_invisible : false,
+        threshold : 200,
+    });
+</script>
+<div class="footer-info">
+    <div class="links w1200">
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.about_us}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.contact_us}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.merchant_presence}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.marketing_center}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.mobile_mall}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.link}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.sales_alliance}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.mall_community}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">{$Think.lang.mall_public_benefit}</a>|
+        <a href="http://www.csdeshang.com/" target="_blank">English Site</a>
+    </div>
+    <p class="copyright">{$Think.config.flow_static_code}</p>
+</div>

@@ -1,0 +1,17 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Clear cache')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <div class="text-center"><br>
+                <h4>{:lang('Clicking the button below clears the site cache')}</h4><br><br>
+                <input type="hidden" name="clearcache" value="clearcache">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default">{:lang('Clear cache')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+{include file="index/footer" /}

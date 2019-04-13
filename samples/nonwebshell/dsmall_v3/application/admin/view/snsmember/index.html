@@ -1,0 +1,83 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>会员标签</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.sns_member_index_tips_1}</li>
+            <li>{$Think.lang.sns_member_index_tips_2}</li>
+        </ul>
+    </div>
+    
+    
+        <table class="ds-default-table">
+            <thead>
+                <tr class="thead">
+                    <th></th>
+                    <th class="w60">{$Think.lang.ds_sort}</th>
+                    <th class="w200">{$Think.lang.sns_member_tag_name}</th>
+                    <th class="align-center">{$Think.lang.ds_recommend}</th>
+                    <th class="w200 align-center">{$Think.lang.ds_handle}</th>
+                </tr>
+            </thead>
+            {notempty name="tag_list"}
+            <tbody>
+            {foreach name="tag_list" item="v"}
+            <tr class="hover edit">
+                <td class="w48"><input type="checkbox" name="id[]" value="{$v.mtag_id}" class="checkitem"></td>
+                <td class="w48 sort"><span title="{$Think.lang.ds_editable}" ajax_branch="membertag_sort" datatype="number" fieldid="{$v.mtag_id}" fieldname="mtag_sort" ds_type="inline_edit" class="editable ">{$v.mtag_sort}</span></td>
+                <td class="w50pre name"><span title="{$Think.lang.ds_editable}" required="1" fieldid="{$v.mtag_id}" ajax_branch="membertag_name" fieldname="mtag_name" ds_type="inline_edit" class="editable ">{$v.mtag_name}</span></td>
+                <td class="align-center yes-onoff">
+                    {if $v.mtag_recommend == 0}
+                    <a href="JavaScript:void(0);" class=" disabled" fieldvalue="0" fieldid="{$v.mtag_id}" ajax_branch="membertag_recommend" fieldname="mtag_recommend" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src=""></a>
+                    {else}
+                    <a href="JavaScript:void(0);" class=" enabled" fieldvalue="1" fieldid="{$v.mtag_id}" ajax_branch="membertag_recommend" fieldname="mtag_recommend" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src=""></a>
+                    {/if}</td>
+                <td class="w132 align-center">
+                    <a href="javascript:dsLayerOpen('{:url('Snsmember/tag_edit',['id'=>$v.mtag_id])}','{$Think.lang.ds_edit}-{$v.mtag_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Snsmember/tag_del',['id'=>$v.mtag_id])}','您确定删除此标签')" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                    <a href="{:url('Snsmember/tag_member',['id'=>$v.mtag_id])}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.sns_member_view_member}</a>
+                </td>
+            </tr>
+           {/foreach}
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td><input type="checkbox" class="checkall" id="checkall_1"></td>
+                <td id="batchAction" colspan="15"><span class="all_checkbox">
+                        <label for="checkall_2">{$Think.lang.ds_select_all}</label>
+                    </span>&nbsp;&nbsp;<a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                </td>
+            </tr>
+            </tfoot>
+            {else}
+            <tbody>
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            </tbody>
+            {/notempty}
+        </table>
+        {$showpage}
+</div>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Snsmember/tag_del.html?id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

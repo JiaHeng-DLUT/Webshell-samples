@@ -1,0 +1,103 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>相册列表</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.g_album_keyword}</dt>
+                <dd><input class="txt" name="keyword" id="keyword" value="{$Request.get.keyword}" type="text"></dd>
+            </dl>
+            <div class="btn_group">
+                {if $store_name!=''  && !empty($albumclass_list)}
+                <a class="btn btn-mini" target="_blank" href="{:url('home/Store/index',['store_id'=>$albumclass_list.0.store_id])}"><span>{$store_name}</span></a>
+                {/if}
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {if $filtered}
+                <a href="{:url('Goodsalbum/index')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                {/if}
+            </div>
+        </div>
+    </form>
+    
+  <div class="explanation" id="explanation">
+      <div class="title" id="checkZoom">
+          <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+          <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+      </div>
+      <ul>
+          <li>{$Think.lang.g_album_del_tips}</li>
+      </ul>
+  </div>
+    
+    
+    <form method='post' id="picForm" name="picForm">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th class="w24"></th>
+                <th class="w72 center">{$Think.lang.g_album_fmian}</th>
+                <th class="w270">{$Think.lang.g_album_one}</th>
+                <th class="w270">{$Think.lang.g_album_shop}</th>
+                <th class="w270">{$Think.lang.g_album_pic_count}</th>
+                <th class="align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="albumclass_list"}
+            {foreach name="albumclass_list" item="v"}
+            <tr class="hover edit" id="ds_row_{$v.aclass_id}">
+                <td><input value="{$v.aclass_id}" class="checkitem" type="checkbox" name="aclass_id[]"></td>
+                <td>
+                    {notempty name="v.aclass_cover"}
+                    <img src="{:goods_cthumb($v.aclass_cover,240,$v.store_id)}" onload="javascript:ResizeImage(this,70,70);">
+                    {else /}
+                    <img src="{$Think.UPLOAD_SITE_URL}/{:default_goodsimage(0)}" onload="javascript:ResizeImage(this,70,70);">
+                    {/notempty}
+                </td>
+                <td class="name">{$v.aclass_name}</td>
+                <td class="class"><a href="{:url('home/Store/index',['store_id'=>$v.store_id])}" >{$v.store_name}</td>
+                <td>{$pic_count[$v.aclass_id] ? $pic_count[$v.aclass_id] : 0}</td>
+                <td class="align-center">
+                    <a href="{:url('Goodsalbum/pic_list',['aclass_id'=>$v.aclass_id])}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.g_album_pic_one}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Goodsalbum/aclass_del',['aclass_id'=>$v.aclass_id])}','{$Think.lang.ds_ensure_del}',{$v.aclass_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a></td>
+            </tr>
+            {/foreach}
+            {else}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="albumclass_list"}
+            <tr colspan="15" class="tfoot">
+                <td><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                <td colspan="16"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp;<a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                </td>
+            </tr>
+            {/notempty}
+            </tfoot>
+        </table>
+        {$show_page}
+    </form>
+</div>
+
+<script type="text/javascript">
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Goodsalbum/aclass_del.html?aclass_id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

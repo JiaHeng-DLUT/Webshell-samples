@@ -1,0 +1,76 @@
+{! admin/util/dates !}
+
+{% if id === false %}
+<p class="selector">
+<form method="GET" action="/admin/versions">
+<input type="hidden" name="id" value="{{ id }}" />
+{"Type"}: <select name="type" onchange="this.form.submit ()">
+{% foreach classes %}
+	<option value="{{ loop_value }}" {% if type == $data->loop_value %}selected{% end %}>{{ loop_value|Versions::plural_name|__ }}</option>
+{% end %}
+</select>
+</form>
+</p>
+{% else %}
+<p><a href="/admin/versions?type={{type|urlencode}}">&laquo; {"All"} {{plural}}</a></p>
+{% end %}
+
+<p style="float: left">
+{! navigation/pager?style=results&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+</p>
+
+{% if total > $data->limit %}
+<div style="float: right">
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+</div>
+{% end %}
+
+{% if id === false %}
+	<p style="clear: both">
+	<table width="100%">
+		<tr>
+			<th width="30%">{"ID"}</th>
+			<th width="30%">{"Last changed"}</th>
+			<th width="25%">{"Author"}</th>
+			<th width="15%">&nbsp;</th>
+		</tr>
+	{% foreach history %}
+		<tr>
+			<td>{{ loop_value->pkey }}</td>
+			<td>{{ loop_value->ts|I18n::date_time }}</td>
+			<td>{{ loop_value->user|admin_filter_user_name }}</td>
+			<td style="text-align: right"><a href="/admin/versions?type={{ type }}&id={{ loop_value->pkey }}">{"Show versions"}</a></td>
+		</tr>
+	{% end %}
+	</table>
+	</p>
+{% else %}
+	<p style="clear: both">
+	<table>
+		<tr>
+			<th>{"Changed on"}</th>
+			<th>{"Author"}</th>
+			<th>&nbsp;</th>
+		</tr>
+	{% foreach history %}
+		<tr>
+			<td>{{ loop_value->ts|I18n::date_time }}</td>
+			<td>{{ loop_value->user|admin_filter_user_name }}</td>
+		{% if loop_index == 0 %}
+			{% if deleted %}
+				<td><a href="/admin/compare?id={{ loop_value->id }}&current=yes"><strong>{"View current (deleted)"}</strong></a></td>
+			{% else %}
+				<td><a href="/admin/compare?id={{ loop_value->id }}&current=yes"><strong>{"Current version"}</strong></a></td>
+			{% end %}
+		{% else %}
+			<td><a href="/admin/compare?id={{ loop_value->id }}&current=no">{"Compare to current"}</a></td>
+		{% end %}
+		</tr>
+	{% end %}
+	</table>
+	</p>
+{% end %}
+
+{% if total > $data->limit %}
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+{% end %}

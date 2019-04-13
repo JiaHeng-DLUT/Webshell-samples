@@ -1,0 +1,102 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('page',['act'=>'add'])}>">+添加新页面</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{$fileurl}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('page_id[]')==false){alert('请指定您要操作的页面ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+		</div>
+                    
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>页面名称</th>
+				<th>页面说明</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$pages item=page}>
+			<tr>
+				<td><input name="page_id[]" type="checkbox" value="<{$page.page_id}>"></td>
+				<td><{$page.page_id}></td>
+				<td><{$page.page_name}></td>
+				<td><{$page.page_intro}></td>
+				<td><a href="<{url('page',['act'=>'edit','page_id'=>$page['page_id']])}>">编辑</a>
+				&nbsp;|&nbsp;<a href="<{url('page',['act'=>'del','page_id'=>$page['page_id']])}>" 
+				onClick="return confirm(\'确认删除此内容吗？\');">删除</a></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="5">无任何自定义页面！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('page')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{url('page')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>页面名称：</th>
+				<td><input name="page_name" type="text" class="ipt" id="page_name" size="50" maxlength="50" value="<{if !empty($page.page_name)}><{$page.page_name}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>页面说明：</th>
+				<td><input name="page_intro" type="text" class="ipt" id="page_intro" size="50" maxlength="50" value="<{if !empty($page.page_intro)}><{$page.page_intro}><{/if}>" /><span class="tips">页面说明，可不填写，字数限制在50个以内</span></td>
+			</tr>
+			<tr>
+				<th>页面内容：</th>
+				<td>
+									<!-- 加载编辑器的容器 -->
+<script name="page_content" id="page_content" type="text/plain" style="width:600px;height:400px;">
+<{if !empty($page.page_content)}><{htmlspecialchars_decode($page.page_content)}><{/if}>
+</script>
+<!-- 样式文件 -->
+<link rel="stylesheet" href="/public/umeditor/themes/default/css/umeditor.css">
+
+<!-- 配置文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.js"></script>
+
+<!-- 实例化编辑器代码 -->
+<script type="text/javascript">
+    $(function(){
+        window.um = UM.getEditor('page_content', {
+        	/* 传入配置参数,可配参数列表看umeditor.config.js */
+        });
+    });
+ </script>
+                </td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $page.page_id}>
+					<input name="page_id" type="hidden" id="page_id" value="<{$page.page_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url("page")}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+
+<{include file="footer.html"}>

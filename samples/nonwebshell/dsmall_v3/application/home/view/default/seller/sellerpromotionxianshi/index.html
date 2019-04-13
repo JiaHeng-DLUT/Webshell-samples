@@ -1,0 +1,149 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{present name="isPlatformStore"}
+<a class="dssc-btn dssc-btn-green" href="{:url('Sellerpromotionxianshi/xianshi_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.xianshi_add}</a>
+{else /}
+{notempty name="current_xianshi_quota"}
+<a class="dssc-btn dssc-btn-green" style="right:100px" href="{:url('Sellerpromotionxianshi/xianshi_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.xianshi_add}</a>
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionxianshi/xianshi_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.set_renewal}</a>
+{else }
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionxianshi/xianshi_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.xianshi_quota_add}</a>
+{/notempty}
+{/present}
+
+
+{/block}
+{block name="seller_main"}
+{present name="isPlatformStore"}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.information_discount_activities1}</li>
+        <li>{$Think.lang.information_discount_activities2}</li>
+    </ul>
+</div>
+{else }
+<div class="alert alert-block mt10">
+    {notempty name="current_xianshi_quota"}
+    <strong>{$Think.lang.overdue_set_meal}{$Think.lang.ds_colon}</strong><strong style="color:#F00;">{$current_xianshi_quota.xianshiquota_endtime|date="Y-m-d H:i:s",###}</strong>
+    {else /}
+    <strong>{$Think.lang.please_buy_set_meal}</strong>
+    {/notempty}
+    <ul>
+        <li>{$Think.lang.xianshi_explain1}</li>
+        <li>{$Think.lang.xianshi_explain2}</li>
+        <li>{$Think.lang.xianshi_explain3}</li>
+        <li>4、<strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong>。</li>
+    </ul>
+</div>
+{/present}
+
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.ds_state}</th>
+            <td class="w100"><select name="state">
+                    {notempty name="xianshi_state_array"}
+                    {foreach name="xianshi_state_array" item="val"}
+                    <option value="{$key}" {if $key==$Request.get.state}selected{/if}>{$val}</option>
+                    {/foreach}
+                    {/notempty}
+                </select></td>
+            <th class="w110">{$Think.lang.xianshi_name}</th>
+            <td class="w160"><input type="text" class="text w150" name="xianshi_name" value="{$Request.get.xianshi_name}"/></td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}"/></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w30"></th>
+            <th class="tl">{$Think.lang.xianshi_name}</th>
+            <th class="w180">{$Think.lang.start_time}</th>
+            <th class="w180">{$Think.lang.end_time}</th>
+            <th class="w80">{$Think.lang.buy_lower_limit}</th>
+            <th class="w80">{$Think.lang.ds_state}</th>
+            <th class="w150">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody id="xianshi_list">
+        {notempty name="xianshi_list"}
+        {foreach name="xianshi_list" item="val"}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">
+                <dl class="goods-name">
+                    <dt>{$val.xianshi_name}</dt>
+                </dl>
+            </td>
+            <td class="goods-time">{$val.xianshi_starttime|date="Y-m-d H:i",###}</td>
+            <td class="goods-time">{$val.xianshi_end_time|date="Y-m-d H:i",###}</td>
+            <td>{$val.xianshi_lower_limit}</td>
+            <td>{$val.xianshi_state_text}</td>
+            <td class="dscs-table-handle tr">
+                {if $val.editable}
+                <span>
+                    <a href="{:url('Sellerpromotionxianshi/xianshi_edit','xianshi_id='.$val.xianshi_id)}" class="btn-blue">
+                        <i class="fa fa-pencil-square"></i>
+                        <p>{$Think.lang.ds_edit}</p>
+                    </a>
+                </span>
+                {/if}
+                <span>
+                    <a href="{:url('Sellerpromotionxianshi/xianshi_manage','xianshi_id='.$val.xianshi_id)}"
+                       class="btn-green">
+                        <i class="fa fa-cog"></i>
+                        <p>{$Think.lang.ds_manage}</p>
+                    </a>
+                </span>
+                <span>
+                    <a href="javascript:;" dstype="btn_del_xianshi" data-xianshi-id={$val.xianshi_id} class="btn-red">
+                        <i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_delete}</p>
+                    </a>
+                </span>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr id="xianshi_list_norecord">
+            <td class="norecord" colspan="20">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="xianshi_list"}
+        <tr>
+            <td colspan="20">
+                <div class="pagination">{$show_page}</div>
+            </td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+<form id="submit_form" action="" method="post">
+    <input type="hidden" id="xianshi_id" name="xianshi_id" value="">
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[dstype="btn_del_xianshi"]').on('click', function () {
+            var action = "{:url('Sellerpromotionxianshi/xianshi_del')}";
+            var xianshi_id = $(this).attr('data-xianshi-id');
+            layer.confirm('{$Think.lang.ds_ensure_del}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#submit_form').attr('action', action);
+                $('#xianshi_id').val(xianshi_id);
+                ds_ajaxpost('submit_form', 'url', "{:url('Sellerpromotionxianshi/index')}")
+            });
+        });
+    });
+</script>
+
+{/block}

@@ -1,0 +1,87 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="add_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w150"><label class="validation">{$Think.lang.admin_voucher_setting_price}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_voucher_price" name="promotion_voucher_price" value="{$setting.promotion_voucher_price}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.admin_voucher_setting_price_tip}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation">{$Think.lang.admin_voucher_setting_storetimes}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_voucher_storetimes_limit" name="promotion_voucher_storetimes_limit" value="{$setting.voucher_storetimes_limit}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.admin_voucher_setting_storetimes_tip}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation">{$Think.lang.admin_voucher_setting_buyertimes}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_voucher_buyertimes_limit" name="promotion_voucher_buyertimes_limit" value="{$setting.voucher_buyertimes_limit}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.admin_voucher_setting_buyertimes_tip}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#submitBtn").click(function(){
+            $("#add_form").submit();
+        });
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+
+            rules : {
+                promotion_voucher_price: {
+                    required : true,
+                    digits : true,
+                    min : 1
+                },
+                promotion_voucher_storetimes_limit: {
+                    required : true,
+                    digits : true,
+                    min : 1
+                },
+                promotion_voucher_buyertimes_limit: {
+                    required : true,
+                    digits : true,
+                    min : 1
+                }
+            },
+            messages : {
+                promotion_voucher_price: {
+                    required : '{$Think.lang.admin_voucher_setting_price_error}',
+                    digits : '{$Think.lang.admin_voucher_setting_price_error}',
+                    min : '{$Think.lang.admin_voucher_setting_price_error}'
+                },
+                promotion_voucher_storetimes_limit: {
+                    required : '{$Think.lang.admin_voucher_setting_storetimes_error}',
+                    digits : '{$Think.lang.admin_voucher_setting_storetimes_error}',
+                    min : '{$Think.lang.admin_voucher_setting_storetimes_error}'
+                },
+                promotion_voucher_buyertimes_limit: {
+                    required : '{$Think.lang.admin_voucher_setting_buyertimes_error}',
+                    digits : '{$Think.lang.admin_voucher_setting_buyertimes_error}',
+                    min : '{$Think.lang.admin_voucher_setting_buyertimes_error}'
+                }
+            }
+        });
+    });
+</script>

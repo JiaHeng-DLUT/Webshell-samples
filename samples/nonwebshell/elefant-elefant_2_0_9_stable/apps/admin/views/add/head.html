@@ -1,0 +1,60 @@
+<script src="/js/json2.js"></script>
+<script src="/js/jstorage.js"></script>
+<script src="/js/jquery.autosave.js"></script>
+<script src="/js/jquery.verify_values.js"></script>
+<script src="/js/urlify.js"></script>
+<script>
+$(function () {
+	$('#admin-add-form').verify_values ({
+		handler: 'admin/add',
+		callback: function (failed) {
+			// highlight the failed elements
+			for (var i = 0; i < failed.length; i++) {
+				$('#' + failed[i] + '-notice').show ();
+			}
+		},
+		reset: function (fields) {
+			for (var i = 0; i < fields.length; i++) {
+				$('#' + fields[i] + '-notice').hide ();
+			}
+		}
+	});
+	{% foreach failed %}
+	$('#{{ loop_value }}-notice').show ();
+	{% end %}
+
+	$('#admin-add-form').autosave ();
+});
+function webpage_add_title_to_id (f) {
+	if (f.elements.id.value == '') {
+		f.elements.id.value = URLify (f.elements.title.value, 60).replace (/-$/, '');
+	}
+}
+function webpage_show_extra_options (link) {
+	var eo = $('#extra-options');
+	if (eo.css ('display') == 'none') {
+		eo.slideDown ('fast', function () {
+			window.scrollTo (0, 1000);
+		});
+		$(link).find ('.arrow').removeClass ('arrow-off');
+	} else {
+		eo.slideUp ('fast', function () {
+			$(this).css ('display', 'none');
+		});
+		$(link).find ('.arrow').addClass ('arrow-off');
+	}
+	return false;
+}
+function webpage_preview (f) {
+	var t = f.target,
+		a = f.action;
+
+	f.target = 'elefant-preview';
+	f.action = '/admin/preview';
+	f.submit ();
+
+	f.target = t;
+	f.action = a;
+	return false;
+}
+</script>

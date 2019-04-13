@@ -1,0 +1,232 @@
+[
+	{
+		"icon": "home",
+		"title": "首页",
+		"s": "home",
+		"data": [
+			{
+				"icon": "info-circle",
+				"title": "程序信息",
+				"t": "info"
+			}, {
+				"icon": "expeditedssl",
+				"title": "站点状态",
+				"t": "websafe"
+			}
+			, {
+				"icon": "ban",
+				"title": "IP黑名单",
+				"t": "ips"
+			}
+			, {
+				"icon": "shield",
+				"title": "攻击防护",
+				"t": "cache"
+			}
+			, {
+				"icon": "calendar",
+				"title": "后台日志",
+				"t": "logs"
+			}
+			, {
+				"icon": "times-circle-o",
+				"title": "版权去除",
+				"t": "deletepowered"
+			}
+		]
+	}, {
+		"icon": "gears",
+		"title": "全局",
+		"s": "set",
+		"data": [
+			{
+				"icon": "gear",
+				"title": "基本设置",
+				"t": "base"
+			}, {
+				"icon": "navicon",
+				"title": "导航相关",
+				"t": "div"
+			}
+			, {
+				"icon": "inbox",
+				"title": "嵌入相关",
+				"t": "embed"
+			}
+			, {
+				"icon": "tv",
+				"title": "帖子显示",
+				"t": "show"
+			}
+			, {
+				"icon": "edit",
+				"title": "发帖相关",
+				"t": "post"
+			}
+			, {
+				"icon": "sign-in",
+				"title": "注册相关",
+				"t": "reg"
+			}
+			, {
+				"icon": "paw",
+				"title": "SEO优化",
+				"t": "seo"
+			}
+			, {
+				"icon": "money",
+				"title": "积分设置",
+				"t": "integral"
+			}, {
+				"icon": "upload",
+				"title": "上传设置",
+				"t": "upload"
+			}
+		]
+	}, {
+		"icon": "comments-o",
+		"title": "论坛",
+		"s": "forum",
+		"data": [
+			{
+				"icon": "plus-square",
+				"title": "添加新版块",
+				"t": "edit"
+			}, {
+				"icon": "list",
+				"title": "已创建的版块列表",
+				"t": "list"
+			}
+			, {
+				"icon": "list-alt",
+				"title": "帖子批量编辑",
+				"t": "editreads"
+			}
+			, {
+				"icon": "umbrella",
+				"title": "防灌水设置",
+				"t": "waterproof"
+			}
+			, {
+				"icon": "check-square-o",
+				"title": "待审核的帖子",
+				"t": "postcheck"
+			}
+			, {
+				"icon": "recycle",
+				"title": "帖子回收站",
+				"t": "recycle"
+			}
+		]
+	}, {
+		"icon": "users",
+		"title": "用户",
+		"s": "user",
+		"data": [
+			{
+				"icon": "search",
+				"title": "用户列表及搜索",
+				"t": "search"
+			}, {
+				"icon": "user-plus",
+				"title": "添加新用户",
+				"t": "seniormanagement"
+			}
+			, {
+				"icon": "group",
+				"title": "用户组管理",
+				"t": "group"
+			}
+			, {
+				"icon": "user-secret",
+				"title": "系统游客设置",
+				"t": "guest"
+			}
+			, {
+				"icon": "user-circle-o",
+				"title": "用户个人账号安全",
+				"t": "safe"
+			}
+		]
+	}, {
+		"icon": "cubes",
+		"title": "应用",
+		"s": "app",
+		"data": [
+			{
+				"icon": "plug",
+				"title": "本地插件",
+				"t": "&type=app"
+			}, {
+				"icon": "puzzle-piece",
+				"title": "本地模板",
+				"t": "&type=template"
+			}
+		]
+	}, {
+		"icon": "shopping-bag",
+		"title": "商店",
+		"s": "appstore",
+		"data": [
+			{
+				"icon": "plug",
+				"title": "插件商店",
+				"t": "&type=app"
+			}, {
+				"icon": "puzzle-piece",
+				"title": "模板商店",
+				"t": "&type=template"
+			}
+		]
+	}, {
+		"icon": "paper-plane",
+		"title": "性能",
+		"s": "performance",
+		"data": [
+			{
+				"icon": "tachometer",
+				"title": "phpinfo探针",
+				"t": "phpinfo"
+			}, {
+				"icon": "wrench",
+				"title": "预加载设置项",
+				"t": "setload"
+			}, {
+				"icon": "database",
+				"title": "数据表信息",
+				"t": "mysqltable"
+			}
+		]
+	}, {
+		"icon": "cloud",
+		"title": "云端",
+		"s": "app",
+		"data": [
+			{
+				"icon": "mixcloud",
+				"title": "本地设置",
+				"t": "hadskycloudserver&type=app&ml=setting"
+			}, {
+				"icon": "user-secret",
+				"title": "站长中心",
+				"t": "http://www.hadsky.com/index.php?c=app&a=zhanzhang:index&s=websitesetting",
+				"target": "_blank"
+			}
+		]
+	}, {
+		"icon": "wrench",
+		"title": "工单",
+		"s": "order",
+		"data": [
+			{
+				"icon": "question-circle-o",
+				"title": "提交工单",
+				"t": "post"
+			}, {
+				"icon": "list-alt",
+				"title": "工单列表",
+				"t": "list"
+			}
+		]
+	}
+]

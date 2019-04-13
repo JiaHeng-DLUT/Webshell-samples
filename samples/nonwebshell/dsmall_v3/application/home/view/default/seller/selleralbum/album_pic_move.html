@@ -1,0 +1,35 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    {notempty name="class_list"}
+    <form id="category_form" method="post" target="_parent" action="{:url('Selleralbum/album_pic_move')}">
+        <input type="hidden" name="id" value="{$id}" />
+        <dl>
+            <dt>{$Think.lang.album_plist_move_album_change}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="cid" class="w100">
+                    {foreach name="class_list" item="v"  }
+                    <option value="{$v.aclass_id}" class="w100" >{$v.aclass_name}</option>
+                    {/foreach}
+                </select>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.album_plist_move_album_begin}" />
+            </label>
+        </div>
+    </form>
+    {else /}
+    <h2>{$Think.lang.album_plist_move_album_only_one}{$Think.lang.album_class_add}{$Think.lang.album_plist_move_album_only_two} </h2>
+    {/notempty}
+</div>
+<script>
+    $(document).ready(function(){
+        $('#category_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('category_form')
+            }
+        });
+    });
+</script>
+

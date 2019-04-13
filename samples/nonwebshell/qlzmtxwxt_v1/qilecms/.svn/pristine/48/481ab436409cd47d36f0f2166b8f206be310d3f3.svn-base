@@ -1,0 +1,30 @@
+<?php
+// +----------------------------------------------------------------------
+// | QiLeCms 
+// +----------------------------------------------------------------------
+// | Copyright (c) 2017 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author:合肥奇乐网络科技有限公司
+// +----------------------------------------------------------------------
+namespace think;
+// 检测PHP环境
+if(version_compare(PHP_VERSION,'5.6.0','<'))  die('require PHP > 5.6.0 !');
+// 定义应用目录
+define('APP_PATH', __DIR__ . './qilecms/');
+
+define('QL_ROOT',str_replace('\\','/',dirname(__FILE__)).'/');
+
+// extends  
+define('EXTEND_PATH', __DIR__ . './extend/'); 
+
+// 加载框架引导文件
+require __DIR__ . './thinkphp/base.php';
+
+// 支持事先使用静态方法设置Request对象和Config对象
+
+// 执行应用并响应
+Container::get('app', [defined('APP_PATH') ? APP_PATH : ''])
+    ->run()
+    ->send();

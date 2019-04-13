@@ -1,0 +1,180 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{if $isPlatformStore}
+<a class="dssc-btn dssc-btn-green" href="javascript:void(0);" dstype="select_goods"><i class="fa fa-plus-square"></i>{$Think.lang.added_items}</a>
+{else /}
+
+{empty name="booth_quota"}
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionbooth/booth_quota_add')}" title="{$Think.lang.purchased_packages}"><i class="fa fa-money"></i>{$Think.lang.purchased_packages}</a>
+{else}
+
+{if $booth_quota.boothquota_state == 1}
+<a class="dssc-btn dssc-btn-green" href="javascript:void(0);" dstype="select_goods" style="right:100px"><i class="fa fa-plus-square"></i>{$Think.lang.added_items}</a>
+{/if}
+<a class="dssc-btn dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionbooth/booth_renew')}"><i class="fa fa-money"></i>{$Think.lang.subscription_fee}</a>
+{/empty}
+{/if}
+
+
+{/block}
+{block name="seller_main"}
+
+{if $isPlatformStore}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.subscription_fee_notice1}</li>
+        {if config('promotion_bundling_sum') != 0}
+        <li>{$Think.lang.subscription_fee_notice2}{$Think.config.promotion_booth_goods_sum}{$Think.lang.subscription_fee_notice3}</li>
+        {/if}
+    </ul>
+</div>
+{else}
+<!-- 有可用套餐，发布活动 -->
+<div class="alert alert-block mt10">
+    {if empty($booth_quota) || $booth_quota['boothquota_state'] == 0}
+    <strong>{$Think.lang.tips_package_activities}</strong>
+    {else/}
+    <strong>{$Think.lang.set_expiration_time}{$Think.lang.ds_colon}</strong> <strong style=" color:#F00;">{$booth_quota.boothquota_endtime|date="Y-m-d H:i:s",###}</strong>
+    {/if}
+    <ul>
+        <li>{$Think.lang.notice_package_renewal1}</li>
+        <li>2、<strong style="color: red">{$Think.lang.notice_package_renewal2}</strong>。</li>
+        <li>{$Think.lang.notice_package_renewal3}</li>
+        {if config('promotion_bundling_sum') != 0}
+        <li>{$Think.lang.notice_package_renewal4}{$Think.config.promotion_booth_goods_sum}{$Think.lang.subscription_fee_notice3}</li>
+        {/if}
+    </ul>
+</div>
+{/if}
+
+{if $isPlatformStore || (!empty($booth_quota) && $booth_quota['boothquota_state'] == 1)}
+<div nvtype="div_goods_select" class="div-goods-select" style="display: none;">
+    <table class="search-form">
+        <tr><th class="w150"><strong>{$Think.lang.search_store_items}</strong></th><td class="w160"><input dstype="search_goods_name" type="text w150" class="text" name="goods_name" value=""/></td>
+            <td class="w70 tc"><label class="submit-border"><input dstype="btn_search_goods" type="button" value="{$Think.lang.ds_search}" class="submit"/></label></td><td class="w10"></td><td><p class="hint">{$Think.lang.show_all_goods_sold}</p></td>
+        </tr>
+    </table>
+    <div dstype="div_goods_search_result" class="search-result"></div>
+    <a dstype="btn_hide_goods_select" class="close" href="javascript:void(0);">X</a> </div>
+
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="w50"></th>
+            <th class="tl">{$Think.lang.name_commodity}</th>
+            <th class="w180">{$Think.lang.price}</th>
+            <th class="w110">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+
+    <tbody dstype="choose_goods_list">
+        <tr dstype="tr_no_promotion" style="display:none;">
+            <td colspan="20" class="norecord"><div class="no-promotion"><i class="zw"></i><span>{$Think.lang.add_platform_stand_items}</span></div></td>
+        </tr>
+        {notempty name="goods_list"}
+        {foreach name="goods_list" item="val"}
+        <tr class="bd-line">
+            <td></td>
+            <td><div class="pic-thumb"><a href="{$val.url}" target="black"><img src="{$val.goods_image}"/></a></div></td>
+            <td class="tl">
+                <dl class="goods-name">
+                    <dt><a href="{$val.url}" target="_blank">{$val.goods_name}</a></dt>
+                    <dd><a href="{:url('Search/index',['cate_id'=>$val.gc_id])}">{$goodsclass_list[$val['gc_id']]['gc_name']|default=lang('there_no_classification')}</a></dd>
+                </dl>
+            </td>
+            <td class="goods-price">￥{$val.goods_price}</td>
+            <td class="dscs-table-handle">
+                <span><a class="btn-red" href='javascript:void(0);' dstype="del_choosed" data-param="{gid:{$val.goods_id}}"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span></td>
+        </tr>
+        {/foreach}
+        {/notempty}
+    </tbody>
+</table>
+{else/}
+
+<table class="dssc-default-table dssc-promotion-buy">
+    <tbody>
+        <tr>
+            <td colspan="20" class="norecord"><div class="no-promotion"><i class="zw"></i><span>{$Think.lang.buy_package_tips1}<br />{$Think.lang.buy_package_tips2}</span></div></td>
+        </tr>
+    </tbody>
+</table>
+{/if}
+<script>
+    $(function(){
+        // 验证是否已经选择商品
+        choosed_goods();
+
+        // 显示搜索框
+        $('a[dstype="select_goods"]').click(function(){
+            $('div[nvtype="div_goods_select"]').show();
+        });
+        // 隐藏搜索框
+        $('a[dstype="btn_hide_goods_select"]').click(function(){
+            $('div[nvtype="div_goods_select"]').hide();
+        });
+
+        // 搜索商品
+        $('input[dstype="btn_search_goods"]').click(function(){
+            _url = "{:url('Sellerpromotionbooth/booth_select_goods')}";
+            $('div[dstype="div_goods_search_result"]').html('').load(_url, {'goods_name':$('input[dstype="search_goods_name"]').val()});
+        });
+        $('div[nvtype="div_goods_select"]').on('click', '.demo', function(){
+            $('div[dstype="div_goods_search_result"]').load($(this).attr('href'));
+            return false;
+        });
+
+        // 选择商品
+        $('div[nvtype="div_goods_select"]').on('click', 'a[dstype="a_choose_goods"]', function(){
+            _url = "{:url('Sellerpromotionbooth/choosed_goods')}";
+            eval('var data_str = ' + $(this).attr('data-param'));
+            $.getJSON(_url, {gid : data_str.gid}, function(data){
+                if (data.result == 'true') {
+                    // 插入数据
+                    $('<tr class="bd-line"></tr>')
+                        .append('<td></td>')
+                        .append('<td><div class="pic-thumb"><a target="_blank" href="' + data.url + '"><img src="' + data.goods_image + '"></a></div></td>')
+                        .append('<td class="tl"><dl class="goods-name"><dt><a target="_blank" href="' + data.url + '">' + data.goods_name + '</a></dt><dd>' + data.gc_name + '</dd></dl></td>')
+                        .append('<td>' + data.goods_price + '</td>')
+                        .append('<td class="dscs-table-handle"><span><a class="btn-red" href="javascript:void(0);" data-param="{gid:'+ data.goods_id +'}" dstype="del_choosed"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span></td>')
+                        .appendTo('tbody[dstype="choose_goods_list"]');
+                    // 验证是否已经选择商品
+                    choosed_goods();
+                } else {
+                    layer.msg(data.msg);
+                }
+            });
+        });
+
+        // 删除商品
+        $('tbody[dstype="choose_goods_list"]').on('click','a[dstype="del_choosed"]', function(){
+            $this = $(this);
+            _url = "{:url('Sellerpromotionbooth/del_choosed_goods')}";
+            eval('var data_str = ' + $(this).attr('data-param'));
+            $.getJSON(_url, {gid : data_str.gid}, function(data){
+                if (data.result == 'true') {
+                    $this.parents('tr:first').fadeOut("slow",function(){
+                        $(this).remove();
+                        choosed_goods();
+                    });
+                } else {
+                    showErroe(data.msg);
+                }
+            });
+        });
+    });
+
+    // 验证是否已经选择商品
+    function choosed_goods() {
+        if ($('tbody[dstype="choose_goods_list"]').children('tr').length == 1) {
+            $('tr[dstype="tr_no_promotion"]').show();
+        } else {
+            $('tr[dstype="tr_no_promotion"]').hide();
+        }
+    }
+</script>
+
+{/block}
+
+

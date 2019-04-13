@@ -1,0 +1,60 @@
+        <link rel="stylesheet" href="{$Think.BASE_SITE_ROOT}/static/home/default/store/styles/default/css/base.css">
+        <link rel="stylesheet" href="{$Think.BASE_SITE_ROOT}/static/home/default/store/styles/default/css/shop.css">
+        <div class="header">
+            <div class="w1200">
+                <div class="logo store_logo_wrap">
+                    <a href="{:url('Index/index')}">
+                        <img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/>
+                    </a>
+                    <a class="store_logo" href="{:url('Store/index',['store_id'=>$store_info.store_id])}">
+                    <img src="{:get_store_logo($store_info['store_logo'],'store_logo')}" alt="{$store_info.store_name}" title="{$store_info.store_name}" />
+                    </a>
+                </div>
+
+                <div class="dss-nav">
+                    <ul>
+                        {notempty name="store_navigation_list"}
+                        {foreach name="store_navigation_list" item="value" }
+                        {if $value.storenav_url != ''}
+                        <li class=""><a href="{$value.storenav_url}"><span>{$value.storenav_title}<i></i></span></a></li>
+                        {else/}
+                        <li class=""><a href="{:url('Store/article',['store_id'=>$store_info.store_id,'storenav_id'=>$value.storenav_id])}"><span>{$value.storenav_title}<i></i></span></a></li>
+                        {/if}
+                        {/foreach}
+                        {/notempty}
+                    </ul>
+                </div>
+                
+                <div id="search" class="head-search-bar">
+                    <form class="search-form" id="store_search_form" method="get" action="{:url('Store/goods_all')}">
+                        <input type="hidden" value="{$Request.param.store_id}" name="store_id">
+                        <input placeholder="{$Think.lang.search_merchandise_keywords}" name="inkeyword" id="keyword" type="text" class="input-text" value="{$Request.param.inkeyword}" maxlength="60" />
+                        <a href="javascript:$('#store_search_form').submit()" class="fa fa-search input-submit"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--面包屑导航 BEGIN-->
+        {notempty name="nav_link_list"}
+        <div class="dsh-breadcrumb-layout">
+            <div class="dsh-breadcrumb w1200"><i class="fa fa-home"></i>
+                {foreach $nav_link_list as $nav_link} 
+                {empty name="nav_link.link"}
+                <span>{$nav_link.title}</span>
+                {else /}
+                <span><a href="{$nav_link.link}">{$nav_link.title}</a></span><span class="arrow">></span>
+                {/empty}
+                {/foreach}
+            </div>
+        </div>
+        {/notempty}
+        <!--面包屑导航 END-->
+
+        <div class="banner" style="background-image: url({$Think.BASE_SITE_ROOT}/static/home/default/store/styles/default/images/header.jpg)">
+            <div class="w1200"></div>
+        </div>
+        
+
+
+

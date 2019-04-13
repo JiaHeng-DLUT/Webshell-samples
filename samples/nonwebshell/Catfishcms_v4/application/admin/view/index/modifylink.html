@@ -1,0 +1,56 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/uploadify/uploadify.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('Modify the link')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <h4>{:lang('With')}&nbsp;<b><span class="text-danger">*</span></b>&nbsp;{:lang('are required')}</h4>
+            <div class="form-group">
+                <label>{:lang('Friendship link name')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <input type="text" class="form-control" value="{$data.link_name}" name="mingcheng" placeholder="{:lang('Friendship link name')}" autofocus>
+                <input type="hidden" name="linkId" id="linkId" value="{$data.link_id}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Friendship link address')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <input type="text" class="form-control" value="{$data.link_url}" name="dizhi" placeholder="http://">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Open mode')}：</label>
+                <select class="form-control" name="dakai">
+                    <option value="_blank"{if condition="$data.link_target eq '_blank'"} selected{/if}>{:lang('Opens as a new window')}</option>
+                    <option value="_self"{if condition="$data.link_target eq '_self'"} selected{/if}>{:lang('The original window opens')}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Friendship link description')}：</label>
+                <textarea class="form-control" rows="3" name="miaoshu">{$data.link_description}</textarea>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether the link is displayed on the home page')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="shouye"{if condition="$data.link_location eq 1"} checked{/if}> {:lang('Home Link')}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Link icon')}：</label>
+                <img src="{$domain}public/common/images/default-thumbnail.png" class="img-thumbnail img-responsive" id="linkImg" style="width: 100px; height: 50px;">
+                <input type="hidden" value="{$data.link_image}" name="tubiao" id="tubiao">
+                <p class="help-block">{:lang('Text links do not upload, it is recommended to upload the picture ratio: 100 × 50 pixel picture, otherwise the picture will be distorted!')}</p>
+                <div id="upload"></div>
+            </div>
+            <div class="text-center">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default" id="baocun">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div><br><br>
+<div class="hidden" id="webroot">{$domain}</div>
+<div class="hidden" id="buttonText">{:lang('Select Image')}</div>
+<script type="text/javascript" src="{$domain}public/common/uploadify/jquery.uploadify.js"></script>
+<script src="{$domain}public/common/js/addLinks.js"></script>
+{include file="index/footer" /}

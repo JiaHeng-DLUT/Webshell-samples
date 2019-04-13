@@ -1,0 +1,20 @@
+﻿{@SL_在线客服}
+<link href="{@SL_安装目录}css/language-selector.css" rel="stylesheet" type="text/css" />
+<div id="lang_sel" style="right:100px;POSITION: fixed;top:20px;z-index:10000; ">
+{@SL_语言按钮}
+</div>
+  <div id="header">
+            
+            <div id="header_in">
+                <a href="{@SL_首页链接}" class="logo"><img src="{@SL_安装目录}{@SL_网站logo}"  style="margin:{@SL_logoy}px 0 0 {@SL_logox}px;" /></a>
+                <div id="nav"> <div class="menu-di_er_dai_qi_ye_zhu_ti_dao_hang-container">
+				<ul id="menu-di_er_dai_qi_ye_zhu_ti_dao_hang" class="menu_nav">
+				
+				{$getmenu(<li id="menu-item-%主菜单ID%" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-%主菜单ID%"><a href="%主菜单链接%">%主菜单标题%</a>%子菜单%</li>,<li id="menu-item-%子菜单ID%" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-%子菜单ID%"><a href="%子菜单链接%">%子菜单标题%</a></li>,<ul class="sub-menu">%子菜单样式%</ul>)}
+				
+</ul></div> </div>
+             
+            </div>
+            
+            
+		</div>

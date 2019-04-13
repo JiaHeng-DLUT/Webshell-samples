@@ -1,0 +1,63 @@
+<form name="form_s" method="get" action="index.php">
+	<input type="hidden" name="c" value="app" />
+	<input type="hidden" name="a" value="superadmin:index" />
+	<input type="hidden" name="s" value="forum" />
+	<input type="hidden" name="t" value="editreads" />
+	<div class="pk-row pk-padding-10 pk-text-bold pk-text-center" style="border:solid 1px #EEEEEE;border-bottom:none">
+		<div class="pk-w-sm-1 pk-padding-top-5 pk-hide-sm" style="border-right:solid 1px #EEEEEE">筛选</div>
+		<div class="pk-w-sm-2 pk-w-md-1">
+			<select name="table" class="pk-textbox pk-textbox-noshadow" data-value="{$_G['GET']['TABLE']}" onclick="if(this.value=='reply'){$('select[name=sortid]').prop('disabled',true)}else{$('select[name=sortid]').prop('disabled',false)}">
+				<option value="read">文章</option>
+				<option value="reply">回复</option>
+			</select>
+		</div>
+		<div class="pk-w-sm-3 pk-w-md-2">
+			<select name="sortid" class="pk-textbox pk-textbox-noshadow" data-value="{$_G['GET']['SORTID']}">
+				<option value="">请选择版块</option>
+				{$_G['GET']['READSORTHTML']}
+			</select>
+		</div>
+		<div class="pk-w-sm-2 pk-w-md-1">
+			<input type="text" class="pk-textbox pk-textbox-noshadow" name="uid" value="{$_G['GET']['UID']}" placeholder="UID" autocomplete="off">
+		</div>
+		<div class="pk-w-sm-2 pk-padding-right-0 pk-hide-sm">
+			<input type="text" class="pk-textbox pk-textbox-noshadow pk-border-right-none" name="date1" value="{$_G['GET']['DATE1']}" placeholder="起始日期yyyymmdd" autocomplete="off">
+		</div>
+		<div class="pk-w-sm-2 pk-padding-left-0 pk-hide-sm">
+			<input type="text" class="pk-textbox pk-textbox-noshadow pk-border-left-none" name="date2" value="{$_G['GET']['DATE2']}" placeholder="结束日期yyyymmdd" autocomplete="off">
+		</div>
+		<div class="pk-w-sm-5 pk-w-md-3">
+			<input type="submit" class="pk-btn pk-btn-primary" value="确定">
+			<input type="button" class="pk-btn pk-btn-success pk-hide-sm" onclick="pkalert($('#newsortiddiv').html(),'移动至新版块','$(\'form[name=form_list]\').attr(\'action\',\'index.php?c=app&a=superadmin:index&s=moveread&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=read&sortid={$_G['GET']['SORTID']}&uid={$_G['GET']['UID']}&date1={$_G['GET']['DATE1']}&date2={$_G['GET']['DATE2']}\');form_list.submit()')" value="移动">
+			<input type="button" class="pk-btn pk-btn-danger" onclick="pkalert('确认删除已选项目？','提示','form_list.submit()')" value="删除">
+		</div>
+	</div>
+</form>
+<div id="newsortiddiv" class="pk-hide">
+	<div class="pk-row">
+		<div class="pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">移动至</div>
+		<div class="pk-w-sm-8">
+			<select id="newsortid" class="pk-textbox pk-textbox-noshadow" onchange="form_list.sortid.value=this.value">
+				<option value="">请选择版块</option>
+				{$_G['GET']['READSORTHTML']}
+			</select>
+		</div>
+	</div>
+</div>
+<div class="pk-row pk-padding-10 pk-text-bold pk-text-center" style="border: solid 1px #EEEEEE;">
+	<div class="pk-w-sm-1" style="border-right:solid 1px #EEEEEE">
+		<input type="checkbox" onclick="$('input[name=\'ids[]\']').prop('checked',this.checked)" />
+	</div>
+	<div class="pk-w-sm-2" style="border-right:solid 1px #EEEEEE">版块</div>
+	<div class="pk-w-sm-4" style="border-right:solid 1px #EEEEEE">标题</div>
+	<div class="pk-w-sm-2" style="border-right:solid 1px #EEEEEE">作者</div>
+	<div class="pk-w-sm-3">时间</div>
+</div>
+<form name="form_list" method="post" action="index.php?c=app&a=superadmin:index&s=delete&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table={$_G['GET']['TABLE']}&sortid={$_G['GET']['SORTID']}&uid={$_G['GET']['UID']}&date1={$_G['GET']['DATE1']}&date2={$_G['GET']['DATE2']}"><input type="hidden" name="delcmd" value="1"><input type="hidden" name="sortid" value="0">{$_G['TEMP']['LIST']}</form>
+<div class="pk-row pk-padding-10 pk-text-sm pk-text-center">
+	<div class="pk-w-sm-12">
+		<a href="index.php?c=app&a=superadmin:index&s=forum&t=editreads&table={$_G['GET']['TABLE']}&sortid={$_G['GET']['SORTID']}&uid={$_G['GET']['UID']}&date1={$_G['GET']['DATE1']}&date2={$_G['GET']['DATE2']}&page={Cnum($_G['TEMP']['PAGE']-1)}">上一页</a>
+		&nbsp;{$_G['TEMP']['PAGE']}&nbsp;
+		<a href="index.php?c=app&a=superadmin:index&s=forum&t=editreads&table={$_G['GET']['TABLE']}&sortid={$_G['GET']['SORTID']}&uid={$_G['GET']['UID']}&date1={$_G['GET']['DATE1']}&date2={$_G['GET']['DATE2']}&page={Cnum($_G['TEMP']['PAGE']+1)}">下一页</a>
+	</div>
+</div>

@@ -1,0 +1,131 @@
+﻿<style>
+#pages7{ position:relative; overflow:hidden; background:url("{@SL_安装目录}{@SL_第七栏背景}");padding-top:70px; }
+</style>
+<div id="footer">
+ <div id="pages7" class="page">
+ 
+    <div class="contact">
+         <div class="contact_left">
+           <span>
+           <a href="{@SL_安装目录}?type=contact">如何到达</a>
+           <img src="{@SL_安装目录}{@SL_地图图片}" />
+           </span>
+           <div class="wenzi">
+           <b>contact us</b>
+           <a>联系我们</a>
+           <p>{@SL_联系方式}</p>
+           <em>Pay attention to WeChat</em>    
+           <img src="{@SL_安装目录}{@SL_微信二维码}" />
+           </div>
+           <p>{@SL_版权文字} {@SL_统计代码}</p>
+         </div>
+         
+          <div class="contact_right">
+           <b>Leave a message</b>
+           <a>在线留言</a>
+                                                         <form name="mailform" method="post" action="{@SL_安装目录}booksave.asp" class="ludou_reg">
+ 	    <p>
+      <label for="mail_phone">Title</label>
+        <input type="text" name="G_title" id="mail_phone" class="input" value="" size="25" />
+      
+    </p>
+    <p>
+      <label for="mail_ame">Name*</label>
+        <input type="text" name="G_name" id="mail_ame" class="input" value="" size="20" />
+      
+    </p>
+
+    <p>
+      <label for="mail_phone">Tel*</label>
+        <input type="text" name="G_phone" id="mail_phone" class="input" value="" size="25" />
+      
+    </p>
+   
+    <p>
+      <label for="mail_email">E-mail*</label>
+        <input type="text" name="G_mail" id="mail_email" class="input" value="" size="25" />
+      
+    </p>
+   
+       <p class="tex">
+      <label for="mail_text">Message*</label>
+       <textarea id="mail_text" cols="30" rows="5" name="G_msg"></textarea>
+    </p>
+   
+   
+    <p class="submit">
+      <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="SEND" />
+    </p>
+   
+    
+</form>             
+          </div>
+           <div class="link">
+        <ul class="link-menu2">
+           <li><a>Friendly Link：</a></li>
+ {$link_list(<li><a href="%友链网址%">%友链网站%</a></li>)}
+        
+        </ul>
+    
+    </div>
+    
+    </div>
+  
+ 
+ 
+ </div></div>
+
+
+<script type="text/javascript">
+
+
+function wptdb_isIE() {
+return /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
+}
+
+function wptdb_getBrowserWidthHeight(w_or_h) {
+var intH = 0;
+var intW = 0;
+if( typeof window.innerWidth  == 'number' ) {
+  intH = window.innerHeight;
+  intW = window.innerWidth;
+} else if(document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+  intH = document.documentElement.clientHeight;
+  intW = document.documentElement.clientWidth;
+} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+  intH = document.body.clientHeight;
+  intW = document.body.clientWidth;
+}
+if (w_or_h == 'w') {
+return parseInt(intW);
+}
+if (w_or_h == 'h') {
+return parseInt(intH);
+}
+}
+
+function wptdb_getScrollXY(x_or_y) {
+  var scrOfX = 0, scrOfY = 0;
+  if( typeof( window.pageYOffset ) == 'number' ) {
+    //Netscape compliant
+    scrOfY = window.pageYOffset;
+    scrOfX = window.pageXOffset;
+  } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+    //DOM compliant
+    scrOfY = document.body.scrollTop;
+    scrOfX = document.body.scrollLeft;
+  } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+    //IE6 standards compliant mode
+    scrOfY = document.documentElement.scrollTop;
+    scrOfX = document.documentElement.scrollLeft;
+  }
+  if (x_or_y == 'x') {
+  return scrOfX;
+  }
+  if (x_or_y == 'y') {
+  return scrOfY;
+  }
+}
+
+
+</script>

@@ -1,0 +1,9 @@
+﻿.form_container{width:100%; max-width: 800px; margin: 0px auto; font-size:15px; height:350px; }
+.form_container .left{width:15%;min-width:100px;float: left; text-align: center; padding: 5px 0}
+.form_container .right{width:85%;min-width:300px;float:left; margin-bottom: 10px;}
+.form_container input[type="text"]{width: 95%;padding: 10px;border-radius:5px; border: #CCCCCC solid 1px; margin-left:10px;}
+.form_container textarea{width: 95%; height: 100px; padding: 10px;border-radius:5px; border: #CCCCCC solid 1px; margin-left:10px;}
+.form_container button[type="submit"]{background: #ff9900; padding: 5px 10px;border-radius:5px;border: #ff9900 solid 1px; color: #ffffff; margin-left:10px;cursor:pointer}
+.form_container button[type="submit"]:hover{background: #FFFFFF; color: #ff9900;}
+.form_container button[type="reset"]{background: #0099ff; padding: 5px 10px;border-radius:5px;border: #0099ff solid 1px; color: #ffffff; margin-left:5px;cursor:pointer}
+.form_container button[type="reset"]:hover{background: #FFFFFF; color: #0099ff;}

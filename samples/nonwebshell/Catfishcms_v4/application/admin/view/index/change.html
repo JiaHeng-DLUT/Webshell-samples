@@ -1,0 +1,28 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Change password')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <div class="form-group">
+                <label>{:lang('Old password')}：</label>
+                <input type="password" class="form-control" name="oldPassword" value="" placeholder="{:lang('Old password')}" autofocus required>
+            </div>
+            <div class="form-group">
+                <label>{:lang('New password')}：</label>
+                <input type="password" class="form-control" name="newPassword" value="" placeholder="{:lang('New password')}" required>
+                <p class="help-block">{:lang('Password length can not be less than 8 characters')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Confirm the new password')}：</label>
+                <input type="password" class="form-control" name="repeat" value="" placeholder="{:lang('Confirm the new password')}" required>
+            </div>
+            <div class="text-center">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+{include file="index/footer" /}

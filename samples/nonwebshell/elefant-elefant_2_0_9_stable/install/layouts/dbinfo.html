@@ -1,0 +1,25 @@
+[Database]
+
+; Database settings go here. Driver must be a valid PDO driver.
+; For examples of various database configurations, visit:
+; http://www.elefantcms.com/wiki/Database-configuration-examples
+
+{% if driver == 'sqlite' %}
+master[driver] = sqlite
+master[file] = "conf/site.db"
+{% else %}
+master[driver] = {{ driver }}
+
+master[host] = "{{ host }}:{{ port }}"
+master[name] = {{ name }}
+
+master[user] = {{ user }}
+
+master[pass] = "{{ pass|none }}"
+{% end %}
+
+; The database table name prefix.
+
+prefix = "{{ prefix }}"
+
+[Mongo]

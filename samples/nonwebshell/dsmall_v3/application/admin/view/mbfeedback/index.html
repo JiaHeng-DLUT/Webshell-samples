@@ -1,0 +1,81 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>意见反馈</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <div class="fixed-empty"></div>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>来自用户的反馈</li>
+        </ul>
+    </div>
+    
+    <form method='post' id="form_link">
+        
+        <table class="ds-default-table nobdb">
+            <thead>
+            <tr class="thead">
+                <th>&nbsp;</th>
+                <th>{$Think.lang.feedback_index_content}</th>
+                <th>用户名</th>
+                <th>{$Think.lang.feedback_index_time}</th>
+                <th>{$Think.lang.feedback_index_from}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="mbfeedback_list"}
+            {foreach name="mbfeedback_list" item="v"}
+            <tr class="hover edit">
+                <td class="w24"><input type="checkbox" name="del_id[]" value="{$v.mbfb_id}" class="checkitem"></td>
+                <td width="705px">{$v.mbfb_content}</td>
+                <td>{$v.member_name}</td>
+                <td>{:date('Y-m-d H:i:s',$v.mbfb_time)}</td>
+                <td>{$v.mbfb_type}</td>
+            </tr>
+           {/foreach}
+           {else /}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="mbfeedback_list"}
+            <tr class="tfoot" id="dataFuncs">
+                <td><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                <td colspan="16" id="batchAction"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp; <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                    </td>
+            </tr>
+            {/notempty}
+            </tfoot>
+
+        </table>
+        {$show_page}
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    
+    function submit_delete(ids_str) {
+        _uri = ADMINSITEURL + "/Mbfeedback/del.html?feedback_id=" + ids_str;
+        dsLayerConfirm(_uri, '{$Think.lang.ds_ensure_del}');
+    }
+
+</script>

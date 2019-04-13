@@ -1,0 +1,24 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">网站文件管理器</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">功能开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_FILESMANAGER_LOAD']}" name="app_filesmanager_load">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+			<a target="_blank" href="index.php?c=app&a=filesmanager:index" class="pk-btn pk-btn-danger">进入应用</a>
+		</div>
+	</div>
+</form>

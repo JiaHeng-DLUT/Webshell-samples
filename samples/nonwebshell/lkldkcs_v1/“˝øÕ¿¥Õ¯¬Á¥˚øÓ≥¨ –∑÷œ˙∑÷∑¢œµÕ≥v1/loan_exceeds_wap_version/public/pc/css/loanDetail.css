@@ -1,0 +1,36 @@
+.name{
+    padding-bottom: 45px;
+}
+.nameLeft img{
+    width: 80px;
+    height: 80px;
+}
+.nameLeft .product_name{
+    font-size: 20px;
+	font-weight: bold;
+	color: #202124;
+}
+.nameLeft .product_text{
+    font-size: 16px;
+	color: #202124;
+}
+.product_slogn{
+    font-size: 14px;
+	color: #acacac;
+}
+
+
+.apply span{
+    font-size: 16px;
+	color: #202124;
+}
+.apply button{
+    width: 156px;
+    height: 39px;
+    line-height: 39px;
+	background-color: #2f75ec;
+	border-radius: 19px;
+    border: solid 2px #2a82ef;
+    color: #fff;
+}
+

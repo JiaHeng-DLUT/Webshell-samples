@@ -1,0 +1,305 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<div class="dssc-index">
+  <div class="top-container">
+    <div class="basic-info">
+      <dl class="dssc-seller-info">
+        <dt class="seller-name">
+          <h3>{$Think.session.seller_name}</h3>
+          <h5>({$Think.lang.user_name}：{$Think.session.member_name})</h5>
+        </dt>
+        <dd class="store-logo">
+          <p><img src="{:get_store_logo($store_info.store_logo,'store_logo')}"/></p>
+          <a href="{:url('Sellersetting/setting')}"><i class="fa fa-pencil-square"></i>{$Think.lang.edit_store_settings}</a> </dd>
+        <dd class="seller-permission">{$Think.lang.administrative_rights}：<strong>{$Think.session.seller_group_name}</strong></dd>
+        <dd class="seller-last-login">{$Think.lang.last_login}：<strong>{$Think.session.seller_last_logintime}</strong> </dd>
+        <dd class="store-name">{$Think.lang.store_name}{$Think.lang.ds_colon}<a href="{:url('Store/index',['store_id'=>$Think.session.store_id])}" >{$store_info.store_name}</a></dd>
+        <dd class="store-grade">{$Think.lang.store_store_grade}{$Think.lang.ds_colon}<strong>{$store_info.grade_name}</strong></dd>
+        <dd class="store-validity">{$Think.lang.store_validity}{$Think.lang.ds_colon}<strong>{$store_info.store_endtime_text}
+          {if $store_info.reopen_tip}
+          <a href="{:url('Sellerinfo/reopen')}">{$Think.lang.immediate_renewal}</a>
+          {/if}
+          </strong>
+        </dd>
+      </dl>
+{if !session('is_platform_store')}
+      <div class="detail-rate">
+        <h5> <strong>{$Think.lang.store_dynamic_evaluation}{$Think.lang.ds_colon}</strong> {$Think.lang.compared_industry} </h5>
+        <ul>
+          {foreach name="$store_info.store_credit" item="value" }
+          <li> {$value.text}<span class="credit">{$value.credit} {$Think.lang.credit_unit}</span> <span class="{$value.percent_class|default=''}"><i></i>{$value.percent_text|default=''}<em>{$value.percent|default=''}</em></span> </li>
+          {/foreach}
+        </ul>
+      </div>
+{/if}
+    </div>
+  </div>
+  <div class="seller-cont">
+    <div class="container type-a">
+      <div class="hd">
+        <h3>{$Think.lang.store_owner_info}</h3>
+        <h5>{$Think.lang.store_notice_info}</h5>
+      </div>
+      <div class="content">
+        <dl class="focus">
+          <dt>{$Think.lang.store_product_release}：</dt>
+          <dd title="{$Think.lang.store_released}/{$Think.lang.store_publish_goods}"><em id="ds_goodscount">0</em>&nbsp;/&nbsp;
+            {if $store_info.grade_goodslimit != 0}
+            {$store_info.grade_goodslimit}
+            {else/}
+            {$Think.lang.store_unlimited}
+            {/if}
+          </dd>
+          <dt>{$Think.lang.store_publish_album}{$Think.lang.ds_colon}</dt>
+          <dd><em id="ds_imagecount">0</em>&nbsp;/&nbsp;{if $store_info.grade_albumlimit >0 }{$store_info.grade_albumlimit}{else/}{$Think.lang.store_unlimited}{/if}</dd>
+        </dl>
+        <ul>
+          <li><a href="{:url('Sellergoodsonline/index')}">{$Think.lang.store_goods_selling} <strong id="ds_online"></strong></a></li>
+          {if config('goods_verify')}
+          <li><a href="{:url('Sellergoodsoffline/index',['type'=>'wait_verify','verify'=>'10'])}" title="{$Think.lang.store_inform30}">{$Think.lang.release_pending_platform_audit} <strong id="ds_waitverify"></strong></a></li>
+          <li><a href="{:url('Sellergoodsoffline/index',['type'=>'wait_verify','verify'=>'0'])}" title="{$Think.lang.store_inform30}">{$Think.lang.platform_audit_failed} <strong id="ds_verifyfail"></strong></a></li>
+          {/if}
+          <li><a href="{:url('Sellergoodsoffline/index')}"> {$Think.lang.store_goods_storage}<strong id="ds_offline"></strong></a></li>
+          <li><a href="{:url('Sellergoodsoffline/index',['type'=>'lock_up'])}"> {$Think.lang.store_goods_show0}<strong id="ds_lockup"></strong></a></li>
+          <li><a href="{:url('Sellerconsult/index',['type'=>'to_reply'])}">{$Think.lang.store_to_consult} <strong id="ds_consult"></strong></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container type-b">
+      <div class="hd">
+        <h3>{$Think.lang.merchant_help}</h3>
+        <h5></h5>
+      </div>
+      <div class="content">
+          <ul>
+              {notempty name="help_list"}
+              {foreach name="help_list" item="val" }
+              <li><i class="fa fa-info-circle"></i><a target="_blank" href="{:url('Showhelp/index',['t_id'=>$val.helptype_id])}" title="{$val.helptype_name}">{$val.helptype_name}</a></li>
+              {/foreach}
+              {/notempty}
+          </ul>
+        <dl>
+          <dt>{$Think.lang.store_site_info}</dt>
+          {notempty name="phone_array"}
+          {foreach name="phone_array" item="val" key="key" }
+          <dd>{$Think.lang.store_site_phone}{$Think.lang.ds_colon}{$val}</dd>
+          {/foreach}
+          {/notempty}
+          <dd>{$Think.lang.store_site_email}{$Think.lang.ds_colon}{$Think.config.site_email}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="container type-a">
+      <div class="hd">
+        <h3>{$Think.lang.store_business}</h3>
+        <h5>{$Think.lang.store_business_info}</h5>
+      </div>
+      <div class="content">
+        <dl class="focus">
+          <dt>{$Think.lang.store_order_info}{$Think.lang.ds_colon}</dt>
+          <dd><a href="{:url('Sellerorder/index')}"> {$Think.lang.store_order_progressing}<strong id="ds_progressing"></strong></a></dd>
+          <dt>{$Think.lang.store_complain_info}{$Think.lang.ds_colon}</dt>
+          <dd><a href="{:url('Sellercomplain/index',['select_complain_state'=>'1'])}">{$Think.lang.store_complain} <strong id="ds_complain"></strong></a></dd>
+        </dl>
+        <ul>
+          <li><a href="{:url('Sellerorder/index',['state_type'=>'state_new'])}">{$Think.lang.store_order_pay} <strong id="ds_payment"></strong></a></li>
+          <li><a href="{:url('Sellerorder/index',['state_type'=>'state_pay'])}">{$Think.lang.store_shipped} <strong id="ds_delivery"></strong></a></li>
+          <li><a href="{:url('Sellerrefund/index',['lock'=>'2'])}"> {$Think.lang.pre_sale_refund}<strong id="ds_refund_lock"></strong></a></li>
+          <li><a href="{:url('Sellerrefund/index',['lock'=>'1'])}"> {$Think.lang.after_sale_refund}<strong id="ds_refund"></strong></a></li>
+          <li><a href="{:url('Sellerreturn/index',['lock'=>'2'])}"> {$Think.lang.return_before_sale}<strong id="ds_return_lock"></strong></a></li>
+          <li><a href="{:url('Sellerreturn/index',['lock'=>'1'])}"> {$Think.lang.return_after_sale}<strong id="ds_return"></strong></a></li>
+          <li><a href="{:url('Sellerbill/index',['bill_state'=>'1'])}"> {$Think.lang.bill_confirmed}<strong id="ds_bill_confirm"></strong></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container type-c">
+      <div class="hd">
+        <h3>{$Think.lang.sales_statistics}</h3>
+        <h5>{$Think.lang.statistics_store_order_quantity}</h5>
+      </div>
+      <div class="content">
+        <table class="dssc-default-table">
+          <thead>
+            <tr>
+              <th class="w50">{$Think.lang.store_item}</th>
+              <th>{$Think.lang.store_order_quantity}</th>
+              <th class="w100">{$Think.lang.store_order_amount}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bd-line">
+              <td>{$Think.lang.store_yesterday_sales_volume}</td>
+              <td>{if empty($daily_sales['ordernum'])}--{else/}{$daily_sales.ordernum}{/if}</td>
+              <td>{if empty($daily_sales['orderamount'])}--{else/}{$daily_sales.orderamount}{/if}</td>
+            </tr>
+            <tr class="bd-line">
+              <td>{$Think.lang.monthly_sales}</td>
+              <td>{if empty($monthly_sales['ordernum'])}--{else/}{$monthly_sales.ordernum}{/if}</td>
+              <td>{if empty($monthly_sales['orderamount'])}--{else/}{$monthly_sales.orderamount}{/if}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="container type-c h500">
+      <div class="hd">
+        <h3>{$Think.lang.single_product_sales_rank}</h3>
+        <h5>{$Think.lang.grasp_supply_commodities}</h5>
+      </div>
+      <div class="content">
+        <table class="dssc-default-table">
+          <thead>
+            <tr>
+              <th>{$Think.lang.store_ranking}</th>
+              <th class="tl" colspan="2">{$Think.lang.commodity_information}</th>
+              <th>{$Think.lang.sales_volume}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notempty name="goods_list"}
+            {php}$i = 0;{/php}
+            {foreach name="goods_list" item="val"}
+            {php}$i++;{/php}
+            <tr class="bd-line">
+              <td class="w50"><strong>{$i}</strong></td>
+              <td class="w60"><div class="pic-thumb"><a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank"><img alt="{$val.goods_name}" src="{:goods_thumb($val, '240')}"></a></div></td>
+              <td><dl class="goods-name">
+                  <dt><a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank">{$val.goods_name}</a></dt>
+                </dl></td>
+              <td class="w60">{$val.goodsnum}</td>
+            </tr>
+            {/foreach}
+            {/notempty}
+          </tbody>
+        </table>
+      </div>
+    </div>
+      <div class="container type-d h500">
+          <div class="hd">
+              <h3>{$Think.lang.store_market_info}</h3>
+              <h5>{$Think.lang.promotions_boost_sales}</h5>
+          </div>
+          <div class="content">
+              {if config('groupbuy_allow') == 1}
+              <dl class="tghd">
+                  <dt class="p-name"> <a href="{:url('Sellergroupbuy/index')}">{$Think.lang.store_groupbuy}</a></dt>
+                  <dd class="p-ico fa fa-shopping-bag"></dd>
+                  <dd class="p-hint">
+                      {if session('is_platform_store') || !empty($groupquota_info)}
+                      <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                      {else/}
+                      <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                      {/if}
+                  </dd>
+                  <dd class="p-info">{$Think.lang.store_groupbuy_info}</dd>
+                  {notempty name="groupquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$groupquota_info.groupbuyquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              {/if}
+              {if intval(config('promotion_allow')) == 1}
+              <dl class="xszk">
+                  <dt class="p-name"><a href="{:url('Sellerpromotionxianshi/index')}">{$Think.lang.store_xianshi}</a></dt>
+                  <dd class="p-ico fa fa-clock-o"></dd>
+                  <dd class="p-hint">
+                      <span>
+                          {if session('is_platform_store') || !empty($xianshiquota_info)}
+                          <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                          {else/}
+                          <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                          {/if}
+                      </span>
+                  </dd>
+                  <dd class="p-info">{$Think.lang.store_xianshi_info}</dd>
+                  {notempty name="xianshiquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$xianshiquota_info.xianshiquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              <dl class="mjs">
+                  <dt class="p-name"><a href="{:url('Sellerpromotionmansong/index')}">{$Think.lang.store_mansong}</a></dt>
+                  <dd class="p-ico fa fa-gift"></dd>
+                  <dd class="p-hint"><span>
+                          {if session('is_platform_store') || !empty($mansongquota_info)}
+                          <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                          {else/}
+                          <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                          {/if}
+                      </span></dd>
+                  <dd class="p-info">{$Think.lang.store_mansong_info}</dd>
+                  {notempty name="mansongquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$mansongquota_info.mansongquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              <dl class="zhxs">
+                  <dt class="p-name"><a href="{:url('Sellerpromotionbundling/index')}">{$Think.lang.store_bundling}</a></dt>
+                  <dd class="p-ico fa fa-cc-discover "></dd>
+                  <dd class="p-hint"><span>
+                          {if session('is_platform_store') || !empty($binglingquota_info)}
+                          <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                          {else/}
+                          <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                          {/if}
+                      </span></dd>
+                  <dd class="p-info">{$Think.lang.store_bundling_info}</dd>
+                  {notempty name="binglingquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$binglingquota_info.blquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              <dl class="tjzw">
+                  <dt class="p-name"><a href="{:url('Sellerpromotionbooth/index')}">{$Think.lang.store_recommended_booth}</a></dt>
+                  <dd class="p-ico fa fa-flag-o"></dd>
+                  <dd class="p-hint"><span>
+                          {if session('is_platform_store') || !empty($boothquota_info)}
+                          <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                          {else/}
+                          <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                          {/if}
+                      </span></dd>
+                  <dd class="p-info">{$Think.lang.store_activity_info}</dd>
+                  {notempty name="boothquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$boothquota_info.boothquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              {/if}
+
+              {if config('voucher_allow') == 1}
+              <dl class="djq">
+                  <dt class="p-name"><a href="{:url('Sellervoucher/templatelist')}">{$Think.lang.store_voucher}</a></span></dt>
+                  <dd class="p-ico fa fa-cny"></dd>
+                  <dd class="p-hint"><span>
+                          {if session('is_platform_store') || !empty($voucherquota_info)}
+                          <i class="fa fa-check-circle"></i>{$Think.lang.store_open}
+                          {else/}
+                          <i class="fa fa-minus-circle"></i>{$Think.lang.store_not_open}
+                          {/if}
+                      </span></dd>
+                  <dd class="p-info">{$Think.lang.store_voucher_info}</dd>
+                  {notempty name="voucherquota_info"}
+                  <dd class="p-point">({$Think.lang.store_renew_charge}：{$voucherquota_info.voucherquota_endtime|date="Y-m-d",###})</dd>
+                  {/notempty}
+              </dl>
+              {/if}
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+$(function(){
+	var timestamp=Math.round(new Date().getTime()/1000/60);//异步URL一分钟变化一次
+    $.getJSON(HOMESITEURL+'/Seller/statistics.html?rand='+timestamp, null, function(data){
+        if (data == null) return false;
+        for(var a in data) {
+            if(data[a] != 'undefined' && data[a] != 0) {
+                var tmp = '';
+                if (a != 'goodscount' && a != 'imagecount') {
+                    $('#ds_'+a).parents('a').addClass('num');
+                }
+                $('#ds_'+a).html(data[a]);
+            }
+        }
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seo['title']}</title>
+<meta name="keywords" content="{$seo['keywords']}" />
+<meta name="description" content="{$seo['description']}" />
+<link type="text/css" rel="stylesheet" href="{$pe['host_tpl']}css/style.css" />
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/global.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/layer/layer.js"></script>
+</head>
+<body style="background:#fff;padding:10px;">
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="120">商品信息</td>
+	<td>
+		<!--<img src="{pe_thumb($info['product_logo'], 100, 100)}" />-->
+		<a href="{pe_url('product-'.$info['product_id'])}" target="_blank" class="cblue">{$info['product_name']}</a>
+	</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">退款类型</td>
+	<td>
+		<!--{if($act == 'add'):}-->
+		<!--{foreach($ini['refund_type'] as $k=>$v):}-->
+		<!--{if($k == 2 && $order['order_state'] == 'wsend')continue;}-->
+		<label for="refund_type_{$k}" class="mar20">
+			<input type="radio" name="refund_type" value="{$k}" id="refund_type_{$k}" <!--{if($info['refund_type']==$k):}-->checked="checked"<!--{endif;}--> class="inputfix" /> {$v}
+		</label>
+		<!--{endforeach;}-->
+		<!--{else:}-->
+		{$ini['refund_type'][$info['refund_type']]}
+		<!--{endif;}-->
+	</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">商品退款</td>
+	<td><input type="text" name="refund_product_money" value="{$info['refund_product_money']}" class="inputall input150" /> 元 <span class="c999 mal10">（最多可退：{$refund_maxmoney['product']}元）</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">运费退款</td>
+	<td><input type="text" name="refund_wl_money" value="{$info['refund_wl_money']}" class="inputall input150" /> 元 <span class="c999 mal10">（最多可退：{$refund_maxmoney['wl']}元）</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">申请原因</td>
+	<td><textarea name="refund_text" style="width:350px; height:65px; resize:none">{$info['refund_text']}</textarea></td>
+</tr>
+</table>
+<div class="mat20" style="text-align:center">
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="hidden" name="pesubmit" />
+	<input type="button" value="提 交" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		pe_submit('{pe_nowurl()}', function(json){
+			if (json.result) pe_open('dialog', 1000);
+		})
+	})
+})
+</script>
+</body>
+</html>

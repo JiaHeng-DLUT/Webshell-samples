@@ -1,0 +1,15 @@
+<div class="dssc-form-default">
+    <dl>
+        <dt>{$Think.lang.send_time}{$Think.lang.ds_colon}</dt>
+        <dd>
+            <p>{:date('Y-m-d H:i:d',$msg_list.storemsg_addtime)}</p>
+        </dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.message_content}{$Think.lang.ds_colon}</dt>
+        <dd>
+            <p>{$msg_list.storemsg_content}</p>
+        </dd>
+    </dl>
+    <div class="bottom pt10 pb10"><a class="dssc-btn" href="javascript:void(0);" onclick="CUR_DIALOG.close();">{$Think.lang.close_window}</a></div>
+</div>

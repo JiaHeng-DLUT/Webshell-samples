@@ -1,0 +1,62 @@
+<!--
+	<?php
+		$_G['TEMPLATE']['BODY']='filesmanager:edit';
+	?>
+-->
+<a name="workarea"></a>
+<div class="pk-container">
+	<div class="pk-container" style="background-color:white">
+		<div class="pk-padding" style="padding-top:0">
+			<form name="form_file_edit" method="post" action="">
+				<div class="pk-padding-top-15">
+					<input type="text" class="pk-textbox" value="文件路径：{$_G['TEMP']['PATH']}" readonly>
+				</div>
+				<div class="pk-padding-15" style="padding-top:0">
+					<button type="button" class="pk-btn pk-btn-sm" onclick="history.back()">返回</button>
+					<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('')">根目录</button>
+					<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('app')">应用目录</button>
+					<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('template')">模板目录</button>
+					<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('uploadfiles')">上传文件目录</button>
+					<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('userhead')">用户头像目录</button>
+				</div>
+				<div class="pk-padding-15 pk-padding-top-0 pk-padding-bottom-0">
+					<textarea name="filecontent" class="pk-textarea" rows="24">{$filecontent}</textarea>
+				</div>
+				<div class="pk-padding-15">
+					<button id="submitbtn" type="button" class="pk-btn pk-btn-primary">保存</button>
+				</div>
+			</form>
+			<div class="pk-padding-15 pk-text-center">
+				<a target="_blank" href="http://www.hadsky.com/index.php?c=read&id=159">出现问题及解决办法</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function gopath($path) {
+		var mpath = "{str_replace('\\', '\\\\',$_G['SYSTEM']['PATH'])}";
+		location.href = 'index.php?c=app&a=filesmanager:index&path=' + encodeURIComponent(mpath + '/' + $path) + '#workarea';
+	}
+
+	$('#submitbtn').on('click', function() {
+		var This = $(this);
+		This.prop('disabled', true);
+		$.post('index.php?c=app&a=filesmanager:index&type=save&path={$urlpath}', {
+			filecontent: $('textarea[name="filecontent"]').val()
+		}, function(data) {
+			This.prop('disabled', false);
+			if(data['state'] == 'ok') {
+				ppp({
+					type: 3,
+					icon: 1,
+					content: "保存成功"
+				});
+			} else {
+				ppp({
+					icon: 2,
+					content: data['datas']['msg']
+				});
+			}
+		}, 'json');
+	});
+</script>

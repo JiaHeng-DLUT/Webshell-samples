@@ -1,0 +1,18 @@
+<div class="pk-row pk-padding-top-15 pk-padding-bottom-15 pk-overflow-hidden" style="line-height:32px;border-bottom:solid 1px #eee;height:62px;">
+	<div class="pk-w-sm-2 pk-text-right">
+		<img height="32" src="{$forumdata['logourl']}" onerror="this.src='template/default/img/forum.png';this.onerror=''" alt="">
+		<span class="pk-radius-all pk-background-color-danger pk-text-white pk-position-absolute pk-text-center pk-cursor-pointer forumtodaycount" style="width: 16px;height: 16px;line-height:16px;font-size: 8px;right:5px;top:-5px;" title="总帖{$forumdata['readcount']}，今日{$forumdata['todayreadcount']}">{$forumdata['todayreadcount']}</span>
+	</div>
+	<div class="pk-w-sm-8 pk-w-md-2 pk-padding-0 pk-text-truncate">
+		<a class="pk-hover-underline pk-text-primary" href="{$forumgourl}">{$forumdata['title']}</a>
+	</div>
+	<div class="pk-w-md-6 pk-hide-sm pk-text-truncate pk-text-default">
+		{$forumdata['content']}&nbsp;
+	</div>
+	<div class="pk-w-sm-2 pk-w-md-2 pk-text-right">
+		<span class="pk-cursor-pointer fa fa-plus-circle" style="color: #bbb;" onclick="$(this).toggleClass('fa-plus-circle').toggleClass('fa-minus-circle').parent().parent().next().toggleClass('pk-hide')"></span>
+	</div>
+</div>
+<div class="pk-row pk-hide pk-overflow-hidden childforums" style="border-bottom:solid 1px #eee">
+	{$_G['TEMP']['CFHTML']}
+</div>

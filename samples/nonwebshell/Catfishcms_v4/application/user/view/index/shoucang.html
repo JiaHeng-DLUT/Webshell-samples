@@ -1,0 +1,36 @@
+{include file="index/header" /}
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-star"></span>&nbsp;{:lang('My collection')}</a></li>
+</ul>
+<div class="tab-content"><br>
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{:lang('Title')}</th>
+                    <th>{:lang('Description')}</th>
+                    <th>{:lang('Collection time')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td><a href="{$domain}{$root}{$vo.url}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.description}</td>
+                    <td>{$vo.createtime}</td>
+                    <td>
+                        <input type="hidden" value="{$vo.id}">
+                        <a href="#!" class="shanchu">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div><br><br>
+<script src="{$domain}public/common/js/user/shoucang.js"></script>
+{include file="index/footer" /}

@@ -1,0 +1,40 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=saveips">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">IP黑名单</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">您的IP</label>
+		<div class="pk-w-sm-8 pk-text-sm pk-padding-top-5">
+			{$_G['SYSTEM']['CLIENTIP']}
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">禁止访问IP(s)</label>
+		<div class="pk-w-sm-8">
+			<textarea class=" pk-width-all pk-textarea" rows="7" name="ips">{$BANIPS}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			设置方法，参见
+			<a target="_blank" class="pk-text-primary pk-hover-underline" href="http://www.hadsky.com/read-1217-1.html">http://www.hadsky.com/read-1217-1.html</a>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+		</div>
+	</div>
+</form>
+<script>
+	form_save.ips.value = form_save.ips.value.replace('<\?php exit("403"); ?\>', '');
+</script>

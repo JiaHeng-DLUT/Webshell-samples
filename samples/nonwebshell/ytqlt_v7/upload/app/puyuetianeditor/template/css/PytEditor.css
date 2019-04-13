@@ -1,0 +1,231 @@
+#PytEditorDriveDiv {
+	position: relative;
+}
+
+.PytEditorFrame {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	overflow: hidden;
+	position: relative;
+}
+
+.PytEditorFrame * {
+	box-sizing: border-box;
+}
+
+.PytEditorFrame .PytToolbar {
+	float: left;
+	width: 100%;
+	padding-top: 5px;
+	padding-left: 5px;
+	color: #999;
+	font-size: 14px;
+	background: linear-gradient(to top, #F0F0EE, #FFFFFF);
+	border-bottom: 1px solid #ccc;
+	outline: none;
+	font-size: 0px;
+}
+
+.PytEditorFrame .PytToolbar:focus {
+	outline: none;
+}
+
+.PytEditorFrame .PytToolbar>span,
+.PytEditorFrame .PytToolbar>input,
+.PytEditorFrame .PytToolbar>select {
+	float: left;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	margin-right: 4px;
+	border: solid 1px transparent;
+	font-size: 14px;
+	color: #999;
+	background-color: transparent;
+	margin-bottom: 5px;
+}
+
+.PytEditorFrame .PytToolbar>span {
+	overflow: hidden;
+	background-repeat: no-repeat;
+	color: #337FE5;
+	background-position: center center;
+}
+
+.PytEditorFrame .PytToolbar>input,
+.PytEditorFrame .PytToolbar>select {
+	color: #666;
+}
+
+@media only screen and (min-width: 1001px) {
+	.PytEditorFrame .PytToolbar>span {
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		background-size: 16px auto;
+	}
+	.PytEditorFrame .PytToolbar>input,
+	.PytEditorFrame .PytToolbar>select {
+		height: 20px;
+		line-height: 20px;
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.PytEditorFrame .PytToolbar>span {
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		background-size: 28px auto;
+	}
+	.PytEditorFrame .PytToolbar>input,
+	.PytEditorFrame .PytToolbar>select {
+		height: 32px;
+		line-height: 32px;
+		font-size: 14px;
+	}
+}
+
+.PytEditorFrame .PytToolbar>span.pk-active,
+.PytEditorFrame .PytToolbar>span:hover {
+	border: solid 1px #F0AF53;
+	background-color: #F0E68C;
+	border-radius: 2px;
+}
+
+.PytEditorFrame .PytToolbar>select:hover,
+.PytEditorFrame .PytToolbar>input:hover {
+	color: #000;
+}
+
+.PytEditorFrame .PytContent {
+	width: 100%;
+	padding: 5px;
+	border: solid 1px transparent;
+	resize: none;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.PytDiv {
+	padding: 10px;
+	width: 354px;
+	max-width: 100%;
+	max-height: 100%;
+	position: absolute;
+	font-size: 14px;
+	border: solid 1px #ccc;
+	display: none;
+	z-index: 999;
+	background-color: white;
+	border: solid 7px #F0F0F0;
+	border-radius: 4px;
+}
+
+.PytDiv.Emotion {
+	width: 296px;
+	height: 296px;
+}
+
+.PytDiv.Emotion>div:nth-of-type(1) {
+	width: 260px;
+	height: 218px;
+	overflow-y: auto;
+}
+
+.PytDiv.Emotion>div:nth-of-type(2) {
+	height: 42px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.PytDiv.Emotion img {
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	margin: 1px;
+	float: left;
+}
+
+.PytDiv button {
+	padding: 0 15px;
+	border-radius: 4px;
+	border: solid 1px transparent;
+	color: #fff;
+	background-color: #5FB878;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.PytDiv button:hover {
+	opacity: .85;
+}
+
+.PytDiv button:active {
+	opacity: 1;
+}
+
+.PytDiv button.up {
+	background-color: #009688
+}
+
+.PytDiv button.cancel {
+	background-color: #c2c2c2;
+}
+
+.PytReplylook {
+	background-color: #FFEEFF;
+	padding: 10px;
+}
+
+#PytImagesBox>div {
+	position: relative;
+	padding: 0 10px;
+}
+
+#PytImagesBox>div>i {
+	position: absolute;
+	text-align: center;
+	color: #fff;
+	cursor: pointer;
+}
+
+#PytImagesBox>div>i.fa-trash-o {
+	font-size: 14px;
+	top: 4px;
+	right: 15px;
+	color: #FF5722;
+}
+
+#PytImagesBox>div>i.fa-check {
+	width: 27px;
+	height: 27px;
+	line-height: 27px;
+	bottom: 0px;
+	left: 10px;
+	background-color: #eeeeee;
+	border-top-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+#PytImagesBox>div>img {
+	float: left;
+	width: 100%;
+	height: 87px;
+	border: solid 2px #eeeeee;
+	border-radius: 4px;
+}
+
+#PytImagesBox>div>img.pk-active {
+	border-color: #5FB878;
+}
+
+#PytImagesBox>div>i.fa-check.pk-active {
+	background-color: #5FB878;
+}

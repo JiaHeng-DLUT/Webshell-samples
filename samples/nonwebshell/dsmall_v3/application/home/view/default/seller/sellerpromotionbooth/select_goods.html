@@ -1,0 +1,27 @@
+{notempty name="goods_list"}
+<ul class="goods-list">
+    {foreach  name="goods_list" item="val"}
+    <li>
+        <div class="goods-thumb"><img src="{:goods_thumb($val,240)}"/></div>
+        <dl class="goods-info">
+            <dt><a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank">{$val.goods_name}</a> </dt>
+            <dd>{$Think.lang.sale_price}：{$Think.lang.currency}{$val.goods_price}
+        </dl>
+        <a dstype="a_choose_goods" data-param='{gid:{$val.goods_id}}' href="javascript:void(0);" class="dssc-btn-mini">{$Think.lang.select_goods}</a> </li>
+    {/foreach}
+</ul>
+<div class="pagination">{$show_page}</div>
+{else /}
+<div>{$Think.lang.no_record}</div>
+{/notempty}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#div_goods_search_result .pagination li a').ajaxContent({
+            event: 'click', //mouseover
+            loaderType: 'img',
+            loadingMsg: '{$Think.HOME_SITE_ROOT}/images/loading.gif',
+            target: '#div_goods_search_result'
+        });
+    });
+</script>

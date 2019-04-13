@@ -1,0 +1,103 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+<form method="get" action="{:url('Membercomplain/index')}">
+            <table class="dsm-search-table">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td class="w100 tr"><select name="select_complain_state">
+                        <option value="0" {if $Request.param.select_complain_state== ''}selected=true{/empty}>{$Think.lang.complain_state_all}</option>
+                        <option value="1" {if $Request.param.select_complain_state=='1'}selected=true{/if}>{$Think.lang.complain_state_inprogress}</option>
+                        <option value="2" {if $Request.param.select_complain_state=='2'}selected=true{/if}> {$Think.lang.complain_state_finish}</option>
+                    </select></td>
+                    <td class="w70 tc"><label class="submit-border">
+                        <input type="submit" class="submit" value="{$Think.lang.ds_search}" />
+                    </label></td>
+                </tr>
+            </table>
+        </form>
+        <table class="dsm-default-table">
+            <thead>
+            <tr>
+                <th class="w10"></th>
+                <th colspan="2">{$Think.lang.complaints_goods}</th>
+                <th class="w200">{$Think.lang.complain_subject_content}</th>
+                <th class="w200">{$Think.lang.complain_datetime}</th>
+                <th class="w150">{$Think.lang.complain_state}</th>
+                <th class="w110">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="complain_list"}
+            {foreach name="complain_list" id="val"}
+            {assign name="goods" value="$goods_list[$val.order_goods_id]"}
+            <tr class="bd-line">
+                <td></td>
+                <td class="w50">
+                    <div class="pic-thumb">
+                        <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                        <img src="{:goods_thumb($goods, 240)}" /></a>
+                    </div>
+                </td>
+                <td class="tl">
+                    <dl class="goods-name">
+                        <dt><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">{$goods.goods_name}</a>
+                        </dt>
+                        <dd>{$Think.lang.merchant}：{$val.accused_name}</dd>
+                    </dl>
+                </td>
+                <td>{$val.complain_subject_content}</td>
+                <td class="goods-time">{$val.complain_datetime|date="Y-m-d H:i:s",###}</td>
+                <td>
+                    {if $val.complain_state == '10'}{$Think.lang.complain_state_new}
+                    {elseif $val.complain_state == '20'}{$Think.lang.complain_state_appeal}
+                    {elseif $val.complain_state == '30'}{$Think.lang.complain_state_talk}
+                    {elseif $val.complain_state == '40'}{$Think.lang.complain_state_handle}
+                    {else $val.complain_state == '99'}{$Think.lang.complain_state_finish}
+                    {/if}
+                </td>
+                <td class="dsm-table-handle">
+                    <span>
+                        <a href="{:url('Membercomplain/complain_show',['complain_id'=>$val.complain_id])}" class="btn-blue"><i class="fa fa-eye"></i>
+          <p>{$Think.lang.complain_text_detail}</p>
+                        </a>
+                    </span>
+                    {if $val.complain_state == '10'}
+                    <span>
+                        <a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Membercomplain/complain_cancel',['complain_id'=>$val.complain_id])}','{$Think.lang.complain_cancel_confirm}');" class="btn-orange"><i class="fa fa-ban"></i>
+                            <p>{$Think.lang.ds_cancel}</p>
+                        </a>
+                    </span>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+           {else /}
+            <tr>
+                <td colspan="20" class="norecord">
+                    <div class="warning-option"><i></i><span>{$Think.lang.no_record}</span></div>
+                </td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="complain_list"}
+            <tr>
+                <td colspan="20">
+                    <div class="pagination">{$show_page}</div>
+                </td>
+            </tr>
+           {/notempty}
+            </tfoot>
+        </table>
+
+
+
+
+
+
+
+
+{/block}

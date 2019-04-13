@@ -1,0 +1,11 @@
+<form method="POST" action="/user/login">
+<input type="hidden" name="redirect" value="{{ $_POST.redirect }}" />
+<p>{"Email"}:<br />
+<input type="email" name="username" value="{{ $_POST.username }}" /></p>
+<p>{"Password"}:<br />
+<input type="password" name="password" value="{{ $_POST.password }}" /></p>
+<p><input type="submit" value="{"Sign in"}" /></p>
+</form>
+
+<p><a href="/user/recover">{"Forgot your password?"}</a>{% if signup_handler %}<br />
+{"Not a member?"} <a href="/user/signup">{"Sign up here"}</a>{% end %}</p>

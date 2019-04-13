@@ -1,0 +1,88 @@
+{! admin/util/minimal-grid !}
+{! admin/util/search !}
+{! admin/util/twemoji?body=true !}
+
+<div class="e-row-variable" style="margin-bottom: 20px">
+	<div class="e-col-50 e-no-padding">
+	{% if User::require_acl ('admin/edit', 'admin/add') %}
+	<a href="/admin/add">{"Add Page"}</a>
+		{% if User::require_acl ('settings') %}
+		&nbsp;|&nbsp;
+		<a href="/admin/extended?extends=Webpage&name=Pages">{"Custom Fields"}</a>
+		{% end %}
+	{% end %}
+	</div>
+	<div class="e-col-50 e-no-padding" style="text-align: right">
+		<form method="get" id="search-form">
+			<input type="text" name="q" id="search-query" size="40" value="{{q|quotes}}" />
+			<button>{"Search"}</button>
+			{% if q != '' %}
+			<button onclick="window.location.href = '/admin/pages'; return false">{"Clear"}</button>
+			{% end %}
+		</form>
+	</div>
+</div>
+
+<div class="e-row-variable">
+	<div class="e-col-50 e-no-padding">
+		{! navigation/pager?style=results&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+	</div>
+	<div class="e-col-50 e-no-padding" style="text-align: right">
+		{% if total > $data->limit %}
+		{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+		{% end %}
+	</div>
+</div>
+
+<table width="100%">
+	<tr>
+		<th width="38%">{"ID"}</th>
+		<th width="38%">{"Title"}</th>
+		<th width="12%">
+			<select class="search-option" data-prefix="access">
+				<option value="">{"Access"}</option>
+				{% foreach User::access_list () as _access, _name %}
+				<option value="{{_access}}">{{_name}}</option>
+				{% end %}
+			</select>
+		</th>
+		<th width="12%">&nbsp;</th>
+	</tr>
+{% foreach pages %}
+	<tr>
+		<td><a href="{{ loop_value->id|Link::href }}" target="_blank">{{ loop_value->id }}</a></td>
+		<td>{{ loop_value->title }}</td>
+		<td>
+			<a href="#" class="search-for" data-search="access:{{ loop_value->access}}">{{ loop_value->access|ucfirst }}</a>
+		</td>
+		<td class="edit">
+			{% if loop_value->locked %}
+			{"Editing Locked"}
+			{% else %}
+				{% if User::require_acl ('admin/edit') %}
+				<a href="/admin/edit?page={{ loop_value->id }}">{"Edit"}</a>
+				{% end %}
+				{% if User::require_acl ('admin/delete') %}
+				|
+				<a href="/admin/delete" data-page="{{ loop_value->id }}" data-admin="true" onclick="return $.confirm_and_post (this, '{"Are you sure you want to delete this page?"}')">{"Delete"}</a>
+				{% end %}
+			{% end %}
+		</td>
+	</tr>
+{% end %}
+</table>
+
+{% if total > $data->limit %}
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+{% end %}
+
+<script>
+$(function () {
+	$.search_init ({
+		form: '#search-form',
+		query: '#search-query',
+		links: '.search-for',
+		options: '.search-option'
+	});
+});
+</script>

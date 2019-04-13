@@ -1,0 +1,28 @@
+<div class="pk-row">
+	<div class="pk-padding-top-10 pk-padding-bottom-10 pk-text-right">
+		<a class="pk-btn pk-btn-success" href="javascript:" onclick="CreateCloudPayUrl()">充值</a>
+	</div>
+	<table class="pk-table pk-table-bordered pk-width-all">
+		<thead>
+			<tr>
+				<th>云编号</th>
+				<th>用户UID</th>
+				<th>充值金额</th>
+				<th>获得{$_G['SET']['TIANDOUNAME']}</th>
+				<th>创建时间</th>
+				<th>完成时间</th>
+				<th>交易状态</th>
+			</tr>
+		</thead>
+		<tbody>{$_G['TEMP']['HTML']}</tbody>
+		<tfoot>
+			<tr>
+				<td class="pk-text-sm pk-text-center" colspan="99">
+					<a class="pk-hover-underline" href="index.php?c=app&a=hadskycloudserver:index&s=cloudpayrecord&page={Cnum({$_G['TEMP']['PAGE']}-1)}">上一页</a>
+					&nbsp;{$_G['TEMP']['PAGE']}&nbsp;
+					<a class="pk-hover-underline" href="index.php?c=app&a=hadskycloudserver:index&s=cloudpayrecord&page={Cnum({$_G['TEMP']['PAGE']}+1)}">下一页</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

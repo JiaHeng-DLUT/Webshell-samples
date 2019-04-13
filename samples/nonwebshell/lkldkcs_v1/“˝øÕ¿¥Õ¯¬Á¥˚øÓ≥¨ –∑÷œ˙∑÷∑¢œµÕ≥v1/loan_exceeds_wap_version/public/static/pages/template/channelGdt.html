@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>立即申请</title>
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+  <link rel="stylesheet" href="../../css/public.css">
+  <link rel="stylesheet" href="../../css/layer.css">
+  <link rel="stylesheet" href="../../css/common.min.css">
+  <script>
+    ! function (g, d, t, e, v, n, s) {
+    if (g.gdt) return;
+    v = g.gdt = function () {
+      v.tk ? v.tk.apply(v, arguments) : v.queue.push(arguments)
+    };
+    v.sv = '1.0';
+    v.bt = 0;
+    v.queue = [];
+    n = d.createElement(t);
+    n.async = !0;
+    n.src = e;
+    s = d.getElementsByTagName(t)[0];
+    s.parentNode.insertBefore(n, s);
+  }(window, document, 'script', '//qzonestyle.gtimg.cn/qzone/biz/gdt/dmp/user-action/gdtevent.min.js');
+  gdt('init', '1107933868');
+  gdt('track', 'PAGE_VIEW');
+</script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://a.gdt.qq.com/pixel?user_action_set_id=1107933868&action_type=PAGE_VIEW&noscript=1" />
+  </noscript>
+</head>
+
+<body>
+  <div class="registerDispense registerDispenseC" id="registerDispense">
+    <div class="yangbanner"></div>
+    <div class="formBox" id="yangbox">
+      <div class="phone phoneyang">
+        <input type="number" placeholder="请输入你的手机号码" onblur="localPhone($(this))" onkeyup="this.value=this.value.replace(/[^\d]/g,'');"
+          oninput="if(value.length>11)value=value.slice(0,11);pwdLogin('.phone input', '.yzm input', '.firstStep')">
+      </div>
+      <div class="yzm clearfix">
+        <input type="text" placeholder="请输入验证码" oninput="if(value.length>6)value=value.slice(0,6);pwdLogin('.phone input', '.yzm input', '.firstStep')">
+        <button onclick="getCode_(this,1)">获取验证码</button>
+      </div>
+      <div class="btn_ nextStep on" onclick="registerDispense(this)">立即申请</div>
+      <div class="min-text">
+        <p>西安乾政互联网金融服务有限公司</p>
+        <p>网站：www.daidaihu360.com</p>
+        <p>陕ICP备18014447号</p>
+        <p>市场有风险，选择需谨慎</p>
+        <p>放款金额及时间依个人资质情况而定</p>
+        <p>资金来源中银消费金融有限公司</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/layer.mobile.js"></script>
+  <script src="../../js/aes.js"></script>
+  <script src="../../js/jquery.base64.js"></script>
+  <script>
+    var bh = $(window).height()
+    $(window).on('resize', function () {
+      var w = $(window).height()
+      if (bh > w) {
+        $('.registerDispense .formBox').css({
+          'bottom': '5.5rem'
+        });
+      } else {
+        $('.registerDispense .formBox').css({
+          'bottom': '.65rem'
+        });
+      }
+      $('.registerDispense').css({
+        'height': bh
+      });
+    })
+    var Base_url = 'https://api.daidaihu365.com/'
+    //  var Base_url = 'http://api.daidai123.cn/'
+    var img_url = 'http://image.daidaihu365.com/'
+    var wap_url = 'http://wap.daidaihu365.com/'
+
+    var myLocalstorage = {
+      //set时expiredDays为过期天数，大于0的整数
+      //get时 isExpired 是否返回未过期
+      set: function (key, value, expiredDays) {
+        if (expiredDays > 0) {
+          var obj = {};
+          obj[key] = value;
+          obj['time'] = new Date().getTime() + 30 * 60000
+          localStorage.setItem(key, JSON.stringify(obj));
+        } else {
+          localStorage.setItem(key, (typeof value == 'object' ? JSON.stringify(value) : value));
+        }
+      },
+      get: function (key, isExpired) {
+        var returnData;
+        if (!localStorage.getItem(key)) {
+          return '';
+        };
+        try {
+          returnData = JSON.parse(localStorage.getItem(key));
+        } catch (e) {
+          returnData = localStorage.getItem(key) ? localStorage.getItem(key) : '';
+        }
+        if (isExpired) {
+          if (returnData.time >= new Date().getTime()) {
+            return returnData[key]
+          } else {
+            return false
+          }
+        };
+      }
+    }
+
+    if (myLocalstorage.get('phone_Gdt', 1)) {
+      $('.phoneyang input').val(myLocalstorage.get('phone_Gdt', 1))
+    } else {
+      localStorage.removeItem('phone_Gdt')
+    }
+
+    function localPhone(e) {
+      var phone = $(e).val()
+      myLocalstorage.set('phone_Gdt', phone, 2)
+    }
+
+    // 按钮可点
+    function pwdLogin(inp1, inp2, btn) {
+      $(inp1).val() && $(inp2).val() ? $(btn).addClass('on') : $(btn).removeClass('on')
+    }
+
+    function pwdLogin2(inp1, inp2, inp3, btn) {
+      $(inp1).val() && $(inp2).val() && $(inp3).val() ? $(btn).addClass('on') : $(btn).removeClass('on')
+    }
+    /**
+     * 登录注册公共参数
+     */
+    var header = {
+        'Device': localStorage.deviceid_, // 平台
+        'Version': '1.0.1', // 渠道下App版本
+        'System': '1.0.1', // 操作系统版本
+        'source': 'wap',
+        'Channel': localStorage.Channel_code,
+        'Authentication': sessionStorage.token,
+        'PageId': 0
+      },
+      com_Data = {};
+
+    var deviceid_ = localStorage.deviceid_;
+    if (!deviceid_ || deviceid_ == 'null' || deviceid_ == null || deviceid_ == undefined || deviceid_ == 'undefined') {
+      uuid()
+    }
+
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+      header.Device = uuid
+      // return uuid;
+    }
+    // $http 第一层拦截
+    function $http(url, data, method, cb, ercb) {
+      switch (method) {
+        case 'get':
+          $.ajax({
+            url: Base_url + url,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: header,
+            data: data,
+            success: function (res) {
+              doCode(res)
+            },
+            error: function (err) {
+              if (cb && typeof cb === 'function') ercb(err)
+            }
+          })
+          break
+        case 'post':
+          $.ajax({
+            url: Base_url + url,
+            type: 'POST',
+            dataType: 'JSON',
+            headers: header,
+            data: data,
+            success: function (res) {
+              doCode(res)
+            },
+            error: function (err) {
+              if (cb && typeof cb === 'function') ercb(err)
+            }
+          })
+          break
+        default:
+          ''
+      }
+
+      function doCode(res) {
+        switch (res.code) {
+          case 4001:
+            createToken(url, data, method, cb, ercb)
+            break
+          default:
+            if (cb && typeof cb === 'function') cb(res)
+        }
+      }
+      // 获取token
+      function createToken(url, data, method, cb, ercb) {
+        $.ajax({
+          url: Base_url + 'api/v1/token',
+          type: 'GET',
+          dataType: 'JSON',
+          headers: header,
+          data: data,
+          success: function (res) {
+            if (res.code === 200) {
+              sessionStorage.token = res.data.token
+              header.Authentication = sessionStorage.token
+              $http(url, data, method, cb, ercb)
+            } else {
+              createToken(url, data, method, cb, ercb)
+            }
+          },
+          error: function (err) {
+            if (cb && typeof cb === 'function') ercb(err)
+          }
+        })
+      }
+    }
+    getToken()
+
+    function getToken() {
+      $http('api/v1/token', {}, 'get', function (res) {
+        if (res.code === 200) {
+          sessionStorage.token = res.data.token
+          header.Authentication = sessionStorage.token
+          getPage()
+        } else if (res.code === 4002) {
+          getToken()
+        }
+      })
+    }
+    // 获取页面信息
+    function getPage() {
+      $http('api/v1/page/' + getUrlParam1(), {}, 'get', function (res) {
+        if (res.code === 200 && res.data) {
+          localStorage.Channel = res.data.page.channel_code;
+          com_Data = res.data;
+          var img = new Image();
+          if (res.data.page_content.register_img_url) {
+            img.src = img_url + res.data.page_content.register_img_url;
+          } else {
+            img.src = 'http://dimg.kuanjiedai.com/public/upload/4vUhD9CoxYKPdV3LhPLbQ8Bj32lDcunLC43EKHIP.png'
+          }
+          img.style.width = '100%';
+          img.style['pointer-events'] = 'none';
+          $('.yangbanner').append(img);
+        } else {}
+      })
+    }
+
+    function getUrlParam1() {
+      var url = window.location.href;
+      var urlArr = url.split('?');
+      var k = urlArr[0],
+        appU = k.split('/');
+      var L = appU[appU.length - 1];
+      var nameArr = L.split('.');
+      var t = $.base64.atob(nameArr[0]).split('=');
+      // console.log(t[1]);
+      localStorage.Channel_code = appU[appU.length - 2];
+      header.Channel = localStorage.Channel_code;
+      header.PageId = decodeURI(t[1]);
+      return null != t ? decodeURI(t[1]) : null
+
+    }
+
+    var time_ = Date.parse(new Date()) / 1000;
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+
+    function pwdVisible(type) {
+      $(type).toggleClass('on')
+
+      if ($(type).siblings('input').prop('type') == 'password') {
+        $(type).siblings('input').prop('type', 'text');
+      } else {
+        $(type).siblings('input').prop('type', 'password');
+      }
+    }
+    var flag = true
+    var phone_
+    var timer
+
+    function getCode_(type, num) {
+      if (flag) {
+        phone_ = $(type).parent().siblings('.phone').find('input').val()
+        if (userPhone_(phone_)) {
+          if (localStorage.deviceid_) {
+            _getCode_(type, phone_, num)
+          } else {
+            uuid()
+            _getCode_(type, phone_, num)
+          }
+        }
+      }
+    }
+
+    function _getCode_(type, phone_, num) {
+      flag = false;
+      var datas = {
+        phone: encrypt(phone_),
+        msg_sign: 0, // 0 =>贷贷狐 , 1=>惠融易
+        verify_type: 'verify' // register=>注册 , verify=>快捷登录 , retrieve=>找回密码
+      };
+      $http('api/get/code/aes', datas, 'post', function (res) {
+        if (res.code === 200) {
+          var time = 60;
+          $(type).addClass('on').text('(' + time + 's)重新获取');
+          timer = setInterval(function () {
+            time--
+            $(type).text('(' + time + 's)重新获取');
+            if (time <= 0) {
+              flag = true;
+              $(type).removeClass('on').text('获取验证码');
+              clearInterval(timer);
+            }
+          }, 1000)
+        } else {
+          flag = true
+          layer.open({
+            content: res.info,
+            skin: 'msg',
+            time: 2
+          })
+        }
+      }, function () {
+        flag = false
+      })
+    }
+    var loginFlag = true
+
+    function registerDispense($this) {
+      var phone = $('.phone input').val()
+      var yzm = $('.yzm input').val()
+      if ($($this).hasClass('on')) {
+        if (userPhone_(phone) && verifyCode(yzm)) {
+          if (loginFlag) {
+            if (header.Device) {
+              registerDispense_(phone, yzm)
+            } else {
+              uuid()
+              registerDispense_(phone, yzm)
+            }
+          }
+        }
+      }
+    }
+
+    function registerDispense_(phone, yzm) {
+      loginFlag = false;
+      var datas = {
+        phone: encrypt(phone),
+        from: 'page',
+        verification: yzm,
+        page_id: com_Data.page_content.page_id,
+        verify_type: 'verify'
+      }
+      $http('api/v1/verify/login/aes', datas, 'post', function (res) {
+        if (res.code === 200) {
+          gdt('track', 'RESERVATION', {
+            'key1': 'value1',
+            'key2': 'value2'
+          });
+          layer.open({
+            content: '登录成功',
+            skin: 'msg',
+            time: 2
+          })
+          setTimeout(function () {
+            window.location.href = '/template/appDown.html?t=' + getUrlParam1()
+          }, 1e3)
+        } else {
+          layer.open({
+            content: res.info,
+            skin: 'msg',
+            time: 2
+          })
+          loginFlag = true
+        }
+      }, function (err) {
+        loginFlag = false
+      })
+
+    }
+    // 加密
+    function encrypt(word) {
+      var key = CryptoJS.enc.Utf8.parse('LoanLoanFox2018-2019@YSJR.$#%^&*')
+      var ivs = CryptoJS.enc.Utf8.parse('DaiFox@YSJR18~19')
+      var srcs = CryptoJS.enc.Utf8.parse(word)
+      var encrypted = CryptoJS.AES.encrypt(srcs, key, {
+        iv: ivs,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      })
+      return encrypted.toString()
+    }
+    // 验证手机
+    function userPhone_(val) {
+      var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
+      if (!reg.test(val)) {
+        layer.open({
+          content: '请填写正确的手机号码',
+          skin: 'msg',
+          time: 2
+        })
+        return false
+      } else {
+        return true
+      }
+    }
+    // 验证密码
+    function userPwd(val) {
+      var reg = /^[a-zA-Z0-9]{6,16}$/
+      if (!reg.test(val)) {
+        layer.open({
+          content: '密码由6-16位的数字和字母组成',
+          skin: 'msg',
+          time: 2
+        })
+        return false
+      } else {
+        return true
+      }
+    }
+    // 验证 验证码
+    function verifyCode(val) {
+      var reg = /^\d{6}$/
+      if (reg.test(val)) {
+        return true
+      } else {
+        layer.open({
+          content: '验证码有误',
+          skin: 'msg',
+          time: 2
+        })
+        // alert('验证码有误')
+        return false
+      }
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('game',['act'=>'add'])}>">+添加游戏</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{url('game')}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+            <option value="move" style="color: #06c;">移动内容</option>
+            <option value="attr" style="color: #f60;">属性设置</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('id[]')==false){alert('请指定您要操作的游戏ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('game')}>?status='+this.options[this.selectedIndex].value+'&cate_id=<{$cate_id}>&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0">所有状态</option>
+			<option value="1" style="color: #333;"<{opt_selected($status, 1)}>>草稿</option>
+			<option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option>
+			<option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&cate_id='+this.options[this.selectedIndex].value+'&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0" selected>所有分类</option>
+			<{$category_option}>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('game')}>?status=<{$status}>&cate_id=<{$cate_id}>&sort='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="1"<{opt_selected($sort, 1)}>>按时间排列</option>
+			<option value="2"<{opt_selected($sort, 2)}>>按浏览排列</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('game')}>?status=<{$status}>&cate_id=<{$cate_id}>&sort=<{$sort}>&order='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="DESC"<{opt_selected($order, 'DESC')}>>降序</option>
+			<option value="ASC"<{opt_selected($order, 'ASC')}>>升序</option>
+			</select>
+		</div>
+                    
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>游戏标题</th>
+                <th>封面</th>
+                <th>属性状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$games item=item}>
+			<tr>
+				<td><input name="id[]" type="checkbox" value="<{$item.id}>"></td>
+				<td><{$item.id}></td>
+				<td><{$item.cate_name}></td>
+				<td><{$item.title}></td>
+                <td><img src="<{$item.cover}>" style="width:72px;height:72px;overflow:hidden"></td>
+                <td><{$item.attr}></td>
+				<td><{$item.operate}></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="7">无任何游戏！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('game')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{url('game')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr>
+				<th>采集地址：</th>
+				<td>
+
+				 <select name="site_api" id="site_api" class="site_api ipt">
+
+				 <{foreach $game_site_api as $k=>$v}>
+				 <option value="<{$k}>"><{$v}></option>
+				 <{/foreach}>
+				</select>
+				<input name="title" type="text" class="ipt" id="caiji-url" size="50" maxlength="100" value="" /> <input type="button" class="layui-btn layui-btn-normal layui-btn-small" id="game-caiji" data-type="game" value="立即采集"></td>
+			</tr>
+			<tr>
+				<th>游戏标题：</th>
+				<td><input name="title" type="text" class="ipt" id="title" size="50" maxlength="100" value="<{if !empty($row.title)}><{$row.title}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>游戏封面：</th>
+				<td><input name="cover" type="text" class="ipt" id="cover" size="100"  value="<{if !empty($row.cover)}><{$row.cover}><{/if}>"  /><span class="tips">请自行复制该页面游戏封面</span></td>
+			</tr>
+			<tr>
+				<th>URL地址：</th>
+				<td><input name="url" type="text" class="ipt" id="url" size="100"  value="<{if !empty($row.url)}><{$row.url}><{/if}>" /><span class="tips">游戏内容页地址，  如: http://www.4399.com/flash/185930.htm</span></td>
+			</tr>
+
+<!--  			<tr>
+				<th>浏览次数：</th>
+				<td><input name="views" type="text" class="ipt" id="views" size="10" maxlength="10" value="<{(!$row.views) ? '0' : $row.views}>" /> 次</td>
+			</tr> -->
+			<tr>
+				<th>属性设置：</th>
+				<td>
+				<input name="ishot" type="checkbox" id="ishot" value="1" <{if !empty($ishot)}><{opt_checked($ishot, 1)}> <{/if}> /><label for="ishot">热门</label>
+				　<input name="isbest" type="checkbox" id="isbest" value="1" <{if !empty($isbest)}><{opt_checked($isbest, 1)}><{/if}> /><label for="isbest">推荐</label></td>
+			</tr> 
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="status" id="status" class="sel"><option value="1" style="color: #333;"<{opt_selected($status, 1)}>>草稿</option><option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option><option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $row.id}>
+					<input name="id" type="hidden" id="id" value="<{$row.id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+	<{if $action == 'move'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('game')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{url('game')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$games item=item}><a href="<{url('game',['act'=>'edit','id'=>$item.id])}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$art.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>将以上内容移动至：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('game')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'attr'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('game')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$games item=item}><{$item.id}> - <a href="
+				<{url('game',['act'=>'edit','id'=>$item.id])}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$item.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td><input name="ispay" type="checkbox" id="ispay" value="1" /><label for="ispay">付费</label> <input name="istop" type="checkbox" id="istop" value="1" /><label for="istop">置顶</label>　<input name="isbest" type="checkbox" id="isbest" value="1" /><label for="isbest">推荐</label></td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="status" id="status" class="sel"><option value="1" style="color: #333;">草稿</option><option value="2" style="color: #f30;">待审核</option><option value="3" selected="selected" style="color: #080;">已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input name="act" type="hidden" id="act" value="<{$h_action}>">
+				<input type="submit" class="btn" value="保 存">&nbsp;
+				<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('game')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+<script>
+
+$(function(){
+	$("#game-caiji").on("click",function(){
+	var site_api = $("#site_api").val();
+	var url =  $("#caiji-url").val();
+
+	var index = layer.load(1, {
+         shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });  
+     $(this).val('采集中');
+	  $.ajax({
+	  	type:"post",
+	  	url:"<{url('api/caiji',['type'=>'game'])}>",
+	  	data:{site_api:site_api,url:url},
+	  	success:function(json){
+         if(json.status ==1){
+         	$("#game-caiji").val('立即采集');
+            $("#title").val(json.data.title);
+            $("#url").val(json.data.url);
+
+           layer.close(index);
+         }else{
+         	alert(json.msg);
+         }
+	  	},
+	  	dataType:"json"
+	  })
+	});
+});
+
+</script>
+<{include file="footer.html"}>

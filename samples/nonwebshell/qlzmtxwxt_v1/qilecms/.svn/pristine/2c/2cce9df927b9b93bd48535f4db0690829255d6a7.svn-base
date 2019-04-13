@@ -1,0 +1,269 @@
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+        <div class="layui-logo">后台布局</div>
+      <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-left "  lay-filter="nav">
+          <li class="layui-nav-item layui-this"><a href="javascript:;" ><i class="fa fa-cogs" aria-hidden="true"></i> 全局</a></li>
+          <li class="layui-nav-item"><a href="javascript:;" ><i class="fa fa-user" aria-hidden="true"></i>  会员</a></li>
+          <li class="layui-nav-item"><a href="javascript:;"  ><i class="fa fa-jpy" aria-hidden="true"></i> 财务</a></li> 
+          <li class="layui-nav-item"><a href="javascript:;"  ><i class="fa fa-pie-chart" aria-hidden="true"></i> 运营</a></li> 
+          <li class="layui-nav-item"><a href="javascript:;"  ><i class="fa fa-mobile" aria-hidden="true"></i> 手机</a></li>
+          <li class="layui-nav-item"><a href="javascript:;" ><i class="fa fa-puzzle-piece" aria-hidden="true"></i> 模块</a></li>
+          <li class="layui-nav-item"><a href="javascript:;"  ><i class="fa fa-plug" aria-hidden="true"></i> 插件</a></li>  
+  <!--        <li class="layui-nav-item">
+            <a href="javascript:;">其它系统</a>
+            <dl class="layui-nav-child">
+              <dd><a href="">邮件管理</a></dd>
+              <dd><a href="">消息管理</a></dd>
+              <dd><a href="">授权管理</a></dd>
+            </dl>
+          </li> -->
+        </ul>
+
+
+        <ul class="layui-nav layui-layout-right">
+
+          <li class="layui-nav-item"><a href="javascript:;" id="clear_cache"><i class="fa fa-refresh" aria-hidden="true"></i> 清理缓存</a></li>
+          <li class="layui-nav-item"><a href="{:url('index/index/index')}"><i class="fa fa-home" aria-hidden="true"></i> 前台</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+              管理员
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a href="">基本资料</a></dd>
+              <dd><a href="">安全设置</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item"><a href="{:url('logout/index')}">退出</a></li>
+        </ul>
+  </div>
+
+<!-- 左侧导航区域 开始-->
+  <div class="layui-side layui-bg-black ">
+    <div class="layui-side-scroll">
+
+
+    <!-- 全局设置 -->
+      <ul class="layui-nav layui-nav-tree"  >
+             <li class="layui-nav-item layui-nav-itemed">
+          <a href="{:url('index/main')}" target="x-iframe">首页信息</a>
+
+        </li>
+
+        <li class="layui-nav-item ">
+          <a class="" href="javascript:;">网站功能</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('settings/site')}"  target="x-iframe">系统设置</a></dd>
+            <dd><a href="{:url('settings/member')}" target="x-iframe">会员设置</a></dd>
+            <dd><a href="{:url('settings/credit')}" target="x-iframe">积分设置</a></dd>
+            <dd><a href="{:url('settings/url')}" target="x-iframe">URL设置</a></dd>
+            <dd><a href="{:url('settings/oauth')}" target="x-iframe">第三方登陆设置</a></dd>
+            <dd><a href="{:url('settings/sms')}" target="x-iframe">短信设置</a></dd>
+            <dd><a href="{:url('settings/email')}" target="x-iframe">邮件设置</a></dd>
+            <dd><a href="{:url('settings/attachments')}" target="x-iframe">附件设置</a></dd>
+      <dd><a href="{:url('settings/pay')}" target="x-iframe">支付设置</a></dd>
+
+
+
+          </dl>
+        </li>
+
+        <li class="layui-nav-item">
+          <a href="javascript:;">导航管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('nav/index')}" target="x-iframe">前台导航</a></dd>
+            <dd><a href="{:url('adminNav/index')}" target="x-iframe">后台导航</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">模板管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('template/sms')}" target="x-iframe">短信模板</a></dd>
+            <dd><a href="{:url('template/email')}" target="x-iframe">邮件模板</a></dd>
+            <dd><a href="{:url('template/index')}" target="x-iframe">网站模板</a></dd>
+            <dd><a href="{:url('template/wap')}" target="x-iframe">手机模板</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">系统管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('area/index')}" target="x-iframe">地区管理</a></dd>
+            <dd><a href="{:url('city/index')}" target="x-iframe">城市分站</a></dd>
+            <dd><a href="{:url('sql/index')}" target="x-iframe">数据库备份</a></dd>
+            <dd><a href="{:url('sql/restore')}" target="x-iframe">数据库还原</a></dd>
+          </dl>
+        </li>
+
+      </ul>
+
+<!-- 商品管理 -->
+<!--       <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">所有商品</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;"  target="x-iframe">列表一</a></dd>
+            <dd><a href="javascript:;">列表二</a></dd>
+            <dd><a href="javascript:;">列表三</a></dd>
+            <dd><a href="">超链接</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">解决方案</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">列表一</a></dd>
+            <dd><a href="javascript:;">列表二</a></dd>
+            <dd><a href="">超链接</a></dd>
+          </dl>
+        </li>
+
+      </ul> -->
+
+   <!-- 会员管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('member/group')}"  target="x-iframe">会员等级</a></dd>
+            <dd><a href="{:url('member/index')}" target="x-iframe">会员列表</a></dd>
+
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">管理员管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('admin/index')}" target="x-iframe">管理员列表</a></dd>
+            <dd><a href="{:url('admin/group')}" target="x-iframe">管理组</a></dd>
+
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">权限管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('auth/index')}" target="x-iframe">权限列表</a></dd>
+            <dd><a href="{:url('auth/add')}" target="x-iframe">添加权限</a></dd>
+          </dl>
+        </li>
+      </ul> 
+ <!-- 财务管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">充值</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('recharge/index')}"  target="x-iframe">充值管理</a></dd>
+
+            
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">提现</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('cash/index')}">提现管理</a></dd>
+
+            
+          </dl>
+        </li>
+
+        <li class="layui-nav-item">
+          <a href="javascript:;">资金</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('moneyLog/index')}">资金流水管理</a></dd>
+
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">保证金</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('deposit/index')}">保证金管理</a></dd>
+
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">积分</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('credit/index')}">积分管理</a></dd>           
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">短信</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('sms/index')}">短信记录</a></dd>
+            
+          </dl>
+        </li>
+      </ul> 
+ <!-- 运营管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">运营管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('ad/index')}"  target="x-iframe">广告管理</a></dd>
+            <dd><a href="{:url('friendlink/index')}" target="x-iframe">友链管理</a></dd>
+            <dd><a href="{:url('notice/index')}" target="x-iframe">公告管理</a></dd>
+            <dd><a href="{:url('page/index')}" target="x-iframe">单页管理</a></dd>
+            <dd><a href="{:url('feedback/index')}" target="x-iframe">留言管理</a></dd>
+            <dd><a href="{:url('message/index')}" target="x-iframe">站内信管理</a></dd>
+              <dd><a href="{:url('email/index')}"  target="x-iframe">邮件管理</a></dd>
+          </dl>
+        </li>
+
+
+      </ul> 
+ <!-- 手机管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">手机WAP管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('settings/wap')}"  target="x-iframe">基本设置</a></dd>
+            <dd><a href="{:url('wap/index')}"  target="x-iframe">手机导航</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">微信管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('settings/weixin')}" target="x-iframe">基本设置</a></dd>
+            <dd><a href="{:url('weixin/menu')}" target="x-iframe">菜单管理</a></dd>
+            <dd><a href="{:url('weixin/autoReply')}" target="x-iframe">自动回复</a></dd>
+            <dd><a href="{:url('weixin/material')}" target="x-iframe">素材管理</a></dd>
+          </dl>
+        </li>
+
+      </ul> 
+
+
+ <!-- 模块管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="javascript:;" >模块管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('module/index')}" target="x-iframe" >模块列表</a></dd>
+
+          </dl>
+        </li>
+
+
+      </ul>
+<!-- 插件管理 -->
+      <ul class="layui-nav layui-nav-tree"  style="display: none;">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">所有插件</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{:url('addons/index')}"  target="x-iframe">插件列表</a></dd>
+            <dd><a href="{:url('addons/install')}"  target="x-iframe">已安装插件</a></dd>
+            <dd><a href="{:url('addons/uninstall')}"  target="x-iframe">已卸载插件</a></dd>
+            <dd><a href="{:url('addons/')}"  target="x-iframe">未安装插件</a></dd>
+          </dl>
+        </li>
+
+
+      </ul>         
+
+
+      </ul>
+
+
+
+    </div>
+     <!-- 左侧导航区域结束 -->
+  </div>
+ 

@@ -1,0 +1,88 @@
+<!--{include(pe_tpl('header.html'));}-->
+
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=comment" <!--{if($act=='index' && !$_g_star):}-->class="sel"<!--{endif;}-->>所有评价（{$tongji['all']}）<i></i></a>
+		<a href="admin.php?mod=comment&star=hao" <!--{if($act=='index' && $_g_star=='hao'):}-->class="sel"<!--{endif;}-->>好 评（{$tongji['hao']}）<i></i></a>
+		<a href="admin.php?mod=comment&star=zhong" <!--{if($act=='index' && $_g_star=='zhong'):}-->class="sel"<!--{endif;}-->>中 评（{$tongji['zhong']}）<i></i></a>
+		<a href="admin.php?mod=comment&star=cha" <!--{if($act=='index' && $_g_star=='cha'):}-->class="sel"<!--{endif;}-->>差 评（{$tongji['cha']}）<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				<input type="hidden" name="star" value="{$_g_star}" />
+				评价用户：<input type="text" name="user_name" value="{$_g_user_name}" class="inputtext input100 mar5" />
+				评价内容：<input type="text" name="text" value="{$_g_text}" class="inputtext input150 mar5" />
+				商品名称：<input type="text" name="name" value="{$_g_name}" class="inputtext input150 mar5" />
+				<select name="reply" class="selectmini">
+				<option value="" href="{pe_updateurl('reply', '')}">= 是否回复 =</option>
+				<!--{foreach(array(1=>'已回复', 0=>'未回复') as $k=>$v):}-->
+				<option value="{$k}" href="{pe_updateurl('reply', $k)}" <!--{if(strlen($_g_reply) && $_g_reply==$k):}-->selected="selected"<!--{endif;}-->><!--{echo ++$index}-->) {$v}</option>
+				<!--{endforeach;}-->
+				</select>
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'comment_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt">评价内容</th>
+			<!--<th class="bgtt" width="100">综合评分</th>-->
+			<th class="bgtt" width="150">评价用户</th>
+			<th class="bgtt" colspan="2">商品信息</th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<!--{$comment_logo = $v['comment_logo'] ? explode(',', $v['comment_logo']) : array()}-->
+		<tr>
+			<td><input type="checkbox" name="comment_id[]" value="{$v['comment_id']}" /></td>
+			<td>{$v['comment_id']}</td>
+			<td valign="top" style="text-align:left">
+				<p>{$v['comment_text']}</p>
+				<!--{if(count($comment_logo)):}-->
+				<p class="mat5">
+				<!--{foreach($comment_logo as $index=>$logo):}-->
+				<a href="admin.php?mod=comment&act=logo&id={$v['comment_id']}&num={$index}" target="_blank"><img src="{pe_thumb($logo, '_40', '_40')}" style="border:1px solid #eaeaea" /></a>
+				<!--{endforeach;}-->
+				</p>
+				<!--{endif;}-->
+				<div class="font12 cbbb mat10">{pe_date($v['comment_atime'], 'Y年m月d日 H:i')}<span class="mal20">{pe_comment($v['comment_star'], 12)}</span></div>
+			</td>
+			<!--<td>{pe_comment($v['comment_star'])}</td>-->
+			<td>
+				<img src="{pe_thumb($v['user_avatar'], '_120', '_120', 'avatar')}" style="width:40px">
+				<p class="mat2"><a href="http://www.ip138.com/ips.asp?ip={$v['user_ip']}" target="_blank">{$v['user_name']}</a>
+			</p>
+			<td width="40"><a href="{pe_url('product-'.$v['product_id'])}" target="_blank"><img src="{pe_thumb($v['product_logo'], 100, 100)}" width="40" height="40" class="imgbg" /></a></td>
+			<td class="aleft" width="210" style="padding-left:0"><a href="{pe_url('product-'.$v['product_id'])}" target="_blank" class="cblue">{$v['product_name']}</a></td>
+			<td>
+				<a href="admin.php?mod=comment&act=edit&id={$v['comment_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=comment&act=del&id={$v['comment_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'comment_id')" />
+			<button href="admin.php?mod=comment&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'comment_id', 'form', '批量删除')">批量删除</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+
+<!--{include(pe_tpl('footer.html'));}-->

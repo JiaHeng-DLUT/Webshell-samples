@@ -1,0 +1,110 @@
+<!--
+	<?php
+		$_G['TEMPLATE']['BODY']='mysqlmanager:index';
+	?>
+-->
+<style>
+	.tablelist {
+		padding: 10px;
+	}
+	
+	.tablecontent {
+		overflow: auto;
+	}
+	
+	.table {
+		border-collapse: collapse;
+		min-width: 100%;
+	}
+	
+	.table tr th {
+		font-weight: bold;
+		text-align: center;
+		padding: 8px;
+		border: solid 1px #AAAAAA;
+	}
+	
+	.table tr td {
+		padding: 8px;
+		border: solid 1px #AAAAAA;
+		max-width: 500px;
+	}
+	
+	.onlyoneline {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.onclick:hover {
+		cursor: pointer;
+		background: #F0F8FF;
+	}
+	
+	.table2 {
+		border-collapse: collapse;
+		width: 100%;
+	}
+	
+	.table2 tr td {
+		border: solid 1px #AAAAAA;
+		width: 100%;
+		padding: 8px;
+	}
+	
+	.table2 tr td input[type=text] {
+		width: 100%;
+		border: none;
+	}
+	
+	.table2 tr td textarea {
+		width: 100%;
+		height: 200px;
+		padding: 4px;
+	}
+	
+	.clear {
+		clear: both;
+	}
+</style>
+<div class="pk-container">
+	<div class="pk-container" style="background-color: white;">
+		<div class="pk-padding-15 pk-text-center">
+			<a target="_blank" href="http://www.hadsky.com/index.php?c=read&id=68" style="color: red;">MySQL数据库管理使用帮助</a>
+			<div class="pk-row pk-margin-top-15" style="max-width:480px">
+				<div class="pk-w-sm-9 pk-padding-0">
+					<input type="text" class="pk-textbox" id="searchmysqlhelp" value="" placeholder="不会使用？输入关键词一键查找相关文档！">
+				</div>
+				<div class="pk-w-sm-3 pk-padding-0">
+					<input type="button" class="pk-btn pk-btn-block pk-btn-success" value="查找文档" onclick="var $v=trim(document.getElementById('searchmysqlhelp').value);if($v){window.open('http://www.hadsky.com/index.php?c=app&a=puyuetian_search:index&w='+ encodeURIComponent($v),'_blank')}">
+				</div>
+			</div>
+		</div>
+		<div class="tablelist">
+			{$tablelist}
+			<div class="clear"></div>
+		</div>
+		<div class="tablecontent">
+			{$tablecontent}
+		</div>
+		<div class="pk-padding-15 pk-text-center pk-text-sm">
+			<a class="pk-hover-underline" href="index.php?c=app&a=mysqlmanager:index&table={$table}&type={$type}&page={$syy}">上一页</a> {$page}
+			<a class="pk-hover-underline" href="index.php?c=app&a=mysqlmanager:index&table={$table}&type={$type}&page={$xyy}">下一页</a>
+		</div>
+	</div>
+</div>
+<script>
+	var mysql_btn = 'mysql_{$table}';
+	mysql_btn = mysql_btn.toLowerCase();
+	if(mysql_btn != 'mysql_') {
+		document.getElementById(mysql_btn).style.backgroundColor = '#2D64B3';
+		document.getElementById(mysql_btn).style.color = 'white';
+	}
+
+	function checkall(c) {
+		var cl = document.getElementsByName('ids[]');
+		for(i = 0; i < cl.length; i++) {
+			cl[i].checked = c;
+		}
+	}
+</script>

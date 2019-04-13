@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>数据库还原</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="200">
+      <col width="110">
+      <col>
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>备份名称</th>
+        <th>数据大小</th>
+        <th>备份时间</th>
+        <th>卷数</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{if $pname}{$pname}/{$vo.filename}{else /}{$vo.filename}{/if}"></td>
+        <td>
+        {if $pname}<a href="javascript:;">
+
+        <i class="fa fa-database" style="color:#c2c2c2" aria-hidden="true"></i> 
+          {$vo.filename}</a>
+        {else /}
+        <a href="{:url('sql/restore',array('pname'=>$vo['filename']))}">
+        <i class="layui-icon" style="color:#FFB800">&#xe622;</i> 
+          {$vo.filename}</a>
+        {/if}
+        </td>
+        <td>{$vo.size}</td>
+        <td>{$vo.atime|date="Y-m-d H:i:s"}</td>
+        <td>{$vo.num}</td>
+
+        <td>
+        <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" id="importBackup" data-name="{$vo.filename}" >
+          <i class="layui-icon">&#xe654;</i>导入备份
+        </button>
+        {if $pname}
+        <a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('sql/download',array('pname'=>$pname,'name'=>$vo['filename']))}" id="down">
+          <i class="layui-icon">&#xe601;</i>下载
+        </a>
+        {/if}
+         <button class="layui-btn layui-btn-sm layui-btn-primary" 
+
+         {if !$pname} onclick="del('{:url("sql/delBackup",array("id"=>$vo["filename"]))}')"
+         {else /} onclick="del('{:url("sql/delBackup",array("id"=>$pname."/".$vo["filename"]))}')" {/if}
+
+         > <i class="layui-icon">&#xe640;</i></button>
+        
+
+      </div>
+
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//全选删除
+    var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+           $.ajax({
+           type:'post',
+           data:{"id":id},
+           dataType:'json',
+           url:"{:url('sql/delBackup')}",
+           success:function(json){
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+// 导入备份
+      $("#importBackup").click(function(){
+       var index = layer.load(1, {
+                  shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
+        var name = $(this).attr('data-name');
+        $.ajax({
+           type:'post',
+           data:{"name":name},
+           dataType:'json',
+           url:"{:url('sql/importBackup')}",
+           success:function(json){
+             layer.close(index);
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+  });
+
+// 强制下载
+  //     $("#download").click(function(){
+  //      var index = layer.load(1, {
+  //                 shade: [0.1,'#fff'] //0.1透明度的白色背景
+  //               });
+  //       var name = $(this).attr('data-name');
+  //       $.ajax({
+  //          type:'post',
+  //          data:{"name":name},
+  //          dataType:'json',
+  //          url:"{:url('sql/download')}",
+  //          success:function(json){
+  //            layer.close(index);
+  //           if(json.code == 0){
+  //             layer.msg(json.msg);
+  //               setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+  //               window.location.reload();//页面刷新
+  //           },1000);
+  //           }
+  //          }
+  //       });
+  // });
+});
+
+</script>
+</body>
+
+</html>

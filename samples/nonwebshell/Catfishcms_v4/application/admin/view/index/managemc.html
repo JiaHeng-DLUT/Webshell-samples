@@ -1,0 +1,50 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All menu categories')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <h4>{:lang('The category that exists')}&nbsp;<small>[<a href="{:Url('/admin/Index/category')}">{:lang('Add menu categories')}</a>]</small></h4>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>{:lang('Category name')}</th>
+                    <th>{:lang('Category description')}</th>
+                    <th>{:lang('Main menu')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.navcid}</td>
+                    <td>{$vo.nav_name}</td>
+                    <td>{$vo.remark}</td>
+                    <td>
+                        {if condition="$vo.active eq 1"}<h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Yes')}</h5>
+                        {else /}<h5 class="text-muted">{:lang('No')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <a href="{:Url('modifycategory')}?c={$vo.navcid}">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="{:Url('classify')}?d={$vo.navcid}">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete the menu category? Can not be restored after deletion!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/managemc.js"></script>
+{include file="index/footer" /}

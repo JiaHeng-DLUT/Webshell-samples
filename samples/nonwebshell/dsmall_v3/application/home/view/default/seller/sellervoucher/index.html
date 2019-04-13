@@ -1,0 +1,142 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{present name="isPlatformStore"}
+<a class="dssc-btn dssc-btn-green" href="{:url('Sellervoucher/templateadd')}"><i class="fa fa-plus-square"></i>{$Think.lang.voucher_templateadd}</a>
+{else /}
+{notempty name="current_quota"}
+<a class="dssc-btn dssc-btn-green" style="right:100px" href="{:url('Sellervoucher/templateadd')}"><i class="fa fa-plus-square"></i>{$Think.lang.voucher_templateadd}</a>
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellervoucher/quotaadd')}" title=""><i class="fa fa-money"></i>{$Think.lang.set_meal_renewal}</a>
+{else /}
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellervoucher/quotaadd')}" title=""><i class="fa fa-money"></i>{$Think.lang.voucher_applyadd}</a>
+{/notempty}
+{/present}
+{/block}
+
+
+{block name="seller_main"}
+
+{present name="isPlatformStore"}
+        <div class="alert alert-block mt10 mb10">
+            <ul>
+                <li>{$Think.lang.voucher_template_list_tip1}</li>
+                <li>{$Think.lang.voucher_template_list_tip2}</li>
+            </ul>
+        </div>
+        {else /}
+        <div class="alert alert-block mt10 mb10">
+            {notempty name="current_quota"}
+            <strong>{$Think.lang.set_expiration_time}{$Think.lang.ds_colon}</strong><strong style="color:#F00;">{$current_quota.voucherquota_endtime|date="Y-m-d H:i:s",###}</strong>
+            {else}
+            <strong>{$Think.lang.please_buy_package_first}</strong>
+            {/notempty}
+            <ul>
+                <li>{$Think.lang.voucher_template_list_tip1}</li>
+                <li>{$Think.lang.voucher_template_list_tip2}</li>
+                <li>3、<strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong>。</li>
+            </ul>
+        </div>
+        {/present}
+
+        <form method="get">
+            <table class="search-form">
+                <tr>
+                    <td>&nbsp;</td>
+
+                    <th>{$Think.lang.voucher_template_enddate}</th>
+                    <td class="w240">
+                        <input type="text" class="text w70"  readonly="readonly" value="{$Request.get.txt_startdate}" id="txt_startdate" name="txt_startdate"/><label class="add-on">
+                        <i class="fa fa-calendar"></i>
+                    </label>
+                        &#8211;
+                        <input type="text" class="text w70"  readonly="readonly" value="{$Request.get.txt_enddate}" id="txt_enddate" name="txt_enddate"/><label class="add-on">
+                        <i class="fa fa-calendar"></i>
+                    </label>
+                    </td>
+                    <th>{$Think.lang.ds_status}</th>
+                    <td class="w120"><select class="w80" name="select_state">
+                        <option value="0" {if $Request.get.select_state == '0'}selected{/if}>{$Think.lang.ds_please_choose}</option>
+                        {notempty name="templatestate_arr"}
+                        {foreach name="templatestate_arr" item="v"}
+                        <option value="{$v.0}" {if $Request.get.select_state == $v.0}selected{/if}>{$v.1}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select></td><th class="w60">{$Think.lang.voucher_template_title}</th>
+                    <td class="w160"><input type="text" class="text w150"  value="" id="txt_keyword" name="txt_keyword" /></td>
+                    <td class="tc w70"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+            </table>
+        </form>
+        <table class="dssc-default-table">
+            <thead>
+            <tr>
+
+                <th class="w50"></th>
+                <th class="tl">{$Think.lang.voucher_template_title}</th>
+                <th class="w100">{$Think.lang.voucher_template_orderpricelimit}</th>
+                <th class="w60">{$Think.lang.voucher_template_price}</th>
+                <th class="w200">{$Think.lang.voucher_template_enddate}</th>
+                <th class="w60">{$Think.lang.ds_status}</th>
+                <th class="w100">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="vouchertemplate_list"}
+            {foreach name="vouchertemplate_list" item="val"}
+            <tr class="bd-line">
+                <td><div class="pic-thumb"><img src="{$val.vouchertemplate_customimg}"/></div></td>
+                <td class="tl">{$val.vouchertemplate_title}</td>
+                <td>￥{$val.vouchertemplate_limit}</td>
+                <td class="goods-price">￥{$val.vouchertemplate_price}</td>
+                <td class="goods-time">{$val.vouchertemplate_startdate|date="Y-m-d",###}~{:date('Y-m-d',$val.vouchertemplate_enddate)}</td>
+                <td>{if $val.vouchertemplate_state == $templatestate_arr.usable.0}{$templatestate_arr.usable.1}{/if}
+                    {if $val.vouchertemplate_state == $templatestate_arr.disabled.0}{$templatestate_arr.disabled.1}{/if}
+                </td>
+                <td class="dssc-table-handle">
+                    {if $val.vouchertemplate_state == $templatestate_arr.usable.0 && !$val.vouchertemplate_giveout}
+                    <span>
+        		  <a class="btn-blue" href="{:url('Sellervoucher/templateedit',['tid'=>$val.vouchertemplate_id])}">
+        		      <i class="fa fa-pencil-square"></i><p>{$Think.lang.ds_edit}</p>
+        		  </a>
+        	   </span>
+                    {else}
+                    <span>
+        		  <a class="btn-blue" href="{:url('Sellervoucher/templateinfo',['tid'=>$val.vouchertemplate_id])}"><i class="fa fa-th-list"></i>
+        		      <p>{$Think.lang.ds_detail}</p>
+        		  </a>
+        	   </span>
+                    {/if}
+                    {if !$val.vouchertemplate_giveout}
+                    <span>
+        	   <a class="btn-red" href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Sellervoucher/templatedel',['tid'=>$val.vouchertemplate_id])}','{$Think.lang.ds_ensure_del}');">
+        	       <i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p>
+        	   </a>
+        	</span>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr>
+                <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="vouchertemplate_list"}
+            <tr>
+                <td colspan="20"><div class="pagination">{$show_page}</div></td>
+            </tr>
+            {/notempty}
+            </tfoot>
+        </table>
+        
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#txt_startdate').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#txt_enddate').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+</script>
+{/block}
+
+
+
+

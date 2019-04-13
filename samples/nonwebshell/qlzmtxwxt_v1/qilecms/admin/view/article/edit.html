@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加文章</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<!-- 后台面包导航 -->
+{:get_admin_breadcrumb()}
+<div class=""  style="padding:20px">
+
+   
+<form class="layui-form" action="" method="post">
+<input type="hidden" name="aid" value="{$Request.param.aid}">
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 文章分类</label>           
+                {:get_cate('article_category',$article.cid)}
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 文章标题</label>
+                <div class="layui-input-inline" style="width:500px;">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"  value="{$article.title}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux"><span class="orange">*</span> 必填</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">文章属性</label>
+                <div class="layui-input-block">
+                {volist name="articleAttr" id="vo"}
+                 <input type="checkbox" name="attr_value[]" lay-skin="primary" title="{$vo.attr_name}( {$vo.attr_value} )" {if in_array($vo.attr_value,$attrArr)}checked{/if} value="{$vo.attr_value}">
+                 {/volist}
+                </div>
+              </div>
+  <!--             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 来源名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="source" lay-verify="source" autocomplete="off" placeholder="" class="layui-input" value="{$article.source}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('格式：新华网')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 来源URL</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="source_url" lay-verify="source_url" autocomplete="off" placeholder="http://" class="layui-input" value="{$article.source_url}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('来源站的网址链接,必须加 http://或者 https://')}</div>
+              </div> -->
+       <!--        <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 文章简介</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="introduction" lay-verify="introduction" autocomplete="off" placeholder="" class="layui-input" value="{$article.introduction}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">
+                 {:about('文章简短的介绍')}</div>
+              </div> -->
+       <!--        <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 关键词 </label>
+                <div class="layui-input-inline">
+                  <input type="text" name="keywords" lay-verify="keywords" autocomplete="off" placeholder="" class="layui-input" value="{$article.keywords}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('多个关键字用,逗号分隔')}</div>
+              </div>  -->
+
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 作者 </label>
+                <div class="layui-input-inline" style="width:150px">
+                  <input type="text" name="username"  id="username" lay-verify="username" autocomplete="off" placeholder="" class="layui-input" value="{$article.username}">
+                </div>
+                <div class="layui-input-inline">
+                   <a href="javascript:;"  class="layui-btn layui-btn layui-btn-normal" id="choose-user">选择用户</a>
+                 </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('发布文章的用户名称')}</div>
+              </div>
+
+  <!--            <div class="layui-form-item">
+              <label class="layui-form-label" style="width:100px;">文章缩略图</label>
+              <div class="layui-input-inline">
+                    {:upload_images('上传缩略图',"thumb",$article.thumb)} 
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('缩略图尺寸250*250')}</div>
+            </div>   -->
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 文章内容</label>
+                <div class="layui-input-block" style="padding:20px">  
+
+                {form:ueditor name="content" value="htmlspecialchars_decode($article['content'])" /}
+
+                </div>
+ 
+              </div>
+
+
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">点击量</label>
+                <div class="layui-input-inline" style="width:150px">
+                  <input type="text" name="hits" lay-verify="hits" autocomplete="off" placeholder="" class="layui-input" value="{$article.hits}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">状态</label>
+                <div class="layui-input-inline">
+                <input type="radio" name="status" {if $article.status ==0}checked{/if} value="0" title="待审">
+                <input type="radio" name="status" {if $article.status ==1}checked{/if} value="1"  title="正常">
+                <input type="radio" name="status" {if $article.status == 2}checked{/if} value="2" title="拒绝" >
+
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                   <button class="layui-btn layui-btn-normal"  lay-submit lay-filter="form">确 定</button>
+                    <button class="layui-btn layui-btn-primary"  onclick="back()">返 回</button>
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element', 'layer','form','upload'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;;upload = layui.upload;
+
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('article/edit')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            layer.msg(json.msg);
+
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+    return false;
+
+  });
+
+
+
+//选择卖家
+  $("#choose-user").on('click',function(){
+  layer.open({
+    type: 2,
+    title:'选择卖家',
+    shadeClose:true,
+    shade: 0.4,
+    area: ['650px','90%'],
+    maxmin: true, //
+    resize:false,
+    content: '{:url("user/userSelect")}',
+    success: function(layero, index){ 
+    var id ='username';
+    var body = layer.getChildFrame('body', index);
+    body.find('#chooseType').val(id); //找到子iframe 中的dom 元素，传值过去
+    }
+  }); 
+});
+});
+
+</script>
+<script>
+
+</script>
+</body>
+
+</html>

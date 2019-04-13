@@ -1,0 +1,66 @@
+{extend name="default/base/base_member" /}
+{block name="member_btn"}
+            {if $isallowsend}
+            <a href="{:url('Membermessage/sendmsg')}" class="dsm-btn dsm-btn-orange" title="{$Think.lang.home_message_send_message}"><i class="fa fa-envelope-o"></i>{$Think.lang.home_message_send_message}</a>
+            {/if}
+{/block}
+{block name="member_main"}
+
+
+
+
+
+<table class="dsm-default-table">
+            <thead>
+            <tr>
+                <th class="w30"></th>
+                <th class="w100 tl">{$Think.lang.home_message_recipient}</th>
+                <th class="tl">{$Think.lang.home_message_content}</th>
+                <th class="w300">{$Think.lang.home_message_last_update}</th>
+                <th class="w110">{$Think.lang.home_message_command}</th>
+            </tr>
+            {notempty name="message_array"}
+            <tr>
+                <td colspan="20"><input type="checkbox" id="all" class="checkall"/>
+                    <label for="all">{$Think.lang.home_message_select_all}</label>
+                    <a href="javascript:void(0)" class="dsm-btn-mini" uri="{:url('Membermessage/dropcommonmsg',['drop_type'=>$drop_type])}" name="message_id" confirm="{$Think.lang.home_message_delete_confirm}?" ds_type="batchbutton"><i class="fa fa-trash-o"></i>{$Think.lang.home_message_delete}</a></td>
+            </tr>
+           {/notempty}
+            </thead>
+            <tbody>
+            {notempty name="message_array"}
+            {foreach name="message_array" item="v"}
+            <tr class="bd-line">
+                <td><input type="checkbox" class="checkitem" value="{$v.message_id}"/></td>
+                <td class="tl">{$v.to_member_name}</td>
+                <td class="tl">{$v.message_body}</td>
+                <td>{:date('Y-m-d H:i:s',$v.message_time)}</td>
+                <td class="dsm-table-handle"><span><a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Membermessage/dropcommonmsg',['drop_type'=>$drop_type,'message_id'=>$v.message_id])}','{$Think.lang.home_message_delete_confirm}?');" class="btn-red"><i class="fa fa-trash-o"></i>
+          <p>{$Think.lang.home_message_delete}</p>
+          </a></span></td>
+            </tr>
+            {/foreach}
+           {else /}
+            <tr>
+                <td colspan="20" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+            </tr>
+           {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="message_array"}
+            <tr>
+                <td colspan="20"><div class="pagination">{$show_page}</div></td>
+            </tr>
+            {/notempty}
+            </tfoot>
+
+        </table>
+
+
+
+
+
+
+{/block}
+
+

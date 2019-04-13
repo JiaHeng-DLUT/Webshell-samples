@@ -1,0 +1,243 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/uploadify/uploadify.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('Website information')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <div class="form-group">
+                <label>{:lang('Site title')}：</label>
+                <input type="text" class="form-control" name="title" value="{$data.title}" placeholder="{:lang('Site title')}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Subtitle')}：</label>
+                <input type="text" class="form-control" name="subtitle" value="{$data.subtitle}" placeholder="{:lang('Subtitle')}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Site domain name')}：</label>
+                <input type="text" class="form-control" id="domainid" name="domain" value="{$data.domain}">
+                <p class="help-block">{:lang('The domain name should start with "http://" or "https://" and end with "/".')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Site keywords')}：</label>
+                <input type="text" class="form-control" name="keyword" value="{$data.keyword}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Site description')}：</label>
+                <textarea class="form-control" name="description" rows="3">{$data.description}</textarea>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Webmaster E-mail')}：</label>
+                <input type="email" class="form-control" name="email" value="{$data.email}" placeholder="{:lang('Webmaster E-mail')}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Template program')}：</label>
+                <select class="form-control" name="template">
+                    {volist name="dir" id="vo"}
+                    <option value="{$vo}"{if condition="$vo eq $data.template"} selected{/if}>{$vo}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Review whether the audit')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="pinglun"{if condition="$data.comment eq 1"} checked{/if}> {:lang('Comments need to be audited')}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{:lang('User name filtering')}：</label>
+                <input type="text" class="form-control" name="guolv" value="{$data.filter}">
+                <p class="help-block">{:lang('You can set the user names that are not allowed to be registered, separated by a comma ","')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('The number of records displayed per page')}：</label>
+                <input type="number" class="form-control" name="everyPageShows" value="{notempty name="data.everyPageShows"}{$data.everyPageShows}{else /}10{/notempty}">
+                <p class="help-block">{:lang('You can set the number of displays in the category page')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Slide size')}：</label>
+                <div class="row">
+                    <div class="col-md-1"><h5 class="text-center">{:lang('Width')}</h5></div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="kuan" value="{$data.slideshowWidth}">
+                    </div>
+                    <div class="col-md-1"><h5 class="text-center">{:lang('Height')}</h5></div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="gao" value="{$data.slideshowHeight}">
+                    </div>
+                </div>
+                <p class="help-block">{:lang('The units are pixels')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the slide')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="closeSlide"{notempty name="data.closeSlide"}{if condition="$data.closeSlide eq 1"} checked{/if}{/notempty}> {:lang('Close the slide')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('Shutting down slides requires theme support')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the message')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="openMessage"{if condition="$data.openMessage eq 0"} checked{/if}> {:lang('Close the message')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('Close message requires subject support')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the comment')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="closeComment"{notempty name="data.closeComment"}{if condition="$data.closeComment eq 1"} checked{/if}{/notempty}> {:lang('Close the comment')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('After closing the comment, setting a comment when writing an article will be invalidated')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Category shows whether subcategories are included')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="includeSubcategories"{notempty name="data.includeSubcategories"}{if condition="$data.includeSubcategories eq 1"} checked{/if}{/notempty}> {:lang('Include subcategories')}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to allow registration')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="notAllowLogin"{notempty name="data.notAllowLogin"}{if condition="$data.notAllowLogin eq 1"} checked{/if}{/notempty}> {:lang('Registrations are not allowed')}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Login requires a verification code?')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="yanzheng"{if condition="$data.captcha eq 1"} checked{/if}> {:lang('Login requires a verification code')}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the big image generation')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="datu"{notempty name="data.datu"}{if condition="$data.datu eq 1"} checked{/if}{/notempty}> {:lang('Close Generate large images')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('Turning off big-picture generation saves space, but it can make large-picture effects for some topics unavailable')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to generate a fixed width to height ratio thumbnail')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="gudingbi" name="gudingbi"{notempty name="data.gudingbi"}{if condition="$data.gudingbi eq 1"} checked{/if}{/notempty}> {:lang('Fixed width to height ratio')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('Thumbnails with a fixed width-to-height ratio allow thumbnails to appear neatly and consistently')}</p>
+            </div>
+            <div class="form-group hidden" id="kuangaobi">
+                <label>{:lang('Thumbnail width to height ratio')}：</label>
+                <div class="row">
+                    <div class="col-md-1"><h5 class="text-center">{:lang('Width')}</h5></div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="kuanbi" value="{notempty name="data.kuanbi"}{$data.kuanbi}{else /}4{/notempty}">
+                    </div>
+                    <div class="col-md-1"><h5 class="text-center">{:lang('Height')}</h5></div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="gaobi" value="{notempty name="data.gaobi"}{$data.gaobi}{else /}3{/notempty}">
+                    </div>
+                </div>
+                <p class="help-block">{:lang('Please enter the ratio of width and height')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to enable short address mode')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="rewrite"{notempty name="data.rewrite"}{if condition="$data.rewrite eq 1"} checked{/if}{/notempty}> {:lang('Enable short addresses')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('Enable short address need to open rewrite, check before you make sure your web environment to run a rewrite')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the site map')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="closeSitemap"{notempty name="data.closeSitemap"}{if condition="$data.closeSitemap eq 1"} checked{/if}{/notempty}> {:lang('Close the site map')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('The site map is turned on by default, where you can turn off the site map')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close RSS')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="closeRSS"{notempty name="data.closeRSS"}{if condition="$data.closeRSS eq 1"} checked{/if}{/notempty}> {:lang('Close RSS')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('The default is to open RSS, where you can turn off RSS')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Whether to close the site')}：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="guanbi"{notempty name="data.guanbi"}{if condition="$data.guanbi eq 1"} checked{/if}{/notempty}> {:lang('Close the site')}
+                    </label>
+                </div>
+                <p class="help-block">{:lang('When you need website maintenance, you can use to close the site')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Site logo')}：</label>
+                <div id="upload"></div>
+                <div style="width: 200px;">
+                    <img src="{$domain}public/common/images/default-thumbnail.png" class="img-thumbnail img-responsive" id="tubiaoImg">
+                </div>
+                <input type="hidden" value="{$data.logo}" name="tubiao" id="tubiao">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Website icon')}：</label>
+                <div id="upload_ico"></div>
+                <div style="width: 200px;">
+                    <img src="{$domain}public/common/images/favicon.ico" class="img-thumbnail img-responsive" id="icotubiaoIco">
+                </div>
+                <input type="hidden" value="{notempty name="data.ico"}{$data.ico}{/notempty}" name="ico" id="icotubiao">
+                <p class="help-block">{:lang('Please upload the "ico" icon file')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Set the time format')}：</label>
+                <select class="form-control" name="timeFormat">
+                    {volist name="timeFormat" id="vo"}
+                    <option value="{$vo.val}"{notempty name="data.timeFormat"}{if condition="$vo.val eq $data.timeFormat"} selected{/if}{/notempty}>{$vo.show}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group{if condition="$lang neq 'zh-cn'"} hidden{/if}">
+                <label>{:lang('Archival information')}：</label>
+                <input type="text" class="form-control" name="record" value="{$data.record}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Copyright Information')}：</label>
+                <textarea class="form-control" name="copyright" rows="3">{$data.copyright}</textarea>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Statistical code')}：</label>
+                <textarea class="form-control" name="statistics" rows="3">{$data.statistics}</textarea>
+            </div>
+            <div class="text-center">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" id="submitid" class="btn btn-default">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div><br><br>
+<div class="hidden" id="webroot">{$domain}</div>
+<div class="hidden" id="buttonText">{:lang('Select Image')}</div>
+<div class="hidden" id="icobuttonText">{:lang('Select the icon')}</div>
+<div class="hidden" id="yumingtishi">{:lang('The domain name should start with "http://" or "https://" and end with "/".')}</div>
+<script type="text/javascript" src="{$domain}public/common/uploadify/jquery.uploadify.js"></script>
+<script src="{$domain}public/common/js/web.js"></script>
+{include file="index/footer" /}

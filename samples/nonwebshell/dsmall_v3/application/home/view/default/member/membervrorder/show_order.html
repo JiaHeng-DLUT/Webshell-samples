@@ -1,0 +1,317 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+
+<div class="dsm-oredr-show">
+  <div class="dsm-order-info">
+    <div class="dsm-order-details">
+      <div class="title">{$Think.lang.virtual_order_information}</div>
+      <div class="content">
+        <dl>
+          <dt>{$Think.lang.store_receiving_phone}：</dt>
+          <dd>
+            {$order_info.buyer_phone}
+            {if $order_info.order_state == ORDER_STATE_PAY}
+              <a href="javascript:void(0);" class="dsm-btn-mini dsm-btn-orange" dialog_id="vr_code_resend" dialog_title="{$Think.lang.send_electronic_exchange_code}" dialog_width="480" ds_type="dialog" uri="{:url('Membervrorder/resend',['buyer_phone'=>$order_info.buyer_phone,'order_id'=>$order_info.order_id])}"><i class="fa fa-mobile-phone"></i>{$Think.lang.again_send}</a>
+             {/if}
+          </dd>
+        </dl>
+        <dl class="line">
+          <dt>{$Think.lang.virtual_order_number}：</dt>
+          <dd>
+            {$order_info.order_sn}
+              <a href="javascript:void(0);">{$Think.lang.store_more}<i class="fa fa-angle-down"></i>
+            <div class="more"><span class="arrow"></span>
+              <ul>
+                <li>{$Think.lang.store_order_pay_method}：<span>{:get_order_payment_name($order_info.payment_code)}</span></li>
+                <li>{$Think.lang.store_order_add_time}：<span>{:date('Y-m-d H:i:s',$order_info.add_time)}</span></li>
+                {notempty name="order_info.payment_time"}
+                  <li>{$Think.lang.store_show_order_pay_time}：<span>{:date('Y-m-d H:i:s',$order_info.payment_time)}</span></li>
+                 {/notempty}
+              </ul>
+            </div>
+            </a></dd>
+        </dl>
+        <dl class="line">
+          <dt>{$Think.lang.store_show_order_buyer_message}：</dt>
+          <dd>{$order_info.buyer_msg}</dd>
+        </dl>
+        <dl class="line">
+          <dt>{$Think.lang.merchants_space}：</dt>
+          <dd>{$order_info.store_name}<a href="javascript:void(0);" id="mapmore">{$Think.lang.store_more}<i class="fa fa-angle-down"></i>
+            <div class="more"><span class="arrow"></span>
+              <ul>
+                <li> {$Think.lang.contact_phone_number}：<span>{notempty name="store_info.live_store_tel"}{$store_info.live_store_tel}{else /}{$store_info.store_phone}{/notempty}</span> </li>
+                <li>{$Think.lang.address_space}： <span>{notempty name="store_info.live_store_address"}{$store_info.live_store_address}{else /}{$store_info.store_address}{/notempty}</span> </li>
+                <li>
+                  <div id="container"></div>
+                </li>
+              </ul>
+            </div>
+            </a></dd>
+        </dl>
+      </div>
+    </div>
+    {if $order_info.order_state == ORDER_STATE_CANCEL}
+      <div class="dsm-order-condition">
+      <dl>
+        <dt><i class="fa fa-power-off orange"></i>{$Think.lang.store_order_state}：</dt>
+        <dd>{$Think.lang.trading_closed}</dd>
+      </dl>
+      <ul>
+        <li>{:date('Y-m-d H:i:s',$order_info.close_time)}{$Think.lang.trading_closed_why}：{$order_info.close_reason}</li>
+      </ul>
+    </div>
+    {elseif $order_info.order_state == ORDER_STATE_NEW}
+      <div class="dsm-order-condition">
+      <dl>
+        <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+        <dd>{$Think.lang.order_generated}</dd>
+      </dl>
+      <ul>
+        <li>{$Think.lang.order_payment_information1}<a href="{:url('Buyvirtual/pay',['order_id'=>$order_info.order_id])}" class="dsm-btn-mini dsm-btn-orange"><i></i>{$Think.lang.order_payment_information2}</a>{$Think.lang.order_payment_information3}</li>
+        <li>{$Think.lang.order_payment_information4} <a href="#order-list" class="dsm-btn-mini">{$Think.lang.store_order_cancel_order}</a>。 </li>
+        <li>{$Think.lang.order_payment_information5}
+          <time>{:date('Y-m-d H:i:s',$order_info.order_cancel_day)}</time>
+          {$Think.lang.order_payment_information6}</li>
+      </ul>
+    </div>
+    {elseif $order_info.order_state == ORDER_STATE_PAY}
+      <div class="dsm-order-condition">
+      <dl>
+        <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+        <dd>{$Think.lang.electronic_exchange_code}</dd>
+      </dl>
+      <ul>
+        <li>{$Think.lang.exchange_code_prompt_message1}</li>
+        <li>{$Think.lang.exchange_code_prompt_message2}&nbsp;<strong class="green">{$order_info.extend_vr_order_code.0.vr_code_valid_count}</strong>&nbsp;{$Think.lang.exchange_code_prompt_message3}
+          <time>{:date('Y-m-d',$order_info.vr_indate)}</time>
+          {$Think.lang.exchange_code_prompt_message4}</li>
+      </ul>
+    </div>
+     {elseif $order_info.order_state == ORDER_STATE_SUCCESS}
+      <div class="dsm-order-condition">
+      <dl>
+        <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+        <dd>{$Think.lang.order_has_been_completed}</dd>
+      </dl>
+      <ul>
+        <li>{$Think.lang.order_completion_information1}</li>
+        <li>{$Think.lang.order_completion_information2}<a href="{:url('Search/index')}" class="dsm-btn-mini dsm-btn-green" target="_blank">{$Think.lang.virtual_goods}</a>。</li>
+      </ul>
+    </div>
+     {/if}
+      <div class="mall-msg">{$Think.lang.questions_ask}<a href="javascript:void(0);" onclick="ajax_form('mall_consult', '{$Think.lang.platform_customer_service}', '{:url('Membermallconsult/add_mallconsult',['inajax'=>1])}', 640);"><i class="fa fa-comments-o"></i>{$Think.lang.platform_customer_service}</a></div>
+  </div>
+  {if $order_info.order_state != ORDER_STATE_CANCEL}
+    <div class="dsm-order-step">
+    <dl class="step-first current">
+      <dt>{$Think.lang.order_generation}</dt>
+      <dd class="bg"></dd>
+      <dd class="date" title="{$Think.lang.order_generation_time}">{:date('Y-m-d H:i:s',$order_info.add_time)}</dd>
+    </dl>
+    <dl class="{$order_info.step_list.step2 ? 'current' : 'null'}">
+      <dt>{$Think.lang.payment_completed}</dt>
+      <dd class="bg"> </dd>
+      <dd class="date" title="{$Think.lang.payment_time}">{:date('Y-m-d H:i:s',$order_info.payment_time)}</dd>
+    </dl>
+    <dl class="{$order_info.step_list.step3 ? 'current' : 'null'}">
+      <dt>{$Think.lang.issue_exchange_code}</dt>
+      <dd class="bg"> </dd>
+    </dl>
+    <dl class="long {$order_info.step_list.step4 ? 'current' : 'null'}">
+      <dt>{$Think.lang.order_completion}</dt>
+      <dd class="bg"> </dd>
+      <dd class="date" title="{$Think.lang.order_completion}">{:date('Y-m-d H:i:s',$order_info.finnshed_time)}</dd>
+    </dl>
+      {notempty name="order_info.extend_vr_order_code"}
+        <div class="code-list" title="{$Think.lang.beyond_scroll_mouse_view}"><i class="arrow"></i>
+      <h5>{$Think.lang.electronic_exchange_code}</h5>
+      <div id="codeList">
+        <ul>
+          {foreach name="order_info.extend_vr_order_code" item="code_info"}
+            <li class="{if $code_info.vr_state==1}used{/if}"><strong>{$code_info.vr_code}</strong> {$code_info.vr_code_desc} </li>
+           {/foreach}
+        </ul>
+      </div>
+    </div>
+      {/notempty}
+  </div>
+   {/if}
+    <div class="dsm-order-contnet" id="order-list">
+    <table class="dsm-default-table order">
+      <thead>
+        <tr>
+          <th class="w10"></th>
+          <th colspan="2">{$Think.lang.store_show_order_goods_name}</th>
+          <th class="w100 tl">{$Think.lang.store_order_goods_single_price}</th>
+          <th class="w60">{$Think.lang.store_show_order_amount}</th>
+          <th class="w100">{$Think.lang.store_order_sell_back}</th>
+          <th class="w100">{$Think.lang.store_trading_status}</th>
+          <th class="w120">{$Think.lang.store_trading_operations}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="20">
+            <span class="ml10" title="{$Think.lang.virtual_order_number}">{$Think.lang.virtual_order_number}：{$order_info.order_sn}</span>
+            <span>{$Think.lang.store_order_add_time}：{:date('Y-m-d H:i',$order_info.add_time)}</span>
+            <span>
+            <a href="{:url('Store/index',['store_id'=>$order_info.store_id])}" title="{$order_info.store_name}">{$store_info.store_name}</a>
+          </span>
+              <!-- QQ -->
+            <span member_id="{$store_info.member_id}">
+              {notempty name="store_info.store_qq"}
+                <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$store_info.store_qq}&site=qq&menu=yes"  title="QQ: {$store_info.store_qq}">
+                  <img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$store_info.store_qq}:52" style=" vertical-align: middle;"/></a>
+               {/notempty}
+
+                <!-- wang wang -->
+              {notempty name="store_info.store_ww"}
+              
+                <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$store_info.store_ww}&site=cntaobao&s=2" class="vm">
+                    <img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$store_info.store_ww}&site=cntaobao&s=2" alt="Wang Wang" style=" vertical-align: middle;"/></a>
+                {/notempty}
+            </span></th>
+        </tr>
+        <tr>
+          <td class="bdl"></td>
+          <td class="w50"><div class="pic-thumb"><a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank" /><img src="{:goods_thumb($order_info)}"/></a></div></td>
+          <td class="tl"><dl class="goods-name">
+              <dt><a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank" title="{$order_info.goods_name}">{$order_info.goods_name}</a></dt>
+              <dd><span class="sale-type">{if $order_info.order_promotion_type == 1}{$Think.lang.store_order_group}，{/if}{$Think.lang.use_aging}{:date('Y-m-d',$order_info.vr_indate)}{if $order_info.vr_invalid_refund == '0'}，{$Think.lang.expired_non_refundable}{/if}
+              </span></dd>
+            </dl></td>
+          <td class="tl">{$order_info.goods_price}</td>
+          <td>{$order_info.goods_num}</td>
+          <td>
+            {if $order_info.if_refund}
+              <a href="{:url('Membervrrefund/add_refund',['order_id'=>$order_info.order_id])}">{$Think.lang.store_order_refund}</a>
+             {/if}
+          </td>
+          <td class="bdl">{$order_info.state_desc}</td>
+          <td class="bdl bdr">
+            {if $order_info.if_cancel}
+              <a href="javascript:void(0)" class="dsm-btn dsm-btn-red" ds_type="dialog" dialog_width="480" dialog_title="{$Think.lang.member_order_cancel_order}" dialog_id="buyer_order_cancel_order" uri="{:url('Membervrorder/change_state',['state_type'=>'order_cancel','order_id'=>$order_info.order_id])}" id="order_action_cancel"><i class="fa fa-ban"></i>{$Think.lang.ds_cancel}</a>
+             {/if}
+
+              <!-- 评价 -->
+            {if $order_info.if_evaluation}
+              <p><a class="dsm-btn dsm-btn-acidblue" href="{:url('Memberevaluate/add_vr',['order_id'=>$order_info.order_id])}">{$Think.lang.member_order_want_evaluate}</a></p>
+            {/if}
+              <!-- 已经评价 -->
+            {if $order_info.evaluation_state == 1}{$Think.lang.order_state_eval}{/if}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="20">
+            <dl class="dsm-store-sales">
+               {notempty name="order_info.voucher_code"}
+              <dd><span>{$Think.lang.order_use} <strong>{$order_info.voucher_price}</strong> {$Think.lang.voucher_code_used}：{$order_info.voucher_code}）</span></dd>
+             {/notempty}
+            </dl>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="20"><dl class="sum">
+              <dt>{$Think.lang.order_payable}：</dt>
+              <dd><em>{$order_info.order_amount}</em>{$Think.lang.ds_yuan}</dd>
+            </dl></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.css">
+<script type="text/javascript">
+var cityName = '';
+store_name = '';
+{present name="store_info.live_store_address"}
+var address = '{:str_replace("'",'"',$store_info.live_store_address)}';
+var store_name = '{:str_replace("'",'"',$store_info.live_store_name)}';
+{/present}
+var map = "";
+var localCity = "";
+var opts = {width: 150, height: 50, title: "{$Think.lang.shop_name}" + store_name}
+
+function initialize() {
+    map = new BMap.Map("container");
+    localCity = new BMap.LocalCity();
+
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    localCity.get(function (cityResult) {
+        if (cityResult) {
+            var level = cityResult.level;
+            if (level < 13) level = 13;
+            map.centerAndZoom(cityResult.center, level);
+            cityResultName = cityResult.name;
+            if (cityResultName.indexOf(cityName) >= 0) cityName = cityResult.name;
+            getPoint();
+        }
+    });
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "{$Think.HTTP_TYPE}api.map.baidu.com/api?v=1.2&callback=initialize";
+    document.body.appendChild(script);
+}
+
+function getPoint() {
+    var myGeo = new BMap.Geocoder();
+    myGeo.getPoint(address, function (point) {
+        if (point) {
+            setPoint(point);
+        }
+    }, cityName);
+}
+
+function setPoint(point) {
+    if (point) {
+        map.centerAndZoom(point, 16);
+        var marker = new BMap.Marker(point);
+        var infoWindow = new BMap.InfoWindow("{$Think.lang.shop_address}" + address, opts);
+        marker.addEventListener("click", function () {
+            this.openInfoWindow(infoWindow);
+        });
+        map.addOverlay(marker);
+        marker.openInfoWindow(infoWindow);
+    }
+}
+
+// 当鼠标放在店铺地图上再加载百度地图。
+$(function () {
+    $('#mapmore').one('mouseover', function () {
+        loadScript();
+    });
+});
+</script>
+{notempty name="order_info.extend_vr_order_code"}
+<script type="text/javascript">
+//兑换码列表过多时出现滚条
+$(function () {
+    $('#codeList').perfectScrollbar();
+});
+</script>
+{/notempty}
+<script>
+function closeErrors() {
+    return true;
+}
+
+window.onerror = closeErrors;
+</script>
+
+
+
+
+
+{/block}

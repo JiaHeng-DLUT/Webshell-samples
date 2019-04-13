@@ -1,0 +1,297 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=savecache">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">攻击防护</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">访问控制</label>
+		<div class="pk-w-sm-8 pk-padding-top-5">（基本DDOS、CC攻击防护）</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">访问控制</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{Cnum(HADSKY_ACCESS)}" name="access_open">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">最大记录文件大小</label>
+		<div class="pk-w-sm-4">
+			<input class="pk-textbox" type="number" name="access_maxfilesize" value="{Cnum(HADSKY_ACCESS_MAXFILESIZE)}" placeholder="留空或填0为不限制，若某个ip被记录的访问日志大于该值将禁止该IP访问网站" title="留空或填0为不限制，若某个ip被记录的访问日志大于该值将禁止该IP访问网站">
+		</div>
+		<div class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">Bytes</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			开启访问控制后，所有的访问记录都会被保存，设置最大记录文件大小后：若某个ip被记录的访问日志大于该值将禁止该IP访问网站，该值设置恰当可有效阻止DDoS及CC攻击，日志保存目录：logs/access/，日志文件可用Excel打开查看。
+		</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			<a class="pk-hover-underline pk-text-primary" target="_blank" href="index.php?c=app&a=superadmin:logs&s=access">查看网站访问数据&raquo;</a>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce"></div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">数据库缓存方式</label>
+		<div class="pk-w-sm-8 pk-padding-top-5">（建议较大型站点或受到一般攻击时开启）</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-padding-bottom-5 pk-text-bold pk-text-right">缓存数据表</label>
+		<div class="pk-w-sm-8 pk-text-sm" style="border:solid 1px green;border-radius:2px">
+			<input class="pk-textbox" type="hidden" name="mysqlcachetables" value="{$_G['SET']['MYSQLCACHETABLES']}" readonly>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="mysqlcachetables-checkbox" type="checkbox" value="read">
+					<span>文章表</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="mysqlcachetables-checkbox" type="checkbox" value="reply">
+					<span>回复表</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10 pk-padding-bottom-10">
+				<div class="pk-w-sm-6">
+					<input class="mysqlcachetables-checkbox" type="checkbox" value="user">
+					<span>用户表</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="mysqlcachetables-checkbox" type="checkbox" value="user_message">
+					<span>消息表</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">缓存周期</label>
+		<div class="pk-w-sm-4">
+			<input id="cachelife2" class="pk-textbox" type="number" name="mysqlcachecycle" value="{$_G['SET']['MYSQLCACHECYCLE']}" placeholder="单位秒，每隔N秒更新一次缓存，留空或填0为不开启" title="单位秒，每隔N秒更新一次缓存，留空或填0为不开启">
+		</div>
+		<div class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">秒</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8">
+			<button type="button" class="pk-btn pk-btn-danger pk-btn-xs" onclick="$('#cachelife2').val('0')">关闭</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('3600')">1小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('7200')">2小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('14400')">4小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('28800')">8小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('43200')">12小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife2').val('86400')">1天</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce;border-top:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-10 pk-text-bold pk-text-right pk-text-primary">文件缓存方式</label>
+		<div class="pk-w-sm-8 pk-padding-top-10">（建议大型站点或受到严重DDOS或CC攻击时开启）</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">缓存页面</label>
+		<div class="pk-w-sm-8 pk-text-sm" style="border:solid 1px green;border-radius:2px">
+			<input class="pk-textbox" type="hidden" name="cachepages" value="{strtolower(HADSKY_CACHEPAGES)}" readonly>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="cachepages-checkbox" type="checkbox" value="list">
+					<span>文章列表页</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="cachepages-checkbox" type="checkbox" value="home">
+					<span>首页</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="cachepages-checkbox" type="checkbox" value="forum">
+					<span>版块页</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="cachepages-checkbox" type="checkbox" value="read">
+					<span>文章详情页</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10 pk-padding-bottom-10">
+				<div class="pk-w-sm-6">
+					<input class="cachepages-checkbox" type="checkbox" value="user">
+					<span>用户资料页</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">缓存周期</label>
+		<div class="pk-w-sm-4">
+			<input id="cachelife" class="pk-textbox" type="number" name="cachelife" value="{Cnum(HADSKY_CACHELIFE)}" placeholder="单位秒，每隔N秒更新一次缓存，留空或填0为不开启" title="单位秒，每隔N秒更新一次缓存，留空或填0为不开启">
+		</div>
+		<div class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">秒</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8">
+			<button type="button" class="pk-btn pk-btn-danger pk-btn-xs" onclick="$('#cachelife').val('0')">关闭</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('3600')">1小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('7200')">2小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('14400')">4小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('28800')">8小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('43200')">12小时</button>
+			<button type="button" class="pk-btn pk-btn-success pk-btn-xs" onclick="$('#cachelife').val('86400')">1天</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">允许参数更新</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{Cnum(HADSKY_CACHEREFRESH)}" name="cacherefresh">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			前台可以通过get参数cache=refresh来更新当前页的缓存，适用于需要立即看见回复信息的站点
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce"></div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">注入及XSS攻击防护</label>
+		<div class="pk-w-sm-8 pk-padding-top-5">（建议开启）</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">URI安全检测</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['SAFE_REQUEST_URI']}" name="safe_request_uri">
+				<option value="0">关闭</option>
+				<option value="1">基础防护（推荐）</option>
+				<option value="2">全面防护（部分应用请求会存在误防）</option>
+			</select>
+		</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			开启URI安全检测后，会对用户的请求进行安全检测，可有效阻止XSS攻击及SQL注入，推荐基础防护，日志保存目录：logs/attack/，日志文件可用Excel打开查看。
+		</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			<a class="pk-hover-underline pk-text-primary" target="_blank" href="index.php?c=app&a=superadmin:logs&s=access">查看网站攻防日志&raquo;</a>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">防CSRF攻击</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['CHKCSRF']}" name="chkcsrf">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">前台CSRF验证的页面</label>
+		<div class="pk-w-sm-8 pk-text-sm" style="border:solid 1px green;border-radius:2px">
+			<input class="pk-textbox" type="hidden" name="chkcsrfpages" value="{htmlspecialchars($_G['SET']['CHKCSRFPAGES'],ENT_QUOTES)}" readonly>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="chklogin">
+					<span>登录</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="admincmd">
+					<span>管理操作</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="delete">
+					<span>帖子删除</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="post">
+					<span>帖子发表</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="postmessage">
+					<span>消息发送</span>
+				</div>
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="savereg">
+					<span>注册</span>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10 pk-padding-bottom-10">
+				<div class="pk-w-sm-6">
+					<input class="chkcsrfpages-checkbox" type="checkbox" value="saveuser">
+					<span>保存资料</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce"></div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+			<button type="button" class="pk-btn pk-btn-danger refreshbtn" data-type="mysql">更新数据库缓存</button>
+			<button type="button" class="pk-btn pk-btn-danger refreshbtn" data-type="file">更新文件缓存</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		TextboxAndCheckbox("input[name='mysqlcachetables']", "input[class='mysqlcachetables-checkbox'][type='checkbox']");
+		TextboxAndCheckbox("input[name='cachepages']", "input[class='cachepages-checkbox'][type='checkbox']");
+		TextboxAndCheckbox("input[name='chkcsrfpages']", "input[class='chkcsrfpages-checkbox'][type='checkbox']");
+
+		$('#SubmitBtn').on('click', function() {
+			$.post('index.php?c=app&a=superadmin:index&s=save&table=set&json=yes', {
+				chkcsrfval: "{$_G['CHKCSRFVAL']}",
+				mysqlcachecycle: $('input[name="mysqlcachecycle"]').val(),
+				mysqlcachetables: $('input[name="mysqlcachetables"]').val(),
+				safe_request_uri: $('select[name="safe_request_uri"]').val(),
+				chkcsrf: $('select[name="chkcsrf"]').val(),
+				chkcsrfpages: $('input[name="chkcsrfpages"]').val()
+			});
+		});
+
+		$('.refreshbtn').on('click', function() {
+			var This = $(this);
+			var _type = 'refresh';
+			if(This.data('type') == 'mysql') {
+				_type = 'mysql_refresh';
+			}
+			This.html('更新中...').prop('disabled', true);
+			$.getJSON("index.php?c=app&a=superadmin:index&s=savecache&do=" + _type + "&chkcsrfval={$_G['CHKCSRFVAL']}&json=yes", function(data) {
+				if(data['state'] == 'ok') {
+					pktip('更新成功', 'success', 1500, function() {
+						This.html('更新' + (_type == 'mysql_refresh' ? '数据库' : '文件') + '缓存').prop('disabled', false);
+					});
+				}
+			});
+		});
+	});
+</script>

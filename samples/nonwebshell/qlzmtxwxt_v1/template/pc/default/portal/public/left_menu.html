@@ -1,0 +1,97 @@
+
+
+<ul class="layui-nav layui-nav-tree " lay-filter="user" style="background:none">
+    <li class="layui-nav-item {if $Request.controller == 'home'}layui-this{/if}">
+      <a href="{:url('home/index')}"><i class="layui-icon">&#xe609;</i> 我的主页 </a>
+    </li>
+
+    <li class="layui-nav-item {if $Request.controller == 'Index'} layui-this {/if}">
+     <a href="{:url('index/index')}"><i class="layui-icon">&#xe612;</i> 用户中心</a>
+    </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 文章管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 商城管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 任务管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li>  
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 社区管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li>  
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 视频管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li> 
+  <li class="layui-nav-item">
+    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i> 积分商城</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">● 文章列表</a></dd>
+      <dd><a href="">● 文章发布</a></dd>
+    </dl>
+  </li> 
+
+    <li class="layui-nav-item  {if $Request.controller == 'guarantee'} layui-this {/if}">
+      <a href="javascript:;">
+        <i class="layui-icon">&#xe620;</i>
+         担保交易
+      </a>
+      <dl class="layui-nav-child">
+          <dd><a href="{:url('guarantee/index')}">
+          <i class="layui-icon">&#xe620;</i>所有交易</a></dd>
+          <dd class="{if $Request.controller == 'guarantee' && $Request.action =='index' && $Request.param.status ==1} layui-this {/if}"><a href="{:url('guarantee/index',['status'=>1])}"><i class="layui-icon">&#xe620;</i>
+           交易中</a></dd>
+          <dd class="{if $Request.controller == 'guarantee' && $Request.action =='index' && $Request.param.status ==2 } layui-this {/if}"> <a href="{:url('guarantee/index',['status'=>2])}">
+            <i class="layui-icon">&#xe620;</i>
+           已结束
+          </a></dd>
+    </dl>
+    </li>
+
+    <li class="layui-nav-item  {if $Request.controller == 'Set'} layui-this {/if}">
+      <a href="javascript:;">
+        <i class="layui-icon">&#xe620;</i>
+        财产中心
+      </a>
+
+      <dl class="layui-nav-child">
+      <dd><a href="">● 交易记录</a></dd>
+      <dd><a href="">● 充值记录</a></dd>
+      <dd><a href="">● 提现记录</a></dd>
+    </dl>
+    </li>
+
+
+    <li class="layui-nav-item  {if $Request.controller == 'Set'} layui-this {/if}">
+      <a href="{:url('set/index')}">
+        <i class="layui-icon">&#xe620;</i>
+        基本设置
+      </a>
+    </li>
+    <li class="layui-nav-item {if $Request.controller == 'Message'} layui-this {/if}">
+      <a href="{:url('message/index')}">
+        <i class="layui-icon">&#xe611;</i>
+        我的消息
+      </a>
+    </li>
+  </ul>

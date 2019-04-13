@@ -1,0 +1,38 @@
+<div class="pk-row pk-text-sm pk-text-bold pk-text-center pk-margin-top-15 pk-margin-bottom-15" style="border-bottom:solid 1px #E0E0E0">
+	<div class="pk-w-sm-12 pk-text-center pk-padding-15">
+		恭喜您，HadSky已被成功安装！
+	</div>
+</div>
+<div class="pk-text-sm pk-padding-10">
+	尊敬的站长：
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;1. 您可以进入
+	<a href="../index.php?c=app&a=superadmin:index">后台管理</a>绑定官方账号安装更多插件及模板；
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;3. 您现在使用的是免费版，若需要更多特权请
+	<a target="_blank" href="http://www.hadsky.com/htmlpage-purchase.html">购买</a>；
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;4. 您若在使用过程中遇到了问题，请及时反馈给我们，我们也会第一时间处理，希望您能支持我们；
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;5.
+	<a target="_blank" href="http://www.hadsky.com/read-281-1.html">HadSky使用教程</a>，<b>免费版用户必须保留标题和页脚官方版权信息</b>。
+	<p class="pk-text-right pk-text-sm">
+		By：puyuetian
+	</p>
+</div>
+<p class="pk-text-center pk-padding-15" style="border-top: solid 1px #E0E0E0">
+	<a class="pk-btn pk-btn-danger" href="../index.php">我的论坛</a> &nbsp;
+	<a target="_blank" class="pk-btn pk-btn-warning" href="http://www.hadsky.com">官方论坛</a> &nbsp;
+	<a target="_blank" class="pk-btn pk-btn-secondary" href="http://www.hadsky.com/app-puyuetian_documents-index.html">使用文档</a>
+</p>
+<script>
+	//创始人账号登录
+	var _data = JSON.parse(decodeURIComponent($_GET('data')));
+	$.post('../index.php?c=chklogin&return=json', {
+		'autologin': 1,
+		'username': _data['username'],
+		'password': _data['password']
+	}, function(data) {
+		if(data['state'] == 'ok') {
+			$.get('../index.php?c=app&a=hadskycloudserver:install');
+		} else {
+			console.log(data);
+		}
+	}, 'json');
+</script>

@@ -1,0 +1,144 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.renewal_notice1}</li>
+        {notempty name="reopen_list"}
+        <li>{$Think.lang.renewal_notice2} {$store_info.store_endtime|date="Y-m-d",###}，{$Think.lang.renewal_notice3} {$store_info.allow_applay_date|date="Y-m-d",###} {$Think.lang.renewal_notice4}</li>
+        {/notempty}
+    </ul>
+</div>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th>{$Think.lang.fee_standard}</th>
+            <th>{$Think.lang.renewal_time}</th>
+            <th>{$Think.lang.payment_amount}</th>
+            <th>{$Think.lang.payment_voucher}</th>
+            <th>{$Think.lang.ds_state}</th>
+            <th>{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="reopen_list"}
+        {foreach name="reopen_list" item="val" }
+        <tr class="bd-line">
+            <td></td>
+            <td>{$val.storereopen_grade_price} ( {$val.storereopen_grade_name} )</td>
+            <td>{$val.storereopen_year}</td>
+            <td>{if $val.storereopen_pay_amount == 0}{$Think.lang.free}{else/}{$val.storereopen_pay_amount}{/if}</td>
+            <td>
+                {if $val.storereopen_pay_cert != ''}
+                <a data-lightbox="lightbox-image" href="{:get_store_joinin_imageurl($val['storereopen_pay_cert'])}">{$Think.lang.ds_view}</a>
+                {/if}
+            </td>
+            <td><?php echo str_replace(array('0','1','2'),array(lang('pending_payment'),lang('pending_audit'),lang('approved_audit')),$val['storereopen_state']);?></td>
+            <td class="dscs-table-handle">
+                {if $val.storereopen_state == '0'}
+                <span><a href="javascript:void(0)" class="btn-red" onclick="ds_ajaxget_confirm('{:url('Sellerinfo/reopen_del',['storereopen_id'=>$val.storereopen_id])}','{$Think.lang.ds_ensure_del}');"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+</table>
+<div class="dssc-form-default">
+    {if isset($upload_cert)}
+    <form method="post" action="{:url('Sellerinfo/reopen_upload')}" name="upload_form" id="upload_form" enctype="multipart/form-data">
+        <input type="hidden" name="storereopen_id" value="{$reopen_info.storereopen_id}">
+        <dl>
+            <dt>{$Think.lang.payment_amount}{$Think.lang.ds_colon}</dt>
+            <dd>
+                {$reopen_info.storereopen_pay_amount} {$Think.lang.ds_yuan}
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.upload_payment_voucher}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input name="storereopen_pay_cert" type="file">
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.note}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <textarea name="storereopen_pay_cert_explain" rows="10" cols="30"></textarea>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="button" id="btn_upload_reopen"  class="submit" value="{$Think.lang.ds_submit}" /></label>
+        </div>
+    </form>
+    {/if}
+    {if isset($applay_reopen)}
+    <form method="post" action="{:url('Sellerinfo/reopen_add')}" name="add_form" id="add_form">
+        <dl>
+            <dt>{$Think.lang.apply_store_level}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="storereopen_grade_id" style="width: auto;">
+                    {notempty name="grade_list"}
+                    {foreach name="grade_list" item="val"  }
+                    <option {if $val.storegrade_id==$current_grade_id}selected{/if} value="{$val.storegrade_id}">{$val.storegrade_name} {if floatval($val['storegrade_price'])>0}{$val.storegrade_price}{$Think.lang.ds_yuan}/{$Think.lang.year}{else/}{$Think.lang.free}{/if}</option>
+                    {/foreach}
+                    {/notempty}
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.application_renewal_duration}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="storereopen_year">
+                    <option value="1">1 {$Think.lang.year}</option>
+                    <option value="2">2 {$Think.lang.year}</option>
+                </select>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="button" id="btn_add_reopen"  class="submit" value="{$Think.lang.ds_submit}" /></label>
+        </div>
+    </form>
+    {/if}
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+                    $(document).ready(function() {
+                        //页面输入内容验证
+                        $('#btn_add_reopen').on('click', function() {
+                            ds_ajaxpost('add_form')
+                        });
+                        $('#upload_form').validate({
+                            submitHandler: function(form) {
+                                ds_ajaxpost('upload_form');
+                            },
+                            rules: {
+                                storereopen_pay_cert: {
+                                    required: true
+                                },
+                                storereopen_pay_cert_explain: {
+                                    maxlength: 100
+                                }
+                            },
+                            messages: {
+                                storereopen_pay_cert: {
+                                    required: '{$Think.lang.please_select_payment_voucher}'
+                                },
+                                storereopen_pay_cert_explain: {
+                                    maxlength: jQuery.validator.format("{$Think.lang.max_word}")
+                                }
+                            }
+                        });
+                        $('#btn_upload_reopen').on('click', function() {
+                            $('#upload_form').submit();
+                        });
+                    });
+</script>
+
+{/block}
+
+

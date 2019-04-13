@@ -1,0 +1,53 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w30"></th>
+            <th class="w180 tl">{$Think.lang.template_name}</th>
+            <th class="w180 tl">{$Think.lang.member_show_expre_company}</th>
+            <th class="tl">{$Think.lang.waybill_legend}</th>
+            <th class="w180">{$Think.lang.template_type}</th>
+            <th class="w110">{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $waybill_list}
+        {foreach name="waybill_list" item="waybill"}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">{$waybill.waybill_name}</td>
+            <td class="tl">{$express_info.express_name}</td>
+            <td class="tl"><div class="waybill-img-thumb"><a data-lightbox="lightbox-image" href="{$waybill.waybill_image_url}"><img src="{$waybill.waybill_image_url}"></a></div>
+                <div class="waybill-img-size">
+                    <p>{$Think.lang.width}：{$waybill.waybill_width}(mm)</p>
+                    <p>{$Think.lang.height}：{$waybill.waybill_height}(mm)</p>
+                </div></td>
+            <td>{$waybill.waybill_type_text}</td>
+            </td>
+            <td class="dscs-table-handle"><span><a href="{:url('Sellerwaybill/waybill_test',array('waybill_id' => $waybill.waybill_id))}" class="btn-acidblue" target="_blank">
+                        <p>{$Think.lang.test}</p>
+                    </a></span><span><a href="{:url('Sellerwaybill/waybill_bind_save',array('waybill_id' =>$waybill.waybill_id,'express_id'=>$express_info.express_id))}"class="btn-green" >
+                        <p>{$Think.lang.binding}</p>
+                    </a>
+
+            </span></td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_waybill_template}<a href="{:url('Sellerwaybill/waybill_add')}">{$Think.lang.build_template}</a></span></div></td>
+        </tr>
+        {/if}
+    </tbody>
+</table>
+<form id="bind_form" action="{:url('Sellerwaybill/waybill_bind_save')}" method="post">
+    <input type="hidden" name="express_id" value="{$express_info.express_id}">
+    <input type="hidden" id="waybill_id" name="waybill_id" value="">
+</form>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+{/block}
+

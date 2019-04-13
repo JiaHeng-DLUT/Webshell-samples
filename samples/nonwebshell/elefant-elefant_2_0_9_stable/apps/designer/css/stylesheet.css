@@ -1,0 +1,77 @@
+#wrapper, #body, #form {
+	height: 100%;
+}
+#wrapper {
+	padding-top: 38px !important;
+}
+#body {
+	position: relative;
+	margin-top: 5px;
+}
+form {
+	position: absolute;
+	display: block;
+	left: 0px;
+	top: 0px;
+	width: 99%;
+}
+#name {
+	margin-top: 3px;
+	margin-bottom: 0px;
+	height: 32px;
+	line-height: 32px;
+}
+.body {
+	position: relative !important;
+	margin-top: 0 !important;
+	width: 100%;
+}
+#tags {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #f1f1f1;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-bottom: 0px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	padding-left: 3px;
+}
+.autosave-notice {
+	position: absolute;
+	top: 3px;
+	left: 400px;
+	z-index: 25;
+}
+#buttons {
+	float: right;
+	margin-right: 0px;
+}
+br.preview {
+	display: none;
+}
+#preview {
+	width: 100%;
+}
+#footer {
+	display: none;
+}
+.CodeMirror {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1px solid #ccc;
+	background: #fff;
+	width: 100%;
+	height: 240px;
+}
+.preview {
+	margin-top: 3px;
+	width: 100%;
+}

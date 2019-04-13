@@ -1,0 +1,91 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+
+<a href="javascript:void(0)" class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.new_classification}" dialog_id="my_category_add"  uri="{:url('Sellergoodsclass/goods_class_add')}" dialog_width="550" title="{$Think.lang.new_classification}">{$Think.lang.new_classification}</a>
+
+
+{/block}
+{block name="seller_main"}
+<table class="dssc-default-table" id="my_category" server="{:url('Sellergoodsclass/goods_class_ajax')}" >
+    <thead>
+        <tr ds_type="table_header">
+            <th class="w30"></th>
+            <th coltype="editable" column="storegc_name" checker="check_required" inputwidth="50%">{$Think.lang.store_goods_class_name}</th>
+            <th class="w60" coltype="editable" column="storegc_sort" checker="check_max" inputwidth="30px">{$Think.lang.store_goods_class_sort}</th>
+            <th class="w120" coltype="switchable" column="storegc_state" checker="" onclass="showclass-ico-btn" offclass="noshowclass-ico-btn">{$Think.lang.ds_display}</th>
+            <th class="w100">{$Think.lang.ds_handle}</th>
+        </tr>
+        {notempty name="goods_class"}
+        <tr>
+            <td class="tc"><input id="all" type="checkbox" class="checkall" /></td>
+            <td colspan="20"><label for="all">{$Think.lang.ds_select_all}</label>
+                <a href="javascript:void(0)" class="dssc-btn-mini" ds_type="batchbutton" uri="{:url('Sellergoodsclass/drop_goods_class')}" name="class_id" confirm="{$Think.lang.store_goods_class_ensure_del}?"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a></td>
+        </tr>
+        {/notempty}
+    </thead>
+    <tbody id="treet1">
+        {notempty name="goods_class"}
+        {foreach name="goods_class" item="val"}
+        <tr class="bd-line" ds_type="table_item" idvalue="{$val.storegc_id}" >
+            <td class="tc"><input type="checkbox" class="checkitem" value="{$val.storegc_id}" /></td>
+            <td class="tl"><span class="ml5" ds_type="editobj" >{$val.storegc_name}</span>
+                {if $val.storegc_parent_id == 0}
+                <span class="add_ico_a"> <a href="javascript:void(0)" class="dssc-btn" ds_type="dialog" dialog_width="480" dialog_title="{$Think.lang.store_goods_class_add_sub}" dialog_id="my_category_add" uri="{:url('Sellergoodsclass/goods_class_add',['top_class_id'=>$val.storegc_id])}" >{$Think.lang.store_goods_class_add_sub}</a></span>
+                {/if}</td>
+            <td><span ds_type="editobj">{$val.storegc_sort}</span></td>
+            <td>
+                {if $val.storegc_state == 1}
+                {$Think.lang.store_create_yes}
+                {else /}
+                {$Think.lang.store_create_no}
+                {/if}</td>
+            <td class="dscs-table-handle"><span><a href="javascript:void(0)" ds_type="dialog" dialog_width="480" dialog_title="{$Think.lang.store_goods_class_edit_class}" dialog_id="my_category_edit" uri="{:url('Sellergoodsclass/goods_class_edit',['top_class_id'=>$val.storegc_id])}" class="btn-blue"><i class="fa fa-pencil-square"></i>
+                        <p>{$Think.lang.ds_edit}</p>
+                    </a></span> <span><a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Sellergoodsclass/drop_goods_class',['class_id'=>$val.storegc_id])}','{$Think.lang.store_goods_class_ensure_del}?');" class="btn-red"><i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_del}</p>
+                    </a></span></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span> </div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    {notempty name="goods_class"}
+    <tfoot>
+        <tr>
+            <th class="tc"><input id="all2" type="checkbox" class="checkall" /></th>
+            <th colspan="15"><label for="all2">{$Think.lang.ds_select_all}</label>
+                <a href="javascript:void(0)" class="dssc-btn-mini" ds_type="batchbutton" uri="{:url('Sellergoodsclass/drop_goods_class')}" name="class_id" confirm="{$Think.lang.store_goods_class_ensure_del}?"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a></th>
+        </tr>
+    </tfoot>
+    {/notempty}
+</table>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jqtreetable.js"></script>
+<script>
+    $(function()
+    {
+        var map = [{$map}];
+        var path = "{$Think.HOME_SITE_ROOT}/images/";
+        if (map.length > 0)
+        {
+            var option = {
+                openImg: path + "treetable/tv-collapsable.gif",
+                shutImg: path + "treetable/tv-expandable.gif",
+                leafImg: path + "treetable/tv-item.gif",
+                lastOpenImg: path + "treetable/tv-collapsable-last.gif",
+                lastShutImg: path + "treetable/tv-expandable-last.gif",
+                lastLeafImg: path + "treetable/tv-item-last.gif",
+                vertLineImg: path + "treetable/vertline.gif",
+                blankImg: path + "treetable/blank.gif",
+                collapse: false,
+                column: 1,
+                striped: false,
+                highlight: false,
+                state:false};
+            $("#treet1").jqTreeTable(map, option);
+        }
+    });
+</script>
+{/block}

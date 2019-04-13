@@ -1,0 +1,220 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.web_set}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data" name="form1" action="">
+        <div class="ncap-form-default">
+            <dl>
+                <dt>{$Think.lang.site_name}</dt>
+                <dd>
+                    <input id="site_name" name="site_name" value="{$list_config.site_name}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic">{$Think.lang.web_name_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.site_logo}</dt>
+                <dd>
+                    {notempty name="$list_config.site_logo"}
+                    <span class="type-file-show"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$list_config.site_logo}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box"><input type='text' name='textfield' id='textfield1' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />
+                        <input name="site_logo" type="file" class="type-file-file" id="site_logo" size="30" hidefocus="true" ds_type="change_site_logo">
+                    </span>
+                    <p class="notic">{$Think.lang.site_logo_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.member_logo}</dt>
+                <dd>
+                    {notempty name="$list_config.member_logo"}
+                    <span class="type-file-show"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$list_config.member_logo}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box"><input type='text' name='textfield' id='textfield2' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />
+                        <input name="member_logo" type="file" class="type-file-file" id="member_logo" size="30" hidefocus="true" ds_type="change_member_logo">
+                    </span>
+                    <p class="notic">{$Think.lang.member_logo_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.seller_center_logo}</dt>
+                <dd>
+                    {notempty name="$list_config.seller_center_logo"}
+                    <span class="type-file-show"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$list_config.seller_center_logo}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box"><input type='text' name='textfield' id='textfield3' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />
+                        <input name="seller_center_logo" type="file" class="type-file-file" id="seller_center_logo" size="30" hidefocus="true" ds_type="change_seller_center_logo">
+                    </span>
+                    <p class="notic">{$Think.lang.seller_center_logo_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.site_mobile_logo}</dt>
+                <dd>
+                    {notempty name="$list_config.site_mobile_logo"}
+                    <span class="type-file-show"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$list_config.site_mobile_logo}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box"><input type='text' name='textfield' id='textfield4' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />
+                        <input name="site_mobile_logo" type="file" class="type-file-file" id="site_mobile_logo" size="30" hidefocus="true" ds_type="change_site_mobile_logo">
+                    </span>
+                    <p class="notic">{$Think.lang.site_mobile_logo_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.site_logowx}</dt>
+                <dd>
+                    {notempty name="$list_config.site_logowx"}
+                    <span class="type-file-show"><img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$list_config.site_logowx}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box"><input type='text' name='textfield' id='textfield5' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />
+                        <input name="site_logowx" type="file" class="type-file-file" id="site_logowx" size="30" hidefocus="true" ds_type="change_site_logowx">
+                    </span>
+                    <p class="notic">{$Think.lang.site_logowx_notice}</p>
+                </dd>
+            </dl>
+              <dl>
+                <dt>{$Think.lang.hot_search}</dt>
+                <dd>
+                    <textarea id="hot_search" name="hot_search">{$list_config.hot_search}</textarea>
+                    <span class="err"></span>
+                    <p class="notic">{$Think.lang.field_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.baidu_map_ak_key}</dt>
+                <dd>
+                    <input id="baidu_ak" name="baidu_ak" value="{$list_config.baidu_ak}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.icp_number}</dt>
+                <dd>
+                    <input id="icp_number" name="icp_number" value="{$list_config.icp_number}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt>{$Think.lang.site_phone}</dt>
+                <dd>
+                    <input id="site_phone" name="site_phone" value="{$list_config.site_phone}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt>{$Think.lang.site_tel400}</dt>
+                <dd>
+                    <input id="site_tel400" name="site_tel400" value="{$list_config.site_tel400}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.site_email}</dt>
+                <dd>
+                    <input id="site_email" name="site_email" value="{$list_config.site_email}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.flow_static_code}</dt>
+                <dd>
+                    <textarea id="flow_static_code" name="flow_static_code">{$list_config.flow_static_code}</textarea>
+                    <span class="err"></span>
+                    <p class="notic">{$Think.lang.flow_static_code_notice}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.cache_open}</dt>
+                <dd>
+                    <div class="onoff">
+                        <label for="cache_open1" class="cb-enable {if condition="$list_config.cache_open eq 1"}selected{/if}">{$Think.lang.ds_open}</label>
+                        <label for="cache_open0" class="cb-disable {if condition="$list_config.cache_open eq 0"}selected{/if}">{$Think.lang.ds_close}</label>
+                        <input id="cache_open1" name="cache_open" value="1" type="radio" {if condition="$list_config.cache_open eq 1"} checked="checked"{/if}>
+                        <input id="cache_open0" name="cache_open" value="0" type="radio" {if condition="$list_config.cache_open eq 0"} checked="checked"{/if}>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.site_state}</dt>
+                <dd>
+                    <div class="onoff">
+                        <label for="site_state1" class="cb-enable {if condition="$list_config.site_state eq 1"}selected{/if}">{$Think.lang.ds_open}</label>
+                        <label for="site_state0" class="cb-disable {if condition="$list_config.site_state eq 0"}selected{/if}">{$Think.lang.ds_close}</label>
+                        <input id="site_state1" name="site_state" value="1" type="radio" {if condition="$list_config.site_state eq 1"} checked="checked"{/if}>
+                        <input id="site_state0" name="site_state" value="0" type="radio" {if condition="$list_config.site_state eq 0"} checked="checked"{/if}>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.closed_reason}</dt>
+                <dd>
+                    <textarea id="closed_reason" name="closed_reason">{$list_config.closed_reason}</textarea>
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt></dt>
+                <dd><a href="JavaScript:void(0);" class="btn" onclick="document.form1.submit()">{$Think.lang.ds_confirm_submit}</a></dd>
+            </dl>
+        </div>
+    </form>
+    
+</div>
+
+
+
+
+
+<script>
+    $(function(){
+        $("#site_logo").change(function () {
+            $("#textfield1").val($("#site_logo").val());
+        });
+        $("#member_logo").change(function () {
+            $("#textfield2").val($("#member_logo").val());
+        });
+        $("#seller_center_logo").change(function () {
+            $("#textfield3").val($("#seller_center_logo").val());
+        });
+
+        $("#site_mobile_logo").change(function () {
+            $("#textfield4").val($("#site_mobile_logo").val());
+        });
+        $("#site_logowx").change(function () {
+            $("#textfield5").val($("#site_logowx").val());
+        });
+    })
+</script>
+
+

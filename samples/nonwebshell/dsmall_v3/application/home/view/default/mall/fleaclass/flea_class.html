@@ -1,0 +1,301 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script> 
+<script type="text/javascript" src="{$Think.HOME_SITE_ROOT}/js/flea/jquery.flea_list.js"></script>
+<link href="{$Think.HOME_SITE_ROOT}/css/flea.css" rel="stylesheet" type="text/css">
+<script>
+    $(function(){
+            $('*[ds_type="dialog"]').click(function(){
+        var id = $(this).attr('dialog_id');
+        var title = $(this).attr('dialog_title') ? $(this).attr('dialog_title') : '';
+        var url = $(this).attr('uri');
+        var width = $(this).attr('dialog_width');
+        CUR_DIALOG = ajax_form(id, title, url, width,0);
+        return false;
+    });
+    })
+</script>
+<div class="content" style=" margin-top:10px;">
+  <!--检索表单	-->
+	<form id="condition" method="GET" action="{:url('Index')}">
+                {if $condition_out!=""}
+                        {foreach name="condition_out" item="val" key="key" }
+                                {if $val}
+					<input type="hidden" id="{$key}" name="{$key}" value="{$val}" />
+				{/if}
+			{/foreach}
+		{/if}
+	</form>
+  <!--检索表单	-->
+  <div class="size790 fn-left" style="margin-bottom:20px;">
+    <div id="flea_keyword">
+                {if $navigation}
+                        {foreach name="navigation" item="val" key="key" }
+				<a href="{$key}">{$val}</a>&nbsp;>
+			{/foreach}
+		{/if}
+		{$Think.lang.flea_index_find_goods}({:count($all_num)})	
+	</div>
+    <div id="cat_select">
+	  <p id="cat_num" style="display:none;">{:count($out_class)}</p>
+          {notempty name='out_class'}
+          <ul id="cate" class="cat_list">
+              {foreach name="out_class" item="val"}
+              <li class="fn-left">
+                  <a keycate="{$val.fleaclass_id}" class="blue" href="#" title="{$val.fleaclass_name}">{:str_cut($val['fleaclass_name'],13)}</a>
+              </li>
+              {/foreach}
+          </ul>
+          {/notempty}
+      <a id="j_moreCat" class="fold blue" href="#">{if (count($out_class)>10)}{$Think.lang.flea_show_more}{/if}</a>
+    </div>
+    <div id="filter">
+      <div class="fill_filter">
+          <dl >
+              <dt class="fn-left">{$Think.lang.flea_according_old}</dt>
+              <dd class="fn-left">
+                  <ul id="quality">
+                      <li class="fn-left {empty name='condition_out.quality_input'}current{/empty}">
+                          <a keyquality="" class="blue" href="#">{$Think.lang.flea_index_unlimit}</a>
+                      </li>
+                      <li><a keyquality="10" class="blue" href="#">{$Think.lang.flea_index_new}</a></li>
+                      <li><a keyquality="9" class="blue" href="#">{$Think.lang.flea_index_almost_new}</a></li>
+                      <li><a keyquality="8" class="blue" href="#">{$Think.lang.flea_index_gently_used}</a></li>
+                      <li><a keyquality="7" class="blue" href="#">{$Think.lang.flea_index_old}</a></li>
+                  </ul>
+              </dd>
+          </dl>
+      </div>
+      <div class="fill_filter">
+          <dl class="city fn-left" >
+              <dt class="fn-left">{$Think.lang.flea_according_price}</dt>
+              <dd class="fn-left">
+                  <ul id="price">
+                      <li class="fn-left {empty name='condition_out.price_input'}current{/empty}">
+                          <a keyprice="" class="blue" href="#">{$Think.lang.flea_index_unlimit}</a>
+                      </li>
+                      <li><a keyprice="35" class="blue">20-50{$Think.lang.flea_index_rmb}</a></li>
+                      <li><a keyprice="75" class="blue">50-100{$Think.lang.flea_index_rmb}</a></li>
+                      <li><a keyprice="150" class="blue">100-200{$Think.lang.flea_index_rmb}</a></li>
+                      <li><a keyprice="350" class="blue">200-500{$Think.lang.flea_index_rmb}</a></li>
+                      <li><a keyprice="750" class="blue">500-1000{$Think.lang.flea_index_rmb}</a></li>
+                      <li><a keyprice="1000" class="blue">1000{$Think.lang.flea_index_rmb}{$Think.lang.flea_index_on}</a></li>
+                  </ul>
+              </dd>
+          </dl>
+      </div>
+        <div class="fill_filter_c">
+            <dl class="city fn-left">
+                <dt class="fn-left">{$Think.lang.flea_according_area}</dt>
+
+                <dd class="fn-left search_city">
+                    <ul id="area">
+                        <li class="fn-left {empty name='condition_out.area_input'}current{/empty}">
+                            <a keyarea="" class="blue" href="#">{$Think.lang.flea_index_unlimit}</a>
+                        </li>
+                        {if isset($area_main)}
+                        <li>
+                            <a keyarea="{$area_main.fleaarea_id}" class="blue">
+                                {$area_main.fleaarea_name}
+                            </a>
+                        </li>
+                        {/if}
+                        {if $out_area}
+                        {foreach name="out_area" item="val"}
+                        <li>
+                            <a keyarea="{$val.fleaarea_id}" class="blue">
+                                {$val.fleaarea_name}
+                            </a>
+                        </li>
+                        {/foreach}
+                        {/if}
+                    </ul>
+                </dd>
+            </dl>
+        </div>   
+    </div>
+    <div id="rank">
+      <div class="rankbar">
+          <ul class="options fn-left">
+              <li id="rank_current" class="rank_default fn-left">
+                  <span><a href="#">{$Think.lang.flea_default_sort}</a></span>
+              </li>
+              <li id="rank_price" keyrank="{$condition_out.rank_input}" class="rank_default fn-left">
+                  <span>
+                      <a class="{eq name='condition_out.rank_input' value='2'}up{/eq}{eq name='condition_out.rank_input' value='1'}down{/eq}" href="#">
+                          {$Think.lang.flea_index_price}<i class="fn-right"></i>
+                      </a>
+                  </span>
+              </li>
+              <li id="float_price" class="rank_price_range fn-left">
+                  <input type="text" size="2" value="{$condition_out.start_input}"/>
+                  <span>-</span>
+                  <input type="text" size="2" value="{$condition_out.end_input}"/>
+              </li>
+              <!--浮动价格搜索-->
+              <li id="price_form">
+                  <input keystart="" name="start" id="start" type="text" size="2" value="{$condition_out.start_input}" />
+                  <span>-</span>
+                  <input keyend="" name="end" id="end" type="text" size="2" value="{$condition_out.end_input}" />
+                  <a id="price_submit" value=""/>{$Think.lang.flea_index_commit}</a>
+              </li>
+              <!--end-->
+              <li class="chack_box fn-left">
+                  <input id="picc" keypic="" {if $condition_out['pic_input']}checked value=""{else /}value="1"{/if}  name="pic_input" type="checkbox"  />
+                         <label for="support-img">
+                      <strong>{$Think.lang.flea_look_no_pic}</strong>
+                  </label>
+              </li>
+          </ul>
+        <div class="keywords fn-right">
+          <div class="key"><input id="key" keykey="" name="key" type="text" value="{$condition_out.key_input}"/></div>
+          <span><a id="search_key" href="#">{$Think.lang.flea_index_search}</a></span>        
+        </div>
+      </div>
+    </div>
+      <div id="list-content">
+          <ul id="seller">
+              {notempty name="listgoods"}
+              {foreach name="listgoods" item="val"}
+              <li class="seller_goods fn-left">
+                  <p class="pic fn-left">
+                      <span class="thumb size120">
+                          <i></i>
+                          <a class="user" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}"><img height="120" width="120" onload="javascript:ResizeImage(this,120,120);" title="{$val.goods_name}" src="{:flea_thumb($val['goods_image'])}"/></a>                
+                      </span>
+                  </p>
+                  <div class="seller fn-left">
+                      <div class="pic fn-left">
+                          <span class="thumb size50">
+                              <i></i>
+                              <a href="{$Think.HOME_SITE_URL}/Fleaclass/index/?seller_input={$val['member_info']['member_id']}&pic_input=1"><img src="{:get_member_avatar(session('avatar'))}" width="50px" height="50px"/></a>
+                          </span>
+                      </div>
+
+                      <div class="seller_num">
+                          <p class="seller_name">
+                              <a class="blue" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?seller_input={$val['member_info']['member_id']}">
+                                  {$val['member_info']['member_name']}
+                              </a>
+                          </p>
+                          <p class="gray">{if $val['member_info']['member_qq']}QQ:<span>{$val['member_info']['member_qq']}</span>{/if}</p>
+                          {$Think.lang.flea_index_goods}
+                          <a href="{$Think.HOME_SITE_URL}/Fleaclass/index/?seller_input={$val['member_info']['member_id']}" class="orange">{$val.member_info.num}</a>
+                          {$Think.lang.flea_index_a}
+                      </div>
+                  </div>
+                  <div class="list fn-left">
+                      <h2>
+                          <a href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}" title="{$val.goods_name}">
+                              {$Think.lang.flea_index_goods_1}{$val.quality}{$Think.lang.flea_index_goods_2}{:str_replace($condition_out['key_input'],"<font color='red'>".$condition_out['key_input']."</font>",str_cut($val['goods_name'],42))}
+                          </a>
+                      </h2>
+                      <p class="details"><strong><span style="font-size:12px;">{$Think.lang.currency}</span>{$val.goods_store_price}</strong></p>
+                      <p class="list_content gray">
+                          {if ($val['explain'])}{:str_cut($val['explain'],140)}{else/}{$Think.lang.flea_no_explain}{/if}
+                      </p>
+                      <p>
+                          <span class="gray fn-left">{$val.time}{$Think.lang.flea_index_front}</span>
+                          <span class="scan gray fn-right"><em class="blue2">{$val.flea_collect_num}</em>{$Think.lang.flea_goods_collect}</span>
+                          <span class="scan gray fn-right"><em class="blue2">{$val.flea_commentnum}</em>{$Think.lang.flea_goods_msg}</span>
+                          <span class="scan gray fn-right"><em class="blue2">{$val.goods_click}</em>{$Think.lang.flea_goods_view}</span>  
+                      </p>
+                  </div>
+
+              </li>
+              {/foreach}
+          </ul>
+          <div class="pagination">{$show_page}</div>
+          {else/}
+          <strong class="nonegoods">
+              <h3>{$Think.lang.flea_no_finds}</h3>
+              <dl>
+                  <dt>{$Think.lang.fela_suggest_str}</dt>
+                  <dd>{$Think.lang.fela_suggest_str1}</dd>
+                  <dd>{$Think.lang.fela_suggest_str2}</dd>
+              </dl>
+          </strong>
+          {/notempty}
+      </div>
+  </div>
+  <div class="size200 fn-right">
+    <a class="sell_btn2" href="{$Think.HOME_SITE_URL}/Memberflea/add_goods">{$Think.lang.flea_want_to}<strong>{$Think.lang.flea_sell}</strong>{$Think.lang.flea_idle}</a>
+    <div class="sell_now">
+      <h2 class="sell_title">
+        <span class="head_title_red">{$Think.lang.flea_are_sold}...</span>
+      </h2>
+        <div class="slider">
+            <div id="slider">
+                <ul>
+                    {if $pre_sale}
+                    {foreach name="pre_sale" item="val"}
+                    <li class="sell_one">
+                        <div class='clearfix'>
+                            <p class="pic1">
+                                <span class="thumb size20">
+                                    <i></i>
+                                    <a href="{$Think.HOME_SITE_URL}/Fleaclass/index/?seller_input={$val.member_id}">
+                                        <img src="{:get_member_avatar(session('avatar'))}" width="25px" height="25px"/>
+                                    </a>              
+                                </span>
+                            </p>
+                            <span class="user_name fn-left">
+                                <a class="blue2" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?seller_input={$val.member_id}">
+                                    {$val.member_name}
+                                </a>
+                            </span>
+                            {$Think.lang.flea_saling}             
+                        </div>
+
+                        <div class="items_info">
+                            <div class="pic2 fn-left">
+                                <span class="thumb size50">
+                                    <a href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}">
+                                        <img height="48" width="48" onload="javascript:ResizeImage(this,48,48);" title="{$val.goods_name}" src="{:flea_thumb($val['goods_image'])}" />
+                                    </a>
+                                </span>
+                            </div>
+                            <p>{:str_cut($val['goods_name'],40)}</p>
+                            <p>{$Think.lang.flea_transfer_price}<span class="orange">{$Think.lang.currency}{$val.goods_store_price}</span></p>
+                        </div>
+                    </li>
+                    {/foreach}
+                    {/if}
+                </ul>
+            </div>
+            <span id="prevBtn"><a href="javascript:void(0);"></a></span>
+            <span id="nextBtn"><a href="javascript:void(0);"></a></span>
+        </div>
+    </div>
+    <div class="look_for">
+      <h2 class="head_title_red">{$Think.lang.flea_preoccupation}...</h2>
+      <ul>
+          {if $attention}
+          {foreach name="attention" item="val"}
+          <li>
+              <div class="pic fn-left">
+                  <span class="thumb size60">
+                      <i></i>
+                      <a href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}">
+                          <img height="60" width="60" onload="javascript:ResizeImage(this,60,60);" title="{$val.goods_name}" src="{:flea_thumb($val['goods_image'])}" />
+                      </a>
+                  </span>
+              </div>
+              <h3 class="fn-right">
+                  <a href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}" >{:str_cut($val['goods_name'],40)}</a>
+              </h3>
+              <p class="price orange fn-right">{$Think.lang.currency}{$val.goods_store_price}</p>
+              <div class="item-attrs blue2 fn-right">
+                  <span class="item_fav fn-right" title="{$Think.lang.flea_goods_collect}">{$val.flea_collect_num}</span>
+                  <span class="item_click fn-right" title="{$Think.lang.flea_goods_view}">{$val.goods_click}</span>
+                  <span class="item_scan fn-right" title="{$Think.lang.flea_goods_msg}">{$val.flea_commentnum}</span>
+              </div>
+          </li>
+          {/foreach}
+          {/if}
+      </ul>
+    </div>
+  </div>
+</div>
+{/block}

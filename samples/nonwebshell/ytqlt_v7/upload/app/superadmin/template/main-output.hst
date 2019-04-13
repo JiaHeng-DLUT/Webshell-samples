@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="pk-hadsky">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>HadSky Superadmin Output Hst</title>
+		<meta name="author" content="puyuetian qq632827168">
+		<meta name="website" content="http://www.hadsky.com">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<link rel="stylesheet" href="template/puyuetianUI/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="template/puyuetianUI/css/puyuetian.css" />
+		<script src="template/puyuetianUI/js/jquery-3.3.1.min.js"></script>
+		<script src="template/puyuetianUI/js/puyuetian.js"></script>
+		<!--[if lt IE 9]>
+			<script src="template/puyuetianUI/js/respond.js"></script>
+		<![endif]-->
+		{$_G['SET']['EMBED_HEADMARKS']}
+		<link rel="stylesheet" href="app/superadmin/template/css/main-output.css" />
+		<link rel="stylesheet" href="template/puyuetianUI/css/CodeMirror.min.css" />
+		<script src="template/puyuetianUI/js/CodeMirror.min.js"></script>
+		<script src="template/puyuetianUI/js/CodeMirror.code.min.js"></script>
+	</head>
+
+	<body>
+		<div id="backandrefreshdiv" class="pk-row pk-margin-bottom-15" style="border-bottom:solid 1px #09f">
+			<div class="pk-w-sm-6 pk-text-left pk-padding-0">
+				<button id="app-superadmin-backbtn" type="button" class="pk-btn pk-btn-secondary pk-hide" onclick="history.back()"><span class="fa fa-fw fa-chevron-left"></span>返回</button> &nbsp;
+			</div>
+			<div class="pk-w-sm-6 pk-text-right pk-padding-0">
+				&nbsp;
+				<button type="button" class="pk-btn pk-btn-secondary" onclick="ppp({type:4,shade:1,content:'正在刷新...',complete:function(){location.reload(true)}})"><span class="fa fa-fw fa-refresh"></span>刷新</button>
+			</div>
+		</div>
+		{$contenthtml}
+		<div class="pk-hide">HadSky后台驱动模块</div>
+		<script src="app/superadmin/template/js/main-output.js"></script>
+	</body>
+
+</html>

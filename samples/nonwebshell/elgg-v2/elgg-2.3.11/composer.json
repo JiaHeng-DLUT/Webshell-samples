@@ -1,0 +1,26 @@
+{
+	"type": "project",
+	"name": "elgg/starter-project",
+	"description": "This is a quickstart skeleton for building a site based on Elgg 2.x.",
+	"license": "MIT",
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+	"require": {
+		"elgg/elgg": "2.3.11"
+	},
+	"require-dev": {
+		"srokap/code_review": "^1.0.5",
+		"phpunit/phpunit": "^4.7"
+	},
+	"scripts": {
+		"post-install-cmd": "\\Elgg\\Composer\\PostInstall::execute",
+		"post-package-update": "\\Elgg\\Composer\\PostUpdate::execute",
+		"test": "phpunit"
+	},
+	"config": {
+		"process-timeout": 0,
+		"platform": {
+			"php": "5.6"
+		}
+	}
+}

@@ -1,0 +1,51 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Plug-ins')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{:lang('Plugin')}</th>
+                    <th>{:lang('The plugin name')}</th>
+                    <th>{:lang('Author')}</th>
+                    <th>{:lang('Version')}</th>
+                    <th>{:lang('Description')}</th>
+                    <th>{:lang('Plugin URL')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.plugin}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.author}</td>
+                    <td>{$vo.version}</td>
+                    <td>{$vo.description}</td>
+                    <td>{$vo.pluginUrl}</td>
+                    <td>
+                        {if condition="($vo.open == 1)"} <h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Turned on')}</h5>
+                        {else /} <h5 class="text-muted">{:lang('Unopened')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <input class="hidden" value="{$vo.open}">
+                        <a class="yincang{if condition="$vo.open neq 1"} hidden{/if}" href="#!">{:lang('Close')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                        <a class="qiyong{if condition="$vo.open eq 1"} hidden{/if}" href="#!">{:lang('Open')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><br>
+<div class="hidden" id="weikaiqi">{:lang('Unopened')}</div>
+<div class="hidden" id="yikaiqi">{:lang('Turned on')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/js/plugin.js"></script>
+{include file="index/footer" /}

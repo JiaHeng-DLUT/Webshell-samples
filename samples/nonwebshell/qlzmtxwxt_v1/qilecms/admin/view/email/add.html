@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加邮件</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：邮件模板添加</blockquote>
+<div class=""  style="padding:20px">
+<form class="layui-form" action="">
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span>  邮件名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="tpl_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                  <div class="layui-form-mid layui-word-aux">{:about('模板名称')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span>  调用名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="use_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" >
+                </div>
+            <div class="layui-form-mid layui-word-aux">{:about('示例：email_xxxxx')}</div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 邮件说明</label>
+                <div class="layui-input-inline">
+                  <textarea  name="explain" lay-verify="explain" autocomplete="off" placeholder="" class="layui-textarea"></textarea>
+                </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('邮件说明')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"><span class="red">*</span> 邮件内容</label>
+                <div class="layui-input-inline" style="width:800px;">
+                     {form:ueditor name="content" /}
+                </div>
+              </div>
+           
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">状态</label>
+                <div class="layui-input-inline">
+                <input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget" lay-text="开启|关闭" checked>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                    <button class="layui-btn layui-btn-normal"  lay-submit lay-filter="form">确 定</button>
+                   <button class="layui-btn layui-btn-primary"  onclick="javascript:history.go(-1);">返 回</button>
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element','upload', 'layer','form'], function(){
+   var  upload = layui.upload,element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('email/add')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            $("form")[0].reset();
+            layer.msg(json.msg);
+            parent.back();
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+   return false;
+  });
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+body,td,th {color: #444; font: 12px Arial, Helvetica, sans-serif;}
+body {background: #f1f1f1; margin: 0;}
+ul,li,h1,h2,h3,h4,p {margin: 0; padding: 0; list-style: none}
+a:link {color: #777; text-decoration: none;}
+a:visited {color: #777; text-decoration: none;}
+a:hover {color: #06f; text-decoration: none;}
+a:active {color: #777; text-decoration: none;}
+#main {width: 100%;}
+.logo {	float: left; height: 95px; margin-left: 15px; width: 250px;margin-top:20px;    margin-top: 20px;
+    font-size: 35px;
+    color: #fff;}
+#link {color: #fff;	float: right; font-size: 12px; height: 25px; line-height: 25px; margin-right: 20px; 
+	margin-top: 35px; text-align: right; }
+#link a {color:#fff !important; margin: 0 5px;}
+#link a:hover { color:#FF0 !important}
+.top {border-bottom: 4px solid #24B5EF;height: 78px;background:#24B5EF;box-shadow: 2px 2px 4px 1px #CBCBCB;overflow: hidden;}
+.top-main{width:940px;margin:auto;}
+.foot {clear: both; height: 50px; line-height: 40px; margin: 10px auto 0 auto; text-align: center; width: 980px;}
+.central {height: 650px; margin: 20px auto 0 auto; width: 940px;background: #fff;padding: 20px;    box-shadow: 1px 2px 4px 4px #DFDFDF;}
+#left {border-right: solid 1px #e1e1e1; float: left; height: 650px; width: 210px;}
+#left ul {}
+#left ul li {border-bottom: solid 1px #eee; color: #777; height: 85px; margin-bottom: 10px;}
+#left h1 {font-size: 50px; float: left; width: 40px;}
+.left_title {width: 160px; float: left}
+.left_title h2 {font-size: 14px; line-height: 30px;}
+.left_title p {color: #999; line-height: 20px}
+.install {color: #24B5EF !important}
+.right {float: right; height: 460px; width: 710px;}
+.right_title {border-bottom: solid 1px #eee; font: bold 16px normal; height: 40px; line-height: 25px; width: 100%;}
+.button {background: url(button.gif) no-repeat; border: 0; color: #4e4e4e; cursor: pointer; height: 38px; font-weight: bold; text-align: center; width: 240px;}
+.agree {border-top: solid 1px #eee; padding-top: 20px;}
+.setup_input {border: solid 1px #e2e2e2; color: #4e4e4e; height: 18px; padding: 5px; font: bold 14px Arial, Helvetica, sans-serif; width: 205px;}
+.lightcolor {color:#808080;}

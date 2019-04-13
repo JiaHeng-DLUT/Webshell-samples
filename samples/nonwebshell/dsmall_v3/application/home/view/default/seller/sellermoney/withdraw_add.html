@@ -1,0 +1,25 @@
+<div class="eject_con">
+    <div id="warning" class="alert alert-error"></div>
+    <form method="post" id="cash_form" action="{:url('Sellermoney/withdraw_add')}">
+      <dl>
+        <dt><i class="required">*</i>{$Think.lang.sellermoney_withdraw_money}：</dt>
+        <dd><input name="pdc_amount" type="text" class="text w50" id="pdc_amount" maxlength="10" ><em class="add-on">
+<i class="fa fa-cny"></i></em> （{$Think.lang.sellermoney_avaliable_money}：<strong class="orange">{:floatval($store_info.store_avaliable_money)}</strong>&nbsp;&nbsp;{$Think.lang.currency_zh}）<span></span>
+          <p class="hint mt5">{$Think.lang.sellermoney_withdraw_cycle}{$store_withdraw_cycle}{$Think.lang.day}，{$Think.lang.sellermoney_withdraw_min}{$store_withdraw_min}{$Think.lang.currency_zh}，{$Think.lang.sellermoney_withdraw_max}{$store_withdraw_max}{$Think.lang.currency_zh}</p>
+        </dd>
+      </dl>
+      
+      <div class="bottom">
+            <label class="submit-border"><input type="submit"  class="submit" value="{$Think.lang.ds_submit}" /></label>
+      </div>
+    </form>
+  </div>
+<script>
+$(document).ready(function(){
+    $('#cash_form').validate({
+    	submitHandler:function(form){
+            ds_ajaxpost('cash_form');
+    	}
+    });
+});
+</script>

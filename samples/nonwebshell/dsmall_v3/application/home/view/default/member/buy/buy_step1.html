@@ -1,0 +1,186 @@
+{include file="default/base/mall_top" /} 
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript" src="{$Think.HTTP_TYPE}api.map.baidu.com/api?v=2.0&ak={$baidu_ak}"></script>
+<div class="dsc-header">
+    <div class="logo">
+        <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+    </div>
+    <ul class="dsc-flow">
+        <li class=""><i class="fa fa-shopping-cart"></i>
+            <p>{$Think.lang.cart_index_ensure_order}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class="current"><i class=" fa fa-pencil"></i>
+            <p>{$Think.lang.cart_index_ensure_info}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-credit-card-alt"></i>
+            <p>{$Think.lang.cart_index_payment}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-thumbs-o-up"></i>
+            <p>{$Think.lang.cart_index_buy_finish}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+    </ul>
+</div>
+<form method="post" id="order_form" name="order_form" action="{:url('Buy/buy_step2')}">
+    {include file="default/member/buy/buy_fcode" /} 
+    <div class="dsc-main">
+        <div class="dsc-title">
+            <h3>{$Think.lang.cart_index_ensure_info}</h3>
+            <h5>{$Think.lang.check_information}</h5>
+        </div>
+        {include file="default/member/buy/buy_address" /}
+        {include file="default/member/buy/buy_payment" /}
+        {include file="default/member/buy/buy_invoice" /}
+        {include file="default/member/buy/buy_goods_list" /}
+        {include file="default/member/buy/buy_amount" /}
+        <!-- 订单来源1为PC 2为手机 -->
+        <input value="1" type="hidden" name="order_from">
+        <!-- 来源于购物车标志 -->
+        <input value="{$ifcart}" type="hidden" name="ifcart">
+        <!-- offline/online -->
+        <input value="online" name="pay_name" id="pay_name" type="hidden">
+        <!-- 是否保存增值税发票判断标志 -->
+        <input value="{$vat_hash}" name="vat_hash" type="hidden">
+        <!-- 收货地址ID -->
+        <input value="{$address_info.address_id}" name="address_id" id="address_id" type="hidden">
+        <!-- 城市ID(运费) -->
+        <input value="" name="buy_city_id" id="buy_city_id" type="hidden">
+        
+        <!-- 记录所选地区是否支持货到付款 第一个前端JS判断 第二个后端PHP判断 -->
+        <input value="" id="allow_offpay" name="allow_offpay" type="hidden">
+        <input value="" id="allow_offpay_batch" name="allow_offpay_batch" type="hidden">
+        <input value="" id="offpay_hash" name="offpay_hash" type="hidden">
+        <input value="" id="offpay_hash_batch" name="offpay_hash_batch" type="hidden">
+
+        <input value="{present name='inv_info.invoice_id'}{$inv_info.invoice_id}{/present}" name="invoice_id" id="invoice_id" type="hidden">
+    </div>
+</form>
+
+
+<script>
+var SUBMIT_FORM = true;
+//计算总运费和每个店铺小计
+function calcOrder() {
+    var allTotal = 0;
+    $('em[ds_type="eachStoreTotal"]').each(function(){
+        store_id = $(this).attr('store_id');
+        var eachTotal = 0;
+        if ($('#eachStoreFreight_'+store_id).length > 0) {
+        	eachTotal += parseFloat($('#eachStoreFreight_'+store_id).html());
+	    }
+        if ($('#eachStoreGoodsTotal_'+store_id).length > 0) {
+        	eachTotal += parseFloat($('#eachStoreGoodsTotal_'+store_id).html());
+	    }
+        if ($('#eachStoreManSong_'+store_id).length > 0) {
+        	eachTotal += parseFloat($('#eachStoreManSong_'+store_id).html());
+	    }
+        if ($('#eachStoreVoucher_'+store_id).length > 0) {
+        	eachTotal += parseFloat($('#eachStoreVoucher_'+store_id).html());
+        }
+        $(this).html(number_format(eachTotal,2));
+        allTotal += eachTotal;
+    });
+    $('#orderTotal').html(number_format(allTotal,2));
+}
+$(function(){
+    $.ajaxSetup({
+        async : false
+    });
+    $('select[dstype="voucher"]').on('change',function(){
+        if ($(this).val() == '') {
+        	$('#eachStoreVoucher_'+items[1]).html('-0.00');
+        } else {
+            var items = $(this).val().split('|');
+            $('#eachStoreVoucher_'+items[1]).html('-'+number_format(items[2],2));
+        }
+        calcOrder();
+    });
+    
+    {if !empty($available_pd_amount) || !empty($available_rcb_amount)}
+    function showPaySubmit() {
+        if ($('input[name="pd_pay"]').prop('checked') || $('input[name="rcb_pay"]').prop('checked')) {
+        	$('#pay-password').val('');
+        	$('#password_callback').val('');
+        	$('#pd_password').show();
+        } else {
+        	$('#pd_password').hide();
+        }
+    }
+
+    $('#pd_pay_submit').on('click',function(){
+        if ($('#pay-password').val() == '') {
+                layer.alert('{$Think.lang.enter_payment_password}');return;
+        }
+        $('#password_callback').val('');
+        var url = HOMESITEURL+'/Buy/check_pd_pwd.html'
+	   $.post(url, {'password':$('#pay-password').val()}, function(data){
+            if (data == '1') {
+            	$('#password_callback').val('1');
+            	$('#pd_password').hide();
+            } else {
+            	$('#pay-password').val('');
+                layer.alert('{$Think.lang.payment_password_error}');return;
+            }
+        });
+    });
+    {/if}
+
+    {if !empty($available_rcb_amount)}
+    $('input[name="rcb_pay"]').on('change',function(){
+    	showPaySubmit();
+    	if ($(this).prop('checked') && !$('input[name="pd_pay"]').prop('checked')) {
+        	if ({$available_rcb_amount} >= parseFloat($('#orderTotal').html())) {
+            	$('input[name="pd_pay"]').prop('checked',false).prop('disabled',true);
+        	}
+    	} else {
+    		$('input[name="pd_pay"]').prop('disabled',false);
+    	}
+    });
+    {/if}
+
+    {if !empty($available_pd_amount)}
+    $('input[name="pd_pay"]').on('change',function(){
+    	showPaySubmit();
+    	if ($(this).prop('checked') && !$('input[name="rcb_pay"]').prop('checked')) {
+        	if ({$available_pd_amount} >= parseFloat($('#orderTotal').html())) {
+            	$('input[name="rcb_pay"]').prop('checked',false).prop('disabled',true);
+        	}
+    	} else {
+    		$('input[name="rcb_pay"]').prop('disabled',false);
+    	}    	
+    });
+    {/if}
+
+});
+    function disableOtherEdit(showText) {
+        $('a[ds_type="buy_edit"]').each(function() {
+            if ($(this).css('display') != 'none') {
+                $(this).after('<font color="#B0B0B0">' + showText + '</font>');
+                $(this).hide();
+            }
+        });
+        disableSubmitOrder();
+    }
+    function ableOtherEdit() {
+        $('a[ds_type="buy_edit"]').show().next('font').remove();
+        ableSubmitOrder();
+    }
+    function ableSubmitOrder() {
+        $('#submitOrder').on('click', function() {
+            submitNext()
+        }).css('cursor', '').addClass('dsc-btn-acidblue');
+    }
+    function disableSubmitOrder() {
+        $('#submitOrder').unbind('click').css('cursor', 'not-allowed').removeClass('dsc-btn-acidblue');
+    }
+</script>
+{include file="default/base/mall_footer" /}

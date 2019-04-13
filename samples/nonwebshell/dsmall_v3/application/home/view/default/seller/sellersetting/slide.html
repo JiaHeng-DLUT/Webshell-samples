@@ -1,0 +1,154 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <div class="alert">
+        <ul>
+            <li>1. {$Think.lang.store_slide_description_one}</li>
+            <li>2. {php}printf(lang('store_slide_description_two'),intval(config('image_max_filesize'))/1024){/php}</li>
+            <li>3. {$Think.lang.store_slide_description_three}</li>
+            <li>4. {$Think.lang.store_slide_description_fore}</li>
+        </ul>
+    </div>
+    {notempty name="store_slide"}
+    <div class="dssc-sellerslider">
+        <ul class="bd">
+            {for start='0' end='5'}
+            {if $store_slide[$i] != ''}
+            <li>
+                <a {if  $store_slide_url[$i] !=''} href="{$store_slide_url[$i]}" {/if}><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_SLIDE}/{$store_slide[$i]}" /></a>
+            </li>
+            {/if}
+            {/for}
+        </ul>
+        <ul class="hd">
+            {for start='0' end='5'}
+            {if $store_slide[$i] != ''}
+            <li></li>
+            {/if}
+            {/for}
+        </ul>
+        <a class="ctrl prev" href="javascript:void(0)">&lt;</a>
+        <a class="ctrl next" href="javascript:void(0)">&gt;</a>
+    </div>
+    {/notempty}
+    <script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+    <script>
+    //轮播
+    jQuery(".dssc-sellerslider").slide({mainCell: "ul", autoPlay: true, delayTime: 500,interTime: 5000});
+    </script>
+    <form action="{:url('Sellersetting/store_slide')}" id="store_slide_form" method="post" >
+        <!-- 图片上传部分 -->
+        <ul class="dssc-store-slider" id="goods_images">
+            {for start='0' end='5'}
+            <li ds_type="handle_pic" id="thumbnail_{$i}">
+                <div class="picture" dstype="file_{$i}">
+                    {empty name="store_slide[$i]"}
+                    <i class="fa fa-picture-o"></i>
+                    {else /}
+                    <img dstype="file_{$i}" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_SLIDE}/{$store_slide[$i]}"/>
+                    {/empty}
+                    <input type="hidden" name="image_path[]" dstype="file_{$i}" value="{$store_slide[$i]|default=''}"/>
+                    <a href="javascript:void(0)" dstype="del" class="del" title="{$Think.lang.remove}" file_id="{$i}">X</a>
+                </div>
+                <div class="url">
+                    <label>{$Think.lang.store_slide_image_url}</label>
+                    <input type="text" class="text w150" name="image_url[]" value="{notempty name='$store_slide_url[$i]'}{$store_slide_url[$i]}{else /}http://{/notempty}"/>
+                </div>
+                <div class="dssc-upload-btn">
+                    <a href="javascript:void(0);">
+                        <span>
+                            <input type="file" hidefocus="true" size="1" class="input-file" name="file_{$i}" id="file_{$i}" file_id="{$i}" />
+                        </span>
+                        <p><i class="fa fa-upload"></i>{$Think.lang.store_slide_image_upload}</p>
+                    </a>
+                </div>
+            </li>
+            {/for}
+        </ul>
+        <div class="bottom"><label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.store_slide_submit}"></label>
+        </div>
+    </form>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/ajaxfileupload.js"></script>
+<script>
+
+    var HOMESITEROOT = '{$Think.HOME_SITE_ROOT}';
+    var UPLOAD_SITE_URL = '{$Think.UPLOAD_SITE_URL}';
+    var ATTACH_COMMON = '{$Think.ATTACH_COMMON}';
+    var ATTACH_STORE = '{$Think.ATTACH_STORE}';
+    $(function(){
+        /* 商品图片ajax上传 */
+        var url = "{:url('Sellersetting/silde_image_upload')}";
+        $('.dssc-upload-btn').find('input[type="file"]').unbind().change(
+            function() {
+                //上传文件名
+                var id = $(this).attr('id');
+                //文件ID
+                var file_id = $(this).attr('file_id');
+                ajaxFileUpload(url, id, file_id);
+            });
+
+        /* 删除图片 */
+        $('a[dstype="del"]').unbind().click(function() {
+                var obj = $(this).parents('li');
+                var file_id = $(this).attr('file_id');
+                var img_src = obj.find('input[type="hidden"]:first').val();
+                obj.find('img:first').attr('src', "{$Think.HOME_SITE_ROOT}/images/loading.gif");
+                obj.find('img:first').replaceWith('<i class="fa fa-picture-o"></i>');
+                $.getJSON(HOMESITEURL+'/Sellersetting/dorp_img.html', {file_id : file_id, img_src : img_src}, function(data) {
+                    obj.find('input[type="file"]').attr('file_id', '').end().find('input[type="hidden"]:first').val('');
+                });
+            });
+            $(function() {
+                $('#store_slide_form').validate({
+                    submitHandler: function(form) {
+                        ds_ajaxpost('store_slide_form');
+                    },
+                    rules: {
+                    },
+                    messages: {
+                    }
+                });
+            });
+    });
+
+    /* 图片上传ajax */
+    function ajaxFileUpload(url, id, file_id)
+    {
+        $('div[dstype="'+id+'"]').find('i').remove().end().find('img').remove()
+            .end().prepend('<img dstype="'+id+'" scr="'+'{$Think.HOME_SITE_ROOT}/images/loading.gif">');
+        $('img[dstype="'+id+'"]').attr('src',"{$Think.HOME_SITE_ROOT}/images/loading.gif");
+        $.ajaxFileUpload
+        (
+            {
+                url:url,
+                secureuri:false,
+                fileElementId:id,
+                dataType: 'json',
+                data:{id:id, file_id:file_id},
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        alert(data.error);
+                        $('img[dstype="'+id+'"]').attr('src','{$Think.UPLOAD_SITE_URL}/{:default_goodsimage()}');
+                    }else
+                    {
+                        $('input[dstype="'+id+'"]').val(data.file_name);
+                        $('img[dstype="'+id+'"]').attr('src',UPLOAD_SITE_URL+'/'+ATTACH_STORE+'/slide/'+data.file_name+'?'+Math.random());
+                    }
+
+                },
+                error: function (data, status, e)
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+
+    }
+</script>
+
+{/block}

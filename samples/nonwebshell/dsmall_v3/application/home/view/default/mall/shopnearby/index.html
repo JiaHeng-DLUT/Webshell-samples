@@ -1,0 +1,367 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/shopnearby.css">
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/swiper/swiper.min.css">
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/swiper/swiper.min.js"></script> 
+<script type="text/javascript" src="{$Think.HTTP_TYPE}api.map.baidu.com/api?v=2.0&ak={$baidu_ak}"></script>
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/swiper/idangerous.swiper2.7.6.css">
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/swiper/idangerous.swiper2.7.6.min.js"></script>
+<![endif]-->
+<script>
+    var local;
+    var map;
+    var the_sc_id = 0;
+    var page = 1;
+    var lock = 1;
+    $(function () {
+        $(window).bind("scroll", function () {
+            var sTop = $(window).scrollTop();
+            sTop = parseInt(sTop);
+
+            if ((sTop + 500) > $('#get_more').offset().top) {
+                more_store();
+                //console.log($('#get_more').offset().top);
+                //console.log(sTop);
+            }
+        })
+
+        mySwiper=new Swiper('.swiper-container', {
+            slidesPerView: 9,
+            paginationClickable: true,
+            spaceBetween: 0,
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+
+        })
+
+  $('.swiper-button-prev').on('click', function(e){
+    
+	if(mySwiper.hasOwnProperty('swipePrev')){
+		e.preventDefault()
+		mySwiper.swipePrev()
+	}
+    
+  })
+  $('.swiper-button-next').on('click', function(e){
+  if(mySwiper.hasOwnProperty('swipeNext')){
+    e.preventDefault()
+    mySwiper.swipeNext()
+	}
+  })
+  
+        map = new BMap.Map('nearby_map');
+        map.enableScrollWheelZoom();
+        map.enableContinuousZoom();
+        //绑定地图单击事件
+        //map.addEventListener("click", clickMap);
+        var lng = getCookie("longitude");
+        var lat = getCookie("latitude");
+        if (!lng && !lat) {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function (r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    var lng = r.point.lng;
+                    var lat = r.point.lat;
+
+                    change_center(lng, lat);
+                    var gc = new BMap.Geocoder();  //初始化，Geocoder类
+
+                    gc.getLocation(r.point, function (rs) {
+                        var addComp = rs.addressComponents;
+                        var province = addComp.province;//获取省份
+                        var city = addComp.city;//获取城市
+                        var district = addComp.district;//区
+                        var street = addComp.street;//街
+                        setCookie('pos_city', city, 30);
+                        setCookie('pos_district', district, 30);
+                        $("#pos_city").text(city);
+                        $("#pos_district").text(district);
+                    });
+                } else {
+                    layer.msg('failed' + this.getStatus());
+                }
+            }, {enableHighAccuracy: true})
+        } else {
+            change_center(lng, lat);
+        }
+        var options = {
+            onSearchComplete: function (results) {
+                // 判断状态是否正确
+                if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+//                            var s = [];
+//                            for (var i = 0; i < results.getCurrentNumPois(); i ++){
+//                                    s.push('<p class="address_list_wrap" onclick="change_center('+results.getPoi(i).point.lng+','+results.getPoi(i).point.lat+')"><span class="address_mt">'+results.getPoi(i).title + "</span><br><span class='address_mc'> " + results.getPoi(i).address+'</span></p>');
+//                            }
+//                            document.getElementById("r-result").innerHTML = s.join("");
+                    if (results.getCurrentNumPois() > 0) {
+                        change_center(results.getPoi(0).point.lng, results.getPoi(0).point.lat);
+                    }
+
+                }
+            }
+        };
+        local = new BMap.LocalSearch(map, options);
+        var pos_city = getCookie("pos_city");
+        var pos_district = getCookie("pos_district");
+        $("#pos_city").text(pos_city);
+        $("#pos_district").text(pos_district);
+
+    });
+    function clickMap(event) {
+
+        pinLng = event.point.lng;
+        pinLat = event.point.lat;
+        change_center(pinLng, pinLat);
+    }
+    function change_center(lng, lat) {
+        map.clearOverlays();  //清除标注  或者可以把market 放入数组
+        var point = new BMap.Point(lng, lat);
+        var marker = new BMap.Marker(point);
+        map.centerAndZoom(point, 16);
+        map.addOverlay(marker);
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+        setCookie('longitude', lng, 30);
+        setCookie('latitude', lat, 30);
+        get_store(lng, lat);
+    }
+    function more_store() {
+        if (lock) {
+            return;
+        }
+        lock = 1;
+        var lng = getCookie("longitude");
+        var lat = getCookie("latitude");
+        $.getJSON(HOMESITEURL + "/Shopnearby/get_Own_Store_List?longitude=" + lng + "&latitude=" + lat + "&storeclass_id=" + the_sc_id + '&page=' + page, function (data) {
+            var store_list = data
+            if (store_list) {
+                $('.store_list').show();
+                $('.ds-no-content').hide();
+                var html = '';
+                for (var k in store_list) {
+                    var goods_html = '';
+                    for (var j in store_list[k].goods_list) {
+                        var goods = store_list[k].goods_list[j];
+                        goods_html += '<img src="' + goods.goods_image + '">';
+                    }
+                    html += '<a href="' + HOMESITEURL + "/Store/index/store_id/" + store_list[k].store_id + '">' +
+                            '<div class="category_store">' +
+                            '<div class="shop_banner" ' + (store_list[k].store_banner ? ('style="background-image: url(' + store_list[k].store_banner + ')"') : '') + ' ></div>' +
+                            '<div class="store_info">' +
+                            '<img class="store_info_img" src="' + store_list[k].store_logo + '">' +
+                            '<div class="store_msg">' +
+                            '<div class="store_name_wrap">' +
+                            '<div class="store_name">' + store_list[k].store_name + '</div>' +
+                            (store_list[k].is_platform_store ? ('<p class="self">{$Think.lang.proprietary}</p>') : '') +
+                            '</div>' +
+                            '<div class="announcement">' +
+                            '<div class="business_time">' +
+                            '<span>' + store_list[k].area_info + '</span>' +
+                            '</div>' +
+                            '<div class="advertisement">' +
+                            '<div class="goods-price">' + store_list[k].store_address + '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="goods_list">' +
+                            goods_html +
+                            '</div>' +
+                            '</div>' +
+                            '</a>';
+                    var marker = new BMap.Marker(new BMap.Point(store_list[k].store_longitude,store_list[k].store_latitude));  // 创建标注
+		var content = '<h2 style="color:orangered;font-size:16px">'+store_list[k].store_name+'</h2><p style="font-size:14px">{$Think.lang.address}：' + store_list[k].store_address + '</p><p style="font-size:14px">{$Think.lang.the_phone}：' + store_list[k].store_phone + '</p>';
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+
+                }
+                $('.store_list').append(html);
+                page++;
+                lock = 0;
+            }
+        })
+    }
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+	var opts = {
+		width : 250,     // 信息窗口宽度
+		height: 80,     // 信息窗口高度
+		};
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+    function get_store(lng, lat) {
+        lock = 1;
+        page = 1;
+        $('.content-container').text('{$Think.lang.in_the_search}');
+        $.getJSON(HOMESITEURL + "/Shopnearby/get_Own_Store_List?longitude=" + lng + "&latitude=" + lat + "&storeclass_id=" + the_sc_id, function (data) {
+            var store_list = data
+            if (store_list) {
+                $('.store_list').show();
+                $('.ds-no-content').hide();
+                var html = '';
+                for (var k in store_list) {
+                    var goods_html = '';
+                    for (var j in store_list[k].goods_list) {
+                        var goods = store_list[k].goods_list[j];
+                        goods_html += '<img src="' + goods.goods_image + '">';
+                    }
+                    html += '<a href="' + HOMESITEURL + "/Store/index/store_id/" + store_list[k].store_id + '">' +
+                            '<div class="category_store">' +
+                            '<div class="shop_banner" ' + (store_list[k].store_banner ? ('style="background-image: url(' + store_list[k].store_banner + ')"') : '') + ' ></div>' +
+                            '<div class="store_info">' +
+                            '<img class="store_info_img" src="' + store_list[k].store_logo + '">' +
+                            '<div class="store_msg">' +
+                            '<div class="store_name_wrap">' +
+                            '<div class="store_name">' + store_list[k].store_name + '</div>' +
+                            (store_list[k].is_platform_store ? ('<p class="self">{$Think.lang.proprietary}</p>') : '') +
+                            '</div>' +
+                            '<div class="announcement">' +
+                            '<div class="business_time">' +
+                            '<span>' + store_list[k].area_info + '</span>' +
+                            '</div>' +
+                            '<div class="advertisement">' +
+                            '<div class="goods-price">' + store_list[k].store_address + '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="goods_list">' +
+                            goods_html +
+                            '</div>' +
+                            '</div>' +
+                            '</a>';
+		var marker = new BMap.Marker(new BMap.Point(store_list[k].store_longitude,store_list[k].store_latitude));  // 创建标注
+		var content = '<h2 style="color:orangered;font-size:16px">'+store_list[k].store_name+'</h2><p style="font-size:14px">{$Think.lang.address}：' + store_list[k].store_address + '</p><p style="font-size:14px">{$Think.lang.the_phone}：' + store_list[k].store_phone + '</p>';
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+                //console.log(store_list[k].store_longitude);
+                }
+                $('.store_list').html(html);
+                page++;
+                lock = 0;
+            } else {
+                $('.store_list').hide();
+                $('.ds-no-content').show();
+                $('.content-container').text('{$Think.lang.no_shops}');
+            }
+        })
+    }
+    function change_map(name) {
+        if (name != '') {
+            map.centerAndZoom(name, 16);
+            map.setCurrentCity(name);
+            local.search(name);
+            $('#pos_city').text(name);
+            setCookie('pos_city', name, 30);
+        }
+    }
+
+//    function city_click(type, name) {
+//        $("#pos_" + type).text(name);
+//        setCookie('pos_' + type, name, 30);
+//        change_map(name);
+//    }
+    function select_sc(storeclass_id) {
+        the_sc_id = storeclass_id;
+
+        $('.category_name .text').removeClass('green');
+        $('[data-id=' + storeclass_id + ']').parent().addClass('green');
+
+        var lng = getCookie("longitude");
+        var lat = getCookie("latitude");
+        get_store(lng, lat);
+    }
+</script>
+<div class="main_content">
+    <div class="choose-city-div" style="display: none; ">
+        <div class="city-content">
+            <div class="header">
+                <div class="title">{$Think.lang.your_city}</div>
+                <span class="close_div" onclick="$('.choose-city-div').hide();$('.choose-city-overlay').hide();">X</span>
+            </div>
+            <div class="content">
+                <div class="content-bottom">
+                    {foreach name='city_list' item='city'}
+                    <div>
+                    <div class="title">{$city.region}</div>
+                    <div class="position-list">
+                        {foreach name='city.child' item='c'}
+                        <li class="position-li " onclick="change_map('{$c.area_name}');$('.position-list li').removeClass('active');$(this).addClass('active')" >{$c.area_name}</li>
+                        {/foreach}
+                    </div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="choose-city-overlay" style="display: none;"></div>
+    <div class="ds-header fixed">
+        <div class="ds-content">
+                <div class="select-location">
+                    <i class="fa fa-location-arrow" onclick="$('.choose-city-div').show();$('.choose-city-overlay').show();"></i>
+                    <span class="current-position" id="pos_city">{$Think.lang.in_the_location}...</span>
+                    <span class="choose-city" id="pos_district" style="display:none"></span>
+                </div>
+            <div class="ds-fl search" data-url="http://install.dev/index.php?m=main&c=index&a=search">
+                <input type="text" placeholder="{$Think.lang.office_building}" name="keywords" value="" id="keywords" autocomplete="off"/>
+                <button class="button search-button" onclick="local.search($('#keywords').val())"><i class="fa fa-search"></i></button>
+                <ul class="shelper"></ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="category w1200">
+	<div class="nearby_map" id="nearby_map">
+
+        </div>
+        <div class="ds-content">
+            <div class="category_list">
+                <div class="ds-category-swiper">
+                    <div id="category-swiper-web" class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="category_name category_all swiper-slide my-active" onclick="select_sc(0)">
+                                <p class="text green"><a href='javascript:volid(0)' data-id="0">{$Think.lang.all_categories}</a></p>
+                            </div>
+                            {foreach name="storeclass_list" item="sc"}
+                            <div class="category_name swiper-slide " onclick="select_sc({$sc.storeclass_id})">
+                                <p class="text "><a href='javascript:volid(0)' data-id="{$sc.storeclass_id}">{$sc.storeclass_name}</a></p>
+                            </div>
+                            {/foreach}
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                    <div class="swiper-button-next swiper-button-white"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="store_list" style="display:none">
+
+        </div>
+    </div>
+    <div id="get_more"></div>
+    <div class="ds-no-content">
+        <div class="content">
+            <div class="content-container">
+                <p>{$Think.lang.in_the_search}...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{/block}

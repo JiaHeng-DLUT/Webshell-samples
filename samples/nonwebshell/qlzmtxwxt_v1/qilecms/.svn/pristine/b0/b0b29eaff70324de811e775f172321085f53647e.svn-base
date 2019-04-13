@@ -1,0 +1,52 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+// 管理员表
+class Admin extends Model
+{
+  Protected $autoCheckFields = true;
+  public function getMemberList(){
+    $data = $this->select();
+    return $data;
+  }
+//用于获取单个管理员信息
+  public function getAdminInfo($where){
+      $data = $this->where($where)->limit(1)->find();
+      if($data){
+        return $data;
+      }else{
+        return false;
+      }
+  }
+
+  public function getAdmin($post){
+
+     $where = array(
+      'uid'=>$post['uid']);
+      $data = $this->alias('a')->join('member_group c','a.group_id = c.group_id')->where($where)->find();
+      return $data;
+  }
+    public function updateInfo($admin_id,$info){
+      $where['admin_id'] = $admin_id;
+      $this->where($where)->update($info);
+    }
+
+  public function del($post){
+
+        if(empty($post) || !is_array($post)){ 
+          return false;
+        }  
+         $uid = implode(',',$post['uid']);
+         $where['uid'] = $uid; 
+
+        if($this->where($where)->delete()){
+           return true;
+        }else{
+
+          return false;
+         }
+
+     }
+
+
+}

@@ -1,0 +1,23 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\cache\driver;
+use think\Db;
+class System extends Common
+{
+	public function clearCache(){
+
+//需要清理的缓存文件
+     $file = array(
+                  QL_ROOT.config('cache.path'),
+                  QL_ROOT.'runtime/temp',
+     );
+        
+    foreach($file as $k=>$v){
+      if(is_dir($v)){
+           deldir($v);
+       }
+    }   
+    return ['code'=>'1','msg'=>'清除缓存成功'];		
+	}
+}

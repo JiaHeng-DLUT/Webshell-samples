@@ -1,0 +1,51 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('setting_menu.html'));}-->
+	<!--{foreach(array('user'=>'会员', 'admin'=>'管理员') as $user_type=>$user_name):}-->
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="50">序号</th>
+			<th class="bgtt" width="">通知类型</th>
+			<th class="bgtt" width="250">通知用户</th>
+			<th class="bgtt" width="250">邮件通知</th>
+			<th class="bgtt" width="250">短信通知</th>
+		</tr>
+		<!--{$num=1}-->
+		<!--{foreach($info_list[$user_type] as $k=>$v):}-->
+		<tr>
+			<td>{$num++}</td>
+			<td>{$v['notice_name']}</td>
+			<td>{$user_name}</td>
+			<!--{foreach(array('email'=>'邮件', 'sms'=>'短信') as $kk=>$vv):}-->
+			<td>
+				<div class="layui-form fl mar10" style="margin-left:98px">
+					<input type="checkbox" <!--{if($v['notice_'.$kk.'_state']):}-->checked<!--{endif;}--> lay-skin="switch" lay-text="开启|关闭" url="admin.php?mod=notice&act={$kk}_state&id={$v['notice_id']}&token={$pe_token}" />
+				</div>
+				<a href="admin.php?mod=notice&act=edit&type={$kk}&id={$v['notice_id']}" class="admin_btn fl" onclick="return pe_dialog(this, '修改{$vv}模板', 850, 500, 'notice')">模板</a>
+				<div class="clear"></div>
+			</td>
+			<!--{endforeach;}-->
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+	</div>
+	<!--{endforeach;}-->
+</div>
+<link rel="stylesheet" href="{$pe['host_root']}include/plugin/layui/css/layui.css">
+<script src="{$pe['host_root']}include/plugin/layui/layui.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(":input").live("change", function(){
+	alert($(this).val());
+	})
+})
+layui.use(['form'], function(){
+	form = layui.form;
+	form.on('switch', function(data){
+		var url = $(this).attr("url") + "&value=" + (this.checked ? 1 : 0)
+		pe_getinfo(url);
+	});
+});
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

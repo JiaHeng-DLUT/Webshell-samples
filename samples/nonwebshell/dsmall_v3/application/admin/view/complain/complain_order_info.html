@@ -1,0 +1,103 @@
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_complain}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <table class="ds-default-table">
+        <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.complain_progress}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="progress"><span id="state_new" class="text">{$Think.lang.complain_state_new}</span> <span class="next-step"></span> <span id="state_appeal" class="text">{$Think.lang.complain_state_appeal}</span> <span class="next-step"></span> <span id="state_talk" class="text">{$Think.lang.complain_state_talk}</span>
+                <span class="next-step">
+          </span> <span id="state_handle" class="text">{$Think.lang.complain_state_handle}</span> <span class="next-step"></span> <span id="state_finish" class="text">{$Think.lang.complain_state_finish}</span></td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="ds-default-table">
+        <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.order_detail}</th>
+        </tr></thead>
+        <tbody>
+        <tr class="noborder">
+            <td><ul>
+                <li>
+                    <strong>{$Think.lang.order_shop_name}:</strong>
+                    <a href="{:url('home/Store/index',['store_id'=>$order_info.store_id])}">
+                        {$order_info.store_name}
+                    </a>
+                </li>
+                <li>
+                    <strong>{$Think.lang.order_state}:</strong>
+                    <b>{$order_info.order_state_text}</b>
+                </li>
+                <li>
+                    <strong>{$Think.lang.order_number}:</strong>
+                    <a href="{:url('Order/show_order',['order_id'=>$order_info.order_id])}" target="_blank">
+                    {$order_info.order_sn}
+                    </a>
+                </li>
+                <li>
+                    <strong>{$Think.lang.order_datetime}:</strong>
+                    {$order_info.add_time|date="Y-m-d H:i:s",###}
+                </li>
+                <li>
+                    <strong>{$Think.lang.order_price}:</strong>
+                    {$Think.lang.currency}{$order_info.order_amount}
+                    {gt name="order_info.refund_amount" value="0"}
+                    ({$Think.lang.order_refund}:{$Think.lang.currency}{$order_info.refund_amount})
+                    {/gt}
+                </li>
+                {notempty name="order_info.voucher_price"}
+                <li>
+                    <strong>{$Think.lang.order_voucher_price}:</strong>
+                    {$Think.lang.currency}{$order_info.voucher_price}
+                </li>
+                <li><strong>{$Think.lang.order_voucher_sn}:</strong>{$order_info.voucher_code}</li>
+                {/notempty}
+            </ul></td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var state = {empty name="complain_info.complain_state"}0{else}{$complain_info.complain_state}{/empty};
+            if(state <= 10) {
+                $("#state_new").addClass('red');
+            }
+            if(state == 20 ){
+                $("#state_new").addClass('green');
+                $("#state_appeal").addClass('red');
+            }
+            if(state == 30 ){
+                $("#state_new").addClass('green');
+                $("#state_appeal").addClass('green');
+                $("#state_talk").addClass('red');
+            }
+            if(state == 40 ){
+                $("#state_new").addClass('green');
+                $("#state_appeal").addClass('green');
+                $("#state_talk").addClass('green');
+                $("#state_handle").addClass('red');
+            }
+            if(state == 99 ){
+                $("#state_new").addClass('green');
+                $("#state_appeal").addClass('green');
+                $("#state_talk").addClass('green');
+                $("#state_handle").addClass('green');
+                $("#state_finish").addClass('green');
+            }
+        });
+    </script>
+
+</div>

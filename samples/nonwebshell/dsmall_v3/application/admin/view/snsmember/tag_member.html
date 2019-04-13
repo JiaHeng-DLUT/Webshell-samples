@@ -1,0 +1,69 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>会员标签</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.sns_member_member_list_tips}</li>
+        </ul>
+    </div>
+
+
+    <form method='post'>
+        <input type="hidden" name="submit_type" id="submit_type" value="" />
+        <table class="ds-default-table">
+            <thead>
+                <tr class="thead">
+                    <th></th>
+                    <th>{$Think.lang.sns_member_member_name}</th>
+                    <th></th>
+                    <th class="align-center">{$Think.lang.ds_recommend}</th>
+                    <th class="w120 align-center">{$Think.lang.ds_handle}</th>
+                </tr>
+            </thead>
+            {notempty name="tagmember_list"}
+            <tbody>
+                {foreach name="tagmember_list" item="v"}
+                <tr class="hover edit">
+                    <td class="w48"><input type="checkbox" name="id[]" value="{$v.mtag_id}" class="checkitem"></td>
+                    <td class="w48 picture"><div class="size-44x44">
+                            <span class="thumb size-44x44"><i></i>
+                                <img src="{$Think.UPLOAD_SITE_URL}/{if $v.member_avatar != ''}{$Think.ATTACH_AVATAR}/{$v.member_avatar}{else/}{$Think.ATTACH_COMMON}/default_user_portrait.gif{/if}"  onload="javascript:ResizeImage(this, 44, 44);"/></span></div></td>
+                    <td class="w50pre name">
+                        <span><strong>{$v.member_name}</strong></span>
+                    </td>
+                    <td class="align-center power-onoff">
+                        <a href="JavaScript:void(0);" class="{if $v.recommend == 0}disabled{else/}enabled{/if}" fieldvalue="{$v.recommend}" fieldid="{$v.mtag_id},{$v.member_id}" ajax_branch="mtagmember_recommend" fieldname="recommend" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+                    </td>
+                    <td class="w120 align-center">
+                        <a href="{:url('Snsmember/mtag_del',['id'=>$v.mtag_id,'mid'=>$v.member_id])}" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                    </td>
+                </tr>
+                {/foreach}
+            </tbody>
+            {else }
+            <tbody>
+                <tr class="no_data">
+                    <td colspan="10">{$Think.lang.ds_no_record}</td>
+                </tr>
+            </tbody>
+            {/notempty}
+        </table>
+        {$showpage}
+    </form>
+</div>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>

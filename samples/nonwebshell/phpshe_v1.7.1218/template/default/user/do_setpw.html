@@ -1,0 +1,48 @@
+<!--{include(pe_tpl('do_header.html'));}-->
+<div class="login_bg">
+	<div style="width:1000px; margin:0 auto">
+		<div class="login_r">
+			<div class="zctt">{$menutitle}</div>
+			<form method="post" id="form">
+			<div class="zc_input1">
+				新&nbsp;&nbsp;密 码：<input type="text" name="user_pw" class="login_input1" placeholder="请填写您的新密码" />
+			</div>
+			<div class="zc_input1 mat10">
+				确认密码：<input type="text" name="user_pw1" class="login_input1" placeholder="请再次填写您的新密码" />
+			</div>
+			<div class="mat25">
+				<input type="hidden" name="pesubmit" />
+				<input type="button" class="loginbtn1" value="提 交" />
+			</div>
+			</form>
+			<div class="login_other mat20">
+				<a href="{$pe['host_root']}user.php?mod=do&act=register" class="mar10">免费注册</a> |
+				<a href="{$pe['host_root']}user.php?mod=do&act=login" class="mal10">用户登录</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		if ($(":input[name='user_pw']").val() == '') {
+			pe_tip('请填写新密码');
+			return false;
+		}
+		if ($(":input[name='user_pw1']").val() == '') {
+			pe_tip('请填写确认密码');
+			return false;
+		}
+		if ($(":input[name='user_pw']").val() != $(":input[name='user_pw1']").val()) {
+			pe_tip('新密码与确认密码不一致');
+			return false;
+		}
+		pe_submit('user.php?mod=do&act=setpw&token={$_g_token}', function(json){
+			if (json.result) {
+				pe_open('user.php?mod=do&act=login', 1000);	
+			}
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('do_footer.html'));}-->

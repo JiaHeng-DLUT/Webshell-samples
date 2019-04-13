@@ -1,0 +1,56 @@
+{include file="index/header" /}
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-record"></span>&nbsp;{:lang('Personal Center')}</a></li>
+            </ul>
+            <div class="tab-content"><br>
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{empty name="user.avatar"}{$domain}public/common/images/headicon_128.png{else /}{$user.avatar}{/empty}" class="img-responsive">
+                        </div>
+                        <div class="col-md-9">
+                            <h4>
+                            <div class="row">
+                                <div class="col-md-3">{:lang('Nickname')}</div>
+                                <div class="col-md-9">{$user.user_nicename}</div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-3">{:lang('Gender')}</div>
+                                <div class="col-md-9">
+                                    {if condition="$user.sex == 1"}{:lang('Male')}
+                                    {elseif condition="$user.sex == 2"/}{:lang('Female')}
+                                    {else /}{:lang('Secrecy')}
+                                    {/if}
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-3">{:lang('Birthday')}</div>
+                                <div class="col-md-9">
+                                    {if condition="$user.birthday == ''"}{:lang('Unfilled')}
+                                    {else /}{$user.birthday}
+                                    {/if}
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-3">{:lang('Personal URL')}</div>
+                                <div class="col-md-9">
+                                    {if condition="$user.user_url == ''"}{:lang('Unfilled')}
+                                    {else /}{$user.user_url}
+                                    {/if}
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-3">{:lang('Signature')}</div>
+                                <div class="col-md-9">
+                                    {if condition="$user.signature == ''"}{:lang('Unfilled')}
+                                    {else /}{$user.signature}
+                                    {/if}
+                                </div>
+                            </div><br>
+                            </h4>
+                            <a class="btn btn-default" href="{:Url('ziliao')}" role="button">{:lang('Edit')}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{include file="index/footer" /}

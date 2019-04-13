@@ -1,0 +1,80 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class FinanceCash extends Common
+{
+  public function index(){
+    $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+                    //排序
+
+      }else{
+            $where =array(
+             );
+           $order =  array(
+
+             );
+      }
+
+     $select  = array('id'=>'流水号','username'=>'会员名','truename'=>'提现平台','editor'=>'受理人');
+      //如期筛选   
+     $date = array(
+                  array('title'=>'申请时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+     $this->assign('add',$add);
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('finance_cash')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list',$list);
+     return $this->fetch();
+ }
+  public function del(){
+    // 删除
+    $param = request()->param();
+    $id = $param['id'];
+      if(empty($id)){
+        return error_json('非法请求！');
+      }
+     if(model('finance_cash')->del($id)){  
+        return success_json('删除成功');
+      }else{
+        return error_json('删除失败');
+      }
+  }
+  public function update(){
+    if(!request()->isPost()){ return error_json('非法请求');}
+    if(!input('post.id')){   return error_json('请求参数错误');}
+    if(!input('post.status')){  return error_json('请求参数错误');}
+    $post = input('post.');
+    if(model('finance_cash')->updateStatus($post)){
+        return success_json('操作成功');
+     }else{
+        return error_json('操作失败');
+     }
+  
+  }
+}

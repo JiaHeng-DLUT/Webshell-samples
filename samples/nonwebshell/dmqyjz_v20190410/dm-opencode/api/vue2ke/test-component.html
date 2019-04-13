@@ -1,0 +1,113 @@
+
+
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>组件 - vue2入门与提高视频教程 </title>
+ 
+<script src="vue.js" type="text/javascript"></script>
+ 
+
+</head>
+<body  >
+ 
+ 
+<div id="app">
+
+
+
+
+  {{ title }}
+
+
+<hr>
+<input type="text" v-model="logo2" />
+<hr>
+
+
+
+
+  <my-header  v-on:changetitlelisten = "changetitle($event)"></my-header>
+
+  <my-header2></my-header2>
+
+ <my-footer></my-footer>
+
+ <my-footer2 :logo="logo2"></my-footer>
+
+
+
+
+
+ </div>
+
+ <script>
+
+ Vue.component('my-header', {
+    
+     data:{
+        childtitle:'name'
+     } ,
+      template: '<div><button v-on:click="clickme">clickme</button>header ......... </div>',
+    
+     methods:{
+        clickme:function(){
+          this.$emit('changetitlelisten', 'childtitle' )
+        }
+
+     }
+})
+ Vue.component('my-footer', {
+     template: '<div>footer ........</div>'
+})
+
+
+var myheader = {
+
+    
+    template: '<div>header22222222 ......... {{ logo }}  <div v-html="logo"></div> </div>',
+    data:function(){
+        return{
+          logo:'<img src="vue.jpg"  />'
+        }
+    }
+}
+
+ 
+var myfooter = {
+
+     props: ['logo'],
+    template: '<div>footer22222222 ......... <div v-html="logo"></div></div>',
+    
+}
+
+
+var vm = new Vue({ 
+
+    el:'#app',
+    data:{
+
+      message:'hello vue',
+      logo2:'<img src="vue.jpg"  /><strong>ccc</strong>',
+      title:'tvdrupal'
+    },
+    methods:{
+      changetitle:function(v){
+          this.title=v;
+      }
+    },
+    components:{
+        'my-header2': myheader,
+        'my-footer2': myfooter,
+
+
+    }
+
+
+})
+ </script>
+</body>
+</html>
+ 
+ 
+
+

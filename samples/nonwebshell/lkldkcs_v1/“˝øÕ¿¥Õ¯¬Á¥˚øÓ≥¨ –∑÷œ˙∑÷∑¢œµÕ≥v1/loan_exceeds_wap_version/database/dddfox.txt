@@ -1,0 +1,9 @@
+表字段添加：
+表：credits
+新增：特权  introduce 真实申请数量 ：apply_numbers
+表：feedbacks
+新增：回复状态：status
+/****************/
+20181106
+messages:
+fixed_at  可为空

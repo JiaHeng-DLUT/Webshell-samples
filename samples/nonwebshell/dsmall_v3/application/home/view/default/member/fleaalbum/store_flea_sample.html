@@ -1,0 +1,46 @@
+
+<div class="goods-gallery"> <a class='sample_demo' id="select_submit" href="fleaalbum/pic_list/item/goods" style="display:none;">{$Think.lang.ds_submit}</a>
+  <div class="nav"><span class="l">{$Think.lang.store_goods_album_users} >
+    {notempty name="class_name"}
+    {$class_name}
+    {else/}
+    {$Think.lang.store_goods_album_all_photo}
+    {/notempty}
+    </span><span class="r">
+    <select name="jumpMenu" id="jumpMenu" style="width:100px;">
+      <option value="0" style="width:80px;">{$Think.lang.ds_please_choose}</option>
+      {foreach name="class_list" item="val"}
+      <option style="width:80px;" value="{$val.aclass_id}" {if $Request.get.id == $val.aclass_id}selected{/if}>{$val.aclass_name}</option>
+      {/foreach}
+    </select>
+    </span></div>
+  <ul class="list">
+    {foreach $pic_list as $v} 
+    <li onclick="insert_img('{:flea_thumb($v['fleafile_name'])}');"><a href="JavaScript:void(0);"><span class="thumb size90"><i></i>
+                <img src="{:flea_thumb($v['fleafile_name'])}" onload="javascript:ResizeImage(this,90,90);" onerror="this.src='{:goods_thumb()}'" title='{$v.apic_name}'/></span></a></li>
+    {/foreach}
+  </ul>
+  <div class="clear" style="padding-top:10px;"></div>
+  <div class="pagination">{$show_page}</div>
+  <div class="clear" style="padding-bottom:20px;"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.demo').ajaxContent({
+		event:'click', //mouseover
+		loaderType:'img',
+		loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+		target:'#demo'
+	});
+	$('#jumpMenu').change(function(){
+		$('#select_submit').attr('href',$('#select_submit').attr('href')+"&id="+$('#jumpMenu').val());
+		$('.sample_demo').ajaxContent({
+			event:'click', //mouseover
+			loaderType:'img',
+			loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+			target:'#demo'
+		});
+		$('#select_submit').click();
+	});
+});
+</script>

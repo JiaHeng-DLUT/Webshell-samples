@@ -1,0 +1,43 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=class" <!--{if($_g_type=='news'):}-->class="sel"<!--{endif;}-->>资讯中心<i></i></a>
+		<a href="admin.php?mod=class&type=help" <!--{if($_g_type=='help'):}-->class="sel"<!--{endif;}-->>帮助中心<i></i></a>
+		<a href="admin.php?mod=class&act=add" <!--{if($act=='add'):}-->class="sel"<!--{endif;}--> id="fabu">添加分类</a>
+		<!--{if($act=='edit'):}--><a href="javascript:;" class="sel">修改信息</a><!--{endif;}-->
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="60">排序</th>
+			<th class="bgtt">分类名称</td>
+			<th class="bgtt" width="110">操作</th>
+		</tr>
+		<!--{foreach($info_list as $k=>$v):}-->
+		<tr>
+			<td><input type="text" name="class_order[{$v['class_id']}]" value="{$v['class_order']}" class="inputtext input40 center" /></td>
+			<td class="aleft"><a href="{pe_url('article-list-'.$v['class_id'])}" target="_blank">{$v['class_name']}</a></td>
+			<td>
+				<!--{if($v['class_id'] != 1):}-->
+				<a href="admin.php?mod=class&act=edit&id={$v['class_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=class&act=del&id={$v['class_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+				<!--{else:}-->
+				-
+				<!--{endif}-->
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl">
+			<button href="admin.php?mod=class&act=order&token={$pe_token}" onclick="pe_doall(this,'form')">批量排序</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

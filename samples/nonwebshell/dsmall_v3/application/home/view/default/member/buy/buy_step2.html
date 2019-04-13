@@ -1,0 +1,120 @@
+{include file="default/base/mall_top" /} 
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<div class="dsc-header">
+    <div class="logo">
+        <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+    </div>
+    <ul class="dsc-flow">
+        <li class=""><i class="fa fa-shopping-cart"></i>
+            <p>{$Think.lang.cart_index_ensure_order}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-pencil"></i>
+            <p>{$Think.lang.cart_index_ensure_info}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class="current"><i class="fa fa-credit-card-alt"></i>
+            <p>{$Think.lang.cart_index_payment}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-thumbs-o-up"></i>
+            <p>{$Think.lang.cart_index_buy_finish}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+    </ul>
+</div>
+<div class="dsc-main">
+  <div class="dsc-title">
+    <h3>{$Think.lang.cart_index_payment}</h3>
+    <h5>{$Think.lang.order_details_can_viewed}<a href="{:url('Memberorder/index')}" target="_blank">{$Think.lang.my_order}</a>{$Think.lang.carry_out_check}。</h5>
+  </div>
+  <form action="{:url('Payment/real_order')}" method="POST" id="buy_form">
+    <input type="hidden" name="pay_sn" value="{$pay_info.pay_sn}">
+    <input type="hidden" id="payment_code" name="payment_code" value="">
+    <div class="dsc-receipt-info">
+      <div class="dsc-receipt-info-title">
+        <h3>
+            {$order_remind}
+            {if condition="$pay_amount_online gt 0"}
+            {$Think.lang.online_payment_amount}：<strong>￥{$pay_amount_online}</strong>
+            {/if}
+          </h3>
+      </div>
+      <table class="dsc-table-style">
+        <thead>
+          <tr>
+            <th class="w50"></th>
+            <th class="w200 tl">{$Think.lang.order_number}</th>
+            <th class="tl w150">{$Think.lang.payment_method}</th>
+            <th class="tl">{$Think.lang.amount_of}</th>
+            <th class="w150">{$Think.lang.logistics}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {if count($order_list)>1}
+          <tr>
+            <th colspan="20">{$Think.lang.different_businesses}{:count($order_list)}{$Think.lang.different_suborder_deliveries}</th>
+          </tr>
+          {/if}
+          {foreach name="order_list" item="order" key="key" }
+          <tr>
+            <td></td>
+            <td class="tl">{$order.order_sn}</td>
+            <td class="tl">{$order.payment_state}</td>
+            <td class="tl">￥{$order.order_amount}</td>
+            <td>{$Think.lang.courier}</td>
+          </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+    <div class="dsc-receipt-info">
+      {notempty name="payment_list"}
+      <div class="dsc-receipt-info-title">
+        <h3>{$Think.lang.choose_online_payment}</h3>
+      </div>
+      <ul class="dsc-payment-list">
+        {foreach name="payment_list" item="val"}
+        <li payment_code="{$val.payment_code}">
+          <label for="pay_{$val.payment_code}">
+          <i></i>
+          <div class="logo" for="pay_{$val.payment_code}"> <img src="{$Think.HOME_SITE_ROOT}/images/payment/{$val.payment_code}_logo.gif" /> </div>
+          </label>
+        </li>
+        {/foreach}
+      </ul>
+      {else /}
+      <div class="nopay">{$Think.lang.satisfy_condition_means_payment}</div>
+      {/notempty}
+    </div>
+    {if $pay_amount_online > 0}
+    <div class="dsc-bottom tc mb50"><a href="javascript:void(0);" id="next_button" class="dsc-btn dsc-btn-green"><i class="fa fa-shield"></i>{$Think.lang.confirm_submit_payment}</a></div>
+    {/if}
+  </form>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('.dsc-payment-list > li').on('click',function(){
+    	$('.dsc-payment-list > li').removeClass('using');
+        $(this).addClass('using');
+        $('#payment_code').val($(this).attr('payment_code'));
+    });
+    $('#next_button').on('click',function(){
+        if ($('#payment_code').val() == '') {
+            layer.alert('{$Think.lang.cart_step2_choose_pay_method}');return false;
+        }
+        $('#buy_form').submit();
+    });
+});
+</script>
+
+
+
+
+{include file="default/base/mall_footer" /}

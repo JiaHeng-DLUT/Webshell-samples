@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title><{$site_title}></title>
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By www.youke365.site" />
+<{include file="base.html"}>
+</head>
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div class="wrapper">
+	<div class="mainbox">
+    	<div class="mainbox-left">
+            <div class="clearfix listbox">
+				<h3 class="listbox-title"><span class="timelink"><{foreach from=$timescope item=item}><a href="<{$item.time_link}>"<{if $item.time_id == $days}> class="timelink_bg"<{/if}>><{$item.time_text}></a><{/foreach}></span>最新收录</h3>
+				<ul class="sitelist">
+					<{foreach from=$websites item=w name=list}>
+                	<li><a href="<{$w.web_link}>" target="_blank"><img src="<{$w.web_pic}>" width="120" height="95" alt="<{$w.web_name}>" class="thumb" /></a><div class="info"><h3><a href="<{$w.web_link}>" title="<{$w.web_name}>" target="_blank"><{$w.web_name}></a> 
+                	
+
+                	</h3><p><{$w.web_intro}></p><cite><a href="<{$w.web_url}>" target="_blank" class="visit" onClick="clickout(<{$w.web_id}>)"><{$w.web_url}></a> - <{$w.web_ctime}></cite></div></li>
+                	<{foreachelse}>
+                	<li>该目录下无任何内容！</li>
+                	<{/foreach}>
+				</ul>
+				<div class="clearfix showpage"><{$showpage}></div>
+			</div>
+		</div>
+		<div class="mainbox-right">
+
+            <!-- 广告 开始 250*200-->
+            <div class="ad250x200"><{get_adcode(17)}></div>
+            <!-- 广告 结束 250*200-->
+                    <div class="blank10"></div>
+			<div class="webbox">
+				<div class="webbox-title">推荐站点</div>
+				<ul class="webbox-list">
+                   	<{foreach from=get_websites(0, 5, true) item=best}>
+                   	<li><h3><a href="<{$best.web_link}>" title="<{$best.web_name}>" target="_blank"><{$best.web_name}></a></h3><p><{$best.web_intro}></p><cite><a href="<{$best.web_url}>" target="_blank" class="visit" onclick="clickout(<{$best.web_id}>)"><{$best.web_url}></a></cite></li>
+                   	<{/foreach}>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+<{include file="footer.html"}>
+</body>
+</html>

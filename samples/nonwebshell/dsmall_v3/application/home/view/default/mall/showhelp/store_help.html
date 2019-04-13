@@ -1,0 +1,28 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+
+<div class="breadcrumb">
+    <span class="fa fa-home"></span>
+    <span><a href="{$Think.HOME_SITE_URL}">{$Think.lang.homepage}</a></span>
+    <span class="arrow">></span>
+    <span>{$Think.lang.business_management_center}</span></div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.business_management_center}</h3>
+        </div>
+        {include file="default/mall/showhelp/store_help_left" /}
+    </div>
+    <div class="right-layout">
+        <div class="article-con">
+            <h1>{$help.help_title}</h1>
+            <h2>{$Think.lang.update_time} {:date('Y-m-d',$help.help_updatetime)}</h2>
+            <div class="default">
+                <p>{$help.help_info|htmlspecialchars_decode}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}

@@ -1,0 +1,37 @@
+</div>
+</div>
+</div>
+<script>
+	function phonegourl($url) {
+		if($(window).width() < 1000) {
+			location.href = $url;
+		}
+	}
+	var $cfs = $('.childforums');
+	for(var i = 0; i < $cfs.length; i++) {
+		var $cfs2 = $($cfs[i]).find('>div');
+		if($cfs2.length) {
+			for(var i2 = 0; i2 < $cfs2.length; i2++) {
+				if($(window).width() < 1000) {
+					if(($cfs2.length - i2 <= $cfs2.length % 2) || ($cfs2.length % 2 == 0 && $cfs2.length - i2 <= 2)) {
+						$($cfs2[i2]).css('border-bottom', 'none');
+					}
+				} else {
+					if(($cfs2.length - i2 <= $cfs2.length % 4) || ($cfs2.length % 4 == 0 && $cfs2.length - i2 <= 4)) {
+						$($cfs2[i2]).css('border-bottom', 'none');
+					}
+				}
+			}
+		} else {
+			$($cfs[i]).css('border-bottom', 'none');
+		}
+	}
+	var $ftc = $('.forumtodaycount');
+	for(var i = 0; i < $ftc.length; i++) {
+		if(parseInt($ftc[i].innerHTML) > 99) {
+			$ftc[i].innerHTML = '99';
+		} else if(parseInt($ftc[i].innerHTML) == 0) {
+			$($ftc[i]).addClass('pk-hide');
+		}
+	}
+</script>

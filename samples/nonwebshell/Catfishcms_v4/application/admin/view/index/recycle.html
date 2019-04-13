@@ -1,0 +1,80 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('Recycle bin')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div>
+        <p>
+            <label>{:lang('Batch operation')}：</label>
+            <button type="button" id="phuanyuan" class="btn btn-primary btn-sm">{:lang('Reduction')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="pshanchu" class="btn btn-primary btn-sm">{:lang('Remove completely')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+        </p>
+    </div>
+    <div class="row" id="huishouzhan">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="zxuan">
+                    </th>
+                    <th>{:lang('Title')}</th>
+                    <th>{:lang('Click volume')}</th>
+                    <th>{:lang('Comments volume')}</th>
+                    <th>{:lang('Author')}</th>
+                    <th>{:lang('Release time')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>
+                        <input class="gouxuan" type="checkbox" value="{$vo.id}">
+                    </td>
+                    <td>{if condition="$vo.thumbnail neq ''"}<img src="{$vo.thumbnail}" width="50">&nbsp;{/if}<a href="#!" class="text-muted">{$vo.post_title}</a></td>
+                    <td>{$vo.post_hits}</td>
+                    <td>{$vo.comment_count}</td>
+                    <td>{$vo.user_login}</td>
+                    <td>{$vo.post_date}</td>
+                    <td>
+                        {if condition="($vo.post_status == 1)"} <h5>{:lang('Audited')}</h5>
+                        {else /} <h5>{:lang('Not audited')}</h5>
+                        {/if}
+                        {if condition="($vo.istop == 1)"} <h5>{:lang('Topped')}</h5>
+                        {else /} <h5>{:lang('Not top')}</h5>
+                        {/if}
+                        {if condition="($vo.recommended == 1)"} <h5>{:lang('Recommended')}</h5>
+                        {else /} <h5>{:lang('Not recommended')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <a class="twhy" href="#!">{:lang('Reduction')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="#!">{:lang('Remove completely')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete this article completely?')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="quedinghuanyuan">{:lang('Are you sure to restore?')}</div>
+<div class="hidden" id="huanyuan">{:lang('Are you sure you want to restore this article?')}</div>
+<div class="hidden" id="huanyuanxuanzhong">{:lang('Are you sure you want to restore the selected article?')}</div>
+<div class="hidden" id="shanchuxuanzhong">{:lang('Are you sure you want to delete the selected article completely?')}</div>
+<div class="hidden" id="jinggao">{:lang('Warning!')}</div>
+<div class="hidden" id="zhishaoxuanyixiang">{:lang('Please select at least one!')}</div>
+<div class="hidden" id="queding">{:lang('Ok')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/recycle.js"></script>
+{include file="index/footer" /}

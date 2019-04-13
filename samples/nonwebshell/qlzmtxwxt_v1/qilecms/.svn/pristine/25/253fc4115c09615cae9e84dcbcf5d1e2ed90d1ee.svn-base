@@ -1,0 +1,37 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class FinanceCash  extends Model
+{
+
+   protected $update_field = ['id','status','edit_time'];
+   public  function getlist($where='',$order='',$limit='10'){
+
+     return $list = $this->where($where)->order($order)->paginate($limit);
+  
+   }
+   public function del($id){
+   	if(!$id){  return true; }
+   	if(is_array($id)){
+   	  $id = implode(',',$id);
+   	}
+   	 $where['id'] = $id;
+     if($this->where($where)->delete()){
+       return true;
+     }else{
+       return false;
+     }
+   }
+  public function updateStatus($post){
+    $where['id'] = $post['id'];
+    $data['status'] = $post['status'];
+    $data['edit_time'] = time();
+    if($this->update($data,$where,$update_field)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+}

@@ -1,0 +1,89 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_delivery}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.delivery_truename}</dt>
+                <dd><input type="text" value="{$Request.get.search_name}" name="search_name" id="search_name" class="txt"></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {notempty name="search_name"}
+                <a href="{:url('Delivery/index')}" class="btn btn-small " title="{$Think.lang.ds_cancel_search}"><span>{$Think.lang.ds_cancel_search}</span></a>
+                {/notempty}
+            </div>
+        </div>
+    </form>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.delivery_index_help1}</li>
+        </ul>
+    </div>
+    
+    <form method="post" id="form_article">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th>{$Think.lang.delivery_index_username}</th>
+                <th>{$Think.lang.delivery_truename}</th>
+                <th>{$Think.lang.delivery_index_address}</th>
+                <th class="align-center">{$Think.lang.ds_status}</th>
+                <th class="align-center">{$Think.lang.delivery_add_time}</th>
+                <th class="w96 align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="dp_list"}
+            {foreach name="dp_list" item="v"}
+            <tr class="hover">
+                <td>{$v.dlyp_name}</td>
+                <td>{$v.dlyp_truename}</td>
+                <td>
+                    <p>{$v.dlyp_addressname}</p>
+                    <p>{$v.dlyp_area_info}&nbsp;&nbsp;{$v.dlyp_address}</p>
+                </td>
+                <td class="align-center">{$delivery_state[$v.dlyp_state]}</td>
+                <td class="nowrap align-center">{$v.dlyp_addtime|date="Y-m-d H:i:s",###}</td>
+                <td class="align-center">
+                    <a href="{:url('Delivery/edit_delivery',['d_id'=>$v.dlyp_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="{:url('Delivery/order_list',['d_id'=>$v.dlyp_id])}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.delivery_index_view_order}</a>
+                </td>
+            </tr>
+           {/foreach}
+            {else }
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+           {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="dp_list"}
+            <tr class="tfoot">
+                <td colspan="16">
+                    {$show_page}
+                </td>
+            </tr>
+            {/notempty}
+            </tfoot>
+        </table>
+    </form>
+
+</div>

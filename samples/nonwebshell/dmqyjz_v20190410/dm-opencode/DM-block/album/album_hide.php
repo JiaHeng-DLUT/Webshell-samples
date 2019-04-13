@@ -1,0 +1,4 @@
+<?php 
+//hide album.
+
+?>

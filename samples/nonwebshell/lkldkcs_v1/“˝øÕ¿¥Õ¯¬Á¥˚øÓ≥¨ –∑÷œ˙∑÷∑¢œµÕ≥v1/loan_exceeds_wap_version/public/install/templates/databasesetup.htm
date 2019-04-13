@@ -1,0 +1,61 @@
+<!--<?php
+# MetInfo Enterprise Content Management System 
+# Copyright (C)  (http://www.kouhaobang.cn). All rights reserved.
+require_once template('head'); 
+echo <<<EOT
+-->
+<script language="javascript">
+parent.document.getElementById("license").className='stepnowno';
+parent.document.getElementById("inspect").className='stepnowno';
+parent.document.getElementById("databasesetup").className='stepnow';
+</script>
+<body>
+<div id="jsheit">
+<div class="contenttext databasesetup round">
+	<p style="font-size:14px;">检查你的数据库设置情况，请在相应栏目仔细输入配置内容。<font style="color:red">安装前请创建数据库名称</font></p>
+    <form method="post" action="">
+    <input name="setup" type="hidden" value="1">
+	 <input name="db_type" type="hidden" value="mysql">
+	  <fieldset style="padding-bottom:0px;">
+	  <legend><strong>数据库信息</strong></legend>
+
+        <div class="section1">
+		  <p>数据库主机</p>
+		  <input type="text" class="text" name="db_host" value="127.0.0.1" size="18" />
+		  <span>数据库主机地址，一般不需要更改</span>
+		</div>
+		<div class="section1">
+		  <p>数据库名 </p>
+		 <input type="text" name="db_name" class="text" size="18" />
+		  <span>例如'yinkelai'或'my_yinkelai',请确保用字母开头</span>
+		</div>
+		<div class="section1">
+		  <p>数据库用户名</p>
+		  <input type="text" class="text" name="db_username" value="root" size="18" />
+		</div>
+		<div class="section1" style="margin-bottom:0px;">
+		  <p>数据库密码</p>
+		  <input type="password" class="text" name="db_pass" />
+		</div>
+		<div class="section1" style="margin-bottom:0px;">
+		  	<p>数据包</p>
+			<label style=" font-weight:normal;"><input name="showdata" type="checkbox" value="yes" checked="checked" style="display:none;"/></label>
+			<input  type="radio" value="yes" checked="checked" />&nbsp;安装基础数据包</label>
+		</div>		
+		<div style="padding:8px 0px 8px 80px;">
+		
+		</div>
+      </fieldset>
+	  <div style="text-align:center; margin-top:5px;">
+	  <input type="submit" name="submit" class="submit" tabindex="15" value="保存数据库设置并继续" />
+	 </div>
+    </form>
+</div>
+</div>
+</body>
+</html>
+<!--
+EOT;
+# This program is an open source system, commercial use, please consciously to purchase commercial license.
+# Copyright (C)  (http://www.yinkelai.com). All rights reserved.
+?>-->

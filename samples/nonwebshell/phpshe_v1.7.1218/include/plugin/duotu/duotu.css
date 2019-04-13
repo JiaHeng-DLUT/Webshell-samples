@@ -1,0 +1,37 @@
+.MagnifierMain{position: relative;}
+/*.MagnifierMain img{width: 100%;}*/
+.MagnifierDrag{position: absolute;top:0;left: 0;background-color: #ccc; opacity: 0.4;filter:alpha(opacity = 40);cursor: move;}
+
+.MagnifierPop{position: absolute;top:0;overflow: hidden;background:#fff url(http://fan.yoka.com/fan5.0/img/loading.gif) no-repeat center center; }
+.MagnifierImg{position: absolute;top:0; left: 0;}
+
+/*.spec-items{position: relative;width: 292px;height: 69px;overflow: hidden;padding-top: 10px;margin: 0;}*/
+.spec-items{position: relative;height: 69px;padding-top: 10px;margin: 0;}
+.spec-items ul{width: 100%;position: absolute;top: 10px;left: 0;}
+.spec-items ul *{
+	-webkit-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+}
+.spec-items li{
+	width: 65px;height: 65px;float: left;overflow: hidden;margin-right: 10px;border: 2px solid #fff;cursor: pointer;
+	
+}
+.spec-items li.on{border:2px solid #ff9300;}
+.spec-items li img{
+	width: 100%;
+	-webkit-transform: scale(1,1);
+	-ms-transform: scale(1,1);
+	-o-transform: scale(1,1);
+	transform: scale(1,1);
+}
+.spec-items li.on img{
+	-webkit-transform: scale(1.2,1.2);
+	-ms-transform: scale(1.2,1.2);
+	-o-transform: scale(1.2,1.2);
+	transform: scale(1.2,1.2);
+}
+span.spe_leftBtn,span.spe_rightBtn{position: absolute;bottom: 0px;display: block;width: 20px;height: 69px;line-height: 69px;font-family: "";text-align: center;font-size: 30px;color: #ddd;cursor: default;background-color: #f9f9f9;}
+span.on{background-color: #ccc;color: #999;cursor: pointer;} 
+span.spe_leftBtn{left: 0;}
+span.spe_rightBtn{right: 0;}

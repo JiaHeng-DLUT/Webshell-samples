@@ -1,0 +1,87 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{present name="isPlatformStore"}
+{else /}
+{notempty name="current_mgdiscount_quota"}
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionmgdiscount/mgdiscount_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.set_renewal}</a>
+{else }
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionmgdiscount/mgdiscount_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.mgdiscount_quota_add}</a>
+{/notempty}
+{/present}
+{/block}
+
+{block name="seller_main"}
+{present name="isPlatformStore"}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>1、{$Think.lang.mgdiscount_explain2}</li>
+        <li>2、{$Think.lang.mgdiscount_explain3}</li>
+    </ul>
+</div>
+{else }
+<div class="alert alert-block mt10">
+    {notempty name="current_mgdiscount_quota"}
+    <strong>{$Think.lang.set_expiration_time}{$Think.lang.ds_colon}</strong><strong style="color:#F00;">{$current_mgdiscount_quota.mgdiscountquota_endtime|date="Y-m-d H:i:s",###}</strong>
+    {else /}
+    <strong>{$Think.lang.please_buy_package_first}</strong>
+    {/notempty}
+    <ul>
+        <li>1、{$Think.lang.mgdiscount_explain1}</li>
+        <li>2、{$Think.lang.mgdiscount_explain2}</li>
+        <li>3、{$Think.lang.mgdiscount_explain3}</li>
+        <li>4、<strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong>。</li>
+    </ul>
+</div>
+{/present}
+
+
+
+
+<div class="dssc-form-default">
+    <form id="add_form" action="" method="post" enctype="multipart/form-data">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.whether_open_membership_discount}</dt>
+            <dd>
+                <input type="radio" name="store_mgdiscount_state" value="0" {if $store.store_mgdiscount_state==0}checked{/if}/>
+                       <label>{$Think.lang.ds_no}</label>
+                <input type="radio" name="store_mgdiscount_state" value="1" {if $store.store_mgdiscount_state==1}checked{/if}/>
+                       <label>{$Think.lang.ds_yes}</label>
+            </dd>
+        </dl>
+        {foreach name="mgdiscount_store_arr" item="v" key="k" }
+        <dl>
+            <dt><i class="required">*</i>{$v.level_name}</dt>
+            <dd>
+                <input class="w60 text" name="mgdiscount_store[{$k}][level_discount]" type="text"  value="{$v.level_discount|default=''}" maxlength="30"  />
+                <span>{$Think.lang.ds_xianshi_flag}</span>
+                <p class="hint">{$Think.lang.setting_indicates_no_discount}</p>
+            </dd>
+        </dl>
+        {/foreach}
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.ds_submit}">
+            </label>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        $('#add_form').validate({
+            errorPlacement: function (error, element) {
+                var error_td = element.parents('dd');
+                error_td.append(error);
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('add_form', 'url', "{:url('Sellerpromotionmgdiscount/mgdiscount_store')}")
+            },
+            rules: {
+            },
+            messages: {
+            }
+        });
+    });
+</script>
+
+{/block}

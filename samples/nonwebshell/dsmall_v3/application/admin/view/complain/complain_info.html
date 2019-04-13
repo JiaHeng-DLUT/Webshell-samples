@@ -1,0 +1,136 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+
+    {include file="complain/complain_order_info" /}
+    {include file="complain/complain_complain_info" /}
+    {notempty name="complain_info.appeal_message"}
+    {include file="complain/complain_appeal_info" /}
+    {/notempty}
+    {gt name="complain_info.complain_state" value="20"}
+    {include file="complain/complain_talk_info" /}
+    {/gt}
+    {eq name="complain_info.complain_state" value="99"}{notempty name="complain_info.final_handle_message"}
+    {include file="complain/complain_finish_info" /}
+    {/notempty}{/eq}
+    {neq name="complain_info.complain_state" value="99"}
+    <table class="ds-default-table">
+        <thead class="thead">
+            <tr class="space">
+                <th>{$Think.lang.complain_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="close_complain">
+                <td>
+                    <form method='post' id="verify_form" action="{:url('Complain/complain_verify')}">
+                        <input name="complain_id" type="hidden" value="{$complain_info.complain_id}" />
+                        {eq name="complain_info.complain_state" value="10"}
+                        <a id="verify_button" class="btn" href="javascript:void(0)"><span>{$Think.lang.complain_text_verify}</span></a>
+                        {/eq}
+                        {neq name="complain_info.complain_state" value="99"}
+                        <a id="close_button" class="btn" href="javascript:void(0)"><span>{$Think.lang.complain_text_close}</span></a>
+                        {/neq}
+                        <a href="JavaScript:void(0);" class="btn" onclick="history.go(-1)"><span>{$Think.lang.ds_back}</span></a>
+                    </form>
+                </td>
+            </tr>
+        <form method='post' id="close_form" action="{:url('Complain/complain_close')}">
+            {notempty name="refund_goods"}
+            <tr class="complain_dialog">
+                <th>{$Think.lang.complain_refund_goods}</th>
+            </tr>
+            <tr class="complain_dialog">
+                <td>
+                    <p> {$Think.lang.complain_refund_goods_tips}</p>
+                    <table class="ds-default-table">
+                        <tr>
+                            <th width="30">&nbsp;</th>
+                            <th colspan="2">{$Think.lang.complain_goods_name}</th>
+                            <th>{$Think.lang.complain_currency_refund_amount}</th>
+                            <th>{$Think.lang.complain_goods_pay_price}</th>
+                            <th>{$Think.lang.complain_goods_num}</th>
+                            <th>{$Think.lang.complain_text_price}</th>
+                        </tr>
+                        {foreach name="refund_goods" item="val"}
+                        <tr>
+                            <td width="30">
+                                {gt name="val.goods_refund" value="0"}
+                                <input class="checkitem" name="checked_goods[{$val.rec_id}]" type="checkbox" value="{$val.rec_id}" />
+                                {/gt}
+                            </td>
+                            <td width="65" align="center" valign="middle"><a style="text-decoration:none;" href="{:url('Goods/index',['goods'=>$val.goods_id])}" target="_blank">
+                                    <img width="50" src="{:goods_cthumb($val.goods_image)}" />
+                                </a></td>
+                            <td class="intro">
+                                <p><a href="{:url('Goods/index',['goods'=>$val.goods_id])}" target="_blank">{$val.goods_name}</a></p>
+                                <p>{:get_order_goodstype($val.goods_type)}</p>
+                            </td>
+                            <td width="10%">{$Think.lang.currency}{$val.goods_refund}</td>
+                            <td width="10%">{$Think.lang.currency}{$val.goods_pay_price}</td>
+                            <td width="10%">{$val.goods_num}</td>
+                            <td width="10%">{$Think.lang.currency}{$val.goods_price}</td>
+                        </tr>
+                        {/foreach}
+                    </table></td>
+            </tr>
+            {/notempty}
+            <tr class="complain_dialog">
+                <th>{$Think.lang.final_handle_message}:</th>
+            </tr>
+            <input name="complain_id" type="hidden" value="{$complain_info.complain_id}" />
+            <tr class="noborder complain_dialog">
+                <td><textarea id="final_handle_message" name="final_handle_message" class="tarea"></textarea></td>
+            </tr>
+            <tr class="complain_dialog">
+                <td>
+                    <a id="btn_handle_submit" class="btn" href="javascript:void(0)"><span>{$Think.lang.ds_submit}</span></a>
+                    <a id="btn_close_cancel" class="btn" href="javascript:void(0)"><span>{$Think.lang.ds_cancel}</span></a>
+                </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+    {/neq}
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".complain_dialog").hide();
+        $("#verify_button").click(function () {
+            layer.confirm("{$Think.lang.verify_submit_message}", {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $("#verify_form").submit();
+            });
+        });
+
+        $("#close_button").click(function () {
+            $("final_handle_message").text('');
+            $(".complain_dialog").show();
+            $("#close_complain").hide();
+        });
+        $("#btn_handle_submit").click(function () {
+            if ($("#final_handle_message").val() == '') {
+                layer.alert("{$Think.lang.final_handle_message_error}");
+            } else {
+                layer.confirm("{$Think.lang.complain_close_confirm}", {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    $("#close_form").submit();
+                });
+            }
+        });
+        $("#btn_close_cancel").click(function () {
+            $(".complain_dialog").hide();
+            $("#close_complain").show();
+        });
+
+    });
+</script>

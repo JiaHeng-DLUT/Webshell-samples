@@ -1,0 +1,94 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">上传相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可上传文件后缀</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="uploadfiletypes" value="{$_G['SET']['UPLOADFILETYPES']}" placeholder="请输入文件后缀">
+		</div>
+
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">一次最多上传文件数</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="uploadfilecount" value="{$_G['SET']['UPLOADFILECOUNT']}" min="1" placeholder="最小为1，建议5，不要太大">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">会员每日共可上传文件</label>
+		<div class="pk-w-sm-6">
+			<input type="number" class="pk-textbox " name="dayuploadfilesize" value="{$_G['SET']['DAYUPLOADFILESIZE']}" placeholder="单位KB，0为不限制">
+		</div>
+		<label class="pk-w-sm-2 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可上传附件大小</label>
+		<div class="pk-w-sm-6">
+			<input type="number" class="pk-textbox " name="uploadfilesize" value="{$_G['SET']['UPLOADFILESIZE']}" placeholder="单位KB">
+		</div>
+		<label class="pk-w-sm-2 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可上传头像大小</label>
+		<div class="pk-w-sm-6">
+			<input type="number" class="pk-textbox " name="uploadheadsize" value="{$_G['SET']['UPLOADHEADSIZE']}" placeholder="单位KB">
+		</div>
+		<label class="pk-w-sm-2 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">下载不重复扣费</label>
+		<div class="pk-w-sm-8">
+			<select name="downloadedrecord" data-value="{$_G['SET']['DOWNLOADEDRECORD']}" class="pk-textbox ">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">下载有效期</label>
+		<div class="pk-w-sm-6">
+			<input type="number" class="pk-textbox" name="attachmenttimeout" value="{$_G['SET']['ATTACHMENTTIMEOUT']}" placeholder="秒">
+		</div>
+		<label class="pk-w-sm-2 pk-padding-top-5 pk-text-bold pk-text-nowrap">秒</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">&nbsp;</label>
+		<div class="pk-w-sm-9 pk-padding-top-5 pk-text-sm">
+			<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="$('input[name=attachmenttimeout]').val(60*60)">一小时</a>&nbsp;
+			<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="$('input[name=attachmenttimeout]').val(24*60*60)">一天</a>&nbsp;
+			<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="$('input[name=attachmenttimeout]').val(24*60*60*7)">一周</a>&nbsp;
+			<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="$('input[name=attachmenttimeout]').val(24*60*60*30)">一月</a>&nbsp;
+			<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="$('input[name=attachmenttimeout]').val(24*60*60*365)">一年</a>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		labelStrSwitch('input[name="uploadfiletypes"]', '\\|', false);
+		$('#SubmitBtn').data({
+			before: function() {
+				labelStrSwitch('input[name="uploadfiletypes"]', '|', true);
+			},
+			after: function() {
+				labelStrSwitch('input[name="uploadfiletypes"]', '\\|', false);
+			}
+		});
+	});
+</script>

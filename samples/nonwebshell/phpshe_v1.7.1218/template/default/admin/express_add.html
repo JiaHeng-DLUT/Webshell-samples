@@ -1,0 +1,226 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+	<form method="post">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20">
+	<tr>
+		<td align="right" width="150">模板名称：</td>
+		<td style="position:relative"><input type="text" name="info[express_name]" value="{$info['express_name']}" class="inputall input200" /></td>
+	</tr>
+	<tr>
+		<td align="right">背景图片：</td>
+		<td style="position:relative">
+			<span id="filePicker" class="fl mat3">选择图片<span id="upload_jindu" class="c666"></span></span>
+			<input type="hidden" name="info[express_logo]" value="{$info['express_logo']}" />
+			<span class="fl mal20">宽：<input type="text" name="info[express_width]" value="{$info['express_width']}" class="inputall input60" /> MM</span>
+			<span class="fl mal20">高：<input type="text" name="info[express_height]" value="{$info['express_height']}" class="inputall input60" /> MM</span>
+			<input type="hidden" name="info[express_width_px]" value="{$info['express_width_px']}" />
+			<input type="hidden" name="info[express_height_px]" value="{$info['express_height_px']}" />
+			<!--X偏移：<input type="text" name="info[express_x]" value="{$info['express_x']}" class="inputall input60" />
+			Y偏移：<input type="text" name="info[express_y]" value="{$info['express_y']}" class="inputall input60" />-->
+		</td>
+	</tr>	
+	<tr>
+		<td align="right">打印标签：</td>
+		<td>
+			<!--{foreach($ini['express_tag'] as $k=>$v):}-->
+			<a href="javascript:tag_add('{$k}', '{$v}')" class="hy_btn">{$v}</a>
+			<!--{endforeach;}-->
+			<a href="javascript:tag_add('diy', '请输入自定义内容')" class="hy_btn">【自定义内容】</a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div id="express_html">
+				<div id="express_logo"><!--{if($info['express_logo']):}--><img src="{pe_thumb($info['express_logo'])}" /><!--{endif;}--></div>
+				<div id="express_tag">
+				<!--{foreach($tag_list as $k=>$v):}-->
+				<!--{$tag_position = explode('|', $v['position'])}-->
+				<!--{$tag_css = "width:".$tag_position[0]."mm;height:".$tag_position[1]."mm;top:".$tag_position[2]."mm;left:".$tag_position[3]."mm"}-->
+				<!--{$diy_css = "width:".$tag_position[0]."mm;height:".$tag_position[1]."mm;top:".$tag_position[2]."mm;left:".$tag_position[3]."mm;padding:0;resize:none;"}-->
+				<!--{if($v['type'] == 'diy'):}-->
+				<div class="order_tag" tag_name="{$v['name']}" style="{$tag_css}"><textarea style="width:100%;height:100%;padding:0;resize:none;">{$v['value']}</textarea><div class="delbtn"></div><div class="handle"></div></div>
+				<!--{else:}-->
+				<div class="order_tag" tag_name="{$v['name']}" style="{$tag_css}"><span>{$v['value']}</span><div class="delbtn"></div><div class="handle"></div></div>
+				<!--{endif;}-->
+				<!--{endforeach;}-->
+				</div>
+			</div>
+		</td>
+	</tr>
+	</table>
+	<div class="center mat20 mab10">
+		<div id="tag_list"></div>
+		<input type="hidden" name="pe_token" value="{$pe_token}" />
+		<input type="hidden" name="pesubmit" />
+		<input type="button" name="pesubmit" value="提 交" class="tjbtn" />		
+	</div>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	tag_bind($(".order_tag"));
+	bg_init();
+	$(":input[name='info[express_width]']").add(":input[name='info[express_height]']").blur(function(){
+		bg_init();
+	})
+	$(":button").click(function(){
+		var _width, _height, _top, _left, tag_name, tag_value, tag_type;
+		var express_width = parseInt($(":input[name='info[express_width]']").val());
+		var express_height = parseInt($(":input[name='info[express_height]']").val());
+		var express_width_px = parseInt($("#express_logo img").width());
+		var express_height_px = parseInt($("#express_logo img").height());
+		var bili = isNaN(express_width_px) ? 1 : express_width/express_width_px;
+		$("#tag_list").empty();
+		$(".order_tag").each(function(){
+			_width = $(this).width() * bili;
+			_height = $(this).height() * bili;
+			_top = ($(this).offset().top - $("#express_html").offset().top) * bili;
+			_left = ($(this).offset().left - $("#express_html").offset().left) * bili;
+			tag_position = _width + '|' + _height + '|' + _top + '|' + _left;
+			if ($(this).find("textarea").is(":input") == true) {
+				tag_name = 'diy';
+				tag_type = 'diy';
+				tag_value = $(this).find("textarea").val();			
+			}
+			else {
+				tag_name = $(this).attr("tag_name");	
+				tag_type = 'tag';
+				tag_value = $(this).find("span").text();
+			}
+			$("#tag_list").append('<input type="hidden" name="tag_name[]" value="'+tag_name+'" />');
+			$("#tag_list").append('<input type="hidden" name="tag_type[]" value="'+tag_type+'" />');
+			$("#tag_list").append('<input type="hidden" name="tag_value[]" value="'+tag_value+'" />');
+			$("#tag_list").append('<input type="hidden" name="tag_position[]" value="'+tag_position+'" />');
+		})
+		$(":input[name='info[express_width_px]']").val(express_width_px)
+		$(":input[name='info[express_height_px]']").val(express_height_px)
+		$("form").submit();
+	})
+	$(".delbtn").live("click", function(){
+		$(this).parents(".order_tag").remove();
+	})
+	/*$(":input[name='info[express_x]']").blur(function(){
+		var _value = parseFloat($(this).val());
+		$(".order_tag").each(function(){
+			$(this).offset({"left" : parseFloat($(this).offset().left) + _value});
+		})
+	})
+	$(":input[name='info[express_y]']").blur(function(){
+		var _value = parseFloat($(this).val());
+		$(".order_tag").each(function(){
+			$(this).offset({"top" : parseFloat($(this).offset().top) + _value});
+		})
+	})*/
+    // 初始化Web Uploader
+    var uploader;
+    uploader = WebUploader.create({
+        // 自动上传。
+        auto: true,
+        // swf文件路径
+        swf: "{$pe['host_root']}include/plugin/webuploader/Uploader.swf",
+        // 文件接收服务端。
+        server: "{$pe['host_root']}include/plugin/webuploader/upload.php?wh=0",	
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: {id:'#filePicker', multiple:false},
+        // 只允许选择文件，可选。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        $("#upload_jindu").html("（上传中 0%）");
+    });
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {      
+        $("#upload_jindu").html('（上传中' + parseInt(percentage * 100) + '%）' );
+    });
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file, response) {
+	    if ( response.result == true ) {
+	        $("#express_logo").html('<img src="' + response.img + '" />');
+	        $("#upload_jindu").html('（上传成功）');
+	        $(":input[name='info[express_logo]']").val(response.val);
+	        bg_init();
+	        uploader.reset();
+	    }
+	    else {
+	        $("#upload_jindu").html('（上传失败）');	    
+	    }
+    });
+    // 文件上传失败，现实上传出错。
+    uploader.on( 'uploadError', function( file ) {
+		$("#upload_jindu").html('上传失败');
+    });
+});
+function tag_bind(tag) {
+	tag.drag("start", function( ev, dd ){
+		dd.attr = $(ev.target).prop("className");
+		dd.width = $(this).width();
+		dd.height = $(this).height();
+	}).drag(function( ev, dd ){
+		var props = {};
+		if ( dd.attr.indexOf("handle") > -1){
+			props.width = Math.max(20, dd.width + dd.deltaX);
+			props.height = Math.max(20, dd.height + dd.deltaY);
+			$(this).find("textarea").css({"width":props.width, "height":props.height})
+		}
+		else {
+			props.top = dd.offsetY - $("#express_html").offset().top;
+			props.left = dd.offsetX - $("#express_html").offset().left;		
+		}
+		$(this).css(props);
+	});
+}
+function tag_add(name, text) {
+	if (name == 'diy') {
+		text = '<textarea style="width:120px;height:22px;padding:0;resize:none">'+text+'</textarea>';
+	}
+	else {
+		text = '<span>'+text+'</span>';	
+	}
+	tag_bind(
+		$('<div class="order_tag" tag_name="'+name+'">'+text+'<div class="delbtn"></div><div class="handle"></div></div>').appendTo("#express_tag")
+		.css({ 
+			top: $("#express_html").offset().top + Math.random() * 100, 
+			left: $("#express_html").offset().left + Math.random() * 500 
+		})
+	);
+}
+//设定模板图宽度
+function bg_init() {
+	var express_width = parseInt($(":input[name='info[express_width]']").val());
+	var express_height = parseInt($(":input[name='info[express_height]']").val());
+	$("#express_logo img").removeAttr("style");
+	if (express_width) {
+		$("#express_logo img").css({"width": express_width + 'mm'});
+	}
+	if (express_height) {
+		$("#express_logo img").css({"height": express_height + 'mm'});
+	}
+}
+</script>
+<link rel="stylesheet" type="text/css" href="{$pe['host_root']}include/plugin/webuploader/webuploader.css">
+<script charset="utf-8" src="{$pe['host_root']}include/plugin/webuploader/webuploader.min.js"></script>
+<script src="{$pe['host_root']}include/plugin/jquery_drag/jquery.event.drag-2.2.js"></script>
+<script src="{$pe['host_root']}include/plugin/jquery_drag/jquery.event.drag.live-2.2.js"></script>
+<style type="text/css">
+#express_html{width:100%; min-height:600px; _height:600px; line-height:20px; font-size:12px; position:relative; background:#e4e4e4; display:block; border:1px solid #eaeaea}
+#express_logo{position:absolute; top:0; left:0; z-index:1px;}
+.order_tag{position:absolute; z-index:999; border:1px solid #ffbb00; border-right:10px solid #ffbb00; background:#ffbb00; cursor:move; height:22px; width:120px;}
+.order_tag textarea{font-size:12px; line-height:20px; border:0}
+.handle{position:absolute; bottom:-1px; right:-10px; cursor: nw-resize; height: 5px; width: 10px;}		
+.delbtn{position:absolute; top:-10px; right:-17px; cursor: pointer; height: 16px; width: 16px; line-height:12px; font-size:10px; font-weight:bold; background:url({$pe['host_tpl']}images/cuo.png); color:#fff}
+.webuploader-pick{background:#00B7EE; height:24px; line-height:24px; padding:0 8px; width:auto; border-radius:3px; color:#fff}
+.webuploader-container{width:auto; height:auto;}
+</style>
+<!--{include(pe_tpl('footer.html'));}-->

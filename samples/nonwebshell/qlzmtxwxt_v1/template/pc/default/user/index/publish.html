@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>发表新闻 - 用户中心 - {$settings.site.sitename}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  {include file="public/css"}
+  {include file="public/js"}
+  <style>
+
+  </style>
+</head>
+<body>
+
+<!-- 头部开始 -->
+{include file="public/header"}
+<!-- 头部结束 -->
+
+<div class="layui-main fly-marginTop fly-user-main ">
+
+<div class="user-left-menu" style="">
+
+    
+<!-- 会员中心导航菜单 -->
+{include file="public/left_menu"}
+</div>
+        <div class="fly-panel fly-panel-user user-right-content" pad20>
+
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+              <li data-type="mine-jie" lay-id="index" class="layui-this">发表新闻</li>
+             
+            </ul>
+       
+           </div>
+
+              <form class="layui-form" action="post">
+                   {:token()}
+                  <div class="layui-form-item">
+                      <div class="layui-input-inline" style="width:100%">
+                     {:get_cate('articleCategory')}
+                     </div>
+                  </div>
+                <div class="layui-form-item">
+                 
+                  
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题50-30个汉字" autocomplete="off" class="layui-input" id="title" >
+              
+                   
+                </div>
+ 
+                <div class="layui-form-item layui-form-text">
+                   {form:ueditor name="content" /}
+  
+          
+                </div>
+                <div class="layui-form-item">
+                 
+                    <button class="layui-btn" lay-submit lay-filter="form" style="width:200px;float:right;background-color: #61669d;">发表</button>
+                
+                  
+                </div>
+              </form>
+           </div>
+           </div>
+        </div>
+        </div>
+    
+</div>
+
+<!-- 会员底部文件 -->
+{include file="public/footer"}
+
+<script>
+layui.use(['form','layedit'], function(){
+  var layedit = layui.layedit;
+  var form = layui.form;
+
+
+  //监听提交
+  form.on('submit(form)', function(data){
+    
+     $.post("{:url('@user/index/publish')}",data.field,function(json){
+         if(json.code ==0){
+            layer.msg(json.msg);
+            location.reload();
+         }else{
+           layer.msg(json.msg);
+         }
+     });
+    return false;
+  });
+});
+</script>
+      
+<script type="text/html" id="titleTpl">
+   <a href="{{d.url}}" target="_blank">{{d.title}}</a>
+</script>
+<script type="text/html" id="statusTpl">
+  {{#  if(d.status == 0){ }}
+    待审核
+  {{#  } else if(d.status == 1){ }}
+    已发表
+  {{#  } }}
+</script>
+</body>
+</html>

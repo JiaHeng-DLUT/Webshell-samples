@@ -1,0 +1,87 @@
+<style>
+	.readcontent a,
+	.replycontent a {
+		color: #458fce;
+	}
+	
+	.readcontent a:hover,
+	.replycontent a:hover {
+		text-decoration: underline;
+	}
+	
+	.readcontent img,
+	.replycontent img {
+		cursor: pointer;
+	}
+	
+	.readcontent embed,
+	.replycontent embed,
+	.readcontent iframe,
+	.replycontent iframe {
+		max-width: 100%;
+	}
+</style>
+<script>
+	function pk_read_expand($this) {
+		if($($this).hasClass('fa-expand')) {
+			$($this).removeClass('fa-expand');
+			$($this).addClass('fa-compress');
+			$this.title = '复原';
+			$('#pk-body-right').addClass('pk-hide');
+			$('#pk-body-left').removeClass('pk-w-md-8 pk-padding-right-0');
+		} else {
+			$($this).addClass('fa-expand');
+			$($this).removeClass('fa-compress');
+			$this.title = '加宽';
+			$('#pk-body-right').removeClass('pk-hide');
+			$('#pk-body-left').addClass('pk-w-md-8 pk-padding-right-0');
+		}
+	}
+	$(function() {
+		if("{$_G['SET']['TEMPLATE_DEFAULT_HIDERIGHTDIV']}" == "1") {
+			$('#pk-fullscreen').click();
+		}
+	});
+</script>
+<div class="pk-row pk-padding-top-10 pk-padding-bottom-10 pk-text-md" style="border-bottom: solid 1px #458fce">
+	<div class="pk-w-md-1 pk-w-sm-2 pk-padding-0 pk-text-right" style="height: 42px">
+		<img class="pk-radius-all pk-cursor-pointer" src="userhead/{$readuserdata['id']}.png" alt="{$readuserdata['username']}" style="width:42px;height:42px" onerror="this.src='template/default/img/randhead/{rand(1,Cnum($_G['SET']['TEMPLATE_DEFAULT_RANDHEADCOUNT'],24))}.png'" onclick="window.open('{ReWriteURL('user','id={$readdata['uid']}&page=1')}','_blank')">
+	</div>
+	<div class="pk-w-md-11 pk-w-sm-10 pk-padding-right-5">
+		<div class="pk-text-truncate pk-display-block pk-text-xs" style="height: 18px;padding-top: 2px">
+			<a target="_blank" href="{ReWriteURL('user','id={$readdata['uid']}&page=1')}" style="color: #999">{$readuserdata['nickname']}</a><span style="color: orangered">Lv{Cnum($readuserdata['jifen']/100)}</span>{$readuserhtml} <span id="pk-fullscreen" class="fa fa-expand pk-text-default pk-cursor-pointer pk-float-right" title="加宽" onclick="pk_read_expand(this)"></span>
+		</div>
+		<div class="pk-display-block pk-text-md" style="min-height: 24px;padding-top: 2px">
+			{$readdata['title']}&nbsp;&nbsp;&nbsp;&nbsp;<span class="pk-text-primary fa fa-bookmark-o">&nbsp;</span><span class="pk-text-sm pk-text-primary">{$readdata['label']}</span>
+		</div>
+	</div>
+</div>
+<style>
+	#readbox a:hover {
+		text-decoration: underline;
+	}
+</style>
+<div class="pk-row">
+	<div class="readcontent pk-w-sm-12 pk-text-sm pk-padding-top-15 pk-padding-bottom-15 pk-word-break-all pk-overflow-hidden pk-img-width-max-all">
+		{$readdata['content']}
+	</div>
+</div>
+<div class="pk-row" style="border-bottom: solid 1px #E0E0E0">
+	<div class="pk-w-sm-12 pk-text-right pk-text-xs pk-padding-right-5 pk-padding-bottom-5" style="color: #999">
+		<a href="javascript:" onclick="window.open('index.php?c=ding&type=read&id={$readdata['id']}','pk-di');$(this).find('span:eq(1)').html(parseInt($(this).find('span:eq(1)').html())+1);$(this).attr('onclick','')"><span class="fa fa-thumbs-o-up"></span>&nbsp;<span>{$readdata['zannum']}</span></a>&nbsp;&nbsp;已被阅读了{$readdata['looknum']}次&nbsp;{$_G['TEMP']['READADMINLINK']}&nbsp;楼主&nbsp;{date('Y-m-d H:i:s',$readdata['posttime'])}
+	</div>
+</div>
+<a name="replylist"></a>
+<div class="pk-row pk-text-xs pk-padding-top-10 pk-padding-bottom-10" style="border-bottom: solid 1px #458fce">
+	<div class="pk-w-sm-3 pk-text-left pk-padding-left-5 pk-text-secondary">
+		回复列表
+	</div>
+	<div class="pk-w-sm-9 pk-text-right pk-text-nowrap pk-padding-right-5">
+		<a class="pk-hover-opacity pk-text-default" href="{ReWriteURL('read','id={$readdata['id']}&page={$page}')}"><span class="fa fa-bars"></span> 默认</a>&nbsp;&nbsp;
+		<a class="pk-hover-opacity pk-text-danger" href="{ReWriteURL('read','id={$readdata['id']}&page={$page}','orderfield=zannum&desc=1')}"><span class="fa fa-fire"></span> 热门</a>&nbsp;&nbsp;
+		<a class="pk-hover-opacity pk-text-success" href="{ReWriteURL('read','id={$readdata['id']}&page={$page}','desc=0')}"><span class="fa fa-sort-numeric-asc"></span> 正序</a>&nbsp;&nbsp;
+		<a class="pk-hover-opacity pk-text-success" href="{ReWriteURL('read','id={$readdata['id']}&page={$page}','desc=1')}"><span class="fa fa-sort-numeric-desc"></span> 倒序</a>
+	</div>
+</div>
+<div id="read-list">
+	<div>

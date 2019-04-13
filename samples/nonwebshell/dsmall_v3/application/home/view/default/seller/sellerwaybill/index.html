@@ -1,0 +1,106 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<div class="alert alert-block mt10">
+    <ul class="mt5">
+        <li>1、{$Think.lang.unbound_logistics_company}<strong>“{$Think.lang.select_template}”</strong>{$Think.lang.select_template_explain}</li>
+        <li>2、{$Think.lang.click}<strong>“{$Think.lang.setting}”</strong>{$Think.lang.setting_information}</li>
+        <li>3、{$Think.lang.click}<strong>“{$Think.lang.default}”</strong>{$Think.lang.default_information}</li>
+        <li>4、{$Think.lang.click}<strong>“{$Think.lang.unbundling}”</strong>{$Think.lang.unbundling_information}</li>
+    </ul>
+</div>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w30"></th>
+            <th class="w180 tl">{$Think.lang.store_deliver_express_title}</th>
+            <th class="w180 tl">{$Think.lang.waybill_template}</th>
+            <th class="tl">{$Think.lang.waybill_legend}</th>
+            <th class="w100 tl">{$Think.lang.default}</th>
+            <th class="w150">{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $express_list}
+        {foreach name="express_list" item="express"}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">{$express.express_name}</td>
+            <td class="tl">{$express.waybill_name}</td>
+            <td class="tl">
+                <div class="waybill-img-thumb">
+                    {notempty name="$express.waybill_image_url"}
+                    <a data-lightbox="lightbox-image" href="{$express.waybill_image_url|default=''}">
+                        <img src="{$express.waybill_image_url|default=''}">
+                    </a>
+                    {/notempty}
+                </div>
+                <div class="waybill-img-size">
+                    <p>{$Think.lang.width}：{$express.waybill_width|default=''}(mm)</p>
+                    <p>{$Think.lang.height}：{$express.waybill_height|default=''}(mm)</p>
+                </div>
+            </td>
+            <td class="tl">{$express.is_default_text|default=''}</td>
+            <td class="dscs-table-handle">
+                <span>
+                    {if $express.bind}
+                    <a href="{:url('Sellerwaybill/waybill_setting',['storewaybill_id' =>$express.storewaybill_id])}" class="btn-blue">
+                        <i class="fa fa-wrench"></i><p>{$Think.lang.setting}</p></a></span>
+                <span><a href="javascript:;" dstype="btn_set_default" data-storewaybill-id="{$express.storewaybill_id}" class="btn-green"><i class="fa fa-check-circle"></i><p>{$Think.lang.default}</p></a></span>
+                <span><a href="{:url('Sellerwaybill/waybill_unbind',['storewaybill_id'=>$express.storewaybill_id])}" class="btn-red"><i class="fa fa-unlink"></i><p>{$Think.lang.unbundling}</p></a></span>
+                {else}
+                <span><a href="{:url('Sellerwaybill/waybill_bind',['express_id' => $express.express_id])}" class="btn-blue"><i class="fa fa-check-circle-o"></i><p>{$Think.lang.select_template}</p></a>
+                    {/if}
+                </span>
+            </td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i>
+                    <span>{$Think.lang.select_default_logistics_company}<a href="{:url('Sellerdeliverset/express')}">{$Think.lang.set_up}</a></span>
+                </div></td>
+        </tr>
+        {/if}
+    </tbody>
+</table>
+<form id="edit_form" method="post">
+    <input id="storewaybill_id" name="storewaybill_id" type="hidden" />
+</form>
+        
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('[dstype="btn_unbind"]').on('click', function() {
+            var _this=$(this)
+            layer.confirm('{$Think.lang.confirm_unbundling}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#storewaybill_id').val(_this.attr('data-storewaybill-id'));
+                $('#edit_form').attr('action', "{:url('Sellerwaybill/waybill_unbind')}");
+                $('#edit_form').submit();
+            });
+        });
+
+        $('[dstype="btn_set_default"]').on('click', function() {
+            $('#storewaybill_id').val($(this).attr('data-storewaybill-id'));
+            $('#edit_form').attr('action', "{:url('Sellerwaybill/waybill_set_default')}");
+            $('#edit_form').submit();
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#edit_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('edit_form', 'url', "{:url('Sellerwaybill/index')}");
+            }
+        });
+    });
+</script>
+
+{/block}
+

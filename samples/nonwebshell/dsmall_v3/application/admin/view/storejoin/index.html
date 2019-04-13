@@ -1,0 +1,98 @@
+    {include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>开店首页</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>可以传三张图片，在开店首页头部显示，建议使用1920px * 420px</li>
+            <li>“置空”会删除图片，提交保存后生效</li>
+            <li>所填写的“贴心提示”会出现在开店首页图片下方</li>
+        </ul>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data" name="form1">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="space">
+                <th colspan="2">图片上传:</th>
+            </tr>
+            {for start="1" end="$size" comparison="elt"}
+            <tr class="noborder">
+                <td colspan="2"><label>IMG{$i}:</label>
+                    <a href="JavaScript:void(0);" onclick="clear_pic({$i})"><span>置空</span></a></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    {notempty name="pic[$i]"}
+                    <span class="type-file-show" id="show{$i}"><a data-lightbox="lightbox-image" href="{$Think.BASE_SITE_ROOT}/uploads/admin/Storejion/{$pic[$i]}">
+            <img class="show_image" title="点击打开" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png"></a>
+            </span>
+                    {/notempty}
+                    <span class="type-file-box">
+                        <input type="text" name="textfield" id="textfield{$i}" class="type-file-text" />
+                        <input type="button" name="button" id="button{$i}" value="" class="type-file-button" />
+                        <input name="pic{$i}" type="file" class="type-file-file" id="pic{$i}" size="30" hidefocus="true">
+                        <input type="hidden" name="show_pic{$i}" id="show_pic{$i}" value="{present name='pic[$i]'}{$pic[$i]}{/present}" />
+                    </span>
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            {/for}
+            <tr class="space">
+                <th colspan="2"><label for="show_txt">贴心提示:</label></th>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><textarea name="show_txt" rows="6" class="tarea" id="show_txt" >{$show_txt}</textarea></td>
+                <td class="vatop tips"><span class="vatop rowform"></span></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="2" ><a href="JavaScript:void(0);" class="btn" onclick="document.form1.submit()"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        $('input[class="type-file-file"]').change(function(){
+            var pic=$(this).val();
+            var extStart=pic.lastIndexOf(".");
+            var ext=pic.substring(extStart,pic.lengtd).toUpperCase();
+            $(this).parent().find(".type-file-text").val(pic);
+            if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+                layer.alert("{$Think.lang.default_img_wrong}");
+                $(this).attr('value','');
+                return false;
+            }
+        });
+    });
+    function clear_pic(n){
+        $("#show"+n+"").remove();
+        $("#textfield"+n+"").val("");
+        $("#pic"+n+"").val("");
+        $("#show_pic"+n+"").val("");
+    }
+</script>

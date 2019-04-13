@@ -1,0 +1,30 @@
+﻿.tidings{width:100%; height:800px; display:inline-block; background:#efefef url(http://www.tubaobao.com/images/newsDe.jpg) repeat-y center;}
+.tid{width:1003px; display:block; margin:0 auto; position:relative;}
+.tid a.tidUp,.tid a.tidDown{width:41px; height:32px; padding-top:41px; font:normal 12px/32px "微软雅黑"; color:#333; display:inline-block; position:absolute; top:389px;}
+.tidUp{left:41px; background:url(http://www.tubaobao.com/images/tidUp1.jpg) no-repeat top;} 
+.tidDown{right:41px; background:url(http://www.tubaobao.com/images/tidDown1.jpg) no-repeat top;} 
+.tidUp:hover{background:url(http://www.tubaobao.com/images/tidUp11.jpg) no-repeat top;}
+.tidDown:hover{right:41px; background:url(http://www.tubaobao.com/images/tidDown11.jpg) no-repeat top;} 
+.TidContent{width:661px; display:block; margin:0 auto 20px;}
+
+.site{float:left; width:100%; height:40px; padding-top:15px; border-bottom:1px dashed #ccc;}
+.site font{float:left; font:normal 12px/40px "宋体"; color:#888; margin-right:8px;}
+.site a{float:left; font:normal 12px/40px "宋体"; color:#888; margin-right:7px;}
+.site span{float:left; font:normal 8px/40px "宋体"; color:#bbb; margin-right:9px;}
+.site .site1{color:#7e9900;}
+.site a:hover{color:#7e9900;}
+.back{float:right; width:101px; display:inline-block; position:absolute; right:0; top:44px;}
+.back a{float:left; width:101px; display:inline-block;}
+.back img{float:left; display:inline;} 
+.back .back1{display:none; padding-top:10px;}
+.back a:hover .back1{display:inline-block;}
+.sly h2{width:100%; padding-bottom: 10px; display:inline-block;}
+.sly h2 font{float:left; width:100%; font:bold 22px/36px "微软雅黑"; color:#000; text-align:center;}
+.sly h2 span{float:left; width:100%; font:400 14px/26px "微软雅黑"; color:#999; text-align:center;}
+.slyW{float:left; width:100%; font:normal 14px/28px "微软雅黑"; color:#333;}
+
+/*story*/
+.navs{width:102px;}
+.navs li a{width:102px;height:34px;background:#d6d6d7;color:#666;text-align:center;line-height:34px;margin-bottom:3px;display:block;}
+.navs li .cur{background:#fff;font-size:12px;font-weight:bold;color:#333;font-family:"微软雅黑"}
+/*story e*/

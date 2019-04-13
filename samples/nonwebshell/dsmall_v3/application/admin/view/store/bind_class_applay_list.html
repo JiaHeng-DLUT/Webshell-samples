@@ -1,0 +1,94 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_name}ID</dt>
+                <dd><input type="text" value="" name="store_id" id="store_id" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>申请状态</dt>
+                <dd>
+                    <select name="state">
+                        <option value="">{$Think.lang.ds_please_choose}...</option>
+                        <option {if $Request.param.state == '0'}selected {/if} value="0">待审核</option>
+                        <option {if $Request.param.state == '1'}selected {/if} value="1">已经审核</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt></dt>
+                <dd></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {if $filtered}
+                <a href="{:url('Store/store_bind_class_applay_list')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                {/if}
+            </div>
+        </div>
+      
+        
+    </form>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>此处可以对商家新申请的经营类目进行 审核/删除 操作</li>
+        </ul>
+    </div>
+    
+    <form method="post" id="store_form" name="store_form">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th class="align-center" colspan="3">经营类目</th>
+                <th class="w150">{$Think.lang.store_name}</th>
+                <th class="w150">{$Think.lang.store_user_name}</th>
+                <th class="w150">分佣比例</th>
+                <th class="align-center w150">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="bind_list"}
+            {foreach name="bind_list" item="v"}
+            <tr class="hover edit">
+                <td>{$v.class_1_name}</td>
+                <td>{$v.class_2_name ? '>' : null} {$v.class_2_name}</td>
+                <td>{$v.class_3_name ? '>' : null} {$v.class_3_name}</td>
+                <td>{notempty name="$bind_store_list[$v.store_id]"}{$bind_store_list[$v.store_id]['store_name']}{/notempty}[ID:{$v.store_id}]</td>
+                <td>{notempty name="$bind_store_list[$v.store_id]"}{$bind_store_list[$v.store_id]['seller_name']}{/notempty}</td>
+                <td class="w150">{$v.commis_rate} %</td>
+                <td class="w72 align-center">
+                    {if $v.storebindclass_state == '0'}
+                    <a href="javascript:dsLayerConfirm('{:url('Store/store_bind_class_applay_check',['bid'=>$v.storebindclass_id,'store_id'=>$v.store_id])}','确认审核吗？')"  class="dsui-btn-edit"><i class="iconfont"></i>审核</a>
+                    {/if}
+                    <a href="javascript:dsLayerConfirm('{:url('Store/store_bind_class_applay_del',['bid'=>$v.storebindclass_id,'store_id'=>$v.store_id])}','{$v.storebindclass_state == '1' ? '该类目已经审核通过，删除它可能影响到商家的使用，' : null}确认删除吗？')"  class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+</div>

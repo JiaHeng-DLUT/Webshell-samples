@@ -1,0 +1,128 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>分类管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+<div class="fixed-empty"></div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>添加，编辑或删除操作后需要点击"提交"按钮才生效</li>
+        </ul>
+    </div>
+
+
+  <table class="tb-type1 noborder search">
+    <tbody>
+      <tr>
+        <th><label>查看下一级地区</label></th>
+        <td>
+            <select name="province" id="province" onchange="refreshdistrict($(this).val(),'province')">
+                <option value="" {if $province == ''}selected='selected'{/if}>-城市-</option>
+                {notempty name="province_list"}
+                {foreach name="province_list" item="v" key="k" }
+                <option value="{$v.fleaarea_id}" {if $province == $v.fleaarea_id}selected='selected'{/if}>{$v.fleaarea_name}</option>
+                {/foreach}
+                {/notempty}
+            </select>
+            <select name="city" id="city" onchange="refreshdistrict($(this).val(),'city')">
+                <option value="" {if $city == ''}selected='selected'{/if}>-地区-</option>
+                {notempty name="city_list"}
+                {foreach name="city_list" item="v" key="k" }
+                <option value="{$v.fleaarea_id}" {if $city == $v.fleaarea_id}selected='selected'{/if}>{$v.fleaarea_name}</option>
+                {/foreach}
+                {/notempty}
+            </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <form method="post" id='form_area_list';>
+    <input type='hidden' name='fleaarea_parent_id' value="{$fleaarea_parent_id}" />
+    <input type='hidden' name='child_area_deep' value="{$child_area_deep}" />
+    <input type='hidden' name='hidden_del_id' id='hidden_del_id' value='' />
+    <table class="ds-default-table">
+      <thead>
+        <tr class="thead">
+          <th class="align-center">排序</th>
+          <th>地区名称</th>
+          <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+      </thead>
+      <tbody id="treet1">
+            {notempty name="area_list"}
+            {foreach name="area_list" item="v" key="k" }
+            <tr id='area_tr_{$v.fleaarea_id}' class="hover edit">
+                <td class="w48 sort align-center"><span id='area_sort_{$v.fleaarea_id}'><input name="area_sort[{$v.fleaarea_id}]" value="{$v.fleaarea_sort}" type='text'/></span></td><td class="node"><span class="node_name" id='area_name_{$v.fleaarea_id}'><input name="area_name[{$v.fleaarea_id}]" value="{$v.fleaarea_name}" type='text'/></span></td>
+                <td class="w72 align-center"><a href="javascript:void(0)" onclick='del("{$v.fleaarea_id}");'>{$Think.lang.ds_del}</a></td>
+            </tr>
+            {/foreach}
+            {/notempty}
+      </tbody>
+      <tbody>
+        <tr>
+          <td colspan="15"><a href="JavaScript:void(0);" class="btn-add-nofloat marginleft" onclick='add_tr();'><span>{$Think.lang.region_index_add}</span></a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="tfoot">
+          <td colspan="15"><a href="JavaScript:void(0);" class="btn" onclick="form_list_submit();"><span>{$Think.lang.ds_submit}</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+      </div>
+{include file="public/footer" /}
+
+
+<script>
+
+function add_tr(){
+    $('#treet1').append('<tr class="hover edit"><td class="w48 sort"><input type="text" name="new_area_sort[]" onchange="layer.alert(\'请先填写地区名称\')" value="0" /></td><td class="node"><input type="text" name="new_area_name[]" value="" /></td><td><a href="javascript:void(0)" onclick="$(this).parents(\'tr\').remove()">{$Think.lang.ds_del}</a></td></tr>');
+}
+function edit(id){
+    //sort
+    $('#area_sort_'+id).html("<input name='area_sort["+id+"]' value='"+$('#hidden_area_sort_'+id).val()+"' type='text'/>");
+    //name
+    $('#area_name_'+id).html("<input name='area_name["+id+"]' value='"+$('#hidden_area_name_'+id).val()+"' type='text'/> ");
+}
+function del(id){
+    $('#area_tr_'+id).remove();
+    $('#hidden_del_id').val($('#hidden_del_id').val()+'|'+id);
+}
+function refreshdistrict(parent_id,type){
+    var url = '';
+    if(type == 'province'){
+        url += '&province='+$('#province').val();
+    }
+    if(type == 'city'){
+        url += '&province='+$('#province').val()+'&city='+$('#city').val();
+    }
+    if(type == 'district'){
+        url += '&province='+$('#province').val()+'&city='+$('#city').val()+'&district='+$('#district').val();
+    }
+    location.href=ADMINSITEURL+'/Flearegion/flea_region?fleaarea_parent_id='+parent_id+url;
+}
+function form_list_submit(){
+    if($('#hidden_del_id').val()){
+        layer.confirm('{$Think.lang.region_index_del_tip}', {
+            btn: ['确定', '取消'],
+            title: false,
+        }, function () {
+            $('#form_area_list').submit();
+        });
+    }
+}
+</script> 

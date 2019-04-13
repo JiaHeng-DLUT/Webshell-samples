@@ -1,0 +1,118 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{if $isPlatformStore}
+<a class="dssc-btn dssc-btn-green" href="{:url('Sellerpromotionmansong/mansong_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.mansong_add}</a>
+{else}
+{notempty name="current_mansong_quota"}
+<a class="dssc-btn dssc-btn-green" style="right:100px" href="{:url('Sellerpromotionmansong/mansong_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.mansong_add}</a>
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionmansong/mansong_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.set_renewal}</a>
+{else /}
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionmansong/mansong_quota_add')}" title=""><i class="fa fa-money"></i>{$Think.lang.promotion_buy_product}</a>
+{/notempty}
+{/if}
+{/block}
+
+{block name="seller_main"}
+{if $isPlatformStore}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>1、{$Think.lang.mansong_explain1}</li>
+    </ul>
+</div>
+{else /}
+<div class="alert alert-block mt10">
+    {notempty name="current_mansong_quota"}
+    <strong>{$Think.lang.set_expiration_time}{$Think.lang.ds_colon}</strong><strong style="color: #F00;">{$current_mansong_quota.mansongquota_endtime|date="Y-m-d H:i:s",###}</strong>
+{else /}
+<strong>{$Think.lang.no_packages_currently_available}</strong>
+{/notempty}
+<ul>
+    <li>1、{$Think.lang.mansong_explain1}</li>
+    <li>2、<strong style="color: red">{$Think.lang.notice_package_renewal6}</strong>。</li>
+</ul>
+</div>
+{/if}
+
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.mansong_status}</th>
+            <td class="w100"><select name="state">
+                    {notempty name="mansong_state_array"}
+                    {foreach name="mansong_state_array" item="val"}
+                    <option value="{$key}" {if $key == $Request.get.state}selected{/if}>{$val}</option>
+                    {/foreach}
+                    {/notempty}
+                </select></td>
+            <th class="w110">{$Think.lang.mansong_name}</th>
+            <td class="w160"><input type="text" class="text w150" name="mansong_name" value="{$Request.get.mansong_name}"/></td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    {notempty name="mansong_list"}
+    <thead>
+        <tr>
+            <th class="w30"></th>
+            <th class="tl">{$Think.lang.mansong_name}</th>
+            <th class="w180">{$Think.lang.start_time}</th>
+            <th class="w180">{$Think.lang.end_time}</th>
+            <th class="w90">{$Think.lang.ds_state}</th>
+            <th class="w100">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach name="mansong_list" item="val"}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl"><dl class="goods-name">
+                    <dt>{$val.mansong_name}</dt>
+                </dl></td>
+            <td class="goods-time">{$val.mansong_starttime|date="Y-m-d H:i",###}</td>
+            <td class="goods-time">{$val.mansong_endtime|date="Y-m-d H:i",###}</td>
+            <td>{$val.mansong_state_text}</td>
+            <td class="dscs-table-handle"><span><a href="{:url('Sellerpromotionmansong/mansong_detail',['mansong_id'=>$val.mansong_id])}" class="btn-blue"><i class="fa fa-th-list"></i>
+                        <p>{$Think.lang.ds_detail}</p>
+                    </a></span> <span><a dstype="btn_mansong_del" data-mansong-id="{$val.mansong_id}" href="javascript:return void(0)" class="btn-red"><i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_del}</p>
+                    </a></span></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    {notempty name="mansong_list"}
+    <tfoot>
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+    </tfoot>
+    {/notempty}
+</table>
+<form id="submit_form" action="" method="post" >
+    <input type="hidden" id="mansong_id" name="mansong_id" value="">
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[dstype="btn_mansong_del"]').on('click', function () {
+            var action = "{:url('Sellerpromotionmansong/mansong_del')}";
+            var mansong_id = $(this).attr('data-mansong-id');
+            layer.confirm('{$Think.lang.ds_ensure_cancel}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#submit_form').attr('action', action);
+                $('#mansong_id').val(mansong_id);
+                ds_ajaxpost('submit_form', 'url', "{:url('Sellerpromotionmansong/index')}");
+            });
+        });
+    });
+</script>
+{/block}
+

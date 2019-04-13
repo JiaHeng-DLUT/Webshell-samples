@@ -1,0 +1,90 @@
+{include file="public/header" /}
+
+
+<div class="page">
+        <form id="navigation_form" method="post">
+            <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder">
+                        <td class="required w120"><label class="validation" for="nav_title">{$Think.lang.nav_title}</label></td>
+                        <td><input type="text" name="nav_title" id="nav_title" value="{$nav.nav_title|default=''}" class="w200"/></td>
+                    </tr>
+                    <tr class="noborder">
+                        <td>{$Think.lang.nav_url}</td>
+                        <td><input type="text" name="nav_url" id="nav_url" value="{$nav.nav_url|default=''}" class="w200"/></td>
+                    </tr>
+                    <tr class="noborder">
+                        <td class="required w120">{$Think.lang.nav_location}</td>
+                        <td>
+                            <input type="radio" name="nav_location" value="header" title="{$Think.lang.nav_top}" {if $nav.nav_location eq 'header'}checked{/if}>{$Think.lang.nav_top}
+                                   <input type="radio" name="nav_location" value="middle" title="{$Think.lang.nav_midd}" {if $nav.nav_location eq 'middle'}checked{/if}>{$Think.lang.nav_midd}
+                                   <input type="radio" name="nav_location" value="footer" title="{$Think.lang.nav_foo}" {if $nav.nav_location eq 'footer'}checked{/if}>{$Think.lang.nav_foo}
+                        </td>
+                    </tr>
+                    <tr class="noborder">
+                        <td class="required w120">{$Think.lang.nav_new_open}</td>
+                        <td>
+                            <div class="onoff">
+                                <label for="sms_login_show1" class="cb-enable {if condition="$nav.nav_new_open eq 1"}selected{/if}">是</label>
+                                <label for="sms_login_show0" class="cb-disable {if condition="$nav.nav_new_open eq 0"}selected{/if}">否</label>
+                                <input id="sms_login_show1" name="nav_new_open" value="1" type="radio" {if condition="$nav.nav_new_open eq 1"} checked="checked"{/if}>
+                                <input id="sms_login_show0" name="nav_new_open" value="0" type="radio" {if condition="$nav.nav_new_open eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="noborder">
+                        <td class="required w120">{$Think.lang.nav_sort}</td>
+                        <td><input type="text" name="nav_sort" id="nav_sort" value="{$nav.nav_sort|default='0'}" class="w200"/></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td colspan="15"><input id="submitBtn"  class="btn" type="submit" value="提交"/></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+
+
+<script type="text/javascript">
+    $(function(){
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function(){
+            if ($("#navigation_form").valid()){
+                $("#navigation_form").submit();
+            }
+        });
+        $('#navigation_form').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules: {
+                nav_title :{
+                    required: true
+                },
+                nav_url :{
+                    url : true
+                },
+                nav_sort :{
+                    number:true,
+                    range:[0,255]
+                }
+            },
+            messages: {
+                nav_title :{
+                   required: '必填'
+                },
+                nav_url : {
+                    url :'请输入有效的链接'
+                },
+                nav_sort:{
+                    number: '请输入数字',
+                    range: '{$Think.lang.ds_range_0_255}'
+                }
+            }
+        });
+        
+    });
+    
+ </script>

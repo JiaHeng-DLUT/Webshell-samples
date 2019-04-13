@@ -1,0 +1,218 @@
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>注册 - {$settings.site['sitename']}</title>
+  {include file="public/css"}
+  {load href="__STATIC__/user/css/register.css" /}
+  </head>
+  <body>
+
+  <!-- 头部 结束 -->
+
+  <!-- 主体内容 -->
+  <section class="register-section" style="background: url(/public/static/portal/img/loginbg.jpg) no-repeat center center;">
+        <div class="layui-main register-main">  
+          <!-- 登陆盒子 开始-->
+          <div class="layui-field-box register-box">
+              <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+
+                <ul class="layui-tab-title">
+                  <li class="layui-this" >用户名注册</li>
+                  <li >短信注册</li>
+                 
+                 
+                </ul>
+                <div class="layui-tab-content">
+
+                    <div class="layui-tab-item  layui-show">
+                          <form class="layui-form layui-form-pane" method="post">
+                           <input name="type" type="hidden" value="account">
+                              <div class="layui-form-item">
+
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="username" required  lay-verify="required" placeholder="用户名" autocomplete="off"  class="layui-input" >
+                                </div>
+                              </div>
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                <i class="layui-icon layui-icon-password"></i></label>
+                                <div class="layui-input-inline">
+                                  <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                                </div>
+                              
+                              </div>
+                              <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-auz"></i></label>
+                                <div class="layui-input-inline" style="width:135px;">
+                                  <input type="text" name="verify_code"  placeholder="验证码" autocomplete="off" class="layui-input" style="width:135px;">
+                                </div>
+                                  <div class="layui-input-inline" style="width:80px;">
+                                 <img src="{:captcha_src()}"   alt="captcha" style="height:40px;" onclick="this.src='{:captcha_src()}?'+Math.random()" id="captcha"/>
+                                 
+                                  </div> 
+                              </div>
+
+
+                              <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid submit-btn" lay-submit lay-filter="form2" >注 册</button>
+                         
+                            </div>
+                        </form>
+                    </div>
+        
+
+
+           <div class="layui-tab-item ">
+                          <form class="layui-form layui-form-pane" method="post">
+                             <input name="type" type="hidden" value="sms">
+                   
+
+
+                             <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-cellphone"></i>  </label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="mobile" required  lay-verify="required" placeholder="您的手机号" autocomplete="off" class="layui-input mobile">
+                                </div>
+                              </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                                <div class="layui-input-inline">
+                                  <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                                </div>
+                              
+                              </div>  
+                              <div class="layui-form-item">
+
+                                <label class="layui-form-label"><i class="layui-icon layui-icon-auz"></i></label>
+                                <div class="layui-input-inline" style="width:135px;">
+                                  <input type="text" name="smscode"  placeholder="动态码" autocomplete="off" class="layui-input"  style="width:135px;">
+
+                                </div>
+
+                               <div class="layui-input-inline" style="width:80px;">
+                                   <button class="layui-btn layui-btn-normal" id="sendcode">获取动态码</button>
+                                 
+                                </div>                            
+
+                              </div>
+                              <div class="layui-form-item">
+                      
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid submit-btn" lay-submit lay-filter="form1" >注 册</button>
+                             
+                              </div>
+                           </form>
+                    </div>
+                </div>
+
+              </div>           
+              <!-- 其他登陆方式 -->
+              <div class="other-register">
+         
+                <span>已有账号？</span>
+                <a href="{:url('/user/login')}" class="register-register-account">立即登陆</a>
+              </div>
+
+          </div>
+          <!-- 登陆盒子结束 -->
+
+  </section>
+
+
+
+
+  {include file="public/js"}
+
+  <script>
+  layui.use('form', function(){
+    var form = layui.form;
+    
+    // 监听登陆按钮1
+    form.on('submit(form1)',function(data){
+       $.post("{:url('register/index')}",data.field,function(json){
+              if(json.code == 0){
+                location.href="{:url('/user/index')}";
+            }else{
+                layer.msg(json.msg);
+            }
+       });
+       return false;
+    });
+
+// 发送验证码
+ var id = "#sendcode"; //发送验证码按钮id
+$(id).on('click',function(){
+  $.post("{:url('register/sendcode')}",{"mobile":$(".mobile").val()},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                            layer.msg(json.msg, {icon: 1,
+                            skin: 'layui-layer-molv',});
+                        
+                    }else{
+                     
+                            time(id,0);
+                             qile.error(json.msg);
+                       
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).removeClass('layui-btn-disabled').addClass('layui-btn-primary');
+      $(id).addClass('layui-btn-primary');
+      $(id).html("发送验证码");
+      $(id).removeAttr("disabled",false);
+     
+    } else { 
+   // 倒计时中 禁用按钮
+      $(id).attr("disabled", true);
+      $(id).removeClass('layui-btn-primary').addClass('layui-btn-disabled')
+      $(id).html("重新发送(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+
+
+
+
+
+// 监听登陆按钮2
+
+    form.on('submit(form2)',function(data){
+       $.post("{:url('register/index')}",data.field,function(json){
+              if(json.code == 0){
+                location.href="{:url('/user/index')}";
+            }else{
+                layer.msg(json.msg);
+            }
+       });
+       return false;
+    });
+
+
+
+
+  });
+  </script>
+
+
+  </body>
+  </html>

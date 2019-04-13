@@ -1,0 +1,124 @@
+{include file="public/header" /}
+<div class="page">
+<div class="fixed-empty"></div>
+  <form id="goods_class_form" method="post">
+    <table class="ds-default-table">
+      <tbody>
+        <tr class="noborder">
+          <td colspan="2" class="required"><label class="validation" for="fleaclass_name">分类名称:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><input type="text" value="" name="fleaclass_name" id="fleaclass_name" class="txt"></td>
+          <td class="vatop tips"></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label for="parent_id">上级分类:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><select name="fleaclass_parent_id" id="fleaclass_parent_id">
+              <option value="0">{$Think.lang.ds_please_choose}...</option>
+              {notempty name="parent_list"}
+              {foreach name="parent_list" item="v"}
+              <option {if $fleaclass_parent_id==$v.fleaclass_id}selected='selected'{/if} value="{$v.fleaclass_id}">{$v.fleaclass_name}</option>
+              {/foreach}
+             {/notempty}
+            </select></td>
+          <td class="vatop tips">如果选择上级分类，那么新增的分类则为被选择上级分类的子分类</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label>{$Think.lang.ds_display}:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform onoff"><label for="fleaclass_show1" class="cb-enable selected"><span>{$Think.lang.ds_yes}</span></label>
+            <label for="fleaclass_show0" class="cb-disable"><span>{$Think.lang.ds_no}</span></label>
+            <input id="fleaclass_show1" name="fleaclass_show" checked="checked" value="1" type="radio">
+            <input id="fleaclass_show0" name="fleaclass_show" value="0" type="radio"></td>
+          <td class="vatop tips">新增的分类名称是否显示</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label>首页显示:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform onoff"><label for="fleaclass_index_show1" class="cb-enable selected"><span>{$Think.lang.ds_yes}</span></label>
+            <label for="fleaclass_index_show0" class="cb-disable"><span>{$Think.lang.ds_no}</span></label>
+            <input id="fleaclass_index_show1" name="fleaclass_index_show" checked="checked" value="1" type="radio">
+            <input id="fleaclass_index_show0" name="fleaclass_index_show" value="0" type="radio"></td>
+          <td class="vatop tips">新增的分类名称是否显示</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label>{$Think.lang.ds_sort}:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><input type="text" value="255" name="fleaclass_sort" id="fleaclass_sort" class="txt"></td>
+          <td class="vatop tips">更新排序</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+   </div>
+
+<script>
+//按钮先执行验证再提交表单
+$(function(){
+
+    $("#submitBtn").click(function(){
+        if($("#goods_class_form").valid()){
+            $("#goods_class_form").submit();
+        }
+    });
+
+    $('#t_id').change(function(){
+        if($(this).val() == '0'){
+            $('#t_name').val('');
+        }else{
+            $('#t_name').val($(this).find('option:selected').text());
+        }
+    });
+
+    $('#goods_class_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parent().parent().prev().find('td:first'));
+        },
+
+        rules : {
+            fleaclass_name : {
+                required : true,
+                remote   : {
+                    url :"{:url('Fleaclass/ajax',['branch'=>'check_class_name'])}",
+                    type:'get',
+                    data:{
+                        fleaclass_name : function(){
+                            return $('#fleaclass_name').val();
+                        },
+                        fleaclass_parent_id : function() {
+                            return $('#fleaclass_parent_id').val();
+                        },
+                        fleaclass_id : ''
+                    }
+                }
+            },
+            fleaclass_sort : {
+                number   : true,
+                range:[0,255]
+            }
+        },
+        messages : {
+            fleaclass_name : {
+                required : '{$Think.lang.goods_class_add_name_null}',
+                remote   : '{$Think.lang.goods_class_add_name_exists}'
+            },
+            fleaclass_sort  : {
+                number   : '{$Think.lang.goods_class_add_sort_int}',
+                range: '{$Think.lang.ds_range_0_255}'
+            }
+        }
+    });
+});
+</script>
+{include file="public/footer" /}

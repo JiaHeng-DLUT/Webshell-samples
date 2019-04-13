@@ -1,0 +1,65 @@
+
+
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>2组件2 - vue2入门与提高视频教程 </title>
+ 
+<script src="vue.js" type="text/javascript"></script>
+ 
+
+</head>
+<body  >
+ 
+ 
+<div id="app">
+
+<input type="text" v-model="logovar"  />
+ 
+    <my-header  :logo="logovar"></my-header>
+
+<br /><br />
+news part............
+<br /><br />
+
+    <my-footer></my-footer>
+
+
+
+ </div>
+
+ <script>
+ 
+ 
+var myheader = {
+      props: ['logo'],
+     template:'<div>  <span v-html="logo"></span></div>'  
+     } 
+
+var myfooter = {
+
+     template:'<div>footer222222222222.............</div>' 
+}
+
+
+
+var vm = new Vue({ 
+
+    el:'#app',
+    data:{ 
+      logovar:'<img src="vue.jpg"  />'
+    },
+    components:{
+      'my-header':myheader,
+      'my-footer':myfooter,
+    }
+
+
+
+})
+ </script>
+</body>
+</html>
+ 
+ 
+
+

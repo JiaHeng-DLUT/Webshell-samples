@@ -1,0 +1,42 @@
+<style>
+	body {
+		background: #69abe5 url(/template/default/img/error_bg.jpg) repeat-x;
+	}
+	
+	.error-cloud {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		padding-top: 10%;
+		background: url(/template/default/img/error_cloud.png) repeat-x bottom;
+		text-align: center;
+	}
+	
+	.error-cloud .error-404 {
+		max-width: 94%;
+	}
+</style>
+<div class="error-cloud">
+	<img class="error-404" src="/template/default/img/error_404.png" alt="error">
+	<div class="pk-row pk-padding-top-15" style="max-width: 420px;">
+		<form method="get" action="/index.php">
+			<input type="hidden" name="c" value="app" />
+			<input type="hidden" name="a" value="puyuetian_search:index" />
+			<div class="pk-w-sm-9 pk-padding-right-0">
+				<input type="text" name="w" class="pk-textbox pk-textbox-noshadow pk-radius-bottom-left-4 pk-radius-top-left-4" autocomplete="off" placeholder="输入关键词，找您所需的~" required>
+			</div>
+			<div class="pk-w-sm-3 pk-padding-left-0">
+				<button type="submit" class="pk-btn pk-btn-block pk-btn-danger pk-radius-bottom-right-4 pk-radius-top-right-4">搜&nbsp;索</button>
+			</div>
+		</form>
+	</div>
+	<div class="pk-row pk-text-center pk-padding-top-15">
+		<img class="pk-hover-opacity pk-cursor-pointer" src="/template/default/img/error_home.png" alt="home" onclick="location.href='/?from=404'" />
+	</div>
+</div>
+<script>
+	var error_cloud_height = 170,
+		error_input_height = 334;
+	var pt = ($(window).height() - error_cloud_height - error_input_height) / 2;
+	$('.error-cloud').css('padding-top', pt);
+</script>

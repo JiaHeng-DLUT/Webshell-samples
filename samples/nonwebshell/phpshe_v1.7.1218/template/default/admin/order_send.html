@@ -1,0 +1,57 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<!--{if(count($refund_list)):}-->
+<div class="tixing mab10 corg"><a href="admin.php?mod=refund&order_id={$info['order_id']}" target="_blank" class="cblue">本订单有{count($refund_list)}笔退款/退货待处理，若不处理直接发货，退款/退货申请将自动关闭！查看详情</a></div>
+<!--{endif;}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="100">订单编号：</td>
+	<td>{$info['order_id']} </td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收 货 人：</td>
+	<td>{$info['user_tname']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">手机号码：</td>
+	<td>{$info['user_phone']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收货地址：</td>
+	<td>{$info['user_address']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">快递公司：</td>
+	<td>
+		<select name="order_wl_name" class="inputselect">
+		<option value="">无需快递</option>
+		<!--{foreach($wlname_list as $v):}-->
+		<!--{if(!$v)continue;}-->
+		<option value="{$v}">{$v}</option>
+		<!--{endforeach;}-->
+		</select>
+	</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">快递单号：</td>
+	<td><input type="text" name="order_wl_id" class="inputall input300" /></td>
+</tr>
+</table>
+<div class="acenter mat30">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" value="确认发货" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+$(":button").click(function(){
+	if ($(":input[name='order_wl_name']").val() != '' && $(":input[name='order_wl_id']").val() == '') {
+		alert('快递单号必须填写');
+		return false;
+	}
+	$("form").submit();
+})
+})
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

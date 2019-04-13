@@ -1,0 +1,32 @@
+body{
+	text-align: left;
+    color: rgb(101, 113, 128);
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+.error_404 {
+    background: url(404.png) no-repeat;
+    width: 490px;
+    padding-top: 65px;
+    margin: 186px auto 0 auto;
+}
+.error_404 h2{font-size:22px; padding-left:154px;}
+.error_404 p{padding-left:154px; line-height:35px;}
+.reindex{padding-left:154px;}
+.reindexBtn{width:115px; height:35px; font-size:14px;  color:#fff; background:#2DA9FA; display:block; line-height:35px; text-align:center;border-radius: 3px; behavior:url(js/pie.htc);margin-top:20px;}
+.reindexBtn:hover{
+	color:#ffffff;
+}
+/*{width: 115px;
+    height: 35px;
+    font-size: 14px;
+    color: #fff;
+    background: #2DA9FA;
+    display: block;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    behavior: url(js/pie.htc);
+    margin-top: 20px;}
+*/

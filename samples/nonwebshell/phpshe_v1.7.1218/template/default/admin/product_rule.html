@@ -1,0 +1,56 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak mab10">
+<!--{$rule_num=1}-->
+<!--{if(count($cache_rule)):}-->
+<!--{foreach($cache_rule as $k=>$v):}-->
+<tr>
+	<td class="bgtt" style="padding-left:10px;height:20px;line-height:20px" width="150">{$rule_num++}) {$v['rule_name']}<!--{if($v['rule_memo']):}--><span class="cbbb mal5">[{$v['rule_memo']}]</span><!--{endif;}--></td>
+	<td>
+		<!--{foreach((array)$cache_rule[$v['rule_id']]['list'] as $vv):}-->
+		<label class="rule_id"><input type="checkbox" name="ruledata_id[]" value="{$vv['ruledata_id']}" class="mar5 inputfix" <!--{if(in_array($vv['ruledata_id'], $ruledata_id)):}-->checked="checked"<!--{endif;}--> />{$vv['ruledata_name']}<i></i></label>
+		<!--{endforeach;}-->
+	</td>
+</tr>
+<!--{endforeach;}-->
+<!--{endif;}-->
+</table>
+<div class="mat20 center"><input type="button" value="生成数据" class="tjbtn" /></div>
+</form>
+<script type="text/javascript">
+function ruledata_select() {
+	$("label :input").each(function(){
+		if ($(this).is(":checked")) {
+			$(this).parent("label").addClass("sel");
+		}
+		else {
+			$(this).parent("label").removeClass("sel");
+		}
+	})
+}
+$(function(){
+	ruledata_select();
+	$("label").click(function(){
+		ruledata_select();
+	})
+	$(":button").click(function(){
+		var ruledata_id = new Array();
+		$("input[name='ruledata_id[]']:checked").each(function(){
+			ruledata_id.push($(this).val());
+		})
+		window.parent.rule_list(ruledata_id, 'datalist_new');
+		window.parent.layer.closeAll();;
+		
+		/*$.getJSON("{$pe['host_root']}admin.php", {"mod":"product", "act":"rule_html", "ruledata_id":ruledata_id.join(',')}, function(json){
+			$(window.parent.document).find(".rule_html").show();
+			$(window.parent.document).find("#rule_html").html(json.html);
+			$(window.parent.document).find(".base_html").hide();
+			parent.layer.closeAll();;
+		})*/
+	})
+})
+</script>
+<style>
+.rule_id{min-width:80px; _width:80px; padding:2px 10px; margin:6px 10px 6px 0}
+</style>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

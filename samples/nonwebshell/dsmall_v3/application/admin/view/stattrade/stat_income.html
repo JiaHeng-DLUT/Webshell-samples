@@ -1,0 +1,130 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>销量分析</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+   <div class="fixed-empty"></div>
+
+ <form method="get" name="formSearch" id="formSearch">
+     <div class="ds-search-form">
+            <dl>
+                <dt>年份</dt>
+                <dd>
+                    <select name="search_year" id="search_year" class="querySelect">
+                        {for start='2017' end='2028'}
+                        <option value="{$i}" {$Request.param.search_year == $i ? 'selected' : ''}>{$i}</option>
+                        {/for}
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>月份</dt>
+                <dd>
+                    <select name="search_month" id="search_month" class="querySelect">
+                        <option value="01" {$Request.param.search_month == '01'? 'selected':''}>1</option>
+                        <option value="02" {$Request.param.search_month == '02'? 'selected':''}>2</option>
+                        <option value="03" {$Request.param.search_month == '03'? 'selected':''}>3</option>
+                        <option value="04" {$Request.param.search_month == '04'? 'selected':''}>4</option>
+                        <option value="05" {$Request.param.search_month == '05'? 'selected':''}>5</option>
+                        <option value="06" {$Request.param.search_month == '06'? 'selected':''}>6</option>
+                        <option value="07" {$Request.param.search_month == '07'? 'selected':''}>7</option>
+                        <option value="08" {$Request.param.search_month == '08'? 'selected':''}>8</option>
+                        <option value="09" {$Request.param.search_month == '09'? 'selected':''}>9</option>
+                        <option value="10" {$Request.param.search_month == '10'? 'selected':''}>10</option>
+                        <option value="11" {$Request.param.search_month == '11'? 'selected':''}>11</option>
+                        <option value="12" {$Request.param.search_month == '12'? 'selected':''}>12</option>
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:void(0);" id="dssubmit" class="btn tooltip" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Stattrade/income')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                <input type="hidden" id="export_type" name="export_type" data-param='{"url":"income?search_year={:intval($Request.param.search_year)}&search_month={:trim($Request.param.search_month)}&exporttype=excel"}' value="excel"/>
+                <a class="btn" href="javascript:void(0);" id="export_btn">导出Excel</a>
+            </div>
+        </div>
+  </form>
+
+<div class="stat-info">
+  <span>收款金额：<strong>{:number_format($plat_data.oot,2)}</strong>元</span>
+  <span>退款金额：<strong>{:number_format($plat_data.oort,2)}</strong>元</span>
+  <span>实收金额：<strong>{:number_format($plat_data['oot']-$plat_data['oort'],2)}</strong>元</span>
+  <span>佣金总额：<strong>{:number_format($plat_data['oct'],2)}</strong>元</span>
+  <span>店铺费用：<strong>{:number_format($plat_data['osct'],2)}</strong>元</span>
+  <span>总收入：<strong>{:number_format($plat_data['ort'],2)}</strong>元</span>
+</div>
+  <div id="container" class="w100pre close_float" style="height:50px"></div>
+  <table class="ds-default-table">
+    <thead>
+      <tr class="thead">
+        <th class="align-center">店铺名称</th>
+        <th class="align-center">卖家账号</th>
+        <th class="align-center">订单金额</th>
+        <th class="align-center">收取佣金</th>
+        <th class="align-center">退单金额</th>
+        <th class="align-center">退回佣金</th>
+        <th class="align-center">店铺费用</th>
+        <th class="align-center">分销佣金</th>
+        <th class="align-center">结算金额</th>
+        <th class="align-center">操作</th>
+      </tr>
+    </thead>
+    <tbody id="datatable">
+    {notempty name="store_list"}
+      {foreach name="store_list" item="v"}
+      <tr class="hover">
+        <td class="align-center">
+          <a href="{:url('home/Store/index',['store_id'=>$v.ob_store_id])}" target="_blank">{$v.ob_store_name}</a>
+        </td>
+        <td class="align-center">{$v.member_name}</td>
+        <td class="align-center">{$v.ob_order_totals}</td>
+        <td class="align-center">{$v.ob_commis_totals}</td>
+        <td class="align-center">{$v.ob_order_return_totals}</td>
+        <td class="align-center">{$v.ob_commis_return_totals}</td>
+        <td class="align-center">{$v.ob_store_cost_totals}</td>
+        <td class="align-center">{$v.ob_inviter_totals}</td>
+        <td class="align-center">{$v.ob_result_totals}</td>
+        <td class="align-center">
+          <a href="{:url('Stattrade/sale',['search_type'=>'month','search_time_month'=>$Request.param.search_month,'search_time_year'=>$Request.param.search_year,'store_name'=>$v.ob_store_name])}">详细</a>
+        </td>
+      </tr>
+     {/foreach}
+      {else /}
+      <tr class="no_data">
+        <td colspan="15">{$Think.lang.ds_no_record}</td>
+      </tr>
+      {/notempty}
+    </tbody>
+  </table>
+  {$show_page}
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<script>
+$(function () {
+    $('#dssubmit').click(function(){
+        $('#formSearch').submit();
+    });
+
+    //导出图表
+    $("#export_btn").click(function(){
+        var item = $("#export_type");
+        var type = $(item).val();
+        if(type == 'excel'){
+            download_excel(item);
+        }
+    });
+
+    $('#dsexport').click(function(){
+        $('#formSearch').submit();
+    });
+});
+</script>

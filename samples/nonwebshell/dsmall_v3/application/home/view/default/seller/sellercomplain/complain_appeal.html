@@ -1,0 +1,168 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-flow-layout" id="dsscComplainFlow">
+    <div class="dssc-flow-container">
+        <div class="title">
+            <h3>{$Think.lang.complain_trade_complaint}</h3>
+        </div>
+
+        <div class="dssc-flow-step">
+            <dl id="state_new" class="step-first current">
+                <dt>{$Think.lang.complain_state_new}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_appeal" class="">
+                <dt>{$Think.lang.complain_state_appeal}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_talk" class="">
+                <dt>{$Think.lang.complain_state_talk}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_handle" class="">
+                <dt>{$Think.lang.complain_state_handle}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_finish" class="">
+                <dt>{$Think.lang.complain_state_finish}</dt>
+            </dl>
+        </div>
+        <div class="dssc-form-default">
+            <h3>{$Think.lang.complain_message}</h3>
+            <dl>
+                <dt>{$Think.lang.complain_state}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_state_text}</dd>
+                <dt>{$Think.lang.complain_subject_content}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_subject_content}</dd>
+                <dt>{$Think.lang.complain_evidence}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    {if empty($complain_info.complain_pic1) && empty($complain_info.complain_pic2) && empty($complain_info.complain_pic3)}
+                        {$Think.lang.complain_pic_none}
+                    {else/}
+                        {notempty name="$complain_info.complain_pic1"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic1}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic1}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.complain_pic2"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic2}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic2}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.complain_pic3"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic3}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic3}" width="50"></a>
+                        {/notempty}
+                    {/if}
+                </dd>
+                <dt>{$Think.lang.complain_datetime}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_datetime|date="Y-m-d H:i:s",###}</dd>
+                <dt>{$Think.lang.complain_content}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_content}</dd>
+            </dl>
+            <h3>{$Think.lang.complain_appeal_detail}</h3>
+            <form action="{:url('Sellercomplain/appeal_save')}" method="post" id="appeal_add_form" enctype="multipart/form-data">
+                <input name="input_complain_id" type="hidden" value="{$complain_info.complain_id}"/>
+                <dl>
+                    <dt>{$Think.lang.complain_appeal_content}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <textarea class="w600" name="input_appeal_message" rows="3"></textarea>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>{$Think.lang.complain_appeal_evidence_upload}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <p>
+                            <input name="input_appeal_pic1" type="file"/>
+                        </p>
+                        <p>
+                            <input name="input_appeal_pic2" type="file"/>
+                        </p>
+                        <p>
+                            <input name="input_appeal_pic3" type="file"/>
+                        </p>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border">
+                        <input id="submit_button" type="submit" class="submit" value="{$Think.lang.ds_submit}">
+                    </label>
+                    <label class=""><a href="javascript:history.go(-1);" class="dssc-btn ml10"><i class="fa fa-reply"></i>{$Think.lang.complain_returns_list}</a></label>
+                </div>
+            </form>
+        </div>
+    </div>
+    {include file="default/seller/sellercomplain/complain_order_info" /}
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var state = '{$complain_info.complain_state|default=0}';
+        if (state <= 10) {
+            $("#state_new").addClass('current');
+        }
+        if (state == 20) {
+            $("#state_new").addClass('current');
+            $("#state_appeal").addClass('current');
+        }
+        if (state == 30) {
+            $("#state_new").addClass('current');
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+        }
+        if (state == 40) {
+            $("#state_new").addClass('current');
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+            $("#state_handle").addClass('current');
+        }
+        if (state == 99) {
+            $("#state_new").addClass('current');
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+            $("#state_handle").addClass('current');
+            $("#state_finish").addClass('current');
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //页面输入内容验证
+        $("#appeal_add_form").validate({
+            errorPlacement: function (error, element) {
+                $(element).next('.field_notice').hide();
+                $(element).after(error);
+            },
+            rules: {
+                input_appeal_message: {
+                    required: true,
+                    maxlength: 100
+                },
+                input_appeal_pic1: {
+                    accept: 'image/jpg,image/jpeg,image/gif,image/png'
+                },
+                input_appeal_pic2: {
+                    accept: 'image/jpg,image/jpeg,image/gif,image/png'
+                },
+                input_appeal_pic3: {
+                    accept: 'image/jpg,image/jpeg,image/gif,image/png'
+                }
+            },
+            messages: {
+                input_appeal_message: {
+                    required: '{$Think.lang.appeal_message_error}',
+                    maxlength: '{$Think.lang.appeal_message_error}'
+                },
+                input_appeal_pic1: {
+                    accept: '{$Think.lang.complain_pic_error}'
+                },
+                input_appeal_pic2: {
+                    accept: '{$Think.lang.complain_pic_error}'
+                },
+                input_appeal_pic3: {
+                    accept: '{$Think.lang.complain_pic_error}'
+                }
+            }
+        });
+
+    });
+</script>
+
+{/block}
+

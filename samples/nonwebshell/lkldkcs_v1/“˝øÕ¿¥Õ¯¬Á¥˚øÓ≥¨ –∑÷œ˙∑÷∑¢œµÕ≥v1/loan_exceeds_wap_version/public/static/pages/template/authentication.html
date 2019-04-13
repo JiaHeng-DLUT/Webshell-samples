@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>实名认证</title>
+  <link rel="stylesheet" href="./../../css/layer.css">
+  <link rel="stylesheet" href="./../../css/lArea.css">
+  <link rel="stylesheet" href="./../../css/common.min.css">
+</head>
+
+<body>
+  <div class="authentication">
+    <div class="step_ step_one ">
+      <header class="main_header">
+        <h1>贷款额度</h1>
+        <div class="title">
+          <a href="javascript:;" class="action" onclick="history.back()" data-action="back">
+            <i class="iconfont icon-arrow-left"></i>
+          </a>
+          <span class="space"></span>
+        </div>
+      </header>
+      <div class="banner">
+        <p>当前金额</p>
+        <div>
+          ¥<span></span>
+        </div>
+      </div>
+      <div class="money_num">
+        <p>借款金额</p>
+        <ul class="clearfix money_">
+          <li class="on">1000</li>
+          <li>2000</li>
+          <li>3000</li>
+          <li>4000</li>
+          <li>5000</li>
+        </ul>
+        <p class="mt25">借款期限（天）</p>
+        <ul class="clearfix deadline_">
+          <li class="on">7</li>
+          <li>14</li>
+          <li>21</li>
+          <li>28</li>
+        </ul>
+      </div>
+      <p class="next_step" onclick="authenticationStep('2')">下一步</p>
+    </div>
+    <div class="step_ step_two none">
+      <header class="main_header">
+        <h1>实名认证</h1>
+        <div class="title">
+          <a href="javascript:;" class="action" onclick="authenticationStep('1')" data-action="back">
+            <i class="iconfont icon-arrow-left"></i>
+          </a>
+          <span class="space"></span>
+        </div>
+      </header>
+      <ul class="schedule clearfix">
+        <li>
+          <img src="./../../img/step_1.png" alt="">
+          <p class="on">实名认证<i></i></p>
+        </li>
+        <li>
+          <i></i>
+        </li>
+        <li>
+          <img src="./../../img/step_2.png" alt="">
+          <p class="">基本信息<i></i></p>
+        </li>
+        <li>
+          <i></i>
+        </li>
+        <li>
+          <img src="./../../img/step_3.png" alt="">
+          <p class="">认证结果<i></i></p>
+        </li>
+      </ul>
+      <div class="identity_card">
+        <div class="clearfix">
+          <p class="p">身份证人像面</p>
+          <p class="img">
+            <input type="file" id="front" accept="image/*" onchange="setIdentity(this, '1')" multiple>
+            <img src="./../../img/front.png" alt="">
+          </p>
+        </div>
+        <div class="clearfix">
+          <p class="p">身份证国徽面</p>
+          <p class="img">
+            <input type="file" id="reverse" accept="image/*" disabled onchange="setIdentity(this, '2')" multiple>
+            <img src="./../../img/reverse.png" alt="">
+          </p>
+        </div>
+      </div>
+      <div class="identity_msg">
+        <div class="clearfix">
+          <p class="p">姓名</p>
+          <input type="text" id="userName" readonly placeholder="请上传身份证照片">
+        </div>
+        <div class="clearfix">
+          <p class="p">身份证号</p>
+          <input type="text" id="idNumber" readonly placeholder="请上传身份证照片">
+        </div>
+      </div>
+      <p class="identity_information">请确认身份信息，如有误请修改</p>
+      <p class="next_step" onclick="identity()">下一步</p>
+    </div>
+    <div class="step_ step_three none">
+      <header class="main_header">
+        <h1>基本信息</h1>
+        <div class="title">
+          <a href="javascript:;" class="action" onclick="authenticationStep('2')" data-action="back">
+            <i class="iconfont icon-arrow-left"></i>
+          </a>
+          <span class="space"></span>
+        </div>
+      </header>
+      <ul class="schedule clearfix">
+        <li>
+          <img src="./../../img/step_1.png" alt="">
+          <p class="pColor">实名认证<i></i></p>
+        </li>
+        <li>
+          <i class="on"></i>
+        </li>
+        <li>
+          <img src="./../../img/step_2_2.png" alt="">
+          <p class="on pColor">基本信息<i></i></p>
+        </li>
+        <li>
+          <i></i>
+        </li>
+        <li>
+          <img src="./../../img/step_3.png" alt="">
+          <p class="">认证结果<i></i></p>
+        </li>
+      </ul>
+      <div class="friendly_reminder">
+        <span>友情提示</span>
+        <p>请选择与您经常通话的联系人</p>
+      </div>
+      <div class="identity_msg">
+        <div class="clearfix">
+          <p class="p">居住地址</p>
+          <div class="city_select" id="city_select">
+            <input type="text" id="cityValue" readonly placeholder="请选择省市区">
+            <input type="hidden" id="cityId">
+            <span class="select_btn"><i></i></span>
+          </div>
+        </div>
+        <div class="clearfix">
+          <p class="p">详细地址</p>
+          <input type="text" id="detailed" placeholder="请填写详细地址">
+        </div>
+      </div>
+      <div class="identity_msg">
+        <div class="clearfix">
+          <p class="p">常用联系人</p>
+          <input type="text" id="linkman" placeholder="请输入常用联系人">
+        </div>
+        <div class="clearfix">
+          <p class="p">联系方式</p>
+          <input type="text" id="manner" placeholder="请输入联系方式" onkeyup="this.value=this.value.replace(/[^\d]/g,'');"
+            oninput="if(value.length>11)value=value.slice(0,11);">
+        </div>
+        <div class="clearfix">
+          <p class="p">关系</p>
+          <input type="text" id="relation" placeholder="与您的关系">
+        </div>
+      </div>
+      <p class="next_step" onclick="result_()">下一步</p>
+    </div>
+    <div class="step_ step_four none">
+      <header class="main_header">
+        <h1>认证结果</h1>
+        <div class="title">
+          <a href="javascript:;" class="action" onclick="history.back()" data-action="back">
+            <i class="iconfont icon-arrow-left"></i>
+          </a>
+          <span class="space"></span>
+        </div>
+      </header>
+      <div class="result_">
+        <a href="javascript:;" onclick="setUrlParam('appDownJfqz.html')">立即查看</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./../../js/jquery.min.js"></script>
+  <script src="./../../js/layer.mobile.js"></script>
+  <script src="./../../js/aes.js"></script>
+  <script src="./../../js/lArea.js"></script>
+  <script>
+    // var Base_url = 'https://api.daidaihu365.com/'
+    var Base_url = 'http://api.daidai123.cn/'
+    // var img_url = 'http://image.daidaihu365.com/'
+    var img_url = 'http://image.daidai123.cn/'
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+
+    var template_id = getUrlParam('template_id')
+    localStorage.template_id = template_id ? template_id : localStorage.template_id
+    var channel_code = getUrlParam('channel_code')
+    localStorage.channel_code = channel_code ? channel_code : localStorage.channel_code
+
+
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+      // return uuid;
+    }
+    var deviceid = localStorage.deviceid_;
+    if (!deviceid || deviceid == 'null' || deviceid == null || deviceid == undefined || deviceid == 'undefined') {
+      uuid()
+    }
+    var header = {
+      'Device': localStorage.deviceid_, // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap',
+      'Channel': localStorage.Channel_code,
+      'Authentication': sessionStorage.token,
+      'PageId': 0
+    };
+    var url = window.location.href
+
+    getToken()
+
+    function getToken() {
+      $http('api/v1/token', {}, 'get', function (res) {
+        if (res.code === 200) {
+          sessionStorage.token = res.data.token
+          header.Authentication = sessionStorage.token
+          getPage()
+        } else if (res.code === 4002) {
+          getToken()
+        }
+      })
+    }
+    // 获取页面信息
+    function getPage() {
+      var u = window.location.pathname === '/template/authentication.html' ? getUrlParam('t') : getUrlParam1();
+      console.log(window.location.pathname)
+      $http('api/v1/page/' + u, {}, 'get', function (res) {
+        console.log(res)
+      })
+    }
+    // $http 第一层拦截
+    function $http(url, data, method, cb, ercb, spMethod) {
+      switch (method) {
+        case 'get':
+          $.ajax({
+            url: Base_url + url,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: header,
+            data: data,
+            success: function (res) {
+              doCode(res)
+            },
+            error: function (err) {
+              if (cb && typeof cb === 'function') ercb(err)
+            }
+          })
+          break
+        case 'post':
+          if (spMethod) {
+            $.ajax({
+              url: Base_url + url,
+              type: 'POST',
+              contentType: false,
+              processData: false,
+              dataType: 'JSON',
+              headers: header,
+              data: data,
+              success: function (res) {
+                doCode(res)
+              },
+              error: function (err) {
+                if (cb && typeof cb === 'function') ercb(err)
+              }
+            })
+          } else {
+            $.ajax({
+              url: Base_url + url,
+              type: 'POST',
+              dataType: 'JSON',
+              headers: header,
+              data: data,
+              success: function (res) {
+                doCode(res)
+              },
+              error: function (err) {
+                if (cb && typeof cb === 'function') ercb(err)
+              }
+            })
+          }
+          break
+        default:
+          ''
+      }
+
+      function doCode(res) {
+        switch (res.code) {
+          case 4001:
+            createToken(url, data, method, cb, ercb)
+            break
+          default:
+            if (cb && typeof cb === 'function') cb(res)
+        }
+      }
+      // 获取token
+      function createToken(url, data, method, cb, ercb) {
+        $.ajax({
+          url: Base_url + 'api/v1/token',
+          type: 'GET',
+          dataType: 'JSON',
+          headers: header,
+          data: data,
+          success: function (res) {
+            if (res.code === 200) {
+              sessionStorage.token = res.data.token
+              header.Authentication = sessionStorage.token
+              $http(url, data, method, cb, ercb)
+            } else {
+              createToken(url, data, method, cb, ercb)
+            }
+          },
+          error: function (err) {
+            if (cb && typeof cb === 'function') ercb(err)
+          }
+        })
+      }
+    }
+
+    function setUrlParam(url) {
+      window.location.href = '/template/appDownJfqz.html?t=' + getUrlParam('t')
+      // window.location.href = url + '?channel_code=' + localStorage.channel_code + '&template_id=' + localStorage.template_id
+    }
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+
+    function getUrlParam1() {
+      var url = window.location.href;
+      var urlArr = url.split('?');
+      var k = urlArr[0],
+        appU = k.split('/');
+      var L = appU[appU.length - 1];
+      var nameArr = L.split('.');
+      var t = $.base64.atob(nameArr[0]).split('=');
+      localStorage.Channel_code = appU[appU.length - 2];
+      // header.Channel = localStorage.Channel_code;
+      // header.PageId = decodeURI(t[1]);
+      return null != t ? decodeURI(t[1]) : null
+
+    }
+
+    function userPhone_(val) {
+      var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
+      if (!reg.test(val)) {
+        layer.open({
+          content: '请填写正确的手机号码',
+          skin: 'msg',
+          time: 2
+        })
+        return false
+      } else {
+        return true
+      }
+    }
+
+  </script>
+  <script>
+    $('.banner span').text($('.money_ .on').text())
+    $('.money_num').on('click', 'li', function () {
+      $(this).addClass('on').siblings().removeClass('on')
+      $('.banner span').text($('.money_ .on').text())
+    })
+
+    function setIdentity(type, num) {
+      var objUrl = getObjectURL(type.files[0]);
+      $(type).siblings('img').attr('src', './../../img/loading.gif')
+      var formData = new FormData()
+      if (objUrl) {
+        num == '1' && formData.append('card_face', $(type)[0].files[0])
+        num == '1' && formData.append('phone', localStorage.userMobile)
+        num == '2' && formData.append('card_back', $(type)[0].files[0])
+        num == '2' && formData.append('rid', localStorage.rid || null)
+      }
+      // formData.append('phone', localStorage.userMobile)
+      // formData.append('rid', localStorage.rid || null)
+      $http('api/v1/recognition/info', formData, 'post', function (res) {
+        if (res.code === 200) {
+          if (num == '1') {
+            localStorage.rid = res.data.rid
+            $(type).attr('disabled', 'disabled')
+            $('#reverse').attr("disabled", false)
+            $('#userName').val(res.data.real_name)
+            $('#idNumber').val(res.data.id_number)
+          }
+          $(type).siblings('img').attr('src', img_url + res.data.pic_url)
+          $(type).data('val', 1)
+        } else {
+          $(type).val('')
+          num == '1' && $(type).siblings('img').attr('src', './../../img/front.png')
+          num == '2' && $(type).siblings('img').attr('src', './../../img/reverse.png')
+          layer.open({
+            content: res.info,
+            skin: 'msg',
+            time: 2
+          })
+        }
+      }, function (err) {}, true)
+    }
+    // 上传身份证-下一步
+    function identity() {
+      if ($('#front').data('val') && $('#reverse').data('val')) {
+        authenticationStep('3')
+      } else {
+        layer.open({
+          content: '请完善身份证信息',
+          skin: 'msg',
+          time: 1
+        })
+      }
+    }
+    // 基本信息-下一步
+    function result_() {
+      if ($('#cityValue').val() && $('#detailed').val() && $('#linkman').val() && userPhone_($('#manner').val()) && $(
+          '#relation').val()) {
+        var datas = {
+          rid: localStorage.rid,
+          quota: $('.money_ .on').text(), // 借款金额
+          time_limit: $('.deadline_ .on').text(), // 借款期限
+          linkage: $('#cityId').val(), // 省-市-区
+          address: $('#detailed').val(), // 详细地址
+          contact: $('#linkman').val(), // 常用联系人
+          contact_phone: $('#manner').val(), // 联系方式
+          contact_relation: $('#relation').val() // 常用联系人与用户的关系
+        }
+        $http('api/v1/save/info', datas, 'post', function (res) {
+          if (res.code === 200) {
+            authenticationStep('4')
+          } else {
+            layer.open({
+              content: res.info,
+              skin: 'msg',
+              time: 1
+            })
+          }
+        })
+      } else {
+        layer.open({
+          content: '请完善基本信息',
+          skin: 'msg',
+          time: 1
+        })
+      }
+    }
+    // 图片预览
+    function getObjectURL(file) {
+      var url = null;
+      if (window.createObjectURL != undefined) { // basic
+        url = window.createObjectURL(file);
+      } else if (window.URL != undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file);
+      } else if (window.webkitURL != undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file);
+      }
+      return url;
+    }
+    // 省市区三级联动
+    var area1 = new LArea();
+    var LAreaData = null;
+    $http('api/v1/district', {}, 'get', function (res) {
+      if (res.code === 200) {
+        LAreaData = res.data
+        area1.init({
+          'trigger': '#cityValue', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+          'valueTo': '#cityId', //选择完毕后id属性输出到该位置
+          'keys': {
+            id: 'id',
+            name: 'name'
+          }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+          'type': 1, //数据源类型
+          'data': LAreaData //数据源
+        });
+      }
+    })
+    // 认证步骤
+    function authenticationStep(num) {
+      switch (num) {
+        case '1':
+          $('.step_one').removeClass('none').siblings().addClass('none')
+          break;
+        case '2':
+          $('.step_two').removeClass('none').siblings().addClass('none')
+          break;
+        case '3':
+          $('.step_three').removeClass('none').siblings().addClass('none')
+          break;
+        case '4':
+          $('.step_four').removeClass('none').siblings().addClass('none')
+          break;
+      }
+    }
+
+  </script>
+</body>
+
+</html>

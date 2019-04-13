@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By www.youke365.site" />
+<{include file="base.html"}>
+</head>
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div id="wrapper">
+    <div id="mainbox" class="mainbox">
+    	<div id="mainbox-left" class="mainbox-left">
+            <div id="listbox" class="clearfix">
+            	<h2><{$pagename}></h2>
+            	<table border="0" cellpadding="0" cellspacing="1" width="100%" class="weblink">
+                	<tr>
+                    	<th>交易方式</th>
+                    	<th>网站名称</th>
+                        <th>网站域名</th>
+                        <th>所属分类</th>
+                        <th>百度权重</th>
+                        <th>360权重</th>
+                        <th>搜狗权重</th>
+                        <th>Alexa排名</th>
+                        <th>更新时间</th>
+						<th>价格(元/月)</th>
+                        <th>联系站长</th>
+                    </tr>
+                    <{foreach from=$weblinks item=item}>
+                    <tr style="text-align: center;">
+                    	<td><span class="sell">
+                        <{$item.deal_type}></span></td>
+                    	<td><a href="<{url('home/linkinfo',['lid'=>$item['link_id']])}>"><{$item.link_name}></a></td>
+                        <td><a href="<{$item.web_url}>" target="_blank"><{$item.web_url}></a></td>
+                        <td><{$item.cate_name}></td>
+                        <td><img src="/public/images/bpr/<{$item.web_brank}>.gif"></td>
+                        <td><img src="/public/images/360r/<{$item.web_r360}>.gif"></td>
+                        <td><img src="/public/images/gpr/<{$item.web_srank}>.gif"></td>
+                        <td><{$item.web_arank}></td>
+                        <td><{$item.link_time}></td>
+						<td>
+                        
+                        <{if is_numeric($item.link_price)}><span style="color:#E44E15"><i class="fa fa-rmb" aria-hidden="true"></i> <{$item.link_price}></span><{else}><{$item.link_price}><{/if}>
+                        </td>
+                        <td>
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=<{$item.user_qq}>&site=qq&menu=yes">
+                        <img src="/public/images/qq/button_1.gif" title="<{$item.user_qq}>"/></a></td>
+                    </tr>
+                    <{/foreach}>
+                </table>
+                <div class="showpage"><{$showpage}></div>
+            </div>
+        </div>
+        <div id="mainbox-right">
+        <div class="blank10"></div>
+                <!-- 广告 开始 250*60-->
+            <div class="ad250x60"><{get_adcode(12)}></div>
+        <!-- 广告 结束 250*60-->
+            <div class="bestart">
+     
+
+
+                <h3>人气链接</h3>
+                <ul class="artlist_b">
+                    <{foreach from=get_linkinfo(0) item=vo }>
+                    <li>【<{$vo.deal_type}>】<a href="<{$vo.link_url}>"><{$vo.link_name}></a></li>
+
+                    <{/foreach}>
+                </ul>
+            </div>
+
+        <!-- 广告 开始 250*200-->
+            <div class="ad250x200"><{get_adcode(13)}></div>
+        <!-- 广告 结束 250*200-->
+        </div>
+    </div>
+    <{include file="footer.html"}>
+</div>
+</body>
+</html>

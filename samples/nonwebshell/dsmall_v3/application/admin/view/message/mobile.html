@@ -1,0 +1,83 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>邮箱短信</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="post">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120">短信平台账号</td>
+                <td class="vatop rowform">
+                    <input type="text" name="smscf_wj_username" id="smscf_wj_username" value="{$list_config.smscf_wj_username}" class="w200"/>
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td class="required w120">短信平台Key</td>
+                <td class="vatop rowform">
+                    <input type="text" name="smscf_wj_key" id="smscf_wj_key" value="{$list_config.smscf_wj_key}" class="w200"/>
+                    <a href="http://sms.webchinese.com.cn/" target="_blank" class="btn btn-blue btn-mini">立即申请</a>
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            {notempty name='smscf_wj_num'}
+            <tr class="noborder">
+                <td class="required w120">可用短信条数</td>
+                <td>{$smscf_wj_num}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            {/notempty}
+            <tr class="noborder">
+                <td class="required w120">手机注册</td>
+                <td class="vatop rowform">
+                    <div class="onoff">
+                        <label for="sms_register_show1" class="cb-enable {if condition="$list_config.sms_register eq 1"}selected{/if}">{$Think.lang.ds_yes}</label>
+                        <label for="sms_register_show0" class="cb-disable {if condition="$list_config.sms_register eq 0"}selected{/if}">{$Think.lang.ds_no}</label>
+                        <input id="sms_register_show1" name="sms_register" value="1" type="radio" {if condition="$list_config.sms_register eq 1"} checked="checked"{/if}>
+                        <input id="sms_register_show0" name="sms_register" value="0" type="radio" {if condition="$list_config.sms_register eq 0"} checked="checked"{/if}>
+                    </div>
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td class="required">手机登录</td>
+                <td class="vatop rowform">
+                    <div class="onoff">
+                        <label for="sms_login_show1" class="cb-enable {if condition="$list_config.sms_login eq 1"}selected{/if}">{$Think.lang.ds_yes}</label>
+                        <label for="sms_login_show0" class="cb-disable {if condition="$list_config.sms_login eq 0"}selected{/if}">{$Think.lang.ds_no}</label>
+                        <input id="sms_login_show1" name="sms_login" value="1" type="radio" {if condition="$list_config.sms_login eq 1"} checked="checked"{/if}>
+                        <input id="sms_login_show0" name="sms_login" value="0" type="radio" {if condition="$list_config.sms_login eq 0"} checked="checked"{/if}>
+                    </div>
+                </td>
+            </tr>
+            <tr class="noborder">
+                <td class="required">找回密码</td>
+                <td class="vatop rowform">
+                    <div class="onoff">
+                        <label for="sms_password_show1" class="cb-enable {if condition="$list_config.sms_password eq 1"}selected{/if}">{$Think.lang.ds_yes}</label>
+                        <label for="sms_password_show0" class="cb-disable {if condition="$list_config.sms_password eq 0"}selected{/if}">{$Think.lang.ds_no}</label>
+                        <input id="sms_password_show1" name="sms_password" value="1" type="radio" {if condition="$list_config.sms_password eq 1"} checked="checked"{/if}>
+                        <input id="sms_password_show0" name="sms_password" value="0" type="radio" {if condition="$list_config.sms_password eq 0"} checked="checked"{/if}>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td></td>
+                <td colspan="15"><input class="btn" type="submit" value="提交"/></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>

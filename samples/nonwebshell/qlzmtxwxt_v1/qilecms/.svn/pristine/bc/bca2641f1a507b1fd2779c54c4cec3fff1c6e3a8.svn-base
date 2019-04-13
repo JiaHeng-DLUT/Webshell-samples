@@ -1,0 +1,164 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+
+class Shop extends Common
+{
+
+    public function set(){
+
+      return $this->fetch();
+    }
+
+	//店铺列表
+   public function shopList(){
+     
+    $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            $group_id   = $post['group_id'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and m.".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and m.reg_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and m.reg_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and m.reg_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+                    //排序
+             $where .= " and m.group_id = '$group_id' ";
+      }else{
+            $where =array(
+       );
+           $order =  array(
+ 
+            );
+      }
+  
+      
+     $select  = array('uid'=>'用户ID','username'=>'用户名');
+      //如期筛选   
+     $date = array(
+                  array('title'=>'注册时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+
+// $one_where = array(
+//   array('field'=>'status','data'=>array('0'=>'支付成功','1'=>'支付失败')),
+// );
+     // print_r($group);
+$two_where =array(array('table'=>'member_group','field_id'=>'group_id','field_name'=>'group_name'));
+
+  $this->assign('two_where',$two_where);
+  $this->assign('one_where',$one_where);
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('member')->alias('m')->join('member_group g','m.group_id = g.group_id',"LEFT")->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+	  return $this->fetch();
+	} 
+
+  //店铺分类
+    public function shopCategory(){
+
+      return $this->fetch();
+    }
+
+  //店铺审核
+    public function shopAudit(){
+
+      return $this->fetch();
+    }
+
+  //店铺编辑
+    public function shopEdit(){
+
+      return $this->fetch();
+    }
+
+  //店铺等级
+    public function shopLevel(){
+
+      return $this->fetch();
+    }
+
+    public function orderList(){
+
+      return $this->fetch();
+    }
+// 商品审核
+    public function goodsAudit(){
+
+      return $this->fetch();
+    }
+// 商品列表
+    public function goodslist(){
+
+      return $this->fetch();
+    }
+// 商品分类
+    public function goodsCategory(){
+
+      return $this->fetch();      
+    }
+    //商品品牌
+    public function goodsBrand(){
+      return $this->fetch();    
+    }
+
+  // 商品规格
+    public function goodsSpecList(){
+       return $this->fetch();     
+    }
+
+  // 商品评论
+    public function goodsComment(){
+       return $this->fetch();     
+    }
+
+
+
+   // public function add(){
+
+   // }
+   // public function edit(){
+
+   //    if(request()->isGet()){
+   //       $post = request()->param();
+   //    }
+   //    $member =  model('member')->getMember($post);
+
+   //  $this->assign('member', $member);
+   //   return $this->fetch();
+   // }
+   // public function del(){
+   //     $post = input("post.");
+   //     $result = model('member')->del($post);
+   //    if($result){      
+   //      return success_json('删除成功');
+   //    }else{
+   //      return error_json('删除失败'); 
+   //    }
+
+   // }
+ 
+
+
+	
+
+}

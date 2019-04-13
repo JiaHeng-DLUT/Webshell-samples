@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="__STATIC__/layui/css/layui.css"  media="all">
+
+<script src="__JS__/jquery.min.js" charset="utf-8"></script>
+<script src="ADMIN_JS/admin.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="ADMIN_CSS/style.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">手机管理</a>
+  <a href="">基本设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：配置手机端基本信息</blockquote>
+
+<form class="layui-form" action="">
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">基本设置</li>
+  </ul>
+
+  <div class="layui-tab-content">
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">手机版状态</label>
+         <div class="layui-input-block">
+              <input type="radio" name="set[city_ip_status]" value="1" title="开启" checked="">
+              <input type="radio" name="set[city_ip_status]" value="0" title="关闭">
+            </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">绑定域名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">手机名称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">自动跳转</label>
+            <div class="layui-input-block">
+              <input type="radio" name="set[city_ip_status]" value="1" title="开启" checked="">
+              <input type="radio" name="set[city_ip_status]" value="0" title="关闭">
+            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">苹果APP下载地址</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">安卓APP下载地址</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+
+  </div>
+  <div class="layui-tab-content"></div>
+  <div class="layui-tab-content"></div>
+  <div class="layui-tab-content"></div>
+
+</div> 
+
+    </form>
+
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>
+
+</body>
+
+</html>

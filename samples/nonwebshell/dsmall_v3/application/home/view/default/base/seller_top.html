@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>{$html_title|default=''}</title>
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta name="keywords" content="{$seo_keywords|default=''}" />
+        <meta name="description" content="{$seo_description|default=''}" />
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/common.css">
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/seller.css">
+        <link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/font-awesome/css/font-awesome.min.css">
+        <script>
+            var BASESITEROOT = "{$Think.BASE_SITE_ROOT}";
+            var HOMESITEROOT = "{$Think.HOME_SITE_ROOT}";
+            var BASESITEURL = "{$Think.BASE_SITE_URL}";
+            var HOMESITEURL = "{$Think.HOME_SITE_URL}";
+        </script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery-ui/jquery-ui.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/common.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery.validate.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/additional-methods.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/layer/layer.js"></script>
+        <script src="{$Think.HOME_SITE_ROOT}/js/member.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+        <script>
+            jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+        </script>
+    </head>
+    <body>
+        <div id="append_parent"></div>
+        <div id="ajaxwaitid"></div>
+        <div class="seller_top">
+            <div class="w1200">
+                <div class="logo">
+                    <a href="{:url('Seller/index')}"><img src="{if $Think.config.seller_center_logo == ''}{$Think.BASE_SITE_ROOT}/uploads/home/common/seller_center_logo.png{else}{$Think.BASE_SITE_ROOT}/uploads/home/common/{$Think.config.seller_center_logo}{/if}"/></a>
+                </div>
+                <div class="navbar">
+                    <ul class="fl">
+                        {foreach name="seller_menu" item="menu"  key="menu_key"}
+                        <li {if $menu_key eq $curmenu}class="actived"{/if}>
+                            <a href="{$menu.url}">{$menu.text}</a>
+                            <dl>
+                                {foreach name="menu.submenu" item="submenu" }
+                                <dd><a href="{$submenu.url}">{$submenu.text}</a></dd>
+                                {/foreach}
+                            </dl>
+                        </li>
+                        {/foreach}
+                    </ul>
+                    <ul class="fr">
+                        <li><a href="javascript:void(0)">{$Think.session.seller_name}</a></li>
+                        <li><a href="{:url('Sellerlogin/logout')}">{$Think.lang.exit}</a></li>
+                        <li><a href="{:url('Store/index',['store_id'=>$Think.session.store_id])}" target="_blank">{$Think.lang.ds_mystroe}</a></li>
+                        <li><a href="{:url('Index/index')}" target="_blank">{$Think.lang.visit_home_page}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        

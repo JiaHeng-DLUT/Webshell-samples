@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>密码找回成功 - {$settings.site.sitename}</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+    {include file="../common/css"}
+    {include file="../common/js"}
+    {load href="__STATIC__/community/css/global.css"}
+    {load href="__PLUGIN__/steps/steps.css"}
+
+  <!-- 模块CSS -->
+  {load href="__STATIC__/portal/css/index.css" /}
+</head>
+<body>
+
+{include file="../portal/public/header"}
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel fly-panel-user" pad20>
+        <div class="ui-steps-round" style="width:540px;margin:0 auto;padding: 70px 0px 22px 0px;">
+          <div class="finished">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>账号验证</label>
+          </div>
+          <div class="finished">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>重置密码</label>
+          </div>
+
+          <div class="finished last">
+            <div class="wrap">
+              <div class="round">3</div>
+            </div>
+            <label>找回成功</label>
+          </div>
+        </div>
+          <div class="layui-tab layui-tab-brief" style="width:500px;margin:0 auto">
+
+            <div class="layui-tab-content" style="padding: 20px 0;">
+              <div class="layui-tab-item layui-show">
+              <div class="layui-form " style="padding: 100px 20px;text-align:center;font-size:50px;color:#1E9FFF">
+              <div class=""><i class="layui-icon layui-icon-ok-circle" style="font-size:50px;"></i></div>
+              <p style="font-size:20px;padding:20px">恭喜您密码找回成功</p>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+    </div>
+  </div>
+
+  
+</div>
+{include file="../portal/public/footer"}
+<script>
+//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+layui.use(['element','form'], function(){
+  var form = layui.form;
+  var element = layui.element;
+//监听邮件找回提交
+form.on("submit(form1)",function(data){
+
+  $.post("{:url('forget/reset')}",data.field,function(json){
+    if(json.code == 0){
+      location.href="{:url('forget/reset')}";
+    }else{
+      qile.error(json.msg);
+    }
+  });
+  return false;
+});
+
+
+
+});
+</script>
+
+<script>
+// 发送验证码
+ var id = "#sendcode"; //发送验证码按钮id
+$(id).on('click',function(){
+  $.post("{:url('forget/sendcode')}",{"mobile":$("#mobile").val()},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                            layer.msg(json.msg, {icon: 1,
+                            skin: 'layui-layer-molv',});
+                        
+                    }else{
+                     
+                            time(id,0)
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});            
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).removeClass('layui-btn-disabled').addClass('layui-btn-primary');
+      $(id).addClass('layui-btn-primary');
+      $(id).html("发送验证码");
+      $(id).removeAttr("disabled",false);
+     
+    } else { 
+   // 倒计时中 禁用按钮
+      $(id).attr("disabled", true);
+      $(id).removeClass('layui-btn-primary').addClass('layui-btn-disabled')
+      $(id).html("重新发送(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+</script>
+<script>
+$(function(){
+  $("#sendemail").on("click",function(){
+        $.post("{:url('forget/sendEmail')}",{"email":$("#email").val()},function(json){
+           if(json.code ==0 ){
+              qile.success(json.msg);
+           }else{
+              qile.msg(json.msg);
+           }
+         
+        })
+
+  });
+       
+});
+</script>
+
+</body>
+</html>

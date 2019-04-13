@@ -1,0 +1,58 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+            <form method="post"  action="{:url('Sellerdeliverset/free_freight')}" id="my_store_form">
+                <dl>
+                    <dt>{$Think.lang.free_freight}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <input class="text w60" name="store_free_price" maxlength="10" type="text"  id="store_free_price" value="{$store_free_price}" /><em class="add-on">
+                            <i class="fa fa-cny"></i>
+                        </em>
+                        <p class="hint"> {$Think.lang.notes_free_freight_amount}</p>
+                    </dd>
+                    <dt>{$Think.lang.estimated_delivery_time}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <input class="text w60" name="store_free_time" maxlength="10" type="text"  id="store_free_time" value="{$store_free_time}" /><em class="add-on">
+                            {$Think.lang.day}</em>
+                        <p class="hint">{$Think.lang.notice_estimated_delivery_time}</p>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_common_button_save}" /></label>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            $(function() {
+                $('#my_store_form').validate({
+                    submitHandler: function(form) {
+                        ds_ajaxpost('my_store_form');
+                    },
+                    rules: {
+                        store_free_price: {
+                            required: true,
+                            number: true
+                        },
+                        store_free_time: {
+                            required: true,
+                            digits: true
+                        },
+                    },
+                    messages: {
+                        store_free_price: {
+                            required: '{$Think.lang.please_fill_amount}',
+                            number: '{$Think.lang.please_fill_correctly}'
+                        },
+                        store_free_time: {
+                            required: '{$Think.lang.please_fill_days}',
+                            digits: '{$Think.lang.please_fill_correctly}'
+                        }
+                    }
+                });
+
+            });
+        </script> 
+
+
+{/block}
+

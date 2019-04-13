@@ -1,0 +1,146 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url($smarty.get.controller,['mod'=>$cate_mod,'act'=>'add','root_id'=>$root_id])}>">+添加新分类</a></span></h3>
+	<div class="listbox">
+		<form name="mform" method="post" action="<{url($smarty.get.controller)}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>ID</th>
+				<th>分类名称</th>
+                <th>所属模块</th>
+				<th>目录名称</th>
+				<th>内容统计</th>
+				<th>排列顺序</th>
+				<th>栏目属性</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$categories item=cate}>
+			<tr>
+				<td><{$cate.cate_id}></td>
+				<td><{$cate.cate_name}> <span style="color: #999; font-size: 10px;">(<{$cate.cate_childcount}>)</span></td>
+                <td><{$cate.cate_mod}></td>
+				<td><{$cate.cate_dir}></td>
+				<td><{$cate.cate_postcount}></td>
+				<td><{$cate.cate_order}></td>
+				<td><{$cate.cate_attr}></td>
+				<td><{$cate.cate_operate}></td>
+			</tr>
+			<{foreachelse}>
+				<{if $root_id == 0}>
+				<tr><td colspan="8">无任何分类！</td></tr>
+				<{else}>
+				<tr><td colspan="8">该分类下无任何子分类！<a href="<{$fileurl}>&root_id=0">返回顶级分类</a></td></tr>
+			<{/if}>
+			<{/foreach}>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('category',['mod'=>$cate_mod])}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{$fileurl}>">
+        <table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td><select name="root_id" id="root_id" class="sel"><option value="0">作为顶级分类</option><{$category_option}></select><input name="cate_mod" type="hidden" id="cate_mod" value="<{$cate_mod}>"></td>
+			</tr>
+			<tr>
+				<th>分类名称：</th>
+				<td><input name="cate_name" type="text" class="ipt" id="cate_name" size="35" maxlength="50" value="<{if !empty($row.cate_name)}><{$row.cate_name}><{/if}>" />  <input name="cate_isbest" type="checkbox" id="cate_isbest" value="1"<{if !empty($row.cate_isbest)}><{opt_checked($row.cate_isbest, 1)}><{/if}> /><label for="cate_isbest">设为推荐</label></td>
+			</tr>
+			<tr>
+				<th>目录名称：</th>
+				<td><input name="cate_dir" type="text" class="ipt" id="cate_dir" size="50" maxlength="50" value="<{if !empty($row.cate_dir)}><{$row.cate_dir}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>跳转地址：</th>
+				<td><input name="cate_url" type="text" class="ipt" id="cate_url" size="50" maxlength="255" value="<{if !empty($row.cate_url)}><{$row.cate_url}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>关 键 词：</th>
+				<td><input name="cate_keywords" type="text" class="ipt" id="cate_keywords" size="50" maxlength="255" value="<{if !empty($row.cate_keywords)}><{$row.cate_keywords}><{/if}>" /><span class="tips">多个关键词之间用“逗号”隔开</span></td>
+			</tr>
+			<tr>
+				<th valign="top">分类描述：</th>
+				<td><textarea name="cate_description" cols="50" rows="6" class="ipt" id="cate_description"><{if !empty($row.cate_description)}><{$row.cate_description}><{/if}></textarea></td>
+			</tr>
+			<tr>
+				<th>排列顺序：</th>
+				<td><input name="cate_order" type="text" class="ipt" id="cate_order" size="10" maxlength="10" value="<{(empty($row.cate_order)) ? '0' : $row.cate_order}>" /></td>
+			</tr>
+			<tr class="btnbox">
+            	<td>&nbsp;</td>
+				<td>
+                    <input name="act" type="hidden" id="act" value="<{$h_action}>">
+                    <input name="cate_mod" type="hidden" id="cate_mod" value="<{$cate_mod}>">
+					<{if $action == 'edit' && $row.cate_id}>
+					<input name="cate_id" type="hidden" id="cate_id" value="<{$row.cate_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'reset'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('category',['mod'=>$cate_mod])}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+            	<th>注意事项：</th>
+				<td>如果选择复位所有分类，则所有分类都将作为一级分类，这时您需要重新对各个分类进行归属的基本设置。<br />不要轻易使用该功能，仅在做出了错误的设置而无法复原分类之间的关系和排序的时候使用。</td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+                    <input name="cate_mod" type="hidden" id="cate_mod" value="<{$cate_mod}>">
+					<input type="submit" class="btn" value="复 位">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+	<{if $action == 'merge'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('category',['mod'=>$cate_mod])}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>将分类：</th>
+				<td><select name="source_id" id="source_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr>
+				<th>合并到：</th>
+				<td><select name="target_id" id="target_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr>
+            	<th>注意事项：</th>
+				<td><font color="#ff0000">所有操作不可逆，请慎重操作！</font><br />不能在同一个分类内进行操作，不能将一个分类合并到其下属分类中，目标分类中不能含有子分类，合并后您所指定的分类（或者包括其下属分类）将被删除，所有内容将转移到目标分类中。</td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+                    <input name="cate_mod" type="hidden" id="cate_mod" value="<{$cate_mod}>">
+					<input type="submit" class="btn" value="合 并">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>
+	<{/if}>
+
+<{include file="footer.html"}>

@@ -1,0 +1,113 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Page settings')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#hunhe" role="tab" data-toggle="tab">{:lang('Mixing')}</a></li>
+            <li role="presentation"><a href="#tuwen" role="tab" data-toggle="tab">{:lang('Photo')}</a></li>
+        </ul>
+        <br>
+        <form method="post" action="">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="hunhe">
+                <h5>{:lang('Blend mode finds all articles, regardless of thumbnails. By default, Mix 1 is set as the main content block.')}</h5>
+                {volist name="hunhe" id="vo" key="k"}
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{:lang('Mixing')} {$k}{if condition="$k eq 1"}&nbsp;<small>{:lang('The main content block')}</small>{/if}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>{:lang('Title')}：</label>
+                                <input type="text" class="form-control" name="biaoti_hunhe_{$k}" value="{$vo.biaoti}">
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('The number displayed')}：</label>
+                                <input type="number" name="shuliang_hunhe_{$k}" class="form-control" value="{$vo.shuliang}" min="0" max="30">
+                                <p class="help-block">{:lang('A quantity of 0 means finding all eligible content.')}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('Display method')}：</label>
+                                <select class="form-control" name="fangshi_hunhe_{$k}">
+                                    <option value="post_date"{if condition="$vo.fangshi eq 'post_date'"} selected{/if}>{:lang('The latest release time')}</option>
+                                    <option value="post_modified"{if condition="$vo.fangshi eq 'post_modified'"} selected{/if}>{:lang('Last modified time')}</option>
+                                    <option value="post_comment"{if condition="$vo.fangshi eq 'post_comment'"} selected{/if}>{:lang('Latest comment')}</option>
+                                    <option value="post_hits"{if condition="$vo.fangshi eq 'post_hits'"} selected{/if}>{:lang('Total number of view')}</option>
+                                    <option value="comment_count"{if condition="$vo.fangshi eq 'comment_count'"} selected{/if}>{:lang('Total number of comments')}</option>
+                                    <option value="post_like"{if condition="$vo.fangshi eq 'post_like'"} selected{/if}>{:lang('Total number of points praise')}</option>
+                                    <option value="id"{if condition="$vo.fangshi eq 'id'"} selected{/if}>{:lang('By writing articles in order')}</option>
+                                </select>
+                                <p class="help-block">{:lang('Which way to display')}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('Category')}：</label>
+                                <select class="form-control" name="fenlei_hunhe_{$k}">
+                                    <option value="0">{:lang('All classification')}</option>
+                                    {volist name="fenlei" id="fvo"}
+                                    <option value="{$fvo.id}"{if condition="$vo.fenlei eq $fvo.id"} selected{/if}>{$fvo.level}{if condition="$fvo.level neq ''"}└&nbsp;{/if}{$fvo.term_name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tuwen">
+                <h5>{:lang('Graphics will find the article containing the thumbnail, no thumbnail of the article will be ignored.')}</h5>
+                {volist name="tuwen" id="vo" key="k"}
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{:lang('Photo')} {$k}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>{:lang('Title')}：</label>
+                                <input type="text" class="form-control" name="biaoti_tuwen_{$k}" value="{$vo.biaoti}">
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('The number displayed')}：</label>
+                                <input type="number" name="shuliang_tuwen_{$k}" class="form-control" value="{$vo.shuliang}" min="0" max="30">
+                                <p class="help-block">{:lang('A quantity of 0 means finding all eligible content.')}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('Display method')}：</label>
+                                <select class="form-control" name="fangshi_tuwen_{$k}">
+                                    <option value="post_date"{if condition="$vo.fangshi eq 'post_date'"} selected{/if}>{:lang('The latest release time')}</option>
+                                    <option value="post_modified"{if condition="$vo.fangshi eq 'post_modified'"} selected{/if}>{:lang('Last modified time')}</option>
+                                    <option value="post_comment"{if condition="$vo.fangshi eq 'post_comment'"} selected{/if}>{:lang('Latest comment')}</option>
+                                    <option value="post_hits"{if condition="$vo.fangshi eq 'post_hits'"} selected{/if}>{:lang('Total number of view')}</option>
+                                    <option value="comment_count"{if condition="$vo.fangshi eq 'comment_count'"} selected{/if}>{:lang('Total number of comments')}</option>
+                                    <option value="post_like"{if condition="$vo.fangshi eq 'post_like'"} selected{/if}>{:lang('Total number of points praise')}</option>
+                                    <option value="id"{if condition="$vo.fangshi eq 'id'"} selected{/if}>{:lang('By writing articles in order')}</option>
+                                </select>
+                                <p class="help-block">{:lang('Which way to display')}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>{:lang('Category')}：</label>
+                                <select class="form-control" name="fenlei_tuwen_{$k}">
+                                    <option value="0">{:lang('All classification')}</option>
+                                    {volist name="fenlei" id="fvo"}
+                                    <option value="{$fvo.id}"{if condition="$vo.fenlei eq $fvo.id"} selected{/if}>{$fvo.level}{if condition="$fvo.level neq ''"}└&nbsp;{/if}{$fvo.term_name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center">
+            <input type="hidden" name="verification" value="{$verification}">
+            <button type="submit" class="btn btn-default" id="baocun">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+        </div>
+        </form>
+    </div>
+</div><br><br>
+{include file="index/footer" /}

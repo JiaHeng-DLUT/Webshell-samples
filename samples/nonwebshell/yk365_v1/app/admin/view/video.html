@@ -1,0 +1,186 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('video',['act'=>'add'])}>">+添加视频</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{url('video')}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+            <option value="move" style="color: #06c;">移动内容</option>
+            <option value="attr" style="color: #f60;">属性设置</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('id[]')==false){alert('请指定您要操作的视频ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('video')}>?status='+this.options[this.selectedIndex].value+'&cate_id=<{$cate_id}>&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0">所有状态</option>
+			<option value="1" style="color: #333;"<{opt_selected($status, 1)}>>草稿</option>
+			<option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option>
+			<option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('video')}>?status=<{$status}>&cate_id='+this.options[this.selectedIndex].value+'&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0" selected>所有分类</option>
+			<{$category_option}>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('video')}>?status=<{$status}>&cate_id=<{$cate_id}>&sort='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="1"<{opt_selected($sort, 1)}>>按时间排列</option>
+			<option value="2"<{opt_selected($sort, 2)}>>按浏览排列</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('video')}>?status=<{$status}>&cate_id=<{$cate_id}>&sort=<{$sort}>&order='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="DESC"<{opt_selected($order, 'DESC')}>>降序</option>
+			<option value="ASC"<{opt_selected($order, 'ASC')}>>升序</option>
+			</select>
+		</div>
+                    
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>视频标题</th>
+                <th>封面</th>
+                <th>属性状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$videos item=item}>
+			<tr>
+				<td><input name="id[]" type="checkbox" value="<{$item.id}>"></td>
+				<td><{$item.id}></td>
+				<td><{$item.cate_name}></td>
+				<td><{$item.title}></td>
+                <td><img src="<{$item.cover}>" style="width:72px;height:72px;overflow:hidden"></td>
+                <td><{$item.attr}></td>
+				<td><{$item.operate}></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="7">无任何视频！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('video')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{url('video')}>" enctype="multipart/form-data" >
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+
+			<tr>
+				<th>视频标题：</th>
+				<td><input name="title" type="text" class="ipt" id="title" size="50" maxlength="100" value="<{if !empty($row.title)}><{$row.title}><{/if}>" /></td>
+			</tr>
+
+
+			<tr>
+				<th>视频封面：</th>
+				<td><input name="cover" type="file"  id="cover" size="100"  value="<{if !empty($row.cover)}><{$row.cover}><{/if}>"  /><span class="tips">建议尺寸：350*240</span><br><br>
+				<img src="<{if !empty($row.cover)}><{$row.cover}><{/if}>" style="width:200px;max-height:100px;"></td>
+			</tr>
+             
+			<tr>
+				<th>播放URL地址：</th>
+				<td><input name="url" type="text" class="ipt" id="url" size="100"  value="<{if !empty($row.url)}><{$row.url}><{/if}>" /><span class="tips">视频内容页地址。</span></td>
+			</tr>
+
+<!--  			<tr>
+				<th>浏览次数：</th>
+				<td><input name="views" type="text" class="ipt" id="views" size="10" maxlength="10" value="<{(!$row.views) ? '0' : $row.views}>" /> 次</td>
+			</tr> -->
+			<tr>
+				<th>属性设置：</th>
+				<td>
+				<input name="ishot" type="checkbox" id="ishot" value="1" <{if !empty($ishot)}><{opt_checked($ishot, 1)}> /><{/if}><label for="ishot">热门</label>
+				　<input name="isbest" type="checkbox" id="isbest" value="1"<{if !empty($isbest)}><{opt_checked($isbest, 1)}><{/if}> /><label for="isbest">推荐</label></td>
+			</tr> 
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="status" id="status" class="sel"><option value="1" style="color: #333;"<{opt_selected($status, 1)}>>草稿</option><option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option><option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $row.id}>
+					<input name="id" type="hidden" id="id" value="<{$row.id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('video')}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+	<{if $action == 'move'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('video')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{url('video')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$videos item=item}><a href="<{url('video')}>&act=edit&id=<{$item.id}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$art.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>将以上内容移动至：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('video')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'attr'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('video')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{url('video')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$videos item=item}><{$item.id}> - <a href="<{url('video')}>&act=edit&id=<{$item.id}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$item.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td>
+				<input name="isbest" type="checkbox" id="isbest" value="1" /><label for="isbest">推荐</label>
+				<input name="ishot" type="checkbox" id="ishot" value="1" /><label for="ishot">热门</label>　</td>
+
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="status" id="status" class="sel"><option value="1" style="color: #333;">草稿</option><option value="2" style="color: #f30;">待审核</option><option value="3" selected="selected" style="color: #080;">已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input name="act" type="hidden" id="act" value="<{$h_action}>">
+				<input type="submit" class="btn" value="保 存">&nbsp;
+				<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('video')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+<{include file="footer.html"}>

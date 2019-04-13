@@ -1,0 +1,29 @@
+/*@media screen and (max-width:480px) {......}
+@media (max-width: 767px) {......}
+@media (min-width: 768px) and (max-width: 991px){......}
+@media (min-width: 992px) and (max-width: 1199px) {......}
+@media (min-width: 1200px) {......}*/
+
+ 
+@media screen and (max-width:480px) {
+.imglist li{margin-left:20%}
+ 
+
+
+}/*end media*/
+
+ 
+@media (min-width: 1200px) { 
+ 
+.pro_album_left{width: 20%; }
+.pro_album_right{width: 78%; }
+
+}/*end media*/
+
+
+@media (max-width: 900px) { 
+ body{width: 900px; }
+ 
+
+
+}/*end media*/

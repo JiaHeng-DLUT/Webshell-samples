@@ -1,0 +1,103 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <form method="post" id="tpl_form" name="tpl_form" action="{:url('Sellertransport/save')}">
+        <input type="hidden" name="transport_id" value="{present name='transport'}{$transport.transport_id}{/present}" />
+        <input type="hidden" name="type" value="{$Request.param.type}">
+        <dl>
+            <dt>
+            <label class="label-like">{$Think.lang.transport_tpl_name}{$Think.lang.ds_colon}</label>
+            </dt>
+            <dd>
+                <input type="text"  class="text"  id="title" autocomplete="off"  value="{present name='transport'}{$transport.transport_title}{/present}" name="title">
+                <p class="J_Message" style="display:none" error_type="title">
+                    <i class="fa fa-exclamation-circle"></i>{$Think.lang.transport_tpl_name_note}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.detailed_setting}：</dt>
+            <dd class="trans-line">
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" id="submit_tpl" class="submit" value="{$Think.lang.transport_tpl_save}" />
+            </label>
+        </div>
+    </form>
+    <div class="ks-ext-mask" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 999; display:none"></div>
+    <div id="dialog_areas" class="dialog-areas" style="display:none">
+        <div class="ks-contentbox">
+            <div class="title">
+                {$Think.lang.transport_tpl_select_area}
+                <a class="ks-ext-close" href="javascript:void(0)">X</a>
+            </div>
+            <form method="post">
+                <ul id="J_CityList">
+                    {include file="default/seller/sellertransport/area" /}
+                </ul>
+                <div class="bottom">
+                    <a href="javascript:void(0);" class="J_Submit dssc-btn dssc-btn-green">{$Think.lang.transport_tpl_ok}</a>
+                    <a href="javascript:void(0);" class="J_Cancel dssc-btn">{$Think.lang.transport_tpl_cancel}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="dialog_batch" class="dialog-batch" style="z-index: 9999; display:none">
+        <div class="ks-contentbox">
+            <div class="title">{$Think.lang.transport_tpl_pl_op}
+                <a class="ks-ext-close" href="javascript:void(0)">X</a>
+            </div>
+            <form method="post">
+                <div class="batch">{$Think.lang.transport_note_1}{$Think.lang.ds_colon}
+                    <input class="w30 mr5 text" type="text" maxlength="4" autocomplete="off" data-field="start" value="1" name="express_start">
+                    {$Think.lang.transport_note_2}
+                    <input class="w60 text" type="text" maxlength="6" autocomplete="off" value="0.00" name="express_postage" data-field="postage">
+                    <em class="add-on"> <i class="fa fa-cny"></i> </em>{$Think.lang.transport_note_3}
+                    <input class="w30 mr5 text" type="text" maxlength="4" autocomplete="off" value="1" data-field="plus" name="express_plus">
+                    {$Think.lang.transport_note_4}
+                    <input class="w60 text" type="text" maxlength="6" autocomplete="off" value="0.00" data-field="postageplus" name="express_postageplus">
+                    <em class="add-on"> <i class="fa fa-cny"></i> </em>
+                </div>
+                <div class="J_DefaultMessage"></div>
+                <div class="bottom"> <a href="javascript:void(0);" class="J_SubmitPL dssc-btn dssc-btn-green">{$Think.lang.transport_tpl_ok}</a>
+                    <a href="javascript:void(0);" class="J_Cancel dssc-btn">{$Think.lang.transport_tpl_cancel}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{$Think.HOME_SITE_ROOT}/js/transport.js"></script>
+<script>
+    $(function(){
+        $('.trans-line').append(TransTpl.replace(/TRANSTYPE/g,'kd'));
+        $('.tbl-except').append(RuleHead);
+        {notempty name='extend'}
+        {foreach name="extend" item="value" }
+        {if $value.transportext_is_default==1}
+                    var cur_tr = $('.tbl-except').prev();
+                    $(cur_tr).find('input[data-field="start"]').val('{$value.transportext_snum}');
+                    $(cur_tr).find('input[data-field="postage"]').val('{$value.transportext_sprice}');
+                    $(cur_tr).find('input[data-field="plus"]').val('{$value.transportext_xnum}');
+                    $(cur_tr).find('input[data-field="postageplus"]').val('{$value.transportext_xprice}');
+        {else/}
+                    StartNum +=1;
+                    cell = RuleCell.replace(/CurNum/g,StartNum);
+                    cell = cell.replace(/TRANSTYPE/g,'kd');
+                    $('.tbl-except').find('table').append(cell);
+                    $('.tbl-attach').find('.J_ToggleBatch').css('display','').html('{$Think.lang.transport_tpl_pl_op}');
+
+                    var cur_tr = $('.tbl-except').find('table').find('tr:last');
+                    $(cur_tr).find('.area-group>p').html('{$value.transportext_area_name}');
+                    $(cur_tr).find('input[type="hidden"]').val("{:trim($value['transportext_area_id'],',')}|||{$value.transportext_area_name}");
+                    $(cur_tr).find('input[data-field="start"]').val('{$value.transportext_snum}');
+                    $(cur_tr).find('input[data-field="postage"]').val('{$value.transportext_sprice}');
+                    $(cur_tr).find('input[data-field="plus"]').val('{$value.transportext_xnum}');
+                    $(cur_tr).find('input[data-field="postageplus"]').val('{$value.transportext_xprice}');
+        {/if}
+        {/foreach}
+        {/notempty}
+    });
+</script>
+{/block}

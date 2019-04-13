@@ -1,0 +1,65 @@
+<?php
+// error_reporting(0);
+// set_time_limit(0);
+// require_once 'PHPMailerAutoload.php';
+// //邮件发送函数，使用前需要实例化phpmailer类 
+// $smtp_address ='smtp.163.com';
+// $smtp_port ='25';
+// $smtp_user = 'haibing2088@163.com';
+// $smtp_pass ='bing2016';
+// $to_email ='1513773524@qq.com';
+// $subject ='这是测试邮件';
+// $body ='内侧的！';
+
+
+// echo send_mail($smtp_address,$smtp_port,$smtp_user,$smtp_pass,$to_email,$subject,$body);
+// if(send_mail($smtp_address,$smtp_port,$smtp_user,$smtp_pass,$to_email,$subject,$body) == true){
+//  echo '发送成功！';
+// }else{
+//  echo '发送失败'.send_mail($smtp_address,$smtp_port,$smtp_user,$smtp_pass,$to_email,$subject,$body);
+// }
+
+	   function send_mail($smtp_address,$smtp_port='25',$smtp_user,$smtp_pass,$to_email,$subject = '',$body = ''){
+                           //  $smtp_address     //smtp服务器地址
+                           //  $smtp_port        //端口
+                           //  $smtp_user        //邮件服务器登录账号
+                           //  $smtp_pass        //邮件服务器登陆密码
+                           //  $to 表示收件人地址 
+                            //$subject 表示邮件标题 
+                            //$body表示邮件正文
+                            //error_reporting(E_ALL);
+                        
+                            date_default_timezone_set('Asia/Shanghai'); //设定时区东八区
+                            $mail             = new PHPMailer(); //new一个PHPMailer对象出来
+                            $mail->CharSet ="ISO-8859-1";   //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+                            $mail->IsSMTP(); // 设定使用SMTP服务
+                            $mail->SMTPDebug  = 0;                     // 启用SMTP调试功能
+                            // 1 = errors and messages
+                            // 2 = messages only
+                            $mail->SMTPAuth   = true;                  // 启用 SMTP 验证功能
+                            //$mail->SMTPSecure = "ssl";                 // 安全协议，可以注释掉
+
+                            $mail->Host       = $smtp_address;      // SMTP 服务器 如：smtp.qq.com smtp.163.com
+                            $mail->Port       = $smtp_port;                   // SMTP服务器的端口号  默认：25
+                            $mail->Username   = $smtp_user;  // SMTP服务器用户名，一般为邮箱地址
+                            $mail->Password   = $smtp_pass;            // SMTP服务器密码
+                            $mail->SetFrom($smtp_user, '系统邮件');   //寄件人邮箱和用户名
+                            //$mail->AddReplyTo('xxx@xxx.xxx','who');
+                            $mail->Subject    = $subject;
+                            $mail->AltBody    = 'To view the message, please use an HTML compatible email viewer!'; // optional, comment out and test
+                            $mail->MsgHTML($body);
+                            $address = $to_email; //收件人邮箱
+                            $mail->AddAddress($address, ''); //收件人地址
+                            //$mail->AddAttachment("images/phpmailer.gif");      // attachment
+                            //$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+                            if(!$mail->Send()) {
+                                // return '邮件发送失败！' . $mail->ErrorInfo;
+                                return $mail->ErrorInfo;
+                            } else {
+                                // return "恭喜，邮件发送成功！";
+                                return true;
+                            }
+                        }
+
+
+

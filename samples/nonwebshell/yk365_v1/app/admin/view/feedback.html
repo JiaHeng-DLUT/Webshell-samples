@@ -1,0 +1,81 @@
+<{include file="header.html"}>
+
+    <{if $action == 'list'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="listbox">
+		<form name="mform" method="post" action="<{url('feedback')}>">
+        <div class="search">
+			<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+			<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+                   
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('fb_id[]')==false){alert('请指定您要操作的意见ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+		</div>
+                        
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>用户昵称</th>
+				<th>电子邮件</th>
+				<th>提交时间</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$feedback item=fb}>
+			<tr>
+				<td><input name="fb_id[]" type="checkbox" value="<{$fb.fb_id}>"></td>
+				<td><{$fb.fb_id}></td>
+				<td><{$fb.fb_nick}></td>
+				<td><{$fb.fb_email}></td>
+				<td><{$fb.fb_date}></td>
+				<td><a href="<{url('feedback',['act'=>'view','fb_id'=>$fb.fb_id])}>">查看</a>&nbsp;|&nbsp;<a href="<{url('feedback',['act'=>'del','fb_id'=>$row['fb_id']])}>" onClick="return confirm('确认删除此内容吗？');">删除</a></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="6">无任何反馈信息！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+    <{/if}>
+
+    <{if $action == 'view'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="formbox">
+		<form name="mform" method="post" action="">
+        <table width="100%" border="0" cellspacing="1" cellpadding="0">
+        	<tr>
+            	<th>用户昵称：</th>
+                <td><{$fb.fb_nick}></td>
+            </tr>
+            <tr>
+            	<th>电子邮件：</th>
+                <td><{$fb.fb_email}></td>
+            </tr>
+           	<tr>
+            	<th>反馈内容：</th>
+            	<td><{$fb.fb_content}></td>
+            </tr>
+            <tr>
+            	<th>提交时间：</th>
+            	<td><{$fb.fb_date}></td>
+            </tr>
+            <tr class="btnbox">
+            	<th>&nbsp;</th>
+            	<td>
+                	<input type="button" class="btn" value="删 除" onclick="if (confirm('确认删除此内容吗？')) { window.location.href='<{url("feedback",["act"=>"del","fb_id"=>$fb.fb_id])}>'}">&nbsp;
+                	<input type="button" class="btn" value="返回列表" onClick="window.location.href='<{url('feedback')}>';">
+                </td>
+            </tr>
+         </table>
+         </form>
+	</div>
+    <{/if}>              
+
+<{include file="footer.html"}>

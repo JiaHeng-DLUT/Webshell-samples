@@ -1,0 +1,30 @@
+<div class="pk-row pk-margin-left-right-auto" style="max-width:560px;margin-top:7%">
+	<div class="pk-row pk-overflow-hidden" style="border:solid 1px #CCCCCC">
+		<div class="pk-padding-15 pk-text-sm pk-padding-top-10 pk-padding-bottom-10" style="background:linear-gradient(to top,#ddd,#fff);color:#777">云安装</div>
+		<div id="download-content" class="pk-w-sm-12 pk-padding-15 pk-text-sm">
+			<span class="fa fa-fw fa-spin fa-spinner"></span>正在连接HadSky官方服务器，请稍后...
+		</div>
+	</div>
+</div>
+<script>
+	$('#backandrefreshdiv').addClass('pk-hide');
+	if($_GET('s') == 'appdownload' && $_GET('id')) {
+		setTimeout('download()', 1000);
+	} else {
+		$('#download-content').html('请求的参数错误，无法继续&nbsp;&nbsp;[<a class="pk-text-primary pk-hover-underline" href="javascript:" onclick="window.close();setTimeout(function(){window.open(\'/\',\'_self\')},100)">关闭本页</a>]');
+	}
+</script>
+<script>
+	function download() {
+		var $r = '';
+		$('#download-content').html('<span class="fa fa-fw fa-spin fa-spinner"></span>正在下载应用请勿刷新或关闭本页...');
+		$.get("index.php?c=app&a=superadmin:index&s=appdownload&do=download&id={$_G['GET']['ID']}&rnd={$_G['RND']}", function(r, s, x) {
+			if(s == 'success') {
+				$r = r;
+			} else {
+				$r = '出错';
+			}
+			$('#download-content').html($r);
+		});
+	}
+</script>

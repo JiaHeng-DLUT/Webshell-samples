@@ -1,0 +1,11 @@
+; {{open_tag|none}} /*
+
+{% for field in fields %}
+{% if field->type !== 'pkey' %}
+[{{field->name}}]
+not empty = 1
+
+{% end %}
+{% end %}
+; */ {{close_tag|none}}
+

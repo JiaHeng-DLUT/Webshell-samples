@@ -1,0 +1,106 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>闲置分类管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+<div class="fixed-empty"></div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>当用户添加闲置闲置信息时选择闲置分类，用户可根据分类查询闲置列表</li>
+            <li>点击分类名前“+”符号，显示当前分类的下级分类</li>
+        </ul>
+    </div>
+
+
+  <form method='post'>
+    <input type="hidden" name="submit_type" id="submit_type" value="" />
+    <table class="ds-default-table">
+      <thead>
+        <tr class="thead">
+          <th></th>
+          <th>{$Think.lang.ds_sort}</th>
+          <th>分类名称</th>
+          <th class="align-center">{$Think.lang.ds_display}</th>
+          <th class="align-center">首页显示</th>
+          <th class="w200">{$Think.lang.ds_handle}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {notempty name="class_list"}
+       {foreach name="class_list" item="v"}
+        <tr class="hover edit" id="ds_row_{$v.fleaclass_id}">
+          <td class="w36"><input type="checkbox" name="check_fleaclass_id[]" value="{$v.fleaclass_id}" class="checkitem">
+              {if $v.have_child == '1'}
+              <img fieldid="{$v.fleaclass_id}" status="open" ds_type="flex" src="{$Think.ADMIN_SITE_ROOT}/images/treetable/tv-expandable.gif">
+              {else /}
+              <img fieldid="{$v.fleaclass_id}" status="close" ds_type="flex" src="{$Think.ADMIN_SITE_ROOT}/images/treetable/tv-item.gif">
+              {/if}</td>
+          <td class="w48 sort"><span title="{$Think.lang.ds_editable}" ajax_branch="goods_class_sort" datatype="number" fieldid="{$v.fleaclass_id}" fieldname="fleaclass_sort" ds_type="inline_edit" class="editable">{$v.fleaclass_sort}</span></td>
+          <td class="w50pre name">
+          <span title="{$Think.lang.ds_editable}" required="1" fieldid="{$v.fleaclass_id}" ajax_branch="goods_class_name" fieldname="fleaclass_name" ds_type="inline_edit" class="editable">{$v.fleaclass_name}</span>
+          <a class="btn-add-nofloat marginleft" href="javascript:dsLayerOpen('{:url('Fleaclass/goods_class_add',['fleaclass_parent_id'=>$v.fleaclass_id])}','{$Think.lang.ds_add_sub_class}')"><span>{$Think.lang.ds_add_sub_class}</span></a>
+          </td>
+          <td class="align-center yes-onoff">
+              {if $v.fleaclass_show == 0}
+              <a href="JavaScript:void(0);" class="disabled" fieldvalue="0" fieldid="{$v.fleaclass_id}" ajax_branch="goods_class_show" fieldname="fleaclass_show" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+              {else /}
+              <a href="JavaScript:void(0);" class="enabled" fieldvalue="1" fieldid="{$v.fleaclass_id}" ajax_branch="goods_class_show" fieldname="fleaclass_show" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+             {/if}
+          </td>
+          <td class="align-center yes-onoff">
+              {if $v.fleaclass_index_show == 0}
+              <a href="JavaScript:void(0);" class="disabled" fieldvalue="0" fieldid="{$v.fleaclass_id}" ajax_branch="goods_class_index_show" fieldname="fleaclass_index_show" ds_type="inline_edit" title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+              {else /}
+              <a href="JavaScript:void(0);" class="enabled" fieldvalue="1" fieldid="{$v.fleaclass_id}" ajax_branch="goods_class_index_show" fieldname="fleaclass_index_show" ds_type="inline_edit"  title="{$Think.lang.ds_editable}"><img src="{$Think.ADMIN_SITE_ROOT}/images/treetable/transparent.gif"></a>
+              {/if}
+          </td>
+          <td class="w84">
+              <a href="javascript:dsLayerOpen('{:url('Fleaclass/goods_class_edit',['fleaclass_id'=>$v.fleaclass_id])}','{$Think.lang.ds_edit}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+              <a href="javascript:dsLayerConfirm('{:url('Fleaclass/goods_class_del',['fleaclass_id'=>$v.fleaclass_id])}','{$Think.lang.goods_class_index_ensure_del}',{$v.fleaclass_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+          </td>
+        </tr>
+        {/foreach}
+       {else /}
+        <tr class="no_data">
+          <td colspan="10">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+      </tbody>
+        {notempty name="class_list"}
+        <tfoot>
+        <tr class="tfoot">
+          <td><input type="checkbox" class="checkall" id="checkall_1"></td>
+          <td id="batchAction" colspan="15">
+              <span class="all_checkbox">
+                  <label for="checkall_2">{$Think.lang.ds_select_all}</label>
+              </span>&nbsp;&nbsp;
+              <a href="JavaScript:void(0);" class="btn btn-small" onclick="if(confirm('{$Think.lang.goods_class_index_ensure_del}')){$('#submit_type').val('del');$('form:first').submit();}"><span>{$Think.lang.ds_del}</span></a>
+              <a href="JavaScript:void(0);" class="btn btn-small" onclick="$('#submit_type').val('brach_edit');$('form:first').submit();"><span>{$Think.lang.ds_edit}</span></a>
+              <a href="JavaScript:void(0);" class="btn btn-small" onclick="$('#submit_type').val('index_show');$('form:first').submit();"><span>首页显示</span></a>
+          </td>
+        </tr>
+      </tfoot>
+        {/notempty}
+    </table>
+  </form>
+
+    </div>
+<script>
+    AJAX_URL_REGION = "{:url('Fleaclass/goods_class')}";
+</script>
+
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/flea/jquery.flea_class.js"></script>
+{include file="public/footer" /}

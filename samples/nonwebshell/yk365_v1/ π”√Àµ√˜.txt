@@ -1,0 +1,32 @@
+优客365分类导航技术QQ群：29655409 
+
+
+技术问题请到论坛求助: http://bbs.youke365.site/
+
+
+程序演示网站：http://demo.youke365.com
+
+
+模板主题下载地址：http://bbs.youke365.site/forum.php?mod=forumdisplay&fid=39
+
+移动端模板下载地址：http://bbs.youke365.site/forum.php?mod=forumdisplay&fid=42
+==================================================================
+
+安装说明
+
+
+下载源码包解压后将文件上传到服务器或空间上，通过“http://www.yourdomain.com”访问，将自动跳转到安装向导，按照提示输入相关数据库信息即可安装成功。对于安装过以往版本的朋友来说，只需保留模板即可，其他全部覆盖。
+
+安装成功后，进入网站后台（http://www.yourdomain.com/admin.php）进行系统设置即可。
+
+默认的后台管理账号为：admin@qq.com，密码为：123456
+
+
+
+伪静规则说明
+
+.htaccess  为Apache规则
+
+
+
+

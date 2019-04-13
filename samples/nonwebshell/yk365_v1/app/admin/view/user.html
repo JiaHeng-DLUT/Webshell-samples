@@ -1,0 +1,107 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('user',['act'=>'add'])}>">+添加新会员</a></span></h3>
+	<div class="listbox">
+		<form name="mform" method="post" action="<{url('user')}>">
+		<div class="search">
+			<input name="keywords" type="text" id="keywords" placeholder="会员昵称" class="ipt" size="30" value="<{$keywords}>" />
+			<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+                    
+		<form name="mform" method="post" action="<{url('user')}>">
+		<div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #f00;">删除选定</option>
+            <option value="setpass" style="color: #083;">验证通过</option>
+            <option value="nopass" style="color: #f60;">取消验证</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('user_id[]')==false){alert('请指定您要操作的会员ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+
+		</div>
+	
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>用户名</th>
+				<th>会员类型</th>
+				<th>电子邮件</th>
+				<th>QQ</th>
+				<th>注册时间</th>
+				<th>会员状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$users item=item}>
+			<tr>
+				<td><input name="user_id[]" type="checkbox" value="<{$item.user_id}>"></td>
+				<td><{$item.user_id}></td>
+				<td><{$item.nick_name}></td>
+				<td><{$item.user_type}></td>
+				<td><{$item.user_email}></td>
+				<td><{$item.user_qq}></td>
+				<td><{$item.join_time}></td>
+				<td><{if $item.user_id !=1}><{$item.user_status}><{else}>正常<{/if}></td>
+				<td><{if $item.user_id !=1}><{$item.user_operate}><{/if}></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="9">无任何会员！</td></tr>
+			<{/foreach}>
+		</table>
+        </form>
+        <div class="pagebox"><{$showpage}></div>
+    </div>
+    <{/if}>
+
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('user')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{url('user')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>会员类型：</th>
+				<td><select name="user_type" id="user_type" class="sel"><{$usertype_option}></select></td>
+			</tr>
+						<tr>
+				<th>用户名：</th>
+				<td><input name="nick_name" type="text" class="ipt" id="nick_name" size="50" maxlength="20" value="<{if !empty($user.nick_name)}><{$user.nick_name}><{/if}>"  <{if $action == 'edit'}> readonly <{/if}> /><{if $action == 'edit'}> 用户名禁止修改<{else}>*<{/if}></td>
+			</tr>
+
+			<tr>
+				<th>登录密码：</th>
+				<td><input name="user_pass" type="text" class="ipt" id="user_pass" size="50" maxlength="50" value="" />*</td>
+			</tr>
+			<tr>
+				<th>电子邮箱：</th>
+				<td><input name="user_email" type="text" class="ipt" id="user_email" size="50" maxlength="50" value="<{if !empty($user.user_email)}><{$user.user_email}><{/if}>" />*</td>
+			</tr>
+			<tr>
+				<th>QQ号 码：</th>
+				<td><input name="user_qq" type="text" class="ipt" id="user_qq" size="30" maxlength="30" value="<{if !empty($user.user_qq)}><{$user.user_qq}><{/if}>" /></td>
+			</tr>
+	<!-- 		<tr>
+				<th>会员积分：</th>
+				<td><input name="user_score" type="text" class="ipt" id="user_score" size="10" maxlength="10" value="<{if !empty($user.user_score)}><{$user.user_score}><{/if}>" /></td>
+			</tr> -->
+			<tr>
+				<th>会员状态：</th>
+				<td><select name="user_status" id="user_status" class="sel"><option value="0" style="color: #f60;"<{opt_selected($status, 0)}>>待验证</option><option value="1" style="color: #080;"<{opt_selected($status, 1)}>>已验证</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $user.user_id}>
+					<input name="user_id" type="hidden" id="user_id" value="<{$user.user_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('user')}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>
+	<{/if}>
+
+<{include file="footer.html"}>

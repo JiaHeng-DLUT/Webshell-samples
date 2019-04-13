@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,noarchive">
+    <title>{:lang('Domain name error')}</title>
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center" style="margin-top: 80px;">
+            <h4>{:lang('The domain name you use does not match the domain name recorded by the system')}</h4>
+            <hr>
+            <p>{:lang('Please continue to use the domain name recorded by the system:')}<a href="{$fulldomain}admin.html">{$domain}</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

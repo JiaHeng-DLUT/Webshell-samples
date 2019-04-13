@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta chardata="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+<form class="layui-form" action="">
+ <input type="hidden" name="groupname" value="{$Request.action}">
+
+<div class="layui-tab layui-tab-brief " lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">会员注册</li>
+    <li >会员认证</li>
+  </ul>
+
+  <div class="layui-tab-content" style="height: 100px;">
+    <div class="layui-tab-item layui-show">
+              <div class="layui-form-item">
+                <label class="layui-form-label">新用户注册</label>
+                <div class="layui-input-inline" style="width:110px">
+                   <input type="radio" name="data[new_register]" value="0"  {if  $settings.member.new_register ==0}checked{/if}  title="不审核" >
+                </div>
+                <div class="layui-input-inline" style="width:110px">
+                  <input type="radio" name="data[new_register]" value="1"  {if  $settings.member.new_register ==1}checked{/if title="邮件验证" >
+                </div>
+                <div class="layui-input-inline" style="width:110px">
+                   <input type="radio" name="data[new_register]" value="2"   {if  $settings.member.new_register ==2}checked{/if title="人工审核" >
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+
+             <div class="layui-form-item">
+                <label class="layui-form-label">注册验证码</label>
+                <div class="layui-input-inline">
+                  <input type="radio" name="data[register_vcode]" value="1"  {if  $settings.member.register_vcode ==0}checked{/if}  title="开启" checked="">
+                   <input type="radio" name="data[register_vcode]" value="0"  {if  $settings.member.register_vcode ==0}checked{/if}  title="关闭">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+        
+              <div class="layui-form-item">
+                <label class="layui-form-label">注册验证问题</label>
+                <div class="layui-input-inline">
+                   <input type="radio" name="data[register_question]" value="1"  {if  $settings.member.register_question ==0}checked{/if}  title="开启" checked="">
+                   <input type="radio" name="data[register_question]" value="0"  {if  $settings.member.register_question ==0}checked{/if}  title="关闭">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>      
+
+</div>
+
+    <div class="layui-tab-item">
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">邮件认证</label>
+                <div class="layui-input-inline">
+                   <input type="radio" name="data[vemail_status]" value="1"  {if  $settings.member.vemail_status ==0}checked{/if}  title="开启" checked="">
+                   <input type="radio" name="data[vemail_status]" value="0"  {if  $settings.member.vemail_status ==0}checked{/if}  title="关闭">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">手机认证</label>
+                <div class="layui-input-inline">
+                        <input type="radio" name="data[vmobile_status]" value="1"  {if  $settings.member.vmobile_status ==0}checked{/if}  title="开启" checked="">
+              <input type="radio" name="data[vmobile_status]" value="0"  {if  $settings.member.vmobile_status ==0}checked{/if}  title="关闭">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+
+               <div class="layui-form-item">
+                <label class="layui-form-label">银行帐号认证</label>
+                   <div class="layui-input-inline">
+                       <input type="radio" name="data[vbank_status]" value="1"  {if  $settings.member.vbank_status ==0}checked{/if}  title="开启" checked="">
+              <input type="radio" name="data[vbank_status]" value="0"  {if  $settings.member.vbank_status ==0}checked{/if}  title="关闭">
+              </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>   
+
+               <div class="layui-form-item">
+                <label class="layui-form-label"> 企业认证</label>
+                <div class="layui-input-block">
+                  <input type="radio" name="data[vcompany_status]" value="1"  {if  $settings.member.vcompany_status ==0}checked{/if}  title="开启" checked="">
+                  <input type="radio" name="data[vcompany_status]" value="0"  {if  $settings.member.vcompany_status ==0}checked{/if}  title="关闭">
+                </div>
+              </div>              
+              
+  </div>
+               <div class="layui-form-item">
+                 <label class="layui-form-label"></label>
+                  <div class="layui-input-block">
+                      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="form">立即提交</button>
+                   </div>
+                </div>
+
+</div> 
+</div> 
+</form>
+
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  
+
+  form.on('submit(form)', function(data){
+    // layer.msg(JSON.stringify(data.field));
+    var data =data.field;
+    $.post("{:url('settings/update')}",data,function(json){
+       if(json.code == 0){
+           layer.msg(json.msg);
+       }else if(json.code == -1){
+           layer.msg(json.msg);
+       }
+    });
+    return false;
+  });
+});
+</script>
+
+</body>
+
+</html>

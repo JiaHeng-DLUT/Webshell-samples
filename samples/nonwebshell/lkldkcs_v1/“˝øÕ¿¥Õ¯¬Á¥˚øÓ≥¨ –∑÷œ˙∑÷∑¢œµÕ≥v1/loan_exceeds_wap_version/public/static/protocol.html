@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>注册协议</title>
+</head>
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f9;
+  }
+
+  .protocol {
+    background-color: #fff;
+  }
+
+  .content {
+    padding: .2rem .4rem 0;
+
+  }
+
+</style>
+
+<body>
+  <div class="protocol">
+    <div class="content"></div>
+  </div>
+
+  <script src="./js/jquery.min.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px'
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //生成随机数
+    function guid() {
+      function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+      }
+      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
+    }
+    var header = {
+      'Device': guid(), // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Authentication': getUrlParam('token') || ''
+    }
+
+    function agreement() {
+      $.ajax({
+        url: 'https://api.daidaihu365.com/api/v1/agreement/',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        success: function (res) {
+          if (res.code === 200) {
+            console.log(res);
+            content = res.data.content
+            $('.content').append(content)
+          } else {
+            console.log(res.info)
+          }
+        },
+        error: function () {
+          flag = false
+        }
+      })
+    }
+    agreement();
+
+  </script>
+</body>
+
+</html>

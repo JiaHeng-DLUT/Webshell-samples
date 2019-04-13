@@ -1,0 +1,68 @@
+<!--
+	<?php
+		global $readdata,$replyuserdata,$replydata,$imgshtml,$lgtime;
+	?>
+-->
+<div id="listdivbox-{$readdata['id']}" class="pk-row pk-padding-top-15" onmouseover="this.style.backgroundColor='#F8F8FF'" onmouseout="this.style.backgroundColor=''" style="border-bottom: solid 1px #E0E0E0">
+	<div class="pk-w-md-1 pk-w-sm-2 pk-padding-0" style="height: 42px">
+		<img class="pk-radius-all pk-display-block pk-margin-left-right-auto" src="" data-src="userhead/{$readuserdata['id']}.png" alt="{$readuserdata['username']}" style="width: 42px;height: 42px" onerror="this.src='template/default/img/randhead/{rand(1,Cnum($_G['SET']['TEMPLATE_DEFAULT_RANDHEADCOUNT'],24))}.png'">
+		<div class="pk-text-center pk-padding-top-5">
+			<div class="pk-badge pk-background-color-success pk-text-xs pk-radius-4 pk-cursor-default pk-max-width-all" title="已被阅读次数">{$readdata['looknum']}</div>
+		</div>
+	</div>
+	<div class="pk-w-md-11 pk-w-sm-10 pk-padding-right-5">
+		<div class="pk-text-truncate pk-display-block pk-text-xs" style="height: 18px;padding-top: 2px">
+			<a target="_blank" href="{ReWriteURL('user','id={$readdata['uid']}&page=1')}" style="color: #999">{$readuserdata['nickname']}</a>
+		</div>
+		<!--
+			<?php
+				if($readdata['high']){
+					$readdata['title']='<span title="精华" class="fa fa-diamond pk-text-primary"></span> '.$readdata['title'];
+				}
+				if($readdata['top']){
+					$readdata['title']='<span title="置顶" class="fa fa-arrow-up pk-text-danger"></span> '.$readdata['title'];
+				}
+			?>
+		-->
+		<div class="pk-display-block pk-text-truncate pk-text-md" style="height: 24px;padding-top: 2px">
+			<a class="pk-text-primary pk-hover-underline" href="{ReWriteURL('read','id={$readdata['id']}&page=1')}">{$i}.{searchws($readdata['title'])}</a>
+		</div>
+		<div class="pk-text-truncate-multiline pk-text-sm" style="max-height: 40px;color: #666">
+			{searchws(EqualReturn(strip_tags($readdata['content'], ''), '', '[NULL]'))}
+		</div>
+		<!--
+			<?php
+			$i=0;
+			$imgshtml='';
+			if (preg_match_all('#<img.*?src="(.*?)".*?\>#', $readdata['olddata']['content'], $match)) {
+				foreach ($match[1] as $value) {
+					if($i>3) break;
+					$i++;
+					$imgshtml.='
+					<div class="pk-w-sm-3">
+						<img onclick="LookImage(this)" class="ImageLoading pk-max-width-all pk-cursor-pointer" src="template/default/img/loading.gif" data-src="'.$value.'" alt=""/>
+					</div>';
+				}
+			}
+			?>
+		-->
+		<div class="pk-row pk-padding-top-10">
+			{$imgshtml}
+		</div>
+		<!--
+			<?php
+				if($_G['USER']['ID']==1||InArray($_G['USER']['QUANXIAN'],'admin')){
+					$_G['TEMP']['READADMINLINK']='
+					<a href="index.php?c=edit&type=read&id='.$readdata['id'].'">编辑</a>
+					<a href="javascript:" onclick="pkalert(&quot;确认删除该文章？&quot;,&quot;提示&quot;,&quot;window.open(\'index.php?c=delete&table=read&id='.$readdata['id'].'\',\'pk-di\');$(\'#listdivbox-'.$readdata['id'].'\').remove()&quot;)">删除</a>
+					';
+				}
+			?>
+		-->
+		<div class="pk-row pk-padding-top-15 pk-padding-bottom-5">
+			<div class="pk-w-sm-12 pk-text-right pk-text-xs pk-padding-right-0" style="color: #999">
+				{$_G['TEMP']['READADMINLINK']} <span class="fa fa-commenting-o pk-cursor-pointer" title="回复数"></span>{$readdata['fs']}&nbsp;{date('Y-m-d H:i:s',$readdata['posttime'])}
+			</div>
+		</div>
+	</div>
+</div>

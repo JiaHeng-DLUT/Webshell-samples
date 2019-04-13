@@ -1,0 +1,39 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+{notempty name="fan_list"}
+<ul class="dsm-friend-list">
+    {foreach name="fan_list" item="v"}
+    <li id="recordone_{$v.friend_frommid}">
+        <div class="avatar">
+            <a href="javascript:void(0)" target="_blank" data-param="{'id':{$v.friend_frommid}}" dstype="mcard">
+                <img src="{$Think.UPLOAD_SITE_URL}/{if $v.member_avatar!=''}{$Think.ATTACH_AVATAR}/{$v.member_avatar}{else/}{$Think.ATTACH_COMMON}/{$Think.config.default_user_portrait}{/if}" alt="{$v.friend_frommname}"/>
+            </a>
+        </div>
+        <dl class="info">
+            <dt><a href="javascript:void(0)" title="{$v.friend_tomname}" target="_blank" data-param="{'id':{$v.friend_frommid}}" dstype="mcard">{$v.friend_frommname}</a><i class="{$v.sex_class}"></i></dt>
+            <dd class="area">{$v.member_areainfo}</dd>
+            <dd><a href="{:url('Membermessage/sendmsg',['member_id'=>$v.friend_frommid])}" target="_blank" title="{$Think.lang.ds_message}"><i class="fa fa-envelope"></i>{$Think.lang.ds_message}</a></dd>
+        </dl>
+        <div class="follow" ds_type="signmodule">
+            <p ds_type="mutualsign" style="{if $v['friend_followstate']!=2}display:none;{/if}"><i></i>{$Think.lang.snsfriend_follow_eachother}</p>
+            <a href="javascript:void(0)" class="dsm-btn-mini dsm-btn-green" ds_type="followbtn" data-param='{"mid":"{$v.friend_frommid}"}' style="{if $v.friend_followstate == 2}display:none{/if}">
+                <i class="fa fa-plus"></i>{$Think.lang.snsfriend_followbtn}
+            </a>
+        </div>
+    </li>
+    {/foreach}
+</ul>
+{else /}
+<div class="warning-option"><i></i><span>{$Think.lang.no_record}</span></div>
+{/notempty}
+<div class="tc"><div class="pagination">{$show_page}</div></div>
+<script src="{$Think.HOME_SITE_ROOT}/js/sns_friend.js"></script>
+
+
+
+
+
+
+{/block}

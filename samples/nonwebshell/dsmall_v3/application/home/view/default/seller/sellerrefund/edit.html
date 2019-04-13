@@ -1,0 +1,132 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-flow-layout">
+    <div class="dssc-flow-container">
+        <div class="title">
+            <h3>{$Think.lang.refund_service}</h3>
+        </div>
+        <div id="saleRefund">
+            <div class="dssc-flow-step">
+                <dl class="step-first current">
+                    <dt>{$Think.lang.buyer_application_refund}</dt>
+                    <dd class="bg"></dd>
+                </dl>
+                <dl class="{if $refund.seller_time > 0}current{/if}">
+                    <dt>{$Think.lang.merchant_process_refund_application}</dt>
+                    <dd class="bg"> </dd>
+                </dl>
+                <dl class="{if $refund.admin_time > 0}current{/if}">
+                    <dt>{$Think.lang.refund_complete}</dt>
+                    <dd class="bg"> </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="dssc-form-default">
+            <h3>{$Think.lang.buyer_refund_application}</h3>
+            <dl>
+                <dt>{$Think.lang.refund_order_refundsn}：</dt>
+                <dd>{$refund.refund_sn}</dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.applicant_buyers}：</dt>
+                <dd>{$refund.buyer_name}</dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_buyer_message}{$Think.lang.ds_colon}</dt>
+                <dd> {$refund.reason_info} </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_order_refund}{$Think.lang.ds_colon}</dt>
+                <dd><strong class="red">{$Think.lang.currency}{$refund.refund_amount}</strong></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.refund_instructions}：</dt>
+                <dd> {$refund.buyer_message} </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.credentials_upload}：</dt>
+                <dd>
+                    {notempty name="pic_list"}
+                    <ul class="dssc-evidence-pic">
+                        {foreach name="pic_list" item="val" key="key" }
+                        {notempty name="val"}
+                        <li><a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}" data-lightbox="lightbox-image"> <img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}"></a></li>
+                        {/notempty}
+                        {/foreach}
+                    </ul>
+                    {/notempty}
+                </dd>
+            </dl>
+            <form id="post_form" method="post" action="{:url('Sellerrefund/edit',['refund_id'=>$refund.refund_id])}">
+                <h3>{$Think.lang.business_processing}</h3>
+                <dl>
+                    <dt><i class="required">*</i>{$Think.lang.refund_seller_confirm}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <label class="mr20">
+                            <input type="radio" class="radio vm" name="seller_state" value="2" />
+                            {$Think.lang.refund_state_yes}</label>
+                        <label>
+                            <input type="radio" class="radio vm" name="seller_state" value="3" />
+                            {$Think.lang.refund_state_no}</label>
+                        <span class="error"></span>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><i class="required">*</i>{$Think.lang.refund_message}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <textarea name="seller_message" rows="2" class="textarea w300"></textarea>
+                        <span class="error"></span>
+                        <p class="hint">{$Think.lang.refund_seller_desc}<br>
+                            {$Think.lang.return_amount_buyer}<br>
+                            {$Think.lang.platform_complain_reapply}</p>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border">
+                        <a class="submit" id="confirm_button">{$Think.lang.ds_ok}</a>
+                    </label>
+                    <label class="submit-border">
+                        <a href="javascript:history.go(-1);" class="submit"><i class="fa fa-reply"></i>{$Think.lang.returns_list}</a>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+    {include file="default/seller/sellerrefund/seller_refund_right" /}
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#confirm_button").click(function () {
+            $("#post_form").submit();
+        });
+        $('#post_form').validate({
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parentsUntil('dl').find('span.error'));
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('post_form', 'url', "{:url('Sellerrefund/index', ['lock' =>$refund.order_lock])}")
+            },
+            rules: {
+                seller_state: {
+                    required: true
+                },
+                seller_message: {
+                    required: true
+                }
+            },
+            messages: {
+                seller_state: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.refund_seller_confirm_null}'
+                },
+                seller_message: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.refund_message_null}'
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

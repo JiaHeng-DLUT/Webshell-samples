@@ -1,0 +1,49 @@
+<?php
+// +----------------------------------------------------------------------
+// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: liu21st <liu21st@gmail.com>
+// +----------------------------------------------------------------------
+
+namespace app\common\taglib;
+use think\Db;
+use think\template\TagLib;
+
+class QiLe extends Taglib
+{
+        // 标签定义
+    protected $tags = [
+      'select'     => ['attr'=>'table,where,order,limit,id,page,sql,field,key,mod,debug','level'=>3],
+
+    ];
+
+    public function tagSelect($attr,$content){
+  
+         $tag       = $this->parseXmlAttr($attr,'select');
+         $table     =!empty($tag['table'])?$tag['table']:'';
+         $order     =!empty($tag['order'])?$tag['order']:'';
+         $limit     =!empty($tag['limit'])?intval($tag['limit']):'';
+         $id        =!empty($tag['id'])?$tag['id']:'r';
+         $where     =!empty($tag['where'])?$tag['where']:' 1 ';
+         $key        =!empty($tag['key'])?$tag['key']:'i';
+         $mod        =!empty($tag['mod'])?$tag['mod']:'2';
+         $page      =!empty($tag['page'])?$tag['page']:false;
+         $sql         =!empty($tag['sql'])?$tag['sql']:'';
+         $field     =!empty($tag['field'])?$tag['field']:'';
+         $debug     =!empty($tag['debug'])?$tag['debug']:false;
+         
+         $this->comparison['noteq']= '<>';
+         $this->comparison['sqleq']= '=';
+         $where     =$this->parseCondition($where);
+         $sql         =$this->parseCondition($sql);
+         $parsestr.='<?php $m= Db::name("'.$table.'");';
+         
+           
+         return $parsestr;
+         
+    }
+}

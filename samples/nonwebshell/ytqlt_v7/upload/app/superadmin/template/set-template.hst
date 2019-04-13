@@ -1,0 +1,35 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">模板高级设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">PC模板加载顺序</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox " name="defaulttemplates" value="{$_G['SET']['DEFAULTTEMPLATES']}" placeholder="多个用,分开" />
+		</div>
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8 pk-text-danger pk-padding-top-5 pk-text-xs">
+			<p>此值建议default模板放在最后一位，若不会设置请在官坛或加群询问，否则设置错误将导致网站无法打开</p>
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">手机模板加载顺序</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox " name="phonedefaulttemplates" value="{$_G['SET']['PHONEDEFAULTTEMPLATES']}" placeholder="多个用,分开" />
+		</div>
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8 pk-text-danger pk-padding-top-5 pk-text-xs">
+			<p>此值建议default模板放在最后一位，若不会设置请在官坛或加群询问，否则设置错误将导致网站无法打开</p>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

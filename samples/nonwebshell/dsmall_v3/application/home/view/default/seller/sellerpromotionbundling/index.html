@@ -1,0 +1,121 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{if $isPlatformStore}
+<a class="dssc-btn dssc-btn-green"  href="{:url('Sellerpromotionbundling/bundling_add')}" ><i class="fa fa-plus-square"></i>{$Think.lang.bundling_add}</a>
+{else /}
+<?php if (empty($bundling_quota)) { ?>
+<a href="javascript:void(0)" class="dssc-btn dssc-btn-acidblue" onclick="window.location = '{:url('Sellerpromotionbundling/bundling_quota_add')}';" title="{$Think.lang.bundling_quota_add}"><i class="fa fa-money"></i>{$Think.lang.bundling_quota_add}</a>
+<?php } else if((isset($bundling_surplus) && intval($bundling_surplus) != 0 ) || config('promotion_bundling_sum') == 0) { ?>
+{if $bundling_quota.blquota_state == 1}
+<a class="dssc-btn dssc-btn-green"  href="{:url('Sellerpromotionbundling/bundling_add')}" style="right:100px"><i class="fa fa-plus-square"></i>{$Think.lang.bundling_add}</a>
+{/if}
+<a class="dssc-btn dssc-btn dssc-btn-acidblue" href="{:url('Sellerpromotionbundling/bundling_renew')}"><i class="fa fa-money"></i>{$Think.lang.set_renewal}</a>
+<?php } ?>
+{/if}
+
+
+{/block}
+{block name="seller_main"}
+
+
+
+{if $isPlatformStore}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.notice_package_renewal1}{$Think.config.promotion_bundling_sum}{$Think.lang.notice_package_renewal2}</li>
+    </ul>
+</div>
+{else}
+<!-- 有可用套餐，发布活动 -->
+<div class="alert alert-block mt10">
+    {notempty name="bundling_quota"}
+    <strong>{$Think.lang.notice_package_renewal3}{$Think.lang.ds_colon}</strong> <strong style=" color:#F00;">{$bundling_quota.blquota_endtime|date="Y-m-d H:i:s",###}</strong>
+    {else /}
+    <strong>{$Think.lang.notice_package_renewal4}</strong>
+    {/notempty}
+    <ul>
+        <li>{$Think.lang.notice_package_renewal5}</li>
+        <li>2、<strong style="color: red">{$Think.lang.notice_package_renewal6}</strong>。</li>
+        {if config('promotion_bundling_sum') != 0}
+        <li>{$Think.lang.notice_package_renewal7}{$Think.config.promotion_bundling_sum}{$Think.lang.notice_package_renewal2}</li>
+        {/if}
+    </ul>
+</div>
+{/if}
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.bundling_status}</th>
+            <td class="w100"><select name="state">
+                    <option value='all'>{$Think.lang.bundling_status_all}</option>
+                    <option value='0' {if $Request.param.state == 0}selected="selected"{/if}>{$Think.lang.bundling_status_0}</option>
+                    <option value='1' {if $Request.param.state == 1}selected="selected"{/if}>{$Think.lang.bundling_status_1}</option>
+                </select></td>
+            <th class="w110">{$Think.lang.bundling_name}</th>
+            <td class="w160"><input type="text" class="text w150" name="bundling_name" value="{$Request.get.bundling_name}"/></td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+        </tr>
+    </table>
+</form>
+
+{empty name="bundling_list"}
+<!-- 没有添加活动 -->
+<table class="dssc-default-table dssc-promotion-buy">
+    <tbody>
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+    </tbody>
+</table>
+{else /}
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="w50"></th>
+            <th class="tl">{$Think.lang.bundling_name}</th>
+            <th class="w180">{$Think.lang.bundling_add_price}</th>
+            <th class="w180">{$Think.lang.bundling_list_goods_count}</th>
+            <th class="w90">{$Think.lang.ds_state}</th>
+            <th class="w110">{$Think.lang.ds_handle}</th>
+        </tr>
+        <tr>
+            <td class="w30 tc"><input type="checkbox" id="all" class="checkall"/></td>
+            <td colspan="20"><label for="all" >{$Think.lang.ds_select_all}</label>
+                <a href="javascript:void(0);" class="dssc-btn-mini" ds_type="batchbutton" uri="{:url('Sellerpromotionbundling/drop_bundling')}" name="bundling_id" confirm="{$Think.lang.ds_ensure_del}"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a></td>
+        </tr>
+    </thead>
+    {foreach name="bundling_list" item="val"}
+    <tbody>
+        <tr class="bd-line">
+            <td><input type="checkbox" class="checkitem tc" value="{$val.bl_id}"/></td>
+            <td><div class="pic-thumb"><a href="{if $val.goods_id !=''}{:url('Goods/index',['goods_id'=>$val.goods_id])}{else}javascript:void(0){/if}" {if $val.goods_id !=''}target='_blank'{else /}target='black'{/if}><img src="{$val.img}"/></a></div></td>
+            <td class="tl"><dl class="goods-name">
+                    <dt><a href="{if $val.goods_id !=''}{:url('Goods/index',['goods_id'=>$val.goods_id])}"target="_blank" {else/}javascript:void(0);"{/if}>{$val.bl_name}</a></dt>
+                </dl></td>
+            <td class="goods-price">{$val.bl_discount_price}</td>
+            <td class="">{$val.count}</td>
+            <td>{$state_array[$val.bl_state]}</td>
+            <td class="dscs-table-handle"><span><a href="{:url('Sellerpromotionbundling/bundling_add',['bundling_id'=>$val.bl_id])}" class="btn-blue"><i class="fa fa-cog"></i>
+                        <p>{$Think.lang.bundling_edit}</p>
+                    </a></span> <span><a class="btn-red" href='javascript:void(0);' onclick="ds_ajaxget_confirm('{:url('Sellerpromotionbundling/drop_bundling',['bundling_id'=>$val.bl_id])}','{$Think.lang.ds_ensure_del}');"><i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_del}</p>
+                    </a></span></td>
+        </tr>
+    </tbody>
+    {/foreach}
+    <tfoot>
+        <tr>
+            <th class="tc"><input type="checkbox" id="all" class="checkall"/></th>
+            <th colspan="20"><label for="all" >{$Think.lang.ds_select_all}</label>
+                <a href="javascript:void(0);" class="dssc-btn-mini" ds_type="batchbutton" uri="{:url('Sellerpromotionbundling/drop_bundling')}" name="bundling_id" confirm="{$Think.lang.ds_ensure_del}"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a></th>
+        </tr>
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+    </tfoot>
+</table>
+{/empty}
+
+{/block}

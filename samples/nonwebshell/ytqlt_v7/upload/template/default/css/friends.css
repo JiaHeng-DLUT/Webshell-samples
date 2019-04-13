@@ -1,0 +1,60 @@
+#messagediv a{
+	text-decoration: underline;
+}
+
+#friendsdiv>div>a>div {
+	padding: 10px 0;
+}
+
+#friendsdiv>div>a>div:hover {
+	background-color: #EEFFEE;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(1) {
+	text-align: right;
+	height: 48px;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(1)>img {
+	width: 48px;
+	height: 48px;
+	border-radius: 100%;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(1)>span {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	color: white;
+	font-size: 10px;
+	text-align: center;
+	top: -5px;
+	right: 5px;
+	border-radius: 100%;
+	background-color: #CC6666;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(2) {
+	height: 48px;
+	overflow: hidden;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(2)>div:nth-of-type(1) {
+	height: 24px;
+	padding-top: 5px;
+	font-size: 14px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#friendsdiv>div>a>div>div:nth-of-type(2)>div:nth-of-type(2) {
+	height: 24px;
+	padding-top: 3px;
+	font-size: 12px;
+	color: #777;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}

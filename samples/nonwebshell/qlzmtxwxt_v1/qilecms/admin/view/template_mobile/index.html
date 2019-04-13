@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>手机模板</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<!-- 后台面包屑导航 -->
+{:get_admin_breadcrumb()}
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：手机模板</blockquote>
+
+
+<div class="template_mobile"> 
+
+
+          <div class="layui-row layui-col-space20" style="margin:0px;padding:10px;">
+             {volist name='uninstall' id='vo'}
+              <div class="layui-col-md2" style="width:220px;height:330px;border:1px solid #eee;margin:10px;float:left">
+                <p ><img  style="width:200px;height:200px;overflow:hidden" src="{if $vo.thumb}{$vo.thumb}{else}__STATIC__/common/images/no.jpg{/if}"></p>
+                <p style="height:20px;line-height:20px;font-size:12px;padding:0px 10px">名称：{$vo.name}</p>
+                <p style="height:20px;line-height:20px;font-size:12px;padding:0px 10px">作者：{$vo.author}</p>
+                <p style="height:20px;line-height:20px;font-size:12px;padding:0px 10px">目录：{$vo.dirname}</p>
+                <p style="margin-top:10px">
+                   
+                {if isset($vo.status) && $vo.status >=0}
+                  {if $vo.status == 1}
+                    <button class="layui-btn layui-btn-danger layui-btn-sm uninstall" style="float:right;;margin-right:10px;"  data-id="{$vo.id}" >卸载</button>
+                    <button class="layui-btn layui-btn-disabled layui-btn-sm" style="float:right;margin-right:10px;">已启用</button>
+
+
+                   {else}
+                    <button class="layui-btn layui-btn-danger layui-btn-sm uninstall"  style="float:right;margin-right:10px;" data-id="{$vo.id}"> 卸载</button>
+                   <button class="layui-btn layui-btn-normal layui-btn-sm open"  style="float:right;margin-right:10px;" data-id="{$vo.id}" >启用</button>
+
+                  {/if}
+
+                {else}
+                    <button class="layui-btn layui-btn-normal layui-btn-sm install"  data-dirname="{$vo.dirname}" style="float:right;margin-right:10px;">安装</button>
+                {/if}
+              </p>
+                
+
+              </div>
+          {/volist}
+            </div>
+
+
+
+  </div>
+</div>
+
+
+<script>
+$(function(){
+  //安装
+   $(".install").on("click",function(){
+      $(this).html('安装中...');
+      var dirname =$(this).attr('data-dirname');
+     $.post("{:url('templateMobile/install')}",{dirname:dirname},function(json){
+        if(json.code == 0){
+            layer.msg(json.msg);
+            location.reload();
+        }else{
+            layer.msg(json.msg);
+        }
+    });
+
+   });
+
+//卸载
+   $(".uninstall").on("click",function(){
+      $(this).html('卸载中...');
+      var id =$(this).attr('data-id');
+    $.post("{:url('templateMobile/uninstall')}",{id:id},function(json){
+      if(json.code == 0){
+          layer.msg(json.msg);
+          location.reload();
+      }else{
+          layer.msg(json.msg);
+      }
+
+     });
+
+   });
+
+// 启用
+//卸载
+   $(".open").on("click",function(){
+      $(this).html('启用中...');
+      var id =$(this).attr('data-id');
+    $.post("{:url('templateMobile/open')}",{id:id},function(json){
+      if(json.code == 0){
+          layer.msg(json.msg);
+          location.reload();
+      }else{
+          layer.msg(json.msg);
+      }
+
+     });
+
+   });
+
+
+ 
+});
+
+
+</script>
+</body>
+
+</html>

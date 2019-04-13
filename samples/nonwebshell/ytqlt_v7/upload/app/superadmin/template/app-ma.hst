@@ -1,0 +1,20 @@
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary">未安装应用</label>
+</div>
+
+{$newinstallhtml}
+
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary">已安装应用</label>
+</div>
+
+{$oldinstallhtml}
+
+<script>
+	$(function() {
+		if($_GET('refresh')) {
+			//应用安装完成，自动刷新父页面
+			top.location.href = "index.php?c=app&a=superadmin:index&PIndex=5&CIndex=0";
+		}
+	});
+</script>

@@ -1,0 +1,87 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>推荐展位</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>商品分类</dt>
+                <dd id="searchgc_td"></dd>
+                <input type="hidden" id="choose_gcid" name="choose_gcid" value="0"/>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Promotionbooth/index')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>被推荐商品将在该商品所在的分类及其上级分类的商品列表左侧随机出现</li>
+        </ul>
+    </div>
+    
+    <form method='post' id="form_goods" action="{:url('Promotionbooth/del_goods')}">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th class="w24"></th>
+                <th colspan="2">商品名称</th>
+                <th class="align-center w72">分类</th>
+                <th class="align-center w72">价格</th>
+                <th class="w150 align-center">{$Think.lang.ds_handle} </th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="goods_list"}
+           {foreach name="goods_list" item="v"}
+            <tr class="hover edit" id="ds_row_{$v.goods_id}">
+                <td><input type="checkbox" name="goods_id[]" value="{$v.goods_id}" class="checkitem"></td>
+                <td class="w60 picture"><div class="size-56x56"><span class="thumb size-56x56"><i></i><img src="{:goods_thumb($v,240)}" onload="javascript:ResizeImage(this,56,56);"/></span></div></td>
+                <td class="goods-name w270"><p><span>{$v.goods_name}</span></p>
+                    <p class="store">店铺名称：{$v.store_name}
+                        {present name="flippedOwnShopIds[$v.store_id]"}
+                        <span class="ownshop">[自营]</span>
+                       {/present}
+                    </p>
+                </td>
+                <td class="align-center">{$gc_list[$v['gc_id']]['gc_name']|default='分类已删除'}</td>
+                <td class="align-center">{$Think.lang.currency}{$v.goods_price}</td>
+                <td class="align-center">
+                    <a href="{:url('home/Goods/index',['goods_id'=>$v.goods_id])}" target="_blank" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Promotionbooth/del_goods',['goods_id'=>$v.goods_id])}','{$Think.lang.ds_ensure_del}',{$v.goods_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else}
+            <tr class="no_data">
+                <td colspan="15">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript">
+    $(function(){
+        init_gcselect({$gc_choose_json},{$gc_json});
+    });
+
+</script>

@@ -1,0 +1,167 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+
+<div class="join_banner">
+    <div class="bd">
+        <ul>
+            {notempty name="pic_list"}
+            {php}$pic_n = 0;{/php}
+            {foreach name="pic_list" item="val" key="key" }
+            {if !empty($val)}
+            {php}$pic_n++;{/php}
+            <li style="background-image: url({$Think.UPLOAD_SITE_URL}/admin/Storejion/{$val})" ></li>
+            {/if}
+            {/foreach}
+            {/notempty}
+        </ul>
+    </div>
+    {gt name='pic_n' value='1'}
+    <div class="hd">
+        <ul>
+            {for start='0' end="$pic_n"}
+            <li><i></i></li>
+            {/for}
+        </ul>
+    </div>
+    <a class="prev" href="javascript:void(0)"></a>
+    <a class="next" href="javascript:void(0)"></a>
+    <script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+    <script>
+        jQuery(".join_banner").slide({mainCell: ".bd ul", autoPlay: true, interTime: 4000});
+    </script>
+    {/gt}
+</div>
+
+<div class="indextip">
+    <div class="container"> <span class="title"><i class="fa fa-volume-up"></i>
+    <h3>{$Think.lang.prompt}</h3>
+    </span>
+        <span class="content">{$show_txt}</span>
+    </div>
+</div>
+
+<div class="index-notice-box">
+    <ul class="index-notice clearfix">
+        <li>
+            <h1>{$Think.lang.application_for_entry}</h1>
+            <p>{$Think.lang.fill_in_entry_information}</p>
+            <a target="_blank" href="{if $Think.session.is_login eq '1'}{:url('Sellerjoinin/step0')}{else/}javascript:login_dialog();{/if}" class="index-notice-btn setUpShop">{$Think.lang.my_settled_in}</a>
+        </li>
+        <li>
+            <h1>{$Think.lang.settled_in_progress}</h1>
+            <p>{$Think.lang.understanding_store_opening_condition}</p>
+            <a href="{if $Think.session.is_login eq '1'}{:url('Sellerjoinin/index')}{else/}javascript:login_dialog();{/if}" target="_blank" class="index-notice-btn merchantsSettled">{$Think.lang.check_your_progress}</a>
+        </li>
+        <li class="index-notice-last"><h1>{$Think.lang.information_announcement}</h1>
+            <ul class="index-list">
+                {foreach $index_articles as $i_a}
+                <li>
+                    <a target="_blank" title="{$i_a.article_title}" href="{if $i_a.article_url !=''}{$i_a.article_url}{else /}{:url('Article/show',['article_id'=>$i_a.article_id])}{/if}">
+                        {$i_a.article_title}
+                    </a>
+                    <em>{$Think.lang.important}</em>
+                </li>
+                {/foreach}
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="con-floor-3 tenants-con-floor-3">
+    <div class="con-topic">{$Think.lang.in_the_process}</div>
+    <div class="w1190">
+        <div class="con-floor-3-single">
+            <i class="fa fa-edit"></i>
+            <div>
+                <h2>{$Think.lang.submit_entry_information}</h2>
+                <em>{$Think.lang.about}2{$Think.lang.hours}</em>
+                <ul>
+                    <li>{$Think.lang.fill_enterprise_information}</li>
+                    <li>{$Think.lang.select_store_type}</li>
+                    <li>{$Think.lang.fill_brand_information}</li>
+                    <li>{$Think.lang.member_map_store_name}</li>
+                    <li>{$Think.lang.confirm_the_contract}</li>
+                </ul>
+            </div>
+        </div>
+        <i class="con-floor-3-arrow"></i>
+        <div class="con-floor-3-single">
+            <i class="fa fa-clock-o"></i>
+            <div>
+                <h2>{$Think.lang.merchants_waiting_review}</h2>
+                <em>3-6{$Think.lang.working_days}</em>
+                <ul>
+                    <li>{$Think.lang.qualification_audit}</li>
+                    <li>{$Think.lang.brand_audit}</li>
+                </ul>
+            </div>
+        </div>
+        <i class="con-floor-3-arrow"></i>
+        <div class="con-floor-3-single">
+            <i class="fa fa-rmb"></i>
+            <div>
+                <h2>{$Think.lang.pay_fee}</h2>
+                <em>{$Think.lang.about}10{$Think.lang.minutes}</em>
+                <ul>
+                    <li>{$Think.lang.real_name_authentication}</li>
+                    <li>{$Think.lang.sign_agency_agreement}</li>
+                    <li>{$Think.lang.payment_fee}</li>
+                </ul>
+            </div>
+        </div>
+        <i class="con-floor-3-arrow"></i>
+        <div class="con-floor-3-single">
+            <i class="fa fa-handshake-o"></i>
+            <div>
+                <h2>{$Think.lang.store_launch}</h2>
+                <em>{$Think.lang.about}20{$Think.lang.minutes}</em>
+                <ul>
+                    <li>{$Think.lang.release_of_goods}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main mt30">
+    <h2 class="index-title">{$Think.lang.entry_guide}</h2>
+    <div class="joinin-info">
+        <ul class="tabs-nav">
+            {notempty name="help_list"}
+            {php}$i = 0;{/php}
+            {foreach name="help_list" item="val" key="key" }
+            {php}$i++;{/php}
+            <li class="{if $i==1}tabs-selected{/if}">
+                <h3>{$val.help_title}</h3>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+        {notempty name="help_list"}
+        {php}$i = 0;{/php}
+        {foreach name="help_list" item="val" key="key" }
+        {php}$i++;{/php}
+        <div class="tabs-panel {if $i!=1}tabs-hide{/if}">{$val.help_info|htmlspecialchars_decode}</div>
+        {/foreach}
+        {/notempty}
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $(".tabs-nav > li > h3").bind('mouseover', (function(e) {
+    	if (e.target == this) {
+    		var tabs = $(this).parent().parent().children("li");
+    		var panels = $(this).parent().parent().parent().children(".tabs-panel");
+    		var index = $.inArray(this, $(this).parent().parent().find("h3"));
+    		if (panels.eq(index)[0]) {
+    			tabs.removeClass("tabs-selected").eq(index).addClass("tabs-selected");
+    			panels.addClass("tabs-hide").eq(index).removeClass("tabs-hide");
+    		}
+    	}
+    }));
+});
+</script>
+
+
+{/block}

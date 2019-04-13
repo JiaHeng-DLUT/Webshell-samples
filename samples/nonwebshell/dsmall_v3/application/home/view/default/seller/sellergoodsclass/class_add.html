@@ -1,0 +1,83 @@
+<div class="eject_con">
+    <div id="warning" class="alert alert-error"></div>
+    <form id="category_form" method="post" target="_parent" action="{:url('Sellergoodsclass/goods_class_save')}">
+        <input type="hidden" name="storegc_id" value="{$Request.param.top_class_id}" />
+        <input type="hidden" name="type" value="{$type}" />
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.store_goods_class_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="text w200" type="text" name="storegc_name" id="storegc_name" value="{present name='class_info.storegc_name'}{$class_info.storegc_name}{/present}" />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>{$Think.lang.store_goods_class_sup_class}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="storegc_parent_id" id="storegc_parent_id">
+                    <option value="0">{$Think.lang.store_create_please_choose}</option>
+                    {notempty name="goods_class"}
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.storegc_id}" {if $val.storegc_id == $class_info.storegc_parent_id}selected="selected"{/if}>{$val.storegc_name}</option>
+                    {/foreach}
+                   {/notempty}
+                </select>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>{$Think.lang.store_goods_class_sort}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="text w60" type="text" name="storegc_sort" value="{present name='class_info.storegc_sort'}{:intval($class_info.storegc_sort)}{/present}"  />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>{$Think.lang.store_goods_class_display_state}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <label>
+                    <input type="radio" name="storegc_state" value="1"
+                           {present name="class_info.storegc_state"}
+                    {if $class_info.storegc_state == 1}
+                    checked="checked"
+                    {/if}{else}checked="checked"{/present}/>
+                    {$Think.lang.store_create_yes}</label>
+                <label>
+                    <input type="radio" name="storegc_state" value="0" {present name="class_info.storegc_state"}{if $class_info.storegc_state == 0 }checked="checked"{/if}{/present} />
+                    {$Think.lang.store_create_no}</label>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.store_goods_class_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#category_form').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function(form, validator) {
+                $('#warning').show();
+            },
+            submitHandler:function(form){
+                ds_ajaxpost('category_form', 'url', "{:url('Sellergoodsclass/index')}")
+            },
+            rules : {
+                storegc_name : {
+                    required : true
+                },
+                storegc_sort : {
+                    number   : true
+                }
+            },
+            messages : {
+                storegc_name : {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_goods_class_name_null}'
+
+                },
+                storegc_sort  : {
+                    number   : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_goods_class_input_int}'
+                }
+            }
+        });
+    });
+</script> 

@@ -1,0 +1,275 @@
+<style>
+	._labeltext {
+		height: 38px;
+		line-height: 38px;
+		font-weight: bold;
+		text-align: right;
+		overflow: hidden;
+	}
+	
+	._labeltext2 {
+		height: 38px;
+		line-height: 38px;
+		text-align: left;
+		font-size: 12px;
+		color: #777;
+		overflow: hidden;
+	}
+</style>
+<div class="pk-padding-15">
+	<form name="form_install" method="post" action="">
+		<div class="pk-row pk-text-sm pk-text-bold pk-text-center pk-margin-top-15 pk-margin-bottom-15" style="border-top:solid 1px #E0E0E0;border-bottom:solid 1px #E0E0E0">
+			<div class="pk-w-sm-12 pk-padding-15">
+				数据库信息填写
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库类型</label>
+			<div class="pk-w-sm-5">
+				<select class="pk-textbox" name="mysql_type">
+					<option value="mysql">MySQL</option>
+				</select>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>此项不知请咨询空间商</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库地址</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="mysql_location" value="127.0.0.1" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>此项不知请咨询空间商</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库用户</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="mysql_username" value="root" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>此项不知请咨询空间商</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库密码</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox xt" name="mysql_password" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>此项不知请咨询空间商</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库名称</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="mysql_database" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>此项不知请咨询空间商</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库前缀</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="mysql_prefix" value="pk_" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>以_结尾，可保持默认</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">数据库编码</label>
+			<div class="pk-w-sm-5">
+				<select name="mysql_charset" class="pk-textbox">
+					<option value="set names utf8">utf8</option>
+					<option value="set names utf8mb4">utf8mb4</option>
+				</select>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>若不懂，请保持默认</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-text-bold pk-text-center pk-margin-top-15 pk-margin-bottom-15" style="border-top:solid 1px #E0E0E0;border-bottom:solid 1px #E0E0E0">
+			<div class="pk-w-sm-12 pk-padding-15">
+				创始人信息填写
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">用户名</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="adminusername" value="admin" minlength="3" maxlength="15" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>字母、数字和下划线组成，不能为纯数字</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">登录密码</label>
+			<div class="pk-w-sm-5">
+				<input type="text" class="pk-textbox" name="adminpassword" value="hadsky.com" minlength="5" maxlength="16" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>任意字符，5-16位</span>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-margin-bottom-5">
+			<label class="pk-w-sm-3 _labeltext">安全邮箱</label>
+			<div class="pk-w-sm-5">
+				<input type="email" class="pk-textbox" name="adminemail" value="admin@hadsky.com" required>
+			</div>
+			<div class="pk-w-sm-4 _labeltext2">
+				<span>请填写正确的邮箱</span>
+			</div>
+		</div>
+
+		<div id="yfw" class="pk-hide">
+			<div class="pk-row pk-text-sm pk-text-bold pk-text-center pk-margin-top-15 pk-margin-bottom-15" style="border-top:solid 1px #E0E0E0;border-bottom:solid 1px #E0E0E0">
+				<div class="pk-w-sm-12 pk-padding-15">
+					云服务信息初始化（选填）
+				</div>
+			</div>
+
+			<div class="pk-row pk-text-sm pk-margin-bottom-5">
+				<label class="pk-w-sm-3 _labeltext">用户名</label>
+				<div class="pk-w-sm-5">
+					<input type="text" class="pk-textbox xt" name="hs_username" value="">
+				</div>
+				<div class="pk-w-sm-4 _labeltext2">
+					<span>若无账号请<a target="_blank" href="http://www.hadsky.com/index.php?c=reg&from=install">注册</a></span>
+				</div>
+			</div>
+
+			<div class="pk-row pk-text-sm pk-margin-bottom-5">
+				<label class="pk-w-sm-3 _labeltext">登录密码</label>
+				<div class="pk-w-sm-5">
+					<input type="password" class="pk-textbox xt" name="hs_password" value="">
+				</div>
+				<div class="pk-w-sm-4 _labeltext2">
+					<span>该账号的登录密码</span>
+				</div>
+			</div>
+
+			<div class="pk-row pk-text-sm pk-margin-bottom-5">
+				<label class="pk-w-sm-3 _labeltext">站点域名</label>
+				<div class="pk-w-sm-5">
+					<input type="text" class="pk-textbox xt" name="hs_domain" value="{$_G['SYSTEM']['DOMAIN']}" readonly>
+				</div>
+				<div class="pk-w-sm-4 _labeltext2">
+					<span>自动绑定账号到该域名站点</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="pk-row pk-text-sm pk-text-danger pk-text-center pk-margin-top-15 pk-margin-bottom-15" style="border-top:solid 1px #E0E0E0;border-bottom:solid 1px #E0E0E0">
+			<div class="pk-w-sm-12 pk-padding-15">
+				安装程序会删除原有的相同的表，请检查后再安装
+			</div>
+		</div>
+
+		<div class="pk-row">
+			<div class="pk-w-sm-12 pk-text-center pk-padding-15">
+				<button type="button" id="submitbtn" class="pk-btn pk-btn-primary"><span></span> <span>确认信息，安装程序</span></button>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+	$(function() {
+		//绑定post事件处理器
+		$(document).ajaxError(function(event, jqxhr, settings, exception) {
+			console.log(event);
+			console.log(jqxhr);
+			console.log(settings);
+		});
+		var domain = location.host;
+		var domains = domain.split('.');
+		if(domains.length > 2 && !parseInt(domains[domain.length - 1])) {
+			$('#yfw').removeClass('pk-hide');
+		} else {
+			$('#yfw').remove();
+		}
+		$('#submitbtn').click(function() {
+			if(parseInt($('input[name="adminusername"]:eq(0)').val())) {
+				ppp({
+					type: 3,
+					icon: 2,
+					content: "创始人用户名不能为纯数字",
+					close: function() {
+						$('input[name="adminusername"]:eq(0)').focus();
+					}
+				});
+				return false;
+			}
+			var allinput = $('form[name=form_install] input:not([class~="xt"],button)');
+			for(var i = 0; i < allinput.length; i++) {
+				if(!$(allinput[i]).val()) {
+					var txt = '请填写“' + $(allinput[i]).parent().prev().html() + '”一项';
+					ppp({
+						type: 3,
+						icon: 2,
+						content: txt,
+						close: function() {
+							$(allinput[i]).focus();
+						}
+					});
+					return false;
+				}
+			}
+
+			var pid = ppp({
+				type: 4,
+				shade: 1,
+				content: "正在安装，请稍后..."
+			});
+			var strings = FormDataPackaging('form[name="form_install"]');
+			$.post('index.php?step=3', strings, function(data) {
+				pkpopup.close(pid);
+				if(data['state'] == 'ok') {
+					var _data = {
+						"username": form_install.adminusername.value,
+						"password": form_install.adminpassword.value
+					}
+					var url = "index.php?step=4&chkcode=HadSkyInstallComplete&data=" + encodeURIComponent(JSON.stringify(_data));
+					if(data['datas']['msg'].indexOf('pkalert|') == 0) {
+						ppp({
+							icon: 0,
+							hideclose: 1,
+							content: data['datas']['msg'].replace('pkalert|', ''),
+							submit: function() {
+								location.href = url;
+							}
+						});
+					} else {
+						ppp({
+							type: 3,
+							icon: 1,
+							content: data['datas']['msg'],
+							close: function() {
+								location.href = url;
+							}
+						});
+					}
+				} else {
+					ppp({
+						icon: 2,
+						hideclose: 1,
+						content: data['datas']['msg']
+					});
+				}
+			}, 'json');
+		});
+	});
+</script>

@@ -1,0 +1,60 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class Admin extends Common
+{
+
+   	//管理员列表
+   public function index(){
+     
+    $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and m.".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and m.reg_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and m.reg_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and m.reg_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+                    //排序
+
+      }else{
+            $where =array(
+       );
+           $order =  array(
+ 
+            );
+      }
+  
+      
+     $select  = array('uid'=>'管理员ID','username'=>'管理员名','group_id'=>'管理员组');
+      //如期筛选   
+     $date = array(
+                  array('title'=>'注册时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('member')->alias('m')->join('member_group g','m.group_id = g.group_id')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+	  return $this->fetch();
+   }
+
+}

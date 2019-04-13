@@ -1,0 +1,90 @@
+{include file="index/header" /}
+<div class="row">
+    <br><br><br>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <div class="panel panel-default">
+            {include file="index/head" /}
+            <div class="panel-body">
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>1</em></span> {:lang('Environment')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>2</em></span> {:lang('Create the data')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-muted"><span class="badge"><em>3</em></span> {:lang('Finish installation')}</h3>
+                </div>
+            </div>
+            <form method="post" action="step3">
+                <div class="panel-body">
+                    <h4>{:lang('Site Information')}</h4><hr>
+                    <div class="form-group">
+                        <label>{:lang('The database server')}：</label>
+                        <input type="text" class="form-control" name="host" value="localhost" required="required">
+                        <p class="help-block">{:lang('Database server address, usually localhost')}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('The database port')}：</label>
+                        <input type="text" class="form-control" name="port" value="3306" required="required">
+                        <p class="help-block">{:lang('The database server port, typically 3306')}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('The database user name')}：</label>
+                        <input type="text" class="form-control" name="user" value="root" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('The database password')}：</label>
+                        <input type="password" class="form-control" name="password" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('The database name')}：</label>
+                        <input type="text" class="form-control" name="name" value="catfish" required="required">
+                        <p class="help-block">{:lang('If you use an existing database, replace it with the actual database name')}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('Database table prefix')}：</label>
+                        <input type="text" class="form-control" name="prefix" value="catfish_" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('Site title')}：</label>
+                        <input type="text" class="form-control" name="biaoti" value="{:lang('Catfish')} CMS">
+                        <p class="help-block">{:lang('You can modify the site name at any time in the background')}</p>
+                    </div><br>
+                    <h4>{:lang('Founder Information')}</h4><hr>
+                    <div class="form-group">
+                        <label>{:lang('The administrator account')}：</label>
+                        <input type="text" class="form-control" name="admin" value="admin" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('The administrator password')}：</label>
+                        <input type="password" class="form-control" name="pwd" value="" required="required">
+                        <p class="help-block">{:lang('The administrator password can not be shorter than 8 characters')}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('Confirm password')}：</label>
+                        <input type="password" class="form-control" name="repwd" value="" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>{:lang('E-mail')}：</label>
+                        <input type="email" class="form-control" name="email" value="" required="required">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <a href="step1"><button type="button" class="btn btn-primary">{:lang('Previous')}</button></a>&nbsp;&nbsp;
+                        <button type="submit" id="myButton" class="btn btn-primary">{:lang('Create the data')}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#myButton").prop('disabled',false);
+        $("form").submit(function(e){
+            $("#myButton").prop('disabled','disabled');
+        });
+    });
+</script>
+{include file="index/footer" /}

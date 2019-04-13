@@ -1,0 +1,155 @@
+
+
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>get user add del - vue2入门与提高视频教程 </title>
+ 
+ <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.css" rel="stylesheet">
+
+<script src="vue.js" type="text/javascript"></script>
+<script src="vue-resource.js" type="text/javascript"></script>
+<!--
+ <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.6"></script>
+-->
+</head>
+<body  >
+ 
+ 
+<div id="app">
+
+ 
+ 
+ 
+    <p>jsonp</p>
+  <ul>
+  <li v-for="node in nodes" :id="node.id" @click="showdetail(node.id)"> {{ node.id }}   {{ node.title }} </li>
+ </ul>
+ 
+ <div class="detail">
+   <h1>{{nodedetail.title}}</h1>
+     
+	 <div v-html="nodedetail.desp"></div>
+ </div>
+ str.replaceAll("\"","'");
+ 
+ 
+ </div> <!--end app-->
+
+
+ 
+
+ 
+ <p>
+ No 'Access-Control-Allow-Origin' header is present on the requested resource   -- 表示前端要跨域
+ 
+ <br /> <br />
+ Uncaught (in promise)   -- 表示服务器端跨域
+ 
+ </p>
+ <script>
+
+  
+ 
+
+var vm = new Vue({ 
+
+    el:'#app',
+    data:{
+      
+	  nodes:[],
+	  nodedetail:[]
+    },
+    methods:{
+      
+       showdetail:function(tid){
+         
+          console.log(tid);
+		  
+		  url = 'http://127.0.0.22:8080/dev2018/dm-opencodesingle/api/apiindex.php?type=nodedetail&tid='+tid;
+		   this.$http.jsonp(url, {},
+				{ 
+					  headers: {},
+					  emulateJSON: true }).then((response) => {
+						this.nodedetail= response.data;
+						
+						 this.nodedetail.desp = replace(this.nodedetail.desp);
+						 console.log(this.nodedetail.desp);
+						//this.nodedetail.desp =stringToHtml(this.nodedetail.desp);
+						console.log(response.data);
+						
+					  });
+					  
+            
+      } ,
+	  replace:function(str){
+	      return   str.replaceAll("\"","'");
+	  }
+
+	  
+    } 
+ ,
+        
+        created:function(){
+           //console.log(2222);
+		   url = 'http://127.0.0.22:8080/dev2018/dm-opencodesingle/api/apiindex.php?type=nodelist&cate=cate20150805_1125344029';
+          
+		  // this.$http.get(url).then(function(response){
+           //console.log(response.data);
+           // this.users= response.data;
+          // });
+		   
+		   
+		    this.$http.jsonp(url, {},
+				{ 
+					  headers: {},
+					  emulateJSON: true }).then((response) => {
+						this.nodes= response.data;
+						console.log(response.data);
+						
+					  });
+	  
+		   
+		   //-----------
+           
+        }
+  
+
+
+
+})
+
+	  function stringToHtml(str) {
+    var result = [];
+    var list = str.split("-");
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        if (item.length < 8) {
+            result.push(item);
+            continue;
+        }
+        var asciiCode = parseInt(item, 2);
+        var charValue = String.fromCharCode(asciiCode);
+        result.push(charValue);
+    }
+    return result.join("");
+}
+
+
+
+ </script>
+
+ <style>
+    li{padding-left:33px; padding-right:33px; height:33px;}
+  li input[type="button"]{float:right}
+  li input[type="checkbox"]{float:left}
+  li .del{ text-decoration:line-through}
+  .detail{background:#ccc}
+    .dn {display:none;}
+    .db {display:block;}
+ </style>
+</body>
+</html>
+ 
+ 
+
+

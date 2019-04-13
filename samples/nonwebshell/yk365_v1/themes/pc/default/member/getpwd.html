@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="<{$site_keywords}>">
+<meta name="description" content="<{$site_description}>">
+<link href="<{$smarty.const.tpl}>skin/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">var sitepath = '<{$site_root}>'; var rewrite = '<{$cfg.is_enabled_rewrite}>';</script>
+<script type="text/javascript" src="<{$site_root}>public/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/js/common.js"></script>
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="header">
+    	<a href="<{$site_url}>" class="logo"><h1>   <img src="/public/images/logo.png"></h1></a>
+       
+    </div>
+    <div class="combox">
+        <div class="regform">
+        	<h3><span>找回账户密码</span></h3>
+        	<form name="myform" method="post" action="">
+        	<ul>
+            	<li><label><font color="#FF0000">*</font> 电子邮箱：</label><input type="text" name="email" size="50" maxlength="50" class="ipt" /><p>只有通过邮箱验证的账号才能找回密码</p></li>
+                <li><label><font color="#FF0000">*</font> 验 证 码：</label><input type="text" name="code" size="10" maxlength="6" class="ipt"  />
+                <span id="mycode"><img  title="点击刷新" src="<{url('member/code')}>" align="absbottom" onclick="this.src='<{url('member/code',['type'=>'code'])}>'+Math.random();"></img>
+                </span></li>
+                <li><label>&nbsp;</label><input type="submit" value="发送密码重置邮件" class="btn" /><input type="hidden" name="action" value="send" /></li>
+            </ul>
+            </form>
+            <div class="textinfo">
+            	<strong>未收到密码找回邮件怎么办？</strong> <br />没有收到密码找回邮件，有可能因为延迟导致的，请稍候查收，也可以再次发送。 
+			</div>
+		</div>
+    </div>
+    <div class="footer">
+    	<{$site_copyright}>
+    </div>
+</div>
+</body>
+</html>

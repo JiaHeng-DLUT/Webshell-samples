@@ -1,0 +1,936 @@
+---------------------------------------------------------------
+[ 2018-01-03T14:34:03+08:00 ] 127.0.0.1 GET /admin/article/index.html
+[ info ] 127.0.0.99/admin/article/index.html [运行时间：0.260000s][吞吐率：3.85req/s] [内存消耗：1,854.02kb] [文件加载：85]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\article\index.html [ array (
+  0 => 'settings',
+  1 => 'two_where',
+  2 => 'one_where',
+  3 => 'select',
+  4 => 'date',
+  5 => 'page',
+  6 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.040000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article` [ RunTime:0.060000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `a`.`aid`,`a`.`title`,`a`.`attr_value`,`a`.`author`,`a`.`create_time`,`a`.`status`,`b`.`cname` FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` ORDER BY `create_time`  desc LIMIT 0,10 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_attr` [ RunTime:0.030000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_attr` WHERE  `attr_value` IN ('c','f') [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: where[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Article.php:43]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:03+08:00 ] 127.0.0.1 GET /admin/article/index.html
+[ info ] 127.0.0.99/admin/article/index.html [运行时间：0.170001s][吞吐率：5.88req/s] [内存消耗：1,706.63kb] [文件加载：81]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\article\index.html [ array (
+  0 => 'settings',
+  1 => 'two_where',
+  2 => 'one_where',
+  3 => 'select',
+  4 => 'date',
+  5 => 'page',
+  6 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.050001s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `a`.`aid`,`a`.`title`,`a`.`attr_value`,`a`.`author`,`a`.`create_time`,`a`.`status`,`b`.`cname` FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` ORDER BY `create_time`  desc LIMIT 0,10 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_attr` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_attr` WHERE  `attr_value` IN ('c','f') [ RunTime:0.010000s ]
+[ error ] [8]未定义变量: where[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Article.php:43]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:05+08:00 ] 127.0.0.1 GET /admin/article/add.html
+[ info ] 127.0.0.99/admin/article/add.html [运行时间：0.130000s][吞吐率：7.69req/s] [内存消耗：2,110.52kb] [文件加载：92]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/article/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\article\add.html [ array (
+  0 => 'settings',
+  1 => 'articleAttr',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_attr` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_attr` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_category` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_category` WHERE  (  status = 1 ) [ RunTime:0.000000s ]
+[ error ] [2]array_push() expects parameter 1 to be array, null given[D:\WWW\tp5.1_qilecms\qilecms\common.php:660]
+[ error ] [8]未定义变量: one[D:\WWW\tp5.1_qilecms\qilecms\common.php:670]
+[ error ] [8]未定义变量: two[D:\WWW\tp5.1_qilecms\qilecms\common.php:685]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:696]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:07+08:00 ] 127.0.0.1 POST /api/category/getcategory.html
+[ info ] 127.0.0.99/api/category/getcategory.html [运行时间：0.030000s][吞吐率：33.33req/s] [内存消耗：737.78kb] [文件加载：65]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'content-length' => '28',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://127.0.0.99/admin/article/add.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+  'pid' => '44',
+  'type' => 'article_category',
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:34:08+08:00 ] 127.0.0.1 POST /api/category/getcategory.html
+[ info ] 127.0.0.99/api/category/getcategory.html [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：737.81kb] [文件加载：65]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'content-length' => '28',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://127.0.0.99/admin/article/add.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+  'pid' => '45',
+  'type' => 'article_category',
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:34:12+08:00 ] 127.0.0.1 GET /admin/article/index.html
+[ info ] 127.0.0.99/admin/article/index.html [运行时间：0.140000s][吞吐率：7.14req/s] [内存消耗：1,706.63kb] [文件加载：81]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\article\index.html [ array (
+  0 => 'settings',
+  1 => 'two_where',
+  2 => 'one_where',
+  3 => 'select',
+  4 => 'date',
+  5 => 'page',
+  6 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `a`.`aid`,`a`.`title`,`a`.`attr_value`,`a`.`author`,`a`.`create_time`,`a`.`status`,`b`.`cname` FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` ORDER BY `create_time`  desc LIMIT 0,10 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_attr` [ RunTime:0.030000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_attr` WHERE  `attr_value` IN ('c','f') [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: where[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Article.php:43]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:12+08:00 ] 127.0.0.1 GET /admin/category/index/type/article.html
+[ info ] 127.0.0.99/admin/category/index/type/article.html [运行时间：0.108000s][吞吐率：9.26req/s] [内存消耗：2,092.08kb] [文件加载：91]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\category\index.html [ array (
+  0 => 'sqlTable',
+  1 => 'customSingleField',
+  2 => 'keywords',
+  3 => 'date',
+  4 => 'page',
+  5 => 'list',
+  6 => 'type',
+  7 => 'module_id',
+  8 => 'module_dir',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ error ] [8]未定义数组索引: keywords[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:26]
+[ error ] [8]未定义数组索引: group_id[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:27]
+[ error ] [8]未定义数组索引: date[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:28]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:28]
+[ error ] [8]未定义数组索引: date[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:31]
+[ error ] [8]未定义变量: order[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:62]
+[ error ] [8]未定义数组索引: module_id[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:75]
+[ error ] [8]未定义数组索引: module_dir[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Category.php:76]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_category` [ RunTime:0.023000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_article_category` WHERE  (  1 and pid = 0 ) LIMIT 1 [ RunTime:0.003000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_category` WHERE  (  1 and pid = 0 ) LIMIT 0,10 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_category` WHERE  `pid` = 44 [ RunTime:0.010000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:20+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.110000s][吞吐率：9.09req/s] [内存消耗：1,663.59kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\index\index.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:34:39+08:00 ] 127.0.0.1 GET /public/static/js/jquery.min.map
+[ info ] 127.0.0.99/public/static/js/jquery.min.map [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：537.73kb] [文件加载：61]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'origin' => 'null',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:34:45+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.030001s][吞吐率：33.33req/s] [内存消耗：684.71kb] [文件加载：64]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:34:45+08:00 ] 127.0.0.1 GET /
+[ info ] 127.0.0.99/ [运行时间：0.130008s][吞吐率：7.69req/s] [内存消耗：1,651.40kb] [文件加载：80]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms\thinkphp/tpl/dispatch_jump.tpl [ array (
+  0 => 'settings',
+  1 => 'code',
+  2 => 'msg',
+  3 => 'data',
+  4 => 'url',
+  5 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.006000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_auth_group_access` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT `auth_group_access`.`uid`,`auth_group_access`.`group_id`,`auth_group`.`title`,`auth_group`.`rules` FROM `ql_auth_group_access` `auth_group_access` LEFT JOIN `ql_auth_group` `auth_group` ON `auth_group_access`.`group_id`=`auth_group`.`id` WHERE  (  auth_group_access.uid='2' and auth_group.status='1' ) [ RunTime:0.007001s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:01+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] 127.0.0.99/admin/login [运行时间：0.080004s][吞吐率：12.50req/s] [内存消耗：938.41kb] [文件加载：72]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; __guid=255864971.1155109557978035200.1514961285946.7249; monitor_count=1; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:35:01+08:00 ] 127.0.0.1 GET /captcha.html
+[ info ] 127.0.0.99/captcha.html [运行时间：0.022002s][吞吐率：45.45req/s] [内存消耗：443.02kb] [文件加载：54]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'rule' => 'captcha/[:id]',
+  'route' => '\\think\\captcha\\CaptchaController@index',
+  'option' => 
+  array (
+  ),
+  'var' => 
+  array (
+    'id' => '',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; monitor_count=2',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept' => 'image/webp,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+  'id' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:35:08+08:00 ] 127.0.0.1 GET /captcha.html?0.11992180779173589
+[ info ] 127.0.0.99/captcha.html?0.11992180779173589 [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：443.30kb] [文件加载：54]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'rule' => 'captcha/[:id]',
+  'route' => '\\think\\captcha\\CaptchaController@index',
+  'option' => 
+  array (
+  ),
+  'var' => 
+  array (
+    'id' => '',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; monitor_count=2',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept' => 'image/webp,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+  '0_11992180779173589' => '',
+  'id' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:35:14+08:00 ] 127.0.0.1 POST /admin/login/check.html
+[ info ] 127.0.0.99/admin/login/check.html [运行时间：0.482007s][吞吐率：2.07req/s] [内存消耗：1,725.79kb] [文件加载：80]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; monitor_count=2',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://127.0.0.99',
+  'accept' => '*/*',
+  'content-length' => '48',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+  'username' => 'admin',
+  'password' => '123456',
+  'verify_code' => '5nfb8',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.348006s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_admin` [ RunTime:0.013001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_admin` WHERE  (  username = 'admin' ) LIMIT 1 [ RunTime:0.002000s ]
+[ sql ] [ SQL ] UPDATE `ql_admin`  SET `last_time`=1514961314,`last_ip`='127.0.0.1'  WHERE  `admin_id` = 1 [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: powercode[D:\WWW\tp5.1_qilecms\qilecms\common.php:177]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:14+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.192011s][吞吐率：5.21req/s] [内存消耗：1,514.77kb] [文件加载：75]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; monitor_count=2; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\index\index.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.105006s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.035002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:21+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.069001s][吞吐率：14.49req/s] [内存消耗：1,514.99kb] [文件加载：75]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=3',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\index\index.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.027001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:26+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.133001s][吞吐率：7.52req/s] [内存消耗：1,514.83kb] [文件加载：75]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=9suqmvitgc8aqtt9j1qg93gtq7',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\index\index.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.020000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.060000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:27+08:00 ] 127.0.0.1 GET /public/static/js/jquery.min.map
+[ info ] 127.0.0.99/public/static/js/jquery.min.map [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：537.99kb] [文件加载：61]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'origin' => 'null',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-01-03T14:35:32+08:00 ] 127.0.0.1 GET /admin/index/index.html
+[ info ] 127.0.0.99/admin/index/index.html [运行时间：0.086001s][吞吐率：11.63req/s] [内存消耗：1,514.99kb] [文件加载：75]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=4',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/login',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\index\index.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.009000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:35+08:00 ] 127.0.0.1 GET /admin/shop/goodslist.html
+[ info ] 127.0.0.99/admin/shop/goodslist.html [运行时间：0.121006s][吞吐率：8.26req/s] [内存消耗：1,709.83kb] [文件加载：82]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=5',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\shop\goodslist.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.014001s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.016001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ error ] [8]未定义变量: select[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:86]
+[ error ] [8]未定义变量: date[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:86]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:476]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:493]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:522]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:548]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:112]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:112]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:112]
+[ error ] [8]未定义变量: page[D:\WWW\tp5.1_qilecms\runtime\temp\1aaf06efe975f941658cbdcec4475540.php:137]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:36+08:00 ] 127.0.0.1 GET /admin/shop/orderlist.html
+[ info ] 127.0.0.99/admin/shop/orderlist.html [运行时间：0.081005s][吞吐率：12.34req/s] [内存消耗：1,709.96kb] [文件加载：82]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=5',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\shop\orderlist.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.005000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: select[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:86]
+[ error ] [8]未定义变量: date[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:86]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:476]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:493]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:522]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5.1_qilecms\qilecms\common.php:548]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:112]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:112]
+[ error ] [8]未定义变量: list[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:112]
+[ error ] [8]未定义变量: page[D:\WWW\tp5.1_qilecms\runtime\temp\06e8db8c286a167342f68241df8ad027.php:137]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:47+08:00 ] 127.0.0.1 GET /admin/article/index.html
+[ info ] 127.0.0.99/admin/article/index.html [运行时间：0.157009s][吞吐率：6.37req/s] [内存消耗：1,706.75kb] [文件加载：81]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=5',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\article\index.html [ array (
+  0 => 'settings',
+  1 => 'two_where',
+  2 => 'one_where',
+  3 => 'select',
+  4 => 'date',
+  5 => 'page',
+  6 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.016001s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article` [ RunTime:0.023001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` LIMIT 1 [ RunTime:0.003000s ]
+[ sql ] [ SQL ] SELECT `a`.`aid`,`a`.`title`,`a`.`attr_value`,`a`.`author`,`a`.`create_time`,`a`.`status`,`b`.`cname` FROM `ql_article` `a` LEFT JOIN `ql_article_category` `b` ON `a`.`cid`=`b`.`cid` ORDER BY `create_time`  desc LIMIT 0,10 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_article_attr` [ RunTime:0.024001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_article_attr` WHERE  `attr_value` IN ('c','f') [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: where[D:\WWW\tp5.1_qilecms\qilecms\admin\controller\Article.php:43]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:49+08:00 ] 127.0.0.1 GET /admin/settings/site.html
+[ info ] 127.0.0.99/admin/settings/site.html [运行时间：0.088005s][吞吐率：11.36req/s] [内存消耗：1,681.49kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=5',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\settings\site.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.005000s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2018-01-03T14:35:50+08:00 ] 127.0.0.1 GET /admin/settings/site.html
+[ info ] 127.0.0.99/admin/settings/site.html [运行时间：0.074005s][吞吐率：13.51req/s] [内存消耗：1,517.27kb] [文件加载：75]
+[ info ] [ LANG ] D:\WWW\tp5.1_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=255864971.1155109557978035200.1514961285946.7249; thinkphp_show_page_trace=0|0; PHPSESSID=b3i8s8kh0rirq8pqj9fdt1voi7; monitor_count=5',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.99/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.99',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+  'httponly' => true,
+  'secure' => false,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5.1_qilecms./qilecms/admin/view\settings\site.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013001s ] mysql:host=localhost;port=3306;dbname=tp5_qilecms;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.016001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]

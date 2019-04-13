@@ -1,0 +1,49 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">防灌水</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发布新文章审核</label>
+		<div class="pk-w-sm-9">
+			<select class="pk-textbox " name="postreadcheck" data-value="{$_G['SET']['POSTREADCHECK']}">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发布新回复审核</label>
+		<div class="pk-w-sm-9">
+			<select class="pk-textbox " name="postreplycheck" data-value="{$_G['SET']['POSTREPLYCHECK']}">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">新人见习时长</label>
+		<div class="pk-w-sm-4">
+			<input class="pk-textbox " type="number" name="novicetraineetime" value="{$_G['SET']['NOVICETRAINEETIME']}">
+		</div>
+		<label class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">分钟</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">会员发帖时间间隔</label>
+		<div class="pk-w-sm-4">
+			<input class="pk-textbox " type="number" name="postingtimeinterval" value="{$_G['SET']['POSTINGTIMEINTERVAL']}">
+		</div>
+		<label class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">秒</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button" class="pk-btn pk-btn-primary">保存</button>
+		</div>
+	</div>
+</form>

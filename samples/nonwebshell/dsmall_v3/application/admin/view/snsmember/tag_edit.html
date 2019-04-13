@@ -1,0 +1,114 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="membertag_form" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="{$mtag_info.mtag_id}"/>
+        <input type="hidden" name="old_membertag_name" value="{$mtag_info.mtag_img}"/>
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation" for="membertag_name">{$Think.lang.sns_member_tag_name}:</label></td>
+                <td class="vatop rowform"><input type="text" value="{$mtag_info.mtag_name}" name="membertag_name"id="membertag_name" class="txt"></td>
+                <td class="vatop tips">{$Think.lang.sns_member_tag_name_tips}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label>{$Think.lang.ds_recommend}:</label></td>
+                <td class="vatop rowform onoff">
+                    <label for="mtag_recommend1"
+                           class="cb-enable {if $mtag_info.mtag_recommend == 1}selected{/if}"><span>{$Think.lang.ds_yes}</span></label>
+                    <label for="mtag_recommend0"
+                           class="cb-disable {if $mtag_info.mtag_recommend == 0}selected{/if}"><span>{$Think.lang.ds_no}</span></label>
+                    <input id="mtag_recommend1"
+                           name="membertag_recommend" {if $mtag_info.mtag_recommend == 1} checked="checked"{/if} value="1" type="radio">
+                    <input id="mtag_recommend0"
+                           name="membertag_recommend" {if $mtag_info.mtag_recommend == 0} checked="checked"{/if} value="0" type="radio">
+                </td>
+                <td class="vatop tips">{$Think.lang.sns_member_tag_recommend_tips}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label for="mtag_sort">{$Think.lang.ds_sort}:</label></td>
+                <td class="vatop rowform"><input type="text" value="{$mtag_info.mtag_sort}" name="membertag_sort"id="mtag_sort" class="txt"></td>
+                <td class="vatop tips">{$Think.lang.sns_member_tag_sort_tips}</td>
+            </tr>
+            <tr class="noborder" style="background: none repeat scroll 0% 0% rgb(251, 251, 251);">
+                <td class="required"><label>{$Think.lang.sns_member_tag_desc}:</label></td>
+                <td class="vatop rowform">
+                    <textarea class="tarea" rows="6" name="membertag_desc" id="membertag_desc">{$mtag_info.mtag_desc}</textarea>
+                </td>
+                <td class="vatop tips">{$Think.lang.sns_member_tag_desc_tips}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label>{$Think.lang.sns_member_tag_img}:</label></td>
+                <td class="vatop rowform">
+                    {notempty name="$mtag_info.mtag_img"}
+                    <span class="type-file-show"><img class="show_image" src={$Think.ADMIN_SITE_ROOT}/images/preview.png>
+                        <div class="type-file-preview"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/membertag/{$mtag_info.mtag_img}"></div>
+                    </span>
+                    {/notempty}
+                    <span class="type-file-box">
+                        <input name="membertag_img" type="file" class="type-file-file" id="membertag_img" size="30" hidefocus="true">
+                    </span>
+                </td>
+                <td class="vatop tips">{$Think.lang.sns_member_tag_img_tips}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+            var textButton1 = "<input type='text' name='textfield' id='textfield1' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />"
+            $(textButton1).insertBefore("#membertag_img");
+            $("#membertag_img").change(function () {
+                $("#textfield1").val($("#membertag_img").val());
+            });
+
+            $("#submitBtn").click(function () {
+                if ($("#membertag_form").valid()) {
+                    $("#membertag_form").submit();
+                }
+            });
+
+            $('#membertag_form').validate({
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().parent().find('td:last'));
+                },
+
+                rules: {
+                    membertag_name: {
+                        required: true,
+                        maxlength: 20
+                    },
+                    membertag_sort: {
+                        digits: true,
+                        range: [0,255]
+                    },
+                    membertag_desc: {
+                        maxlength: 50
+                    }
+                },
+                messages: {
+                    membertag_name: {
+                        required: '{$Think.lang.sns_member_tag_name_null_error}',
+                    maxlength: '{$Think.lang.sns_member_tag_name_max_error}'
+        },
+            membertag_sort : {
+                digits   : '{$Think.lang.sns_member_tag_sort_error}',
+                range : '不在范围'
+        },
+        membertag_desc:
+    {
+        maxlength : '{$Think.lang.sns_member_tag_desc_max_error}'
+    }
+}
+    });
+    });
+</script>

@@ -1,0 +1,30 @@
+
+<div class="goods-gallery"> <a class='sample_demo' id="select_s" href="fleaalbum/pic_list/item/des" style="display:none;">{$Think.lang.ds_submit}</a>
+    <ul class="list">
+        {foreach $pic_list as $v} 
+        <li onclick="insert_editor('{:flea_thumb($v['fleafile_name'])}');"> <a href="JavaScript:void(0);"> <span class="thumb size90"> <i></i> <img src="{:flea_thumb($v['fleafile_name'])}" onload="javascript:ResizeImage(this, 90, 90);" title='{$v.fleafile_name}'/> </span> </a> </li>
+        {/foreach}
+    </ul>
+    <div class='clear'></div>
+    <div class="pagination">{$show_page}</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.demo').ajaxContent({
+		event:'click', //mouseover
+		loaderType:'img',
+		loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+		target:'#des_demo'
+	});
+	$('#jump_menu').change(function(){
+		$('#select_s').attr('href',$('#select_s').attr('href')+"&id="+$('#jump_menu').val());
+		$('.sample_demo').ajaxContent({
+			event:'click', //mouseover
+			loaderType:'img',
+			loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+			target:'#des_demo'
+		});
+		$('#select_s').click();
+	});
+});
+</script>

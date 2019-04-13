@@ -1,0 +1,139 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{present name="isPlatformStore"}
+<a href="{:url('Sellergroupbuy/groupbuy_add_vr')}" style="right:100px"
+   class="dssc-btn dssc-btn-green" title="{$Think.lang.new_virtual_goods_snap}"><i class="fa fa-plus-square"></i>{$Think.lang.new_virtual_panic_buying}</a>
+<a href="{:url('Sellergroupbuy/groupbuy_add')}" class="dssc-btn dssc-btn-green"
+   title="{$Think.lang.groupbuy_index_new_group}"><i
+        class="fa fa-plus-square"></i>{$Think.lang.groupbuy_index_new_group}</a>
+{else /}
+{notempty name="current_groupbuy_quota"}
+
+<a href="{:url('Sellergroupbuy/groupbuy_add_vr')}" style="right:200px"
+   class="dssc-btn dssc-btn-green" title="{$Think.lang.new_virtual_goods_snap}"><i class="fa fa-plus-square"></i>{$Think.lang.new_virtual_panic_buying}</a>
+<a href="{:url('Sellergroupbuy/groupbuy_add')}" style="right:100px"
+   class="dssc-btn dssc-btn-green" title="{$Think.lang.groupbuy_index_new_group}"><i
+        class="fa fa-plus-square"></i>{$Think.lang.groupbuy_index_new_group}</a>
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellergroupbuy/groupbuy_quota_add')}"
+   title="{$Think.lang.set_renewal}"><i class="fa fa-money"></i>{$Think.lang.set_renewal}</a>
+{else /}
+<a class="dssc-btn dssc-btn-acidblue" href="{:url('Sellergroupbuy/groupbuy_quota_add')}"
+   title="{$Think.lang.purchase_plan}"><i class="fa fa-money"></i>{$Think.lang.purchase_plan}</a>
+{/notempty}
+{/present}
+
+
+{/block}
+{block name="seller_main"}
+{present name="isPlatformStore"}
+<div class="alert alert-block mt10">
+    <ul class="mt5">
+        <li>{$Think.lang.purchase_plan1}</li>
+        <li>{$Think.lang.purchase_plan2}</li>
+    </ul>
+</div>
+{else /}
+<div class="alert alert-block mt10">
+    {notempty name="current_groupbuy_quota"}
+    <strong>{$Think.lang.set_expiration_time}{$Think.lang.ds_colon}</strong><strong
+        style="color: #F00;">{$current_groupbuy_quota.groupbuyquota_endtime|date="Y-m-d H:i:s",###}</strong>
+    {else /}
+    <strong>{$Think.lang.please_buy_package_first}</strong>
+    {/notempty}
+    <ul class="mt5">
+        <li>{$Think.lang.package_instructions1}</li>
+        <li>{$Think.lang.package_instructions2}</li>
+        <li>{$Think.lang.package_instructions3}</li>
+        <li>4、<strong style="color: red">{$Think.lang.package_instructions4}</strong></li>
+    </ul>
+</div>
+{/present}
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.snap_type}</th>
+            <td class="w100">
+                <select name="groupbuy_vr" class="w90">
+                    <option value="">{$Think.lang.ds_all}</option>
+                    <option value="0" {if $Request.get.groupbuy_vr=='0'}selected{/if}>{$Think.lang.online_rob}</option>
+                    <option value="1" {if $Request.get.groupbuy_vr=='1'}selected{/if}>{$Think.lang.virtual_rob}</option>
+                </select>
+            </td>
+            <th>{$Think.lang.groupbuy_index_activity_state}</th>
+            <td class="w100"><select name="groupbuy_state" class="w90">
+                    {notempty name="groupbuy_state_array"}
+                    {foreach name="groupbuy_state_array" item="val"}
+                    <option value="{$key}" {if $key== $Request.get.groupbuy_state}selected{/if}>{$val}</option>
+                    {/foreach}
+                    {/notempty}
+                </select></td>
+            <th>{$Think.lang.group_name}</th>
+            <td class="w160">
+                <input class="text" type="text" name="groupbuy_name" value="{$Request.get.groupbuy_name}"/>
+            </td>
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_search}"/>
+                </label>
+            </td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="w50"></th>
+            <th class="tl">{$Think.lang.group_name}</th>
+            <th class="w130">{$Think.lang.start_time}</th>
+            <th class="w130">{$Think.lang.end_time}</th>
+            <th class="w90">{$Think.lang.browse_number}</th>
+            <th class="w90">{$Think.lang.text_buy}</th>
+            <th class="w110">{$Think.lang.groupbuy_index_activity_state}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="group"}
+        {foreach name="group" item="group"}
+        <tr class="bd-line">
+            <td></td>
+            <td>
+                <div class="pic-thumb"><a href="{$group.groupbuy_url}" target="_blank"><img src="{:groupbuy_thumb($group.groupbuy_image,'small')}"/></a></div>
+            </td>
+            <td class="tl">
+                <dl class="goods-name">
+                    <dt>
+                        {if $group.groupbuy_is_vr}
+                        <span title="{$Think.lang.virtual_exchange}" class="type-virtual">{$Think.lang.virtual_rob}</span>
+                        {/if}
+                        <a target="_blank" href="{$group.groupbuy_url}">{$group.groupbuy_name}</a>
+                    </dt>
+                </dl>
+            </td>
+            <td>{$group.start_time_text}</td>
+            <td>{$group.end_time_text}</td>
+            <td>{$group.groupbuy_views}</td>
+            <td>{$group.groupbuy_buy_quantity}</td>
+            <td>{$group.groupbuy_state_text}</td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="20">
+                <div class="pagination">{$show_page}</div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+{/block}

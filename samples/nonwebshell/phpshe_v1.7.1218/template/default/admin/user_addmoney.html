@@ -1,0 +1,39 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="100">用&nbsp;&nbsp;户 名</td>
+	<td>{$info['user_name']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">账户余额</td>
+	<td>
+		<span class="corg num strong">{$info['user_money']} 元</span>
+		<span class="mal10 c999">（提现中：{pe_num($cashout['cashout_money'], 'round', 1)} 元）</span>		
+	</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">{$act=='addmoney'?'充值':'扣除'}金额</td>
+	<td><input type="text" name="money" class="inputall input150" /> 元</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">操作说明</td>
+	<td><input type="text" name="text" class="inputall input300" /></td>
+</tr>
+</table>
+<div class="acenter mat20">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="button" value="提 交" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		pe_submit("{pe_nowurl()}", function(json){
+			if (json.result) pe_open('dialog', 1000);
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

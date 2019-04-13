@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>支付设置</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：配置前请到对应接口网站申请支付接口账号</blockquote>
+
+<form class="layui-form" action="">
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+      <li class="layui-this">支付宝</li>
+      <li class="">支付宝手机</li>
+      <li class="">微信扫码</li>
+      <li class="">财付通</li>
+      <li class="">网银在线</li>
+      <li class="">中国银联</li>
+      <li class="">PayPal（国际支付）</li> 
+      <li class="">易宝支付</li>
+      <li class="">天工收银</li>
+
+    </ul>
+
+
+ <div class="layui-tab-content">
+      <input type="hidden"  name="groupname" value="{$Request.action}">
+      <div class="layui-tab-item layui-show"> 
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">支付宝状态</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[alipay_status]" value="1" {if $settings.pay.alipay_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[alipay_status]" value="0" {if $settings.pay.alipay_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">支付宝帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[account_name]" lay-verify="account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001000" target="_blank">申请接口</a></div>
+                        </div>
+             
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">合作者身份（partnerID） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[partner_id]" lay-verify="partner_id" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.partner_id}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">安全校验码（key） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[md5_key]" lay-verify="md5_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.md5_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">支付异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[notify_url]" lay-verify="notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+
+
+      </div>
+      <div class="layui-tab-item"> 
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">手机支付宝状态</label>
+                              <div class="layui-input-block">
+                                <input type="radio" name="data[alipay_wap_status]" value="1" {if $settings.pay.alipay_wap_status ==1}checked{/if} title="开启" checked="">
+                                <input type="radio" name="data[alipay_wap_status]" value="0" {if $settings.pay.alipay_wap_status ==0}checked{/if} title="关闭">
+                              </div>
+                            </div>              
+               
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">应用ID （Appid）</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="data[alipay_wap_app_id]" lay-verify="alipay_wap_app_id" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.alipay_wap_app_id}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"><a href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001001" target="_blank">申请接口</a></div>
+                          </div>
+               
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">商户公钥（public_key）</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[alipay_wap_public_key]" lay-verify="alipay_wap_public_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.alipay_wap_public_key}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div>
+
+                             <div class="layui-form-item">
+                            <label class="layui-form-label">商户私钥（private_key） </label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[alipay_wap_merchant_private_key]" lay-verify="alipay_wap_merchant_private_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.alipay_wap_merchant_private_key}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div> 
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">支付异步通知 （notify_url）</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[alipay_wap_notify_url]" lay-verify="alipay_wap_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.alipay_wap_notify_url}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div>
+      </div>
+      <div class="layui-tab-item">
+                         <div class="layui-form-item">
+                            <label class="layui-form-label">微信状态</label>
+                              <div class="layui-input-block">
+                                <input type="radio" name="data[weixin_status]" value="1" {if $settings.pay.weixin_status ==1}checked{/if} title="开启" checked="">
+                                <input type="radio" name="data[weixin_status]" value="0" {if $settings.pay.weixin_status ==0}checked{/if} title="关闭">
+                              </div>
+                            </div>              
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">身份标识(appid):</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="data[weixin_app_id]" lay-verify="weixin_app_id" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_app_id}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"><a href="https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4" target="_blank">申请接口</a></div>
+                          </div>
+               
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">商户帐号(mchid):</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[weixin_mchid]" lay-verify="weixin_mchid" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_mchid}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div>
+
+                             <div class="layui-form-item">
+                            <label class="layui-form-label">商户身份密钥(md5_key): </label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[weixin_md5_key]" lay-verify="weixin_md5_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_md5_key}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div> 
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">微信支付回调URL:</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[weixin_notify_url]" lay-verify="weixin_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_notify_url}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div>
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">cert_path:</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[weixin_cert_path]" lay-verify="weixin_cert_path" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_cert_path}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                          </div>
+
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">key_path:</label>
+                            <div class="layui-input-inline">
+                              <input type="ptext" name="data[weixin_key_path]" lay-verify="weixin_key_path" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.weixin_key_path}">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux"></div>
+                            </div>
+
+      </div>
+
+      <div class="layui-tab-item">
+                         <div class="layui-form-item">
+                            <label class="layui-form-label">财富通状态</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[tenPay_status]" value="1" {if $settings.pay.tenpay_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[tenpay_status]" value="0" {if $settings.pay.tenpay_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">商户帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[tenpay_account_name]" lay-verify="tenpay_account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.tenpay_account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="https://b.alipay.com/signing/productDetail.htm?productId=I1011000290000001000" target="_blank">申请接口</a></div>
+                        </div>
+             
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">商户密钥（key） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[tenpay_key]" lay-verify="tenpay_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.tenpay_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[tenpay_notify_url]" lay-verify="tenpay_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.tenpay_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>
+       </div>
+      <div class="layui-tab-item">
+                             <div class="layui-form-item">
+                            <label class="layui-form-label">网银在线状态</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[chinabank_status]" value="1" {if $settings.pay.chinabank_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[chinabank_status]" value="0" {if $settings.pay.chinabank_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">商户帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[chinabank_account_name]" lay-verify="chinabank_account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.chinabank_account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="http://www.chinabank.com.cn/product/payment_gateway.jsp" target="_blank">申请接口</a></div>
+                        </div>
+             
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">商户密钥（key） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[chinabank_key]" lay-verify="chinabank_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.chinabank_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[chinabank_notify_url]" lay-verify="chinabank_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.chinabank_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>                
+      </div>
+<!-- 中国银联 -->
+            <div class="layui-tab-item">
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">中国银联</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[unionpay_status]" value="1" {if $settings.pay.unionpay_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[unionpay_status]" value="0" {if $settings.pay.unionpay_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">商户帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[unionpay_account_name]" lay-verify="unionpay_account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.unionpay_account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="http://www.unionpay.com.cn/product/payment_gateway.jsp" target="_blank">申请接口</a></div>
+                        </div>
+             
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">商户密钥（key） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[unionpay_key]" lay-verify="unionpay_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.unionpay_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[unionpay_notify_url]" lay-verify="unionpay_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.unionpay_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>                           
+      </div>
+<!-- PayPal（国际支付） -->
+      <div class="layui-tab-item">
+                             <div class="layui-form-item">
+                            <label class="layui-form-label">PayPal（国际支付）</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[paypal_status]" value="1" {if $settings.pay.paypal_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[paypal_status]" value="0" {if $settings.pay.paypal_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">商户帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[paypal_account_name]" lay-verify="paypal_account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.paypal_account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux">
+
+                          <i class="layui-icon">&#xe60b;</i> Paypal business为email收款账户
+                          <a href="https://www.paypal.com/c2/webapps/mpp/home?locale.x=zh_c2" target="_blank">申请接口</a>
+                          </div>
+                        </div>
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">PDT Token  </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[paypal_key]" lay-verify="paypal_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.paypal_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>             
+
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">IPN 通知文件名 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[paypal_notify_url]" lay-verify="unionpay_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.unionpay_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux">
+                           </div>
+                        </div> 
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">支付币种 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[paypal_currency]" lay-verify="paypal_currency" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.paypal_currency}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux">
+                          <i class="layui-icon">&#xe60b;</i> 值可以为 "CNY"、"USD"、"EUR"、"TWD"、"JPY"等</div>
+                        </div> 
+                     
+      </div>
+<!-- 易宝支付 -->
+            <div class="layui-tab-item">
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">易宝支付</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[yeepay_status]" value="1" {if $settings.pay.yeepay_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[yeepay_status]" value="0" {if $settings.pay.yeepay_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">商户帐号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[yeepay_account_name]" lay-verify="yeepay_account_name" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.yeepay_account_name}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="https://www.yeepay.com/productCenter/internetBankingPayment" target="_blank">申请接口</a></div>
+                        </div>
+             
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">商户密钥（key） </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[yeepay_key]" lay-verify="yeepay_key" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.yeepay_key}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[yeepay_notify_url]" lay-verify="yeepay_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.yeepay_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>                           
+      </div>
+
+<!-- 天工收银（商派） -->
+            <div class="layui-tab-item">
+                            <div class="layui-form-item">
+                            <label class="layui-form-label">天工收银（商派）</label>
+                            <div class="layui-input-block">
+                              <input type="radio" name="data[teegon_status]" value="1" {if $settings.pay.teegon_status ==1}checked{/if} title="开启" checked="">
+                              <input type="radio" name="data[teegon_status]" value="0" {if $settings.pay.teegon_status ==0}checked{/if} title="关闭">
+                            </div>
+                          </div>              
+             
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">client_id</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="data[teegon_client_id]" lay-verify="teegon_client_id" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.teegon_client_id}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"><a href="https://opennew.teegon.com/" target="_blank">申请接口</a></div>
+                        </div>
+             
+
+                           <div class="layui-form-item">
+                          <label class="layui-form-label">client_secret </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[teegon_client_secret]" lay-verify="teegon_client_secret" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.teegon_client_secret}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>  
+
+                          <div class="layui-form-item">
+                          <label class="layui-form-label">异步通知 </label>
+                          <div class="layui-input-inline">
+                            <input type="ptext" name="data[teegon_notify_url]" lay-verify="teegon_notify_url" placeholder="" autocomplete="off" class="layui-input" value="{$settings.pay.teegon_notify_url}">
+                          </div>
+                          <div class="layui-form-mid layui-word-aux"></div>
+                        </div>                           
+      </div>
+
+
+<!--       <div class="layui-tab-item"></div> -->
+                     <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                          <div class="layui-input-block">
+                              <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="form">确 定</button>
+                          </div>
+                        </div>
+      </div>
+
+  </div>
+
+</form>
+
+
+
+
+    
+
+
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(form)', function(data){
+    // layer.msg(JSON.stringify(data.field));
+    var data =data.field;
+    $.post("{:url('settings/update')}",data,function(json){
+       if(json.code == 0){
+           layer.msg(json.msg);
+       }else if(json.code == -1){
+           layer.msg(json.msg);
+       }
+    });
+    return false;
+  });
+});
+</script>
+
+</script>
+
+</body>
+
+</html>

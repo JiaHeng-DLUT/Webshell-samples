@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/member.css">
+    <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/memberflea.css">
+    <script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-size: 12px;
+            position: relative;
+            z-index: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        function submit_form(obj) {
+            obj.prop('disabled', 'disabled');
+            $('#image_form').submit();
+            obj.removeAttr('disabled');
+        }
+    </script>
+</head>
+<body>
+
+<form action="{:url('Memberflea/image_upload',['upload_type'=>'uploadedfile'])}" method="post" enctype="multipart/form-data" id="image_form">
+    <input type="hidden" name="id" value="{$Request.param.id}"/>
+    <input type="hidden" name="item_id" value="{$Request.param.item_id}"/>
+    <input type="hidden" name="file_id" value="{$Request.param.file_id}"/>
+    <span style="width: 74px; height: 22px; position: absolute; left: 0; top: -10px; z-index: 999; cursor:pointer; ">
+<input onChange="$('#submit_button').click();" type="file" name="file"
+       style="width: 74px; height: 32px; cursor: pointer; opacity:0; filter: alpha(opacity=0)" size="1" hidefocus="true" maxlength="0">
+</span>
+    <div class="upload-button">{$Think.lang.store_goods_img_upload}</div>
+    <input id="submit_button" style="display:none" type="button" value="{$Think.lang.ds_submit}" onClick="submit_form($(this))">
+</form>
+</body>
+</html>

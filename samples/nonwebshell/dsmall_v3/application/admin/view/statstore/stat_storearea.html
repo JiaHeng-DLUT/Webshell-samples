@@ -1,0 +1,117 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺统计</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+   <div class="fixed-empty"></div>
+  <form method="get" name="formSearch" id="formSearch">
+      <div class="ds-search-form">
+            <dl>
+                <dd>
+                    <select name="search_sclass" id="search_sclass" class="querySelect">
+                        <option value="" selected>店铺分类</option>
+                        {foreach name="store_class" item="v"}
+                        <option value="{$v.storeclass_id}" {$Request.param.search_sclass== $v.storeclass_id ? 'selected' :''}>{$v.storeclass_name}</option>
+                        {/foreach}
+                    </select>
+                </dd>
+                <dd>
+                    <input class="txt date" type="text" value="{if $Request.param.search_time}{$Request.param.search_time}{else}{:date('Y-m-d')}{/if}" id="search_time" name="search_time">
+                </dd> 
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:void(0);" id="dssubmit" class="btn tooltip" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Statstore/storearea')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+  </form>
+   
+<div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+           <li>统计图展示了店铺分类下到某个时间为止（默认为当前时间）开店数量在各省级地区的分布情况</li>
+        	<li>统计地图将根据各个区域的开店数量统计数据等级依次显示不同的颜色</li>
+        </ul>
+    </div>
+   <table class="ds-default-table">
+       <thead class="thead">
+           <tr class="space">
+               <th colspan="15">店铺所在地区分布</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <td>
+                   <!-- 地图容器 -->
+                   <div id="container_storenum" class="close_float" style="height:600px; width:90%; margin: 0 auto;">
+                       <div class="stat-map-color">高&nbsp;&nbsp;<span style="background-color: #FD0B07;">&nbsp;</span><span
+                               style="background-color: #FF9191;">&nbsp;</span><span style="background-color: #F7BA17;">&nbsp;</span><span
+                               style="background-color: #FEF406;">&nbsp;</span><span style="background-color: #25AAE2;">&nbsp;</span>&nbsp;&nbsp;低
+                           <p>备注：按照排名由高到低显示：排名第1、2、3名为第一阶梯；排名第4、5、6名为第二阶梯；排名第7、8、9为第三阶梯；排名第10、11、12为第四阶梯；其余为第五阶梯。</p></div>
+                   </div>
+
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+    <!-- 统计列表 -->
+    <table class="ds-default-table">
+        <thead class="thead">
+            <tr>
+                <th class="align-center">序号</th>
+                <th class="align-center">省份</th>
+                <th class="align-center">数量</th>
+                <th class="align-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty name="statlist"}
+            {foreach name="statlist" item="v"}
+            <tr>
+                <td class="align-center">{$v.sort}</td>
+                <td class="align-center">{$v.provincename}</td>
+                <td class="align-center">{$v.storenum}</td>
+                <td class="align-center">
+                    {present name="v.province_id"}
+                    <a href="{$actionurl}?provid={$v.province_id}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+                    {/present}
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="3">{$Think.lang.no_record}
+                </td>
+            </tr>
+            {/notempty}
+        </tbody>
+    </table>
+  </div>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<link rel="stylesheet" type="text/css" href="{$Think.PLUGINS_SITE_ROOT}/map/jquery.vector-map.css"/>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/map/jquery.vector-map.js"></script>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/map/china-zh.js"></script>
+<script>
+$(function () {
+    $('#search_time').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#dssubmit').click(function(){
+        $('#formSearch').submit();
+    });
+    //地图
+    getMap({$stat_json},'container_storenum');
+});
+</script>

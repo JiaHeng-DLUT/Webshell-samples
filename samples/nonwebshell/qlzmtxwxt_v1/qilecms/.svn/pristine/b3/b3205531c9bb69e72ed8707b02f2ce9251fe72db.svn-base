@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">模块管理</a>
+  <a href="">模块列表</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+     <a href="{:url('module/index')}"> <li class="layui-this">模块列表</li></a>
+     <a href="{:url('module/unopened')}"><li>未启用模块</li></a>
+    <a href="{:url('module/uninstall')}"><li>未安装模块</li></a>
+  </ul>
+
+
+  <div class="layui-tab-content">
+
+
+    <div class="layui-tab-item layui-show">
+                      <table class="layui-table">
+                  <colgroup>
+                    <col width="50">
+                    <col width="100">
+                    <col width="200">
+                    <col width="80">
+                    <col width="80">
+                    <col width="200">
+                    <col width="200">
+                    <col width="200">
+                    <col width="200">
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>LOGO</th>
+                      <th>名称</th>
+                      <th>目录</th>
+                      <th>类型</th>
+                      <th>域名</th>
+                      <th>导航</th>
+                      <th>安装时间</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+
+                {volist name="list" id="vo"}
+
+                    <tr>
+                      <td>{$vo.id}</td>
+                      <td>{$vo.logo}</td>
+                      <td>{$vo.name}</td>
+                      <td>{$vo.dir}</td>
+                      <td>内置</td>
+                      <td>{$vo.domain}</td>
+                      <td>{$vo.create_time}</td>
+                      <td>已启用<td>
+
+                      <td>
+
+                      {if  condition="$vo.status eq 1" /}
+                      <button class="layui-btn  layui-btn-sm layui-btn-disable" click="closeModule(this)" data-url="{:url('module/open',array('id'=>$vo.id,'status'=>0))}">
+                      禁用
+                  </button>
+                    {/if}
+
+                </td>
+
+                    </tr>
+                {/volist}
+                  </tbody>
+                </table>
+  </div>
+
+<div class="layui-tab-item ">内容2</div>
+
+<div class="layui-tab-item ">内容3</div>
+
+   </div>
+
+
+
+</div> 
+
+
+
+
+
+
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+function closeModule(obj){
+  var url = obj.getAttribute('data-url');
+  $.get(url,function(json){
+    if(json.code == 0){
+      layer.msg(json.msg);
+        setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                            window.location.reload();//页面刷新
+                          },1000);
+    }
+  });
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="{$pe['host_root']}user.php?mod=userbank" class="sel">{$menutitle}<i></i></a>
+		</div>
+		<div class="hy_table">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="text-align:right;" width="150">账户类型：</td>
+			<td>
+				<select name="userbank_type" class="inputselect" style="width:216px">
+				<!--{foreach($ini['userbank_type'] as $k=>$v):}-->
+				<option value="{$k}">{$v}</option>
+				<!--{endforeach;}-->
+				</select>
+			</td>
+		</tr>
+		<tr id="userbank_address">
+			<td style="text-align:right;">开户银行：</td>
+			<td><input type="text" name="userbank_address" value="{$info['userbank_address']}" class="inputall input400" placeholder="例：中国建设银行北京清华园支行" /> <span id="userbank_address_show"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:right;">收款账号：</td>
+			<td><input type="text" name="userbank_num" value="{$info['userbank_num']}" class="inputall input200" /> <span id="userbank_num_show"></span></td>
+		</tr>
+		<tr>
+			<td style="text-align:right;">收&nbsp;&nbsp;款 人：</td>
+			<td><input type="text" name="userbank_tname" value="{$info['userbank_tname']}" class="inputall input200" /> <span id="userbank_tname_show"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="hidden" name="pesubmit" />	
+				<input type="button" value="提 交"  class="tjbtn" />
+			</td>
+		</tr>
+		</table>
+		</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(function(){
+	js_bankselect();
+	$(":input[name='userbank_type']").change(function(){
+		js_bankselect();
+	})
+	$(":button").click(function(){
+		var userbank_type = $(":input[name='userbank_type'] option:selected").val();
+		/*if (userbank_type != 'alipay' && $(":input[name='userbank_address']").val() == '') {
+			pe_tip('请填写开户行');
+			return false;
+		}
+		if ($(":input[name='userbank_num']").val() == '') {
+			pe_tip('请填写收款帐号');
+			return false;
+		}
+		if ($(":input[name='userbank_tname']").val() == '') {
+			pe_tip('请填写收款人');
+			return false;
+		}*/
+		pe_submit('user.php?mod=userbank&act=add', function(json){
+			if (json.result) {
+				if ('{$_g_fromto}') {
+					pe_open("{$_g_fromto}", 1000);
+				}
+				else {
+					pe_open("user.php?mod=userbank", 1000);				
+				}
+			}
+		})
+	})
+})
+function js_bankselect() {
+	var userbank_type = $(":input[name='userbank_type'] option:selected").val();
+	if (userbank_type == 'alipay' || userbank_type == 'wechat') {
+		$("#userbank_address").hide().find(":input").attr("disabled", "disabled");
+	}
+	else {
+		$("#userbank_address").show().find(":input").removeAttr("disabled");
+	}
+}
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

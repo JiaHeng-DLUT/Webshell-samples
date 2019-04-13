@@ -1,0 +1,46 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+
+<div class="wrapper pr">
+  <ul class="dsc-flow dsc-point-flow">
+    <li class=""><i class="fa fa-shopping-cart"></i>
+      <p>{$Think.lang.pointcart_ensure_order}</p>
+      <sub></sub>
+      <div class="hr"></div>
+    </li>
+    <li class=""><i class="fa fa-pencil"></i>
+      <p>{$Think.lang.pointcart_ensure_info}</p>
+      <sub></sub>
+      <div class="hr"></div>
+    </li>
+    <li class="current"><i class="fa fa-thumbs-o-up"></i>
+      <p>{$Think.lang.pointcart_exchange_finish}</p>
+      <sub></sub>
+      <div class="hr"></div>
+    </li>
+  </ul>
+  <div class="dsc-main">
+    <div class="dsc-title">
+      <h3>{$Think.lang.pointcart_exchange_finish}</h3>
+      <h5>{$Think.lang.convertible_notes1}</h5>
+    </div>
+      <div class="dsc-receipt-info mb30">
+        <div class="dsc-finish-a"><i></i>{$Think.lang.pointcart_step2_order_created}
+          <span class="all-points">{$Think.lang.pointcart_step2_order_allpoints}{$Think.lang.ds_colon}
+            <em>{$order_info.point_allpoint}</em>
+          </span>
+        </div>
+        <div class="dsc-finish-b">{$Think.lang.convertible_notes2}<a href="{:url('Memberpointorder/orderlist')}">{$Think.lang.convertible_notes3}</a>{$Think.lang.convertible_notes4}。
+
+        </div>
+        <div class="dsc-finish-c mb30">
+        <a class="dsc-btn-mini dsc-btn-green mr15" href="{:url('Index/index')}"><i class="fa fa-shopping-cart"></i>{$Think.lang.continue_shopping}</a>
+        <a class="dsc-btn-mini dsc-btn-acidblue" href="{:url('Memberpointorder/order_info',['order_id'=>$order_info.point_orderid])}"><i class="fa fa-file-text-o"></i>{$Think.lang.pointcart_step2_view_order}</a></div>
+      </div>
+  </div>
+</div>
+
+
+{/block}

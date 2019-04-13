@@ -1,0 +1,44 @@
+.banner{
+    width: 1280px;
+	height: 360px;
+}
+.card_list{
+
+}
+.card_list li{
+    width: 234px;
+	height: 284px;
+    background-color: #ffffff;
+    float: left;
+    margin-right: 27px;
+    margin-top: 28px;
+}
+.card_list li:nth-child(5){
+    margin-right: 0;
+}
+.card_list li:last-child{
+    margin-right: 0;
+}
+.card_pic{
+    width: 194px;
+    height: 121px;
+    border-radius: 4px;
+}
+.card_list h3{
+    font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 15px;
+}
+.card_list p{
+    letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 8px;
+}
+.card_list .look{
+	letter-spacing: 1px;
+    color: #2f75ec;
+    cursor: pointer;
+    padding: 18px 0;
+}

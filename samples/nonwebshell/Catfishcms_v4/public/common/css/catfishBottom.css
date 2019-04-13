@@ -1,0 +1,12 @@
+html, body {
+    height: 100%;
+}
+#catfishContentBlock {
+    min-height: 100%;
+    margin-bottom: -40px;
+    padding-bottom: 40px;
+}
+#catfishFooter {
+    line-height: 40px;
+    float: right;
+}

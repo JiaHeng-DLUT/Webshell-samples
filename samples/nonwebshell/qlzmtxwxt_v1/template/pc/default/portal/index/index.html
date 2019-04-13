@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{if !empty($settings.site.seo_title)}{$settings.site.seo_title}{else}{$settings.site.sitename}{/if}</title>
+  <meta name="keywords" content="{if !empty($settings.site.seo_keywords)}{$settings.site.seo_keywords}{/if}">
+  <meta name="description" content="{if !empty($settings.site.seo_description)}{$settings.site.seo_description}{/if}">
+  {include file="public/css"}
+</head>
+<body>
+
+{include file="public/header"}
+
+
+
+   
+<div class="layui-main news-index">
+	<div class="layui-row layui-col-space20 contentTop">
+    <div class="slide-left">
+    <!-- 轮播图 -->
+      <div class="layui-carousel" id="newsIndex">
+        <div carousel-item>
+           {if !empty($slide_article_list)}
+             {volist name="slide_article_list" id="vo"}
+                    <div><a href="{:url('@portal/article/detail',['aid'=>$vo.aid])}" target="_blank"><img src="{$vo.thumb}"></a>
+                    <p id="txt"><span><a href="{:url('@portal/article/detail',['aid'=>$vo.aid])}" target="_blank">{$vo.title}</a></span></p>
+                    </div> 
+
+             {/volist}
+          {/if}
+                  </div>
+        
+      </div>
+    </div>
+
+<!-- 顶置 -->
+ {if !empty($top_article_list)}
+   {volist name="top_article_list" id="vo"}
+    <div class="slide-right-news layui-col-sm4">
+     	<div class="banner-img">
+      <a href="{:url('@portal/article/detail',['aid'=>$vo.aid])}" target="_blank">
+	     	<img src="{$vo.thumb}">
+	     	<div><p><span>{$vo.cname}</span>{$vo.title}</p></div>
+      </a>
+     	</div>
+    </div>
+ {/volist}
+{/if}
+
+	<div class="layui-row layui-col-space20 contentBot">
+    <div class="best-news index-list">
+    	<h2>最新新闻</h2>
+           <!-- 最新新闻 -->
+    	<ul class="newsList" id="newslist">
+    
+    	</ul>
+    	
+    </div>
+    <div class="hour-news index-side">
+    	<div class="newsSide">
+	     	<h2>24小时热文</h2>
+        {if !empty($hour_article_list)}
+	     	<ul> 
+             {volist name="hour_article_list" id="vo"}
+               <li><a href="{:url('@portal/article/detail',['aid'=>$vo.aid])}" target="_blank"><span><img src="{$vo.thumb}"></span><p class="txt">{$vo.title}</p></a></li>
+            {/volist}
+	     	
+	     	</ul>
+        {/if}
+	    </div>
+    </div>
+	</div>
+  <div id="silde"><a id="refresh"><i class="layui-icon layui-icon-refresh"></i></a><a id="scroll"><i class="layui-icon layui-icon-up"></i></a></div>
+</div>
+</div>
+{include file="public/footer"}
+
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  {include file="public/js"}
+<script>
+    layui.use('flow', function(){
+      var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+      var flow = layui.flow;
+
+    // 初始化加载
+          flow.load({
+          elem: '#newslist' //指定列表容器
+          ,mb: 100  
+          // ,isAuto:false
+          ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+            var lis = [];
+           
+            //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+            $.get("{url('@portal/index/index')}"+'?page='+page, function(res){
+        
+              //假设你的列表返回在data集合中
+              layui.each(res.data, function(index, item){
+                   
+         
+                 if(index ==0){
+                    color = 'red';
+                 }else if(index ==1){
+                    color = 'orange';
+                 }else if(index ==2){
+                    color = 'violet';
+                 }else if(index ==3){
+                    color = 'green';
+                 }else if(index ==4){
+                    color = 'cyan';
+                 }else if(index ==5){
+                    color = 'red';
+                 }else if(index ==6){
+                    color = 'orange';
+                 }else if(index ==7){
+                    color = 'violet';
+                 }else if(index ==8){
+                    color = 'green';
+                 }else if(index ==9){
+                    color = '';
+                 }
+                if(item.thumb !=null  && item.thumb1 !=null && item.thumb2 !=null){ 
+                //显示三张图片
+               var html ='';
+                   html +='<li class="newsList2">';
+                   html +='<div class="title"><a href="'+item.url+'" target="_blank">'+item.title+'</a></div>';
+                   html +='<a href="'+item.url+'"><img src="'+item.thumb+'"></a>';
+                   html +='<a href="'+item.url+'"><img src="'+item.thumb1+'"></a>';
+                   html +='<a href="'+item.url+'" class="last"><img src="'+item.thumb2+'"></a>';
+
+                   html +=' <div class="label"><span class="'+color+'">'+item.cname+'</span>'+item.username+'<b>'+item.create_time+'</b> <i class="layui-icon layui-icon-news-review1"></i>'+item.comment+'</div>';
+                   html +='</li>';
+              }else if(item.thumb !=null && item.thumb1 ==null){
+                //显示一张图片
+                   var html ='';
+                   html +='<li><a class="img" href="'+item.url+'" target="_blank"><img src="'+item.thumb+'"></a>';
+                   html +='<div class="txt">';
+                   html +='<a href="'+item.url+'" target="_blank">'+item.title+'</a>';
+                   html +='<div class="label"><span class="'+color+'">'+item.cname+'</span>'+item.username+'<b>'+item.create_time+'</b>';
+                   html +='<i class="layui-icon layui-icon-news-review1"></i>'+item.comment+'</div>';
+                   html +='<p class="cont">'+item.content+'</p>';
+                   html +='</div>';
+                   html +='</li>';
+              }else{
+                //显示纯文字
+                   var html ='';
+                   html +='<li><a href="'+item.url+'" target="_blank"></a>';
+                   html +='<div class="txt" style="width:100%">';
+                   html +='<a href="'+item.url+'" target="_blank">'+item.title+'</a>';
+                   html +='<div class="label"><span class="'+color+'">'+item.cname+'</span>'+item.username+'<b>'+item.create_time+'</b>';
+                   html +='<i class="layui-icon layui-icon-news-review1"></i>'+item.comment+'</div>';
+                   html +='<p class="cont">'+item.content+'</p>';
+                   html +='</div>';
+                   html +='</li>';
+              }
+                    lis.push(html);
+                  }); 
+             
+              //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+              //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+              next(lis.join(''), page < res.pages);    
+            });
+          }
+        });
+   
+});
+</script>
+</body>
+</html>

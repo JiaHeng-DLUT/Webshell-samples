@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文章 - {$userinfo.nickname} - 用户中心 - {$settings.site.sitename}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {include file="public/css"}
+
+</head>
+<body class="bgcolor">
+{include file="../portal/public/header"}
+
+<div class="layui-main news-user">
+  <div class="userSelf">
+    <div class="img">{:avatar($userinfo.uid,128)}</div>
+    <p class="name">{:get_nickname($userinfo.uid)}</p>
+ <!--    {if $user.uid}
+    <a href="{:url('@user/index/publish')}"  class="layui-btn layui-btn-news"><i class="layui-icon layui-icon-add-1"></i>发布新闻</a>
+    {/if} -->
+    <ul><li><span class="number">{$article_count}</span><span class="label">文章</span></li>
+    <li><span class="number">{$follow_count}</span><span class="label">关注</span></li>
+    <li><span class="number">{$fans_count}</span><span class="label">粉丝</span></li></ul>
+  </div>
+  <div class="layui-tab layui-tab-brief userCont">
+    <ul class="layui-tab-title">
+      <li class="layui-this"><a href="{:url('@user/home/index',['uid'=>$Request.param.uid])}">我的文章</a></li>
+      <li><a href="{:url('@user/home/collect',['uid'=>$Request.param.uid])}">我的收藏</a></li>
+      <li><a href="{:url('@user/home/comment',['uid'=>$Request.param.uid])}">我的评论</a></li>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-tab-item layui-show">
+       
+        <ul class="layui-form article" id="article" data-uid="{$Request.param.uid}">
+        {volist name="article_list" id="vo"}
+               <li>
+            <input type="checkbox" lay-skin="primary" class="layui-input">
+            <span class="img"><img src="{$vo.thumb}"></span><div class="txt">
+              <a href="{$vo.url}" target="_blank">{$vo.title}</a>
+              <p>{$vo.create_time}</p>
+              <p class="cont">{$vo.content}</p>
+            </div>
+             </li>
+          {/volist}
+        </ul>
+
+  
+      </div>
+      <div id="page">{$page|raw}</div>
+   
+    </div>
+  </div>    
+</div>
+
+{include file="../portal/public/footer"}
+
+{include file="public/js"}
+{load href="__STATIC__/portal/js/news.js" /}
+
+<script>
+layui.use('flow', function(){
+  var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+  var flow = layui.flow;
+
+// 初始化加载
+
+    //   flow.load({
+    //   elem: '#article' //指定列表容器
+    //   // ,isAuto:false
+    //   ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+    //     var lis = [];
+    //     var uid = $("#collect").attr('data-uid');
+    //     //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+    //     $.get("{:url('@user/home/article')}"+'?uid='+uid+'&page='+page, function(res){
+    //       //假设你的列表返回在data集合中
+    //       layui.each(res.data, function(index, item){
+
+    //        var html ='';
+    //        html +='<li style="float:left;border: 1px solid red;">';
+    //        html +='<input type="checkbox" lay-skin="primary" class="layui-input">';
+    //        html +='<span class="img"><img src="'+item.thumb+'"></span><div class="txt">';
+    //        html +='<a href="'+item.url+'" target="_blank">'+item.title+'</a>';
+    //        html +='<p>'+item.create_time+'</p>';
+    //        html +='<p class="cont">'+item.content+'</p>';
+    //        html +='</div>';
+    //        html +='</li>';
+
+   
+    //         lis.push(html);
+    //       }); 
+          
+    //       //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+    //       //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+    //       next(lis.join(''), page < res.pages);    
+    //     });
+    //   }
+    // });
+// collect
+
+    //   flow.load({
+    //    elem: '#collect' //指定列表容器
+    //   // ,isAuto:false
+    //   ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+    //     var lis = [];
+    //     var uid = $("#collect").attr('data-uid');
+    //     //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+    //     $.get("{:url('@user/home/collect')}"+'?uid='+uid+'&page='+page, function(res){
+    //       //假设你的列表返回在data集合中
+    //       layui.each(res.data, function(index, item){
+    //        var html ='';
+    //        html +='<li style="float:left;border: 1px solid #fff;">';
+    //        html +='<input type="checkbox" lay-skin="primary" class="layui-input">';
+    //        html +='<span class="img"><img src="'+item.article.thumb+'"></span><div class="txt">';
+    //        html +='<a href="'+item.article.url+'" target="_blank">'+item.article.title+'</a>';
+    //        html +='<p>'+item.article.create_time+'</p>';
+    //        html +='<p class="cont">'+item.article.content+'</p>';
+    //        html +='</div>';
+    //        html +='</li>';
+    //        lis.push(html);
+    //       });   
+    //       //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+    //       //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+    //       next(lis.join(''), page < res.pages);    
+    //     });
+    //   }
+    // });
+
+//评论
+    //   flow.load({
+    //    elem: '#comment' //指定列表容器
+    //   // ,isAuto:false
+    //   ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+    //     var lis = [];
+    //     var uid = $("#comment").attr('data-uid');
+    //     //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+    //     $.get("{:url('@user/home/comment')}"+'?uid='+uid+'&page='+page, function(res){
+    //       //假设你的列表返回在data集合中
+    //       layui.each(res.data, function(index, item){
+    //        var html ='';
+    //            html+='<li>';
+    //            html+='<p class="title"><a href="'+item.article.url+'" target="_blank">'+item.article.title+'</a><span class="pushTime">'+item.article.create_time+'</span><span class="like">'+item.like+'</span><i class="layui-icon layui-icon-news-good like"></i></p>';
+    //            html+='<p>'+item.content+'</p>';
+    //            html+='</li>';
+
+    //        lis.push(html);
+    //       });   
+    //       //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+    //       //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+    //       next(lis.join(''), page < res.pages);    
+    //     });
+    //   }
+    // });
+});
+</script>
+</body>
+</html>

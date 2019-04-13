@@ -1,0 +1,4 @@
+<?php
+// See extensions/LimeScript
+
+?>

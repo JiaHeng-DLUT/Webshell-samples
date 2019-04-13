@@ -1,0 +1,73 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>会员相册</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.snsalbum_pic_name}</dt>
+                <dd><input type="text" value="{$Request.get.pic_name}" name="pic_name" id="pic_name" class="txt"></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+            </div>
+        </div>
+    </form>
+    
+        <table class="ds-default-table">
+            <tbody>
+            {notempty name="pic_list"}
+            <tr><td colspan="20"><ul class="thumblists">
+                {foreach name="pic_list" item="val"}
+                <li class="picture">
+                    <div class="size-64x64">
+                        <span class="thumb"><i></i><img width="64" height="64" class="show_image" src="{:get_snsalbumpic($val['member_id'],$val['ap_cover'])}" />
+                            <span class="type-file-preview" style="display: none;">
+                                <img src="{:get_snsalbumpic($val['member_id'],$val['ap_cover'])}">
+                            </span>
+                        </span>
+                    </div>
+                    <p>
+                        <span><input class="checkitem" type="checkbox" name="id[]" value="{$val.ap_id}" /></span><span><a href="javascript:submit_delete({$val.ap_id})">{$Think.lang.ds_del}</a></span>
+                    </p>
+                </li>
+                {/foreach}
+            </ul>
+            </td>
+            </tr>
+             <tfoot>
+            <tr class="tfoot">
+                <td class="w48"><input id="checkallBottom" class="checkall" type="checkbox" /></td>
+                <td colspan="16">
+                    <label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    <a class="btn btn-small" href="javascript:void(0);" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+            </tr>
+            </tfoot>
+            {else}
+            <tr class="no_data">
+                <td colspan="15">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$showpage}
+</div>
+
+<script type="text/javascript">
+    function submit_delete(ids_str) {
+        _uri = ADMINSITEURL + "/Snsmalbum/del_pic.html?ap_id=" + ids_str;
+        dsLayerConfirm(_uri, '{$Think.lang.ds_ensure_del}');
+    }
+</script>

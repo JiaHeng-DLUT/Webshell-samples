@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{QUERY_STRING} ^(.*)$  
+RewriteRule ^MP_verify_([a-zA-Z0-9]+)\.txt$ api.php?mod=wechat&act=verify_txt&txt=$1  
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(.*\.php|data|hook|include|install|template|module)
+RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

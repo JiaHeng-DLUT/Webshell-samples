@@ -1,0 +1,37 @@
+.form-horizontal ul.wysihtml5-toolbar li {
+    overflow:visible;
+}
+#addnewsurvey ul.wysihtml5-toolbar li{
+    clear:none;
+}
+
+.settingswidget .jsoneditor-wrapper{
+    height:1em;/* set a heigth for heigth:100% on children*/
+    min-height:20em;/* set the min-height */
+    vertical-align: middle;
+}
+/*
+    Special layout for list settings (in table).
+*/
+.settingswidget .setting-list table{
+    width: 100%;
+}
+.setting-list .settings .controls{
+    margin:0;
+    width:100%;
+    max-width:100%;
+}
+.setting-list .settings .setting{
+    text-align:center;
+    vertical-align:middle;
+    display:table-cell;
+}
+.setting-list .settings .setting:before, .setting-list .settings .setting:after {
+    content: none;
+    display: none;
+}
+.setting-list .settings .setting:after {
+    clear: none;
+}
+.select2-container{min-width:6em}
+.select2-container{max-width:100%}

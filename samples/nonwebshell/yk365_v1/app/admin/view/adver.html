@@ -1,0 +1,105 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+    <h3 class="title"><em>广告列表</em><span><a href="<{url('adver',['act'=>'add'])}>">+添加新广告</a></span></h3>
+	<div class="listbox">
+        <form name="mform" method="post" action="<{url('adver')}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="<{url('adver')}>">
+        <div class="toolbar">
+        	<select name="act" id="act" class="sel">
+        	<option value="del" style="color: #FF0000;">删除选定</option>
+        	</select>
+        	<input type="submit" class="btn" value="应用" onClick="if(IsCheck('adver_id[]')==false){alert('请指定您要操作的广告ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+        
+        </div>
+                        
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>广告类型</th>
+				<th>广告名称</th>
+				<th>有效天数</th>
+				<th>广告显示状态</th>
+				<th>到期时间</th>
+				<th>前台调用代码</th>
+				<th>广告状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$advers item=ad}>
+			<tr>
+				<td><input name="adver_id[]" type="checkbox" value="<{$ad.adver_id}>"></td>
+				<td><{$ad.adver_id}></td>
+				<td>代码广告</td>
+				<td><{$ad.adver_name}></td>
+				<td><{$ad.adver_days}></td>
+				<td><{$ad.adver_time_status}></td>
+				<td><{$ad.adver_date}></td>
+				<td><{'<{get_adcode('}><{$ad.adver_id}><{')}>'}></td></td>
+                <td><{if $ad.adver_status == 1}><span class="label label-success">开启</span><{else}><span class="label label-default">关闭</span><{/if}></td>
+				<td><{$ad.adver_operate}></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="8">无任何网站广告！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+    <{/if}>
+
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('adver')}>">返回列表&raquo;</a></span></h3>
+    <div class="formbox">
+    	<form name="mform" method="post" action="<{url('adver')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>广告类型：</th>
+				<td><input name="adver_type" type="radio" id="adver_type2" value="1" <{if !empty($ad_type)}><{opt_checked($ad_type, 1)}> <{/if}> onClick="$('#url').hide(); $('#code').show();" /><label for="adver_type2">广告代码</label></td>
+			</tr>
+			<tr>
+				<th>广告名称：</th>
+				<td><input name="adver_name" type="text" class="ipt" id="adver_name" size="50" maxlength="50" value="<{if !empty($adver.adver_name)}><{$adver.adver_name}><{/if}>" /></td>
+			</tr>
+
+			<tr id="code" >
+				<th valign="top">广告代码：</th>
+				<td><textarea name="adver_code" cols="50" rows="10" class="ipt" id="adver_code"><{if !empty($adver.adver_code)}><{$adver.adver_code}><{/if}></textarea></td>
+			</tr>
+			<tr>
+				<th>过期提示：</th>
+				<td><input name="adver_etips" type="text" class="ipt" id="adver_etips" size="50" maxlength="50" value="<{if !empty($adver.adver_etips)}><{$adver.adver_etips}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>有效天数：</th>
+				<td><input name="adver_days" type="text" class="ipt" id="adver_days" size="10" maxlength="3" value="<{if !empty($adver.adver_days)}><{$adver.adver_days}><{else}>0<{/if}>" /> 天<span class="tips">当有效天数为0时，表示广告长期有效</span></td>
+			</tr>
+			<tr>
+				<th>广告状态：</th>
+				<td><input name="adver_status" type="radio"  value="1" <{if !empty($adver.adver_status)}><{opt_checked($adver.adver_status,1)}><{/if}>/><label for="adver_status1">显示</label>　<input name="adver_status" type="radio"  value="0" 
+				<{if !empty($adver.adver_status)}><{opt_checked($adver.adver_status,0)}><{/if}>
+				/><label for="adver_status2">关闭</label></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $adver.adver_id}>
+					<input name="adver_id" type="hidden" id="adver_id" value="<{$adver.adver_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('adver')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>           
+	<{/if}>
+
+<{include file="footer.html"}>

@@ -1,0 +1,105 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <form class="" id="user_form" method="post">
+        <div class="ds-default-table">
+            <table>
+                <tbody>
+                    <tr class="noborder">
+                        <td class="required w120"></td>
+                        <td class="vatop rowform"">
+                            <div id="gcategory" class="default_select">
+                                <input type="hidden" name="gc_id" value="{$spec.gc_id}" class="mls_id" />
+                                <input type="hidden" name="gc_name" value="{$spec.gc_name|default=''}" class="mls_name" />
+                                {if $spec.gc_id}
+                                <span>{$spec.gc_name|default=''}</span>
+                                <input type="button" value="{$Think.lang.ds_edit}" class="edit_gcategory" />
+                                {/if}
+                                <select {if $spec.gc_id}style="display:none"{/if}>
+                                    <option value="0">请选择分类</option>
+                                    {foreach name="gc_list" item="gc"}
+                                    <option value="{$gc.gc_id}">{$gc.gc_name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="noborder">
+                        <td class="required w120">{$Think.lang.sp_name}</td>
+                        <td class="vatop rowform">
+                            <input type="text" name="sp_name" id="sp_name" value="{$spec.sp_name|default=''}" class="w200"/>
+                        </td>
+                    </tr>
+                    <tr class="noborder">
+                        <td class="required w120">{$Think.lang.sp_sort}</td>
+                        <td class="vatop rowform">
+                            <input type="text" name="sp_sort" id="sp_sort" value="{$spec.sp_sort|default=''}" class="w200"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr class="tfoot">
+                    <td></td>
+                    <td>
+                        <input id="submitBtn" class="btn" type="submit" value="提交"/>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </form>
+</div>
+<!--载入-->
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+
+<script>
+    $(function() {
+        gcategoryInit("gcategory");
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function(){
+            if ($("#user_form").valid()){
+                $("#user_form").submit();
+            }
+        });
+        $('#user_form').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules: {
+                sp_name :{
+                    required: true,
+                },
+                sp_sort :{
+                    required: true,
+                    digits:true,
+                    max: 255,
+                    min:0,
+                }
+                
+                 
+            },
+            messages: {
+                sp_name :{
+                   required: '必填',
+                },
+                sp_sort :{
+                    required: '必填',
+                    digits: '输入数字范围为0~255，数字越小越靠前',
+                    max: '输入小于等于255的数'
+                }
+            }
+        });
+        
+    });
+    
+    
+</script>

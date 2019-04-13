@@ -1,0 +1,236 @@
+<?php /*a:3:{s:60:"D:\WWW\tp5.1_qilecms./qilecms/admin/view\shop\orderlist.html";i:1514639240;s:56:"D:\WWW\tp5.1_qilecms./qilecms/admin/view\public\css.html";i:1514188107;s:55:"D:\WWW\tp5.1_qilecms./qilecms/admin/view\public\js.html";i:1514603431;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--引入CSS-->
+ <link rel="stylesheet" type="text/css" href="/public/static/webuploader/webuploader.css" />
+ <link rel="stylesheet" type="text/css" href="/public/static/layui/css/layui.css" />
+ <link rel="stylesheet" type="text/css" href="/public/static/font-awesome/css/font-awesome.min.css" />
+ <link rel="stylesheet" type="text/css" href="/public/static/admin/css/style.css" />
+
+
+    <!--引入JS-->
+<script type="text/javascript" src="/public/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/static/layui/layui.js"></script>
+<script type="text/javascript" src="/public/static/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="/public/static/admin/js/admin.js"></script>
+<script type="text/javascript" src="/public/static/admin/js/admin.js"></script>
+  <script>
+layui.use(['element', 'layer','form',], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>
+<script>
+$(document).ready(function(){
+  $(".layui-header .layui-nav-item").click(function(){
+   var i =$(this).index();
+   $(".layui-nav-tree").eq(i).show().siblings('.layui-nav-tree').hide();
+  });
+});
+</script>
+
+<script>
+
+$(function(){
+  $("#clear_cache").on("click",function(){
+      layer.confirm('是否确定清理缓存！', {
+  btn: ['确定','取消'] //按钮
+}, function(){
+         $.post("<?php echo url('system/clearCache'); ?>",{"status":"clear"},function(json){
+           if(json.code == 1){
+             layer.msg(json.msg);
+           }else{
+              layer.msg(json.msg);
+           }
+       });
+}, function(){   });
+
+
+
+  });
+});
+</script>
+
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+   <blockquote class="layui-elem-quote" style="margin-top:5px;">说明：</blockquote>
+<div class="layui-tab " lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this"><a href="<?php echo url('shop/goodsList'); ?>">商品列表</a></li>
+    <li><a href="<?php echo url('Category/index',array('type'=>'goods')); ?>">商品分类</li>
+    <li><a href="<?php echo url('shop/goodsBrand'); ?>">商品品牌</a></li>
+    <li><a href="<?php echo url('shop/goodsSpecList'); ?>">商品规格</a></li>
+  </ul>
+
+</div>      
+<?php echo search('添加商品',$select,'false','false',$date); ?>
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col width="110">
+      <col>
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>规则ID</th>
+        <th>规则标题</th>
+        <th>规则URL</th>
+        <th>规则模块</th>
+        <th>规则类型</th>
+        <th>规则条件</th>
+        <th>规则状态</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+<?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+      <tr>
+        <td><input type="checkbox" name="uid[]" class="id " title=""  lay-skin="primary" value="<?php echo htmlentities($vo['uid']); ?>"></td>
+        <td><?php echo htmlentities($vo['id']); ?></td>
+        <td><?php echo htmlentities($vo['title']); ?></td>
+        <td><?php echo htmlentities($vo['name']); ?></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('<?php echo url("member/edit",array("uid"=>$vo["uid"])); ?>')"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+<?php endforeach; endif; else: echo "" ;endif; ?>
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages"><?php echo $page; ?></div>
+<!-- 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+         -->  
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//删除
+    var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+           $.ajax({
+           type:'post',
+           data:{"uid":id},
+           dataType:'json',
+           url:"<?php echo url('member/del'); ?>",
+           success:function(json){
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+
+});
+$("#add").on("click",function(){
+  open('<?php echo url("auth/add"); ?>','添加规则','580px','80%');
+});
+
+
+function edit(url){
+ parent.layer.open({
+          type: 2,
+          title: '用户编辑',
+          shadeClose: true,
+          shade: 0.8,
+          area: ['880px', '90%'],
+          content: url //iframe的url
+        }); 
+}
+
+</script>
+</body>
+
+</html>

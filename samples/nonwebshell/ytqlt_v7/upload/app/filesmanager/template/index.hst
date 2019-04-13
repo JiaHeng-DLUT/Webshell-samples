@@ -1,0 +1,155 @@
+<!--
+	<?php
+		$_G['TEMPLATE']['BODY']='filesmanager:index';
+	?>
+-->
+<style>
+	.div-filelist {
+		border: solid 1px gray;
+		padding: 1px;
+		overflow-y: scroll;
+		max-height: 410px;
+	}
+	
+	.div-filelist table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 14px;
+	}
+	
+	.div-filelist table tr td {
+		border: solid 1px lightgray;
+		padding: 8px;
+	}
+	
+	.div-filelist table tr td:nth-child(1) {
+		border-bottom: none;
+		border-left: none;
+	}
+	
+	.div-filelist table tr td:nth-child(2) {
+		border-bottom: none;
+	}
+	
+	.div-filelist table tr td:nth-child(3) {
+		border-bottom: none;
+		text-align: right;
+	}
+	
+	.div-filelist table tr td:nth-child(4) {
+		border-bottom: none;
+		border-right: none;
+		text-align: center;
+	}
+	
+	#mkdiv {
+		visibility: hidden;
+		position: fixed;
+		width: 222px;
+		border: solid 1px #333;
+		background-color: white;
+		padding: 10px;
+		font-family: "microsoft yahei";
+		border-radius: 5px;
+		z-index: 9999;
+	}
+</style>
+<a name="workarea"></a>
+<div class="pk-container">
+	<div class="pk-container" style="background-color:white">
+		<div class="pk-padding-top-15" style="padding-top:0">
+			<input type="text" class="pk-textbox" value="当前路径：{$_G['TEMP']['PATH']}" readonly>
+		</div>
+		<div class="pk-padding-15" style="padding-top:0">
+			<button type="button" class="pk-btn pk-btn-sm" onclick="showdivframe('mkdiv');">新建</button>
+			<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('')">根目录</button>
+			<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('app')">应用目录</button>
+			<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('template')">模板目录</button>
+			<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('uploadfiles')">上传文件目录</button>
+			<button type="button" class="pk-btn pk-btn-sm" onclick="gopath('userhead')">用户头像目录</button>
+		</div>
+		<div class="pk-padding-15 pk-padding-top-0 pk-padding-bottom-0">
+			<div class="div-filelist">
+				<table>
+					<tr>
+						<td style="border-top:0;text-align:left">文件名称</td>
+						<td style="border-top:0;text-align:left;width:180px">修改时间</td>
+						<td style="border-top:0;text-align:left">文件大小</td>
+						<td style="border-top:0;text-align:left;width:100px">管理操作</td>
+					</tr>
+					{$filelist}
+				</table>
+			</div>
+		</div>
+		<div class="pk-padding-15 pk-text-center">
+			<a target="_blank" href="http://www.hadsky.com/index.php?c=read&id=159">出现问题及解决办法</a>
+		</div>
+	</div>
+</div>
+<div id="mkdiv">
+	<div style="background:white;border-radius:5px">
+		<form name="form_mkfile" method="get" action="index.php">
+			<input type="hidden" name="c" value="app" />
+			<input type="hidden" name="a" value="filesmanager:index" />
+			<input type="hidden" name="path" value="{$path}" />
+			<div class="pk-padding-10 pk-text-center">
+				<input type="radio" name="type" value="mkfile" checked />文件
+				<input type="radio" name="type" value="mkdir" />目录
+				<br>
+			</div>
+			<div class="pk-padding-10" style="padding-top:0">
+				<input name="mkname" class="pk-textbox" type="text" placeholder="名称，文件请带后缀" required />
+			</div>
+			<div class="pk-padding-10 pk-text-center" style="padding-top:0">
+				<button class="pk-btn pk-btn-default pk-btn-sm" type="submit">创建</button>
+				<button class="pk-btn pk-btn-default pk-btn-sm" type="button" onclick="hiddendivframe('mkdiv')">取消</button>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	//绑定post事件处理器
+	$(document).ajaxError(function(event, jqxhr, settings, exception) {
+		//console.log(_data);
+		console.log(event);
+		console.log(jqxhr);
+		console.log(settings);
+	});
+
+	function gopath($path) {
+		var mpath = "{str_replace('\\', '\\\\',$_G['SYSTEM']['PATH'])}";
+		location.href = 'index.php?c=app&a=filesmanager:index&path=' + encodeURIComponent(mpath + '/' + $path) + '#workarea';
+	}
+
+	function delFile(path, This) {
+		var p = $(This).parents('tr:eq(0)');
+		ppp({
+			type: 1,
+			icon: 3,
+			content: "确认是否删除该文件？",
+			submit: function() {
+				$.getJSON('index.php', {
+					c: "app",
+					a: "filesmanager:index",
+					type: "del",
+					path: path
+				}, function(data) {
+					if(data['state'] == 'ok') {
+						ppp({
+							type: 3,
+							icon: 1,
+							content: "删除成功"
+						});
+						p.remove();
+					} else {
+						ppp({
+							type: 0,
+							icon: 2,
+							content: data['datas']['msg']
+						});
+					}
+				});
+			}
+		});
+	}
+</script>

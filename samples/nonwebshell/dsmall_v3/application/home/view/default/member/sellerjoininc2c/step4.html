@@ -1,0 +1,151 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+<div class="breadcrumb"><span class="fa fa-home"></span><span><a href="">{$Think.lang.homepage}</a></span> <span class="arrow">></span> <span>{$Think.lang.merchant_entry_application}</span> </div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.merchant_entry_application}</h3>
+        </div>
+        <div class="content">
+            <dl>
+                <dt class="{if $sub_step == 'step0'}current{/if}"> <i class="hide"></i>{$Think.lang.enter_agreement}</dt>
+            </dl>
+            <dl show_id="0">
+                <dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>{$Think.lang.submit_application}</dt>
+                <dd>
+                    <ul>
+                        <li class="{if $sub_step == 'step1'}current{/if}"><i></i>{$Think.lang.store_qualification_information}</li>
+                        <li class="{if $sub_step == 'step2'}current{/if}"><i></i>{$Think.lang.financial_qualification_information}</li>
+                        <li class="{if $sub_step == 'step3'}current{/if}"><i></i>{$Think.lang.store_operation_information}</li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="{if $sub_step == 'pay'}current{/if}"> <i class="hide"></i>{$Think.lang.contract_signing_payment}</dt>
+            </dl>
+            <dl>
+                <dt> <i class="hide"></i>{$Think.lang.store_opening}</dt>
+            </dl>
+        </div>
+        <div class="title">
+            <h3>{$Think.lang.platform_contact}</h3>
+        </div>
+        <div class="content">
+            <ul>
+                <li>{$Think.lang.phone}：{$Think.config.site_phone}</li>
+                <li>{$Think.lang.email}：{$Think.config.site_email}</li>
+            </ul> 
+        </div>
+    </div>
+    <div class="right-layout">
+        <div class="joinin-step">
+            <ul>
+                <li class="step1 {if $sub_step >= 'step0'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.enter_agreement}</span></li>
+                <li class="{if $sub_step >= 'step1'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.store_qualification_information}</span></li>
+                <li class="{if $sub_step >= 'step2'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.financial_qualification_information}</span></li>
+                <li class="{if $sub_step >= 'step3'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.store_operation_information}</span></li>
+                <li class="{if $sub_step >= 'step4'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.contract_signing_payment}</span></li>
+                <li class="step6"><span>{$Think.lang.store_opening}</span></li>
+            </ul>
+        </div>
+        <div class="joinin-concrete">
+
+
+
+
+
+
+
+
+
+<div class="explain"><i class="fa fa-refresh "></i>{$joinin_message|default=''}</div>
+{notempty name="joinin_detail"}
+<table border="0" cellpadding="0" cellspacing="0" class="all">
+  <tbody>
+    <tr>
+      <th>{$Think.lang.payment_list}</th>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table  border="0" cellpadding="0" cellspacing="0" class="type">
+          
+          <tbody>
+            <tr>
+              <td class="w80">{$Think.lang.fee_standard}：</td>
+              <td class="w250 tl">{$joinin_detail.storegrade_price|default='0'}{$Think.lang.ds_yuan}/{$Think.lang.ds_year}( {$joinin_detail.storegrade_name} )</td>
+              <td class="w80">{$Think.lang.store_opening_hours}：</td>
+              <td class="tl">{$joinin_detail.joinin_year} {$Think.lang.ds_year}</td>
+            </tr>
+            <tr>
+              <td class="w80">{$Think.lang.store_classification}：</td>
+              <td class="tl">{$joinin_detail.storeclass_name}</td>
+              <td class="w80">{$Think.lang.deposit}：</td>
+              <td class="tl">{$joinin_detail.storeclass_bail} {$Think.lang.ds_yuan}</td>
+            </tr>
+            <tr>
+              <td>{$Think.lang.payable_amount}：</td>
+              <td class="tl" colspan="3">{$joinin_detail.paying_amount} {$Think.lang.ds_yuan}</td>
+            </tr>
+          </tbody>
+        </table></td>
+    </tr>
+    <tr>
+      <th>{$Think.lang.business_category_list}</th>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table border="0" cellpadding="0" cellspacing="0" id="table_category" class="type">
+          <thead>
+            <tr>
+              <th class="w120 tc">{$Think.lang.one_level_class}</th>
+              <th class="w120 tc">{$Think.lang.two_level_class} </th>
+              <th class="tc">{$Think.lang.three_level_class}</th>
+              <th class="tc">{$Think.lang.commission_ratio}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notempty name="$joinin_detail.store_class_names"}
+            {php}$store_class_names = @unserialize($joinin_detail['store_class_names']);{/php}
+            {php}$store_class_commis_rates = explode(',', $joinin_detail['store_class_commis_rates']);{/php}
+            {foreach name="store_class_names" item="name" key="k" }
+            {php}$name = explode(',', $name);{/php}
+            <tr>
+              <td>{$name.0|default='0'}</td>
+              <td>{$name.1|default='0'}</td>
+              <td>{$name.2|default='0'}</td>
+              <td>{$store_class_commis_rates[$k]} %</td>
+            </tr>
+            {/foreach}
+            {/notempty}
+          </tbody>
+        </table></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="20">&nbsp;</td>
+    </tr>
+  </tfoot>
+</table>
+{/notempty}
+<div class="bottom">
+    {if $btn_next}
+    <a id="" href="{$btn_next}" class="btn">{$Think.lang.next_step}</a>
+    {/if}
+</div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+{/block}

@@ -1,0 +1,51 @@
+<div class="eject_con">
+    <div id="warning" class="alert alert-error"></div>
+    <form action="{:url('Sellerreturn/receive',['return_id'=>$return.refund_id])}" method="post" id="post_form">
+        <dl>
+            <dt>{$Think.lang.delivery_time}{$Think.lang.ds_colon}</dt>
+            <dd> {$return.delay_time|date="Y-m-d H:i:s",###} </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.logistics_information}{$Think.lang.ds_colon}</dt>
+            <dd>{$express_name}{$return.invoice_no}</dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.goods_situation}{$Think.lang.ds_colon}</dt>
+            <dd><select name="return_type">
+                    <option value="">{$Think.lang.ds_please_choose}</option>
+                    <option value="4">{$Think.lang.has_been_received}</option>
+                    {if $delay_time > 0}
+                    <option value="3">{$Think.lang.not_yet_received}</option>
+                    {/if}
+                </select>
+                <p class="hint">{$Think.lang.receiving_instructions1} {$return_delay} {$Think.lang.receiving_instructions2} {$return_confirm} {$Think.lang.receiving_instructions3}</p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" id="confirm_yes" value="{$Think.lang.ds_ok}" /></label>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#post_form').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function (form, validator) {
+                $('#warning').show();
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('post_form');
+            },
+            rules: {
+                return_type: {
+                    required: true
+                }
+            },
+            messages: {
+                return_type: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.please_select_receiving_situation}'
+                }
+            }
+        });
+    });
+</script>

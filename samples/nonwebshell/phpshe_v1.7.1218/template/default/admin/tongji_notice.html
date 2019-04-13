@@ -1,0 +1,43 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('tongji_menu.html'));}-->
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="30"></th>
+			<th class="bgtt">通知内容</th>
+			<th class="bgtt" width="150">发送对象</th>
+			<th class="bgtt" width="120">发送时间</th>
+			<th class="bgtt" width="100">发送状态</th>
+			<th class="bgtt" width="60">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td>{$v['noticelog_id']}</td>
+			<td><img src="{$pe['host_tpl']}images/{$v['noticelog_type']}.png" /></td>
+			<td class="aleft"><!--{if($v['noticelog_name']):}--><p>{$v['noticelog_name']}</p><!--{endif;}-->{pe_cut(pe_text($v['noticelog_text']), 80, '...')}</span></td>
+			<td>{$v['noticelog_user']}</td>
+			<td class="num">{$v['noticelog_stime'] ? pe_date($v['noticelog_stime']) : '-'}</td>
+			<!--{if($v['noticelog_state']=='new'):}-->
+			<td><span class="cred">待发送</span></td>
+			<!--{elseif($v['noticelog_state']=='send'):}-->
+			<td><span class="cred">发送中</span></td>
+			<!--{elseif($v['noticelog_state']=='success'):}-->
+			<td><span class="cgreen">成功</span></td>
+			<!--{elseif($v['noticelog_state']=='fail'):}-->
+			<td><a href="javascript:;" onmouseenter="pe_tips(this, '{$v['noticelog_error']}')" class="c999" style="text-decoration:line-through">失败</a></td>
+			<!--{endif;}-->
+			<td><a href="admin.php?mod=tongji&act=notice_del&id={$v['noticelog_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a></td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

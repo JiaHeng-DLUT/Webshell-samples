@@ -1,0 +1,60 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <form id="add_form" action="{:url('Sellervoucher/quotaadd')}" method="post">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.voucher_apply_addnum}{$Think.lang.ds_colon}</dt>
+            <dd><input id="quota_quantity" name="quota_quantity" type="text" class="text w50"/><em class="add-on">{$Think.lang.ds_month}</em><span></span>
+                <p class="hint">{$Think.lang.voucher_apply_add_tip1}</p>
+                <p class="hint">{php}printf(lang('voucher_apply_add_tip2'), config('promotion_voucher_price')){/php},{php}printf(lang('voucher_apply_add_tip3'), config('voucher_storetimes_limit')){/php}</p>
+                <p class="hint"><strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong></p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input id="submit_button" type="submit" value="{$Think.lang.ds_submit}"  class="submit"></label>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            submitHandler:function(form){
+                var unit_price = parseInt('{$Think.config.promotion_voucher_price}');
+                var quantity = parseInt($("#quota_quantity").val());
+                var price = unit_price * quantity;
+                layer.confirm('{$Think.lang.voucher_apply_add_confirm1}'+price+'{$Think.lang.voucher_apply_add_confirm2}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    ds_ajaxpost('add_form','url',"{:url('Sellervoucher/templatelist')}");
+                });
+            },
+            rules : {
+                quota_quantity : {
+                    required : true,
+                    digits : true,
+                    min : 1,
+                    max : 12
+                }
+            },
+            messages : {
+                quota_quantity : {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_apply_num_error}',
+                    digits : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_apply_num_error}',
+                    min : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_apply_num_error}',
+                    max : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.voucher_apply_num_error}'
+                }
+            }
+        });
+    });
+</script> 
+
+{/block}
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>编辑分类</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<div class=""  style="padding:20px">
+
+<form class="layui-form" action="" method="post">
+
+<input type="hidden" name="type" value="{$type}">
+<input type="hidden" name="cid" value="{$Request.param.cid}">
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 上级分类</label>
+                <div class="layui-input-inline">
+                 
+{:get_select_cate($Request.controller.'_category',$category.cid,$category.pid)}
+               
+                </div>
+            
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 分类名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="cname" lay-verify="cname" autocomplete="off" placeholder="" class="layui-input" value="{$category.cname}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux"><span class="orange">*</span> 必填</div>
+              </div>
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">别名</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="alias" lay-verify="alias" autocomplete="off" placeholder="" class="layui-input" value="{$category.alias}">
+                </div>
+                  <div class="layui-form-mid layui-word-aux"><span class="orange">*</span> 必填<br></div>
+                    <div class="layui-form-mid layui-word-aux">  {:about('建议使用英文首字母缩写别名，或者中文首字母别名，用于前台url显示')}</div>
+                 
+                
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">SEO标题</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="seotitle" lay-verify="seotitle" autocomplete="off" placeholder="" class="layui-input" value="{$category.seotitle}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">SEO关键词</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="keywords" lay-verify="keywords" autocomplete="off" placeholder="" class="layui-input" value="{$category.keywords}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">SEO描述</label>
+                <div class="layui-input-inline">
+                  <textarea name="description" lay-verify="condition" autocomplete="off" placeholder="" class="layui-textarea">{$category.description}</textarea>
+                </div>
+                   <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+         <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">列表模板</label>
+                <div class="layui-input-inline"> 
+                    <select name="list_template" lay-verify="required">
+                {volist name="list_template"  id="vo"}         
+                  <option value="{$vo.name}" {if $category.list_template == $vo.name} selected {/if}>{$vo.name}</option>   
+                {/volist}
+                   </select>
+                
+                </div>
+                   <div class="layui-form-mid layui-word-aux">默认为空,将模板文件上传到模板目录的 {$Request.controller|strtolower}目录下，如：template/default/{$Request.controller|strtolower}目录下，文件名必须为list/*.html，*为自定义文件名</div>
+              </div>
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">详情模板</label>
+                <div class="layui-input-inline">
+                <select name="detail_template" lay-verify="required">
+                {volist name="detail_template"  id="vo"}         
+                  <option value="{$vo.name}" {if $category.detail_template == $vo.name} selected {/if}>{$vo.name}</option>   
+                {/volist}
+                </select>          
+           
+                </div>
+                   <div class="layui-form-mid layui-word-aux">默认为空,将模板文件上传到模板目录的 {$Request.controller|strtolower}目录下，如：template/default/{$Request.controller|strtolower}目录下，文件名必须为detail/*.html，*为自定义文件名</div>
+              </div>  
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">排序</label>
+                <div class="layui-input-inline">
+                <input type="text" class="layui-input"  name="sort"  value="0" value="{$category.sort}">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">状态</label>
+                <div class="layui-input-inline">
+                <input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget" {if $category.status}checked{/if} lay-text="显示|隐藏">
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                   <button class="layui-btn layui-btn-normal"  lay-submit lay-filter="form">确 定</button>
+                   <a href="javascript:history.go(-1);" class="layui-btn layui-btn-primary"  >返 回</a>
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url($Request.controller.'/categoryEdit')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            layer.msg(json.msg);
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+     return false;
+  });
+});
+
+</script>
+<script>
+
+</script>
+</body>
+
+</html>

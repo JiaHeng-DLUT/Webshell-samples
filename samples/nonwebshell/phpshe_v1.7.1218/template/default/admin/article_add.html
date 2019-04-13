@@ -1,0 +1,55 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20">
+		<tr>
+			<td align="right" width="150">文章名称：</td>
+			<td><input type="text" name="info[article_name]" value="{$info['article_name']}" class="inputall input500" /></td>
+		</tr>
+		<tr>
+			<td align="right">文章分类：</td>
+			<td>
+				<select name="info[class_id]" class="inputselect">
+				<!--{foreach($cache_class_arr['news'] as $v):}-->
+				<option value="{$v['class_id']}" <!--{if($v['class_id']==$info['class_id']):}-->selected="selected"<!--{endif;}-->>[资讯中心] {$v['class_name']}</option>
+				<!--{endforeach;}-->
+				<option value="0" disabled>--------------------------</option>
+				<!--{foreach($cache_class_arr['help'] as $v):}-->
+				<option value="{$v['class_id']}" <!--{if($v['class_id']==$info['class_id']):}-->selected="selected"<!--{endif;}-->>[帮助中心] {$v['class_name']}</option>
+				<!--{endforeach;}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">发布日期：</td>
+			<td><input type="text" name="info[article_atime]" value="{pe_date($info['article_atime'] ? $info['article_atime'] : time())}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate inputall" /></td>
+		</tr>
+		<tr>
+			<td align="right">文章详情：</td>
+			<td><textarea name="info[article_text]" id="editortext" style="width:760px;height:400px">{htmlspecialchars($info['article_text'])}</textarea></td>
+		</tr>
+		</table>
+		<div class="mat10 mab10">
+			<input type="hidden" name="pe_token" value="{$pe_token}" />
+			<input type="submit" name="pesubmit" value="提 交" class="tjbtn" style="margin-left:435px" />
+		</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/my97/WdatePicker.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/editor/kindeditor.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/editor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8">
+var editor;
+KindEditor.ready(function(K) {
+	editor = K.create('#editortext', {
+		allowFlashUpload :false
+	});
+});
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="app/superadmin/template/css/main.css" />
+<!--启动界面-->
+<div class="start-div"></div>
+<!--大屏端-->
+<div id="app-superadmin-main" class="pk-row pk-hide pk-admin" data-data="{htmlspecialchars($_G['TEMP']['NAV_DATA'],ENT_QUOTES)}">
+	<div class="left">
+		<div class="pk-row adminbox">
+			<div class="pk-w-md-4 pk-padding-0">
+				<img src="userhead/{$_G['TEMP']['UID']}.png" onerror="this.src='userhead/0.png'" />
+			</div>
+			<div class="pk-w-md-8 pk-padding-0">
+				<p class="pk-text-truncate">{$_G['USER']['NICKNAME']}</p>
+				<p class="pk-text-truncate">欢迎您，超级管理员</p>
+			</div>
+		</div>
+		<div class="nav">
+			<ul></ul>
+		</div>
+		<div class="powered">
+			<a class="pk-hover-underline" target="_blank" href="http://www.hadsky.com">Powered by HadSky</a>
+		</div>
+	</div>
+	<div class="right">
+		<div class="pk-row" style="background-color:#EEEEEE">
+			<div class="pk-w-md-9 pk-padding-0">
+				<div class="nav">
+					<ul>
+						<li id="left-nav-sh" style="background-color:#009e73">
+							<span class="fa fa-fw fa-chevron-left"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="pk-w-md-3 pk-padding-0">
+				<div class="nav2">
+					<a target="_blank" href="index.php">站点首页<span class="fa fa-fw fa-angle-double-right"></span></a>
+				</div>
+			</div>
+		</div>
+		<div class="pk-row" style="height:100%">
+			<div class="inav">
+				<ul>
+					<li onclick="Close_Nav_All()" style="padding:0 .5rem">
+						<i class="fa fa-fw fa-times"></i>
+					</li>
+				</ul>
+			</div>
+			<div id="app-superadmin-mainshow" class="pk-w-md-12"></div>
+		</div>
+	</div>
+</div>
+<!--小屏端-->
+<div id="app-superadmin-main-sm" class="pk-row pk-hide pk-admin-sm">
+	<div class="pk-row _header">
+		<div class="pk-w-sm-4">
+			<select></select>
+		</div>
+		<div class="pk-w-sm-8">
+			<select></select>
+		</div>
+	</div>
+	<div class="pk-row _bodyer">
+		<div id="app-superadmin-mainshow-sm">
+			<iframe src=""></iframe>
+		</div>
+	</div>
+</div>
+<script>
+	//初始化数据
+	var Code_Powered = 'Powered by HadSky';
+	var FontSwitch = parseInt("{$_G['SET']['APP_SUPERADMIN_FONTSWITCH']}") || 0;
+</script>
+<script src="app/superadmin/template/js/main.js"></script>

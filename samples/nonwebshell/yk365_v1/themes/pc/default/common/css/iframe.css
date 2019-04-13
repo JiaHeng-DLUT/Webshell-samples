@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* custom */
+body {font-family: 微软雅黑;}
+#wrapper {margin: 0 auto; width: 100%;}
+/* header */
+#header {height: 70px;background:#393D49}
+#logo {background: url(../images/logo.png) no-repeat; float: left;margin-top:10px;margin-left:5px; height:50px; text-align:center;line-height:70px;width: 200px;font-size:18px;display:inline-block;color:#fff;}
+#link {color: #fff; margin-left: 200px;height:70px; line-height:70px;text-align: right;padding-right:10px;}
+#link a {display:inline-block;width:100px;text-align:center;height:100%;color: #fff; text-decoration: none;font-size:15px;}
+#link a:hover{background:#3DB3F7;color:#fff;}
+/* mainer */
+#mainer-left {float: left; width:210px}
+#mainer-right {margin-left:212px}
+#sidebar { overflow-y: auto;}
+#content {    background: #fff;
+    border: solid 1px #EEEEEE;
+    _zoom: 1;
+    box-shadow: -2px 30px 146px #C7C7C7;}
+#main_frame {height: 100%; width: 100%;}
+.layui-nav-itemed>a{background-color: #0388DC!important;}
+.youke ul li{border-bottom:1px solid #eee;margin-left:6px;height:25px;line-height:25px;}

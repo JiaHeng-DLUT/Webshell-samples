@@ -1,0 +1,36 @@
+{{open_tag|none}}
+
+
+$this->require_acl ('admin', '{{plural}}', 'admin/edit');
+
+$page->layout = 'admin';
+$page->title = __ ('Edit {{appname|cli\Filter::title}}');
+
+$form = new Form ('post', $this);
+
+$form->data = new {{plural}}{{backslash}}{{appname|cli\Filter::camel}} ($_GET['id']);
+
+echo $form->handle (function ($form) {
+	// Update the {{appname}} 
+	${{appname}} = $form->data;
+{% for field in fields %}
+{% if field->name !== $data->pkey %}
+	${{appname}}->{{field->name}} = $_POST['{{field->name}}'];
+{% end %}
+{% end %}
+	${{appname}}->put ();
+
+	if (${{appname}}->error) {
+		// Failed to save
+		error_log ('Error updating {{appname}}: ' . DB::error ());
+		$form->controller->add_notification (__ ('Unable to save {{appname|cli\Filter::spaces}}.'));
+		return false;
+	}
+
+	// Save a version of the {{appname}} 
+	Versions::add (${{appname}});
+
+	// Notify the user and redirect on success
+	$form->controller->add_notification (__ ('{{appname|cli\Filter::label}} saved.'));
+	$form->controller->redirect ('/{{plural}}/admin');
+});

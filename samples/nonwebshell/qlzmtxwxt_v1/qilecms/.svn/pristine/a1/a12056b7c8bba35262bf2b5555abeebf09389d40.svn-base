@@ -1,0 +1,78 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Module extends Common
+{
+	public function index(){
+     
+		$module = model('module');
+		$list = $module->getModuleList('status=1');
+       
+    $this->assign('list',$list);
+		return $this->fetch();
+	}
+	public function unopened(){
+		$module = model('module');
+		$list = $module->getModuleList('status=0');
+       
+        $this->assign('list',$list);
+		return $this->fetch();
+
+
+	}
+
+	public function uninstall(){
+       $list=array();
+	     $exist_module =array('admin','common','api','index','extra');
+       $module_default =array('module','name','version','dscription','author','website','uninstall');
+        foreach (glob(APP_PATH."*/") as $filename) {
+          $module = str_replace(array(APP_PATH,'/'),'',$filename);
+        	  if(!in_array($module,$exist_module)){
+                
+                  if(is_file(APP_PATH.$module.'/config.php')){
+                     $module_config = include(APP_PATH.$module.'/config.php');
+                     if($module_config['module'] && $module_config['name']){
+   						          array_push($list,$module_config);
+                     }
+                   
+        
+                  }else{
+                  	return ['code'=>'1','msg'=>'模块配置文件丢失'];
+                  }
+               }
+		}
+
+    
+       $this->assign('list',$list);
+		  return $this->fetch();
+	}
+ //安装模块
+  public function install(){
+    $param = request()->param();
+    $path = APP_PATH.$param['module'].'/config.php';
+    if(!is_file($path)){   return error_json('模块配置文件不存在');  }
+    $config = include($path); 
+    $res= model('module')->install($config);
+    if($res){
+       return success_json('安装成功'); 
+    }else{
+       return error_json('安装失败');
+    }
+
+  }
+  //开启模块
+   public function open(){
+     $param = request()->param();
+     $id = $param['id'];
+     $status = $param['status']; 
+     model('module')->open($id,$status);
+     return success_json('模块开启成功');
+   }
+   public function close(){
+     $param = request()->param();
+     $id = $param['id'];
+     $status = $param['status']; 
+     model('module')->open($id,$status);
+     return success_json('模块关闭成功');
+   }
+}

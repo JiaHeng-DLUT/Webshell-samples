@@ -1,0 +1,8 @@
+{
+	"title": "文件管理器",
+	"type": "app",
+	"author": "puyuetian",
+	"dir": "filesmanager",
+	"version": "2.0.0.20190318",
+	"description": "HS默认的文件管理器，不可删除。"
+}

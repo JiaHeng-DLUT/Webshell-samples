@@ -1,0 +1,196 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="alert mt10" style="clear:both;">
+	<ul class="mt5">
+		<li>{$Think.lang.statistical_information1}</li>
+        <li>{$Think.lang.hotgoods_information2}</li>
+      </ul>
+</div>
+
+<form method="get"  target="_self">
+  <table class="search-form">
+    <tr>
+    	<td class="tr">
+    		<div class="fr">
+    			<label class="submit-border">
+                  <input type="submit" class="submit" value="{$Think.lang.ds_common_search}" />
+                </label>
+    		</div>
+    		<div class="fr">
+    		  <div class="fl" style="margin-right:3px;">
+        		<select name="search_type" id="search_type" class="querySelect">
+        			<option value="day" {$Request.param.search_type == 'day'?'selected':''}>{$Think.lang.day_statistics}</option>
+                  <option value="week" {$Request.param.search_type == 'week'?'selected':''}>{$Think.lang.weekly_statistics}</option>
+                  <option value="month" {$Request.param.search_type == 'month'?'selected':''}>{$Think.lang.monthly_statistics}</option>
+        		</select>
+        	  </div>
+        		<div id="searchtype_day" style="display:none;" class="fl">
+        			<input type="text" class="text w70" name="search_time" id="search_time" value="{:date('Y-m-d',$search_arr.day.search_time)}" />
+                  <label class="add-on">
+                    <i class="fa fa-calendar"></i>
+                  </label>
+                </div>
+                <div id="searchtype_week" style="display:none;" class="fl">
+                  	<select name="searchweek_year" class="querySelect">
+                      {foreach name="year_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.week.current_year == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchweek_month" class="querySelect">
+                      {foreach name="month_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.week.current_month == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchweek_week" class="querySelect">
+                      {foreach name="week_arr" item="v"}
+                  		<option value="{$v.key}" {$search_arr.week.current_week == $v.key ?'selected':''}>{$v.val}</option>
+                      {/foreach}
+                    </select>
+              </div>
+              <div id="searchtype_month" style="display:none;" class="fl">
+                  	<select name="searchmonth_year" class="querySelect">
+                      {foreach name="year_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.month.current_year == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchmonth_month" class="querySelect">
+                      {foreach name="month_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.month.current_month == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+              </div>
+    		</div>
+    	</td>
+    </tr>
+  </table>
+</form>
+<div id="stat_tabs" class="ui-tabs" style="min-height:500px;padding-top:10px;">
+	<div class="tabmenu">
+      	<ul class="tab pngFix">
+      		<li><a href="#orderamount_div" ds_type="showdata" data-param='{"type":"orderamount"}'>{$Think.lang.place_order_amount}</a></li>
+        	<li><a href="#goodsnum_div" ds_type="showdata" data-param='{"type":"goodsnum"}'>{$Think.lang.order_quantity}</a></li>
+        </ul>
+    </div>
+  <!-- 下单金额 -->
+    <div id="orderamount_div">
+    	<div id="container_ordergamount"></div>
+    	<div>
+    		<table class="dssc-default-table">
+              <thead>
+                <tr class="sortbar-array">
+                  <th class="w90">{$Think.lang.serial_number}</th>
+                  <th>{$Think.lang.commodity_name}</th>
+                  <th>{$Think.lang.place_order_amount}</th>
+                </tr>
+              </thead>
+              <tbody>
+              {notempty name="statlist.orderamount"}
+                {foreach name="statlist.orderamount" item="v"}
+                <tr class="bd-line">
+                  <td>{$key+1}</td>
+                  <td class="tl">
+                    <span class="over_hidden w400 h20">
+                      <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">{$v.goods_name}</a>
+                    </span>
+                  </td>
+                  <td>{$v.orderamount}</td>
+                </tr>
+                {/foreach}
+                {else /}
+                <tr>
+                  <td colspan="20" class="norecord">
+                    <div class="warning-option">
+                      <i class="fa fa-warning"></i>
+                      <span>{$Think.lang.no_record}</span>
+                    </div>
+                  </td>
+                </tr>
+                {/notempty}
+              </tbody>
+            </table>
+    	</div>
+    </div>
+  <!-- 下单商品数 -->
+    <div id="goodsnum_div">
+    	<div id="container_goodsnum" style="width:930px;"></div>
+    	<div>
+    		<table class="dssc-default-table">
+              <thead>
+                <tr class="sortbar-array">
+                  <th class="w90">{$Think.lang.serial_number}</th>
+                  <th>{$Think.lang.commodity_name}</th>
+                  <th>{$Think.lang.order_quantity}</th>
+                </tr>
+              </thead>
+              <tbody>
+              {notempty name="statlist.goodsnum"}
+                {foreach name="statlist.goodsnum" item="v"}
+                <tr class="bd-line">
+                  <td>{$key+1}</td>
+                  <td class="tl">
+                    <span class="over_hidden w400 h20">
+                      <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">{$v.goods_name}</a>
+                    </span>
+                  </td>
+                  <td>{$v.goodsnum}</td>
+                </tr>
+                {/foreach}
+                {else /}
+                <tr>
+                  <td colspan="20" class="norecord">
+                    <div class="warning-option"><i class="fa fa-warning"></i>
+                      <span>{$Think.lang.no_record}</span>
+                    </div>
+                  </td>
+                </tr>
+               {/notempty}
+              </tbody>
+            </table>
+    	</div>
+    </div>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+//展示搜索时间框
+function show_searchtime(){
+    s_type = $("#search_type").val();
+    $("[id^='searchtype_']").hide();
+    $("#searchtype_"+s_type).show();
+}
+
+$(function(){
+    //切换登录卡
+    $('#stat_tabs').tabs();
+
+    //统计数据类型
+    var s_type = $("#search_type").val();
+    $('#search_time').datepicker({dateFormat: 'yy-mm-dd'});
+
+    show_searchtime();
+    $("#search_type").change(function(){
+        show_searchtime();
+    });
+
+    //更新周数组
+    $("[name='searchweek_month']").change(function(){
+        var year = $("[name='searchweek_year']").val();
+        var month = $("[name='searchweek_month']").val();
+        $("[name='searchweek_week']").html('');
+        $.getJSON(HOMESITEURL+'/Index/getweekofmonth.html',{y:year,m:month},function(data){
+            if(data != null){
+                for(var i = 0; i < data.length; i++) {
+                    $("[name='searchweek_week']").append('<option value="'+data[i].key+'">'+data[i].val+'</option>');
+                }
+            }
+        });
+    });
+
+    $('#container_goodsnum').highcharts({$stat_json.goodsnum});
+    $('#container_ordergamount').highcharts({$stat_json.orderamount});
+});
+</script>
+
+
+
+{/block}
+

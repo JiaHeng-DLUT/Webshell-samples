@@ -1,0 +1,268 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">系统游客</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客数据</label>
+		<div class="pk-w-sm-8">
+			<textarea name="guestdata" class="pk-textarea" readonly ondblclick="this.readOnly=false;this.style.backgroundColor=''" rows="5" style="background-color:#EEE" title="双击解除锁定" data-data="{htmlspecialchars($_G['SET']['GUESTDATA'],ENT_QUOTES)}">{htmlspecialchars($_G['SET']['GUESTDATA'])}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客用户名</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" id="guest-username">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客昵称</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" id="guest-nickname">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客权限</label>
+		<div class="pk-w-sm-8">
+			<input type="text" id="guest-quanxian" readonly class="pk-textbox ">
+		</div>
+		<div class="pk-row">
+			<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+			<div class="pk-w-sm-8 pk-text-sm">
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="bbcode"> 帖子解析BB标签
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="download"> 下载帖子附件
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="login"> 允许登录
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookread"> 浏览帖子
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookuser"> 浏览用户信息
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postread"> 发表主题
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postreply"> 发表回复
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="search"> 搜索
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadfile"> 上传附件
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadhead"> 上传头像
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delread"> 可删除自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delreply"> 可删除自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editread"> 可编辑自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editreply"> 可编辑自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreadcheck"> 免除文章审核
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreplycheck"> 免除回复审核
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="noverifycode"> 免除所有验证码验证
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostingtimeinterval"> 免除发帖时间间隔验证
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="htmlcode"> 发帖HTML解析
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input type="checkbox" onclick="if(!this.checked)$('#guest-quanxian').prop('readonly',true);else {$('#guest-quanxian').prop('readonly',false);$('#guest-quanxian').focus()}"> 自定义权限
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客阅读权限</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox" id="guest-readlevel">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客可用的HTML标签</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="temp1" id="guestdata-htmlcodemarks" placeholder="留空则应用系统默认">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客可用的HTML属性</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="temp2" id="guestdata-htmlcodeattrs" placeholder="留空则应用系统默认">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">游客允许上传的最大文件</label>
+		<div class="pk-w-sm-5">
+			<input type="number" class="pk-textbox" id="guestdata-uploadsize" placeholder="留空则应用系统默认">
+		</div>
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-xs pk-text-danger">
+			如果点击保存后，该设置清空且不起作用，是您没有关闭magic_quotes_gpc()函数，请关闭后再尝试，
+			<a class="pk-hover-underline" target="_blank" href="http://www.hadsky.com/index.php?c=read&id=1320&page=1">请点击这里查看关闭方法</a>。
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		try {
+			var guestdata = $('textarea[name="guestdata"]').data('data') || [];
+			var guestdatadata = JSON.parse(guestdata['data']);
+			var $inputs = $('form[name="form_save"] :input');
+			for($i = 0; $i < $inputs.length; $i++) {
+				if($inputs[$i].id.substr(0, 6) == 'guest-') {
+					$inputs[$i].value = guestdata[$inputs[$i].id.substr(6)];
+				}
+				if($inputs[$i].id.substr(0, 10) == 'guestdata-') {
+					$inputs[$i].value = guestdatadata[$inputs[$i].id.substr(10)];
+				}
+			}
+		} catch(e) {}
+		TextboxAndCheckbox("#guest-quanxian", "input[class='qx-checkbox'][type='checkbox']");
+		labelStrSwitch('input[name="temp1"]', '><', false, '<', '>');
+		$('#SubmitBtn').data({
+			before: function() {
+				$('#guest-readlevel').val(Cnum($('#guest-readlevel').val()));
+				if(!trim($('#guest-username').val())) {
+					ppp({
+						type: 3,
+						icon: 2,
+						content: "游客用户名不能为空"
+					});
+					submitReturn = true;
+					$('#guest-username').focus();
+					return false;
+				}
+				if(!trim($('#guest-nickname').val())) {
+					ppp({
+						type: 3,
+						icon: 2,
+						content: "游客昵称不能为空"
+					});
+					submitReturn = true;
+					$('#guest-nickname').focus();
+					return false;
+				}
+				labelStrSwitch('input[name="temp1"]', '><', true, '<', '>');
+				$('input[name="temp1"],input[name="temp2"]').attr('name', '');
+				var $data = {};
+				var $data2 = {};
+				var $inputs = $('form[name="form_save"] :input');
+				for($i = 0; $i < $inputs.length; $i++) {
+					if($inputs[$i].id.substr(0, 6) == 'guest-') {
+						$data[$inputs[$i].id.substr(6)] = $inputs[$i].value;
+					}
+					if($inputs[$i].id.substr(0, 10) == 'guestdata-') {
+						$data2[$inputs[$i].id.substr(10)] = $inputs[$i].value;
+					}
+				}
+				$data['data'] = JSON.stringify($data2);
+				$('textarea[name="guestdata"]').val(JSON.stringify($data));
+			},
+			after: function() {
+				$('#guestdata-htmlcodemarks').attr('name', 'temp1');
+				$('#guestdata-htmlcodeattrs').attr('name', 'temp2');
+				labelStrSwitch('input[name="temp1"]', '><', false, '<', '>');
+			}
+		});
+	});
+</script>

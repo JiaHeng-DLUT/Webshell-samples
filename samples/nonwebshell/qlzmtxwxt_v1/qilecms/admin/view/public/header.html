@@ -1,0 +1,55 @@
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+        <div class="layui-logo">后台管理中心 <i class="fa fa-bars" aria-hidden="true" id="admin-menu"></i></div>
+      <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-left "  lay-filter="nav">
+        {volist name="adminNav" id="vo"  key="k"}
+           <li class="layui-nav-item {if $k == 1}layui-this{/if}" ><a href="{if !empty($vo.name)}{$vo.name}{else /}javascript:;{/if}" >
+           <i class="{$vo.icon}" aria-hidden="true"></i> {$vo.title}</a></li>
+        {/volist}
+
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+
+          <li class="layui-nav-item"><a href="javascript:;" id="clear_cache" title="清理缓存"><i class="fa fa-refresh" aria-hidden="true"></i> </a></li>
+          <li class="layui-nav-item"><a href="/" target="_blank" title="前台主页"><i class="fa fa-home" aria-hidden="true" ></i> </a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+              {$Think.session.role_name} {$Think.session.admin_username}
+            </a>
+    <!--         <dl class="layui-nav-child">
+              <dd><a href="">基本资料</a></dd>
+              <dd><a href="">安全设置</a></dd>
+            </dl> -->
+          </li>
+          <li class="layui-nav-item"><a href="{:url('logout/index')}" title="退出登陆"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+        </ul>
+  </div>
+
+<!-- 左侧导航区域 开始-->
+  <div class="layui-side layui-bg-black ">
+    <div class="layui-side-scroll">
+    {volist name="adminNav" id="vo"  key="k"}
+      <ul class="layui-nav layui-nav-tree" {if $k !=1} style="display: none;"{/if}  >
+      {if !empty($vo.children)}
+      {volist name="vo.children" id="vo2" key="k2"}
+        <li class="layui-nav-item {if $k2 ==1}layui-nav-itemed{/if}">
+           <a  href="{if empty($vo2.name)}javascript:;{else /}{:url($vo2.name)}{/if}"  target="r-show"><i class="{$vo2.icon}" aria-hidden="true"></i> {$vo2.title}</a>
+          <dl class="layui-nav-child">
+          {if !empty($vo2.children)}
+          {volist name="vo2.children" id="vo3"}
+            <dd><a href="{if empty($vo3.name)}javascript:;{else /}{:url($vo3.name)}{/if}"  target="r-show"><i class="{$vo3.icon}" aria-hidden="true"></i>  {$vo3.title}</a></dd>
+          {/volist}
+          {/if}
+          </dl>
+        </li>
+        {/volist}
+       {/if} 
+      </ul>
+    {/volist}
+
+    </div>
+    <!-- 左侧导航区域结束 -->
+
+  </div>

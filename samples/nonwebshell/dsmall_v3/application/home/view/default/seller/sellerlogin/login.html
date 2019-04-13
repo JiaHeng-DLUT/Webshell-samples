@@ -1,0 +1,75 @@
+{include file='default/base/mall_top'/}
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home.css">
+<div class="header-login clearfix">
+    <div class="w1200">
+        <div class="logo">
+            <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+        </div>
+    </div>
+</div>
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/seller.css">
+        <script language="JavaScript" type="text/javascript">
+            $(document).ready(function () {
+
+                //登陆表单验证
+                $("#form_login").validate({
+                    errorPlacement: function (error, element) {
+                        element.prev(".repuired").append(error);
+                    },
+                    onkeyup: false,
+                    rules: {
+                        seller_name: {
+                            required: true
+                        },
+                        member_password: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        seller_name: {
+                            required: "<i class='fa fa-exclamation-circle'></i>{$Think.lang.login_index_username_isnull}"
+                        },
+                        member_password: {
+                            required: "<i class='fa fa-exclamation-circle'></i>{$Think.lang.login_index_password_isnull}"
+                        }
+                    }
+                });
+                //Hide Show verification code
+                $("#hide").click(function () {
+                    $(".code").fadeOut("slow");
+                });
+                $("#captcha").focus(function () {
+                    $(".code").fadeIn("fast");
+                });
+
+            });
+        </script>
+        <div class="w1200">
+            <div class="dssc-login-container">
+                <div class="dssc-login-title">
+                    <h2>{$Think.lang.business_management_center}</h2>
+                    <span>{$Think.lang.business_name_application}<br/>{$Think.lang.universal_password_mall_users}</span>
+                </div>
+                <form id="form_login" action="" method="post" >
+                    <div class="input">
+                        <label>{$Think.lang.login_index_username}</label>
+                        <span class="repuired"></span>
+                        <input name="seller_name" type="text" autocomplete="off" class="text" autofocus>
+                        <span class="ico"><i class="fa fa-user-o"></i></span> </div>
+                    <div class="input">
+                        <label>{$Think.lang.sellerlogin_password}</label>
+                        <span class="repuired"></span>
+                        <input name="member_password" type="password" autocomplete="off" class="text">
+                        <span class="ico"><i class="fa fa-key"></i></span> 
+                    </div>
+                    <div class="input">
+                        <input type="submit" class="login-submit" value="{$Think.lang.merchant_login}">
+                    </div>
+                    <div class="mt10 fr"><a href="{$Think.HOME_SITE_URL}" title="{$Think.lang.return_home_page}">{$Think.lang.return_home_page}</a></div>
+                </form>
+            </div>
+        </div>
+        <div class="dssc-login-bg">
+        </div>
+        
+{include file='default/base/mall_footer'/}

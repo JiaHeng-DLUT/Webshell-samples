@@ -1,0 +1,117 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet">
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All articles')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="well">
+            <form class="form-inline" role="form" method="get" action="search">
+                <div class="form-group">
+                    <label>{:lang('Category')}：</label>
+                    <select class="form-control" name="fenlei">
+                        <option value="0">{:lang('All')}</option>
+                        {volist name="fenlei" id="vo"}
+                        <option value="{$vo.id}">{$vo.level}{$vo.term_name}</option>
+                        {/volist}
+                    </select>
+                </div>&nbsp;&nbsp;
+                <div class="form-group">
+                    <label>{:lang('Time')}：</label>
+                    <input type="text" class="form-control" readonly id="fromdatetime" name="start">&nbsp;—
+                    <input type="text" class="form-control" readonly id="todatetime" name="end">
+                </div>&nbsp;&nbsp;
+                <div class="form-group">
+                    <label>{:lang('Keyword')}：</label>
+                    <input type="text" name="key" class="form-control" placeholder="{:lang('Keyword')}">
+                </div>
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;{:lang('Search')}</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <p>
+            <label>{:lang('Batch operation')}：</label>
+            {if condition="$authority eq 'all'"}
+            <button type="button" id="shenhe" class="btn btn-primary btn-sm">{:lang('Approve')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="weishenhe" class="btn btn-primary btn-sm">{:lang('Unapprove')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="zhiding" class="btn btn-primary btn-sm">{:lang('Top')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="weizhiding" class="btn btn-primary btn-sm">{:lang('Cancel top')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="tuijian" class="btn btn-primary btn-sm">{:lang('Recommend')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="weituijian" class="btn btn-primary btn-sm">{:lang('Cancel recommended')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            {/if}
+            <button type="button" id="pshanchu" class="btn btn-primary btn-sm">{:lang('Delete')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="zxuan">
+                    </th>
+                    <th>{:lang('Title')}</th>
+                    <th>{:lang('Click volume')}</th>
+                    <th>{:lang('Comments volume')}</th>
+                    <th>{:lang('Author')}</th>
+                    <th>{:lang('Release time')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>
+                        <input class="gouxuan" type="checkbox" value="{$vo.id}">
+                    </td>
+                    <td>{if condition="$vo.thumbnail neq ''"}<img src="{$vo.thumbnail}" width="50">&nbsp;{/if}<a href="{:Url('/article/'.$vo.id)}" target="_blank">{$vo.post_title}</a></td>
+                    <td>{$vo.post_hits}</td>
+                    <td>{$vo.comment_count}</td>
+                    <td>{$vo.user_login}</td>
+                    <td>{$vo.post_date}</td>
+                    <td>
+                        {if condition="($vo.post_status == 1)"} <h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Audited')}</h5>
+                        {else /} <h5 class="text-muted">{:lang('Not audited')}</h5>
+                        {/if}
+                        {if condition="($vo.istop == 1)"} <h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Topped')}</h5>
+                        {else /} <h5 class="text-muted">{:lang('Not top')}</h5>
+                        {/if}
+                        {if condition="($vo.recommended == 1)"} <h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Recommended')}</h5>
+                        {else /} <h5 class="text-muted">{:lang('Not recommended')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <a href="{:Url('rewrite')}?art={$vo.id}" target="_blank">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="#!">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div><br>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="fangruhuishouzhan">{:lang('Are you sure you want to put this post in the trash?')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="wenzhanghuishou">{:lang('Are you sure you want to put the selected article in the recycle bin?')}</div>
+<div class="hidden" id="yishenhe">{:lang('Audited')}</div>
+<div class="hidden" id="meishenhe">{:lang('Not audited')}</div>
+<div class="hidden" id="yizhiding">{:lang('Topped')}</div>
+<div class="hidden" id="meizhiding">{:lang('Not top')}</div>
+<div class="hidden" id="yituijian">{:lang('Recommended')}</div>
+<div class="hidden" id="meituijian">{:lang('Not recommended')}</div>
+<div class="hidden" id="jinggao">{:lang('Warning!')}</div>
+<div class="hidden" id="zhishaoxuanyixiang">{:lang('Please select at least one!')}</div>
+<div class="hidden" id="queding">{:lang('Ok')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script type="text/javascript" src="{$domain}public/common/datetimepicker/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/articles.js"></script>
+{include file="index/footer" /}

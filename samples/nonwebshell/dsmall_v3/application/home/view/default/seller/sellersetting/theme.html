@@ -1,0 +1,72 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-store-templet">
+    <dl class="current-style">
+        <dt class="templet-thumb"><img src="{$curr_theme.curr_image}" id="current_theme_img" /></dt>
+        <dd>{$Think.lang.store_theme_tpl_name}{$Think.lang.ds_colon}<strong id="current_template">{$curr_theme.curr_name}</strong></dd>
+        <dd>{$Think.lang.store_theme_style_name}{$Think.lang.ds_colon}<strong id="current_style">{$curr_theme.curr_truename}</strong></dd>
+        <dd>{$Think.lang.store_create_store_name}{$Think.lang.ds_colon}<strong>{$store_info.store_name}</strong></dd>
+        <dd><a href="{:url('Store/index',['store_id'=>$store_info.store_id])}" class="dssc-btn">{$Think.lang.store_theme_homepage}</a></dd>
+    </dl>
+    <h3>{$Think.lang.store_theme_valid}</h3>
+    <div class="templet-list">
+        <ul>
+            {foreach name="theme_list" item="theme"}
+            <li>
+                <dl>
+                    <dt><a href="javascript:void(0)" onclick="preview_theme('{$theme.name}');"><img id="themeimg_{$theme.name}" src="{$theme.image}"></a></dt>
+                    <dd>{$Think.lang.store_theme_tpl_name1}{$Think.lang.ds_colon}{$theme.name}</dd>
+                    <dd>{$Think.lang.store_theme_style_name1}{$Think.lang.ds_colon}{$theme.truename}</dd>
+                    <dd class="btn"> <a href="javascript:void(0)" onclick=" use_theme('{$theme.name}', '{$theme.truename}');" class="dssc-btn"><i class="fa fa-cogs"></i>{$Think.lang.store_theme_use}</a> <a href="javascript:preview_theme('{$theme.name}');" class="dssc-btn"><i class="fa fa-search-plus"></i>{$Think.lang.store_theme_preview}</a> </dd>
+                </dl>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div>
+<script>
+    function use_theme(style, truename) {
+        ds_ajaxget("{:url('Sellersetting/set_theme')}" + '?style_name=' + style);
+    }
+</script>
+<script>
+    var curr_template_name = '{$curr_theme.curr_name}';
+    var curr_style_name = '{$curr_theme.curr_name}';
+    var preview_img = new Image();
+    preview_img.onload = function () {
+        var d = DialogManager.get('preview_image');
+        if (!d)
+        {
+            return;
+        }
+
+        if (d.getStatus() != 'loading')
+        {
+
+            return;
+        }
+
+        d.setWidth(this.width + 50);
+        d.setPosition('center');
+        d.setContents($('<img src="' + this.src + '" alt="" />'));
+        ScreenLocker.lock();
+    };
+    preview_img.onerror = function () {
+        layer.msg('{$Think.lang.store_theme_load_preview_fail}');
+        DialogManager.close('preview_image');
+    };
+    function preview_theme(style_name) {
+        var screenshot = '{$Think.BASE_SITE_ROOT}/static/home/default/store/styles/' + style_name + '/screenshot.jpg';
+        var d = DialogManager.create('preview_image');
+        d.setTitle('{$Think.lang.store_theme_effect_preview}');
+        d.setContents('loading', {'text': '{$Think.lang.store_theme_loading1}...'});
+        d.setWidth(270);
+        d.show('center');
+
+        preview_img.src = screenshot;
+    }
+</script>
+
+{/block}
+
+

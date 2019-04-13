@@ -1,0 +1,169 @@
+<h4 id="extended-header-{{extends|URLify::filter}}">{"Custom Fields"}</h4>
+
+<div id="extended-fields-{{extends|URLify::filter}}">
+{% if ! count ($data->fields) %}
+<p>{"No custom fields defined."} <a href="/admin/extended?extends={{extends}}&name={{name}}" target="_blank">{"Click here to add custom fields."}</a></p>
+{% end %}
+
+{% foreach fields as field %}
+	{% if field->type === 'text' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<input	type="text"
+					name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+					value="{{field->value|quotes}}"
+					size="30"
+			/>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'date' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<input	type="text"
+					name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+					value="{{field->value|quotes}}"
+					class="datewidget-date"
+					size="20"
+			/>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'datetime' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<input	type="text"
+					name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+					value="{{field->value|quotes}}"
+					class="datewidget-datetime"
+					size="20"
+			/>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'textarea' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<textarea	name="_extended[{{field->name}}]"
+						id="_extended_{{field->name}}"
+						cols="80"
+						rows="6"
+			>{{field->value}}</textarea>
+			{% if field->required %}
+				<br />
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'select' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<select	name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+			>
+				<option value="">- {"choose"} -</option>
+				{% foreach field->options as option %}
+				<option value="{{option}}"{% if option == $data->field->value %} selected{% end %}>{{option}}</option>
+				{% end %}
+			</select>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'file' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			<input	type="text"
+					name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+					value="{{field->value|quotes}}"
+					class="wysiwyg-file-input"
+					size="30"
+			/>
+			<input	type="submit"
+					id="{{field->name}}-filebrowser"
+					value="{'Browse...'}"
+					onclick="return filebrowser_{{field->name}} ()"
+			/>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% elseif field->type === 'image' %}
+		<p>
+			{{field->label|Template::sanitize|__}}:<br />
+			{% if file_exists (substr ($data->field->value, 1)) && getimagesize (substr ($data->field->value, 1)) %}
+				<img src="{{field->value|quotes}}" id="{{field->name}}-image-preview" style="max-height: 100px; max-width: 100px; margin-bottom: 5px" /><br />
+			{% else %}
+				<img src="/apps/admin/css/admin/blank.png" id="{{field->name}}-image-preview" style="max-height: 100px; max-width: 100px; margin-bottom: 5px" /><br />
+			{% end %}
+			<input	type="text"
+					name="_extended[{{field->name}}]"
+					id="_extended_{{field->name}}"
+					value="{{field->value|quotes}}"
+					class="wysiwyg-image-input"
+					size="30"
+			/>
+			<input	type="submit"
+					id="{{field->name}}-filebrowser"
+					value="{'Browse...'}"
+					onclick="return imagebrowser_{{field->name}} ()"
+			/>
+			{% if field->required %}
+				<span class="notice" id="_extended_{{field->name}}_notice">{{field->label|__}} {"is required"}.</span>
+			{% end %}
+		</p>
+	{% end %}
+{% end %}
+</div>
+
+<script>
+{% foreach fields as field %}
+	{% if field->type === 'file' %}
+		function filebrowser_{{field->name}} () {
+			$.filebrowser ({
+				set_value: '#_extended_{{field->name}}'
+			});
+			return false;
+		}
+	{% elseif field->type === 'image' %}
+		function imagebrowser_{{field->name}} () {
+			$.filebrowser ({
+				set_value: '#_extended_{{field->name}}',
+				thumbs: true,
+				callback: function (file) {
+					$('#{{field->name}}-image-preview').attr ('src', file);
+				}
+			});
+			return false;
+		}
+	{% end %}
+{% end %}
+$(function () {
+	$.expanded_section ({
+		header: '#extended-header-{{extends|URLify::filter}}',
+		section: '#extended-fields-{{extends|URLify::filter}}',
+		visible: {% if open %}true{% else %}false{% end %},
+		modal: {% if modal %}true{% else %}false{% end %}
+	});
+
+	{% foreach fields as field %}
+		{% if field->required %}
+			$('form').on ('submit', function () {
+				var val = $('#_extended_{{field->name}}').val ();
+				if (! val || val === null || val === '') {
+					$('#_extended_{{field->name}}_notice').show ();
+					return false;
+				}
+				$('#_extended_{{field->name}}_notice').hide ();
+				return true;
+			});
+		{% end %}
+	{% end %}
+});
+</script>

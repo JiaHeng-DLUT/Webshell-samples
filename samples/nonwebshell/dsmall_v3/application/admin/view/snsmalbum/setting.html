@@ -1,0 +1,50 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <form method="post" name="form_setting" id="form_setting">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w150"><label class="validation">{$Think.lang.snsalbum_allow_upload_max_count}:</label></td>
+                <td class="vatop rowform"><input type="text" class="txt" value="{$list_setting.malbum_max_sum}" name="malbum_max_sum" id="malbum_max_sum"></td>
+                <td class="vatop tips">{$Think.lang.snsalbum_allow_upload_max_count_tip}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="2" ><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#submitBtn").click(function(){
+            if($("#form_setting").valid()){
+                $("#form_setting").submit();
+            }
+        });
+
+        $('#form_setting').validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+
+            rules : {
+                malbum_max_sum : {
+                    required : true,
+                    digits   : true
+                }
+            },
+            messages : {
+                malbum_max_sum  : {
+                    required : '{$Think.lang.snsalbum_pls_input_figures}',
+                    digits   : '{$Think.lang.snsalbum_pls_input_figures}'
+                }
+            }
+        });
+    });
+</script>

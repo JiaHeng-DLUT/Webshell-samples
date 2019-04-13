@@ -1,0 +1,184 @@
+<div class="dss-info">
+    <div class="title">
+        <h4>{if $store_info.is_platform_store}<em>{$Think.lang.platform_store}</em>{else}<img src="{$Think.HOME_SITE_ROOT}/images/store_grade/{$store_info.grade_id}.png" class="pngFix">{/if}&nbsp;<a href="{:url('Store/index',['store_id'=>$store_info.store_id])}" >{$store_info.store_name}</a>
+        <span member_id="{$store_info.member_id}"></span>
+        {if isset($store_info['member_id']) || !empty($store_info.store_qq) || !empty($store_info.store_ww)}
+                {notempty name="store_info.store_qq"}
+                <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$store_info.store_qq}&site=qq&menu=yes" title="QQ: {$store_info.store_qq}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$store_info.store_qq}:52" style=" vertical-align: middle;"/></a>
+                {/notempty}
+                {notempty name="store_info.store_ww"}
+                <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&amp;uid={$store_info.store_ww}&site=cntaobao&s=1" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$store_info.store_ww}&site=cntaobao&s=2" alt="{$Think.lang.ds_message_me}" style=" vertical-align: middle;"/></a>
+                {/notempty}
+        {/if}        
+        </h4>
+    </div>
+    <div class="content">
+        <dl class="all-rate">
+            <dt><span class="t_adjust">{$Think.lang.comprehensive_score}</span><span>：</span></dt>
+            <dd>
+                <div class="rating"><span style="width: {$store_info.store_credit_percent}%"></span></div>
+                <em>{$store_info.store_credit_average}</em>{$Think.lang.credit_unit}</dd>
+        </dl>
+        <div class="dss-detail-rate">
+            <h5>{$Think.lang.ds_dynamic_evaluation}：</h5>
+            <ul>
+                {notempty name="store_info.store_credit"}
+                {foreach name="store_info.store_credit" item="value"}
+                <li> {$value.text}<span class="credit">{$value.credit} {$Think.lang.credit_unit}</span>
+                    {present name="value.percent_class"}
+                    <span class="{$value.percent_class}"><i></i>{$value.percent_text}<em>{$value.percent}</em></span> </li>
+                {/present}
+               {/foreach}
+                {/notempty}
+            </ul>
+        </div>
+        
+        <!--只有实名认证实体店认证后才显示保障体系-->
+          {if $store_info.store_baozh}
+        <dl class="messenger">
+            <dt><span class="t_adjust">{$Think.lang.merchant_guarantee}</span><span>：</span></dt>
+            <dd>
+                <!--新加的保障-->
+                {if $store_info.store_shiti}
+                <span id="certMatershiti" class="text-hidden fl ml5" title="{$Think.lang.physical_certification}"></span>
+                {/if}
+
+                {if $store_info.store_qtian}
+                <span id="certMaterqtian" class="text-hidden fl ml5" title="{$Think.lang.physical_filming}"></span>
+                {/if}
+
+                {if $store_info.store_zhping}
+                <span id="certMaterzhping" class="text-hidden fl ml5" title="{$Think.lang.genuine_protection}"></span>
+                {/if}
+
+                {if $store_info.store_erxiaoshi}
+                <span id="certMatererxiaoshi" class="text-hidden fl ml5" title="{$Think.lang.delivery_within_hours}"></span>
+                {/if}
+
+                {if $store_info.store_tuihuo}
+                <span id="certMatertuihuo" class="text-hidden fl ml5" title="{$Think.lang.return_commitment}"></span>
+                {/if}
+
+                {if $store_info.store_shiyong}
+                <span id="certMatershiyong" class="text-hidden fl ml5" title="{$Think.lang.trial_center}"></span>
+                {/if}
+
+                {if $store_info.store_xiaoxie}
+                <span id="certMaterxiaoxie" class="text-hidden fl ml5" title="{$Think.lang.consumer_protection}"></span>
+                {/if}
+
+                {if $store_info.store_huodaofk}
+                <span id="certMaterhuodaofk" class="text-hidden fl ml5" title="{$Think.lang.support_cash_delivery}"></span>
+                {/if}
+                <!--新加的保障-->
+            </dd>
+        </dl>
+        {/if}
+        <!--保证金金额-->
+        {if $store_info.store_avaliable_deposit > 0}
+        <dl class="messenger">
+            <dt><span class="t_adjust">{$Think.lang.guaranteed_amount}</span><span>：</span></dt>
+            <dd style="width: 100px;">{$store_info.store_avaliable_deposit}
+            </dd>
+        </dl>
+       {/if}
+
+        <dl class="no-border">
+            <dt><span class="t_adjust">{$Think.lang.company_name}</span><span>：</span></dt>
+            <dd>{$store_info.store_company_name}</dd>
+        </dl>
+        <dl>
+            <dt><span class="t_adjust">{$Think.lang.ds_srore_location}</span><span>：</span></dt>
+            <dd>{$store_info.area_info}</dd>
+        </dl>
+        {notempty name="store_info.store_phone"}
+        <dl>
+            <dt><span class="t_adjust">{$Think.lang.phone_space}</span><span>：</span></dt>
+            <dd>{$store_info.store_phone}</dd>
+        </dl>
+        {/notempty}
+        <div class="shop-other" id="shop-other">
+            <div class="goto">
+                <a href="javascript:collect_store('{$store_info.store_id}','count','store_collect')" ><i class="fa fa-star"></i>{$Think.lang.ds_collect}</a>
+                <a href="{:url('Storesnshome/index',['sid'=>$store_info.store_id])}" ><i class="fa fa-volume-up"></i>{$Think.lang.ds_dynamics}</a>
+            </div>
+            <div class="shop_btn">
+                <div class="dss-info-btn-map fa fa-map-marker" >
+                    <div class="dss-info-map" id="map_container" style="width:208px;height:208px;"></div>
+                </div>
+                <div class="dss-info-btn-qrcode fa fa-qrcode" >
+                    <div class="dss-info-qrcode"><img src="{:store_qrcode($store_info.store_id)}" title="{$Think.lang.shop_primitive}{:url('Store/goods_all',['store_id'=>$store_info.store_id])}" style="width:208px;height:208px"></div>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!--店铺基本信息 E-->
+<script type="text/javascript">
+    var BASESITEROOT = "{$Think.BASE_SITE_ROOT}";
+    var BASESITEURL = "{$Think.BASE_SITE_URL}";
+    var HOMESITEURL = "{$Think.HOME_SITE_URL}";
+    var cityName = "{$store_info.store_address}";
+    var address = "{$store_info.area_info}";
+    var store_name = "{$store_info.store_company_name}";
+    function initialize() {
+        map = new BMap.Map("map_container");
+        localCity = new BMap.LocalCity();
+
+        map.enableScrollWheelZoom();
+        localCity.get(function(cityResult){
+            if (cityResult) {
+                var level = cityResult.level;
+                if (level < 13) level = 13;
+                map.centerAndZoom(cityResult.center, level);
+                cityResultName = cityResult.name;
+                if (cityResultName.indexOf(cityName) >= 0) cityName = cityResult.name;
+                getPoint();
+            }
+        });
+    }
+
+    function loadScript() {
+        var script = document.createElement("script");
+        script.src = "{$Think.HTTP_TYPE}api.map.baidu.com/api?v=1.2&callback=initialize";
+        document.body.appendChild(script);
+    }
+    function getPoint(){
+        var myGeo = new BMap.Geocoder();
+        myGeo.getPoint(address, function(point){
+            if (point) {
+                setPoint(point);
+            }
+        }, cityName);
+    }
+    function setPoint(point){
+        if (point) {
+            map.centerAndZoom(point, 16);
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+        }
+    }
+
+    // 当鼠标放在店铺地图上再加载百度地图。
+    $(function(){
+        $('.dss-info-btn-map').one('mouseover',function(){
+            loadScript();
+        });
+        $('.dss-info-btn-map').one('click',function(){
+            loadScript();
+        });
+    });
+</script>
+
+<script>
+    $(function(){
+        var store_id = "{$store_info.store_id}";
+        var goods_id = "{$Request.param.goods_id}";
+        var controller = "{$Request.controller}";
+        var action  = "{$Request.action ? $Request.action : 'index'}";
+        $.getJSON("{:url('Store/ajax_flowstat_record')}",{store_id:store_id,goods_id:goods_id,controller_param:controller,action_param:action});
+    });
+</script>

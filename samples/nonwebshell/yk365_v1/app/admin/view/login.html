@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pagetitle}></title>
+<link href="/public/admin/skin/css/global.css" rel="stylesheet" type="text/css" />
+<link href="/public/admin/skin/css/login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="background-image:url('/public/admin/skin/images/bg.jpg')">
+<div id="loginbox">
+	<h2>后台管理中心</h2>
+    <div>
+    <form name="mform" method="post" action="<{$fileurl}>">
+    	<div id="formbox">
+		<table>
+        	<tr>
+				<th>用户名：</th>
+				<td><input name="username" type="text" class="ipt" id="username" size="20" maxlength="25" autocomplete="off" /></td>
+			</tr>
+			<tr>
+				<th>登录密码：</th>
+				<td><input name="pass" type="password" class="ipt" id="pass" size="20" maxlength="25" /></td>
+
+
+			</tr>
+
+			<tr>
+			<th>验证码：</th>
+<td>
+<input name="code" type="text" class="ipt" id="code" size="20" maxlength="25" style="width:85px" />
+  <span id="mycode"><img  title="点击刷新" src="<{url('member/code')}>" align="absbottom" onclick="this.src='<{url("member/code",['type'=>'code'])}>?'+Math.random();"></span></li>
+</td>
+			</tr>
+		</table>
+        </div>
+    	<div id="btnbox">
+		<input name="act" type="hidden" id="act" value="login">
+		<input name="submit" type="submit" class="btn" value="登 陆">&nbsp;
+    	</div>
+    </form>
+    <div class="copyright"> Powered by <a href="http://www.youke365.site" target="_blank">Youke365</a> </div>
+    </div>
+</div>
+</body>
+</html>

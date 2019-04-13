@@ -1,0 +1,34 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Add category')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <h4>{:lang('With')}&nbsp;<b><span class="text-danger">*</span></b>&nbsp;{:lang('are required')}</h4>
+            <div class="form-group">
+                <label>{:lang('Category Name')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <input type="text" class="form-control" name="fenleim" placeholder="{:lang('Category name')}" required autofocus>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Category parent')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <select class="form-control" name="shangji">
+                    <option value="0">{:lang('As the first level category')}</option>
+                    {volist name="fenlei" id="vo"}
+                    <option value="{$vo.id}"{if condition="$fufenlei eq $vo.id"} selected{/if}>{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.term_name}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Category description')}</label>
+                <textarea class="form-control" rows="3" name="miaoshu"></textarea>
+            </div>
+            <hr>
+            <div class="text-center">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default">{:lang('Add category')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+{include file="index/footer" /}

@@ -1,0 +1,196 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">云服务 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">应用开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_LOAD']}" name="app_hadskycloudserver_load">
+				<option value="0">关闭</option>
+				<option value="embed">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">SiteKey</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_hadskycloudserver_sitekey" placeholder="请在官网我的网站 - 站点设置中查看" value="{$_G['SET']['APP_HADSKYCLOUDSERVER_SITEKEY']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">节点及类型</label>
+		<div id="nodesDiv" class="pk-w-sm-8" data-data="{htmlspecialchars($_G['SET']['APP_HADSKYCLOUDSERVER_NODES'],ENT_QUOTES)}">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_NODE']}" name="app_hadskycloudserver_node">
+				<option value="auto">智能选择（推荐）</option>
+			</select>
+			<button type="button" class="pk-btn pk-btn-success" style="position:absolute;right:15px;top:0">同步列表</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-top-15 pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">云登录设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">关闭注册后可以通过QQ注册</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_QQLOGIN_OPENREG']}" name="app_hadskycloudserver_qqlogin_openreg">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">关闭注册后可以通过新浪微博注册</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_WEIBOLOGIN_OPENREG']}" name="app_hadskycloudserver_weibologin_openreg">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">关闭注册后可以通过百度账号注册</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_BAIDULOGIN_OPENREG']}" name="app_hadskycloudserver_baidulogin_openreg">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">关闭注册后可以通过微信扫码注册</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_WEIXINLOGIN_OPENREG']}" name="app_hadskycloudserver_weixinlogin_openreg">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-top-15 pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">云支付设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">1元兑换{$_G['SET']['TIANDOUNAME']}数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_hadskycloudserver_tiandouduihuanshu" placeholder="用户充值1元可以得到多少{$_G['SET']['TIANDOUNAME']}" value="{$_G['SET']['APP_HADSKYCLOUDSERVER_TIANDOUDUIHUANSHU']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-top-15 pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">云短信设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">功能开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_HADSKYCLOUDSERVER_SMS_OPEN']}" name="app_hadskycloudserver_sms_open">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">验证码保护</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_PUYUETIAN_SMS_VERIFYCODE']}" name="app_puyuetian_sms_verifycode">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">强制使用手机号注册</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_PUYUETIAN_SMS_MUSTREG']}" name="app_puyuetian_sms_mustreg">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">每个号码每日请求短信上限</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_puyuetian_sms_pnmax" value="{$_G['SET']['APP_PUYUETIAN_SMS_PNMAX']}" placeholder="留空或0为不限制">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">每个IP每日请求短信上限</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_puyuetian_sms_ipmax" value="{$_G['SET']['APP_PUYUETIAN_SMS_IPMAX']}" placeholder="留空或0为不限制">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+			<a target="_blank" class="pk-btn pk-btn-success" href="http://www.hadsky.com/index.php?c=app&a=zhanzhang:index&s=websitesetting&domain={$_G['SYSTEM']['DOMAIN']}">云端设置</a>
+			<a target="_blank" class="pk-btn pk-btn-danger" href="index.php?c=app&a=hadskycloudserver:index&s=cloudpayrecord">本地充值记录</a>
+			<a target="_blank" class="pk-btn pk-btn-warning" href="http://www.hadsky.com/index.php?c=app&a=zhanzhang:index&s=cloudpayrecord">云端充值记录</a>
+			<a class="pk-btn pk-btn-default" href="javascript:" onclick="window.open('index.php?c=app&a=hadskycloudserver:index&s=synccloudorder&rnd='+Math.random(),'pk-di');pkalert('同步完成！')">充值记录云同步</a>
+		</div>
+	</div>
+</form>
+<iframe class="pk-hide" src="index.php?c=app&a=hadskycloudserver:install"></iframe>
+<script>
+	$(function() {
+		var nodes = $('#nodesDiv').data('data'),
+			nodeList = $('#nodesDiv select');
+		if(typeof(nodes) == "object") {
+			for(var i in nodes) {
+				nodeList.append('<option value="' + i + '">' + nodes[i] + '</option>');
+			}
+			nodeList.val(nodeList.data('value'));
+		}
+		$('#nodesDiv button').on('click', function() {
+			var This = $(this);
+			var pid = ppp({
+				type: 4,
+				shade: true,
+				content: "正在更新云服务节点列表"
+			});
+			$.getJSON('index.php', {
+				c: "app",
+				a: "hadskycloudserver:getcloudservernodes",
+				chkcsrfval: $_USER['CHKCSRFVAL']
+			}, function(data) {
+				pkpopup.close(pid);
+				if(data['state'] == 'ok') {
+					$('#nodesDiv select option[value!="auto"]').remove();
+					var _nodes = data['datas'];
+					for(var i in _nodes) {
+						nodeList.append('<option value="' + i + '">' + _nodes[i] + '</option>');
+					}
+					nodeList.val(nodeList.data('value'));
+					ppp({
+						type: 3,
+						icon: 1,
+						content: "同步成功"
+					});
+				} else {
+					ppp({
+						icon: 2,
+						content: data['datas']['msg'] || '同步失败'
+					});
+				}
+			});
+		});
+	});
+</script>

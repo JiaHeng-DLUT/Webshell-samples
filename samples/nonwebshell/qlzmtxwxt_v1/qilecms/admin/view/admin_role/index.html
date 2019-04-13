@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>角色列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<!-- 后台面包屑导航 -->
+{:get_admin_breadcrumb()}
+
+
+<!-- 搜索表单 -->
+{:create_search_form("添加角色",$keywordsData,$customSingleField,$groupData,$dateData,$orderData)}
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col width="110">
+      <col width="150">
+      <col width="80">
+      <col width="50">
+      <col width="50">
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>角色ID</th>
+        <th>角色名称</th>
+        <th>备注</th>
+        <th>状态</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td>{if $vo.role_id !=1}<input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.role_id}">{/if}</td>
+        <td>{$vo.role_id}</td>
+        <td>{$vo.role_name}</td>
+        <td>{$vo.remarks}</td>
+        <td>{if $vo.status == 1}<span class="layui-badge layui-bg-blue">启用</span>{else}<span class="layui-badge layui-bg-gray">禁用</span>{/if}</td>
+        <td>{$vo.sort}</td>
+        <td>
+        <div class="layui-btn-group">
+  {if $vo.role_id !=1}
+  <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="blank('{:url("adminRole/edit",array("id"=>$vo["role_id"]))}','角色编辑')"> <i class="layui-icon">&#xe642;</i></button>  
+   <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="del('{:url("adminRole/del",array("id"=>$vo["role_id"]))}')"> <i class="layui-icon">&#xe640;</i></button>
+
+{/if}
+
+   </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+{if empty($list)}
+ <div class="layui-form-item">
+    <div class="empty">
+     <div class="img"></div>
+     <p>暂无内容</p></div>
+ </div>
+</div>
+{/if}
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-primary" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 批量删除</button>
+</div>
+
+<script>
+$(function(){
+ //全选批量删除
+         var id = []; //定义空数组
+        var url ="{:url('adminRole/del')}"; //请求的url
+        var data = {"id":id};   //传递的表单数据
+        var delButton = "#del"; //删除节点class 或者ID
+        var checkboxClass = ".id"; //多选框class
+       
+
+         $(delButton).click(function(){
+              $(checkboxClass).each(function() {
+              if(this.checked == true){
+                   id.push($(this).val()); 
+              }
+              });              
+         if(id.length == 0){
+            parent.layer.alert('你没有选中任何分类',{title:'批量删除提示'});
+         }else{
+                     var index =parent.layer.confirm('批量删除后，数据不可恢复', {
+                      btn: ['确定删除','取消'] //按钮
+                      ,title:'是否批量删除'
+                      ,shadeClose:true
+                      ,icon: 3
+                      ,anim: 5  //动画类型
+                    }, function(){
+                       parent.layer.close(index);
+                    // 确定ajax 删除数据
+                                $.post(url,data        
+                                     ,function(json){
+                                      if(json.code == 0){
+                                          layer.msg(json.msg);
+                                               setTimeout(function(){ 
+                                                     window.location.reload();  //页面刷新
+                                                },1000);
+                                           }
+                                         }
+                                       );
+
+                    }, function(){
+                       // 取消
+
+                    });
+
+         }
+
+    });
+
+   $("#add").on("click",function(){
+      blank('{:url("adminRole/add")}');  //弹窗显示 
+  });  
+});
+</script>
+
+</body>
+
+</html>

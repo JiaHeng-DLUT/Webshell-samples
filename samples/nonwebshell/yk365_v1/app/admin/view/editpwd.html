@@ -1,0 +1,35 @@
+<{include file="header.html"}>
+
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+	<div class="formbox">
+       	<form name="mform" method="post" action="<{url('editpwd')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>电子邮箱：</th>
+				<td><input name="user_email" type="text" class="ipt" id="user_email" size="30" maxlength="30" value="<{$myself.user_email}>" /></td>
+			</tr>
+			<tr>
+				<th>原始密码：</th>
+				<td><input name="user_pass" type="password" class="ipt" id="user_pass" size="30" maxlength="30" value="" /></td>
+			</tr>
+			<tr>
+				<th>新 密 码：</th>
+				<td><input name="new_pass" type="password" class="ipt" id="new_pass" size="30" maxlength="30" value="" /></td>
+			</tr>
+			<tr>
+				<th>确认密码：</th>
+				<td><input name="new_pass1" type="password" class="ipt" id="new_pass1" size="30" maxlength="30" value="" /></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+                	<input name="user_id" type="hidden" id="user_id" value="<{$myself.user_id}>">
+					<input name="act" type="hidden" id="act" value="saveedit">
+					<input type="submit" class="btn" value="确认修改">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>
+
+<{include file="footer.html"}>

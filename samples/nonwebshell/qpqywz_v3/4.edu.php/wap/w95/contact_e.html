@@ -1,0 +1,63 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>{@SL_联系标题}-{@SL_网站标题}</title>
+<link href="{@SL_安装目录}{@SL_网站ico}" rel="shortcut icon" />
+<meta name="keywords" content="{@SL_网站关键字}">
+<meta name="description" content="{@SL_网站描述}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/amazeui.css">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/main.css">
+</head>
+<body>
+ 
+<script src="{@SL_安装目录}wap/w95/style/js/jquery.min.js"></script> 
+{@SL_网站顶部}
+<div class="list-main">
+  <div class="am-container">
+    <div class="list-nav" data-am-sticky="">
+      <ul class="am-cf">
+{$left_list(<li id="%左侧type%-%左侧typeID%"><a href="%左侧链接%" title="%左侧标题%">%左侧标题%</a></li>,{@SL_菜单ID})}
+</ul>
+      <div class="curBg"></div>
+      <div class="cls"></div>
+    </div>
+    <div><img src="{@SL_安装目录}{@SL_联系页面}" class="am-img-responsive" alt=""></div>
+    <div class="list-pag"> Position：<a href="{@SL_首页链接}">Home</a> > <a href="">{@SL_联系标题}</a> </div>
+    <div class="list-center">
+      <h1>{@SL_联系标题}</h1>
+      <div class="list-single">
+        
+        <style>.contact_box{width:33%; min-width: 330px; float: left;text-align:center;border-right: solid 1px #EEEEEE;border-left: solid 1px #EEEEEE;margin:20px 0;border-top: solid 1px #EEEEEE;padding:10px;}</style>
+<h3 style="text-align:center;">{@SL_联系标题}</h3>
+<p style="text-align:center;">{@SL_联系英文标题}</p>
+<iframe src="{@SL_安装目录}mapload.asp?C_address={@SL_地图地址}&C_zb={@SL_地图坐标}" scrolling="no" name="mapif" type="1" frameborder="0" height="400" width="100%" style="margin: 20px 0"></iframe>
+<h3 style="text-align:center;">{@SL_网站标题}</h3>
+<p style="text-align:center;">{@SL_网站描述}</p>
+<div class="contact_box">
+<h4>Contact Us</h4>
+{@SL_联系方式}
+</div>
+<div class="contact_box">
+<h4>Online Service</h4>
+{$qq_list(<a href="http://wpa.qq.com/msgrd?v=3&uin=%号码%&site=qq&menu=yes" class="qq" target="_blank">%职务%：%号码%</a><br>,qq)}
+{$qq_list(<a href="http://www.taobao.com/webww/ww.php?ver=3&touid=%号码%&siteid=cntaobao&status=1&charset=utf-8" class="qq" target="_blank">%职务%：%号码%</a><br>,ww)}
+</div>
+<div class="contact_box">
+<h4>Concern</h4>
+<img src="{@SL_安装目录}{@SL_微信二维码}" width="150">
+</div>
+<div style="font: 0px/0px sans-serif;clear: both;display: block"></div></div>
+</div>
+<br>
+      </div>
+    </div>
+  
+{@SL_网站底部}<script>$('#contact-1').attr('class','list-active');</script></body>
+</html>

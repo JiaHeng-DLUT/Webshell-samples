@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seo['title']}</title>
+<link href="{$pe['host_tpl']}css/style.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="{$pe['host_tpl']}css/style.css" rel="stylesheet" media="print" type="text/css" />
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/global.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.printarea.js"></script>
+<style type="text/css">
+body{color:#000; padding-bottom:50px !important;}
+.print_btn{position:fixed; display:block; bottom:0; left:0; height:45px; line-height:40px; width:100%; color:#fff; background:#ffa500; text-align:center; font-weight:bold; font-size:14px; z-index:1}
+.print_btn:hover{color:#fff}
+@media print{
+	.print_btn {display:none}
+} 
+</style>
+</head>
+<body style="background:#fff;padding:5px;">
+<!--startprint1-->
+<div id="printhtml">
+<!--{foreach($info_list as $k=>$v):}-->
+<!--{$product_list  = $db->pe_selectall('orderdata', array('order_id'=>$v['order_id']))}-->
+<!--{$order_num = 0}-->
+<div class="dingdan" style="width:100%;font-size:14px;line-height:30px;">
+	<p style="text-align:center;font-size:20px;margin:20px 0 30px">{$cache_setting['web_title']}发货单</p>
+	<span class="fl" style="width:50%">订单编号：{$v['order_id']}</span>
+	<span class="fl" style="width:50%">下单时间：{pe_date($v['order_atime'])}</span>
+    <div style="clear:both"></div>	
+	<span class="fl" style="width:50%">用户姓名：{$v['user_tname']}</span>
+	<span class="fl" style="width:50%">联系电话：{$v['user_phone']}</span>
+    <div style="clear:both"></div>
+    <span class="fl" style="width:100%">收货地址：{$v['user_address']}</span>
+    <div style="clear:both"></div>  
+	<div style="border-bottom:1px dashed #000;margin:10px 0;"></div>
+    <p style="width:35%;float:left;text-align:left;">商品名称</p>
+    <p style="width:30%;float:left;text-align:center;margin-left:5%;">规格</p>
+    <p style="width:10%;float:left;text-align:center;">单价</p>
+    <p style="width:10%;float:left;text-align:center;">数量</p>
+    <p style="width:10%;float:left;text-align:center;">小计</p>
+	<div style="clear:both"></div>
+	<div style="border-bottom:1px dashed #000;margin:10px 0;"></div>
+	<div style="height:240px">
+		<div style="_height:180px;min-height:180px;">
+		<!--{foreach($product_list as $kk=>$vv):}-->
+		<!--{$order_num += $vv['product_num']}-->
+		<p style="width:35%;float:left;text-align:left;">{$vv['product_name']}</p>
+		<p style="width:30%;float:left;text-align:left;font-size:12px;margin-left:5%;">{order_skushow($vv['product_rule'])}&nbsp;</p>  
+	    <p style="width:10%;float:left;text-align:center;">{$vv['product_money']}元</p>
+	    <p style="width:10%;float:left;text-align:center;">{$vv['product_num']}</p>
+	    <p style="width:10%;float:left;text-align:center;">{$vv['product_allmoney']}元</p>
+	    <div style="clear:both"></div>
+		<!--{endforeach;}-->
+		</div>
+		<div style="border-bottom:1px dashed #000;margin:10px 0;"></div>
+	    <p style="width:50%;float:left;text-align:left;">总数：{$order_num}件</p>
+	    <p style="width:50%;float:left;text-align:right;">总计：{$v['order_money']} 元&nbsp;&nbsp;&nbsp;</p>
+		<div style="clear:both"></div>
+	</div>
+</div>
+<!--{endforeach;}-->
+</div>
+<!--endprint1-->
+<a href="javascript:printhtml(1);" class="print_btn">打印发货单 >></a>
+<script type="text/javascript">
+function printhtml(num) {  
+	if (num < 10) {
+		html = window.document.body.innerHTML;//获取当前页的html代码  
+		sprnstr = "<!--startprint"+num+"-->";//设置打印开始区域  
+		eprnstr = "<!--endprint"+num+"-->";//设置打印结束区域  
+		prnhtml = html.substring(html.indexOf(sprnstr)+18); //从开始代码向后取html  
+		prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html  
+		window.document.body.innerHTML = prnhtml;  
+		window.print();  
+		window.document.body.innerHTML = html;  
+	}
+	else {
+		window.print();  
+	} 
+}  
+</script>
+</body>
+</html>

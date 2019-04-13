@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加广告</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+  <ul class="layui-tab-title" style="margin-top:10px">
+    <li class="layui-this"><a href="{:url('ad/add',['position_id'=>$Request.param.position_id])}">添加广告</a></li>
+    <li  ><a href="{:url('ad/index',['position_id'=>$Request.param.position_id])}">广告管理</a></li>
+  </ul>
+
+
+<div class=""  style="padding:20px">
+
+<form class="layui-form" method="post">
+<input type="hidden"  name="position_id" value="{$Request.param.position_id}">
+<input type="hidden" name="ad_type" lay-filter="ad_type" value="{$adPosition.position_type}">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 广告类型</label>
+                <div class="layui-input-inline"><div class="layui-form-mid layui-word-aux">
+                {if $adPosition.position_type == 0}
+                  图片广告
+                 {elseif $adPosition.position_type == 1}
+                
+                 代码广告
+                 {elseif $adPosition.position_type == 2}
+            
+                 幻灯片广告
+                  {/if}
+                  </div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 广告标题</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="title" lay-verify="required"  autocomplete="off" placeholder="" class="layui-input">
+                </div>
+              </div>
+   
+
+    {if $adPosition.position_type == 0 || $adPosition.position_type == 2}
+              <div class="layui-form-item adtype">
+                <label class="layui-form-label" style="width:100px;">广告图片</label>
+                <div class="layui-input-inline" style="width:500px;">
+
+                      <div class="img" style="padding:10px"> 
+                         {:upload_images("上传广告图片","ad_img",'')}
+                      </div>
+                   <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+     {/if}
+  {if $adPosition.position_type == 1}
+      <div class="layui-form-item adtype">
+                <label class="layui-form-label" style="width:100px;">广告代码</label>
+                <div class="layui-input-inline" style="width:500px;">
+                       <textarea name="code" placeholder="" class="layui-textarea"></textarea>
+                      
+                     </div>
+                   <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+       
+               
+{/if}
+
+              {if $adPosition.position_type == 0 || $adPosition.position_type == 2}
+              <div class="layui-form-item url">
+                <label class="layui-form-label" style="width:100px;">广告链接URL</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="url"   lay-verify="url" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                   <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              {/if}
+
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">开始时间</label>
+                <div class="layui-input-inline">
+                   <input type="text" name="start_time" lay-verify="start_time" autocomplete="off" placeholder="" class="layui-input " id="start_time" value="">
+                </div>
+                   <div class="layui-form-mid layui-word-aux">{:about('留空，则代表当前时间开始')}</div>
+              </div>
+
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">结束时间</label>
+                <div class="layui-input-inline">
+                   <input type="text" name="end_time" lay-verify="end_time" autocomplete="off" placeholder="" class="layui-input " id="end_time" value="">
+                </div>
+                   <div class="layui-form-mid layui-word-aux">{:about('0或者留空 代表永久有效')} </div>
+              </div>
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">排序</label>
+                <div class="layui-input-inline">
+                 <input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                   <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">广告状态</label>
+                <div class="layui-input-inline">
+                <input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget" checked lay-text="开启|关闭">
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                 <button class="layui-btn layui-btn-normal" lay-submit lay-filter="form">确 定</button>
+                 <button class="layui-btn layui-btn-primary"  onclick="javascript:history.go(-1);">返 回</button>
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element', 'layer','form', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+ var laydate = layui.laydate;
+
+//开始时间选择器
+laydate.render({
+  elem: '#start_time'
+  ,type: 'datetime'
+  ,value: "{$time|date='Y-m-d H:i'}"
+});
+
+//结束时间选择器
+laydate.render({
+  elem: '#end_time'
+  ,type: 'datetime'
+});
+
+// 监听radio
+form.on('radio(ad_type)',function(data){
+    // data.checked
+    if(data.value == 0){
+       $(".img").show();
+          $(".url").show();
+       $(".code").hide();
+
+    }else if(data.value == 1){
+       $(".code").show(); 
+       $(".img").hide();
+      $(".url").hide();
+    }
+    // console.log(data.elem.checked);
+});
+
+//监听select;
+ form.on('select(position_cate_id)',function(data){
+  var html='';
+  var v = data.value;
+    $.post("{:url('ad/getInfoByPositionCateId')}",{id:v},function(json){
+      var data =json.data;
+        if(json.code == 0){
+
+              for(var p in data){
+                 html += '<option value="'+json.data[p].position_id+'">'+json.data[p].position_name+'</option>';
+                         
+              }
+
+         $("#position_list").html(html);
+          form.render();
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+
+ });
+form.render();
+
+//监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('ad/add')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            $("form")[0].reset();
+  //添加数据成功，关闭弹出窗之前，刷新列表页面的数据
+           
+             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引      
+             // parent.window.location.reload();
+             parent.layer.close(index); 
+             layer.msg(json.msg);
+
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+   return false;  //阻止表单跳转使用提供layer 提交
+  });
+
+
+});
+
+</script>
+
+</body>
+
+</html>

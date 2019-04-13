@@ -1,0 +1,79 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class Module extends Model
+{
+   protected $autoCheckFields = true;
+   public  function getModuleList($where){
+
+    return $data = $this->where($where)->order('sort','desc')->select();
+   }
+
+   public function addNav($data){
+   	    if(empty($data) || !is_array($data) ){ 
+   	    	return false;
+   	    }
+        if($this->save()){
+            return true;
+        }else{
+	    	return false;
+	    }
+ 
+
+  }
+
+   public function updateNav($post){
+        if(empty($post) || !is_array($post) ){ 
+          return false;
+        }
+
+        if($this->update($post)){
+            return true;
+        }else{
+             return false;
+      }
+ 
+
+  }
+   public function delNav($id){
+
+        if(empty($id) || !is_array($id) ){ 
+          return false;
+        }   
+        if($this->destroy($id)){
+           return true;
+        }else{
+          return false;
+      }
+ 
+
+  }
+ //安装模块 
+  public function install($config){
+    $data['name'] = $config['name'];
+    $data['module'] = $config['module'];
+    $data['dir'] = $config['module'];
+    $data['version'] = $config['version'];
+    $data['uninstall'] = $config['uninstall'];
+    $data['description'] = $config['description'];
+    $data['create_time'] = time();
+    $this->save($data);
+    return  true;
+  }
+//开启模块
+ public function open($id,$status){
+  $where['id'] = $id;
+  $data['status'] =$status;
+  $this->where($where)->update($data);
+  return true;
+ }
+
+//开闭模块
+ public function close($id,$status){
+  $where['id'] = $id;
+  $data['status'] =$status;
+  $this->where($where)->update($data);
+  return true;
+ }
+}

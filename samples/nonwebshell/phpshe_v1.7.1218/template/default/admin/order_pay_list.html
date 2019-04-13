@@ -1,0 +1,63 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=order_pay" <!--{if(!$_g_state):}-->class="sel"<!--{endif;}-->>{$menutitle}（{$tongji['all']}）<i></i></a>
+		<a href="admin.php?mod=order_pay&state=wpay" <!--{if($_g_state=='wpay'):}-->class="sel"<!--{endif;}-->>待付款（{$tongji['wpay']}）<i></i></a>
+		<a href="admin.php?mod=order_pay&state=success" <!--{if($_g_state=='success'):}-->class="sel"<!--{endif;}-->>已付款（{$tongji['success']}）<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				<input type="hidden" name="state" value="{$_g_state}" />
+				订单号：<input type="text" name="id" value="{$_g_id}" class="inputtext input200 mar5" />
+				用户名：<input type="text" name="user_name" value="{$_g_user_name}" class="inputtext input100" />
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="130">充值日期</th>
+			<th class="bgtt" width="">订单号</th>
+			<!--<th class="bgtt" width="">订单名称</th>-->
+			<th class="bgtt" width="150">充值金额</th>
+			<th class="bgtt" width="150">用户名</th>
+			<th class="bgtt" width="120">支付方式</th>
+			<th class="bgtt" width="130">付款日期</th>
+			<th class="bgtt" width="120">订单状态</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td class="num">{pe_date_color(pe_date($v['order_atime']))}</span></td>
+			<td>{$v['order_id']}</td>
+			<!--<td>{$v['order_name']}</td>-->
+			<td><span class="num strong cgreen">{$v['order_money']}</span></td>
+			<td>{$v['user_name']}</td>
+			<td>{$v['order_payment_name']}</td>
+			<!--{if($v['order_state'] == 'success'):}-->
+			<td class="num">{pe_date_color(pe_date($v['order_ptime']))}</td>
+			<td><span class="cgreen">充值成功</span></td>
+			<!--{else:}-->
+			<td class="num">-</td>
+			<td><span class="cred">待付款</span></td>
+			<!--{endif;}-->			
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

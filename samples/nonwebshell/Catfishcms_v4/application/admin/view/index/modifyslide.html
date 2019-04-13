@@ -1,0 +1,43 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/uploadify/uploadify.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('Edit the slideshow')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <form method="post" action="">
+            <div class="form-group">
+                <label>{:lang('Slide name')}：</label>
+                <input type="text" class="form-control" value="{$data.slide_name}" name="mingcheng" placeholder="{:lang('Slide name')}" autofocus>
+                <p class="help-block">{:lang('The slideshow name will be displayed, and if it is not required, leave it blank')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Slide description')}：</label>
+                <input type="text" class="form-control" value="{$data.slide_des}" name="miaoshu" placeholder="{:lang('Slide description')}">
+                <p class="help-block">{:lang('The slideshow description will be displayed and leave blank if no display is required')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Slide link')}：</label>
+                <input type="text" class="form-control" value="{$data.slide_url}" name="lianjie" placeholder="http://">
+                <p class="help-block">{:lang('The page that will be accessed after clicking the slide')}</p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Slide picture')}：</label>
+                <img src="{$data.slide_pic}" class="img-thumbnail img-responsive" id="slideshowImg">
+                <input type="hidden" value="{$data.slide_pic}" name="slideshow" id="slideshow">
+                <input type="hidden" value="{$data.slide_id}" name="slideId">
+                <p class="help-block">{:lang('Suggested upload ratio')}：{$slideshowWidth}×{$slideshowHeight}{:lang('pixels of the picture, otherwise the image will be distorted!')}</p>
+                <div id="upload"></div>
+            </div>
+            <div class="text-center">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default" id="baocun">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+    </div>
+</div><br><br>
+<div class="hidden" id="webroot">{$domain}</div>
+<div class="hidden" id="buttonText">{:lang('Select Image')}</div>
+<script type="text/javascript" src="{$domain}public/common/uploadify/jquery.uploadify.js"></script>
+<script src="{$domain}public/common/js/addSlideshow.js"></script>
+{include file="index/footer" /}

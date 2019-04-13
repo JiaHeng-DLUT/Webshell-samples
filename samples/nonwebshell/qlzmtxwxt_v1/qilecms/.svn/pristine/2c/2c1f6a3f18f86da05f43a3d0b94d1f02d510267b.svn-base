@@ -1,0 +1,69 @@
+<?php
+namespace app\admin\controller;
+use app\admin\controller\Common;
+class Nav extends Common
+{
+
+  public function index(){
+//显示导航
+    $Nav =  model('Nav');
+    $list  = $Nav->getNav();   
+    $this->assign('list',$list);
+    return $this->fetch();
+
+  } 
+
+
+	public function add()
+    {
+      // $post = input('post.');
+      // $Nav = model('Nav');
+      // if($Nav->addNav($post)){
+      //   $result = ['code'=>'1','msg'=>'菜单添加成功'];
+      // }else{
+      //   $result = ['code'=>'0','msg'=>'菜单添加失败'];
+
+      // }
+
+      return $this->fetch();
+	}
+
+  public function update()
+    {
+      $post = input('post.');
+      $Nav = model('Nav');
+
+      if($Nav->updateNav($post)){
+         return success_json('菜单更新成功');
+      }else{
+         return error_json('菜单更新失败');
+      }
+
+  }
+
+  public function del()
+    {
+      $id = input('post.id/a');
+      $Nav = model('Nav');
+
+      if($Nav->delNav($id)){
+         return success_json('菜单删除成功');
+      }else{
+         return error_json('菜单删除失败');
+
+      }
+       
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+}

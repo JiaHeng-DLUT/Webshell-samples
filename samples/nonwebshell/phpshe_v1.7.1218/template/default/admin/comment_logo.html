@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seo['title']}</title>
+<meta name="keywords" content="{$seo['keywords']}" />
+<meta name="description" content="{$seo['description']}" />
+<link type="text/css" rel="stylesheet" href="{$pe['host_tpl']}css/style.css" />
+<link rel="shortcut icon" href="{$pe['host_tpl']}images/favicon.ico" />
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/global.js"></script>
+</head>
+<body>
+<div class="swiper-container js_photo">
+    <div class="swiper-wrapper">
+		<!--{foreach($info_list as $v):}-->
+		<div class="swiper-slide">
+		    <img data-src="{pe_thumb($v)}" class="swiper-lazy">
+		    <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+		</div>
+		<!--{endforeach;}-->
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-button-prev swiper-button-white"></div>
+</div>
+<div class="swiper-container js_thumb">
+    <div class="swiper-wrapper">
+		<!--{foreach($info_list as $v):}-->
+		<div class="swiper-slide" style="background-image:url({pe_thumb($v)})"></div>
+		<!--{endforeach;}-->
+    </div>
+</div>
+<link type="text/css" rel="stylesheet" href="{$pe['host_root']}include/plugin/swiper/swiper.min.css" />
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/swiper/swiper.jquery.min.js"></script>
+<script type="text/javascript">
+var js_photo = new Swiper('.js_photo', {
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 10,
+    lazyLoading: true,
+    preloadImages: false,
+    initialSlide :{$nownum},
+	onSlideChangeStart: function() {
+		return;
+		$('.js_thumb .swiper-slide').removeClass('swiper-slide-active');
+		var activeNav = $('.js_thumb').eq(js_photo.activeIndex).addClass('swiper-slide-active');
+		if(!activeNav.hasClass('swiper-slide-visible')) {
+			if(activeNav.index() > js_photo.activeIndex) {
+				var thumbsPerNav = Math.floor(js_thumb.width / activeNav.width()) - 1;
+				js_thumb.swipeTo(activeNav.index() - thumbsPerNav);
+			} else {
+				js_thumb.swipeTo(activeNav.index());
+			}
+		}
+	}
+});
+var js_thumb = new Swiper('.js_thumb', {
+	spaceBetween: 10,
+	centeredSlides: true,
+	slidesPerView: 5,
+	touchRatio: 0.2,
+	slideToClickedSlide: true,
+	initialSlide :{$nownum},
+	onTap: function() {
+		return;
+		js_photo.slideTo(js_thumb.clickedIndex);
+	}
+});
+js_photo.params.control = js_thumb;
+js_thumb.params.control = js_photo;
+</script>
+<style>
+html, body {
+    position: relative;
+    height: 100%;
+}
+body {
+    background: #000;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color:#000;
+    margin: 0;
+    padding: 0;
+}
+.swiper-container {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+.js_photo {
+    height: 80%;
+    width: 100%;
+}
+.js_photo  img{
+	max-width:100%;
+	-ms-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+.js_thumb {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+.js_thumb .swiper-slide {
+    width: 20%;
+    height: 100%;
+    opacity: 0.3;
+}
+.js_thumb .swiper-slide-active {
+    opacity: 1;
+}
+</style>
+</body>
+</html>

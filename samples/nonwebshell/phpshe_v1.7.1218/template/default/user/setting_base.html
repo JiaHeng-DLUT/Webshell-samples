@@ -1,0 +1,54 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt"><a href="javascript:;" class="sel">{$menutitle}<i></i></a></div>
+		<div class="hy_table">
+			<form method="post" id="form">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="text-align:right;" width="150">用&nbsp;&nbsp;户 名：</td>
+				<td>{$info['user_name']}</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">会员等级：</td>
+				<td><span class="dj_btn">{$cache_userlevel[$info['userlevel_id']]['userlevel_name']}</span></td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">真实姓名：</td>
+				<td><input type="text" name="user_tname" value="{$info['user_tname']}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">手机号码：</td>
+				<td><input type="text" name="user_phone" value="{$info['user_phone']}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">电子邮箱：</td>
+				<td><input type="text" name="user_email" value="{$info['user_email']}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">注册日期：</td>
+				<td>{pe_date($info['user_atime'])}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="hidden" name="pe_token" value="{$pe_token}" />
+					<input type="hidden" name="pesubmit" />	
+					<input type="button" value="提 交"  class="tjbtn" />
+				</td>
+			</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		pe_submit("user.php?mod=setting&act=base");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,95 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/member_login.css">
+<div class="ds-login-layout">
+  <div class="openid">
+    <span class="avatar"><img src="{$headimgurl}" /></span>
+    <span>{$Think.lang.home_wx_prompt_1}<a href="#register_form">{$user_info.nickname}</a>{$Think.lang.home_wx_prompt_2}<br/>
+    {$Think.lang.home_wx_prompt_3}<a href="{:url('Index/index')}">{$Think.lang.home_wx_prompt_4}</a>{$Think.lang.home_wx_prompt_5}</span></div>
+  <div class="left-pic"><img src="{$Think.HOME_SITE_ROOT}/images/login_openid.jpg" /> </div>
+  <div class="ds-login">
+    <div class="arrow"></div>
+    <div class="ds-wx-mode">
+      <ul class="tabs-nav">
+        <li><a href="#register">{$Think.lang.improve_account_information}<i></i></a></li>
+      </ul>
+      <div id="tabs_container" class="tabs-container">
+        <div id="register" class="tabs-content">
+          <form name="register_form" id="register_form" class="ds-login-form" method="post" action="{:url('Connectwx/edit_info')}">
+            <dl>
+              <dt>{$Think.lang.login_register_username}：</dt>
+              <dd>
+                <input type="text" value="{:session('member_name')}" id="user" name="user" class="text" readOnly/>
+              </dd>
+            </dl>
+            <dl>
+              <dt>{$Think.lang.login_register_pwd}：</dt>
+              <dd>
+                <input type="text" value="{$password}" id="password" name="password" class="text" placeholder="{$Think.lang.login_register_password_to_login}>"/>
+              </dd>
+            </dl>
+            <dl class="mt15">
+              <dt>{$Think.lang.login_register_email}：</dt>
+              <dd>
+                <input type="text" id="email" name="email" class="text" placeholder="{$Think.lang.login_register_input_valid_email}"/>
+              </dd>
+            </dl>
+            <div class="submit-div">
+              <input type="submit" name="submit" value="{$Think.lang.login_register_enter_now}" class="submit"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){
+    //注册表单验证
+    $('#register_form').validate({
+        errorPlacement: function(error, element){
+            var error_td = element.parent('dd');
+            error_td.append(error);
+            element.parents('dl:first').addClass('error');
+        },
+        success: function(label) {
+            label.parents('dl:first').removeClass('error').find('label').remove();
+        },
+        rules: {
+            password: {
+                required: true,
+                minlength: 6,
+                maxlength: 20
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: "{:url('Login/check_email')}",
+                    type: 'get',
+                    data: {
+                        email: function() {
+                            return $('#email').val();
+                        }
+                    }
+                }
+            }
+        },
+        messages : {
+            password  : {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_input_password}',
+                minlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_password_range}',
+                maxlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_password_range}'
+            },
+            email : {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_input_email}',
+                email    : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_invalid_email}',
+                remote	 : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.login_register_email_exists}'
+            }
+        }
+    });
+});
+</script>
+
+{/block}

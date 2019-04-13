@@ -1,0 +1,53 @@
+<div id="app-puyuetian_sms" class="pk-container">
+	<div class="pk-background-color-white pk-padding-10">
+		<div class="pk-row pk-margin-left-right-auto" style="max-width:480px;">
+			<div class="pk-text-center pk-text-lg pk-padding-25">更换绑定手机</div>
+			<form name="form_sms" method="post" action="index.php?c=app&a=puyuetian_sms:index&s=reg">
+				<div class="pk-row pk-margin-bottom-5">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">新手机号</div>
+					<div class="pk-w-sm-8">
+						<input name="phone" type="text" class="pk-textbox" placeholder="请输入要绑定的手机号" autocomplete="off" />
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-15">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">&nbsp;</div>
+					<div class="pk-w-sm-8">
+						<button type="button" id="getverifycode" class="pk-btn pk-btn-success">获取手机验证码<span></span><span></span><span></span></button>
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-15">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">短信验证码</div>
+					<div class="pk-w-sm-8">
+						<input name="code" type="text" class="pk-textbox" placeholder="请输入手机收到的验证码" autocomplete="off" />
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-5">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">&nbsp;</div>
+					<div class="pk-w-sm-8">
+						<button id="smbtn" type="button" class="pk-btn pk-btn-secondary">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+	var $xyyzm = "{$_G['SET']['APP_PUYUETIAN_SMS_VERIFYCODE']}";
+</script>
+<script src="app/hadskycloudserver/template/js/sms.js"></script>
+<script>
+	$('#smbtn').click(function() {
+		$('#smbtn').prop('disabled', true).html('修改中...');
+		var strings = FormDataPackaging('form[name="form_sms"]');
+		$.post('index.php?c=app&a=hadskycloudserver:index&s=sms_changephone&submit=yes', strings, function(data) {
+			if(data['state'] == 'ok') {
+				pkalert('修改成功！', 'js:location.href="index.php?c=user"');
+			} else {
+				pkalert(data['msg'] || '未知错误');
+			}
+			$('#smbtn').prop('disabled', false).html('确定');
+		}, 'json').error(function(e){
+			console.log(e);
+		});
+	});
+</script>

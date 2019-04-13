@@ -1,0 +1,27 @@
+<style>
+	.childforums>div {
+		border-right: solid 1px #eee;
+		border-bottom: solid 1px #eee;
+	}
+	
+	.childforums>div:hover {
+		cursor: pointer;
+		background-color: #eee;
+	}
+	
+	.childforums>div:nth-of-type(4n) {
+		border-right: none;
+	}
+	
+	@media only screen and (max-width: 999px) {
+		.childforums>div:nth-of-type(2n) {
+			border-right: none;
+		}
+	}
+</style>
+<div class="pk-container">
+	<div class="pk-background-color-white pk-text-sm">
+		<div class="pk-padding-15" style="border-bottom: solid 1px #458fce;">
+			昨日:<span class="pk-text-primary">{$_G['SET']['YESTODAYPOSTRR']}</span>篇&nbsp;&nbsp;今日:<span class="pk-text-primary">{$_G['SET']['TODAYPOSTRR']}</span>篇 &nbsp;&nbsp;总帖:<span class="pk-text-primary">{$_G['SET']['SUMPOSTRR']}</span>篇 &nbsp;&nbsp;会员:<span class="pk-text-primary">{$_G['SET']['MEMBERCOUNT']}</span>位
+		</div>
+		<div>

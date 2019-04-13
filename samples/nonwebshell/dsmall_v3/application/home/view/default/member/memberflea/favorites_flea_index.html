@@ -1,0 +1,57 @@
+{extend name="default/base/base_member" /}
+
+
+{block name="member_main"}
+
+
+<table class="dsm-default-table">
+    <thead>
+        <tr ds_type="table_header">
+            <th class="w30"></th>
+            <th class="w70"></th>
+            <th class="tl">{$Think.lang.flea_goods_name}</th>
+            <th class="w200">{$Think.lang.login_index_username}</th>
+            <th class="w100">{$Think.lang.flea_goods_price}</th>
+            <th class="w90">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="favorites_list"}
+        {foreach name="favorites_list" item="val"}
+        <tr class="bd-line">
+            <td></td>
+            <td><div class="goods-pic-small"> <span class="thumb size60"> <i></i><a href="{:url('Fleagoods/index',['goods_id'=>$val.flea.goods_id])}" target="_blank"><img height="50" width="50" src="{notempty name='val.flea.goods_image'}{$val.flea.goods_image}{else /}{:goods_thumb(array())}{/notempty}" onload="javascript:ResizeImage(this,60,60);" /></a></span></div></td>
+            <td class="tl"><dl class="goods-name">
+                    <dt>{$val.flea.goods_name}</dt>
+                </dl></td>
+            <td>{$val.flea.member_name}</td>
+            <td>{$val.flea.goods_store_price}</td>
+            <td>
+                <p><a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Memberflea/favorites',['fav_id'=>$val.fleafav_id,'drop'=>'ok'])}','{$Think.lang.ds_ensure_del}');" class="dsu-btn2 mt5">{$Think.lang.ds_del}</a></p></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord">
+                <div class="warning-option">
+                    <i>&nbsp;</i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+
+
+
+
+
+{/block}
+

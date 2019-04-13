@@ -1,0 +1,99 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="alert mt10" style="clear:both;">
+	<ul class="mt5">
+        <li>{$Think.lang.traffic_trends}</li>
+    </ul>
+</div>
+<form method="get" target="_self">
+  <table class="search-form">
+    <tr>
+    	<td class="tr">
+    		<div class="fr">
+    			<label class="submit-border">
+                  <input type="submit" class="submit" value="{$Think.lang.ds_common_search}" /></label>
+    		</div>
+    		<div class="fr">
+    		  <div class="fl" style="margin-right:3px;">
+        		<select name="search_type" id="search_type" class="querySelect">
+        			<option value="week" {$Request.param.search_type == 'week'?'selected':''}>{$Think.lang.with_week_statistics}</option>
+                  <option value="month" {$Request.param.search_type == 'month'?'selected':''}>{$Think.lang.with_monthly_statistics}</option>
+        		</select>
+        	 </div>
+                <div id="searchtype_week" style="display:none;" class="fl">
+                  	<select name="searchweek_year" class="querySelect">
+                      {foreach name="year_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.week.current_year == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchweek_month" class="querySelect">
+                      {foreach name="month_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.week.current_month ==$key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchweek_week" class="querySelect">
+                      {foreach name="week_arr" item="v"}
+                  		<option value="{$v.key}" {$search_arr.week.current_week == $v.key ?'selected':''}>{$v.val}</option>
+                      {/foreach}
+                    </select>
+              </div>
+              <div id="searchtype_month" style="display:none;" class="fl">
+                  	<select name="searchmonth_year" class="querySelect">
+                      {foreach name="year_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.month.current_year == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+                    <select name="searchmonth_month" class="querySelect">
+                      {foreach name="month_arr" item="v"}
+                  		<option value="{$key}" {$search_arr.month.current_month == $key ?'selected':''}>{$v}</option>
+                      {/foreach}
+                    </select>
+              </div>
+    		</div>
+    	</td>
+    </tr>
+  </table>
+</form>
+
+<div id="container"></div>
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+//展示搜索时间框
+function show_searchtime(){
+    s_type = $("#search_type").val();
+    $("[id^='searchtype_']").hide();
+    $("#searchtype_"+s_type).show();
+}
+
+$(function(){
+    //统计数据类型
+    var s_type = $("#search_type").val();
+
+    show_searchtime();
+    $("#search_type").change(function(){
+        show_searchtime();
+    });
+
+    //更新周数组
+    $("[name='searchweek_month']").change(function(){
+        var year = $("[name='searchweek_year']").val();
+        var month = $("[name='searchweek_month']").val();
+        $("[name='searchweek_week']").html('');
+        $.getJSON(HOMESITEURL+'/Index/getweekofmonth.html',{y:year,m:month},function(data){
+            if(data != null){
+                for(var i = 0; i < data.length; i++) {
+                    $("[name='searchweek_week']").append('<option value="'+data[i].key+'">'+data[i].val+'</option>');
+                }
+            }
+        });
+    });
+
+    $('#container').highcharts({$stat_json});
+
+});
+</script>
+
+{/block}
+

@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+  <meta name="format-detection" content="telephone=no" />
+  <title>激活</title>
+  <link type="text/css" rel="stylesheet" href="../../css/download.css">
+  <link rel="stylesheet" href="css/layer.css">
+</head>
+
+<body class="activatePage">
+  <div class="container" id="activate">
+    <p class="banner"></p>
+    <p class="_input phone">
+      <input type="text" placeholder="输入手机号" @input="inpPhone" v-model="phone" onkeyup="this.value=this.value.replace(/[^\d]/g,'');">
+    </p>
+    <p class="jihuo_btn">
+      <a href="javascript:;" @click="getCode_"></a>
+    </p>
+    <div class="yzmBox" v-show="status">
+      <div class="yzmCon">
+        <p>
+          <input type="text" @input="inpYzm" v-model="yzm" placeholder="请输入验证码" onkeyup="this.value=this.value.replace(/[^\d]/g,'');">
+          <span v-text="count"></span>
+        </p>
+        <a href="javascript:;" @click="examine">立即查看</a>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/layer.mobile.js"></script>
+  <script src="../../js/vue.min.js"></script>
+  <script src="../../js/aes.js"></script>
+  <script src="../../js/jquery.base64.js"></script>
+  <script>
+        var Base_url = 'https://api.daidaihu365.com/'
+//    var Base_url = 'http://api.daidai123.cn/'
+    var img_url = 'http://image.daidaihu365.com/'
+    var wap_url = 'http://wap.daidaihu365.com/'
+
+    var deviceid_ = localStorage.deviceid_;
+    if (!deviceid_ || deviceid_ == 'null' || deviceid_ == null || deviceid_ == undefined || deviceid_ == 'undefined') {
+      uuid()
+    }
+    var header = {
+      'Device': localStorage.deviceid_, // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Channel': localStorage.Channel_code,
+      'Authentication': sessionStorage.token,
+      'PageId': 0
+    }
+    // 手机号
+    function userPhone(val) {
+      var reg = /^[1][3,4,5,7,8][0-9]{9}$/
+      if (!reg.test(val)) {
+        layer.open({
+          content: '请填写正确的手机号码',
+          skin: 'msg',
+          time: 2
+        })
+        return false
+      } else {
+        return true
+      }
+    }
+
+    function encrypt(word) {
+      var key = CryptoJS.enc.Utf8.parse('LoanLoanFox2018-2019@YSJR.$#%^&*')
+      var ivs = CryptoJS.enc.Utf8.parse('DaiFox@YSJR18~19')
+      var srcs = CryptoJS.enc.Utf8.parse(word)
+      var encrypted = CryptoJS.AES.encrypt(srcs, key, {
+        iv: ivs,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      })
+      return encrypted.toString()
+    }
+
+    function getUrlParam1() {
+      var url = window.location.href;
+      var urlArr = url.split('?');
+      var k = urlArr[0],
+        appU = k.split('/');
+      var L = appU[appU.length - 1];
+      var nameArr = L.split('.');
+      var t = $.base64.atob(nameArr[0]).split('=');
+      //        console.log(t[1]);
+      localStorage.Channel_code = appU[appU.length - 2];
+      header.Channel = localStorage.Channel_code;
+      header.PageId = decodeURI(t[1]);
+      return null != t ? decodeURI(t[1]) : null
+
+    }
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+
+    // $http 第一层拦截
+    function $http(url, data, method, cb, ercb) {
+      switch (method) {
+        case 'get':
+          $.ajax({
+            url: Base_url + url,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: header,
+            data: data,
+            success: function (res) {
+              doCode(res)
+            },
+            error: function (err) {
+              if (cb && typeof cb === 'function') ercb(err)
+            }
+          })
+          break
+        case 'post':
+          $.ajax({
+            url: Base_url + url,
+            type: 'POST',
+            dataType: 'JSON',
+            headers: header,
+            data: data,
+            success: function (res) {
+              doCode(res)
+            },
+            error: function (err) {
+              if (cb && typeof cb === 'function') ercb(err)
+            }
+          })
+          break
+        default:
+          ''
+      }
+
+      function doCode(res) {
+        switch (res.code) {
+          case 4001:
+            createToken(url, data, method, cb, ercb)
+            break
+          default:
+            if (cb && typeof cb === 'function') cb(res)
+        }
+      }
+      // 获取token
+      function createToken(url, data, method, cb, ercb) {
+        $.ajax({
+          url: Base_url + 'api/v1/token',
+          type: 'GET',
+          dataType: 'JSON',
+          headers: header,
+          data: data,
+          success: function (res) {
+            if (res.code === 200) {
+              sessionStorage.token = res.data.token
+              header.Authentication = sessionStorage.token
+              $http(url, data, method, cb, ercb)
+            } else {
+              createToken(url, data, method, cb, ercb)
+            }
+          },
+          error: function (err) {
+            if (cb && typeof cb === 'function') ercb(err)
+          }
+        })
+      }
+    }
+    getToken()
+
+    function getToken() {
+      $http('api/v1/token', {}, 'get', function (res) {
+        if (res.code === 200) {
+          sessionStorage.token = res.data.token
+          header.Authentication = sessionStorage.token
+          getPage()
+        } else if (res.code === 4002) {
+          getToken()
+        }
+      })
+    }
+    // 获取页面信息
+    function getPage() {
+      $('api/v1/page/' + getUrlParam1(), {}, 'get', function (res) {
+        if (res.code === 200 && res.data) {
+          localStorage.Channel = res.data.page.channel_code;
+          com_Data = res.data;
+          var img = new Image();
+          img.src = img_url + res.data.page_content.register_img_url;
+          img.style.width = '100%';
+          $('.yangbanner').append(img);
+        } else {}
+      }, function (err) {})
+    }
+    var vm = new Vue({
+      el: "#activate",
+      data: {
+        flag: true,
+        loginFlag: true,
+        status: false,
+        timer: '',
+        time: 60,
+        phone: '',
+        yzm: '',
+        app_url: '',
+        count: '60s',
+        typeNum: 1,
+        wx: false
+      },
+      created: function () {
+        // this.appInfoView()
+        this.wx = navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1
+      },
+      methods: {
+        appInfoView: function () { // 获取下载包
+          var n = getUrlParam('channel_code') || '';
+          app.getApi(urls.appInfo, {
+            channel_code: n
+          }).then(function (n) {
+            1 === n.status && (vm.app_url = n.data.android_app_url)
+          }).catch(function (n) {})
+        },
+        inpPhone: function () {
+          if (this.phone.length > 11) {
+            this.phone = this.phone.slice(0, 11)
+          }
+        },
+        inpYzm: function () {
+          if (this.yzm.length > 6) {
+            this.yzm = this.yzm.slice(0, 6)
+          }
+        },
+        examine: function () {
+          if (loginFlag) {
+            this.loginFlag = false;
+            var datas = {
+              phone: encrypt(this.phone),
+              verification: this.yzm,
+              page_id: com_Data.page_content.page_id,
+              verify_type: 'verify'
+            }
+            $http('api/v1/verify/login/aes', datas, 'post', function (res) {
+              if (res.code === 200) {
+                if (vm.wx) {
+                  window.location.href = wap_url + 'appDown.html?channel_code=' + localStorage.channel_code +
+                    '&template_id=' + localStorage.template_id
+                } else {
+                  window.location = vm.app_url
+                }
+                vm.loginFlag = false
+                vm.status = false
+              } else {
+                layer.open({
+                  content: res.info,
+                  skin: 'msg',
+                  time: 2
+                })
+                loginFlag = true
+              }
+            }, function () {})
+          }
+        },
+        getCode_: function () {
+          if (this.flag && userPhone(this.phone)) {
+            if (header.device) {
+              getDeviceid()
+            } else {
+              uuid()
+              getDeviceid()
+            }
+          }
+        }
+      }
+    })
+
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
+
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+      header.device = uuid
+      // return uuid;
+    }
+
+    function getDeviceid() {
+      var datas = {
+        phone: encrypt(vm.phone),
+        msg_sign: 0, // 0 =>贷贷狐 , 1=>惠融易
+        verify_type: 'verify' // register=>注册 , verify=>快捷登录 , retrieve=>找回密码
+      }
+      $http('api/get/code/aes', datas, 'post', function (res) {
+        if (res.code === 200) {
+          vm.flag = false
+          vm.status = true
+          vm.timer = setInterval(function () {
+            vm.time--;
+            vm.count = vm.time + 's';
+            if (vm.time <= 0) {
+              vm.flag = true;
+              vm.count = '获取验证码';
+              clearInterval(vm.timer);
+            }
+          }, 1000)
+        } else {
+          layer.open({
+            content: res.info,
+            skin: 'msg',
+            time: 2
+          })
+        }
+      }, function (err) {})
+    }
+  </script>
+</body>
+
+</html>

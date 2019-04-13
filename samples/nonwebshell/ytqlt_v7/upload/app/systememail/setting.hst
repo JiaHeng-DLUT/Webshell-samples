@@ -1,0 +1,102 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">系统邮件 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">功能开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_LOAD']}" name="app_systememail_load">
+				<option value="0">关闭</option>
+				<option value="load">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">发信驱动</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_PHPMAILER']}" name="app_systememail_phpmailer">
+				<option value="0">系统默认（低消耗，但兼容性不佳，若无法发信请换到PHPMailer驱动）</option>
+				<option value="1">PHPMailer（兼容性好）</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发信超时阀值（秒）</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_systememail_timeoutseconds" placeholder="留空或0为不超时，若邮件服务器正确配置该值建议为0，否则会影响到发邮件性能" value="{$_G['SET']['APP_SYSTEMEMAIL_TIMEOUTSECONDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">SMTP服务地址</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_systememail_smtp" placeholder="例如：smtp.hadsky.com，若端口不为25请添加端口号，例：smtp.hadsky.com:80" value="{$_G['SET']['APP_SYSTEMEMAIL_SMTP']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">登录用户</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_systememail_user" placeholder="例如：puyuetian@hadsky.com" value="{$_G['SET']['APP_SYSTEMEMAIL_USER']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">登录密码</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_systememail_pass" placeholder="例如：woainipyt" value="{$_G['SET']['APP_SYSTEMEMAIL_PASS']}">
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">邮件格式</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_FORMAT']}" name="app_systememail_format">
+				<option value="HTML">HTML格式</option>
+				<option value="TXT">TXT文本格式</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">新注册用户邮箱验证</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_EMAILVERIFY']}" name="app_systememail_emailverify">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">新注册邮件欢迎</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_REGSENDEMAIL']}" name="app_systememail_regsendemail">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">收到新回复邮件通知</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_SYSTEMEMAIL_REPLYSENDEMAIL']}" name="app_systememail_replysendemail">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn">保存</button>
+			<a target="_blank" href="index.php?c=app&a=systememail:index" class="pk-btn pk-btn-danger">进入应用</a>
+		</div>
+	</div>
+</form>

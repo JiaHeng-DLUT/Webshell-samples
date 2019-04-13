@@ -1,0 +1,5 @@
+create table #prefix#{{plural}} (
+{% for key, field in fields %}
+	{{field->name}} {{field->type|crud_sqlite_type (%s)}}{% if $data->key < count ($data->fields) - 1 %},{% end %} 
+{% end %}
+);

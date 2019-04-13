@@ -1,0 +1,60 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a href="javascript:void(0)" class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.store_daddress_new_address}" dialog_id="my_address_add"  uri=" {:url('Sellerdeliverset/daddress_add')}" dialog_width="550" title="{$Think.lang.store_daddress_new_address}">{$Think.lang.store_daddress_new_address}</a>
+{/block}
+
+{block name="seller_main"}
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w70">{$Think.lang.whether_default}</th>
+            <th class="w90">{$Think.lang.store_daddress_receiver_name}</th>
+            <th class="tl">{$Think.lang.store_daddress_deliver_address}</th>
+            <th class="w150">{$Think.lang.store_daddress_phone}</th>
+            <th class="w200">{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $address_list}
+        {foreach name="address_list" item="address"}
+        <tr class="bd-line">
+            <td>
+                <label for="is_default_{$address.daddress_id}">
+                    <input type="radio" id="is_default_{$address.daddress_id}" name="is_default"{if $address.daddress_isdefault eq '1'} checked {/if} value="{$address.daddress_id}">{$Think.lang.store_daddress_default}
+                </label>
+            </td>
+            <td>{$address.seller_name}</td>
+            <td class="tl">{$address.area_info}&nbsp{$address.daddress_detail}</td>
+            <td><span class="tel">{$address.daddress_telphone}</span> <br/>
+            <td class="dssc-table-handle">
+                <a href="javascript:void(0);" dialog_id="my_address_edit" dialog_width="640" dialog_title="{$Think.lang.store_daddress_edit_address}" ds_type="dialog" uri="{:url('Sellerdeliverset/daddress_add',['address_id'=>$address.daddress_id])}" class="btn-blue"><i class="fa fa-pencil-square"></i>
+                    {$Think.lang.ds_edit}
+                </a>
+                <a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Sellerdeliverset/daddress_del',['address_id'=>$address.daddress_id])}','{$Think.lang.ds_common_op_confirm}');" class="btn-red"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a>
+            </td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/if}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="20">&nbsp;</td>
+        </tr>
+    </tfoot>
+</table>
+<script>
+    $(function () {
+        $('input[name="is_default"]').on('click', function () {
+            $.get(HOMESITEURL + '/Sellerdeliverset/daddress_default_set.html?address_id=' + $(this).val(), function (result) {})
+        });
+    });
+</script>
+{/block}
+

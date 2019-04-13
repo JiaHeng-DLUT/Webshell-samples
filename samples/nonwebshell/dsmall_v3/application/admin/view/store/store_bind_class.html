@@ -1,0 +1,142 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="fixed-empty"></div>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>删除店铺的经营类目会造成相应商品下架，请谨慎操作</li>
+            <li>所有修改即时生效</li>
+        </ul>
+    </div>
+    
+    <table class="ds-default-table">
+        <thead class="thead">
+        <tr class="space">
+            <th colspan="15">店铺名称：{$store_info.store_name}</th>
+        </tr>
+        </thead>
+        <thead>
+        <tr class="thead">
+            <th>分类1</th>
+            <th>分类2</th>
+            <th>分类3</th>
+            <th>分佣比例</th>
+            <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {notempty name="store_bind_class_list"}
+        {foreach name="store_bind_class_list" item="value"}
+        <tr class="hover edit">
+            <td class="w25pre">{$value.class_1_name}</td>
+            <td class="w25pre">{$value.class_2_name}</td>
+            <td class="w25pre">{$value.class_3_name}</td>
+            <td class="sort"><span ds_type="commis_rate" column_id="{$value.storebindclass_id}" title="{$Think.lang.ds_editable}" class="editable " style="vertical-align: middle; margin-right: 4px;">{$value.commis_rate}</span>% </td>
+            <td class="w60 align-center"><a href="javascript:dsLayerConfirm('{:url('Store/store_bind_class_del',['bid'=>$value.storebindclass_id])}','确认删除？删除后店铺对应分类商品将全部下架')" class="dsui-btn-del"><i class="iconfont"></i>删除</a></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+            <td colspan="10">{$Think.lang.ds_no_record}</td>
+        </tr>
+       {/notempty}
+        </tbody>
+    </table>
+    <table class="ds-default-table" >
+        <thead class="thead">
+        <tr class="space">
+            <th colspan="15"><span>添加经营类目</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="noborder">
+            <td class="required" colspan="2" >选择分类：</td>
+        </tr>
+        <tr class="noborder">
+            <td colspan="2" id="gcategory" class="vatop rowform"><select id="gcategory_class1" style="width: auto;">
+                <option value="0">全部分类</option>
+                {notempty name="gc_list"}
+                {foreach name="gc_list" item="gc"}
+                <option value="{$gc.gc_id}" data-explain="{$gc.commis_rate}">{$gc.gc_name}</option>
+                {/foreach}
+               {/notempty}
+            </select><span id="error_message" style="color:red;"></span></td>
+        </tr>
+        <tr>
+            <td class="required" colspan="2" >分佣比例(必须为0-100的整数)：</td>
+        </tr>
+        <tr class="noborder">
+            <td class="vatop rowform"><form id="add_form" action="{:url('Store/store_bind_class_add')}" method="post">
+                <input name="store_id" type="hidden" value="{$store_info.store_id}">
+                <input id="goods_class" name="goods_class" type="hidden" value="">
+                <input id="commis_rate" name="commis_rate" class="w60" type="text" value="" />
+                % <span id="error_message1" style="color:red;"></span>
+            </form></td>
+            <td class="vatop tips"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="2"><a id="btn_add_category" class="btn" href="JavaScript:void(0);" /><span>确认</span></a></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        gcategoryInit("gcategory");
+
+        // 提交新添加的类目
+        $('#btn_add_category').on('click', function() {
+            $('#error_message').hide();
+            $('#error_message1').hide();
+            var category_id = '';
+            var validation = true;
+            $('#gcategory').find('select').each(function() {
+                if(parseInt($(this).val(), 10) > 0) {
+                    category_id += $(this).val() + ',';
+                } else {
+                    validation = false;
+                }
+            });
+
+            var commis_rate = parseInt($('#commis_rate').val(), 10);
+            if(isNaN(commis_rate) || commis_rate < 0 || commis_rate > 100) {
+                $('#error_message1').text('请填写正确的分佣比例');
+                $('#error_message1').show();
+                return false;
+            }
+
+            $('#goods_class').val(category_id);
+            $('#add_form').submit();
+        });
+
+        $('#gcategory select').on('change', function() {
+            var cr = $(this).children(':selected').attr('data-explain');
+            $('#commis_rate').val(parseInt(cr) || '');
+        });
+
+        // 修改分佣比例
+        $('span[ds_type="commis_rate"]').inline_edit({controller: 'store',action: 'store_bind_class_update'});
+    });
+
+</script>

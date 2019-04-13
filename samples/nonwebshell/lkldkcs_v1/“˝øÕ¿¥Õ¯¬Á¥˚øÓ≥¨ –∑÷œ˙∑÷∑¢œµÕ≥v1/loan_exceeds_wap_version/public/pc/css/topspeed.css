@@ -1,0 +1,33 @@
+section{
+    background-color: #f8f8f8;
+}
+
+#main .engText{
+    font-size: 30px;
+    color: #d4d3d3;
+}
+
+.list li{
+    width: 320px;
+	height: 160px;
+	background-color: #ffffff;
+    border-radius: 10px;
+    margin-right: 120px;
+    padding: 40px 59px 40px 45px;
+    display: flex;
+    justify-content: space-between;
+}
+.list li:last-child{
+    margin-right: 0;
+}
+.list li div:first-child{
+    margin-top: 14px;
+}
+.list li .pro-name{
+    font-size: 20px;
+	font-weight: bold;
+	line-height: 18px;
+	color: #202124;
+}
+
+

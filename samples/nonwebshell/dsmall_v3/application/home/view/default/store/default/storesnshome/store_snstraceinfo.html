@@ -1,0 +1,97 @@
+{extend name="default/base/base_store" /}
+{block name="store_main"}
+
+<div class="wrap">
+<div class="mt20">
+<ul class="fd-list">
+  {notempty name="strace_info"}
+  <li id="ds_row_{$strace_info.stracelog_id}">
+      <div class="fd-aside">
+          <span class="thumb size60"><i></i>
+              <a href="{:url('Storesnshome/index',['sid'=>$strace_info.stracelog_storeid])}" target="_blank">
+                  <img src="{:get_store_logo($strace_info['stracelog_storelogo'])}" onload="javascript:ResizeImage(this,60,60);">
+              </a>
+          </span>
+      </div>
+    <dl class="fd-wrap">
+      <dt>
+        <h3><a href="{:url('Storesnshome/index',['sid'=>$strace_info.stracelog_storeid])}" target="_blank">{$strace_info.stracelog_storename}</a>{$Think.lang.ds_colon}</h3>
+        <h5>{$strace_info.stracelog_title}</h5>
+        {if $Think.session.store_id == $strace_info.stracelog_storeid}
+        <span class="fd-handle">
+        <p class="hover-arrow"><i></i><a href="javascript:void(0);" ds_type="sd_del" data-param='{"txtid":"{$strace_info.stracelog_id}","type":"href"}'>{$Think.lang.ds_delete}</a></p>
+        </span>
+        {/if}
+        </dt>
+      <dd>
+          {:parsesmiles($strace_info['stracelog_content'])}
+      </dd>
+	  <dd>
+		<span class="goods-time fl">{$strace_info.stracelog_time|date="Y-m-d H:i",###}</span>
+		<span class="fr">
+			<a href="javascript:void(0);" ds_type="sd_forwardbtn" data-param='{"txtid":"{$strace_info.stracelog_id}"}'>{$Think.lang.sns_forward}</a>&nbsp;|&nbsp;
+                        <a href="javascript:void(0);" ds_type="sd_commentbtn" data-param='{"txtid":"{$strace_info.stracelog_id}"}'>{$Think.lang.sns_comment}{if $strace_info.stracelog_comment>0}({$strace_info.stracelog_comment}){/if}</a>
+		</span>
+	  </dd>
+	  <dd>
+		<!-- 评论模块start -->
+		<div id="tracereply_{$strace_info.stracelog_id}" style="display:none;"></div>
+		<!-- 评论模块end --> 
+		<!-- 转发模块start -->
+		<div id="forward_{$strace_info.stracelog_id}" style="display:none;">
+			<div class="forward-widget">
+				<div class="forward-edit">
+					<form id="forwardform_{$strace_info.stracelog_id}" method="post" action="{:url('Storesnshome/addforward')}">
+						<input type="hidden" name="stid" value="{$strace_info.stracelog_id}"/>
+						<div class="forward-add">
+							<textarea resize="none" id="content_forward{$strace_info.stracelog_id}" name="forwardcontent"></textarea>
+							<span class="error"></span> 
+							<!-- 验证码 -->
+							<div id="forwardseccode{$strace_info.stracelog_id}" class="seccode" style="display: none;">
+								<label for="captcha">{$Think.lang.ds_checkcode}{$Think.lang.ds_colon}</label>
+								<input name="captcha" class="text" type="text" size="4" maxlength="4"/>
+								<img src="" title="{$Think.lang.wrong_checkcode_change}" name="codeimage" onclick="this.src='{:url('Seccode/makecode')}'"/> <span>{$Think.lang.wrong_seccode}</span>
+							</div>
+							<input type="text" style="display:none;" />
+							<!-- 防止点击Enter键提交 -->
+							<div class="act">
+                                                            <span class="skin-blue"><span class="btn"><a href="javascript:void(0);" ds_type="s_forwardbtn" data-param='{"txtid":"{$strace_info.stracelog_id}"}'>{$Think.lang.sns_forward}</a></span></span>
+                                                            <span id="forwardcharcount{$strace_info.stracelog_id}" style="float:right;"></span>
+                                                            <a class="face" ds_type="smiliesbtn" data-param='{"txtid":"forward{$strace_info.stracelog_id}"}' href="javascript:void(0);" >{$Think.lang.sns_smiles}</a>
+                                                        </div>
+						</div>
+					</form>
+				</div>
+				<ul class="forward-list"></ul>
+			</div>
+		</div>
+		<!-- 转发模块end -->
+		<div class="clear"></div>
+	  </dd>
+    </dl>
+    <!-- 转发模块end -->
+    <div id="smilies_div" class="smilies-module"></div>
+  </li>
+ {else /}
+  <li>
+    <div class="sns-norecord">{$Think.lang.sns_trace_deleted}</div>
+  </li>
+  {/notempty}
+</ul>
+</div>
+</div>
+<script type="text/javascript" src="{$Think.HOME_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("#tracereply_{$strace_info.stracelog_id}").load("{:url('Storesnshome/commentlist',['id'=>$strace_info.stracelog_id])}").show();
+    $('.demo').ajaxContent({
+		event:'click', //mouseover
+		loaderType:'img',
+		loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+		target:'#tracereply_{$strace_info.stracelog_id}'
+	});
+});
+</script>
+
+
+{/block}

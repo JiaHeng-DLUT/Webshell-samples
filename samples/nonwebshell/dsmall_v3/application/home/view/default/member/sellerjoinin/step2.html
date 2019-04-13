@@ -1,0 +1,308 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+<div class="breadcrumb"><span class="fa fa-home"></span><span><a href="">{$Think.lang.homepage}</a></span> <span class="arrow">></span> <span>{$Think.lang.merchant_entry_application}</span> </div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.merchant_entry_application}</h3>
+        </div>
+        <div class="content">
+            {notempty name="help_list"}
+            {foreach name="help_list" item="val" key="key" }
+            <dl show_id="{$val.helptype_id}">
+                <dt onclick="show_list('{$val.helptype_id}');" style="cursor: pointer;"> <i class="hide"></i>{$val.helptype_name}</dt>
+                <dd style="display:none;">
+                    <ul>
+                        {notempty name="$val.help_list"}
+                        {foreach name="$val.help_list" item="v" key="k" }
+                        <li> <i></i>
+                            {notempty name="$v.help_url"}
+                            <a href="{:url('Showhelp/index',['t_id'=>$v.helptype_id,'help_id'=>$v.help_id])}" target="_blank">{$v.help_title}</a>
+                            {else /}
+                            <a href="{$v.help_url}" target="_blank">{$v.help_title}</a>
+                            {/notempty}
+                        </li>
+                        {/foreach}
+                        {/notempty}
+                    </ul>
+                </dd>
+            </dl>
+            {/foreach}
+            {/notempty}
+             <dl>
+                <dt class="{if $sub_step=='step0'}current{/if}"> <i class="hide"></i>{$Think.lang.enter_agreement}</dt>
+            </dl>
+            <dl show_id="0">
+                <dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>{$Think.lang.submit_application}</dt>
+                <dd>
+                    <ul>
+                        <li class="{if $step=='1'}current{/if}"><i></i>{$Think.lang.company_qualification_information}</li>
+                        <li class="{if $step=='2'}current{/if}"><i></i>{$Think.lang.financial_qualification_information}</li>
+                        <li class="{if $step=='3'}current{/if}"><i></i>{$Think.lang.store_operation_information}</li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="{if $step=='4'}current{/if}"> <i class="hide"></i>{$Think.lang.contract_signing_payment}</dt>
+            </dl>
+            <dl>
+                <dt> <i class="hide"></i>{$Think.lang.store_opening}</dt>
+            </dl>
+        </div>
+        <div class="title">
+            <h3>{$Think.lang.platform_contact}</h3>
+        </div>
+        <div class="content">
+            <ul>
+                {notempty name="phone_array"}
+                {foreach name="phone_array" item="val" key="key" }
+                {$Think.lang.phone}{$val}
+                {/foreach}
+                {/notempty}
+                <li>{$Think.lang.email}:{$Think.config.site_email}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-layout">
+        <div class="joinin-step">
+            <ul>
+                <li class="step1 {if $step >= 0}current{/if}"><span>{$Think.lang.enter_agreement}</span></li>
+                <li class="{if $step >= 1}current{/if}"><span>{$Think.lang.company_qualification_information}</span></li>
+                <li class="{if $step >= 2}current{/if}"><span>{$Think.lang.financial_qualification_information}</span></li>
+                <li class="{if $step >= 3}current{/if}"><span>{$Think.lang.store_operation_information}</span></li>
+                <li class="{if $step >= 4}current{/if}"><span>{$Think.lang.contract_signing_payment}</span></li>
+                <li class="step6"><span>{$Think.lang.store_opening}</span></li>
+            </ul>
+        </div>
+        <div class="joinin-concrete">
+            <!--区别部分 BEGIN-->
+
+
+            
+            
+
+<!-- 公司资质  -->
+
+<div id="apply_credentials_info" class="apply-credentials-info">
+  <div class="alert">
+     <h4>{$Think.lang.matters_needing_attention}：</h4>
+    {$Think.lang.upload_information1}</div>
+  <form id="form_credentials_info" action="{:url('Sellerjoinin/step3')}" method="post" enctype="multipart/form-data" >
+    <table border="0" cellpadding="0" cellspacing="0" class="all">
+      <thead>
+        <tr>
+          <th colspan="20">{$Think.lang.account_information}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="w150"><i>*</i>{$Think.lang.bank_account_name}：</th>
+          <td><input name="bank_account_name" type="text" class="w200" />
+            <span></span></td>
+        </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.company_bank_account_number}：</th>
+          <td><input name="bank_account_number" type="text" class="w200" />
+            <span></span></td>
+        </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.bank_branch_name}：</th>
+          <td><input name="bank_name" type="text" class="w200" />
+            <span></span></td>
+        </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.location_bank_account}：</th>
+          <td><input id="bank_address" name="bank_address" type="hidden" />
+            <span></span></td>
+        </tr>
+
+  
+        <tr>
+          <th></th>
+          <td><input id="is_settlement_account" name="is_settlement_account" type="checkbox" />
+            <label for="is_settlement_account">{$Think.lang.use_settlement_account}</label></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="20">&nbsp;</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div id="div_settlement">
+      <table border="0" cellpadding="0" cellspacing="0" class="all">
+        <thead>
+          <tr>
+            <th colspan="20">{$Think.lang.settlement_account_information}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="w150"><i>*</i>{$Think.lang.bank_account_name}：</th>
+            <td><input id="settlement_bank_account_name" name="settlement_bank_account_name" type="text" class="w200"/>
+              <span></span></td>
+          </tr>
+          <tr>
+            <th><i>*</i>{$Think.lang.company_bank_account_number}：</th>
+            <td><input id="settlement_bank_account_number" name="settlement_bank_account_number" type="text" class="w200"/>
+              <span></span></td>
+          </tr>
+          <tr>
+            <th><i>*</i>{$Think.lang.bank_branch_name}：</th>
+            <td><input id="settlement_bank_name" name="settlement_bank_name" type="text" class="w200"/>
+              <span></span></td>
+          </tr>
+
+ 
+          <tr>
+            <th><i>*</i>{$Think.lang.location_bank_account}：</th>
+            <td><input id="settlement_bank_address" name="settlement_bank_address" type="hidden" />
+              <span></span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="20">&nbsp;</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    
+  </form>
+  <div class="bottom"><a id="btn_apply_credentials_next" href="javascript:;" class="btn">{$Think.lang.submit_store_operation_information}</a></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    var use_settlement_account = true;
+    $("#bank_address").ds_region();
+    $("#settlement_bank_address").ds_region();
+
+    $("#is_settlement_account").on("click", function() {
+        if($(this).prop("checked")) {
+            use_settlement_account = false;  
+            $("#div_settlement").hide();
+            $("#settlement_bank_account_name").val("");
+            $("#settlement_bank_account_number").val("");
+            $("#settlement_bank_name").val("");
+
+            $("#settlement_bank_address").val("");
+        } else {
+            use_settlement_account = true;  
+            $("#div_settlement").show();
+        }
+    });
+
+    $('#form_credentials_info').validate({
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+        rules : {
+            bank_account_name: {
+                required: true,
+                maxlength: 50 
+            },
+            bank_account_number: {
+                required: true,
+                maxlength: 22 
+            },
+            bank_name: {
+                required: true,
+                maxlength: 50 
+            },
+
+            bank_address: {
+                required: true
+            },
+
+           /*  bank_licence_electronic: {
+                required: true
+            }, */
+            settlement_bank_account_name: {
+                required: function() { return use_settlement_account; },    
+                maxlength: 50 
+            },
+            settlement_bank_account_number: {
+                required: function() { return use_settlement_account; },
+                maxlength: 20 
+            },
+            settlement_bank_name: {
+                required: function() { return use_settlement_account; },
+                maxlength: 50 
+            },
+
+            settlement_bank_address: {
+                required: function() { return use_settlement_account; }
+            },
+  
+
+        },
+        messages : {
+            bank_account_name: {
+                required: '{$Think.lang.fill_bank_account_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+            bank_account_number: {
+                required: '{$Think.lang.fill_company_bank_account_number}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+            bank_name: {
+                required: '{$Think.lang.fill_bank_branch_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+
+            bank_address: {
+                required: '{$Think.lang.select_location_bank}'
+            },
+
+         /*   ank_licence_electronic: {
+                required: '请选择上传开户银行许可证电子版文件'
+            }, */
+            settlement_bank_account_name: {
+                required: '{$Think.lang.fill_bank_account_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+            settlement_bank_account_number: {
+                required: '{$Think.lang.fill_company_bank_account_number}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+            settlement_bank_name: {
+                required: '{$Think.lang.fill_bank_branch_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+
+            settlement_bank_address: {
+                required: '{$Think.lang.gselect_location_bank}'
+            },
+
+        }
+    });
+
+    $('#btn_apply_credentials_next').on('click', function() {
+        if($('#form_credentials_info').valid()) {
+            $('#form_credentials_info').submit();
+        }
+    });
+
+});
+</script>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+
+            <!--区别部分 END-->
+        </div>
+    </div>
+</div>
+
+
+
+{/block}

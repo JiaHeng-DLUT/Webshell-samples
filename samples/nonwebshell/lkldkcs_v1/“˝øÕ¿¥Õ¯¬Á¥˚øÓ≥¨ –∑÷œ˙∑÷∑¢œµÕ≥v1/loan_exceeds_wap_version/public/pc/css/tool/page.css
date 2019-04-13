@@ -1,0 +1,76 @@
+div.zxf_pagediv{
+	text-align: center;
+	color: #999999;
+}
+div.zxf_pagediv a{
+	text-decoration: none;
+	
+}
+div.zxf_pagediv span,div.zxf_pagediv a{
+	display: inline-block;
+	box-sizing: border-box;
+}
+.current{
+	color: #ffffff;
+	background-color: #1976d2;
+	width: 32px;
+	height: 33px;
+	line-height: 33px;
+	border-radius: 4px;
+}
+/* 未点击 */
+.zxfPagenum{
+	width: 32px;
+	height: 33px;
+	line-height: 33px;
+	background-color: #ffffff;
+	border-radius: 4px;
+	border: solid 1px #dce1e6;
+	font-size: 14px;
+	color: #242b33;
+
+}
+.zxfPagenum,.nextpage,.current,.nextbtn,.prebtn,span.disabled{
+	margin-right: 20px;
+}
+
+/* 翻页 */
+.nextbtn,.prebtn,span.disabled{
+	display: inline-block;
+	width: 32px;
+	height: 33px;
+	line-height: 33px;
+	background-color: #ffffff;
+	border-radius: 4px;
+	border: solid 1px #dce1e6;
+	cursor: pointer;
+	text-align: center;
+	/* margin-right: 20px; */
+}
+.zxfinput{
+	width: 50px;
+	height: 42px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #E6E6E6;
+	margin: 0 12px;
+	border-radius: 3px;
+	color: #666;
+}
+.zxfokbtn{
+	width: 48px;
+	height: 32px;
+	line-height: 32px;
+	border: 1px solid #E6E6E6;
+	margin-left: 10px;
+	cursor:pointer;
+	border-radius: 3px;
+	background: #fff;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"]{
+  -moz-appearance: textfield;
+}

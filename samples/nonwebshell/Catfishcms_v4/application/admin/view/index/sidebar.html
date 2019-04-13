@@ -1,0 +1,268 @@
+<div class="col-xs-12 col-sm-3 col-md-2">
+    <div class="collapse navbar-collapse" style="position: fixed; top: 51px; bottom: 0; padding-top: 10px; z-index: 9100; background-color:#eee;" id="bs-example-js-navbar-collapse">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_nr">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse_nr">
+                            <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;{:lang('Content')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_nr" class="panel-collapse collapse{eq name="backstageMenu" value="neirong"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/write')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="write"} btn-primary{/eq}">
+                                {:lang('Write an article')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/articles')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="articles"} btn-primary{/eq}">
+                                {:lang('All articles')}
+                            </button>
+                        </a>
+                        {if condition="$permissions < 6"}
+                        <a href="{:Url('/admin/Index/addclassify')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="addclassify"} btn-primary{/eq}">
+                                {:lang('Add category')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/classify')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="classify"} btn-primary{/eq}">
+                                {:lang('All categories')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/comments')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="comments"} btn-primary{/eq}">
+                                {:lang('All comments')}
+                            </button>
+                        </a>
+                        {/if}
+                        {if condition="$permissions < 5"}
+                        <a href="{:Url('/admin/Index/messages')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="messages"} btn-primary{/eq}">
+                                {:lang('All messages')}
+                            </button>
+                        </a>
+                        {/if}
+                        <a href="{:Url('/admin/Index/recycle')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="recycle"} btn-primary{/eq}">
+                                {:lang('Recycle bin')}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {if condition="$permissions < 5"}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_ym">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_ym">
+                            <span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;{:lang('Page')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_ym" class="panel-collapse collapse{eq name="backstageMenu" value="yemian"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/newpage')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="newpage"} btn-primary{/eq}">
+                            {:lang('New page')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/allpage')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="allpage"} btn-primary{/eq}">
+                            {:lang('All pages')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/pageSettings')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="pageSettings"} btn-primary{/eq}">
+                            {:lang('Page settings')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/addSlideshow')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="addSlideshow"} btn-primary{/eq}">
+                            {:lang('Add a slide')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/slideshow')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="slideshow"} btn-primary{/eq}">
+                            {:lang('All slides')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/addLinks')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="addLinks"} btn-primary{/eq}">
+                            {:lang('Add links')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/links')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="links"} btn-primary{/eq}">
+                            {:lang('All links')}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_yh">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_yh">
+                            <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{:lang('User')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_yh" class="panel-collapse collapse{eq name="backstageMenu" value="yonghu"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/general')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="general"} btn-primary{/eq}">
+                                {:lang('General users')}
+                            </button>
+                        </a>
+                        {if condition="$permissions < 3"}
+                        <a href="{:Url('/admin/Index/addmanageuser')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="addmanageuser"} btn-primary{/eq}">
+                                {:lang('Add user')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/manageuser')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="manageuser"} btn-primary{/eq}">
+                                {:lang('All users')}
+                            </button>
+                        </a>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_cd">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_cd">
+                            <span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;{:lang('Menu')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_cd" class="panel-collapse collapse{eq name="backstageMenu" value="caidan"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/category')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="category"} btn-primary{/eq}">
+                            {:lang('Add menu categories')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/managemc')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="managemc"} btn-primary{/eq}">
+                            {:lang('All menu categories')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/addmenu')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="addmenu"} btn-primary{/eq}">
+                                {:lang('Add a menu')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/managemenu')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="managemenu"} btn-primary{/eq}">
+                                {:lang('All menus')}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_xt">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_xt">
+                            <span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;{:lang('System')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_xt" class="panel-collapse collapse{eq name="backstageMenu" value="xitong"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/web')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="web"} btn-primary{/eq}">
+                                {:lang('Website information')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/themes')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="themes"} btn-primary{/eq}">
+                            {:lang('Themes')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/personal')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="personal"} btn-primary{/eq}">
+                                {:lang('Personal information')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/change')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="change"} btn-primary{/eq}">
+                                {:lang('Change password')}
+                            </button>
+                        </a>
+                        <a href="{:Url('/admin/Index/clearcache')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="clearcache"} btn-primary{/eq}">
+                                {:lang('Clear cache')}
+                            </button>
+                        </a>
+                        {if condition="$auopen eq 1"}
+                        <a href="{:Url('/admin/Index/author')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="author"} btn-primary{/eq}">
+                            {:lang('Authorized')}
+                            </button>
+                        </a>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_kz">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_kz">
+                            <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;{:lang('Extensions')}&nbsp;&nbsp;<span class="caret"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_kz" class="panel-collapse collapse{eq name="backstageMenu" value="kuozhan"} in{/eq}">
+                    <div class="list-group" style="margin-bottom: 0px;">
+                        <a href="{:Url('/admin/Index/plugin')}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="plugin"} btn-primary{/eq}">
+                            {:lang('Plug-ins')}
+                            </button>
+                        </a>
+                        {volist name="pluginslist" id="vo" offset="0" length='6'}
+                        <a id="kz_plugin_{$vo.plugin}" href="{:Url('/admin/Index/plugins/plugin/'.$vo.plugin)}">
+                            <button type="button" class="btn btn-default btn-block{eq name="option" value="$vo.plugin"} btn-primary{/eq}">
+                            {:lang($vo.pname)}
+                            </button>
+                        </a>
+                        {/volist}
+                        {if condition="$numberOfPlugins > 6 "}
+                        <div class="btn-group btn-block dropup">
+                            <button type="button" class="btn btn-default btn-block" data-toggle="dropdown">
+                                {:lang('More plug-ins')} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                {volist name="pluginslist" id="vo" offset="6"}
+                                <li>
+                                    <a id="kz_plugin_{$vo.plugin}" href="{:Url('/admin/Index/plugins/plugin/'.$vo.plugin)}">
+                                        <button type="button" class="btn btn-default btn-block{eq name="option" value="$vo.plugin"} btn-primary{/eq}">
+                                        {:lang($vo.pname)}
+                                        </button>
+                                    </a>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            {/if}
+        </div>
+        <div class="visible-xs-block">
+            <a href="{:Url('/index')}">
+                <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{:lang('Home')}</button>
+            </a><br>
+        </div>
+        <a href="{:Url('/admin/Common/quit')}">
+            <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{:lang('Sign out')}</button>
+        </a><br>
+        <div class="text-center">{:lang('Generated')}：{$executionTime}</div>
+    </div>
+</div>

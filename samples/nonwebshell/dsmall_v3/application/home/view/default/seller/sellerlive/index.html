@@ -1,0 +1,126 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+    <div class="alert alert-block mt10">
+  <ul>
+    <li>{$Think.lang.activity_guidelines1}</li>
+    <li>{$Think.lang.activity_guidelines2}</li>
+    <li>{$Think.lang.activity_guidelines3}</li>
+  </ul>
+</div>
+<div class="dssc-form-default">
+  <form id="add_form" action="{:url('Sellerlive/index')}" method="post">
+    <dl>
+      <dt>{$Think.lang.conversion_code_generate}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <input class="w50 text" name="store_vrcode_prefix" type="text" maxlength="3" value="{$store.store_vrcode_prefix}" maxlength="30"  />
+        <span></span>
+        <p class="hint">{$Think.lang.conversion_code_generate_interpretation}</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.offline_store_name}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <input class="w200 text" name="live_store_name" type="text" id="live_store_name" value="{$store.live_store_name}" maxlength="30"  />
+        <span></span>
+        <p class="hint">{$Think.lang.offline_store_name_interpretation}</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.offline_shops}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <input class="w200 text" name="live_store_tel" type="text" id="live_store_tel" value="{$store.live_store_tel}" maxlength="30"  />
+        <span></span>
+        <p class="hint">{$Think.lang.offline_shops_interpretation}</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.offline_store_address}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <input class=" w500 text" name="live_store_address" type="text" id="live_store_address" value="{$store.live_store_address}" maxlength="30"  />
+        <span></span>
+        <p class="hint">{$Think.lang.offline_store_address_interpretation}</p>
+        <div id="container" class="w500 h200 mt10"></div>
+
+      </dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.offline_traffic_information}：</dt>
+      <dd>
+        <textarea class="textarea w500 h50" name="live_store_bus">{$store.live_store_bus}</textarea>
+         <p class="hint">{$Think.lang.offline_traffic_information_interpretation}</p>
+      </dd>
+    </dl>
+    <div class="bottom">
+      <label class="submit-border">
+        <input type="submit" class="submit" value="{$Think.lang.ds_submit}">
+      </label>
+    </div>
+  </form>
+</div>
+
+<script type="text/javascript">
+var cityName = '';
+var address = "{:str_replace("'",'"',$store['live_store_address'])}";
+var store_name = "{:str_replace("'",'"',$store['live_store_name'])}";
+var map = "";
+var localCity = "";
+var opts = {width : 150,height: 50,title : "{$Think.lang.store_name}"+store_name}
+$(document).ready(function(){
+    $('#add_form').validate({
+        submitHandler:function(form){
+            ds_ajaxpost('add_form');
+        }
+    });
+});
+
+function initialize() {
+    map = new BMap.Map("container");
+    localCity = new BMap.LocalCity();
+
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    localCity.get(function(cityResult){
+        if (cityResult) {
+            var level = cityResult.level;
+            if (level < 13) level = 13;
+            map.centerAndZoom(cityResult.center, level);
+            cityResultName = cityResult.name;
+            if (cityResultName.indexOf(cityName) >= 0) cityName = cityResult.name;
+            getPoint();
+        }
+    });
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "{$Think.HTTP_TYPE}api.map.baidu.com/api?v=2.0&ak={$baidu_ak}&callback=initialize";
+    document.body.appendChild(script);
+}
+function getPoint(){
+    var myGeo = new BMap.Geocoder();
+    myGeo.getPoint(address, function(point){
+        if (point) {
+            setPoint(point);
+        }
+    }, cityName);
+}
+function setPoint(point){
+    if (point) {
+        map.centerAndZoom(point, 16);
+        var marker = new BMap.Marker(point);
+        var infoWindow = new BMap.InfoWindow("{$Think.lang.store_address}"+address, opts);
+        marker.addEventListener("click", function(){
+            this.openInfoWindow(infoWindow);
+        });
+        map.addOverlay(marker);
+        marker.openInfoWindow(infoWindow);
+    }
+}
+$(function(){
+    loadScript();
+});
+
+</script>
+{/block}

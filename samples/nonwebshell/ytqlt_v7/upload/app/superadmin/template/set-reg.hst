@@ -1,0 +1,286 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">注册相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户注册</label>
+		<div class="pk-w-sm-8">
+			<select name="openreg" data-value="{$_G['SET']['OPENREG']}" class="pk-textbox ">
+				<option value="1">开启</option>
+				<option value="0">关闭</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">开启中文用户名</label>
+		<div class="pk-w-sm-8">
+			<select name="usernameeverychars" data-value="{$_G['SET']['USERNAMEEVERYCHARS']}" class="pk-textbox">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">自动男女头像</label>
+		<div class="pk-w-sm-8">
+			<select name="reguserheadauto" data-value="{$_G['SET']['REGUSERHEADAUTO']}" class="pk-textbox">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">注册方式</label>
+		<div class="pk-w-sm-8">
+			<select name="regway" data-value="{$_G['SET']['REGWAY']}" class="pk-textbox">
+				<option value="normal">正常</option>
+				<option value="quick">快速</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">新用户用户组</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox " data-value="{$_G['SET']['REGUSERGROUPID']}" name="regusergroupid">
+				<option value="0">无用户组</option>
+				{$_G['TEMP']['UGS']}
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<div class="pk-row">
+			<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">新用户权限</label>
+			<div class="pk-w-sm-8">
+				<input type="text" name="reguserquanxian" value="{$_G['SET']['REGUSERQUANXIAN']}" readonly class="pk-textbox ">
+			</div>
+		</div>
+		<div class="pk-row">
+			<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+			<div class="pk-w-sm-8 pk-text-sm">
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="bbcode"> 帖子解析BB标签
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="download"> 下载帖子附件
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="login"> 允许登录
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookread"> 浏览帖子
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookuser"> 浏览用户信息
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postread"> 发表主题
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postreply"> 发表回复
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="search"> 搜索
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadfile"> 上传附件
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadhead"> 上传头像
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delread"> 可删除自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delreply"> 可删除自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editread"> 可编辑自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editreply"> 可编辑自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreadcheck"> 免除文章审核
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreplycheck"> 免除回复审核
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="noverifycode"> 免除所有验证码验证
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostingtimeinterval"> 免除发帖时间间隔验证
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="htmlcode"> 发帖HTML解析
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input type="checkbox" onclick="if(!this.checked)$('input[name=reguserquanxian]').prop('readonly',true);else {$('input[name=reguserquanxian]').prop('readonly',false);$('input[name=reguserquanxian]').focus()}"> 自定义权限
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">新用户初始积分</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="regjifen" value="{$_G['SET']['REGJIFEN']}" min="0">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">新用户初始天豆</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="regtiandou" value="{$_G['SET']['REGTIANDOU']}" min="0">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">新用户初始阅读权限</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="regreadlevel" value="{Cnum($_G['SET']['REGREADLEVEL'])}" min="0">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">默认好友UID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="regfriends" value="{htmlspecialchars($_G['SET']['REGFRIENDS'],ENT_QUOTES)}" placeholder="请填写用户UID">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">初始DATA数据</label>
+		<div class="pk-w-sm-8">
+			<textarea class=" pk-width-all pk-textarea" rows="5" name="reguserdata">{htmlspecialchars($_G['SET']['REGUSERDATA'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">欢迎文字</label>
+		<div class="pk-w-sm-8">
+			<textarea class=" pk-width-all pk-textarea" rows="5" name="regmessage">{htmlspecialchars($_G['SET']['REGMESSAGE'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">关闭注册提示</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea" rows="5" name="closeregtip">{htmlspecialchars($_G['SET']['CLOSEREGTIP'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户注册协议</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _codemirrorbox" rows="12" name="regagreement">{htmlspecialchars($_G['SET']['REGAGREEMENT'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">注册违禁词</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" name="banregwords" placeholder="请输入违禁词" value="{htmlspecialchars($_G['SET']['BANREGWORDS'],ENT_QUOTES)}">
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-xs pk-text-danger">
+			用户名或昵称包含违禁词将会被禁止注册。
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		TextboxAndCheckbox("input[name='reguserquanxian']", "input[class='qx-checkbox'][type='checkbox']");
+		var v = $('input[name="regfriends"]').val();
+		if(v.length > 2) {
+			v = v.substr(1, v.length - 2);
+		} else {
+			v = '';
+		}
+		v = v.replace(/__/g, ',');
+		$('input[name="regfriends"]').val(v);
+		$('#SubmitBtn').on('click', function() {
+			var v = $('input[name="regfriends"]').val();
+			v = '_' + v.replace(/,/g, '__') + '_';
+			$('input[name="regfriends"]').val(v);
+		});
+	});
+</script>

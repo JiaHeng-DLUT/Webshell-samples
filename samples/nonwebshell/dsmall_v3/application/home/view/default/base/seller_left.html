@@ -1,0 +1,11 @@
+<div class="seller_left">
+    {foreach name="seller_menu" item="menu" }
+    {if condition="$menu.name eq $curmenu"}
+    <ul>
+        {foreach name="menu.submenu" item="submenu" }
+        <li {if condition="$submenu.name eq $cursubmenu"}class="current"{/if}><a href="{$submenu.url}">{$submenu.text}</a></li>
+        {/foreach}
+    </ul>
+    {/if}
+    {/foreach}
+</div>

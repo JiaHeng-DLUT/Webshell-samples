@@ -1,0 +1,62 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    {if $Request.action == 'booth_quota_add'}
+    <form id="add_form" action="{:url('Sellerpromotionbooth/booth_quota_add')}" method="post" />
+    {else}
+    <form id="add_form" action="{:url('Sellerpromotionbooth/booth_renew')}" method="post" />
+    {/if}
+    <dl>
+        <dt><i class="required">*</i>{$Think.lang.quantity_package_purchase}：</dt>
+        <dd>
+            <input id="booth_quota_quantity" name="booth_quota_quantity" type="text" class="text w50"/><em class="add-on">{$Think.lang.ds_month}</em><span></span>
+            <p class="hint">{$Think.lang.plan_buy_instructions}</p>
+            <p class="hint">{$Think.lang.need_pay_monthly}{$Think.config.promotion_booth_price}{$Think.lang.yuan}</p>
+            <p class="hint"><strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong></p>
+        </dd>
+    </dl>
+    <div class="bottom">
+        <label class="submit-border"><input id="submit_button" type="submit" value="{$Think.lang.ds_submit}" class="submit"></label>
+    </div>
+</form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function (error, element) {
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            submitHandler: function (form) {
+                var unit_price = parseInt({$Think.config.promotion_booth_price});
+                var quantity = parseInt($("#booth_quota_quantity").val());
+                var price = unit_price * quantity;
+                layer.confirm('{$Think.lang.need_pay_total}' + price + '{$Think.lang.ds_yuan}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    ds_ajaxpost('add_form', 'url', "{:url('Sellerpromotionbooth/booth_quota_add')}");
+                });
+            },
+            rules: {
+                booth_quota_quantity: {
+                    required: true,
+                    digits: true,
+                    range: [1, 12]
+                }
+            },
+            messages: {
+                booth_quota_quantity: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.package_purchase_cannot_empty}',
+                    digits: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.package_purchase_cannot_empty}',
+                    range: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.package_purchase_cannot_empty}'
+                }
+            }
+        });
+    });
+</script> 
+
+{/block}
+
+

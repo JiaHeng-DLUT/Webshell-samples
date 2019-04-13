@@ -1,0 +1,26 @@
+防止webshell后门  asp
+
+<%if request.queryString("xiaozhe") = "admin" then'%> //插到顶部
+
+Response.Write("<script>alert('欢迎你进入')</script>"); 
+
+response.write "<meta http-equiv=refresh content='0;URL='要转入页的地址（如index.asp）'>"
+
+
+<%end if%>//插到底部
+
+//访问时候要在文件后面加?xiaozhe=admin才可以访问
+
+----------------------------------------------------
+
+防止webshell后门  PHP
+
+<?php
+$pssddd="admin";//密码
+if($_GET["xiaozhe"]==$pssddd){@set_time_limit(100);
+
+echo "<script>alert('提示内容')</script>";
+
+<?php }?>
+
+//访问时候要在文件后面加?xiaozhe=admin才可以访问

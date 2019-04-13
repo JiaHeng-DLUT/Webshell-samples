@@ -1,0 +1,38 @@
+﻿/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}
+ul,ol,li{list-style:none;}
+input,button{margin:0;font-size:12px;vertical-align:middle;}
+body{font-family:Arial, Helvetica, sans-serif; color:#333; margin:0 auto; }
+table{border-collapse:collapse;border-spacing:0;}
+
+a{color:#333;text-decoration:none;}
+a:hover{color:#c00;}
+
+.box-163css{width:350px; position:relative; padding:10px; margin:10px; border:1px solid #ede9e9;}
+.btn{position:absolute;display:none; padding-top:200px;width:22px; height:205px; cursor:pointer; text-indent:-999em;}
+.pre{ background:url(../images/left.png) no-repeat 0 200px; left:20px;}
+
+#ztbox {width:100%; position:relative; height:85px; overflow:hidden}
+.spic{ width:350px; position:relative; background:#f9f9f9; padding-top:6px; height:78px;}
+#left {width:13px; height:43px; float:left; top:20px; position:absolute; left:4px; cursor:pointer; background:url(../images/left.gif) no-repeat; }
+#right{ width:13px; height:43px; right:4px; top:20px; position:absolute;cursor:pointer; background:url(../images/right.gif) no-repeat; }
+#conter{ margin-left:20px; width:310px; position:relative; height:90px; float:left; display:inline; overflow:hidden; }
+#conter .txt{ display:none;}
+#conter ul { width:auto; height:76px; overflow:hidden; top:0px; left:0px; position:absolute; }
+#conter li{ width:70px; cursor:pointer; height:70px; float:left; border:1px solid #eaeaea; display:inline; margin:0 0 0 4px; }
+#conter li b,#conter li strong{ font-weight:normal;}
+#conter li.on{border:1px solid #898989; }
+#conter li.on span{ background:#898989; color:#fff;}
+#conter li img{ width:70px; height:70px; float:left; overflow:hidden;}
+#conter li span{ display:block; width:100%; line-height:17px; color:#797979; float:left; height:17px; overflow:hidden; background:#eaeaea; text-align:center; }
+#scroll{ background:url(../images/line.gif) repeat-x left bottom; width:350px; height:13px; left:0px; bottom:-100px; cursor:pointer; position:absolute;  }
+#scroll span { width:142px; height:13px; left:0px; bottom:0px; cursor:pointer; position:absolute; background:url(../images/scrollBg.png) no-repeat; }
+.bpic{ width:100%; margin:0 auto 0 auto; }
+
+.bigpic{ width:100%; position:relative; margin-bottom:10px;}
+.intro{ width:100%; height:52px; position:absolute; left:0; bottom:4px;}
+.bg{ background:#000;filter:alpha(opacity=40); opacity:0.4; z-index:0; width:100%; height:52px; position:absolute; bottom:0;}
+.txt{ position:absolute; padding-left:1%; width:99%; top:5px; z-index:10; color:#fff;}
+.txt h2{ width:100%; float:left; font-size:16px; padding-bottom:4px;}
+.txt p{width:100%; float:left;}
+.bclose{ position:absolute; right:10px; top:10px; z-index:11; cursor:pointer; color:#fff;}

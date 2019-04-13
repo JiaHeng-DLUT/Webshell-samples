@@ -1,0 +1,53 @@
+{include file="public/header" /}
+
+
+<div class="page">
+
+    <form id="add_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation">{$Think.lang.mgdiscount_price}:</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_xianshi_price" name="mgdiscount_price" value="{$setting.mgdiscount_price}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.mgdiscount_price_explain}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+<script>
+    $(document).ready(function(){
+        $("#submitBtn").click(function(){
+            $("#add_form").submit();
+        });
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+
+            rules : {
+                promotion_xianshi_price: {
+                    required : true,
+                    digits : true,
+                    min : 0
+                }
+            },
+            messages : {
+                promotion_xianshi_price: {
+                    required : '{$Think.lang.xianshi_price_error}',
+                    digits : '{$Think.lang.xianshi_price_error}',
+                    min : '{$Think.lang.xianshi_price_error}'
+                }
+            }
+        });
+    });
+</script> 

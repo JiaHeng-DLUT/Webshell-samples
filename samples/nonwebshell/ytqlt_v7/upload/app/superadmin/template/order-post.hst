@@ -1,0 +1,142 @@
+<style>
+	#imageList img._uploadimg,
+	#imageList img._uploadbtn {
+		width: 120px;
+		height: 120px;
+		cursor: pointer;
+		margin-right: 10px;
+	}
+</style>
+<form name="form_save" method="post" action="">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">提交工单</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<input type="hidden" name="type" value="read" />
+	<input type="hidden" name="imagesdata" />
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"><b style="color:red">*</b>问题简述</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="title" placeholder="请一句话描述问题" value="">
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">详细内容</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-width-all pk-textarea" rows="7" name="content" placeholder="问题的详细描述，可以添加截图"></textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">问题截图</label>
+		<div id="imageList" class="pk-w-sm-8">
+			<img class="_uploadbtn" src="app/superadmin/template/img/order_upload.jpg" title="上传图片" />
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">极速处理</label>
+		<div class="pk-w-sm-8">
+			<select name="yxcl" class="pk-textbox">
+				<option value="0">否（授权用户免审核，普通用户需待审核通过后才可处理）</option>
+				<option value="1">是（30分钟内响应，vip授权每月2次，svip每月30次）</option>
+			</select>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-xs pk-text-danger">
+			极速处理服务时间段：9:00 - 22:00，不在时间范围内不保证处理速度。
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">注意事项</label>
+		<div class="pk-w-sm-8 pk-padding-top-5 pk-text-danger">
+			请不要在工单内包含私密信息，工单都是公开查看的。
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button id="orderpostbtn" type="button" class="pk-btn pk-btn-secondary">提交工单</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		//提交工单
+		$('#orderpostbtn').on('click', function() {
+			if(!form_save.title.value) {
+				ppp({
+					type: 3,
+					icon: 0,
+					content: "请输入标题",
+					close: function() {
+						form_save.title.focus();
+					}
+				});
+				return false;
+			}
+			var _iobj = $('#imageList img._uploadimg');
+			var _h = '';
+			if(_iobj.length > 0) {
+				//有图
+				for(var i = 0; i < _iobj.length; i++) {
+					_h += '"' + _iobj[i].src + '"';
+				}
+			}
+			if(_h) {
+				_h = '[' + _h.replace(/\"\"/, '","') + ']';
+			}
+			form_save.imagesdata.value = _h;
+			//提交
+			$('#orderpostbtn').prop('disabled', true).html('提交中...');
+			$.post('index.php?c=app&a=superadmin:index&s=order&submit=yes', FormDataPackaging('form[name="form_save"]'), function(data) {
+				if(data['state'] == 'ok') {
+					ppp({
+						content: data['datas']['msg'],
+						icon: 1,
+						close: function() {
+							location.reload(true);
+						}
+					});
+				} else {
+					ppp({
+						content: data['datas']['msg'],
+						icon: 2
+					});
+					$('#orderpostbtn').prop('disabled', false).html('提交工单');
+				}
+			}, 'json');
+		});
+
+		//添加截图
+		$('#imageList ._uploadbtn').on('click', function() {
+			var id = 'uploadImage-obj-' + parseInt(Math.random() * 10000);
+			$('body').append('<input class="pk-hide" type="file" id="' + id + '" value="" accept="image/*">');
+			$('#' + id).on('change', function() {
+				var _l = $('#imageList img').length;
+				$('#imageList').prepend('<img class="_uploadimg _' + _l + '" src="" onclick="if(confirm(\'确认删除该截图吗？\')){$(this).remove()}">');
+				$('body').append('<img class="pk-hide" id="' + id + '-temp" src="' + getLocalFileUrl(this) + '">');
+				$('#' + id + '-temp').on('load', function() {
+					$('#imageList ._' + _l).attr('src', ImageToBase64(this, 'max:1000', 'max:3000'));
+					$('#' + id).remove();
+					$(this).remove();
+				});
+			}).click();
+
+		});
+	});
+</script>

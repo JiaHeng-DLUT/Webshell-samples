@@ -1,0 +1,22 @@
+<div class="pager">
+	<div class="pager-numbers">
+		<span class="pager-number pager-first"><a href="{{ first_link|none }}">&laquo;</a></span>
+{% foreach links %}
+	{% if loop_index === $data->num && ! $data->is_extra %}
+		<span class="pager-number pager-current">{{ loop_index }}</span>
+	{% else %}
+		<span class="pager-number"><a href="{{ loop_value|none }}">{{ loop_index }}</a></span>
+	{% end %}
+{% end %}
+		<span class="pager-number pager-last"><a href="{{ last_link|none }}">&raquo;</a></span>
+{% foreach extra as extra %}
+	{% if $data->extra['url'] == $_SERVER['REQUEST_URI'] || $data->orig === $data->extra['key'] %}
+		<span class="pager-extra pager-current">{{ extra['label']|__ }}</span>
+	{% else %}
+		<span class="pager-extra"><a href="{{ extra['url']|none }}">{{ extra['label']|__ }}</a></span>
+	{% end %}
+{% end %}
+	</div>
+
+	<br clear="both" />
+</div>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>编辑广告位</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<!-- 后台面包屑导航 -->
+{:get_admin_breadcrumb()}
+
+<blockquote class="layui-elem-quote">编辑广告位</blockquote>
+<div class=""  style="padding:20px">
+
+
+<form class="layui-form" action="" method="post" >
+<input type="hidden" name="position_id"  value="{$Request.param.position_id}}">
+ 
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">广告位名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="position_name" lay-verify="position_name" autocomplete="off" placeholder="" class="layui-input" value="{$AdPosition.position_name}">
+                </div>
+              </div> 
+          <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">广告位类型</label>
+                <div class="layui-input-inline" style="width:500px;">
+                  <input type="radio" name="position_type" lay-filter="position_type" value="0" {:checked($AdPosition.position_type,0)}  title="图片广告">
+                 <input type="radio" name="position_type" lay-filter="position_type" value="1"   {:checked($AdPosition.position_type,1)} title="代码广告">
+                 <input type="radio" name="position_type" lay-filter="position_type" value="2"   {:checked($AdPosition.position_type,2)} title="幻灯片">
+                </div>
+              </div> 
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">宽度</label>
+                <div class="layui-input-inline" style="width:110px;">
+                  <input type="text" name="position_width" lay-verify="position_width" autocomplete="off" placeholder="" class="layui-input" maxlength="4" value="{$AdPosition.position_width}">
+                </div>
+                 <div class="layui-form-mid layui-word-aux">px</div>
+                  <div class="layui-input-inline" style="width:110px;">
+                  <input type="text" name="position_height" lay-verify="position_height" autocomplete="off" placeholder="" class="layui-input" maxlength="4" value="{$AdPosition.position_height}">
+                </div>
+               <div class="layui-form-mid layui-word-aux">px {:about('默认 ')}</div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">广告描述</label>
+                <div class="layui-input-inline">
+                  <textarea name="position_desc"  class="layui-textarea">{$AdPosition.position_desc}</textarea>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">广告位状态</label>
+                <div class="layui-input-inline">
+                <input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget" lay-text="开启|关闭" {if $AdPosition.status ==1}checked{/if}>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="form">确 定</button>
+                <button class="layui-btn layui-btn-primary"  onclick="javascript:history.go(-1);">返 回</button>
+                </div>
+              </div>
+</form>
+</div>
+
+<script>
+// 默认必须存在的
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('adPosition/edit')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            // $("form")[0].reset();
+            layer.msg(json.msg);
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+    return false; //阻止表单跳转
+  });
+});
+
+</script>
+
+</body>
+
+</html>

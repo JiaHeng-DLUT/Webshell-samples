@@ -1,0 +1,95 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <form id="add_form" action="{:url('Sellerwaybill/waybill_save')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="waybill_id" value="{$waybill_info.waybill_id|default=''}">
+        <input type="hidden" name="old_waybill_image" value="{$waybill_info.waybill_image|default=''}">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.template_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" value="{$waybill_info.waybill_name|default=''}" name="waybill_name" id="waybill_name" class="w120 text">
+                <span></span>
+                <p class="hint">{$Think.lang.name_waybill_template}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.member_show_expre_company}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="waybill_express">
+                    {notempty name="express_list"}
+                    {foreach name="express_list" item="express"}
+                    <option value="{$express.express_id}|{$express.express_name}" {if isset($express.selected) && $express.selected}selected{/if}>{$express.express_name}</option>
+                    {/foreach}
+                    {/notempty}
+                </select>
+                <span></span>
+                <p class="hint">{$Think.lang.corresponding_logistics_companies}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.width}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" value="{$waybill_info.waybill_width|default=''}" name="waybill_width" id="waybill_width" class="w60 text"><em class="add-on">mm</em>
+                <span></span>
+                <p class="hint">{$Think.lang.waybill_width}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.height}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" value="{$waybill_info.waybill_height|default=''}" name="waybill_height" id="waybill_height" class="w60 text"><em class="add-on">mm</em>
+                <span></span>
+                <p class="hint">{$Think.lang.waybill_height}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.top_partial_shift}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" value="{$waybill_info.waybill_top|default=''}" name="waybill_top" id="waybill_top" class="w60 text"><em class="add-on">mm</em>
+                <span></span>
+                <p class="hint">{$Think.lang.template_top_partial_shift}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.left_partial_shift}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" value="{$waybill_info.waybill_left|default=''}" name="waybill_left" id="waybill_left" class="w60 text"><em class="add-on">mm</em>
+                <span></span>
+                <p class="hint">{$Think.lang.template_left_partial_shift}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.template_image}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <img width="500" src="{$waybill_info.waybill_image_url|default=''}">
+                <input name="waybill_image" type="file" class="type-file-file" >
+                <span></span>
+                <p class="hint">{$Think.lang.template_guidelines1}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.enable}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <ul class="dssc-form-radio-list">
+                    <li>
+                        <label for="waybill_usable_1">
+                            <input id="waybill_usable_1" type="radio" name="waybill_usable" value="1" {if isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable eq '1'}checked{/if}>{$Think.lang.ds_yes}</label>
+                    </li>
+                    <li><label for="waybill_usable_0"><input id="waybill_usable_0" type="radio" name="waybill_usable" value="0" {if isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable neq '1'}checked{/if}>{$Think.lang.ds_no}</label></li></ul>
+                <span></span>
+                <p class="hint">{$Think.lang.template_guidelines2}</p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.ds_submit}">
+            </label>
+        </div>
+    </form>
+</div>
+
+{/block}
+
+
+

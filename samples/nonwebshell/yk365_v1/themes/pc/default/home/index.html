@@ -1,0 +1,541 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title><{$site_title}></title>
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<{include file="base.html"}>
+</head>
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div class="wrapper">
+
+<ul>
+
+
+
+
+</ul>
+<div class="ad1200x90">
+<{get_adcode(20)}>
+</div>
+
+
+		<{if $cfg.is_enabled_tj =='yes'}>
+				<div class="count">
+				<div class="count-title"><i class="fa fa-pie-chart" aria-hidden="true"></i> 数据统计</div>
+				 <ul class="tj-list">
+					<li style=""><a style=""><{$stat.website}></a> 个优秀站点</li>
+					<li><a ><{$stat.apply}></a> 个站点正在排队审核</li>
+					<li><a ><{$stat.article}></a> 篇新闻资讯</li>
+					<li><a ><{$stat.user}></a> 个会员</li>
+
+				</ul>
+				<{if !empty($cfg.home_pay_money)}>
+				<div class="count-pay-money">
+				  快审服务: <{$cfg.home_pay_money}>元/站 
+				</div>
+				<{/if}>
+			</div>
+		<div class="blank10"></div>
+       <{/if}>
+
+
+	<div class="homebox">
+
+        <!--   付费快审  开始-->
+        <{if $cfg.home_pay >0}>
+        <div class="recommended">
+		<div class="main-top"><i class="fa fa-flag-o" aria-hidden="true"></i> 付费快审</div>
+		<ul class="index-top">
+		  <{foreach from=get_website_list("w.web_ispay = 1 and w.web_status = 3 ",'utime','desc',0,$cfg.home_pay) item=vo}>
+          <li id="dowebok" class="qq animated bounceInDown">
+            <a href="<{$vo.web_link}>" target="_blank"><{$vo.web_name}></a>
+          </li>
+		   	<{/foreach}>
+		</ul>
+    </div>
+    <{/if}>
+      <!-- 付费快审 结束-->
+
+        <!-- 权威推荐 开始-->
+        <{if $cfg.home_best >0}>
+        <div class="recommended">
+		<div class="main-top"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 权威推荐</div>
+		<ul class="index-top">
+		  <{foreach from= getTop($cfg.home_best) item=vo}>
+          <li id="dowebok" class="qq animated bounceInDown">
+            <a href="<{$vo.web_link}>" target="_blank"><{$vo.web_name}></a>
+          </li>
+		   	<{/foreach}>
+		</ul>
+		  <!-- 权威推荐 结束-->
+       </div>
+        <{/if}>
+    
+<div class="blank10"></div>
+
+
+
+	<div class="homebox-right">
+		<div class="blank10"></div>
+<!-- 推荐 -->
+<{if $cfg.home_isbest > '0'}>
+<div class="bestbox">
+	<div class="bestbox-body">
+		<ul class="clearfix bestbox-list">
+			<{foreach from=get_websites(0, <{$cfg.home_isbest}>, true) item=best}>
+			<li><a href="<{$best.web_link}>" target="_blank" title="<{$best.web_name}>">
+			<{if $best.web_ico}><img src="<{$best.web_ico}>" style="width:15px;height:15px;"><{/if}> <{$best.web_name}></a></li>
+			<{/foreach}>
+		</ul>
+	</div>
+</div>
+<div class="blank10"></div>
+<!-- 广告 开始 -->
+<div class="ad2">
+<{get_adcode(18)}>	
+</div> 
+<!-- 广告 开始 -->
+<div class="blank10"></div>
+<{/if}>
+<!-- 推荐分类 -->
+	<div class="coolbox">
+        <div class="coolbox-body">
+		    <ul class="coolbox-list">
+				<{foreach from=get_best_categories('webdir') item=item name=isite}>
+				<li class="clearfix">
+				       <strong><a href="<{url('home/webdir',['cid'=>$item.cate_id])}>" title="<{$item.cate_name}>"><{$item.cate_name}></a></strong>
+						<span>
+						<{foreach from=get_websites($item.cate_id,7,false,'ctime','asc') item=cool}>
+						<span id="coolbox-a"><a href="<{$cool.web_link}>" 
+						title="<{$cool.web_name}>">
+						<{if $cool.web_ico}><img src="<{$cool.web_ico}>" style="width:15px;height:15px;"><{/if}><{$cool.web_name}></a></span>
+						<{/foreach}></span>
+						<em><a href="<{url('home/webdir',['cid'=>$item.cate_id])}>" class="more">更多>></a></em>
+				</li>
+				<{if $smarty.foreach.isite.iteration % 5 == 0 && $smarty.foreach.isite.iteration != 20}>
+				<li class="sline"></li>
+				<{/if}>
+				<{/foreach}>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+		<div class="homebox-left">
+		<div class="blank10"></div>
+			<div class="newsbox">
+			<!-- 导航盒子 开始-->
+				<{$cfg.nav_code}>
+			<!-- 导航盒子结束 -->
+			</div>
+		<div class="blank10"></div>
+
+        <!-- 首页左侧广告位 开始 250X90 -->
+		<div class="youkeadverta">
+			  <{get_adcode(1)}>
+		</div>
+		<!-- 首页左侧广告位 结束 250X90 -->	
+        <div class="blank10"></div>
+		<div class="slideTxtBox-a box1">
+		<div class="slideTxtBox">
+			<div class="hd">
+				<ul>
+		<{foreach from=get_categories_mod('article',4,'true') item=vo}>
+				<li><{$vo.cate_name}></li>
+        <{/foreach}>
+				</ul>
+			</div>
+			<div class="bd">
+		<!-- 显示文章 -->
+             <{foreach from=get_categories_mod('article',4,'true') item=vo}>
+               <!-- <{$vo.cate_id}> -->
+                 <{assign var="cid" value=$vo.cate_id}>
+
+				<ul>
+				<{foreach from=get_articles($cid,7) item=vo}>
+					<li><a href="<{$vo.art_link}>" target="_blank"><{$vo.art_title}></a></li>
+
+					 <{/foreach}>
+				</ul>
+                <{/foreach}>
+			</div>
+		</div>
+		<div class="blank10"></div>
+<div align="center" style="width:250px; margin:0 auto">
+<div class="banner">
+	<div class="banner-btn">
+		<a href="javascript:;" class="prevBtn"><i></i></a>
+		<a href="javascript:;" class="nextBtn"><i></i></a>
+	</div>
+	<ul class="banner-img">
+	<!-- 图文幻灯片 -->
+		<{foreach from=get_articles("0",10,'false') item=a name=list}>
+			<{if $a.art_content|get_img }>
+		<li>
+		    <a href="<{$a.art_link}>">
+		    <img src="<{$a.art_content|get_img}>"></a>
+            <div class="cont1"><span><{$a.art_title}></span></div>
+		</li>
+		<{/if}>
+        <{/foreach}>
+	</ul>
+	<!-- <ul class="banner-circle"></ul> -->
+</div>
+</div>
+<div class="blank10"></div>
+		<div class="slideTxtBox-a box2">
+		<div class="slideTxtBox">
+			<div class="hd">
+		
+				<span class="arrow"><a class="next"></a><a class="prev"></a></span>
+				<ul><li>视频</li><li>游戏</li><li>资讯</li><li>网站</li></ul>
+			</div>
+			<div class="bd">
+		<!-- 最新视频 -->
+				<ul>
+				<{foreach from=get_video_list('','ctime','desc',0,5)  item=vo}>
+					<li><a href="<{$vo.url}>" target="_blank"><i class="fa fa-play-circle" aria-hidden="true"></i> <{$vo.title}></a></li>
+					<{/foreach}>
+				</ul>
+		<!-- 最新游戏		 -->
+				<ul>
+				<{foreach from=get_game_list('','ctime','desc',0,5)  item=vo}>
+					<li>· <a href="<{$vo.url}>" target="_blank"><{$vo.title}></a></li>
+				<{/foreach}>
+				</ul>
+		<!-- 最新文章 -->
+				<ul>
+				<{foreach from=get_article_list('','ctime','desc',0,5)  item=vo}>
+					<li>· <a href="<{$vo.art_link}>" target="_blank"><{$vo.art_title}></a></li>
+					<{/foreach}>
+
+				</ul>
+		<!-- 最新站点 -->
+				<ul class="newsite">
+				<{foreach from=get_website_list('','ctime','desc',0,10)  item=vo}>
+					<li><a href="<{$vo.web_link}>" target="_blank"><{$vo.web_name}></a></li>
+				<{/foreach}>
+
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">jQuery(".slideTxtBox").slide();</script>
+		<div class="blank10"></div>
+        <!-- 首页左侧广告位 开始 250X185 -->
+		<div class="youkeadvertb">
+		      <{get_adcode(2)}>
+		</div>
+		<!-- 首页左侧广告位 结束 250X185 -->	
+<{if $cfg.home_new > '0'}>
+			<div class="blank10"></div>
+	
+<{/if}>
+		</div>
+	</div>
+</div>
+<div class="blank10"></div>
+<div class="wrapper">
+	<div class="clearfix hcatebox">
+		<{foreach from=get_categories(0, 5) item=cate name=csite}>
+		<{if $smarty.foreach.csite.iteration % 5 == 0}>
+		<dl class="hcatebox-one" style="border-right: 0;">
+		<{else}>
+		<dl class="hcatebox-one">
+		<{/if}>
+			<dt><a href="<{$cate.cate_link}>" target="_blank" title="<{$cate.cate_name}>"><{$cate.cate_name}></a></dt>
+			<dd>
+				<{foreach from=get_categories($cate.cate_id, 15) item=scate}>
+				<a href="<{$scate.cate_link}>" title="<{$scate.cate_name}>"><{$scate.cate_name}></a>
+				<{/foreach}>
+            </dd>
+		</dl>
+		<{/foreach}>
+	</div>
+</div>
+
+<div class="blank10"></div>
+
+<!-- 1200*90 广告开始 -->
+<{get_adcode(3)}>
+
+<!-- 1200*90 广告结束 -->
+
+<{if $cfg.is_video_status !='no'}>
+<!--===== 看视频模块 开始=====-->
+<div class="wrapper">
+<div class="inbox-title"><i class="fa fa-film" aria-hidden="true"></i> 看视频</div>
+<div class="outBox" style="margin:0 auto">
+<!-- <div class="hd"><ul><li>影视大全</li><li>电视剧</li><li>电影</li><li>综艺</li><li>动漫</li></ul></div> -->
+<div class="">
+  <div class="inBox">
+    <div class="inBd">
+      <ul>
+        <li>
+          <div class="youketvfl">
+
+<div class="youkeleft-tv">
+
+<div class="youketvleft">
+<{foreach from=get_video_list('a.isbest = 1','ctime','desc',0,1)  item=vo}>
+<a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>">
+<div class="youkepa"><{$vo.title}></div>
+<div class="youkea1">
+<i class="fa fa-play-circle-o fa-4x" aria-hidden="true"></i>
+</div>
+</a>
+<{/foreach}>
+</div>
+
+<{foreach from=get_video_list('a.isbest = 1','ctime','desc',1,4)  item=vo}>
+
+<div class="youketvright">
+  <a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>" alt="{$vo.title}>">
+<div class="youkepb"><{$vo.title}></div>
+<div class="youkea2"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i></div>
+</a>
+</div>
+<{/foreach}>
+
+</div>
+
+
+<div class="tvselected">
+<h2>热门精选</h2>
+<div id="slideBox" class="slideBox">
+<div class="tvbd">
+<ul>
+<{assign var="video" value=get_video_list('a.ishot = 1','ctime','desc',0,4)}>
+<{if !empty($video)}>
+<li>
+<{foreach from=$video  item=vo}>
+<div class="youketvbottom">
+<a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>">
+<div class="youkepf"><{$vo.title}></div>
+<div class="youkea6"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i></div>
+</a>
+</div>
+<{/foreach}>
+</li>
+<{/if}>
+<{assign var="video1" value=get_video_list('a.ishot = 1','ctime','desc',4,8)}>
+<{if !empty($video1)}>
+<li>
+<{foreach from=$video1  item=vo}>
+<div class="youketvbottom">
+<a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>" alt="{$vo.title}>">
+<div class="youkepf"><{$vo.title}></div>
+<div class="youkea6"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i></div>
+</a>
+</div>
+<{/foreach}>
+</li>
+<{/if}>
+<{assign var="video2" value=get_video_list('a.ishot = 1','ctime','desc',8,12)}>
+<{if !empty($video2)}>
+<li>
+<{foreach from=$video2  item=vo}>
+<div class="youketvbottom">
+<a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>"  alt="{$vo.title}>">
+<div class="youkepf"><{$vo.title}></div>
+<div class="youkea6"><i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i></div>
+</a>
+</div>
+<{/foreach}>
+</li>
+<{/if}>
+</ul>
+</div>
+<a class="prev" href="javascript:void(0)"></a>
+<a class="next" href="javascript:void(0)"></a>
+</div>
+<script>
+jQuery(".tvselected .slideBox").slide({mainCell:".tvbd ul",effect:"left",easing:"easeOutCirc",delayTime:1000});
+</script>
+</div>
+</div>
+
+
+
+<div class="youketvfr">      
+<div class="slideyouke" style="margin:0 auto">
+<div class="youkebd">
+<div class="inyouke">
+<div class="youkeHd">
+<ul>
+<{foreach from=get_categories_mod('video',5,'true') item="vo" }>
+<li><{$vo.cate_name}></li>
+<{/foreach}>
+</ul>
+</div>
+<div class="youkeBd">
+<{foreach from=get_categories_mod('video',5,'true') item="vo" }>
+
+<{assign var="cid" value=$vo.cate_id}>
+<ul>
+<li>
+<div class="youkeranking">
+<ul>
+<{foreach from=get_video($cid,24) item=v }>
+<li><a href="<{$v.url}>"><{$v.title}></a></li>
+<{/foreach}>
+
+</ul>
+</div>
+</li>
+</ul>
+
+<{/foreach}>
+
+</div>
+<div class="youkeAD">
+<div class="picScroll-left">
+<div class="tempWrap">
+<div class="bd">
+<ul class="picList">
+<!-- 最新视频 -->
+<{foreach from=get_video_list('','ctime','desc',0,4)  item=vo}>
+<li>
+<div class="pic">
+<a href="<{$vo.url}>" target="_blank">
+<img src="<{$vo.cover}>" alt="{$vo.title}>">
+<div class="title">
+<span><{$vo.title}></span>
+</div>
+</a>
+</div>
+</li>
+
+<{/foreach}>
+</ul>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+jQuery(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true,vis:2,delayTime:1000});
+</script>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+/* 内层inBox渐显切换，注意titCell、mainCell等不能与外层相同 */
+jQuery(".inyouke").slide({ titCell:".youkeHd li",mainCell:".youkeBd" });
+/* 外层outBox左滚动切换 */
+jQuery(".slideyouke").slide({ effect:"left" });
+</script>
+</div>
+</li>
+</ul>
+</div>
+</div>		
+</div>
+</div>
+<script type="text/javascript">
+/* 内层inBox渐显切换，注意titCell、mainCell等不能与外层相同 */
+jQuery(".inBox").slide({ titCell:".inHd li",mainCell:".inBd" });
+/* 外层outBox左滚动切换 */
+jQuery(".outBox").slide({ effect:"left" });
+</script>
+</div>
+<!--===== 看视频模块 结束=====-->
+<{/if}>
+
+<{if $cfg.is_game_status !='no'}>
+<div class="blank10"></div>
+<!-- 1200*90 广告开始 -->
+<{get_adcode(4)}>
+
+<!-- 1200*90 广告结束 -->
+
+<!--===== 小游戏模块 开始=====-->
+<div class="wrapper">
+    <div class="inbox-title game"><i class="fa fa-gamepad fa-lg" aria-hidden="true"></i> 玩游戏</div>
+	<div id="slideBox" class="slideBox">
+		<div class="bd">
+			<ul>
+				<li>
+					<div class="youkegame">
+						<div class="clearfix">
+<!-- 广告开始 -->
+							<{get_adcode(19)}>
+<!-- 广告结束 -->
+						</div>
+					</div>
+				    <{assign var="gamelist" value=get_game(543,20)}>
+					<ul class="gamelist">
+					    <{foreach $gamelist as $v}>
+						<li>
+							<a href="<{$v.url}>" target="_blank">
+								<img src="<{$v.cover}>" alt="{$v.title}>" />
+								<h3><{$v.title}></h3>
+							</a>
+						</li>
+					    <{/foreach}>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	    <a class="prev" href="javascript:void(0)"></a>
+	    <a class="next" href="javascript:void(0)"></a>
+	</div>
+	<script type="text/javascript">
+	jQuery(".slideBox").slide({mainCell:".bd ul",effect:"left",trigger:"click"});
+	</script>
+</div>
+<!--===== 小游戏模块 结束=====-->
+<{/if}>
+<div class="blank10"></div>
+
+
+<!-- 1200*90 广告开始 -->
+<{get_adcode(5)}>
+
+<!-- 1200*90 广告结束 -->
+
+<!-- 最新点入模块 -->
+<div class="wrapper">
+<{if $cfg.home_instat > '0'}>
+	<div class="inbox">
+		<div class="inbox-title">最新点入（实时更新）</div>
+		<ul class="clearfix inbox-list">
+          	<{nocache}>
+			<{foreach from=get_websites(0, <{$cfg.home_instat}>, false, 'instat') item=instat}>
+			<a href="<{$instat.web_link}>" title="<{$instat.web_name}>">
+             <li>
+			   <div class="inbox-list-top">
+			     <{$instat.web_name}>
+			  </div>
+			  <div class="inbox-list-bottom">
+			    <span>人气<br> <{$instat.web_views}></span>&nbsp;<div class="intro"><{$instat.web_intro}></div>&nbsp;
+			  </div>  
+			</li>
+			</a>
+			<{/foreach}>
+            <{/nocache}>
+		</ul>
+	</div>
+	<div class="blank10"></div>
+<{/if}>
+</div>
+</div>
+
+<!-- 返回顶部 -->
+<div class="youketop">
+  	<div class="toTop" id="roll_top" title="返回顶部">
+	    <i class="fa fa-angle-up fa-3x" aria-hidden="true"></i>
+	</div>
+</div>
+</div>
+<{include file="footer.html"}>
+</body>
+</html>

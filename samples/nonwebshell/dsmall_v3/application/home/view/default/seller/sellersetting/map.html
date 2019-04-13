@@ -1,0 +1,134 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<script type="text/javascript" src="{$Think.HTTP_TYPE}api.map.baidu.com/api?v=2.0&ak={$baidu_ak}"></script>
+<script>
+    var local;
+    var map;
+    var lst_name = '';
+    function change_map() {
+        if ($("#area_ select:eq(0)").length > 0 && $("#area_ select:eq(0) option:selected").val() != '') {
+            var name = $("#area_ select:eq(0) option:selected").text();
+        }
+        if ($("#area_ select:eq(1)").length > 0 && $("#area_ select:eq(1) option:selected").val() != '') {
+            var name = $("#area_ select:eq(1) option:selected").text();
+        }
+        if ($("#area_ select:eq(2)").length > 0 && $("#area_ select:eq(2) option:selected").val() != '') {
+            var name = $("#area_ select:eq(2) option:selected").text();
+        }
+        if (name != '' && lst_name != name) {
+            lst_name = name;
+            map.setCurrentCity(name);
+            map.centerAndZoom(name, 16);
+            map.clearOverlays();
+            local.search(name);
+        }
+
+    }
+    $(function () {
+        $('#company_address').ds_region();
+        map = new BMap.Map("allmap");
+        var lng = '{$store_info.store_longitude}';
+        var lat = '{$store_info.store_latitude}';
+        if (!lng && !lat) {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function (r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    var lng = r.point.lng;
+                    var lat = r.point.lat;
+                    var point = new BMap.Point(lng, lat);
+                    map.centerAndZoom(point, 16);
+                    map.addControl(new BMap.NavigationControl());
+                    map.enableScrollWheelZoom();
+                    var marker = new BMap.Marker(point);  // 创建标注
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+                    document.getElementById("longitude").value = lng;
+                    document.getElementById("latitude").value = lat;
+
+                } else {
+                    layer.msg('failed' + this.getStatus());
+                }
+            }, {enableHighAccuracy: true})
+        } else {
+            var point = new BMap.Point(lng, lat);
+            map.centerAndZoom(point, 16);
+            map.addControl(new BMap.NavigationControl());
+            map.enableScrollWheelZoom();
+            var marker = new BMap.Marker(point);  // 创建标注
+            map.addOverlay(marker);              // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        }
+
+
+        var options = {
+            onSearchComplete: function (results) {
+                // 判断状态是否正确
+                if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+                    if (results.getCurrentNumPois() > 0) {
+
+                        map.clearOverlays();  //清除标注  或者可以把market 放入数组
+                        var point = new BMap.Point(results.getPoi(0).point.lng, results.getPoi(0).point.lat);
+                        var marker = new BMap.Marker(point);
+                        map.centerAndZoom(point, 16);
+                        map.addOverlay(marker);
+                        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+                        document.getElementById("longitude").value = results.getPoi(0).point.lng;
+                        document.getElementById("latitude").value = results.getPoi(0).point.lat;
+
+                    }
+                }
+            }
+        };
+        local = new BMap.LocalSearch(map, options);
+        map.addEventListener("click", function (e) {
+//                    alert(e.point.lng + ", " + e.point.lat);
+            map.clearOverlays();  //清除标注  或者可以把market 放入数组
+            var point = new BMap.Point(e.point.lng, e.point.lat);
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+            document.getElementById("longitude").value = e.point.lng;
+            document.getElementById("latitude").value = e.point.lat;
+        });
+    })
+</script>
+<div class="dssc-form-default">
+    <form action="{:url('Sellersetting/map')}" method="post"  enctype="multipart/form-data" id="my_store_form">
+        <dl>
+            <dt>{$Think.lang.home}：</dt>
+            <dd id="area_" onclick="change_map()">
+                <input type="hidden" value="{$store_info.area_info}" name="company_address" id="company_address">
+                <input type="hidden" value="" name="province_id" id="_area_1">
+                <input type="hidden" value="" name="city_id" id="_area_2">
+                <input type="hidden" value="{$store_info.region_id}" name="district_id" id="_area_3">
+                <span></span></dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.detailed_address}：</dt>
+            <dd><input name="company_address_detail" type="text" value="{$store_info.store_address}" class="w200" onkeyup="local.search($(this).val());">
+                <span></span>
+                <div>
+                    <input name="longitude" id="longitude" value="{$store_info.store_longitude}" type="hidden" />
+                    <input name="latitude" id="latitude" value="{$store_info.store_latitude}" type="hidden" />
+                    <div id="allmap" style="width:530px;height: 350px;margin-top: 20px"></div>
+                </div>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.store_goods_class_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#my_store_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('my_store_form', 'url', "{:url('Sellersetting/map')}");
+            },
+        });
+    });
+</script>
+
+{/block}

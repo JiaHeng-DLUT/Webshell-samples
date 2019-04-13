@@ -1,0 +1,28 @@
+/**
+* The css file of ZenTaoPMS.
+*
+* @copyright   Copyright 2009-2015 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+* @license     ZPL (http://zpl.pub/page/zplv12.html)
+* @author      Chunsheng Wang <chunsheng@cnezsoft.com>
+* @package     front
+* @version     $Id: style.css 1454 2009-10-23 01:45:26Z wwccss $
+* @link        http://www.zentao.net
+*/
+
+/* Change zentao icon on fixed footer with classic style image */
+#poweredBy .icon-zentao {background: url(images/main/icon.png) center no-repeat}
+#poweredBy .icon-zentao:before {visibility: hidden;}
+
+/* Finish task #5068*/
+.main-table .table{cursor:pointer;}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th{background:none;}
+
+#dropMenu.show-right-col{width:502px;max-width:520px;}
+#dropMenu.has-search-text{width:250px;max-width:260px;}
+#dropMenu.has-search-text .col-right{margin-left:0px;}
+#dropMenu>.search-box{max-width:240px;}
+#dropMenu .list-group{width:250px; max-width:260px;}
+#dropMenu.show-right-col>.list-group{width:502px;max-width:520px;}
+#dropMenu.show-right-col .col-left>.list-group{width:250px;max-width:260px;}
+#dropMenu.show-right-col .col-right>.list-group{width:250px;max-width:260px;}
+#dropMenu .col-footer{width:230px;}

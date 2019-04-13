@@ -1,0 +1,75 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+
+
+
+<form method="post" target="_self">
+    <table class="search-form">
+        <tr>
+            <th>{$Think.lang.order_number}</th>
+            <td class="w160"><input type="text" class="text w150" name="orderinviter_order_sn" value="{$Request.param.orderinviter_order_sn}"></td>
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_search}"/>
+                </label>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w40">{$Think.lang.commission}</th>
+            <th class="w80 tl">{$Think.lang.order_number}</th>
+            <th class="w80 tl">{$Think.lang.goods_name}</th>
+            <th class="w80 tl">{$Think.lang.goods_quantity}</th>
+            <th class="w80 tl">{$Think.lang.goods_amount}</th>
+            <th class="w80 tl">{$Think.lang.inviter_name}</th>
+            <th class="w80 tl">{$Think.lang.inviter_addtime}</th>
+            <th class="w150 tl">{$Think.lang.remark}</th>
+            <th class="w40">{$Think.lang.whether_effective}    </thead>
+    <tbody>
+        {notempty name="orderinviter_list"}
+        {foreach name="orderinviter_list" item="v" }
+        <tr class="bd-line">
+            <td class="tl">￥{$v.orderinviter_money}</td>
+            <td class="tl">{$v.orderinviter_order_sn}</td>
+            <td class="tl">{$v.orderinviter_goods_name}</td>
+            <td class="tl">{$v.orderinviter_goods_quantity}</td>
+            <td class="tl">{$v.orderinviter_goods_amount}</td>
+            <td class="tl">{$v.orderinviter_member_name}</td>
+            <td class="tl">{$v.orderinviter_addtime|date="Y-m-d H:i",###}</td>
+            <td class="tl">{$v.orderinviter_remark}</td>
+            <td class="tl">{if $v.orderinviter_valid}{$Think.lang.ds_yes}{else/}{$Think.lang.ds_no}{/if}</td>
+        </tr>
+        {/foreach}
+        {else/}
+        <tr>
+            <td colspan="9" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="orderinviter_list"}
+        <tr>
+            <td colspan="9"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+
+
+
+
+{/block}

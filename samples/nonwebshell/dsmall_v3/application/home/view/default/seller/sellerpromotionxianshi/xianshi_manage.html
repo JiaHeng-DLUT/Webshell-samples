@@ -1,0 +1,225 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+{if $xianshi_info.editable}
+<a id="btn_show_goods_select" class="dssc-btn dssc-btn-green" href="javascript:;"><i></i>{$Think.lang.goods_add}</a>
+{/if}
+
+
+{/block}
+{block name="seller_main"}
+<table class="dssc-default-table">
+    <tbody>
+        <tr>
+            <td class="w90 tr"><strong>{$Think.lang.xianshi_name}{$Think.lang.ds_colon}</strong></td>
+            <td class="w120 tl">{$xianshi_info.xianshi_name}</td>
+            <td class="w90 tr"><strong>{$Think.lang.start_time}{$Think.lang.ds_colon}</strong></td>
+            <td class="w120 tl">{$xianshi_info.xianshi_starttime|date="Y-m-d H:i",###}</td>
+            <td class="w90 tr"><strong>{$Think.lang.end_time}{$Think.lang.ds_colon}</strong></td>
+            <td class="w120 tl">{$xianshi_info.xianshi_end_time|date="Y-m-d H:i",###}</td>
+            <td class="w90 tr"><strong>{$Think.lang.buy_lower_limit}{$Think.lang.ds_colon}</strong></td>
+            <td class="w120 tl">{$xianshi_info.xianshi_lower_limit}</td>
+            <td class="w90 tr"><strong>{$Think.lang.ds_state}{$Think.lang.ds_colon}</strong></td>
+            <td class="w120 tl">{$xianshi_info.xianshi_state_text}</td>
+        </tr>
+</table>
+<div class="alert">
+    <strong>{$Think.lang.ds_explain}{$Think.lang.ds_colon}</strong>
+    <ul>
+        <li>{$Think.lang.xianshi_manage_goods_explain1}</li>
+        <li>{$Think.lang.xianshi_manage_goods_explain2}</li>
+    </ul>
+</div>
+<!-- 商品搜索 -->
+<div id="div_goods_select" class="div-goods-select" style="display: none;">
+    <table class="search-form">
+        <tr><th class="w150"><strong>{$Think.lang.search_store_items}</strong></th><td class="w160"><input id="search_goods_name" type="text w150" class="text" name="goods_name" value=""/></td>
+            <td class="w70 tc"><a href="javascript:void(0);" id="btn_search_goods" class="dssc-btn"/><i class="fa fa-search"></i>{$Think.lang.ds_search}</a></td><td class="w10"></td><td><p class="hint">{$Think.lang.special_goods_not_allowed}</p></td>
+        </tr>
+    </table>
+    <div id="div_goods_search_result" class="search-result"></div>
+    <a id="btn_hide_goods_select" class="close" href="javascript:void(0);">X</a> </div>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="w50"></th>
+            <th class="tl">{$Think.lang.goods_name}</th>
+            <th class="w90">{$Think.lang.goods_store_price}</th>
+            <th class="w120">{$Think.lang.discount_price}</th>
+            <th class="w120">{$Think.lang.discount}</th>
+            <th class="w120">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody id="xianshi_goods_list">
+        <tr id="xianshi_goods_list_norecord" style="display:none">
+            <td class="norecord" colspan="20"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+    </tbody>
+</table>
+<div class="bottom">
+    <label class="submit-border"><input type="submit" class="submit" id="submit_back" value="{$Think.lang.ds_back}{$Think.lang.xianshi_index}" onclick="window.location = '{:url('Sellerpromotionxianshi/index')}'"></label>
+</div>
+<div id="dialog_edit_xianshi_goods" class="eject_con" style="display:none;">
+    <input id="dialog_xianshigoods_id" type="hidden">
+    <dl><dt>{$Think.lang.goods_store_price}：</dt><dd><span id="dialog_edit_goods_price"></span></dd></dl>
+    <dl><dt>{$Think.lang.discount_price}：</dt><dd><input id="dialog_edit_xianshi_price" type="text" class="text w70"><em class="add-on"><i class="fa fa-cny"></i></em>
+            <p id="dialog_edit_xianshi_goods_error" style="display:none;"><label for="dialog_edit_xianshi_goods_error" class="error"><i class='fa fa-exclamation-circle'></i>{$Think.lang.discount_price_cannot_empty}</label></p>
+    </dl>
+    <div class="eject_con">
+        <div class="bottom pt10 pb10"><a id="btn_edit_xianshi_goods_submit" class="submit" href="javascript:void(0);">{$Think.lang.ds_submit}</a></div>
+    </div>
+</div>
+<script id="xianshi_goods_list_template" type="text/html">
+    <tr class="bd-line">
+        <td></td>
+        <td><div class="pic-thumb"><a href="<%=goods_url%>" target="_blank"><img src="<%=image_url%>" alt=""></a></div></td>
+        <td class="tl"><dl class="goods-name"><dt><a href="<%=goods_url%>" target="_blank"><%=goods_name%></a></dt></dl></td>
+        <td>{$Think.lang.currency}<%=goods_price%></td>
+        <td>{$Think.lang.currency}<span dstype="xianshi_price"><%=xianshigoods_price%></span></td>
+        <td><span dstype="xianshi_discount"><%=xianshi_discount%></span></td>
+        <td class="dssc-table-handle">
+            {if $xianshi_info.editable}
+            <span><a dstype="btn_edit_xianshi_goods" class="btn-blue" data-xianshi-goods-id="<%=xianshigoods_id%>" data-goods-price="<%=goods_price%>" href="javascript:void(0);"><i class="fa fa-pencil-square"></i><p>{$Think.lang.ds_edit}</p></a></span>
+            <span><a dstype="btn_del_xianshi_goods" class="btn-red" data-xianshi-goods-id="<%=xianshigoods_id%>" href="javascript:void(0);"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span>
+            {/if}
+        </td>
+    </tr>
+</script>
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/template.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            // 当前编辑对象，默认为空
+            $edit_item = {};
+
+            //现实商品搜索
+            $('#btn_show_goods_select').on('click', function () {
+                $('#div_goods_select').show();
+            });
+
+            //隐藏商品搜索
+            $('#btn_hide_goods_select').on('click', function () {
+                $('#div_goods_select').hide();
+            });
+
+            //搜索商品
+            $('#btn_search_goods').on('click', function () {
+                var url = "{:url('Sellerpromotionxianshi/goods_select')}";
+                var datas = $.param({goods_name: $('#search_goods_name').val()});
+                $('#div_goods_search_result').load(url, datas);
+            });
+            $('#div_goods_search_result').on('click', 'a.demo', function () {
+                $('#div_goods_search_result').load($(this).attr('href'));
+                return false;
+            });
+
+            //添加限时折扣商品弹出窗口 
+            $('#div_goods_search_result').on('click', '[dstype="btn_add_xianshi_goods"]', function () {
+                $('#dialog_goods_id').val($(this).attr('data-goods-id'));
+                $('#dialog_goods_name').text($(this).attr('data-goods-name'));
+                $('#dialog_goods_price').text($(this).attr('data-goods-price'));
+                $('#dialog_input_goods_price').val($(this).attr('data-goods-price'));
+                $('#dialog_goods_img').attr('src', $(this).attr('data-goods-img'));
+                $('#dialog_add_xianshi_goods').ds_show_dialog({width: 450, title: '{$Think.lang.promotion_add_goods}'});
+                $('#dialog_xianshi_price').val('');
+                $('#dialog_add_xianshi_goods_error').hide();
+            });
+
+            //添加限时折扣商品
+            $('#div_goods_search_result').on('click', '#btn_submit', function () {
+                var goods_id = $('#dialog_goods_id').val();
+                var xianshi_id = '{$Request.param.xianshi_id}';
+                var goods_price = Number($('#dialog_input_goods_price').val());
+                var xianshi_price = Number($('#dialog_xianshi_price').val());
+                if (!isNaN(xianshi_price) && xianshi_price > 0 && xianshi_price < goods_price) {
+                    $.post("{:url('Sellerpromotionxianshi/xianshi_goods_add')}",
+                            {goods_id: goods_id, xianshi_id: xianshi_id, xianshi_price: xianshi_price},
+                            function (data) {
+                                if (data.result) {
+                                    $('#dialog_add_xianshi_goods').hide();
+                                    $('#xianshi_goods_list').prepend(template.render('xianshi_goods_list_template', data.xianshi_goods)).hide().fadeIn('slow');
+                                    $('#xianshi_goods_list_norecord').hide();
+                                    layer.msg(data.message);
+                                } else {
+                                    layer.msg(data.message);
+                                }
+                            },
+                            'json');
+                } else {
+                    $('#dialog_add_xianshi_goods_error').show();
+                }
+            });
+
+            //编辑限时活动商品
+            $('#xianshi_goods_list').on('click', '[dstype="btn_edit_xianshi_goods"]', function () {
+                $edit_item = $(this).parents('tr.bd-line');
+                var xianshigoods_id = $(this).attr('data-xianshi-goods-id');
+                var xianshi_price = $edit_item.find('[dstype="xianshi_price"]').text();
+                var goods_price = $(this).attr('data-goods-price');
+                $('#dialog_xianshigoods_id').val(xianshigoods_id);
+                $('#dialog_edit_goods_price').text(goods_price);
+                $('#dialog_edit_xianshi_price').val(xianshi_price);
+                $('#dialog_edit_xianshi_goods').ds_show_dialog({width: 450, title: '{$Think.lang.modify_price}'});
+            });
+
+            $('#btn_edit_xianshi_goods_submit').on('click', function () {
+                var xianshigoods_id = $('#dialog_xianshigoods_id').val();
+                var xianshi_price = Number($('#dialog_edit_xianshi_price').val());
+                var goods_price = Number($('#dialog_edit_goods_price').text());
+                if (!isNaN(xianshi_price) && xianshi_price > 0 && xianshi_price < goods_price) {
+                    $.post("{:url('Sellerpromotionxianshi/xianshi_goods_price_edit')}",
+                            {xianshigoods_id: xianshigoods_id, xianshi_price: xianshi_price},
+                            function (data) {
+                                if (data.result) {
+                                    $edit_item.find('[dstype="xianshi_price"]').text(data.xianshi_price);
+                                    $edit_item.find('[dstype="xianshi_discount"]').text(data.xianshi_discount);
+                                    $('#dialog_edit_xianshi_goods').hide();
+                                } else {
+                                    layer.msg(data.message);
+                                }
+                            }, 'json'
+                            );
+                } else {
+                    $('#dialog_edit_xianshi_goods_error').show();
+                }
+            });
+
+            //删除限时活动商品
+            $('#xianshi_goods_list').on('click', '[dstype="btn_del_xianshi_goods"]', function () {
+                var $this = $(this);
+                layer.confirm('{$Think.lang.ds_ensure_del}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    var xianshigoods_id = $(this).attr('data-xianshi-goods-id');
+                    $.post("{:url('Sellerpromotionxianshi/xianshi_goods_delete')}",{xianshigoods_id: xianshigoods_id},function (data) {
+                                if (data.result) {
+                                    $this.parents('tr').hide('slow', function () {
+                                        var xianshi_goods_count = $('#xianshi_goods_list').find('.bd-line:visible').length;
+                                        if (xianshi_goods_count <= 0) {
+                                            $('#xianshi_goods_list_norecord').show();
+                                        }
+                                    });
+                                } else {
+                                    layer.msg(data.message);
+                                }
+                            }, 'json');
+                });
+            });
+
+            //渲染限时折扣商品列表
+            xianshi_goods_array = $.parseJSON('{:json_encode($xianshi_goods_list)}');
+            if (xianshi_goods_array.length > 0) {
+                var xianshi_goods_list = '';
+                $.each(xianshi_goods_array, function (index, xianshi_goods) {
+                    xianshi_goods_list += template.render('xianshi_goods_list_template', xianshi_goods);
+                });
+                $('#xianshi_goods_list').prepend(xianshi_goods_list);
+            } else {
+                $('#xianshi_goods_list_norecord').show();
+            }
+        });
+</script>
+
+{/block}

@@ -1,0 +1,12 @@
+<div class="pk-row pk-margin-bottom-15">
+	<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">验证码</label>
+	<div class="pk-w-sm-9">
+		<input type="text" class="pk-textbox pk-radius-4" name="verifycode" value="" placeholder="点击显示验证码" onfocus="document.getElementById('verifycodeimageobject').click();this.onfocus=''" required autocomplete="off" />
+	</div>
+</div>
+<div class="pk-row pk-margin-bottom-15">
+	<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap"></label>
+	<div class="pk-w-sm-9">
+		<img id="verifycodeimageobject" class="pk-max-width-all pk-cursor-pointer" src="template/default/img/null_88x32.png" onclick="this.src='index.php?c=app&a=verifycode:index&type={$_G['APP']['VERIFYCODE']['TYPE']}&rnd='+Math.random()" title="点击刷新">
+	</div>
+</div>

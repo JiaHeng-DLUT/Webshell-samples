@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{notempty name="ico"}{$ico}{else /}{$domain}public/common/images/favicon.ico{/notempty}">
+    <title>{$title} | {$subtitle}</title>
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+    <link href="{$domain}public/common/html/404/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="row pad-top text-center">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <h2>  {:lang('You visit the page out to play!')} </h2>
+            <h5> {:lang('The page does not exist, please click the link at the bottom of the page to return')}</h5>
+            <span id="error-link"></span>
+            <h2>! {:lang('Access error')} !</h2>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="bigfont">
+                <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+            </div>
+            <a href="{$domain}" class="btn btn-primary">{:lang('Return to the home page')}</a><br><br>
+        </div>
+    </div>
+</div>
+<script src="{$domain}public/common/js/jquery.min.js"></script>
+<script src="{$domain}public/common/html/404/js/countUp.js"></script>
+<script src="{$domain}public/common/html/404/js/custom.js"></script>
+</body>
+</html>

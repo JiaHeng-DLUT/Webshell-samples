@@ -1,0 +1,50 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="{$pe['host_root']}user.php?mod=pay" <!--{if($menumark=='pay'):}-->class="sel"<!--{endif;}-->>账户充值<i></i></a>
+			<a href="{$pe['host_root']}user.php?mod=cashout&act=add" <!--{if($menumark=='cashout_add'):}-->class="sel"<!--{endif;}-->>申请提现<i></i></a>
+			<a href="{$pe['host_root']}user.php?mod=cashout" <!--{if($menumark=='cashout_list'):}-->class="sel"<!--{endif;}-->>提现记录<i></i></a>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="120">申请日期</th>
+				<th>收款账户</th>
+				<th width="70">收款人</th>
+				<th width="120">提现金额</th>
+				<th width="120">处理结果</th>
+				<th width="120">处理日期</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td>{pe_date($v['cashout_atime'])}</td>
+				<td>{$v['cashout_bankname']} ({userbank_num($v['cashout_banknum'])})</td>
+				<td>{$v['cashout_banktname']}</td>
+				<td><span class="corg">¥ {$v['cashout_money']+$v['cashout_fee']}</span></td>
+				<td>
+					<!--{if($v['cashout_state']==1):}-->
+					<span class="cgreen">已结算</span>
+					<!--{elseif($v['cashout_state'] == 2):}-->
+					<del class="c999">已取消</del>
+					<!--{else:}-->
+					<span class="cred">待审核</span>
+					<!--{endif;}-->
+				</td>
+				<td>
+					<!--{if(!$v['cashout_state']):}-->
+					<a href="javascript:pe_confirm('取消本次提现', 'user.php?mod=cashout&act=del&id={$v['cashout_id']}&token={$pe_token}');" class="tag_gray">取消</a>
+					<!--{else:}-->
+					{pe_date($v['cashout_ptime'])}
+					<!--{endif;}-->
+				</td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

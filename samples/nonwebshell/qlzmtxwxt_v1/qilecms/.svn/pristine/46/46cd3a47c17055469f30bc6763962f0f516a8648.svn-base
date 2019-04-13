@@ -1,0 +1,98 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+class MemberGroup extends Common
+{
+	Protected $autoCheckFields = true;
+	protected $create_fields = array("group_name","group_icon","sort");
+
+	public function index(){
+        
+		 $post = request()->param(); // 获取某个get变量
+		    if($post){
+		            $keywords = $post['keywords'];
+		            foreach($post['date'] as $k=>$v){
+		              $post['date'][] = strtotime($v);
+		            }
+		              $date = $post['date'];
+		              $where = 1;
+		             if($keywords['value']){
+		                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+		              }
+
+
+		      }else{
+		            $where =array(
+		       );
+		           $order =  array(
+		              'sort'=>'desc'
+		            );
+		      }
+		  
+		      
+		     $select  = array('group_id'=>'会员等级ID','group_name'=>'用户组名');
+
+		     $sort = array();
+		     $this->assign('select',$select);
+		     $list = DB::name('member_group')->where($where)->order($order)->paginate(10);
+		     $page = $list->render();
+
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+	  return $this->fetch();
+	}
+	public function edit(){
+      $param = input("param.");
+      if(input("post.")){
+          $post =input("post.");
+          $where['group_id'] = input("post.group_id");
+          $post = input('post.');
+	
+		//表单数据验证
+		    $rule = [
+		    'group_name'  => 'require',
+			];
+			$msg = [
+			    'group_name.require' => '等级名称不能为空',
+			];
+			$validate = Validate()->make($rule)->message($msg);
+			$result = $validate->check($post);
+			if(!$result){ 
+			   return alert($validate->getError());
+			}
+
+
+      	// 检查字段
+      	 $res =model('member_group')->edit($post,$where,$this->create_fields);
+         if($res){
+	        return alert('编辑成功'); 
+	     }        
+
+      }else{
+       $memberGroup = model('member_group')->getMemberGroup($param);
+       $this->assign('memberGroup',$memberGroup);
+       return $this->fetch();
+      }
+
+
+	}
+
+
+	public function del(){
+	   $param = input("param.");
+	   $group_id = $param['group_id'];
+	   if(!request()->isGet()){
+        return error_json('非法请求'); 
+	   }
+	   if(!$group_id){
+        return error_json('请求错误'); 
+	   }
+       $result = model('member_group')->del($group_id);
+      if($result){      
+        return success_json('删除成功');
+      }else{
+        return error_json('删除失败'); 
+      }
+	}
+}

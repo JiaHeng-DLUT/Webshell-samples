@@ -1,0 +1,165 @@
+<{include file="header.html"}>
+		
+            <div class="content">
+            	<div class="title"><{$pagename}></div>
+                <div class="body">
+        <{if $action == 'list'}>
+        <div id="listbox">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
+				<tr>
+					<th>ID</th>
+					<th>所属分类</th>
+					<th>网站名称</th>
+					<th>网站地址</th>
+					<th>属性状态</th>
+					<th>提交时间</th>
+					<th>操作选项</th>
+				</tr>
+          
+				<{foreach from=$weblist item=web}>
+				<tr>
+					<td><{$web.web_id}></td>
+					<td><{$web.cate_name}></td>
+					<td class="textleft"><{$web.web_name}></td>
+					<td class="textleft"><{$web.web_url}></td>
+					<td style="color: #FF0000;"><{$web.web_status}></td>
+					<td><{$web.web_ctime}></td>
+					<td><a  href="<{url('website',['act'=>'edit','wid'=>$web.web_id])}>" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i></a></td>
+                    <td></td>
+				</tr>
+				<{foreachelse}>
+				<tr><td colspan="7">您还未提交任何站点！</td></tr>
+				<{/foreach}>
+			</table>
+		</div>
+        <div id="showpage" class="clearfix"><{$showpage}></div>
+        <{/if}>
+
+        <{if $action == 'add' || $action == 'edit'}>
+        <{if $cfg.is_enabled_submit == 'yes'}>
+
+        <div id="formbox">
+			<form name="myfrom" id="myfrom" method="post" action="<{url('website')}>">
+		
+        	<ul>
+        		<li><strong>选择分类：</strong>
+        		<{if !empty($cate_pids)}>
+            		<{foreach from=$cate_pids item=item key=key}>
+            		<select name="level_<{$key}>" id="level_<{$key}>" class="sel"></select>
+            		<{/foreach}>
+                <{else}>
+            		<select name="level_0" id="level_0" class="sel"></select>
+            	<{/if}>	
+
+             
+        		<input type="hidden" name="cate_id" id="cate_id" value="<{if !empty($web.cate_id)}><{$web.cate_id}><{/if}>"></li>
+        		<li><strong>网站名称：</strong><input type="text" name="web_name" id="web_name" class="ipt" size="50" maxlength="50" 
+        		value="<{if !empty($web.web_name)}><{$web.web_name}><{/if}>" /></li>
+            	<li><strong>网站域名：</strong><input type="text" name="web_url" id="web_url" class="ipt" size="50" maxlength="50"  onblur="checkurl(this.value)" value="<{if !empty($web)}><{$web.web_url}><{/if}>" /><input type="button" class="btn" id="meta_btn" value="抓取Meta" onclick="getmeta()"> 必须带http:// 或者 https://</li>
+
+
+            	<li><strong>TAG标签：</strong><input type="text" name="web_tags" id="web_tags" class="ipt" size="50" maxlength="50" value="<{if !empty($web.web_tags)}><{$web.web_tags}><{/if}>" onBlur="javascript:this.value=this.value.replace(/，/ig,',');" /></li>
+            	<li><strong>网站简介：</strong><textarea name="web_intro" id="web_intro" cols="55" rows="6" class="ipt"><{if !empty($web.web_intro)}><{$web.web_intro}><{/if}></textarea></li>
+				<li><strong>服务器IP：</strong><input name="web_ip" type="text" class="ipt" id="web_ip" size="30" maxlength="30" value="<{if !empty($web.web_ip)}><{$web.web_ip}><{/if}>" readonly /><input type="button" class="btn" id="data_btn" value="获取数据" onclick="getdata()">&nbsp;</li>
+                <li><strong>百度权重：</strong><input name="web_brank" type="text" class="ipt" id="web_brank" size="10" maxlength="2" value="<{if !empty($web.web_brank)}><{$web.web_brank}><{else}>0<{/if}>" readonly /></li>
+                <li><strong>360权重：</strong><input name="web_r360" type="text" class="ipt" id="web_r360" size="10" maxlength="2" 
+                value="<{if !empty($web.web_r360)}><{$web.web_r360}><{else}>0<{/if}>" readonly /></li>
+                <li><strong>搜狗权重：</strong><input name="web_srank" type="text" class="ipt" id="web_srank" size="10" maxlength="2" value="<{if !empty($web.web_srank)}><{$web.web_srank}>0<{else}>0<{/if}>" readonly /></li>
+				<li><strong>Alexa：</strong><input name="web_arank" type="text" class="ipt" id="web_arank" size="10" maxlength="10" value="<{if !empty($web.web_arank)}><{$web.web_arank}>0<{else}>0<{/if}>" readonly /></li>
+            	<li><strong>&nbsp;</strong><input type="hidden" name="web_id" id="web_id" value="<{$web.web_id}>"><input type="hidden" name="do" id="do" value="<{$do}>"><input type="submit" class="btn" value="提 交"> <input type="reset" class="btn" value="重 填"></li>
+        	</ul>
+        	</form>
+        <script type="text/javascript" src="/public/js/linkage.select.js"></script>
+        <script type="text/javascript">
+        var url = '<{url("api/collect",["type"=>"category"])}>';
+
+		var options = {ajax :url, field_name : '[name=cate_id]', auto : true}
+		var sel = new LinkageSelect(options);
+		<{if $action == 'add'}>
+		sel.bind('#level_0');
+		<{else}>
+		<{foreach from=$cate_pids item=item key=key}>
+		sel.bind('#level_<{$key}>', <{$item}>);
+		<{/foreach}>
+		<{/if}>
+        </script>
+    	</div>
+        <{else}>
+        <div style="background: #ffc; border: dashed 1px #f30; color: #f00; padding: 20px; text-align: center;"><{$cfg.submit_close_reason}></div>
+        <{/if}>
+		<{/if}>
+                </div>
+            </div>
+<script>
+
+//验证url
+function checkurl(url){
+    if (url == '') {
+        $("#msg").html('请输入网站域名！');
+        return false;
+    }
+      $.get('<{url("api/collect",["type"=>"check"])}>?url='+url,function(json){
+      if(json.code != 0){
+         layer.msg(json.msg);  
+      }
+
+    });
+
+
+
+}
+
+//获取META
+function getmeta() {
+
+    var url = $("#web_url").val();
+    if (url == '') {
+        layer.msg('请输入网站域名！');
+        $("#web_url").focus();
+        return false;
+    }
+     $("#meta_btn").val('正在获取，请稍候...');
+    $.get('<{url("api/collect",["type"=>"get_meta"])}>?url='+url,function(json){
+      if(json.code == 0){
+        $("#web_name").val(json.data.title);
+        $("#web_tags").val(json.data.keywords);
+        $("#web_intro").val(json.data.description);
+
+      }else{
+         layer.msg(json.msg);
+      }
+    
+     $("#meta_btn").val('重新获取');
+    });
+    
+}
+
+//获取IP, PageRank, Sogou PageRank, Alexa
+function getdata() {
+    var url = $("#web_url").val();
+    if (url == '') {
+        alert('请输入网站域名！');
+        $("#web_url").focus();
+        return false;
+    }
+$("#data_btn").val('正在获取，请稍候...');
+  $.get('<{url("api/collect",["type"=>"data"])}>?url='+url,function(json){
+      if(json.code == 0){ 
+         $("#web_ip").val(json.data.ip);
+$("#web_r360").val(json.data.r360);
+$("#web_brank").val(json.data.brank);
+$("#web_srank").val(json.data.srank);
+$("#web_arank").val(json.data.arank);
+
+      }else{
+         layer.msg(json.msg);
+      }
+    
+     $("#data_btn").val('重新获取');
+    });
+    
+}
+
+
+</script>
+<{include file="footer.html"}>

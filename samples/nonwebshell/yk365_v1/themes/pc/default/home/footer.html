@@ -1,0 +1,45 @@
+<div class="blank10"></div>
+<div class="wrapper">
+<!-- 1200*90 广告开始 -->
+<{get_adcode(6)}>
+
+<!-- 1200*90 广告结束 -->
+<div class="blank10"></div>
+</div>
+<div class="footer">
+
+  <div class="footer-main clearfix">
+    <div class="footer-left">
+      <div class="footer-wx">
+        <img src="<{$cfg.qcode_img}>">
+        <p><{$cfg.qcode_name}></p>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="linkbox clearfix">
+        <div class="linkbox-left">友情链接：</div>
+          <ul class="linkbox-list">
+            <{foreach from=get_links() item=link}>
+            <li><a href="<{$link.link_url}>" target="_blank"><{$link.link_name}></a></li>
+            <{/foreach}>
+          </ul>
+        </div>
+        <div class="footer-nav">
+
+        <{foreach from= get_pages() item=item}><a href="<{$item.page_link}>"><{$item.page_name}></a> | <{/foreach}>
+        <a href="<{url('update')}>">最新收录</a> | <a href="<{url('archives')}>">数据归档</a> | <a href="<{url('top')}>">TOP排行榜</a> |<a href="<{url('feedback')}>">意见反馈 |<a href="<{url('sitemap')}>">站点地图</a> | <a href="<{url('home/index')}>?visit=mobile">移动版</a> <{$cfg.site_code}>
+
+<div class="kefu_qq">
+        <{foreach from=get_kefu() item=vo}>
+        <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=<{$vo}>&site=qq&menu=yes"><img border="0" src="/public/images/qq/button_1.gif" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> </li>
+      <{/foreach}>
+</div>
+        </div>
+
+
+        <div class="footer-copy"> Copyright © 2018  All Rights Reserved Powered by <a href="http://www.youke365.site/" target="_blank">Youke365</a> v<{$smarty.const.SYS_VERSION}></div>
+      </div>
+    </div>
+  </div>
+</div>
+

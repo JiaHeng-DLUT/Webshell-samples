@@ -1,0 +1,63 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>评价详情</th>
+				<th colspan="2">商品信息</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<!--{$comment_logo = $v['comment_logo'] ? explode(',', $v['comment_logo']) : array()}-->
+			<tr>
+				<td valign="top" style="text-align:left">
+					{$v['comment_text']}
+					<!--{if(count($comment_logo)):}-->
+					<div class="pj_img">
+						<!--{foreach($comment_logo as $vv):}-->
+						<a href="javascript:;"><img src="{pe_thumb($vv, '_400', '_400')}" /></a>
+						<!--{endforeach;}-->
+					</div>
+					<div class="pj_bigimg"></div>
+					<!--{endif;}-->
+					<div class="mat10 cbbb font12">{pe_date($v['comment_atime'], 'Y年m月d日 H:i')}<span class="mal20">{pe_comment($v['comment_star'], 12)}</span></div>
+					<!--{if($v['comment_reply']):}-->
+					<div class="mat10 corg" style="padding:10px;background:#f8f8f8 ;border-radius:5px">
+						<div>商家回复：{$v['comment_reply_text']}</div>
+						<div class="mat5 font12">{pe_date($v['comment_reply_time'], 'Y年m月d日 H:i')}</div>
+					</div>
+					<!--{endif;}-->
+				</td>
+				<td valign="top" width="50"><a href="{pe_url('product-'.$v['product_id'])}" class="dingdan_img" target="_blank"><img src="{pe_thumb($v['product_logo'], 100, 100)}" /></a></td>
+				<td valign="top" width="250" class="aleft" style="padding-left:0">
+					<a href="{pe_url('product-'.$v['product_id'])}" target="_blank" class="c888">{$v['product_name']}</a>
+				</td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//晒图预览
+	$(".pj_img img").live("click", function(){
+		var pj_bigimg = $(this).parents(".pj_img").next(".pj_bigimg");
+		$(this).parents(".pj_img").find("img").removeClass("sel");
+		if (pj_bigimg.find("img").attr("src") == $(this).attr("src")) {
+			pj_bigimg.empty();
+		}
+		else {
+			$(this).addClass("sel");
+			pj_bigimg.html('<img src="'+$(this).attr("src")+'" />');
+		}
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

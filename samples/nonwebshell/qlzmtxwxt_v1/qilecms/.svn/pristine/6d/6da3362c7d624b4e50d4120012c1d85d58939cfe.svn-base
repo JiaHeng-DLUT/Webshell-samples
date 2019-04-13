@@ -1,0 +1,43 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+class Article extends Model
+{
+   protected $autoCheckFields = true;
+   // protected $auto = ['create_time', 'ip'];
+   // protected $insert = ['cid','title','source','introduction','hits','content','status'];
+   // protected $add_field =['cid','title','source','introduction','hits','content','status'];
+   public  function getArticleInfo($aid){
+      $where['aid'] = $aid;
+      $info = $this->where($where)->find();
+      return $info;
+   }
+
+   public function add($post){
+      
+     $result = $this->create($post);
+     
+
+     return $result;
+
+   }
+   public function edit($data){
+     $where['aid'] =$data['aid'];
+     $result = $this->where($where)->update($data);
+     return $result;
+
+   }
+   public function del($aid){
+   	 if(is_array($aid)){
+           $aidData = implode(',',$aid);
+      }
+     $aidData = $aid;
+     $res = $this->where("aid",'in',$aidData)->delete();
+        if($res){
+           return true;
+        }else{
+           return false;
+        }
+   }
+
+}

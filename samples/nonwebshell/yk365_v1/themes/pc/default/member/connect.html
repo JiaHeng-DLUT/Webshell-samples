@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="<{$site_keywords}>">
+<meta name="description" content="<{$site_description}>">
+<script type="text/javascript">var sitepath = '<{$site_root}>'; var rewrite = '<{$cfg.is_enabled_rewrite}>';</script>
+<script type="text/javascript" src="<{$site_root}>public/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/js/common.js"></script>
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/reset.css" rel="stylesheet" type="text/css" />
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/login.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="header">
+    	<a href="<{$site_url}>" class="logo"></a>
+        <div id="toplink"><a href="<{$site_url}><{url('index')}>"> 
+        <img src="/public/images/logo.png"></a></div>
+    </div>
+	<div id="regform" class="clearfix">
+      	<h2>欢迎注册成为<{$site_name}>会员！</h2>
+        <div style="font: bold 14px normal; padding-left: 250px; padding-top: 30px;"><input type="radio" name="radio" id="radio_1" checked onClick="$('#form1').show(); $('#form2').hide();" /><label for="radio_1">我还未注册</label>　　<input type="radio" name="radio" id="radio_2" onClick="$('#form1').hide(); $('#form2').show();" /><label for="radio_2">已经注册过</label></div>
+        <div id="form1">
+        	<form name="form1" method="post" action="<{url('member/register')}>">
+        	<ul>
+               <li><label><font color="#FF0000">*</font> 用户名：</label><input type="text" name="nick_name" size="40" maxlength="20" class="ipt" value="<{$nick_name}>" /><p></p></li>
+           		<li><label><font color="#FF0000">*</font> 电子邮箱：</label><input type="text" name="email" size="40" maxlength="50" class="ipt" /><p>登录账户、找回密码时使用</p></li>
+            	<li><label><font color="#FF0000">*</font> 帐号密码：</label><input type="password" name="pass" size="40" maxlength="50" class="ipt" /><p>6~20个字符，区分大小写</p></li>
+            	<li><label><font color="#FF0000">*</font> 确认密码：</label><input type="password" name="pass1" size="40" maxlength="50" class="ipt" /><p>同上</p></li>
+
+            	<li><label><font color="#FF0000">*</font> QQ：</label><input type="text" name="qq" size="40" maxlength="20" class="ipt" /><p>联系</p></li>
+            	<li><label><font color="#FF0000">*</font> 验 证 码：</label>
+                <input type="text" name="code" size="10" maxlength="6" class="ipt" />
+
+                <span id="mycode"><img  title="点击刷新" src="<{url('member/code')}>" align="absbottom" onclick="this.src='<{url("member/code",['type'=>'code'])}>?'+Math.random();">
+                </span>
+                </li>
+            	<li><label>&nbsp;</label>
+                <input type="hidden" name="open_id" id="open_id" value="<{$open_id}>"><input type="hidden" name="action" value="register"><input type="submit" value="绑定帐号" class="btn" /></li>
+        	</ul>
+        </form>
+        </div>
+        
+        <div id="form2" style="display: none;">
+        	<form name="form2" id="form2" method="post" action="<{url('member/login')}>">
+        	<ul>
+        		<li><label>用户名：</label><input type="text" name="nick_name" size="30" maxlength="50" class="ipt" /></li>
+            	<li><label>登录密码：</label><input type="password" name="pass" size="30" maxlength="50" class="ipt" /></li>
+            	<li><label>&nbsp;</label><input type="hidden" name="open_id" id="open_id" value="<{$open_id}>"><input type="hidden" name="action" value="login" /><input type="submit" value="绑定帐号" class="btn" /></li>
+        	</ul>
+        	</form>
+        </div>
+    </div>
+    <div id="footer" class="clearfix">
+    	Powered by <a href="http://www.youke365.site/" target="_blank">Youke365</a> v<{$smarty.const.SYS_VERSION}>
+    </div>
+</div>
+</body>
+</html>

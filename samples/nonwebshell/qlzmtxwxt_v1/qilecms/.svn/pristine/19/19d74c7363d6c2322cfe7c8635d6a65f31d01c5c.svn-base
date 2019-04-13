@@ -1,0 +1,365 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__ADMIN__/js/jquery.min.js"></script>
+<div class="aright">
+<style type="text/css">
+.tpt_sels a{padding-right:15px;position:relative}
+.tpt_sels a{padding:0 20px 0 8px;color:#3B6268;background:#FFFFBA;border:1px #F8E06E solid;margin-right:5px;margin-bottom:5px;font-size:14px;height:26px;line-height:26px;display:block;float:left}
+.tpt_sels a em{width: 12px;height: 12px;font-style: normal;display: block;position: absolute;top: 7px;right: 4px;z-index: 2;background: url(__ADMIN__/img/sx.png) no-repeat 0 0;}
+</style>
+<div class="layui-tab" lay-filter="demo" style="margin: 20px 30px 20px 20px;">
+  <ul class="layui-tab-title">
+    <li class="layui-this">Âü∫Êú¨ËÆæÁΩÆ</li>
+    <li>Â∏∏Áî®ËÆæÁΩÆ</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+
+<form class="layui-form bform" method="post" action="{:U('conf/doedit')}" enctype="multipart/form-data">
+  <input type="hidden" name="id" value="{$c.id}">
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">ÁΩëÁ´ôÂüüÂêç</label>
+    <div class="layui-input-block">
+      <input type="text" name="yuming" value="{$c.yuming}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">ÁΩëÁ´ô‰ΩúËÄÖ</label>
+    <div class="layui-input-block">
+      <input type="text" name="author" value="{$c.author}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">‰ΩúËÄÖQQ</label>
+    <div class="layui-input-block">
+      <input type="text" name="qqs" value="{$c.qqs}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Â§áÊ°àÂè∑</label>
+    <div class="layui-input-block">
+      <input type="text" name="beian" value="{$c.beian}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">ÂºÄÂêØÊäïÁ®ø</label>
+    <div class="layui-input-block">
+      <input type="checkbox" title="ÂºÄÂêØ" name="open" value="1" <if condition="$c['open'] eq 1">checked</if>>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">LOGO</label>
+     <div class="layui-input-block">
+     <div class="file-box">
+     <i class="layui-icon">&#xe61f;</i>
+     <input class="file-btn" type="button" value="ÈÄâÊã©ÂõæÁâá"> 
+     <input class="file-txt" type="text" autocomplete="off" name="textfield" id="textfield"><if condition="$c[logo] neq ''"><img src="__ROOT__/Uploads{$c.logo}" height="30"><else/></if>
+     <input class="file-file" type="file" name="logo" id="logo" size="28" onchange="document.getElementById('textfield').value=this.value" /> 
+     </div>
+     </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">ÁΩëÁ´ôÊ†áÈ¢ò</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" value="{$c.title}" placeholder="ÂøÖÂ°´ÂÜÖÂÆπ" required lay-verify="required" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">ÂÖ≥ÈîÆÂ≠ó</label>
+    <div class="layui-input-block">
+      <textarea name="keywords" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" class="layui-textarea">{$c.keywords}</textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">ÁΩëÁ´ôÊèèËø∞</label>
+    <div class="layui-input-block">
+      <textarea name="description" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" class="layui-textarea">{$c.description}</textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+	  <button class="layui-btn" lay-submit lay-filter="formDemo">Á´ãÂç≥Êèê‰∫§</button>
+      <button class="layui-btn layui-btn-primary" onclick="history.go(-1)">ËøîÂõû</button>
+    </div>
+  </div>
+
+</form>
+	
+	</div>
+    <div class="layui-tab-item">
+
+
+	<form class="layui-form bform" method="post" action="{:U('conf/webconf')}" enctype="multipart/form-data">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Ê®°ÊùøÂêçÁß∞</label>
+    <div class="layui-input-block">
+      <input type="text" name="WEB_TPT" value="{:C('WEB_TPT')}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">‰º™ÈùôÊÄÅ</label>
+    <div class="layui-input-block">
+      <input type="radio" name="WEB_URL" value="1" title="ÂºÄÂêØ" <if condition="C('WEB_URL') eq 1">checked</if>>
+      <input type="radio" name="WEB_URL" value="0" title="ÂÖ≥Èó≠" <if condition="C('WEB_URL') eq 0">checked</if>>
+    </div>
+  </div>
+
+  <blockquote style="padding: 10px;border-left: 5px solid #FF5722;margin: 10px 0 20px 40px;" class="layui-elem-quote">ËØ∑Ëá™Ë°åÁî≥ËØ∑ÁïôË®ÄÁ≥ªÁªüIDÔºö<a href="http://changyan.kuaizhan.com/" style="color:#FF5722;" target="_blank">Áî≥ËØ∑ÁΩëÂùÄ</a></blockquote>
+
+   <div class="layui-form-item">
+    <label class="layui-form-label">ÁïÖË®ÄID</label>
+    <div class="layui-input-block">
+      <input type="text" name="WEB_CID" value="{:C('WEB_CID')}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">ÁïÖË®ÄKEY</label>
+    <div class="layui-input-block">
+      <input type="text" name="WEB_CKEY" value="{:C('WEB_CKEY')}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+
+  <blockquote style="padding: 10px;border-left: 5px solid #FF5722;margin: 10px 0 20px 40px;" class="layui-elem-quote">Ê≠§È™åËØÅÁ†ÅIDÂíåKEY‰ªÖ‰æõÊµãËØïÔºåËØ∑Ëá™Ë°åÁî≥ËØ∑Ôºö<a href="http://www.geetest.com/" style="color:#FF5722;" target="_blank">Áî≥ËØ∑ÁΩëÂùÄ</a></blockquote>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">È™åËØÅÁ†ÅID</label>
+    <div class="layui-input-block">
+      <input type="text" name="GEETEST_ID" value="{:C('GEETEST_ID')}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">È™åËØÅÁ†ÅKEY</label>
+    <div class="layui-input-block">
+      <input type="text" name="GEETEST_KEY" value="{:C('GEETEST_KEY')}" placeholder="ËØ∑ËæìÂÖ•ÂÜÖÂÆπ" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <blockquote style="padding: 10px;border-left: 5px solid #FF5722;margin: 10px 0 20px 40px;" class="layui-elem-quote">ËøôÈáåÂèØ‰ª•Â°´ÂÜô‰Ω†ÊØîËæÉÂ∏∏Áî®ÁöÑÁÉ≠Èó®Ê†áÁ≠æÊàñÂÖ≥ÈîÆÂ≠óÔºö</blockquote>
+ 
+  <div class="tpt_item">
+	<input type="hidden" name="WEB_TAG" value="{:C('WEB_TAG')}">
+	<div id="tpt_sel" class="tpt_sels" style="margin-top: 20px;">
+		<span style="margin-bottom: 5px;float: left;margin-left: 110px;">
+		<if condition="C('WEB_TAG') neq ''"><?php $arr=explode(',', C('WEB_TAG'));foreach ($arr as $k=>$v){echo "<a href='javascript:;'>$v<em></em></a>";}?></if>
+		</span>
+		<div class="layui-form-item" style="margin-bottom: 20px;">
+			<label class="layui-form-label">ÊñáÁ´†Ê†áÁ≠æ</label>
+			<div class="layui-input-block">
+				<input id="tpt_input" type="text" value="" autocomplete="off" class="layui-input" style="width: 400px;float: left;margin-right: 20px;">
+				<button class="layui-btn" id="tpt_btn" type="button" style="background: #FF5722;">Ê∑ªÂä†Ê†áÁ≠æ</button>
+			</div>
+		</div>
+	</div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+	  <button class="layui-btn" lay-submit lay-filter="formDemo">Á´ãÂç≥Êèê‰∫§</button>
+      <button class="layui-btn layui-btn-primary" onclick="history.go(-1)">ËøîÂõû</button>
+    </div>
+  </div>
+
+</form>
+	
+	
+	</div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function() {
+	$('#tpt_input').keydown(function(e) {
+		if (e.which === 13) {
+			$("#tpt_btn").click();
+			e.preventDefault();
+			return false;
+		}
+	});
+	$("#tpt_sel").on('click', 'a>em', function() {
+		var name = "WEB_TAG";
+		var tag = $(this).parent().text();
+		$(this).parent().remove();
+		var tags = new Array();
+		$("#tpt_sel").find('a').each(function() {
+			tags.push($(this).text());
+		});
+		$("input[name=" + name + "]").val(tags.join(","));
+		$("#tpt_pre a:contains('" + tag + "')").removeClass("selected");
+	});
+	$("#tpt_btn").click(function() {
+		var name = "WEB_TAG";
+		var tags = $.trim($("input[name=" + name + "]").val());
+		if (tags !== "") {
+			tags = tags.split(",");
+		} else {
+			tags = new Array();
+		}
+		var tag = $.trim($("#tpt_input").val());
+		if (tag !== '' && $.inArray(tag, tags) === -1) {
+			tags.push(tag);
+			$("#tpt_pre a:contains('" + tag + "')").addClass("selected");
+		}
+		$("#tpt_sel").children('span').empty();
+		$.each(tags, function(k, v) {
+			$("#tpt_sel").children('span').append('<a href="javascript:;">' + v + '<em></em></a>');
+		});
+		$("input[name=" + name + "]").val(tags.join(","));
+		$("#tpt_input").val('');
+	});
+	$("#tpt_pre").on('click', 'a:not(.selected)', function() {
+		var name = "WEB_TAG";
+		var tags = $.trim($("input[name=" + name + "]").val());
+		if (tags !== "") {
+			tags = tags.split(",");
+		} else {
+			tags = new Array();
+		}
+		var tag = $.trim($(this).text());
+		if (tag !== '' && $.inArray(tag, tags) === -1) {
+			tags.push(tag);
+		}
+		$("#tpt_sel").children('span').empty();
+		$.each(tags, function(k, v) {
+			$("#tpt_sel").children('span').append('<a href="javascript:;">' + v + '<em></em></a>');
+		});
+		$("input[name=" + name + "]").val(tags.join(","));
+		$(this).addClass('selected');
+	});
+});
+</script>
+<script>
+layui.use('form', function(){
+  var form = layui.form();
+});
+layui.use('element', function(){
+  var element = layui.element();
+  element.on('tab(demo)', function(data){
+    console.log(data);
+  });
+});
+</script>
+</div>
+</div>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              INDX( 	 
+ÛS          (   ò	  Ë        ”m ”              ù”     h X     x|     f
+`D”;Gg∞⁄0“…á YHv”f
+`D”                      I N D E X ~ 1 . H T M ë”    C p ^     x|     f
+`D”’¢…8sa“}zYHv”f
+`D”       ˇ              L i n k s _ a d d . h t m l   í”     p `     x|     Îm`D”¬óMj“û»YHv”Îm`D”       ∑              L i n k s _ e d i t . h t m l ì”     x b     x|     Îm`D”xa/Mj“¿YHv”Îm`D”       3              L i n k s _ i n d e x . h t m l      ë”    C p Z     x|     f
+`D”’¢…8sa“}zYHv”f
+`D”       ˇ              L I N K S _ ~ 1 . H T M       í”     p Z     x|     Îm`D”¬óMj“û»YHv”Îm`D”       ∑              L I N K S _ ~ 2 . H T M       ì”     p Z     x|     Îm`D”xa/Mj“¿YHv”Îm`D”       3              L I N K S _ ~ 3 . H T M       î”     x b     x|     Îm`D”ß[!í˚“·dYHv”Îm`D”                     L o g i n _ i n d e x . h t m l       î”     p Z     x|     Îm`D”ß[!í˚“·dYHv”Îm`D                      L O G I N _ ~ 1 . H T M       ï”     x d     x|     Îm`D”¯<sa“≥YHv”Îm`D”       l              M e m b e r _ i n d e x . h t m l     ï”     p Z     x|     Îm`D”¯<sa“≥YHv”Îm`D”       l              M E M B E R ~ 1 . H T M       ñ”     p `     x|     Îm`D”Ω⁄sza“#YHv”Îm`D”       E	              N a v t o p _ a d d . h t m l ó”     x b     x|     Îm`D”·°åÅza“DOYHv”Îm`D”       Ï
+              N a v t o p _ e d i t . h t  l       ô”    P x d     x|     Îm`D”HAza“eùYHv”Îm`D”       ø              N a v t o p _ i n d e x . h t m l    ñ”     p Z     x|     Îm`D”Ω⁄sza“#YHv”Îm`D”       E	              N A V T O P ~ 1 . H T M       ó”     p Z     x|     Îm`D”·°åÅza“DOYHv”Îm`D”       Ï
+              N A V T O P ~ 2 . H T M       ô”    P p Z     x|     Îm`D”HAza“eùYHv”Îm`D”       ø              N A V T O P ~ 3 . H T M       ö”    ' x f     x|     Îm`D”ñ^∆D”áÎYHv Îm`D”       ;              P u b l i c _ h e a d e r . h t m l   ö”    ' p Z     x|     Îm`D”ñ^∆D”áÎYHv”Îm`D”       ;              P U B L I C ~ 1 . H T M       ú”    $ x f     x|     G–`D”≤≥eCsa“®9 YHv”G–`D”       y              R u n t i m e _ i n d e x . h t m l   ú”    $ p Z     x|     G–`D”≤≥eCsa“®9 YHv”G–`D”       y              R U N T I M ~ 1 . H T M                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Tpt-BlogÂçöÂÆ¢ÁÆ°ÁêÜÁ≥ªÁªü</title>
+  <link rel="stylesheet" href="__ADMIN__/css/admin.css">
+  <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css">
+  <script src="__ADMIN__/layui/layui.js"></script>
+</head>
+<body>
+<div class="header">
+<h2 class="z cl"><a href="{:U('index/index')}"><img src="__ADMIN__/img/logo.png"></a></h2>
+<div class="y cl">
+<a target="_blank" href="__ROOT__/index.php">ÁΩëÁ´ôÈ¶ñÈ°µ</a>
+<a href="{:U('Login/logout')}">ÈÄÄÂá∫</a>
+</div>
+</div>
+<div class="admin">
+<div class="aleft">
+<h3><i class="layui-icon" style="position: relative;right: 3px;top: 1px;font-size: 18px;color: #009688;">&#xe643;</i>Êìç‰ΩúËèúÂçï</h3>
+<ul class="cl">
+<li><i class="layui-icon">&#xe601;</i><a href="{:U('navtop/index')}">ÂØºËà™ÁÆ°ÁêÜ</a></li>
+<li><i class="layui-icon">&#xe61f;</i><a href="{:U('category/index')}">Ê†èÁõÆÁÆ°ÁêÜ</a></li>
+<li><i class="layui-icon">&#xe63c;</i><a href="{:U('article/index')}">ÊñáÁ´†ÁÆ°ÁêÜ</a></li>
+<li><i class="layui-icon">&#xe60c;</i><a href="{:U('banner/index')}">ÂπªÁÅØÁÆ°ÁêÜ</a></li>
+<li><i class="layui-icon">&#xe64e;</i><a href="{:U('links/index')}">ÂèãÊÉÖËøûÊé•</a></li>
+</ul>
+<h3><i class="layui-icon" style="position: relative;right: 3px;top: 1px;font-size: 18px;color: #009688;">&#xe614;</i>Á≥ªÁªüÁÆ°ÁêÜ</h3>
+<ul class="cl">
+<li><i class="layui-icon">&#xe62c;</i><a href="{:U('conf/index')}">ÁΩëÁ´ôÈÖçÁΩÆ</a></li>
+<li><i class="layui-icon">&#xe631;</i><a href="{:U('member/index')}">ÂØÜÁ†Å‰øÆÊîπ</a></li>
+<li><i class="layui-icon">&#xe640;</i><a href="{:U('runtime/index')}">Ê∏ÖÁêÜÁºìÂ≠ò</a></li>
+<li><i class="layui-icon">&#x1006;</i><a href="{:U('Login/logout')}">Á´ãÂç≥ÈÄÄÂá∫</a></li>
+</ul>
+<h3><i class="layui-icon" style="position: relative;right: 3px;top: 1px;font-size: 18px;color: #009688;">&#xe612;</i>Â∏ÆÂä©‰∏≠ÂøÉ</h3>
+<ul class="cl">
+<li><i class="layui-icon">&#xe63a;</i><a target="_blank" href="http://www.tpt360.com/">ÂÆòÊñπÁΩëÁ´ô</a></li>
+</ul>
+</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <include file="Public:header"/>
+<div class="aright">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin: 20px 30px 20px 20px;">
+  <legend>Ê∑ªÂä†Ê†èÁõÆ</legend>
+</fieldset>
+
+<form class="layui-form bform" method="post" action="{:U('Runtime/doClear')}" enctype="multipart/form-data">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Ê®°ÊùøÁºìÂ≠ò</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="data[]" value="Cache" title="Ê∏ÖÁêÜ" checked="">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Êï∞ÊçÆÁºìÂ≠ò</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="data[]" value="Temp" title="Ê∏ÖÁêÜ">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Êï∞ÊçÆÁõÆÂΩï</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="data[]" value="Data" title="Ê∏ÖÁêÜ">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">Êó•ÂøóÊñá‰ª∂</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="data[]" value="Logs" title="Ê∏ÖÁêÜ">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+	  <button class="layui-btn" lay-submit lay-filter="formDemo">Á´ãÂç≥Êèê‰∫§</button>
+      <button class="layui-btn layui-btn-primary" onclick="history.go(-1)">ËøîÂõû</button>
+    </div>
+  </div>
+
+</form>
+<script>
+layui.use('form', function(){
+  var form = layui.form();
+});
+</script>
+</div>
+</div>
+</body>
+</html>
+
+
+                           
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           INDX( 	 ™ˆS           (   X  Ë       ”                    Q|     ` N     P|     ∫`D”qìYHv”qìYHv”qìYHv”                       C o m m o n   S|     ` J     P|     &Ç`D”8hYHv”8hYHv”8hYHv”                       C o n f       U|     h V     P|     &Ç`D”÷8YHv”÷8YHv”÷8YHv”                       
+C o n t r o l l e r   U|     h R     P|     &Ç`D”÷8YHv”÷8YHv”÷8YHv”                       C O N T R O ~ 1       ü”     h V     P|     ∫`D”- g∞⁄0“Í’ YHv ∫`D”                      
+i n d e x . h t m l  ü”     h X     P|     ∫`D”- g∞⁄0“Í’ YHv”∫`D”                      I N D E X ~ 1 . H T M t|     ` L     P|     ‘F
+`D”9#YHv”9#YHv”9#YHv”                       M o d e l     x|     ` J     P|     0©`D”…á YHv”…á YHv”…á YHv”                       V i e w                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

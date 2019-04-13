@@ -1,0 +1,176 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<style>
+.waybill_area { margin: 10px auto; width:{$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px; position: relative; z-index: 1;}
+.waybill_back { position: relative; width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px;}
+.waybill_back img { width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px;}
+.waybill_design { position: absolute; left: 0; top: 0; width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px;}
+</style>
+
+<div class="alert alert-block mt10">
+    <ul class="mt5">
+        <li>{$Think.lang.check_information1}</li>
+        <li>{$Think.lang.check_information2}</li>
+    </ul>
+</div>
+<div class="dssc-form-default">
+    <dl>
+        <dt>{$Think.lang.select_print_item}：</dt>
+        <dd>
+            <form id="design_form" action="{:url('Sellerwaybill/waybill_design_save')}" method="post">
+                <input type="hidden" name="waybill_id" value="{$waybill_info.waybill_id}">
+                <ul id="waybill_item_list" class="dssc-form-checkbox-list">
+                    {if $waybill_item_list}
+                    {foreach name="waybill_item_list" item="value"  k="key"}
+                    <li>
+                        <input id="check_{$key}" class="checkbox" type="checkbox" name="waybill_data[{$key}][check]" data-waybill-name="{$key}" data-waybill-text="{$value.item_text}" {$value.check}>
+                        <label for="check_{$key}" class="label">{$value.item_text}</label>
+                        <i dstype="btn_item_edit" data-item-name="{$key}" title="{$Think.lang.fine_tuning}" class="fa fa-pencil-square"></i>
+                        <input id="left_{$key}" type="hidden" name="waybill_data[{$key}][left]" value="{$value.left}">
+                        <input id="top_{$key}" type="hidden" name="waybill_data[{$key}][top]" value="{$value.top}">
+                        <input id="width_{$key}" type="hidden" name="waybill_data[{$key}][width]" value="{$value.width}">
+                        <input id="height_{$key}" type="hidden" name="waybill_data[{$key}][height]" value="{$value.height}">
+                    </li>
+                    {/foreach}
+                    {/if}
+                </ul>
+            </form>
+        </dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.print_item_offset_correction}：</dt></dl>
+    <div>
+        <div class="waybill_area">
+            <div class="waybill_back"> <img src="{$waybill_info.waybill_image_url}" alt=""> </div>
+            <div class="waybill_design">
+                {if $waybill_info_data}
+                {foreach name="waybill_info_data" item="data" k="key"}
+                {notempty name="$data.check"}
+                <div id="div_{$key}" data-item-name="{$key}" class="waybill_item" style="position: absolute;width:{$data.width}px;height:{$data.height}px;left:{$data.left}px;top:{$data.top}px;">{$data.item_text}</div>
+                {/notempty}
+                {/foreach}
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="bottom"><label class="submit-border"><input id="submit"  type="submit" class="submit" value="{$Think.lang.ds_submit}"></label></div>
+</div>
+<div id="dialog_item_edit" class="eject_con" style="display:none;">
+    <input id="dialog_item_name" type="hidden">
+    <dl>
+        <dt>{$Think.lang.left_partial_shift}：</dt>
+        <dd>
+            <input id="dialog_left" class="w60 text" type="text" value=""><em class="add-on">mm</em>
+        </dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.top_partial_shift}：</dt>
+        <dd>
+            <input id="dialog_top" class="w60 text" type="text" value=""><em class="add-on">mm</em>
+        </dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.width}：</dt>
+        <dd>
+            <input id="dialog_width" class="w60 text" type="text" value=""><em class="add-on">mm</em>
+        </dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.height}：</dt>
+        <dd>
+            <input id="dialog_height" class="w60 text" type="text" value=""><em class="add-on">mm</em>
+        </dd>
+    </dl>
+    <div class="bottom pt10 pb10"><a id="btn_dialog_submit" class="dssc-btn dssc-btn-green" href="javascript:;">{$Think.lang.ds_common_button_confirm}</a> <a id="btn_dialog_cancel" class="dssc-btn" href="javascript:;">{$Think.lang.ds_cancel}</a></div> 
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#design_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('design_form', 'url', "{:url('Sellerwaybill/waybill_list')}");
+            },
+        });
+
+        var draggable_event = {
+            stop: function(event, ui) {
+                var item_name = ui.helper.attr('data-item-name');
+                var position = ui.helper.position();
+                $('#left_' + item_name).val(position.left);
+                $('#top_' + item_name).val(position.top);
+            }
+        };
+
+        var resizeable_event = {
+            stop: function(event, ui) {
+                var item_name = ui.helper.attr('data-item-name');
+                $('#width_' + item_name).val(ui.size.width);
+                $('#height_' + item_name).val(ui.size.height);
+            }
+        };
+
+        $('.waybill_item').draggable(draggable_event);
+        $('.waybill_item').resizable(resizeable_event);
+
+        $('#waybill_item_list input:checkbox').on('click', function() {
+            var item_name = $(this).attr('data-waybill-name');
+            var div_name = 'div_' + item_name;
+            if($(this).prop('checked')) {
+                var item_text = $(this).attr('data-waybill-text');
+                var waybill_item = '<div id="' + div_name + '" data-item-name="' + item_name + '" class="waybill_item">' + item_text + '</div>';
+                $('.waybill_design').append(waybill_item);
+                $('#' + div_name).draggable(draggable_event);
+                $('#' + div_name).resizable(resizeable_event);
+                $('#left_' + item_name).val('0');
+                $('#top_' + item_name).val('0');
+                $('#width_' + item_name).val('100');
+                $('#height_' + item_name).val('20');
+            } else {
+                $('#' + div_name).remove();
+            }
+        });
+
+        $('.waybill_design').on('click', '.waybill_item', function() {
+            console.log($(this).position());
+        });
+
+        //微调弹出窗口
+        $('[dstype="btn_item_edit"]').on('click', function() {
+            var item_name = $(this).attr('data-item-name');
+            $('#dialog_item_name').val(item_name);
+            $('#dialog_left').val($('#left_' + item_name).val());
+            $('#dialog_top').val($('#top_' + item_name).val());
+            $('#dialog_width').val($('#width_' + item_name).val());
+            $('#dialog_height').val($('#height_' + item_name).val());
+            $('#dialog_item_edit').ds_show_dialog({title:'{$Think.lang.fine_tuning}'});
+        });
+
+        //微调保存
+        $('#btn_dialog_submit').on('click', function() {
+            var item_name = $('#dialog_item_name').val();
+            $('#div_' + item_name).css('left', $('#dialog_left').val() + 'px');
+            $('#div_' + item_name).css('top', $('#dialog_top').val() + 'px');
+            $('#div_' + item_name).css('width', $('#dialog_width').val() + 'px');
+            $('#div_' + item_name).css('height', $('#dialog_height').val() + 'px');
+            $('#left_' + item_name).val($('#dialog_left').val());
+            $('#top_' + item_name).val($('#dialog_top').val());
+            $('#width_' + item_name).val($('#dialog_width').val());
+            $('#height_' + item_name).val($('#dialog_height').val());
+            $('#dialog_item_edit').hide();
+        });
+
+        //微调取消
+        $('#btn_dialog_cancel').on('click', function() {
+            $('#dialog_item_edit').hide();
+        });
+
+        $('#submit').on('click', function() {
+            $('#design_form').submit();
+
+        });
+    });
+</script>
+
+
+{/block}
+

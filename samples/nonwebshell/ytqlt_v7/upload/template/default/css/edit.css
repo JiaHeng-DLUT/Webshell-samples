@@ -1,0 +1,115 @@
+#forumlabel {
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+
+#forumlabel:before,
+#forumlabel:after {
+	content: " ";
+	display: table;
+}
+
+#forumlabel:after {
+	clear: both;
+}
+
+#forumlabel>a,
+#forumlabel>span {
+	float: left;
+	padding: 2px 5px;
+	border: solid 1px #0077B3;
+	border-radius: 2px;
+	font-size: 12px;
+	margin-left: 5px;
+	margin-top: 5px;
+	color: #0077B3;
+}
+
+#forumlabel>span {
+	border: solid 1px transparent;
+}
+
+#forumlabel>a.pk-active {
+	background-color: #0077B3;
+	color: white!important;
+	border: solid 1px #0077B3!important;
+}
+
+#forumlabel>a:hover {
+	opacity: 0.8;
+}
+
+._title_colorbar {
+	position: absolute;
+	right: 6px;
+	top: 9px;
+	width: 20px;
+	height: 20px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACHklEQVQ4T62UQVIaURCGvx4WuAvEKgOrcINwA2eD5U5ygvBuQE4gOUHICQZPENhZsnA8gdxAXGFSZSQ7XDid6veG0akQyYLeDAzN9/rv/vsJOw7ZMY/XgcnPNpGeoLRAWyBzhDmZTHAHs03FbAYmix4ipyi/QccQzSBbgrTB4MQIb5BowKeDs5fgMjBZtBD5jnIL2oe9pU929fC03yM5IauewaoNMgRSXKOPqUFbz0B7Idklqp9xzVEA3C0RlF6jnn+fIXxAmeAa3eIQO1ger1H9EoDJQw15vCnBAjD0yTVMqlWYInJYBvr/WiETXHOQAxcjkCVUB8jjKarfcM35X023g73UvdmLNgQ1rtmzh/i+iNyg1TqsaiAz0C6umW61VGKF0MI143WukNz1QdvrE7ZC1gnmBKQP1TgUQi9ITu7G+aSGHu4aNrnXI/nRBR3lhcxfFpUDdegl/g/Q2+NpDJVuYe5kYf22CtOS5Ifj4xZPT++pVG7r5+cbhuL7fY2Kw70zZeCrzfrrPoq3DCt7Mbg/OhrkmzDfv7iwz+Uw28Do2aeF3T6uh1gY+1enk6pIGmVZmkVRLKrx2+m0mJ53Q5homH7w7iXKld+UPArgfaczRKQWqaaZSIzqcn86LRJLpZpM0a+5wUs5pV02yaJ6qCJXXrL5TOTB3zBIDVWzRxfVW2Cwyatbrq9FDGIWCatnFwGV8b+urrApO46dA/8A02MB4r5bRSYAAAAASUVORK5CYII=");
+	cursor: pointer;
+}
+
+.forumList {
+	overflow-y: auto;
+	width: 100%;
+}
+
+.forumList>.li:nth-of-type(1) {
+	border-top: solid 1px #eee;
+}
+
+.forumList .li:hover {
+	background-color: #eee;
+}
+
+.forumList .li.pk-active {
+	background-color: #ddd;
+}
+
+.forumList .li {
+	position: relative;
+	border-radius: 4px;
+	border: solid 1px transparent;
+	font-size: 15px;
+	height: 46px;
+	line-height: 46px;
+	padding-left: 46px;
+	background-size: 24px 24px;
+	background-position: 11px 11px;
+	background-repeat: no-repeat;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAEwklEQVRYR82Yf0zUZRzHP8/3193JIafAcamIImj+CGSLlprJHAlaa0r8ijBGOcvWbM2tFZGhU2cYlxZ/xNJ0OF2QNW21sglpjZkj0hWIpfyI4ofKcXDfg7vvz6d9v/PyvDu44+SI73Z/3HfP83le3/fz/jzP53kQAMCLp4ZerW93VmgpxCj/J/txilhYPY95szp3hhlt+XJo+4V2bjdFQMRkg7iPZ+fxyEupukI0v/wm1lLo/2T5b2xBRi1osfkWnhI0AIABhCkFpAhzX0CKtLIMIAOAKKlfCBQBQKC7v/GqHxSQIAEIMgYEMszQkZyekbvnRpAdGopw/jPEm1iBih10SEaWA2AoAhgSIFCXjguIlxBIsgTzDbgldQ5xNjVW++uKhOkXdDqwRSJkU9TAGNMsCxGtNkfixU4u89x157rWfngUAwka0r9eAQFJGMApYlg0U2jMSdJ8uik+6kR0NGL9h1cB0VfNA+mHm5zv/tZHrtLShDqloz1+gQQZAYUEe2ESsXdrekylESF7ICCebRTlys/3l1Q1SmUUSQA5CtSYQAqMBnFseaYu98mlkd8FA+LZp7Khf3tFg3CIIUmfSo0KJMoItCRvqcjUFqxbHPn9RMC4Yuyt6zNXNcLrYQzhFdYnkJK+vCjBwfW6vKcfMtROJIzL+GlVPfXdLP0Y7WF0n0AOAeDxOOlsdf4DmRMN44pX2WDd/N5PXLXeQyUvoDvqjBzdqH94zcLw1lABXfl7ZHZera0ZgDC4Z50XkJLeyTFk3emiqPRQwdyZNnLtEUtHl1WKZdxSzgtIma60OHzgWH7MGyEGotOPDLR1WsWxgew8hj1rNflFjxhqQgl03WKZnn2c/8MhkSb3NclLoWEeYEuK/NrODNOHoQT6+iq7bNsZtkmvoe6pUn14CCB1llxbW2jKCyXQtlO9O79tI3fp6HtH8QKSAQGFuc6Tz1HLkk2m4VBA/dI1uODZz9hLBKWNJNSi5e7jcx0a5jFkJdh3HMxeYA4F0BMf36hpYw25GlKppPwopKYkIOC4EcuB9bAme3lcy0RCZR1ueeuyJXqf1mOqXGOMupcJMgEzafZk2QbxhQ2Jidz9QmGMiY2f/F562WraFUYrW73vUt7Pbk8AEoeuFKdIL5dkLLwULNQXjX/Fm3/m3u92GDbp1BPO6OcKv/WQDAQ4eH44OdL6kTltSVliIgpYraMNHcvPXBOKWiz6HJlgZjOEt2cC8pBnIwkjIEC2nX7eOOdBj0rx2u3b4RLGeKnRaFempeJc+8peO8Re7JKLexzTViOC0WoopaYO7LTlVyGXyXmeu3k8OyJpVUL4LRfw1tqut+vaoZgmMY6Zrh0iEFB/9ovJFEmrxT2JlPQIDMSvqd1Vcoogr5w1su9E4bx3lPcNN/qMJd9YPuh0RhXo1IIGgyhj1Rq0ug+MD8LvOuTeQMIERFC2H0szwp/q7WHjf+jkspoHpuU5cdgixsc6EqzxA1ZIEZ1GwiBgqcfGk3NJktbT6mEweBXGgg7YQ0qQ8fohGLUCAgomcDB91MuGKXcds/lz647zbfx+PYOoYL5qovr0D8vwyoqwHPX8uKeefeZYk6OUJvESgMm+1sO8IKGrBSm6/bvTw2v+BebZHNs1fMfLAAAAAElFTkSuQmCC");
+	border-bottom: solid 1px #eee;
+}
+
+.forumList .li>a {
+	display: block;
+	height: 100%;
+}
+
+.forumList .li>a>i.fa-check {
+	color: green;
+	margin-left: 15px;
+}
+
+.forumList .li>i {
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-align: center;
+	line-height: 44px;
+	width: 44px;
+	height: 44px;
+	cursor: pointer;
+}
+
+.forumList ._pl {
+	padding-left: 12px;
+}
+
+#showForumText {
+	float: left;
+	font-size: 12px;
+	color: #555;
+	height: 29px;
+	line-height: 29px;
+}

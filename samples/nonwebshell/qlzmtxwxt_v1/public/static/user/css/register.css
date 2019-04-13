@@ -1,0 +1,26 @@
+
+/*注册页面样*/
+.register{height:80px;}
+.register .logo{width:200px;display:inline;padding:20px;}
+.register .header-right{width: 300px;font-size: 27px;display: inline;padding: 6px;border-left: 1px solid #eee;line-height: 59px;color: #7b7b7b;}
+
+.register-section{width:100%;overflow:hidden;}
+.register-section .register-main{position:relative;height:550px;padding-top: 100px;}
+.register-section .register-box{width: 350px;color: #666;background: #fff;margin: 0 auto;padding: 50px 30px 10px;box-shadow: 0 0 5px 5px rgba(0,0,0,0.05);}
+.register-box .layui-form-item .layui-form-label{width:50px;}
+.register-box .layui-form-pane .layui-form-label{background-color:#fcfcfc;}
+.register-box .layui-form-item input{width:250px;border-left: 1px solid #fff;}
+.register-box button{background: #009966}
+.register-box  .layui-tab-title li{width: 147px;}
+.register-box .layui-tab-content{padding:20px;}
+.register-box .other-register{height:35px;}
+.register-box .other-register a{width:100px;height:35px;line-height:35px;padding:5px;}
+.other-register .register-qq i{font-size:15px;color:#01AAED;}
+.other-register .register-weixin  i{font-size:15px;color:#5FB878;}
+.other-register .register-weibo  i{font-size:15px;color:#FF5722;}
+.register-register-account{color:#01AAED;}
+.register-register-account:hover{color:#01AAED;text-decoration: underline;}
+.register-box .layui-tab-bar{display:none;}
+
+/*注册页面底部*/
+.footer .footer-main{height:50px;line-height:50px;text-align:center;}

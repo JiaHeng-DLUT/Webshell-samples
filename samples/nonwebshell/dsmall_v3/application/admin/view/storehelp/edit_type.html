@@ -1,0 +1,72 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <form id="post_form" method="post" name="form1">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation" for="helptype_name">类型名称:</label></td>
+                <td class="vatop rowform"><input id="helptype_name" name="helptype_name" value="{$type.helptype_name}" class="txt" type="text"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation" for="helptype_sort">{$Think.lang.ds_sort}:</label></td>
+                <td class="vatop rowform"><input type="text" value="{$type.helptype_sort}" name="helptype_sort" id="helptype_sort" class="txt"></td>
+                <td class="vatop tips">数字范围为0~255，数字越小越靠前</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required">{$Think.lang.ds_display}:</td>
+                <td class="onoff">
+                    <label for="show1" class="cb-enable {eq name='type.helptype_show' value='1'}selected{/eq}" title="{$Think.lang.ds_yes}"><span>{$Think.lang.ds_yes}</span></label>
+                    <label for="show0" class="cb-disable {neq name='type.helptype_show' value='1'}selected{/neq}" title="{$Think.lang.ds_no}"><span>{$Think.lang.ds_no}</span></label>
+                    <input id="show1" name="helptype_show" {eq name='type.helptype_show' value='1'}checked="checked"{/eq}  value="1" type="radio">
+                    <input id="show0" name="helptype_show" {neq name='type.helptype_show' value='1'}checked="checked"{/neq} value="0" type="radio"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15" ><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    //按钮先执行验证再提交表单
+    $(function(){
+        $("#submitBtn").click(function(){
+            if($("#post_form").valid()){
+                $("#post_form").submit();
+            }
+        });
+        $("#post_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules : {
+                helptype_name : {
+                    required : true
+                },
+                helptype_sort : {
+                    required : true,
+                    digits   : true
+                }
+            },
+            messages : {
+                helptype_name : {
+                    required : "类型名称不能为空"
+                },
+                helptype_sort  : {
+                    required : "排序仅可以为数字",
+                    digits   : "排序仅可以为数字"
+                }
+            }
+        });
+    });
+
+</script>

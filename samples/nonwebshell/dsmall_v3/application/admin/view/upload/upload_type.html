@@ -1,0 +1,81 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>上传设置</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data" name="form1">
+        <div class="ncap-form-default">
+            <dl>
+                <dt>{$Think.lang.upload_type}</dt>
+                <dd id="radio">
+                    <input type="radio" id="radio1" name="upload_type" value="local" {if $list_config.upload_type =='local'}checked="checked"{/if}><label for="radio1">{$Think.lang.upload_type_local}</label>
+                    <input type="radio" id="radio2" name="upload_type" value="alioss" {if $list_config.upload_type =='alioss'}checked="checked"{/if}><label for="radio2">{$Think.lang.upload_type_alioss}</label>
+                </dd>
+            </dl>
+            <div class="alioss">
+                <dl>
+                    <dt>{$Think.lang.aliendpoint_type}</dt>
+                    <dd>
+                        <div class="onoff">
+                            <label for="aliendpoint_type_show1" class="cb-enable {if condition="$list_config.aliendpoint_type eq 1"}selected{/if}">是</label>
+                            <label for="aliendpoint_type_show0" class="cb-disable {if condition="$list_config.aliendpoint_type eq 0"}selected{/if}">否</label>
+                            <input id="aliendpoint_type_show1" name="aliendpoint_type" value="1" type="radio" {if condition="$list_config.aliendpoint_type eq 1"} checked="checked"{/if}>
+                            <input id="aliendpoint_type_show0" name="aliendpoint_type" value="0" type="radio" {if condition="$list_config.aliendpoint_type eq 0"} checked="checked"{/if}>
+                        </div>
+                    </dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.alioss_accessid}</dt>
+                            <dd>
+                                <input id="alioss_accessid" name="alioss_accessid" value="{$list_config.alioss_accessid|default=''}" class="input-txt" type="text">
+                                <a href="http://www.csdeshang.com/home/help/article/id/203.html" target="_blank">配置文档</a>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.alioss_accesssecret}</dt>
+                            <dd>
+                                <input id="alioss_accesssecret" name="alioss_accesssecret" value="{$list_config.alioss_accesssecret|default=''}" class="input-txt" type="text">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.alioss_bucket}</dt>
+                            <dd>
+                                <input id="alioss_bucket" name="alioss_bucket" value="{$list_config.alioss_bucket|default=''}" class="input-txt" type="text">
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.alioss_endpoint}</dt>
+                            <dd>
+                                <input id="alioss_endpoint" name="alioss_endpoint" value="{$list_config.alioss_endpoint|default=''}" class="input-txt" type="text">
+                            </dd>
+                        </dl>
+                    </div>
+                    <dl>
+                        <dt></dt>
+                        <dd><a href="JavaScript:void(0);" class="btn" onclick="document.form1.submit()">确认提交</a></dd>
+                    </dl>
+                </div>
+            </form>
+        </div>
+        <script>
+            $(function () {
+                $("#radio").buttonset();
+                if ($('#radio1').prop('checked')) {
+                    $('.alioss').hide();
+                }
+                $('#radio1').click(function () {
+                    $('.alioss').hide();
+                });
+                $('#radio2').click(function () {
+                    $('.alioss').show();
+                })
+            });
+        </script>

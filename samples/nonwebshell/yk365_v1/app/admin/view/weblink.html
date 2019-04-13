@@ -1,0 +1,54 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{$fileurl}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" placeholder="链接名称" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('link_id[]')==false){alert('请指定您要操作的链接ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+        </div>
+        
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+    		<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+                <th>所属分类</th>
+                <th>交易方式</th>
+				<th>价格(元/月)</th>
+				<th>链接名称</th>
+				<th>链接地址</th>
+				<th>发布时间</th>
+                <th>操作选项</th>
+    		</tr>
+            <{foreach from=$weblinks item=link}>
+    		<tr>
+				<td><input name="link_id[]" type="checkbox" value="<{$link.link_id}>"></td>
+				<td><{$link.link_id}></td>
+				<td><{$link.cate_name}></td>
+				<td><{$link.deal_type}></td>
+				<td>￥<{$link.link_price}></td>
+				<td><{$link.link_name}></td>
+				<td><{$link.web_url}></td>
+                <td><{$link.link_time}></td>
+                <td><{$link.link_operate}></td>
+    		</tr>
+			<{foreachelse}>
+			<tr><td colspan="8">无任何友情链接！</td></tr>
+			<{/foreach}>
+		</table>
+        </form>
+        <div class="pagebox"><{$showpage}></div>
+    </div>
+    <{/if}>
+    
+<{include file="footer.html"}>

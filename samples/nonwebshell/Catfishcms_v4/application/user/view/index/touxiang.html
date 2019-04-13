@@ -1,0 +1,28 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/uploadify/uploadify.css" type="text/css" rel="stylesheet">
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>&nbsp;{:lang('Edit avatar')}</a></li>
+</ul>
+<div class="tab-content"><br>
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <form method="post" action="">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="{empty name="user.avatar"}{$domain}public/common/images/headicon_128.png{else /}{$user.avatar}{/empty}" class="img-responsive" id="avatarImg">
+                    <input type="hidden" value="{$user.avatar}" name="avatar" id="avatar">
+                </div>
+                <div class="col-md-9">
+                    <div id="upload"></div>
+                </div>
+            </div><br>
+            <div>
+                <button type="submit" class="btn btn-default">{:lang('Save the avatar')}</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="hidden" id="webroot">{$domain}</div>
+<div class="hidden" id="buttonText">{:lang('Select Image')}</div>
+<script type="text/javascript" src="{$domain}public/common/uploadify/jquery.uploadify.js"></script>
+<script src="{$domain}public/common/js/user/touxiang.js"></script>
+{include file="index/footer" /}

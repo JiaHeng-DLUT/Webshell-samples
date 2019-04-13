@@ -1,0 +1,76 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>微信菜单</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+            <a href="{:url('Wechat/pub_menu')}"  class="btn btn-small" style="float: right">更新菜单</a>
+        </div>
+    </div>
+     <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>1.自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单</li>
+            <li>2.一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替。</li>
+            <li>3.创建自定义菜单后，菜单的刷新策略是，在用户进入公众号会话页或公众号profile页时，如果发现上一次拉取菜单的请求在5分钟以前，就会拉取一下菜单，如果菜单有更新，就会刷新客户端的菜单。测试时可以尝试取消关注公众账号后再次关注，则可以看到创建后的效果。</li>
+            <li>4.目前支持的菜单类型的命令：hot点击率高的商品 commend店铺推荐商品 sale销售量 colleect收藏量</li>
+            <li>5.菜单添加完成后点击右上角更新菜单按钮同步菜单到公众号</li>
+        </ul>
+    </div>
+            <table class="ds-default-table">
+                <thead>
+                <tr>
+                    <th>{$Think.lang.menu_name}</th>
+                    <th>{$Think.lang.menu_type}</th>
+                    <th>{$Think.lang.menu_value}</th>
+                    <th>{$Think.lang.menu_sort}</th>
+                    <th>{$Think.lang.ds_handle}</th>
+                </tr>
+                </thead>
+                {notempty name="p_menu"}
+                <tbody>
+                {foreach name="p_menu" item="pmenu"}
+                <tr>
+                    <td>{$pmenu.name}</td>
+                    <td>{$menu_type[$pmenu.type]}</td>
+                    <td>{$pmenu.value}</td>
+                    <td>{$pmenu.sort}</td>
+                    <td>
+                        <a href="javascript:dsLayerOpen('{:url('Wechat/menu_edit',['id'=>$pmenu.id])}','{$Think.lang.ds_edit}-{$pmenu.name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                        <a href="javascript:dsLayerConfirm('{:url('Wechat/menu_drop',['id'=>$pmenu.id])}','{$Think.lang.ds_ensure_del}')"  class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                    </td>
+                </tr>
+                {foreach name="c_menu[$pmenu.id]" item="cmenu"}
+                {if $cmenu.pid eq $pmenu.id}
+                <tr>
+                    <td>|___{$cmenu.name}</td>
+                    <td>{$menu_type[$cmenu.type]}</td>
+                    <td>{$cmenu.value}</td>
+                    <td>{$cmenu.sort}</td>
+                    <td>
+                        <a href="javascript:dsLayerOpen('{:url('Wechat/menu_edit',['id'=>$cmenu.id])}','{$Think.lang.ds_edit}-{$cmenu.name}')"  class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                        <a href="javascript:dsLayerConfirm('{:url('Wechat/menu_drop',['id'=>$cmenu.id])}','{$Think.lang.ds_ensure_del}')"  class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                    </td>
+                </tr>
+                {/if}
+                {/foreach}
+                {/foreach}
+                </tbody>
+                {else /}
+                <tbody>
+            <tr class="no_data">
+                <td colspan="20">{$Think.lang.no_record}</td>
+            </tr>
+        </tbody>
+                {/notempty}
+            </table>
+        </div>

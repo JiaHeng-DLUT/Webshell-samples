@@ -1,0 +1,51 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">站点安全</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">安全码</label>
+		<div class="pk-w-sm-5 pk-padding-right-0">
+			<input class="pk-textbox pk-textbox-noshadow pk-border-right-none" type="text" name="key" placeholder="用户身份/重要操作校验加密码" value="{htmlspecialchars($_G['SET']['KEY'],ENT_QUOTES)}">
+		</div>
+		<div class="pk-w-sm-3 pk-padding-left-0">
+			<button type="button" class="pk-btn pk-btn-block pk-btn-default" onclick="form_save.key.value=randomString(32).toUpperCase()">随机生成</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">运行错误</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox " data-value="{$_G['SET']['RUNERRORDISPLAY']}" name="runerrordisplay">
+				<option value="1">显示</option>
+				<option value="0">关闭</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">站点状态</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox " data-value="{$_G['SET']['SITESTATUS']}" name="sitestatus">
+				<option value="0">正常</option>
+				<option value="1">关闭</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">站点关闭提示</label>
+		<div class="pk-w-sm-8">
+			<textarea class=" pk-width-all pk-textarea" rows="7" name="siteclosedtip">{htmlspecialchars($_G['SET']['SITECLOSEDTIP'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

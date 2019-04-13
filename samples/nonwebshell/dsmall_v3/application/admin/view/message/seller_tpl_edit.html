@@ -1,0 +1,182 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>邮箱短信</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span id="explanationZoom" title="收起提示" class="arrow"></span>
+        </div>
+        <ul>
+            <li>平台可给商家提供站内信、短消息、邮件三种通知方式。平台可以选择开启一种或多种通知方式供商家选择。</li>
+            <li>开启强制接收后，商家不能取消该方式通知的接收。</li>
+            <li>短消息、邮件需要商家设置正确号码后才能正常接收。</li>
+        </ul>
+    </div>
+    <div class="ncap-form-default homepage-focus"  dstype="sellerTplContent">
+        <h4>模板名称：{$smtpl_info.storemt_name}</h4>
+        <ul class="tab-menu">
+            <li class="current">站内信模板</li>
+            <li>手机短信模板</li>
+            <li>邮件模板</li>
+        </ul>
+        <form class="tab-content" method="post" name="message_form" >
+            <input type="hidden" name="code" value="{$smtpl_info.storemt_code}" />
+            <input type="hidden" name="type" value="message" />
+            <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder"> 
+                        <td class="required w120">站内信开关</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="smt_message_switch1" class="cb-enable {if condition="$smtpl_info.storemt_message_switch eq 1"}selected{/if}">是</label>
+                                <label for="smt_message_switch0" class="cb-disable {if condition="$smtpl_info.storemt_message_switch eq 0"}selected{/if}">否</label>
+                                <input id="smt_message_switch1" name="message_switch" value="1" type="radio" {if condition="$smtpl_info.storemt_message_switch eq 1"} checked="checked"{/if}>
+                                <input id="smt_message_switch0" name="message_switch" value="0" type="radio" {if condition="$smtpl_info.storemt_message_switch eq 0"} checked="checked"{/if}>
+                            </div>   
+                        </td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">强制接收</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                            <label for="storemt_message_forced1" class="cb-enable {if condition="$smtpl_info.storemt_message_forced eq 1"}selected{/if}">是</label>
+                            <label for="storemt_message_forced0" class="cb-disable {if condition="$smtpl_info.storemt_message_forced eq 0"}selected{/if}">否</label>
+                            <input id="storemt_message_forced1" name="message_forced" value="1" type="radio" {if condition="$smtpl_info.storemt_message_forced eq 1"} checked="checked"{/if}>
+                            <input id="storemt_message_forced0" name="message_forced" value="0" type="radio" {if condition="$smtpl_info.storemt_message_forced eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">消息内容</td>
+                        <td class="vatop rowform"><textarea name="message_content" rows="6" class="tarea">{$smtpl_info.storemt_message_content}</textarea></td>
+			<td class="vatop tips"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td colspan="15"><input class="btn" type="submit" value="提交"/></td>
+                    </tr>					
+                </tfoot>
+            </table>
+        </form>
+        
+        <form class="tab-content" method="post" name="short_form"  style="display:none;">
+            <input type="hidden" name="code" value="{$smtpl_info.storemt_code}" />
+            <input type="hidden" name="type" value="short" />
+            <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder"> 
+                        <td class="required w120">手机短信开关</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="storemt_short_switch1" class="cb-enable {if condition="$smtpl_info.storemt_short_switch eq 1"}selected{/if}">是</label>
+                                <label for="storemt_short_switch0" class="cb-disable {if condition="$smtpl_info.storemt_short_switch eq 0"}selected{/if}">否</label>
+                                <input id="storemt_short_switch1" name="short_switch" value="1" type="radio" {if condition="$smtpl_info.storemt_short_switch eq 1"} checked="checked"{/if}>
+                                <input id="storemt_short_switch0" name="short_switch" value="0" type="radio" {if condition="$smtpl_info.storemt_short_switch eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                        <td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">强制接收</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="smt_short_forced1" class="cb-enable {if condition="$smtpl_info.smt_short_forced eq 1"}selected{/if}">是</label>
+                                <label for="smt_short_forced0" class="cb-disable {if condition="$smtpl_info.smt_short_forced eq 0"}selected{/if}">否</label>
+                                <input id="smt_short_forced1" name="short_forced" value="1" type="radio" {if condition="$smtpl_info.smt_short_forced eq 1"} checked="checked"{/if}>
+                                <input id="smt_short_forced0" name="short_forced" value="0" type="radio" {if condition="$smtpl_info.smt_short_forced eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                        <td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">消息内容</td>
+                        <td class="vatop rowform"><textarea name="short_content" rows="6" class="tarea">{$smtpl_info.storemt_short_content}</textarea></td>
+			<td class="vatop tips"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td colspan="15"><input class="btn" type="submit" value="提交"/></td>
+                    </tr>					
+                </tfoot>
+            </table>
+        </form>
+        
+        <form class="tab-content" method="post" name="mail_form"  style="display:none;">
+            <input type="hidden" name="code" value="{$smtpl_info.storemt_code}" />
+            <input type="hidden" name="type" value="mail" />
+            <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder"> 
+                        <td class="required w120">邮件开关</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="storemt_mail_switch1" class="cb-enable {if condition="$smtpl_info.storemt_mail_switch eq 1"}selected{/if}">是</label>
+                                <label for="storemt_mail_switch0" class="cb-disable {if condition="$smtpl_info.storemt_mail_switch eq 0"}selected{/if}">否</label>
+                                <input id="storemt_mail_switch1" name="mail_switch" value="1" type="radio" {if condition="$smtpl_info.storemt_mail_switch eq 1"} checked="checked"{/if}>
+                                <input id="storemt_mail_switch0" name="mail_switch" value="0" type="radio" {if condition="$smtpl_info.storemt_mail_switch eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                        <td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">强制接收</td>
+                        <td class="vatop rowform">
+                            <div class="onoff">
+                                <label for="storemt_mail_forced1" class="cb-enable {if condition="$smtpl_info.storemt_mail_forced eq 1"}selected{/if}">是</label>
+                                <label for="storemt_mail_forced0" class="cb-disable {if condition="$smtpl_info.storemt_mail_forced eq 0"}selected{/if}">否</label>
+                                <input id="storemt_mail_forced1" name="mail_forced" value="1" type="radio" {if condition="$smtpl_info.storemt_mail_forced eq 1"} checked="checked"{/if}>
+                                <input id="storemt_mail_forced0" name="mail_forced" value="0" type="radio" {if condition="$smtpl_info.storemt_mail_forced eq 0"} checked="checked"{/if}>
+                            </div>
+                        </td>
+                        <td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">邮件标题</td>
+                        <td class="vatop rowform"><textarea name="mail_subject" rows="6" class="tarea">{$smtpl_info.storemt_mail_subject}</textarea></td>
+			<td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">邮件内容</td>
+                        <td class="vatop rowform"><textarea name="mail_content" rows="6" class="tarea">{$smtpl_info.storemt_mail_content}</textarea></td>
+			<td class="vatop tips"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td colspan="15"><input class="btn" type="submit" value="提交"/></td>
+                    </tr>					
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+$(function(){
+    $('div[dstype="sellerTplContent"] > ul').find('li').click(function(){
+        $(this).addClass('current').siblings().removeClass('current');
+        var _index = $(this).index();
+        var _form = $('div[dstype="sellerTplContent"]').find('form');
+        _form.hide();
+        _form.eq(_index).show();
+    });
+});
+</script>

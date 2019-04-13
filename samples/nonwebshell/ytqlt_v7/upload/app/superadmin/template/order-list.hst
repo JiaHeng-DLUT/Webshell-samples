@@ -1,0 +1,39 @@
+<table id="_table" class="pk-table pk-width-all pk-table-bordered">
+	<thead>
+		<tr>
+			<th width="100">ID</th>
+			<th class="pk-text-left">问题</th>
+			<th width="150">状态</th>
+			<th width="100">操作</th>
+		</tr>
+	</thead>
+	<tbody class="pk-text-sm pk-text-center">
+		<tr>
+			<td colspan="99"><span class="fa fa-fw fa-spin fa-spinner"></span>正在加载...</td>
+		</tr>
+	</tbody>
+</table>
+<script>
+	$(function() {
+		$.getJSON('index.php?c=app&a=superadmin:index&s=order&getlist=yes', function(data) {
+			if(data['state'] == 'ok') {
+				var h = '';
+				var datas = data['datas'];
+				for(var i = 0; i < datas.length; i++) {
+					h += '<tr><td>' + datas[i]['id'] + '</td><td class="pk-text-left">' + datas[i]['title'] + '</td><td>' + (datas[i]['fs'] > 1 ? '<font color="green">已回复</font>' : '<font color="red">待处理</font>') + '</td><td><a target="_blank" class="pk-btn pk-btn-sm pk-btn-success" href="//www.hadsky.com/read-' + datas[i]['id'] + '-1.html">查看</a></td></tr>';
+				}
+				if(h) {
+					$('#_table tbody').html(h);
+				} else {
+					$('#_table tbody td').html('无数据');
+				}
+			} else {
+				ppp({
+					icon: 2,
+					content: data['datas']['msg']
+				});
+				$('#_table tbody td').html('请求异常');
+			}
+		})
+	});
+</script>

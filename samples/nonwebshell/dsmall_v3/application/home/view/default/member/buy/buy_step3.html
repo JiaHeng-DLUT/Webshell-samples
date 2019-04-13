@@ -1,0 +1,43 @@
+{include file="default/base/mall_top" /} 
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<div class="dsc-header">
+    <div class="logo">
+        <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+    </div>
+    <ul class="dsc-flow">
+        <li class=""><i class="fa fa-shopping-cart"></i>
+            <p>{$Think.lang.cart_index_ensure_order}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-pencil"></i>
+            <p>{$Think.lang.cart_index_ensure_info}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class=""><i class="fa fa-credit-card-alt"></i>
+            <p>{$Think.lang.cart_index_payment}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+        <li class="current"><i class="fa fa-thumbs-o-up"></i>
+            <p>{$Think.lang.cart_index_buy_finish}</p>
+            <sub></sub>
+            <div class="hr"></div>
+        </li>
+    </ul>
+</div>
+<div class="dsc-main">
+    <div class="dsc-title">
+        <h3>{$Think.lang.cart_index_buy_finish}</h3>
+        <h5>{$Think.lang.order_has_been_paid}</h5>
+    </div>
+    <div class="dsc-receipt-info mb30">
+        <div class="dsc-finish-a"><i></i>{$Think.lang.order_payment_success}<em>￥{$Request.param.pay_amount}</em>。</div>
+        <div class="dsc-finish-b">{$Think.lang.available_through_user_center}<a href="{:url('Memberorder/index')}">{$Think.lang.purchased_goods}</a>{$Think.lang.view_order_status}</div>
+        <div class="dsc-finish-c mb30"><a href="{:url('Index/index')}" class="dsc-btn-mini dsc-btn-green mr15"><i class="fa fa-shopping-cart"></i>{$Think.lang.cart_index_continue_shopping}</a><a href="{:url('Memberorder/index')}" class="dsc-btn-mini dsc-btn-acidblue"><i class="fa fa-file-text-o"></i>{$Think.lang.view_order}</a></div>
+    </div>
+</div>
+{include file="default/base/mall_footer" /}

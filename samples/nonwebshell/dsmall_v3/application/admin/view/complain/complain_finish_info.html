@@ -1,0 +1,42 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_complain}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <table class="ds-default-table">
+        <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.final_handle_detail}</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+            <th>{$Think.lang.final_handle_message}</th>
+        </tr>
+        <tr class="noborder">
+            <td>{$complain_info.final_handle_message}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.final_handle_datetime}</th>
+        </tr>
+        <tr class="noborder">
+            <td>{$complain_info.final_handle_datetime|date="Y-m-d H:i:s",###}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr class="tfoot">
+            <td><a href="JavaScript:void(0);" class="btn" onclick="history.go(-1)"><span>{$Think.lang.ds_back}</span></a></td>
+        </tr>
+        </tfoot>
+    </table>
+
+</div>

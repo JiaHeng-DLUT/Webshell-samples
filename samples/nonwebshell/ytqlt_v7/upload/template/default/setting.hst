@@ -1,0 +1,169 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">系统默认 模板设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8">
+			<a class="pk-text-primary pk-hover-underline" target="_blank" href="http://www.hadsky.com/index.php?c=read&id=492&page=1">系统默认模板设置教程</a>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">文章列表内容格式</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['TEMPLATE_DEFAULT_LISTCONTENTTYPE']}" name="template_default_listcontenttype">
+				<option value="0">显示内容摘要</option>
+				<option value="1">显示最新回复</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">颜色风格</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['TEMPLATE_DEFAULT_COLORSTYLE']}" name="template_default_colorstyle">
+				<option value="0">默认</option>
+				<option value="#12B7F5">蓝</option>
+				<option value="#CC6666">红</option>
+				<option value="#FFCC66">橙</option>
+				<option value="#66CC66">绿</option>
+				<option value="#333333">黑</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">文章页隐藏右侧栏</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['TEMPLATE_DEFAULT_HIDERIGHTDIV']}" name="template_default_hiderightdiv">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">右侧栏显示版块导航</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['TEMPLATE_DEFAULT_SHOWBKDH']}" name="template_default_showbkdh">
+				<option value="0">开启</option>
+				<option value="1">关闭</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">六格图片调用个数</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="template_default_homesliderlistcount" placeholder="默认5" value="{$_G['SET']['TEMPLATE_DEFAULT_HOMESLIDERLISTCOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">六格图片自定义</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea" rows="5" name="template_default_homeslidercode" placeholder="此项留空则自动出图，反之调用此处设置">{$_G['SET']['TEMPLATE_DEFAULT_HOMESLIDERCODE']}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">六格文章调用个数</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="template_default_homearticlelistcount" placeholder="默认10" value="{$_G['SET']['TEMPLATE_DEFAULT_HOMEARTICLELISTCOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">首页版块文章调用个数</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="template_default_homeforumlistcount" placeholder="默认10" value="{$_G['SET']['TEMPLATE_DEFAULT_HOMEFORUMLISTCOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">首页版块调用设置</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="template_default_homeforumids" placeholder="填写版块ID，多个用,分开，留空为不调用" value="{$_G['SET']['TEMPLATE_DEFAULT_HOMEFORUMIDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">随机头像个数</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="template_default_randheadcount" placeholder="数字，不会设置的用户请在官坛查阅" value="{$_G['SET']['TEMPLATE_DEFAULT_RANDHEADCOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">推荐文章ID</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="template_default_tjwzids" placeholder="多个用,分开，留空为不显示" value="{$_G['SET']['TEMPLATE_DEFAULT_TJWZIDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">最新精华显示数</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox" name="template_default_jhnum" placeholder="数字，留空为不显示" value="{$_G['SET']['TEMPLATE_DEFAULT_JHNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">热帖显示数</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox" name="template_default_rtnum" placeholder="数字，留空为不显示" value="{$_G['SET']['TEMPLATE_DEFAULT_RTNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">HEAD自定义样式</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_headhtml" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_HEADHTML'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">HEAD头部Banner处HTML</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_banner" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_BANNER'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">HEAD搜索框右侧HTML</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_searchrighthtml" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_SEARCHRIGHTHTML'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">登录框下方的广告位</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_ad1htmlcode" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_AD1HTMLCODE'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">各种贴后面的广告位</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_ad2htmlcode" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_AD2HTMLCODE'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">FOOT上方的广告位</label>
+		<div class="pk-w-sm-8">
+			<textarea name="template_default_ad3htmlcode" class="pk-textarea _codemirrorbox" rows="7">{htmlspecialchars($_G['SET']['TEMPLATE_DEFAULT_AD3HTMLCODE'],ENT_QUOTES)}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+		</div>
+	</div>
+</form>

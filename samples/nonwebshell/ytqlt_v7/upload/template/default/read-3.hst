@@ -1,0 +1,106 @@
+</div>
+</div>
+<div class="pk-padding-45 pk-text-center">
+	<button id="loadmorereadlistbtn" type="button" class="pk-btn pk-btn-block pk-btn-default pk-radius-4">加载更多 »</button>
+</div>
+<div id="saveloadhtml" class="pk-display-none"></div>
+<script>
+	$(function() {
+		var $loadpage = parseInt("{$page}") + 1;
+		var $loaded = 0;
+		$('#loadmorereadlistbtn').click(function() {
+			if($loaded == 0) {
+				$loaded = 1;
+				$('#saveloadhtml').load("index.php?c=read&id={$id}&page=" + $loadpage + " #read-list div:eq(0)", function(r, s, x) {
+					if(s == "error") {
+						pkalert('加载出错！');
+					} else {
+						var $html = $('#saveloadhtml').html();
+						if($html.length > 11) {
+							$loadpage++;
+							$('#read-list').append($html);
+							ImageLaterLoading('img', '懒加载过来的图片^o^', 'this.src="template/default/img/imageloaderror.png";this.title="此图已被汪星人给吃了~汪呜汪呜~~~";this.onclick=""');
+							$('.replycontent img').attr({
+								"onclick": "LookImage(this)",
+								"onerror": "this.src='template/default/img/imageloaderror.png';this.title='此图已被狗给吃了~汪呜~';this.onclick=''"
+							});
+							$loaded = 0;
+						} else {
+							$('#loadmorereadlistbtn').prop('disabled', true);
+							$('#loadmorereadlistbtn').html('已无更多内容');
+						}
+					}
+					$('#saveloadhtml').html('');
+				});
+			}
+		});
+		$('.readcontent img,.replycontent img').attr({
+			"onclick": "LookImage(this)",
+			"onerror": "this.src='template/default/img/imageloaderror.png';this.title='此图已被狗给吃了~汪呜~';this.onclick=''"
+		});
+	});
+</script>
+<form name="form_post" method="post" action="index.php?c=post&type=reply&return=json">
+	<input type="hidden" name="rid" value="{$readdata['id']}" />
+	<div class="pk-row pk-margin-bottom-5">
+		<div class="pk-w-sm-12 pk-padding-0">
+			<p class="pk-text-sm pk-padding-left-5 pk-text-truncate pk-text-default">回复：{$readdata['title']}</p>
+		</div>
+	</div>
+	<div class="pk-row pk-margin-bottom-15">
+		<div class="pk-w-sm-12 pk-padding-0">
+			<a name="postreplyposition"></a>
+			<textarea id="container" class="pk-width-all pk-textarea pk-radius-4" name="content" style="height:200px" placeholder="您的浏览器太古董了，所以您只能裸着发布了T_T" required></textarea>
+		</div>
+	</div>
+	<div style="max-width:240px">
+		{loadVerifycode('postreply','')}
+	</div>
+	<div class="pk-row pk-margin-bottom-15">
+		<div class="pk-w-sm-12 pk-padding-0">
+			<button id="postreplysubmitbtn" type="button" class="pk-btn pk-btn-primary">发布</button>
+		</div>
+	</div>
+</form>
+<script>
+	function ReplyNF($uid, $f, $nickname) {
+		if($uid) {
+			PytCmd('inserthtml', false, '@' + $uid + ':(在' + $f + 'F的' + $nickname + ')&nbsp;');
+		} else {
+			PytCmd('inserthtml', false, '回复' + $f + '楼:');
+		}
+	}
+	$(function() {
+		$('#postreplysubmitbtn').click(function() {
+			if(trim(form_post.content.value)) {
+				form_post.content.value = form_post.content.value.replace(/\<div/g, '<p');
+				form_post.content.value = form_post.content.value.replace(/\<\/div\>/g, '</p>');
+				$(this).prop('disabled', true).html('发布中...');
+				var formstring = FormDataPackaging('form[name="form_post"]:eq(0)');
+				$.post($('form[name="form_post"]:eq(0)').attr('action'), formstring, function(data) {
+					if(data['state'] == 'ok') {
+						//pkalert(data['msg'], 'js:location.href="index.php?c=read&id=' + data['rid'] + '&cache=refresh"');
+						pktip(data['msg'], 'success', 1400, function() {
+							location.href = "index.php?c=read&id=" + data['rid'] + "&cache=refresh&rnd=" + parseInt(Math.random() * 10000) + "#replylist";
+						});
+					} else {
+						$('form[name="form_post"] input[name="verifycode"]').val('');
+						$('#verifycodeimageobject').click();
+						pkalert(data['msg'] || '未知错误');
+					}
+					$('#postreplysubmitbtn').prop('disabled', false).html('发布');
+				}, 'json').error(function() {
+					$('#postreplysubmitbtn').prop('disabled', false).html('发布');
+					$('form[name="form_post"]:eq(0)').attr('action', $('form[name="form_post"]:eq(0)').attr('action').replace('&return=json', ''));
+					form_post.submit();
+				});
+			} else {
+				if(PytEditor.body) {
+					PytEditor.body.focus();
+				} else {
+					form_post.content.focus();
+				}
+			}
+		});
+	});
+</script>

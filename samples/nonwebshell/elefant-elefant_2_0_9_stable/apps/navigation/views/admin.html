@@ -1,0 +1,55 @@
+<link href="/apps/navigation/js/tree-drag-drop/css/tree-drag-drop.css" rel="stylesheet" type="text/css" />
+
+<!--[if IE]>
+<style>
+body:not(.cursorGrabbing) .treeDragDrop li, .tdd-dragContainer li{
+	cursor: url(/apps/navigation/js/tree-drag-drop/css/openhand.cur), move;
+}
+</style>
+<![endif]-->
+<style>
+.trashbin{
+	width:48%; 
+	float:right
+}
+
+.tree{
+	width:48%; 
+	float:left
+}
+
+.caption{
+	margin-top:10px;
+}
+
+</style>
+
+<div class="treeDragDrop">
+	<div class="tree">
+		<h4> {"Site tree"}</h4>
+		<p class="caption">{"Drag pages to the site tree to include them in your navigation."}</p>
+		{! navigation/admin_tree !}	
+		
+	</div>	
+	<div class="trashbin">
+		<h4> {"Other pages"}</h4>	
+		<p class="caption">{"Drag pages here to remove them from the tree."}</p>
+		<ul class="tdd-trashbin">
+		{% foreach other_pages %}
+			<li id="{{ loop_index }}">{{ loop_value }}</li>
+		{% end %}
+		</ul>
+		
+	</div>
+</div>
+<br clear="both" />
+
+<p class="caption"><em>{"Note: Pages that are not publicly visible will not be listed here."}</em></p>
+
+<script>
+$(function () {
+	document.querySelectorAll ('li').forEach (function (li) {
+		twemoji.parse (li);
+	});
+});
+</script>

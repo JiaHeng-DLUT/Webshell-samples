@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>选择用户</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<!-- 搜索表单 -->
+{:create_search_form("",$keywordsData,$customSingleField,$groupData,$dateData,$orderData)}
+
+<div class="layui-form" style="padding:0px 10px ;">
+<input  type="hidden"  id="chooseType" value="">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="30">
+      <col width="100">
+      <col width="110">
+      <col width="100">  
+      <col >
+    </colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th>头像</th>
+        <th>用户名</th>
+        <th>昵称</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td><input type="radio" name="id" class="id" title=""  lay-filter="id" lay-skin="primary" value="{$vo.uid}"></td>
+         <td>{:avatar($vo.uid)}</td>
+         <td class="user-{$vo.uid}" >{$vo.username}</td>
+         <td >{$vo.nickname}</td>
+       
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+{if empty($list)}
+ <div class="layui-form-item">
+    <div class="empty">
+     <div class="img"></div>
+     <p>暂无内容</p></div>
+ </div>
+</div>
+{/if}
+
+</div>
+
+
+<div id="pages">{$page|raw}</div>
+<div class="layui-card">
+  
+  <div class="layui-card-body" style="text-align:center">
+    <button class="layui-btn layui-btn-normal layui-btn-radius" id="confirm" data-type="getCheckData">选择用户</button>
+  </div>
+</div>
+
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+
+   var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+  $('#confirm').on('click', function(){   
+      var id =  $("input[name='id']:checked").val();
+      if(!id){
+        layer.alert('请选择用户',{title:false});
+        return;
+      }
+       var  username =  $(".user-"+id).html();
+       var chooseType = $("#chooseType").val();
+        
+       parent.$("#"+chooseType).val(username);  //父类的 ID
+       parent.layer.close(index);
+      form.render();
+  }); 
+
+  }); 
+</script>
+
+</body>
+
+</html>

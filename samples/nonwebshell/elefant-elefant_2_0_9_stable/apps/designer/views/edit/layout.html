@@ -1,0 +1,106 @@
+<p class="autosave-notice autosave-edit">{"Auto-saved data found."} <a href="#" class="autosave-restore">{"Click to restore."}</a></p>
+
+<form method="POST" id="edit-form">
+
+<p id="buttons">
+	<span class="notice" id="body-notice">&nbsp; {"You must enter body content."}</span>
+	<span class="notice" id="invalid-php-functions-notice">&nbsp; {"Invalid PHP functions detected. Please remove to save changes."}</span>
+	<span id="bgsave-status"></span>
+	<input type="submit" value="{"Save Layout"}" class="autosave-clear" />&nbsp;
+	<input type="submit" value="{"Save &amp; Keep Editing"}" id="bgsave" />&nbsp;
+	<a href="/admin/cancel?type=Designer&id={{ file|urlencode }}&return={{ $_SERVER['HTTP_REFERER']|urlencode }}" onclick="return $.cancel_autosave ('{"Are you sure you want to cancel and lose any changes?"}')">{"Cancel"}</a>
+</p>
+
+<p id="name"><strong>{"Edit Layout"}: {{file}}</strong></p>
+
+<div id="layout">
+<div id="tags">{"Insert tag"}:&nbsp;
+	<a href="#" onclick="_codemirror.replaceRange ('{' + '{ var }}', _codemirror.getCursor (true)); return false">{<span></span>{ var }}</a> &nbsp;
+	<a href="#" onclick="_codemirror.replaceRange ('{' + '% foreach %}\n', _codemirror.getCursor (true)); _codemirror.replaceRange ('\n{' + '% end %}', _codemirror.getCursor (false)); return false">{<span></span>% foreach %}</a> &nbsp;
+	<a href="#" onclick="_codemirror.replaceRange ('{' + '% if %}', _codemirror.getCursor (true)); _codemirror.replaceRange ('{' + '% end %}', _codemirror.getCursor (false)); return false">{<span></span>% if %}</a> &nbsp;
+	<a href="#" onclick="_codemirror.replaceRange ('{' + '! app/handler !}', _codemirror.getCursor (true)); return false">{<span></span>! handler !}</a> &nbsp;
+	<a href="#" onclick="_codemirror.replaceRange ('{&quot; text &quot;}', _codemirror.getCursor (true)); return false">{<span></span>" text "}</a></div>
+<textarea name="body" id="code-body" cols="90" rows="28">{{ body }}</textarea>
+
+<div class="preview">{"Preview"}:</div>
+<iframe src="/designer/preview?layout={{ $_GET.file }}" id="preview" frameborder="0" height="300" style="border: 1px solid #ccc"></iframe>
+</div>
+
+</form>
+
+<link rel="stylesheet" type="text/css" href="/apps/designer/js/codemirror/lib/codemirror.css" />
+<!-- link rel="stylesheet" type="text/css" href="/apps/designer/js/codemirror/theme/default.css" / -->
+<script type="text/javascript" src="/apps/designer/js/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="/apps/designer/js/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="/apps/designer/js/codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="/apps/designer/js/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="/apps/designer/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jstorage.js"></script>
+<script type="text/javascript" src="/js/jquery.autosave.js"></script>
+<script type="text/javascript" src="/js/jquery.bgsave.js"></script>
+<script type="text/javascript" src="/js/jquery.verify_values.js"></script>
+<script type="text/javascript">
+var _codemirror, filemanager_interval, filemanager_last_preview = '';
+
+$(function () {
+	_codemirror = CodeMirror.fromTextArea(
+		document.getElementById ('code-body'),
+		{
+			mode: 'text/html',
+			theme: 'default',
+			indentWithTabs: true,
+			lineNumbers: true,
+			onFocus: function () {
+				try {
+					$('form').autosave ();
+				} catch (e) {}
+			}
+		}
+	);
+
+	$('#edit-form').verify_values ({
+		handler: 'designer/editlayout',
+		callback: function (failed) {
+			// highlight the failed elements
+			for (var i = 0; i < failed.length; i++) {
+				$.add_notification ($('#' + failed[i] + '-notice').text ());
+			}
+		},
+		reset: function (fields) {
+			for (var i = 0; i < fields.length; i++) {
+				$('#' + fields[i] + '-notice').hide ();
+			}
+		}
+	});
+	{% foreach failed %}
+	$.add_notification ($('#{{ loop_value }}-notice').text ());
+	{% end %}
+
+	// increase editor and preview height if window is tall enough
+	$('.CodeMirror').height ($(window).height () / 2 - 60);
+	$('#preview').height ($(window).height () / 2 - 80);
+	$('html,body').css ({overflow: 'hidden'});
+
+	$('#edit-form').autosave ();
+	$('#edit-form').bgsave ({
+		url: '/designer/bgsave?file=',
+		id: '{{ file }}',
+		msg_saving: '{"Saving..."}',
+		msg_saved: '{"Saved!"}',
+		msg_failed: '{"Failed to save..."}'
+	});
+
+	filemanager_last_preview = _codemirror.getValue ();
+	$('.CodeMirror').bindWithDelay ('keyup', function () {
+		var layout = _codemirror.getValue ();
+		if (layout != filemanager_last_preview) {
+			filemanager_last_preview = layout;
+			$.post ('/designer/preview', {layout: layout}, function (res) {
+				document.getElementById ('preview').contentDocument.body.innerHTML = res;
+			});
+		}
+	}, 500);
+});
+</script>

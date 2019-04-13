@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>HadSky 安装出错</title>
+		<meta name="description" content="{$_G['SET']['WEBDESCRIPTION']}">
+		<meta name="keywords" content="{$_G['SET']['WEBKEYWORDS']}">
+		<meta name="author" content="puyuetian qq632827168">
+		<meta name="website" content="http://www.hadsky.com">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<link rel="stylesheet" href="../template/puyuetianUI/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../template/puyuetianUI/css/puyuetian.css" />
+		<script src="../template/puyuetianUI/js/jquery-3.3.1.min.js"></script>
+		<script src="../template/puyuetianUI/js/puyuetian.js"></script>
+	</head>
+
+	<body>
+		<div class="pk-container pk-padding-15 pk-margin-left-right-auto" style="max-width: 360px;">
+			<div class="am-panel am-panel-default">
+				<div class="pk-padding-10 pk-background-color-danger pk-text-white">安装出错</div>
+				<div class="pk-padding-15 pk-text-center pk-text-default" style="border:solid 1px #E0E0E0;border-top: none;">
+					<p class="pk-text-sm pk-word-break-all">{$error}</p>
+					<p class="pk-padding-top-25">
+						<a class="pk-btn pk-btn-primary" href="javascript:history.back()">返回</a> &nbsp;
+						<a target="_blank" class="pk-btn pk-btn-success" href="http://www.hadsky.com">求助</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

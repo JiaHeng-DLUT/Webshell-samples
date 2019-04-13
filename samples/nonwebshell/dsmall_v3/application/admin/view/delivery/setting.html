@@ -1,0 +1,36 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <form id="setting_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w150"><label class="validation" for="promotion_booth_price">{$Think.lang.delivery_is_open}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform onoff"><label for="site_status1" class="cb-enable {if $list_setting.delivery_isuse == '1'}selected{/if}" ><span>{$Think.lang.ds_open}</span></label>
+                    <label for="site_status0" class="cb-disable {if $list_setting.delivery_isuse == '0'}selected{/if}" ><span>{$Think.lang.ds_close}</span></label>
+                    <input id="site_status1" name="delivery_isuse" {if $list_setting.delivery_isuse == '1'}checked="checked"{/if} value="1" type="radio">
+                    <input id="site_status0" name="delivery_isuse" {if $list_setting.delivery_isuse == '0'}checked="checked"{/if} value="0" type="radio"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2">{$Think.lang.delivery_set_express}，<a onclick="window.parent.openItem('index,express,setting');" href="JavaScript:void(0);">{$Think.lang.ds_express}</a></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(function(){
+        $("#submitBtn").click(function(){
+            $("#setting_form").submit();
+        });
+    });
+</script>

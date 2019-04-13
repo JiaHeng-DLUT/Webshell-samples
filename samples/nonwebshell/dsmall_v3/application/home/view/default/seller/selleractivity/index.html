@@ -1,0 +1,47 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+
+<table class="dssc-default-table">
+            {notempty name="activity_list"}
+            <thead>
+            <tr>
+                <th class="w20">&nbsp;</th>
+                <th class="tl w200">{$Think.lang.store_activity_theme}</th>
+                <th class="tl">{$Think.lang.store_activity_intro}</th>
+                <th class="w150">{$Think.lang.store_activity_start_time}</th>
+                <th class="w150">{$Think.lang.store_activity_end_time}</th>
+                <th class="w90">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="activity_list" item="v"}
+            <tr>
+                <td></td>
+                <td class="tl"><a target="_blank" href="{:url('Activity/detail',['activity_id'=>$v.activity_id])}">{$v.activity_title}</a></td>
+                <td class="tl">{$v.activity_desc}</td>
+                <td class="goods-time">{:date('Y-m-d',$v.activity_startdate)}</td>
+                <td class="goods-time">{:date('Y-m-d',$v.activity_enddate)}</td>
+                <td class="dscs-table-handle"><span><a id="a_{$v.activity_id}" href="{:url('Selleractivity/activity_apply',['activity_id'=>$v.activity_id])}"  class="btn-green"><i class="fa fa-pencil-square"></i>
+                            <p>{$Think.lang.store_activity_join}</p>
+                        </a></span></td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr>
+                <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="activity_list"}
+            <tr>
+                <td colspan="20"><div class="pagination">{$show_page}</div></td>
+            </tr>
+            {/notempty}
+            </tfoot>
+        </table>
+
+
+{/block}

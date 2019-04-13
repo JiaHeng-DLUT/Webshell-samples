@@ -1,0 +1,119 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.bill_billing_list}</h3>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+  <div class="fixed-empty"></div>
+  <form method="get" action="" name="formSearch" id="formSearch">
+      <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_name}ID/{$Think.lang.bill_store_name}</dt>
+                <dd><input class="txt-short" type="text" value="{$Request.param.query_store}" name="query_store" id="query_store"/></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.bill_state}</dt>
+                <dd>
+                    <select name="bill_state">
+                        <option>{$Think.lang.ds_please_choose}</option>
+                        <option {if condition="$Request.param.bill_state eq BILL_STATE_CREATE"}selected{/if} value="{$Think.BILL_STATE_CREATE}">{$Think.lang.bill_state_create}</option>
+                        <option {if condition="$Request.param.bill_state eq BILL_STATE_STORE_COFIRM"}selected{/if} value="{$Think.BILL_STATE_STORE_COFIRM}">{$Think.lang.bill_srate_store_cofirm}</option>
+                        <option {if condition="$Request.param.bill_state eq BILL_STATE_SUCCESS"}selected{/if} value="{$Think.BILL_STATE_SUCCESS}">{$Think.lang.bill_state_success}</option>
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Bill/show_statis')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                <a class="btn" href="javascript:export_xls('{:url('Bill/export_zd_step1')}')"><span>{$Think.lang.ds_export}Excel</span></a>
+            </div>
+        </div>
+  </form>
+  <div class="explanation" id="explanation">
+      <div class="title" id="checkZoom">
+          <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+          <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+      </div>
+      <ul>
+          <li>{$Think.lang.bill_show_statis_help1}</li>
+          <li>{$Think.lang.bill_show_statis_help2}</li>
+      </ul>
+  </div>
+  <table class="ds-default-table">
+    <thead>
+      <tr class="thead">
+        <th>{$Think.lang.bill_ob_no}</th>
+        <th class="align-center">{$Think.lang.bill_os_startdate}</th>
+        <th class="align-center">{$Think.lang.bill_os_enddate}</th>
+        <th class="align-center">{$Think.lang.order_price_from}</th>
+        <th class="align-center">{$Think.lang.order_total_transport}</th>
+        <th class="align-center">{$Think.lang.bill_print_commision}</th>
+        <th class="align-center">{$Think.lang.bill_ob_order_return_totals}</th>
+        <th class="align-center">{$Think.lang.bill_os_commis_returntotals}</th>
+        <th class="align-center">{$Think.lang.ob_inviter_totals}</th>
+        <th class="align-center">{$Think.lang.bill_ob_vr_order_totals}</th>
+        <th class="align-center">{$Think.lang.bill_ob_vr_order_return_totals}</th>
+        <th class="align-center">{$Think.lang.bill_ob_vr_commis_totals}</th>
+        <th class="align-center">{$Think.lang.bill_ob_vr_commis_return_totals}</th>
+            <th class="align-center">{$Think.lang.bill_ob_vr_inviter_totals}</th>
+        <th class="align-center">{$Think.lang.bill_os_store_costtotals}</th>
+        
+        <th class="align-center">{$Think.lang.bill_os_result_totals}</th>
+        <th class="align-center">{$Think.lang.bill_out_date}</th>
+        <th class="align-center">{$Think.lang.bill_state}</th>
+        <th class="align-center">{$Think.lang.store_name}</th>
+        <th class="align-center">{$Think.lang.ds_handle}</th>
+      </tr>
+    </thead>
+    <tbody>
+        {notempty name="bill_list"}
+        {foreach name="bill_list" item="bill_info"}
+        <tr class="hover">
+            <td>{$bill_info.ob_no}</td>
+            <td class="nowrap align-center">{$bill_info.ob_startdate|date='Y-m-d',###}</td>
+            <td class="nowrap align-center">{$bill_info.ob_enddate|date='Y-m-d',###}</td>
+            <td class="align-center">{$bill_info.ob_order_totals}</td>
+            <td class="align-center">{$bill_info.ob_shipping_totals}</td>
+            <td class="align-center">{$bill_info.ob_commis_totals}</td>        
+            <td class="align-center">{$bill_info.ob_order_return_totals}</td>        
+            <td class="align-center">{$bill_info.ob_commis_return_totals}</td> 
+            <td class="align-center">{$bill_info.ob_inviter_totals}</td>
+            <td class="align-center">{$bill_info.ob_vr_order_totals}</td>
+            <td class="align-center">{$bill_info.ob_vr_order_return_totals}</td>
+            <td class="align-center">{$bill_info.ob_vr_commis_totals}</td>
+            <td class="align-center">{$bill_info.ob_vr_commis_return_totals}</td>
+            <td class="align-center">{$bill_info.ob_vr_inviter_totals}</td>
+            <td class="align-center">{$bill_info.ob_store_cost_totals}</td>    
+            
+            <td class="align-center">{$bill_info.ob_result_totals}</td>
+            <td class="align-center">{$bill_info.ob_createdate|date='Y-m-d',###}</td>
+            <td class="align-center">{:get_bill_state($bill_info['ob_state'])}</td>
+            <td class="align-center">{$bill_info.ob_store_name}<br/>id:{$bill_info.ob_store_id}</td>
+            <td class="align-center">
+                <a href="javascript:dsLayerOpen('{:url('Bill/show_bill',['ob_no'=>$bill_info.ob_no])}','{$Think.lang.ds_view}-{$bill_info.ob_no}')" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+            <td colspan="19">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+    </tbody>
+    
+  </table>
+  <div>{$show_page}</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('#bill_month').datepicker({dateFormat:'yy-mm'});
+});
+</script> 

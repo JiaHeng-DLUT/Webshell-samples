@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    (¯`·._.·(¯`·._.· Fruity Theme Manifest  ·._.·´¯)·._.·´¯)
+
+    Base configuration for Fruity Theme.
+    The content of this file is imported into DB when you install the template.
+
+-->
+<config>
+    <!-- Those metadata are displayed in the theme configuration page.  -->
+    <metadata>
+        <name>Fruity</name>
+        <title>Fruity Theme</title>
+        <creationDate>08/01/2016</creationDate>
+        <author>Louis-Sébastien Gac Artigas</author>
+        <authorEmail>louis.gac@limesurvey.org</authorEmail>
+        <authorUrl>http://www.limesurvey.org</authorUrl>
+        <copyright>Copyright (C) 2005 - 2016 LimeSurvey Gmbh, Inc. All rights reserved.</copyright>
+        <license>GNU General Public License version 2 or later</license>
+        <version>3.0.1</version>
+        <apiVersion>3</apiVersion>
+        <description><![CDATA[<strong>LimeSurvey Fruity Theme</strong><br>A fruity theme for a flexible use. This theme offers monochromes variations and many options for easy customizations.]]></description>
+        <last_update>2018-06-12 16:26:42</last_update>
+        <extends>vanilla</extends>
+    </metadata>
+
+    <!--
+        Here the list of the css/js files to add to the template package.
+        About packages in Yii: http://www.yiiframework.com/doc/api/1.1/CClientScript#packages-detail
+        "css/variations/sea_green.css" will be updated via the theme variation options
+
+        NOTE: The "add" tag also count as a "replace" tag.
+              Eg: You can't add a file with the same name as a file in the mother theme. It will always replace it. You must use a diffrent file name.
+              Eg: Vanilla manifest already has "<add>css/theme.css</add>". So here, if you use "<add>css/theme.css</add>" it will replace the vanilla css/theme.css
+
+        NOTE: If a file in a mother theme, you don't need to add it here again.
+              Eg: css/ajaxify.css is already added in vanilla, this theme doesn't replace it, so ne need to add it here.
+                  Even if no mention at all about  "css/ajaxify.css" is made here, it will be added because it's in the mother theme configuration
+
+        NOTE: To easy test changes in config file, you can force the use of the XML file rather than DB. To do so, turn debug mode on, and in config.php config array, on bottom of debug mode, add:
+              'force_xmlsettings_for_survey_rendering' => true,
+
+              Then, you will not need anymore to reset your theme each time you change the config file.
+              But, once turning the setting off, You will still must reset the theme to the changes are pushed to DB 
+    -->
+    <files>
+        <css>
+            <add>css/variations/sea_green.css</add>
+            <replace>css/animate.css</replace>
+            <replace>css/theme.css</replace>
+            <replace>css/custom.css</replace>
+        </css>
+        <js>
+            <replace>scripts/theme.js</replace>
+            <replace>scripts/ajaxify.js</replace>
+            <replace>scripts/custom.js</replace>
+        </js>
+        <print_css>
+            <replace>css/print_theme.css</replace>
+        </print_css>
+    </files>
+
+    <!-- You can add here any option you want. It will be available in twig file via aSurveyInfo.options.youroptionname -->
+    <!-- eg: Ajaxmode: will be available with aSurveyInfo.options.ajaxmode -->
+    <!-- for animations, see https://daneden.github.io/animate.css/ -->
+    <!-- for checkbox icons, use the Unicode of the charcter (eg: http://fontawesome.io/icon/check/ is f00c ) -->
+    <options>
+        <ajaxmode>off</ajaxmode>
+        <brandlogo>on</brandlogo>
+        <brandlogofile>./files/logo.png</brandlogofile>
+        <container>on</container>
+        <backgroundimage>off</backgroundimage>
+        <backgroundimagefile>./files/pattern.png</backgroundimagefile>
+        <animatebody>off</animatebody>
+        <bodyanimation>fadeInRight</bodyanimation>
+        <bodyanimationduration>500</bodyanimationduration>
+        <animatequestion>off</animatequestion>
+        <questionanimation>flipInX</questionanimation>
+        <questionanimationduration>500</questionanimationduration>
+        <animatealert>off</animatealert>
+        <alertanimation>shake</alertanimation>
+        <alertanimationduration>500</alertanimationduration>
+        <font>noto</font>
+        <bodybackgroundcolor>#ffffff</bodybackgroundcolor>
+        <fontcolor>#444444</fontcolor>
+        <questionbackgroundcolor>#ffffff</questionbackgroundcolor>
+        <questionborder>on</questionborder>
+        <questioncontainershadow>on</questioncontainershadow>
+        <checkicon>f00c</checkicon>
+        <animatecheckbox>on</animatecheckbox>
+        <checkboxanimation>rubberBand</checkboxanimation>
+        <checkboxanimationduration>500</checkboxanimationduration>
+        <animateradio>on</animateradio>
+        <radioanimation>zoomIn</radioanimation>
+        <radioanimationduration>500</radioanimationduration>
+        <zebrastriping>off</zebrastriping>
+        <stickymatrixheaders>off</stickymatrixheaders>
+        <greyoutselected>off</greyoutselected>
+        <hideprivacyinfo>off</hideprivacyinfo>
+        <crosshover>off</crosshover>
+        <showpopups>1</showpopups>
+        <fixnumauto>off</fixnumauto>
+    </options>
+
+    <!-- Engine configuration is the very same as vanilla  -->
+
+
+</config>

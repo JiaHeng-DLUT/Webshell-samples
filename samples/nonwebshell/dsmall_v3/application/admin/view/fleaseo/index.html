@@ -1,0 +1,107 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>SEO设置</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+<div class="fixed-empty"></div>
+  <form id="form1" method="post" enctype="multipart/form-data" name="form1">
+    <table class="ds-default-table">
+      <tbody>
+        <tr>
+          <td colspan="2" class="required"><label for="flea_site_title">闲置首页标题:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><input id="flea_site_title" name="flea_site_title" value="{$list_setting.flea_site_title}" class="txt" type="text" /></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label for="flea_site_description">闲置首页描述:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><textarea name="flea_site_description" rows="6" class="tarea" id="flea_site_description">{$list_setting.flea_site_description}</textarea></td>
+          <td class="vatop tips"><span class="vatop rowform">{$Think.lang.site_description_notice}</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required">闲置首页关键字:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><input id="flea_site_keywords" name="flea_site_keywords" value="{$list_setting.flea_site_keywords}" class="txt" type="text" /></td>
+          <td class="vatop tips"><span class="vatop rowform">{$Think.lang.site_keyword_notice}</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="tfoot">
+          <td colspan="2" ><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+  </div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+// 模拟网站LOGO上传input type='file'样式
+$(function(){
+    var textButton="<input type='text' name='textfield' id='textfield1' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />"
+    $(textButton).insertBefore("#site_logo");
+    $("#site_logo").change(function(){
+        $("#textfield1").val($("#site_logo").val());
+    });
+// 上传图片类型
+    $('input[class="type-file-file"]').change(function(){
+        var filepatd=$(this).val();
+        var extStart=filepatd.lastIndexOf(".");
+        var ext=filepatd.substring(extStart,filepatd.lengtd).toUpperCase();
+        if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+            layer.alert("{$Think.lang.default_img_wrong}");
+            $(this).attr('value','');
+            return false;
+        }
+    });
+});
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function() {
+            if ($("#form1").valid()) {
+                $("#form1").submit();
+            }
+        });
+        $('#form1').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules: {
+                flea_site_title : {
+                    maxlength:30
+                },
+                flea_site_description : {
+                    maxlength:100
+                },
+                flea_site_keywords : {
+                    maxlength:30
+                }
+            },
+            messages: {
+                flea_site_title : {
+                    maxlength:  '闲置首页标题文本个数不能大于30'
+                },
+                flea_site_description : {
+                    maxlength:  '闲置首页描述文本个数不能大于100'
+                },
+                flea_site_keywords : {
+                    maxlength:  '闲置首页关键字文本个数不能大于30'
+                }
+            }
+        });
+    });
+</script>

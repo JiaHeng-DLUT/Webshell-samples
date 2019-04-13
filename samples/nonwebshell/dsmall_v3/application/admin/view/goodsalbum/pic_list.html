@@ -1,0 +1,101 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>图片列表</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.g_album_keyword}</dt>
+                <dd><input class="txt" name="keyword" id="keyword" value="{$Request.get.keyword}" type="text"></dd>
+            </dl>
+            <div class="btn_group">
+                {if $store_name!=''  && !empty($albumpic_list)}
+                <a class="btn btn-mini" target="_blank" href="{:url('home/Store/index',['store_id'=>$albumpic_list.0.store_id])}"><span>{$store_name}</span></a>
+                {/if}
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Goodsalbum/pic_list',['aclass_id'=>$Request.param.aclass_id])}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    
+        <table class="ds-default-table">
+            <tbody>
+            {notempty name="albumpic_list"}
+            <tr>
+                <td colspan="20">
+                    <ul class="thumblists">
+                        {foreach name="albumpic_list" item="v"}
+                        <li class="picture" id="ds_row_{$v.apic_id}">
+                            <div class="size-64x64">
+                                <span class="thumb">
+                                    <i></i>
+                                    {notempty name="v.apic_cover"}
+                                    <a data-lightbox="lightbox-image" href="{:goods_cthumb($v.apic_cover,1280,$v.store_id)}" rel="gal">
+                                        <img title='{$v.apic_uploadtime|date="Y-m-d",###}<br>{$v.apic_spec}px<br>{:number_format($v.apic_size/1024,2)}k' width="64" height="64" class="tip" src="{:goods_cthumb($v.apic_cover,240,$v.store_id)}">
+                                    </a>
+                                    {else}
+                                    <img height="64" src="" max-height='70px' max-width="70px">
+                                    {/notempty}
+                                </span>
+                            </div>
+                            <p>
+                                <span><input class="checkitem" type="checkbox" name="delbox[]" value="{$v.apic_id}"></span><span><a href="javascript:dsLayerConfirm('{:url('Goodsalbum/del_album_pic',['apic_id'=>$v.apic_id])}','{$Think.lang.ds_ensure_del}',{$v.apic_id})">{$Think.lang.ds_del}</a></span>
+                            </p>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </td>
+            </tr>
+            {else /}
+            <tr class="no_data">
+                <td colspan="15">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td class="w48"><input id="checkallBottom" class="checkall" type="checkbox"/></td>
+                <td colspan="16">
+                    <label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    <a class="btn btn-small" href="javascript:void(0);" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+         {$show_page}
+
+</div>
+<script>
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script>
+    $(function () {
+        $('.tip').poshytip({
+            className: 'tip-yellowsimple',
+            alignTo: 'target',
+            alignX: 'center',
+            alignY: 'bottom',
+            offsetX: 0,
+            offsetY: 5,
+            allowTipHover: false
+        });
+    });
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Goodsalbum/del_album_pic.html?apic_id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

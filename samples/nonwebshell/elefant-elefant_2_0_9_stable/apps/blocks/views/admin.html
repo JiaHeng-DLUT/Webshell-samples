@@ -1,0 +1,50 @@
+{! admin/util/twemoji?body=true !}
+
+{% if User::require_acl ('admin/edit', 'admin/add') %}
+<p><a href="/blocks/add">{"Add Block"}</a></p>
+{% end %}
+
+<p style="float: left">
+{! navigation/pager?style=results&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+</p>
+
+{% if total > $data->limit %}
+<div style="float: right">
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+</div>
+{% end %}
+
+<p>
+<table width="100%">
+	<tr>
+		<th width="25%">{"ID"}</th>
+		<th width="40%">{"Title"}</th>
+		<th width="20%">{"Access"}</th>
+		<th width="15%">&nbsp;</th>
+	</tr>
+{% foreach blocks %}
+	<tr>
+		<td>{{ loop_value->id }}</td>
+		<td>{{ loop_value->title }}</td>
+		<td>{{ loop_value->access|ucfirst }}</td>
+		<td style="text-align: right">
+			{% if loop_value->locked %}
+			{"Editing Locked"}
+			{% else %}
+				{% if User::require_acl ('admin/edit') %}
+				<a href="/blocks/edit?id={{ loop_value->id }}">{"Edit"}</a>
+				{% end %}
+				{% if User::require_acl ('admin/delete') %}
+				|
+				<a href="/blocks/delete" data-id="{{ loop_value->id }}" onclick="return $.confirm_and_post (this, '{"Are you sure you want to delete this block?"}');">{"Delete"}</a>
+				{% end %}
+			{% end %}
+		</td>
+	</tr>
+{% end %}
+</table>
+</p>
+
+{% if total > $data->limit %}
+{! navigation/pager?style=numbers&url=[url]&total=[total]&count=[count]&limit=[limit] !}
+{% end %}

@@ -1,0 +1,62 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+class City extends Model
+{
+   protected $autoCheckFields = true;
+
+//是否存在地区名
+   public function isCityName($name){
+     $where['name'] = $name;
+     $result = $this->where($where)->find();
+     if($result){
+       return true;
+     }else{
+       return false;
+     }
+   }
+   public function addCity($post){
+       if(empty($post) || !is_array($post)){ 
+          return false;
+        }
+        $data['pid'] =   $post['pid']?$post['pid']:0;
+        $data['name'] =   $post['name']?$post['name']:'';
+        if($this->data($data)->save()){
+            return true;
+        }else{
+	    	    return false;
+	    }
+ 
+
+  }
+ public function getCityName($id){
+    $where['id'] = $id;
+    $data = $this->allowField('name')->where($where)->find();
+    if($data){
+      return $data;
+    }else{
+      return false;
+    }
+ }
+   public function updateCity($post){
+        if(empty($post) || !is_array($post) ){ 
+          return false;
+        }
+
+        if($this->update($post)){
+            return true;
+        }else{
+            return false;
+       }
+ }
+ 
+   public function delCity($post){       
+        if($this->destroy($post)){
+           return true;
+        }else{
+          return false;
+         }
+ 
+  }
+
+}

@@ -1,0 +1,71 @@
+{extend name="default/base/base_member" /}
+
+{block name="member_btn"}
+<a href="javascript:void(0)"  class="dsm-btn dsm-btn-orange" onclick="go('{:url('Memberflea/add_goods')}');" title="{$Think.lang.store_goods_index_new_goods}">{$Think.lang.store_goods_index_new_flea}</a>
+{/block}
+{block name="member_main"}
+
+
+
+
+<form method="get" action="">
+    <table class="dsm-search-table">
+      <tr>
+        <td>&nbsp;</td>
+        <th style="width:90px;">{$Think.lang.flea_goods_name}{$Think.lang.ds_colon}</th>
+        <td class="w150"><input type="text" class="text" name="keyword" value="{$Request.param.keyword}"/></td>
+        <td class="w90 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+      </tr>
+    </table>
+  </form>
+<table class="dsm-default-table">
+    <thead>
+        <tr ds_type="table_header">
+            <th class="w30"></th>
+            <th class="w70"></th>
+            <th class="tl">{$Think.lang.flea_goods_name}</th>
+            <th class="w200">{$Think.lang.flea_goods_gc_name}</th>
+            <th class="w100">{$Think.lang.flea_goods_price}</th>
+            <th class="w90">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="list_goods"}
+        {foreach name="list_goods" item="val"}
+        <tr class="bd-line">
+            <td></td>
+            <td><div class="goods-pic-small"> <span class="thumb size60"> <i></i><a href="{:url('Fleagoods/index',['goods_id'=>$val.goods_id])}" target="_blank"><img height="50" width="50" src="{notempty name='val.goods_image'}{$val.goods_image}{else /}{:goods_thumb(array())}{/notempty}" onload="javascript:ResizeImage(this,60,60);" /></a></span></div></td>
+            <td class="tl"><dl class="goods-name">
+                    <dt>{$val.goods_name}</dt>
+                </dl></td>
+            <td>{$val.fleaclass_name}</td>
+            <td>{$val.goods_store_price}</td>
+            <td><p><a href="{:url('Memberflea/edit_goods',['goods_id'=>$val.goods_id])}">{$Think.lang.store_goods_index_edit_flea}</a></p>
+                <p><a href="javascript:void(0)" onclick="ds_ajaxget_confirm('{:url('Memberflea/flea_del',['goods_id'=>$val.goods_id])}','{$Think.lang.ds_ensure_del}');"class="dsu-btn2 mt5">{$Think.lang.ds_del}</a></p></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord">
+                <div class="warning-option">
+                    <i>&nbsp;</i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+
+
+
+
+
+{/block}
+

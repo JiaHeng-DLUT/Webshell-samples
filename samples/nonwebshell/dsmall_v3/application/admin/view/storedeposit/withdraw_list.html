@@ -1,0 +1,96 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_store_deposit}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    
+
+    <form method="get" id="formSearch">
+        <div class="ds-search-form">
+            
+            <dl>
+                <dt>{$Think.lang.admin_storedeposit_recordstate}</dt>
+                <dd>
+                    <select id="paystate_search" name="paystate_search">
+                        <option value="">{$Think.lang.ds_please_choose}</option>
+                        <option value="2" {if condition="$Request.param.paystate_search eq '2'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_wait}</option>
+                        <option value="3" {if condition="$Request.param.paystate_search eq '3'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_agree}</option>
+                        <option value="4" {if condition="$Request.param.paystate_search eq '4'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_reject}</option>
+                        <option value="5" {if condition="$Request.param.paystate_search eq '5'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_payed}</option>
+                        <option value="6" {if condition="$Request.param.paystate_search eq '6'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_cancel}</option>
+                        <option value="7" {if condition="$Request.param.paystate_search eq '7'"}selected="selected"{/if}>{$Think.lang.admin_storedeposit_paying}</option>
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.getElementById('formSearch').submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {if $filtered}
+                <a href="{:url('Storedeposit/withdraw_list')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                {/if}
+            </div>
+        </div>
+
+    </form>
+
+
+    <table class="ds-default-table">
+        <thead>
+        <tr class="thead">
+            <th>&nbsp;</th>
+            <th>{$Think.lang.admin_storedeposit_membername}</th>
+            <th class="align-center">{$Think.lang.admin_storedeposit_apptime}</th>
+            <th class="align-center">{$Think.lang.admin_storedeposit_cash_price}({$Think.lang.currency_zh})</th>
+            <th class="align-center">{$Think.lang.admin_storedeposit_cash_shoukuanaccount}</th>
+            <th class="align-center">{$Think.lang.admin_storedeposit_recordstate}</th>
+            <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {notempty name="withdraw_list"}
+        {foreach name="withdraw_list" item="v" key="k" }
+        <tr class="hover">
+            <td class="w12">&nbsp;</td>
+            <td>{$v.seller_name}</td>
+            <td class="nowrap align-center">{notempty name="$v.storedepositlog_add_time"}{$v.storedepositlog_add_time|date='Y-m-d H:i:s',###}{/notempty}</td>
+            <td class="align-center">{if $v.storedepositlog_state == '2' || $v.storedepositlog_state == '3' || $v.storedepositlog_state == '4'}{$v.store_freeze_deposit}{else}{$v.store_payable_deposit}{/if}</td>
+            <td class="align-center">{$v.storedepositlog_desc}</td>
+            <td class="align-center">{if $v.storedepositlog_state==2}{$Think.lang.admin_storedeposit_wait}{elseif $v.storedepositlog_state==3}{$Think.lang.admin_storedeposit_agree}{elseif $v.storedepositlog_state==4}{$Think.lang.admin_storedeposit_reject}{elseif $v.storedepositlog_state==5}{$Think.lang.admin_storedeposit_payed}{elseif $v.storedepositlog_state==6}{$Think.lang.admin_storedeposit_cancel}{elseif $v.storedepositlog_state==7}{$Think.lang.admin_storedeposit_paying}{/if}</td>
+            <td class="w90 align-center">
+                {if $v.storedepositlog_state==2}
+                <a href="javascript:dsLayerOpen('{:url('Storedeposit/withdraw_view',['id'=>$v.storedepositlog_id])}','{$Think.lang.ds_verify}')" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_verify}</a>
+                {/if}
+                {if $v.storedepositlog_state==7}
+                <a href="javascript:dsLayerOpen('{:url('Storedeposit/recharge_view',['id'=>$v.storedepositlog_id])}','{$Think.lang.ds_handle}')" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_handle}</a>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+            <td colspan="10">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+        </tbody>
+    </table>
+    {$show_page}
+</div>
+
+<script language="javascript">
+    $(function(){
+        $('#stime').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#etime').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+</script>
+

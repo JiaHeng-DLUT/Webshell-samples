@@ -1,0 +1,159 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_delivery}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form id="delivery_form" method="post" action="{:url('Delivery/save_edit')}">
+        <input type="hidden" name="did" value="{$dlyp_info.dlyp_id}">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td colspan="2" class="required">{$Think.lang.delivery_username}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$dlyp_info.dlyp_name}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_truename}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$dlyp_info.dlyp_truename}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_mob_phone}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    <input class="txt" type="text" name="dmobile" value="{$dlyp_info.dlyp_mobile}">
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_telephone}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    <input class="txt" type="text" name="dtelephony" value="{$dlyp_info.dlyp_telephony}">
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_name}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    <input class="txt" type="text" name="daddressname" value="{$dlyp_info.dlyp_addressname}">
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.region}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$dlyp_info.dlyp_area_info}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.address}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    <input class="txt" type="text" name="daddress" value="{$dlyp_info.dlyp_address}">
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_idcard}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$dlyp_info.dlyp_idcard}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_idcardimage}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><a href="{$dlyp_info.dlyp_idcardimage}" target="_blank"><img src="{$dlyp_info.dlyp_idcardimage}"></a></td>
+                <td class="vatop tips">{$Think.lang.delivery_idcardimage_tips}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_add_time}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$dlyp_info.dlyp_addtime|date="Y-m-d H:i:s",###}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.delivery_passwd}：</td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="txt" name="dpasswd"></td>
+                <td class="vatop tips">{$Think.lang.delivery_passwd_tips}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required">{$Think.lang.ds_status}：</td>
+            </tr>
+            <?php if (in_array($dlyp_info['dlyp_state'], array(1,2))) {?>
+            <tr class="noborder">
+                <td class="vatop rowform onoff">
+                    <label for="site_status1" class="cb-enable {if $dlyp_info.dlyp_state == '1'}selected{/if}" ><span>{$Think.lang.ds_open}</span></label>
+                    <label for="site_status0" class="cb-disable {if $dlyp_info.dlyp_state == '0'}selected{/if}" ><span>{$Think.lang.ds_close}</span></label>
+                    <input id="site_status1" name="dstate" {if $dlyp_info.dlyp_state == '1'}checked="checked"{/if}  value="1" type="radio">
+                    <input id="site_status0" name="dstate" {if $dlyp_info.dlyp_state == '0'}checked="checked"{/if} value="0" type="radio"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <?php } else {?>
+            <tr class="noborder">
+                <td class="vatop rowform onoff"><label for="site_status1" class="cb-enable selected" ><span>{$Think.lang.ds_pass}</span></label>
+                    <label for="site_status20" class="cb-disable" ><span>{$Think.lang.ds_fail}</span></label>
+                    <input id="site_status1" name="dstate" checked="checked" value="1" type="radio">
+                    <input id="site_status20" name="dstate" value="20" type="radio"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr style="display: none;" dstype="fail_reason">
+                <td colspan="2" class="required">{$Think.lang.delivery_fail_reason}：</td>
+            </tr>
+            <tr class="noborder" style="display: none;" dstype="fail_reason">
+                <td class="vatop rowform" dstype="fail_reason">
+                    <textarea id="fail_reason" class="tarea" rows="6" name="fail_reason"></textarea>
+                </td>
+            </tr>
+            <?php }?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    $(function(){
+        $("#submitBtn").click(function(){
+            $("#delivery_form").submit();
+        });
+        $('input[name="dstate"]').change(function(){
+            _val = $('input[name="dstate"]:checked').val();
+            if (_val == 20) {
+                $('[dstype="fail_reason"]').show();
+            } else {
+                $('[dstype="fail_reason"]').hide();
+            }
+        });
+    });
+</script>

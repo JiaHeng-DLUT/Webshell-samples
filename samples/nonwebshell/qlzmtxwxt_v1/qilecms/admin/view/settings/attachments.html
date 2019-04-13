@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>附件设置</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<!-- 后台面包导航 -->
+{:get_admin_breadcrumb()}
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+
+        <form class="layui-form" action="">
+               <input type="hidden"  name="groupname" value="{$Request.action}">
+           
+ 
+<div class="layui-tab layui-tab-brief " lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">上传设置</li>
+    <li >缩略图设置</li>
+    <li >水印设置</li>
+  </ul>
+
+
+ 
+
+ 
+
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show"> 
+          <div class="layui-form-item">
+              <label class="layui-form-label">图片保存路径</label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[images_path]" lay-verify="images_path" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.images_path}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认路径：/public/upload/images/')}</div>
+            </div>
+ 
+              <div class="layui-form-item">
+              <label class="layui-form-label">允许上传的文件类型 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[images_ext]" lay-verify="images_ext" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.images_ext}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('允许上传的图片类型,用逗号隔开')}</div>
+            </div>
+
+               <div class="layui-form-item">
+              <label class="layui-form-label">图片上传大小限制 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[images_size]" lay-verify="images_size" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.images_size}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认 256kb =256000 b')}</div>
+            </div>  
+
+
+          <div class="layui-form-item">
+              <label class="layui-form-label">视频保存路径</label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[videos_path]" lay-verify="videos_path" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.videos_path}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认路径：/public/upload/videos/')}</div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">允许视频上传的类型 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[videos_ext]" lay-verify="videos_ext" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.videos_ext}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('允许上传的视频类型,用逗号隔开')}</div>
+            </div>
+               <div class="layui-form-item">
+              <label class="layui-form-label">视频上传大小限制 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[videos_size]" lay-verify="videos_size" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.videos_size}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认 256kb =256000 b')}</div>
+            </div>
+
+         <div class="layui-form-item">
+              <label class="layui-form-label">文件保存路径</label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[files_path]" lay-verify="files_path" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.files_path}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认路径：/public/upload/files/')}</div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">允许上传的文件类型 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[files_ext]" lay-verify="files_ext" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.files_ext}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('允许上传的文件类型')}</div>
+            </div>
+               <div class="layui-form-item">
+              <label class="layui-form-label">文件上传大小限制 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="data[files_size]" lay-verify="files_size" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.files_size}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('默认 256kb =256000 b')}</div>
+            </div>
+    </div>
+    <div class="layui-tab-item"> 
+    <div class="layui-form-item">
+              <label class="layui-form-label">产品中图缩略大小 </label>
+              <div class="layui-input-inline" style="width:110px">
+                <input type="text" name="data[thumb_width]" lay-verify="thumb_width" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.thumb_width}">
+              </div>
+               <div class="layui-form-mid layui-word-aux">X</div>
+             <div class="layui-input-inline" style="width:110px">
+                <input type="text" name="data[thumb_height]" lay-verify="thumb_height" placeholder="" autocomplete="off" class="layui-input" value="{$settings.attachments.thumb_height}">
+              </div>
+
+              <div class="layui-form-mid layui-word-aux">{:about('图片缩略大小')}</div>
+            </div> 
+           </div>
+    <div class="layui-tab-item">
+               <div class="layui-form-item">
+                <label class="layui-form-label">水印类型</label>
+                <div class="layui-input-block">
+                  <input type="radio" name="data[water_status]" value="1" {if $settings.attachments.water_status ==1}checked{/if} title="开启" checked="">
+                  <input type="radio" name="data[water_status]" value="0" {if $settings.attachments.water_status ==0}checked{/if} title="关闭">
+                </div>
+              </div>   
+
+              <div class="layui-form-item">
+              <label class="layui-form-label">水印位置</label>
+              <div class="layui-input-inline" style="width:350px;">
+                 <input type="radio" name="data[water_position]" value="1" title="左上角" >
+                 <input type="radio" name="data[water_position]" value="2" title="上居中" >
+                 <input type="radio" name="data[water_position]" value="3" title="右上角" >
+                 <input type="radio" name="data[water_position]" value="4" title="左居中" >
+                 <input type="radio" name="data[water_position]" value="5" title="居中间"   >
+                 <input type="radio" name="data[water_position]" value="6" title="右居中" >
+                 <input type="radio" name="data[water_position]" value="6" title="左下角" >
+                 <input type="radio" name="data[water_position]" value="6" title="下居中" >
+                 <input type="radio" name="data[water_position]" checked value="6" title="右下角" >
+              </div>
+              <div class="layui-form-mid layui-word-aux">{:about('水印位置')}</div>
+            </div></div>
+
+<!--     <div class="layui-tab-item">内容4</div>
+    <div class="layui-tab-item">内容5</div> -->
+  </div>
+
+    
+
+           <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+              <div class="layui-input-block">
+                  <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="form">确 定</button>
+              </div>
+            </div>
+
+         
+</form>
+
+ </div>
+                
+  
+
+
+
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(form)', function(data){
+    // layer.msg(JSON.stringify(data.field));
+    var data =data.field;
+    $.post("{:url('settings/update')}",data,function(json){
+       if(json.code == 0){
+           layer.msg(json.msg);
+       }else if(json.code == -1){
+           layer.msg(json.msg);
+       }
+    });
+    return false;
+  });
+});
+</script>
+<script>
+$(function(){
+
+  $("#sendattachments").on("click",function(){
+       $(this).addClass('layui-btn-disabled').attr('disabled','true').html('发送中...');
+    var load = layer.load(2, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+     
+   var test_attachments =  $("#test_attachments").val();
+     $.post("{:url('attachments/test')}",{'test_attachments':test_attachments},function(json){
+      layer.close(load); //关闭加载弹窗
+      $("#sendattachments").html('发送测试邮件').removeAttr('disabled').removeClass('layui-btn-disabled');
+        if(json.code == 0){
+           layer.msg(json.msg);
+        }else{
+           layer.msg(json.msg);
+        }
+     });
+
+  });
+});
+</script>
+
+</body>
+
+</html>

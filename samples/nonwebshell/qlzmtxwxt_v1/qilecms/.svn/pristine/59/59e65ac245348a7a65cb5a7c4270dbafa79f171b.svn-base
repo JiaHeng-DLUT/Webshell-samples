@@ -1,0 +1,32 @@
+<?php
+//数据非空判断
+// error_reporting(0);
+// function is_empty($name){
+
+
+//   if(!isset($name)){
+//      return null;
+//   }else{
+//   	 return null;
+//   }
+	
+// }
+
+function about($content){
+ 
+ $html = '<i class="layui-icon">&#xe60b;</i> '.$content;
+ return $html;
+}
+
+function ql_link($content,$url){
+ $html = '<i class="layui-icon" style="font-size:10px;">&#xe64c;</i> <a href="'.$url.'" target="_blank">'.$content.'</a>';
+ return $html;
+}
+
+
+// function upload($url="",$type="images"){
+
+// echo  $html = @file_get_contents(QL_ROOT."qilecms/admin/view/tag/uploads_img.html");
+// return ;
+
+// }

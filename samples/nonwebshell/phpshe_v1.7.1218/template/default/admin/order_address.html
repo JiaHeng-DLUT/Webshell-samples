@@ -1,0 +1,31 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="120">订单编号</td>
+	<td>{$info['order_id']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收 货 人</td>
+	<td><input type="text" name="info[user_tname]" value="{$info['user_tname']}" class="inputall input150"></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">手机号码</td>
+	<td><input type="text" name="info[user_phone]" value="{$info['user_phone']}" class="inputall input150" /></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收货地址</td>
+	<td><input type="text" name="info[user_address]" value="{$info['user_address']}" class="inputall input350" /></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">买家留言</td>
+	<td><textarea name="info[order_text]" style="width:355px;height:80px">{$info['order_text']}</textarea></td>
+</tr>
+</table>
+<div class="acenter mat30">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" value="提 交" class="tjbtn" />
+</div>
+</form>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

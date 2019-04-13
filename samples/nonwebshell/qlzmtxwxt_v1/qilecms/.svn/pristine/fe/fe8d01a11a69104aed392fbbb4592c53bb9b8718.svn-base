@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="__STATIC__/layui/css/layui.css"  media="all">
+
+<script src="__JS__/jquery.min.js" charset="utf-8"></script>
+<script src="ADMIN_JS/admin.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="ADMIN_CSS/style.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<span class="layui-breadcrumb">
+  <a href="javascript:;">首页</a>
+  <a href="javascript:;">导航设置</a>
+  <a href="javascript:;">后台导航</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+
+<div class="layui-form">
+  <table class="layui-table" id="nav-table">
+    <colgroup>
+      <col width="50">
+      <col width="200">
+      <col width="350">
+      <col width="120">
+      <col width="100">
+      <col width="100">
+      <col width="100">
+     <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th><input type="checkbox" name="selectAll"  lay-skin="primary" id="selectAll" lay-filter="selectAll" ></th>
+
+        <th>导航名称</th>
+        <th>链接地址</th>
+        <th>图标</th>
+        <th>新窗口</th>
+        <th>显示状态</th>
+        <th>手机显示</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+  {volist name="list" id="vo"}
+      <tr data-id="{$vo.id}" data-pid="{$vo.pid}" >
+        <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo.id}" title="" class="id"  > </td>
+
+        <td><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo.id}" value="{$vo.name}"></td>
+
+        <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo.id}" value="{$vo.url}"></td>
+
+        <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo.id}" value="{$vo.icon}"></td>
+
+
+
+        <td><input type="checkbox" class="target_{$vo.id}"  name="target" lay-skin="switch"  lay-filter="switchTarget" {if $vo['target'] ==1}checked{/if} lay-text="是|否"></td>
+
+        <td><input type="checkbox" class="status_{$vo.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo['status'] ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="checkbox" class="is_wap_{$vo.id}" name="is_wap" lay-skin="switch"  lay-filter="switchIs_wap" {if $vo['is_wap'] ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="text" name="order" lay-verify="order" autocomplete="off" placeholder="" class="layui-input order_{$vo.id}" value="{$vo.order}"></td>
+        <td>    <button class="layui-btn layui-btn-primary layui-btn-sm add-nav" data-url="{:url('nav/add',array('id'=>$vo['id']))}" ><i class="layui-icon">添加子导航</i></button>
+  
+    <button class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button></td>
+      </tr>
+ {/volist}
+
+ <button class="layui-btn layui-btn-danger" id="del-nav" > <i class="layui-icon">&#xe640;</i> 删除</button>
+    <button  class="layui-btn layui-btn-normal" id="add-one-nav" lay-filter="addnav" data-url="{:url('nav/add',array('id'=>0))}">增加主导航</button>
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+
+
+
+//监听全选
+form.on('checkbox(selectAll)', function(data){
+   // layer.alert(data.elem.checked);
+
+  if (data.elem.checked == true) { 
+    $("#selectAll").addClass("layui-btn-danger");
+       $(".id").each(function() {       
+           this.checked = "checked";
+             form.render('checkbox'); 
+        }); 
+   } else { 
+     $("#selectAll").removeClass("layui-btn-danger");
+      $(".id").each(function() { 
+         this.checked = false; 
+         form.render('checkbox');
+      }); 
+    } 
+
+});
+
+
+form.on('switch(switchTarget)', function(data){
+  console.log(data.elem.checked);
+  var id =$(this).parents("tr").attr("data-id");
+  var target = data.elem.checked;
+   if(target == true ){ target =1; }else{target = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"target":target},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+     });
+
+});
+form.render();
+form.on('switch(switchStatus)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var status = data.elem.checked;
+  if(status == true ){ status =1; }else{status = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"status":status},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+     });
+ 
+
+
+});
+
+form.render();
+form.on('switch(switchIs_wap)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var is_wap = data.elem.checked;
+   if(is_wap == true ){ is_wap =1; }else{is_wap = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"is_wap":is_wap},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+     });
+
+
+});
+form.render();
+form.on('submit(addnav)', function(data){
+  alert();
+ // $("#add-one-nav").bind("click",function(){
+
+ //          $("#nav-table").append('<tr class="one-nav"  style="background:#F7F7F7" data-pid="0"><td><input type="checkbox" name="id" lay-skin="primary"  value="" title="" class="id"  > </td>'
+ //            +'<td><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name" value=""></td>'
+ //             +'<td><input type="text"  class="layui-input url" value=""></td>'
+ //             +'<td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon" value=""></td>'
+ //             +'<td><input type="checkbox" name="switch" lay-skin="switch"></td>'
+ //             +'<td><input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget"  lay-text="是|否"></td>'
+ //             +'<td><input type="text"  class="layui-input sort" value="0" style="width:50px"></td>'
+ //             +'<td></td></tr>');
+ //        });
+
+});
+
+
+});
+
+
+ </script>
+
+<script>
+$(function(){
+    //导航删除
+    var id = [];
+    $("#del-nav").click(function(){
+          $(".id").each(function() {
+          if(this.checked == true){
+               id.push($(this).val()); 
+          }
+          }); 
+           
+     if(id.length == 0){
+        parent.layer.alert('你没有选中任何分类');
+     }else{
+         $.ajax({
+         type:'post',
+         data:{"id":id},
+         dataType:'json',
+         url:"{:url('nav/del')}",
+         success:function(json){
+          if(json.code == 0){
+            layer.msg(json.msg);
+              setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+              window.location.reload();//页面刷新
+          },1000);
+          }
+         }
+      });
+     }
+});
+
+
+  // 导航数据更新
+$("input").on("blur",function(){
+var id =$(this).parents("tr").attr("data-id");
+var pid = $(this).parents("tr").attr("data-pid");
+var name = $(".name_"+id).val();
+// var target = $(".target_"+id).attr('checked');
+var url = $(".url_"+id).val();
+
+// var status = $(".status_"+id).attr('checked');
+var order = $(".order_"+id).val();
+// console.log($(".target_"+id));
+    $.post('{:url("nav/update")}',{"id":id,"pid":pid,"name":name,"url":url,"order":order},function(json){
+        if(json.code == 0){
+          layer.msg(json.msg);
+        }
+   
+     }
+  );
+});
+
+
+
+
+
+// // 添加导航
+// $("#add-one-nav,.add-nav").bind("click",function(){
+//         var url = $(this).attr('data-url');
+//           //页面层
+//           parent.layer.open({
+//             type: 2,
+//             title: '添加导航',
+//             shadeClose: true,
+//             shade: 0.8,
+//             area: ['500px', '80%'],
+//             content: url //iframe的url
+//         }); 
+
+
+//     });
+
+});
+
+</script>
+</body>
+
+</html>

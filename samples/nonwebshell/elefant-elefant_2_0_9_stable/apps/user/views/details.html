@@ -1,0 +1,104 @@
+{! admin/util/dates !}
+{! admin/util/fontawesome !}
+
+<p>
+	<a href="/user/admin">&laquo; {"Back"}</a>
+	&nbsp;|&nbsp;
+	<a href="/user/edit?id={{id}}">{"Edit"}</a>
+	&nbsp;|&nbsp;
+	<a href="/user/delete?id={{id}}" onclick="return confirm ('{"Are you sure you want to delete this user?"}');">{"Delete"}</a>
+</p>
+
+{% if photo == '' %}
+	<img src="{{Appconf::user ('User', 'default_photo')}}" id="photo" />
+{% else %}
+	<img src="{{photo}}" align="left" id="photo" />
+{% end %}
+
+<p>
+	<b>{"Email"}:</b> <a href="mailto:{{email}}">{{email}}</a>
+	{% if phone != '' %}<br /><b>{"Phone"}:</b> {{phone}}{% end %}
+	{% if fax != '' %}<br /><b>{"Fax"}:</b> {{fax}}{% end %}
+	{% if website != '' %}<br /><b>{"Website"}:</b> <a href="{{website}}">{{website}}</a>{% end %}
+</p>
+
+<p>
+	<b>{"Company"}:</b> {{company}}<br />
+	<b>{"Title"}:</b> {{title}}
+</p>
+
+<p>
+	{{address}}{% if address2 != '' %},<br />{{address2}}{% end %}<br />
+	{{city}}, {{state|user\Data::state}}<br />
+	{{country|user\Data::country}} {{zip}}
+</p>
+
+{% if about != '' %}
+<p><b>{"About"}:</b><br />{{about}}</p>
+{% end %}
+
+<h3 class="print-only">{"Notes"}</h3>
+
+<div id="tabs" class="clear-photo">
+	<ul id="tab-list">
+		<li><a href="#tab-notes">{"Notes"}</a></li>
+		<li><a href="#tab-social">{"Social"}</a></li>
+	{% foreach tabs as _name, _content %}
+		<li><a href="#tab-{{_name|URLify::filter}}">{{_name|__}}</a></li>
+	{% end %}
+	</ul>
+
+	<div id="tab-notes"></div>
+	<div id="tab-social"></div>
+{% foreach tabs as _name, _content %}
+	<div id="tab-{{_name|URLify::filter}}">
+		<h3 class="print-only">{{_name}}</h3>
+		{{_content|none}}
+	</div>
+{% end %}
+</div>
+
+<script>
+var I18N = {
+	add_link: '{"Add Link"}',
+	add_note: '{"Add Note"}',
+	link_placeholder: '{"Link or handle"}',
+	service: '{"- service -"}',
+	edit: '{"Edit"}',
+	del: '{"Delete"}',
+	confirm_delete_link: '{"Are you sure you want to delete this link?"}',
+	confirm_delete_note: '{"Are you sure you want to permanently delete this note?"}',
+	link_deleted: '{"Link deleted."}',
+	note_deleted: '{"Note deleted."}',
+	link_added: '{"Link added."}',
+	note_added: '{"Note added."}'
+};
+</script>
+
+<script>
+$(function () {
+	$('#tabs').tabs ();
+});
+React.renderComponent (
+	LinkBox ({
+		init_url: '/user/api/link/{{id}}',
+		add_url: '/user/api/link/add',
+		del_url: '/user/api/link/delete',
+		user_id: {{id}},
+		current_user: {{User::val ('id')}},
+		i18n: I18N
+	}),
+	document.getElementById ('tab-social')
+);
+React.renderComponent (
+	NoteBox ({
+		init_url: '/user/api/note/{{id}}',
+		add_url: '/user/api/note/add',
+		del_url: '/user/api/note/delete',
+		user_id: {{id}},
+		current_user: {{User::val ('id')}},
+		i18n: I18N
+	}),
+	document.getElementById ('tab-notes')
+);
+</script>

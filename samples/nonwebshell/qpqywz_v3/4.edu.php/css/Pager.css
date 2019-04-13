@@ -1,0 +1,40 @@
+﻿#pager{text-align:center;}
+#pager ul.pages {
+	display: block;
+	border: none;
+	text-transform: uppercase;
+	font-size: 12px;
+	margin: 10px 0 50px;
+	padding: 0;
+	font: normal 13px "Microsoft YaHei";
+	font-family: "Microsoft YaHei","微软雅黑","sans-serif";
+}
+#pager ul.pages li {
+	padding: 4px 7px;
+	text-decoration: none;
+	border-left-width: 0;
+	list-style: none;
+	background-color: #eee;
+	color: #888;
+	margin: 0 3px 0 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	display:inline;
+}
+#pager ul.pages li:hover {
+	color: #fff;
+	background-color: #bbbbbb;
+}
+#pager ul.pages li.pgNext {
+}
+#pager ul.pages li.pgEmpty {
+	display: none /*border:1px solid #eee;
+color:#eee;
+*/;
+}
+#pager ul.pages li.pgCurrent {
+	color: #fff;
+	font-weight: 700;
+	background-color: #bbbbbb;
+}

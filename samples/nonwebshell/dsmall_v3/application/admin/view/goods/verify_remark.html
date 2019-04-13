@@ -1,0 +1,51 @@
+{include file="public/header" /}
+<form method="post" name="remark_form" id="remark_form" action="{:url('Goods/goods_verify')}">
+    <input type="hidden" value="{$commonids}" name="commonids">
+    <table class="ds-default-table nobdb">
+        <tbody>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>审核通过:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform onoff">
+                    <label for="rewrite_enabled_1"  class="cb-enable selected" title="{$Think.lang.ds_yes}>"><span>{$Think.lang.ds_yes}</span></label>
+                    <label for="rewrite_disabled_2" class="cb-disable" title="{$Think.lang.ds_no}"><span>{$Think.lang.ds_no}</span></label>
+                    <input id="rewrite_enabled_1" name="verify_state"  value="1" type="radio" checked="checked">
+                    <input id="rewrite_disabled_2" name="verify_state" value="0" type="radio">
+                </td>
+
+            </tr>
+            <tr dstype="reason" style="display: none;">
+                <td colspan="2" class="required"><label for="verify_reason">未通过理由:</label></td>
+            </tr>
+            <tr class="noborder" dstype="reason" style="display :none;">
+                <td class="vatop rowform"><textarea rows="6" class="tarea" cols="60" name="verify_reason" id="verify_reason"></textarea></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="tfoot">
+                <td colspan="2">
+                    <a href="JavaScript:void(0);" class="btn" dstype="btn_submit">{$Think.lang.ds_submit}</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+<script>
+      $(function() {
+          $('a[dstype="btn_submit"]').click(function() {
+              $('#remark_form').submit();
+          });
+      });
+</script>
+<script>
+    $(function() {
+        $('input[name="verify_state"]').click(function() {
+            if ($(this).val() == 1) {
+                $('tr[dstype="reason"]').hide();
+            } else {
+                $('tr[dstype="reason"]').show();
+            }
+        });
+    });
+</script>

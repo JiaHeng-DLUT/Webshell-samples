@@ -1,0 +1,21 @@
+<div id="replydivbox-{$replydata['id']}" class="pk-row pk-padding-top-15" onmouseover="this.style.backgroundColor='#F8F8FF'" onmouseout="this.style.backgroundColor=''" style="border-bottom: solid 1px #E0E0E0">
+	<div class="pk-w-md-1 pk-w-sm-2 pk-padding-0" style="height: 42px">
+		<img class="pk-radius-all pk-display-block pk-margin-left-right-auto pk-cursor-pointer" src="userhead/{$replyuserdata['id']}.png" alt="{$replyuserdata['username']}" style="width: 42px;height: 42px" onerror="this.src='template/default/img/randhead/{rand(1,Cnum($_G['SET']['TEMPLATE_DEFAULT_RANDHEADCOUNT'],24))}.png'" onclick="window.open('{ReWriteURL('user','id={$replydata['uid']}&page=1')}','_blank')">
+		<div class="pk-text-center">
+			<div class="pk-badge pk-background-color-warning pk-text-xs pk-radius-4 pk-cursor-default pk-max-width-all">{$replydata['fnum']}F</div>
+		</div>
+	</div>
+	<div class="pk-w-md-11 pk-w-sm-10 pk-padding-right-5">
+		<div class="pk-text-truncate pk-display-block pk-text-xs" style="height: 18px;padding-top: 2px">
+			<a target="_blank" href="{ReWriteURL('user','id={$replydata['uid']}&page=1')}" style="color: #999">{$replyuserdata['nickname']}</a><span style="color: orangered">Lv{Cnum($replyuserdata['jifen']/100)}</span>{$replyuserhtml}
+		</div>
+		<div data-id="{$replydata['id']}" class="replycontent pk-word-break-all pk-text-xs pk-img-width-max-all" style="color: #666">
+			{$replydata['content']}
+		</div>
+		<div class="pk-row pk-padding-top-15 pk-padding-bottom-5">
+			<div class="pk-w-sm-12 pk-text-right pk-text-xs pk-padding-right-0" style="color: #999">
+				<a href="javascript:" onclick="window.open('index.php?c=ding&type=reply&id={$replydata['id']}','pk-di');$(this).find('span:eq(1)').html(parseInt($(this).find('span:eq(1)').html())+1);$(this).attr('onclick','')"><span class="fa fa-thumbs-o-up"></span>&nbsp;<span>{$replydata['zannum']}</span></a>&nbsp;&nbsp;{$_G['TEMP']['READADMINLINK']}&nbsp;{$lgtime}&nbsp;<a href="#postreplyposition" onclick="ReplyNF('{$replyuserdata['id']}','{$replydata['fnum']}','{str_replace('\'', '‘', $replyuserdata['nickname'])}')">回复</a>
+			</div>
+		</div>
+	</div>
+</div>

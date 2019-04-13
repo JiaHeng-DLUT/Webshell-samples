@@ -1,0 +1,34 @@
+/*本模板由DM建站系统 www.demososo.com开发
+*//*elastic slider*/ 
+.eisliderwrap{background:#2e2e2e;padding-bottom:8%}
+.ei-slider{font-family:'Maven Pro',sans-serif;position:relative;width:100%;max-width:1920px;height:450px;margin:0 auto}
+.ei-slider-loading{width:100%;height:100%;position:absolute;top:0px;left:0px;z-index:99;background:#fff;color:#fff;text-align:center;line-height:400px}
+.ei-slider-large{height:100%;width:100%;position:relative;overflow:hidden}
+.ei-slider-large li{position:absolute;top:0px;left:0px;overflow:hidden;height:100%;width:100%}
+.ei-slider-large li img{margin-left:0px !important}
+.ei-title{position:absolute;right:25%;top:15%}
+.ei-title .btn2{background:#57C5A0; display:inline-block;height: 40px;line-height:30px;padding:5px;margin:0;  }
+.ei-title .btn2 a{display:block; font-size:14px;color:#fff;}
+.ei-title .btn2 a:hover {color:#e2e2e2}
+.ei_icons{padding:10px 10px 5px;background:#ffffff;line-height:1.8em}
+.ei-title h2{font-family:'Maven Pro',sans-serif;padding:10px 0 0;font-size:2.5em;line-height:1.2em;color:#242424;text-transform:capitalize}
+.ei-title h3{font-family:'Maven Pro',sans-serif;padding-top:15px;font-size:1.2em;line-height:1.5em;color:#000}
+.ei-title h3.active{color:#000000}
+.ei-slider-thumbs{height:10px;margin:0 auto;position:relative}
+.ei-slider-thumbs li{position:relative;float:left;height:100%}
+.ei-slider-thumbs li.ei-slider-element{top:0px;left:0px;position:absolute;width:100%;height:100%;z-index:10;text-indent:-9000px;background:#5B6A7F;background:#57C5A0}
+.ei-slider-thumbs li a{text-align:center;display:block;background:#000000;width:100%;height:100%;cursor:pointer;-webkit-box-shadow:0px 1px 1px 0px rgba(0,0,0,0.3),0px 1px 0px 1px rgba(48,48,48,1);-moz-box-shadow:0px 1px 1px 0px rgba(0,0,0,0.3),0px 1px 0px 1px rgba(255,255,255,0.5);box-shadow:0px 1px 1px 0px rgba(0,0,0,0.3),0px 1px 0px 1px rgba(48,48,48,1);-webkit-transition:background 0.2s ease;-moz-transition:background 0.2s ease;-o-transition:background 0.2s ease;-ms-transition:background 0.2s ease;transition:background 0.2s ease}
+.ei-slider-thumbs li a:hover{background-color:#f0f0f0}
+.ei-slider-thumbs li a span.active{color:#ffffff}
+.ei-slider-thumbs li a span{padding-top:30px;font-size:1.2em;display:inline-block;color:#999999;text-transform:capitalize}
+.ei-slider-thumbs li a p{text-transform:capitalize;font-size:0.8125em;color:#999999;line-height:1.8em}
+.ei-slider-thumbs li img{position:absolute;bottom:50px;opacity:0;z-index:99;max-width:100%;-webkit-transition:all 0.4s ease;-moz-transition:all 0.4s ease;-o-transition:all 0.4s ease;-ms-transition:all 0.4s ease;transition:all 0.4s ease;-webkit-box-reflect:below 0px -webkit-gradient(
+            linear,left top,left bottom,from(transparent),color-stop(50%,transparent),to(rgba(255,255,255,0.3))
+            );-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"}
+.ei-slider-thumbs li:hover img{opacity:1;bottom:13px;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"}
+
+@media  (max-width:800px) {
+ .eisliderwrap{ padding-bottom:100px}
+ .ei-title h2{font-size:2em;}
+ .ei-title{right:10px}
+}

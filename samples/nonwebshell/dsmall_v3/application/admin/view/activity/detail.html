@@ -1,0 +1,138 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_activity_manage}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <input type="hidden" name="id" value="{$Request.get.id}">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.activity_detail_index_store}</dt>
+                <dd><input type="text" name="searchstore" id="searchstore" class="txt" value='{$Request.get.searchstore}'></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.activity_detail_index_goods_name}</dt>
+                <dd><input type="text" name="searchgoods" id="searchgoods" class="txt" value='{$Request.get.searchgoods}'></dd>
+                <dd>
+                    <select name="searchstate">
+                        <option value="0" >{$Think.lang.activity_detail_index_auditstate}</option>
+                        <option value="1" {eq name="Request.get.searchstate" value="1"}selected=selected{/eq}>{$Think.lang.activity_detail_index_to_audit}</option>
+                        <option value="2" {eq name="Request.get.searchstate" value="2"}selected=selected{/eq}>{$Think.lang.activity_detail_index_passed}</option>
+                        <option value="3" {eq name="Request.get.searchstate" value="3"}selected=selected{/eq}>{$Think.lang.activity_detail_index_unpassed}</option>
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.activity_detail_index_tip1}</li>
+            <li>{$Think.lang.activity_detail_index_tip2}</li>
+            <li>{$Think.lang.activity_detail_index_tip3}</li>
+        </ul>
+    </div>
+
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th></th>
+                <th>{$Think.lang.ds_sort}</th>
+                <th>{$Think.lang.activity_detail_index_goods_name}</th>
+                <th>{$Think.lang.activity_detail_index_store}</th>
+                <th class="align-center">{$Think.lang.ds_status}</th>
+                <th class="align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody id="treet1">
+            {notempty name="activitydetail_list"}
+           {foreach name="activitydetail_list" item="v"}
+            <tr class="hover">
+                <td class="w24"><input type="checkbox" name='activitydetail_id[]' value="{$v.activitydetail_id}" class="checkitem"></td>
+                <td class="w48 sort"><span class=" editable" title="{$Think.lang.ds_editable}" style="cursor:pointer;"  required="1" fieldid="{$v.activitydetail_id}" ajax_branch='activitydetail_sort' fieldname="activitydetail_sort" ds_type="inline_edit">{$v.activitydetail_sort}</span></td>
+                <td><a target="_blank" href="{:url('home/Goods/index',['goods_id'=>$v.item_id])}">{$v.item_name}</a></td>
+                <td><a href="{:url('home/Store/index',['store_id'=>$v.store_id])}">{$v.store_name}</a></td>
+                <td class="align-center">
+                    {switch name="v.activitydetail_state"}
+                    {case value="0"}{$Think.lang.activity_detail_index_to_audit}{/case}
+                    {case value="1"}{$Think.lang.activity_detail_index_passed}{/case}
+                    {case value="2"}{$Think.lang.activity_detail_index_unpassed}{/case}
+                    {case value="3"}{$Think.lang.activity_detail_index_apply_again}{/case}
+                    {/switch}
+                </td>
+                <td class="w160 align-center" id="ds_row_{$v.activitydetail_id}">
+                    {neq name="v.activitydetail_state" value="1"}
+                    <a href="{:url('Activity/deal',['activitydetail_id'=>$v.activitydetail_id,'state'=>'1'])}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.activity_detail_index_pass}</a>
+                    {/neq}
+                    {eq name="v.activitydetail_state" value="0"}
+                   {/eq}
+                    {neq name="v.activitydetail_state" value="2"}
+                    <a href="{:url('Activity/deal',['activitydetail_id'=>$v.activitydetail_id,'state'=>'2'])}" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.activity_detail_index_refuse}</a>
+                    {/neq}
+                    {if ($v.activitydetail_state eq '0') OR ($v.activitydetail_state eq '2')}
+                    <a href="javascript:dsLayerConfirm('{:url('Activity/del_detail',['activitydetail_id'=>$v.activitydetail_id])}','{$Think.lang.ds_ensure_del}',{$v.activitydetail_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a></td>
+                    {/if}
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+            {notempty name="activitydetail_list"}
+            <tfoot>
+            <tr class="tfoot">
+                <td><input type="checkbox" class="checkall" id="checkall_1"></td>
+                <td colspan="16" id="batchAction">
+                    <label for="checkall_1">{$Think.lang.ds_select_all}</label>&nbsp;&nbsp;
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="javascript:submit_form('pass');"><span>{$Think.lang.activity_detail_index_pass}</span></a>
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="javascript:submit_form('refuse');"><span>{$Think.lang.activity_detail_index_refuse}</span></a>
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="javascript:submit_form('del');"><span>{$Think.lang.ds_del}</span></a>
+                    {$show_page}
+                </td>
+            </tr>
+            </tfoot>
+            {/notempty}
+        </table>
+
+</div>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function submit_form(action){
+        /* 获取选中的项 */
+        var items = '';
+        $('.checkitem:checked').each(function () {
+            items += this.value + ',';
+        });
+        if (items != '') {
+            items = items.substr(0, (items.length - 1));
+        }
+        if(action=='del'){
+            _uri = ADMINSITEURL+"/Activity/del_detail.html?activitydetail_id=" + items;
+            dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+        }else if(action=='pass'){
+            _uri = ADMINSITEURL+"/Activity/deal.html?state=1&activitydetail_id=" + items;
+            dsLayerConfirm(_uri,'{$Think.lang.activity_detail_index_pass_all}');
+        }else if(action=='refuse'){
+            _uri = ADMINSITEURL+"/Activity/deal.html?state=2&activitydetail_id=" + items;
+            dsLayerConfirm(_uri,'{$Think.lang.activity_detail_index_refuse_all}');
+        }
+    }
+</script>

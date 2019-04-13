@@ -1,0 +1,353 @@
+﻿@charset "utf-8";
+/* 嗨购商城CSS样式**
+-----！！made by Scv！！-----
+QQ:200980998
+-----------------
+非专业人员。
+请不要乱删和乱修改CSS样式。
+ */
+html {
+	font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;
+}
+body {
+	font-size: 12px;
+	font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;
+	margin: 0px;
+	padding: 0px;
+	background:#f8f7f3;
+}
+li {
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+ul {
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+p {
+	padding: 0px;
+	margin: 0px;
+}
+h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ol, pre, form, fieldset, legend, button, input, textarea, th, td {
+	margin: 0;
+	padding: 0;
+}
+label {
+	cursor: pointer
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+a:hover {
+	text-decoration: underline;
+}
+a span {
+	cursor: pointer;
+}
+em, cite {
+	font-style: normal;
+}
+img, input {
+	vertical-align: middle;
+	border: 0;
+}
+.clear {
+	clear: both;
+}
+.R {
+	float: right;
+}
+.L {
+	float: left;
+}
+.big-f{ font-weight:bold;}
+/**********公共样式Over****************/
+ div{ display: block;}
+.panel-t1 .sd {
+	display: block;
+	background: black;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -1;
+	opacity: .20;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	filter:alpha(opacity=20);
+}
+.panel-t1 .close {
+	display: block;
+	width: 11px;
+	height: 11px;
+	position: absolute;
+	overflow: hidden;
+	background: url(../images/bg_sns_panel.png) 0 -25px no-repeat;
+	top: 14px;
+	_top: 11px;
+	right: 18px;
+	cursor: pointer;
+}
+
+.panel-t1 .panel-content .hd {
+background-color: whiteSmoke;
+height: 32px;
+line-height: 32px;
+border-bottom: 1px solid #EBEBEB;
+overflow: hidden;
+}
+span.emptyhint {
+	color: #999;
+	position: absolute;
+	padding: 3px
+}
+span.dark-emptyhint {
+	display: none
+}
+input.button, button {
+	font-size: 100%;
+	overflow: visible;
+*padding-top:3px;
+*padding-left:8px;
+*padding-right:8px
+}
+.panel {
+	position: relative;
+	z-index: 0;
+	text-align: left
+}
+.panel-t1 .panel-content {
+	background: #fff;
+	_border: 1px solid #ccc
+}
+.panel-t1 {
+	padding: 8px;
+	_padding: 0
+}
+.cls:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden
+}
+.cls {
+	zoom: 1
+}
+.panel .panel-content {
+	position: relative;
+	_width: 100%;
+	z-index: 2;
+	background: #fff;
+*zoom:1;
+	_zoom: 0
+}
+.panel-t1 .panel-content {
+	background: #fff;
+	_border: 1px solid #ccc
+}
+.panel-t1 .panel-content .hd {
+	background-color: #f5f5f5;
+	height: 32px;
+	line-height: 32px;
+*line-height:33px;
+	border-bottom: 1px solid #ebebeb;
+	overflow: hidden
+}
+.panel-t1 .panel-content .hd h3 {
+	font-size: 14px;
+	font-weight: normal;
+	color: #333;
+	padding: 0 0 0 10px
+}
+.panel-t1 .panel-content .ft {
+	background: #fff;
+	text-align: right
+}
+/*************/
+.panel-login-new {
+	width: 540px
+}
+.panel-login-new .panel-login-cont-hd {
+	width: 100%;
+	height: 84px;
+	background: url(../images/bg-panel-login.png) 0 0 no-repeat
+}
+.panel-login-new .panel-login-cont-bd {
+	padding: 0 30px 40px 30px
+}
+.panel-login-new .panel-login-cont-l {
+	float: left;
+	width: 146px;
+	color: #666
+}
+.panel-login-new .panel-login-cont-l .login-btn, .panel-login-new .panel-login-cont-l .third-party-btn {
+	display: block;
+	background: url(../images/bg-panel-login2.png) 0 -85px no-repeat;
+	width: 106px;
+	height: 28px;
+	overflow: hidden;
+	text-indent: -999em
+}
+.panel-login-new .panel-login-cont-l .reg-btn, .panel-login-new .panel-login-cont-l .third-party-btn {
+	display: block;
+	background: url(../images/bg-panel-login.png) 0 -85px no-repeat;
+	width: 106px;
+	height: 28px;
+	overflow: hidden;
+	text-indent: -999em
+}
+
+.panel-login-new .panel-login-cont-l .third-party-btn {
+	background-position: 0 -114px;
+	height: 25px;
+	margin-bottom: 5px
+}
+.panel-login-new .panel-login-cont-l .reg-btn {
+	margin: 6px 0 10px 0
+}
+.panel-login-new .panel-login-cont-l .sina {
+	margin-top: 6px;
+	height: 24px
+}
+.panel-login-new .panel-login-cont-l .qq {
+	background-position: 0 -139px
+}
+.panel-login-new .panel-login-cont-l .renren {
+	background-position: 0 -165px
+}
+.panel-login-new .panel-login-cont-l .baidu {
+	background-position: 0 -191px
+}
+.panel-login-new .panel-login-cont-l .qihu360 {
+	background-position: 0 -217px
+}
+.panel-login-new .panel-login-cont-r {
+	float: left;
+	border-left: 1px solid #eef0ec;
+	padding-left: 30px;
+	margin-top: 36px
+}
+.panel-login-new .panel-login-cont-r .panel-login-form li {
+	margin-bottom: 18px;
+	font-size: 14px
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .k {
+	font-size: 14px;
+	display: inline-block;
+*display:inline;
+*zoom:1
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .v {
+	position: relative;
+	display: inline-block;
+*display:inline;
+*zoom:1
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .v .emptyhint {
+	left: 0;
+	top: 0;
+	height: 32px;
+	line-height: 32px;
+	padding: 3px 8px
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .v input {
+	width: 202px;
+	height: 36px;
+	line-height: 36px\9;
+	vertical-align: middle;
+	outline: 0;
+	border: 1px solid #b3b3b3;
+	border-right-color: #ebebeb;
+	border-bottom-color: #ebebeb;
+	padding: 0 8px;
+	font-family: "微软雅黑", "黑体";
+	font-size: 14px;
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .v input.error {
+	border: 1px solid #f25749;
+	background: #fff6f5
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .btn-login {
+	width: 80px;
+	height: 38px;
+	_height: 39px;
+	border: 0;
+	background: url(../images/bg-panel-login.png) -106px -85px no-repeat;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 14px;
+	margin: 0 30px 0 44px;
+	margin-left: 48px\9;
+	vertical-align: middle
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .btn-active {
+	background-position: -106px -202px;
+	color: #666
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .error-txt {
+	margin-left: 46px;
+	margin-left: 50px\9;
+	padding-bottom: 8px
+}
+.panel-login-new .panel-login-cont-r .panel-login-form .error-txt .error {
+	background: url(../images/ico_form.png) 0 0 no-repeat;
+	display: block;
+	line-height: 16px;
+	padding-left: 22px;
+	margin: -8px 0 10px 0
+}
+.panel-login-new .login-remember {
+	padding-left: 46px;
+	margin-top: -8px;
+	margin-bottom: 16px
+}
+.panel-login-new .login-remember .remember-checkbox {
+	float: left;
+	color: #666
+}
+.panel-login-new .login-remember .remember-checkbox label {
+	cursor: pointer
+}
+.panel-login-new .login-remember .remember-checkbox input {
+	vertical-align: -3px;
+	_vertical-align: -1px
+}
+.panel-login-new .login-remember .fogot-num {
+	float: right;
+	margin-top: 1px\9
+}
+/**********/
+
+
+body{font-family: "microsoft Yahei"}
+.s_head{height: 25px;background: #4D5050; color: #ffffff;padding-top:2px; }
+.s_head a{padding: 5px 10px;color: #FFFFFF;font-size: 12px;text-decoration:none}
+.s_head a:hover{color: #CCCCCC;}
+.s_top{background-color: #ffffff;border-bottom:2px solid #EEEEEE;border-top:2px solid #EEEEEE; }
+.s_top .navbar-nav>li>a{color: #000000;}
+.s_top .navbar-nav>li>a:hover{color: #333333;background-color:#EEEEEE;}
+.s_header{text-align: center;margin: 60px 20px; border-bottom:none;}
+#Custom img{ border: solid 1px #EEEEEE;border-radius:5px;}
+.s_use{text-align: center;width: 200px;height: 40px; border: 2px solid #0099ff; padding: 30px; font-size: 20px; margin: 20px;border-radius:10px;text-decoration:none;white-space:nowrap;}
+.s_use:hover{color: #FFFFFF;background: #0099ff;text-decoration:none}
+.b-left{border-left: 1px solid #e5e5e5;}
+.h_50{height: 50px;}
+.s_left_title{height: 60px; border: solid 2px #337AB7; background: #FFFFFF;color: #337AB7;margin-bottom: 10px;text-align: center;line-height:60px;font-size: 20px; border-radius:10px;}
+
+.navbar-inverse .navbar-toggle .icon-bar{color:#000000;background-color:#000000;}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #DDDDDD;}
+.box{border: solid 1px #DDDDDD; padding:15px;border-radius:5px; margin: 10px 0;}
+.sence{background: #f7f7f7;padding-bottom:50px; margin-top:50px;}
+.slide:hover{ background: #EEEEEE;}
+.slide{ color:#333333;}
+
+.btn-hide{display: none;}
+.slide:hover .btn-hide{display: inline;}

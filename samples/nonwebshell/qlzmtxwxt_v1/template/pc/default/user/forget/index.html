@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>找回密码/重置密码 - {$settings.site.sitename}</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+    {include file="../common/css"}
+    {include file="../common/js"}
+    {load href="__STATIC__/community/css/global.css"}
+    {load href="__PLUGIN__/steps/steps.css"}
+  <!-- 模块CSS -->
+  {load href="__STATIC__/portal/css/index.css" /}
+</head>
+<body>
+
+{include file="../portal/public/header"}
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel fly-panel-user" pad20>
+        <div class="ui-steps-round" style="width:540px;margin:0 auto;padding: 70px 0px 22px 0px;">
+          <div class="finished">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>账号验证</label>
+          </div>
+          <div class="todo">
+            <div class="wrap">
+              <div class="round">1</div>
+              <div class="bar"></div>
+            </div>
+            <label>重置密码</label>
+          </div>
+
+          <div class="todo last">
+            <div class="wrap">
+              <div class="round">3</div>
+            </div>
+            <label>找回成功</label>
+          </div>
+        </div>
+          <div class="layui-tab layui-tab-brief" style="width:500px;margin:0 auto">
+            <ul class="layui-tab-title">
+             <li class="layui-this">邮箱找回</li>
+                  <li >短信找回</li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+              <div class="layui-tab-item layui-show">
+              <div class="layui-form " style="padding: 20px 0;">
+                    <form method="post" class="layui-form" >
+                    <input type="hidden" name="type"  value="1">
+                        <div class="layui-form-item">
+                          <label for="email" class="layui-form-label">邮箱</label>
+                          <div class="layui-input-block">
+                            <input type="text" id="email" name="email"  autocomplete="off" class="layui-input" placeholder="请输入邮箱">
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <label for="vercode" class="layui-form-label">验证码</label>
+                                <div class="layui-input-inline" style="width:270px">
+                                  <input type="text" name="email_code"  placeholder="验证码" autocomplete="off" class="layui-input" >
+                                </div>
+                                  <div class="layui-input-inline" style="width:80px;">
+                                 <a href="javascript:;"  class="layui-btn layui-btn-primary" id="sendemail" >发送验证码</a>
+                                  </div> 
+                          <div class="layui-form-mid">
+                            <span style="color: #c00;"></span>
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <button class="layui-btn layui-btn-normal"  lay-filter="form1" style="width:100%;" lay-submit>提交</button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+              <div class="layui-tab-item">
+              <div class="layui-form " style="padding: 20px 0;">
+                    <form method="post"  class="layui-form" >
+                    <input type="hidden" name="type"  value="2">
+                        <div class="layui-form-item">
+                          <label for="email" class="layui-form-label">手机</label>
+                          <div class="layui-input-block">
+                            <input type="text" id="mobile" name="mobile" autocomplete="off" class="layui-input" placeholder="请输入手机号">
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <label for="sms_code" class="layui-form-label">验证码</label>
+                          <div class="layui-input-inline" style="width:270px">
+                            <input type="text" id="sms_code" name="sms_code"  autocomplete="off" class="layui-input"  placeholder="验证码">
+                          </div>
+                           <div class="layui-input-inline" style="width:80px;">
+                             <a href="javascript:;" class="layui-btn layui-btn-primary"  id="sendcode" >发送验证码</a>
+                           </div> 
+
+                          <div class="layui-form-mid">
+                            <span style="color: #c00;"></span>
+                          </div>
+                        </div>
+                        <div class="layui-form-item">
+                          <button class="layui-btn layui-btn-normal" alert="1" lay-filter="form2" style="width:100%;" lay-submit>提交</button>
+                        </div>
+                      </form>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+    </div>
+  </div>
+
+  
+</div>
+{include file="../portal/public/footer"}
+
+<script>
+//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+layui.use(['element','form'], function(){
+  var form = layui.form;
+  var element = layui.element;
+//监听邮件找回提交
+form.on("submit(form1)",function(data){
+// 邮箱找回
+  $.post("{:url('forget/index')}",data.field,function(json){
+    if(json.code == 0){
+      location.href="{:url('forget/reset',['type'=>1])}";
+    }else{
+      qile.error(json.msg);
+    }
+  });
+  return false;
+});
+
+ //监听短信找回提交 
+form.on("submit(form2)",function(data){
+  // 手机找回
+  $.post("{:url('forget/index')}",data.field,function(json){
+     if(json.code == 0){
+        location.href="{:url('forget/reset',['type'=>2])}";
+    }else{
+        qile.error(json.msg);
+    }
+  });
+  return false;
+});
+
+
+
+});
+</script>
+
+<script>
+
+// 发送验证码
+ var id = "#sendemail"; //发送验证码按钮id
+$(id).on('click',function(){
+  $.post("{:url('forget/sendemail')}",{"email":$("#email").val()},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                           qile.success(json.msg);
+                        
+                    }else{
+                     
+                            time(id,0)
+                            qile.msg(json.msg);;            
+                    }
+                    
+                  });
+  return false;
+
+});
+
+
+// 发送验证码
+ var obj = "#sendcode"; //发送验证码按钮id
+$(obj).on('click',function(){
+  $.post("{:url('forget/sendcode')}",{"mobile":$("#mobile").val()},
+                  function(json) {
+                    if(json.code == 0){
+                           time(obj); 
+                            qile.success(json.msg);
+                        
+                    }else{
+                     
+                            time(obj,0)
+                            qile.msg(json.msg);           
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).removeClass('layui-btn-disabled').addClass('layui-btn-primary');
+      $(id).addClass('layui-btn-primary');
+      $(id).html("发送验证码");
+      $(id).removeAttr("disabled",false);
+     
+    } else { 
+   // 倒计时中 禁用按钮
+      $(id).attr("disabled", true);
+      $(id).removeClass('layui-btn-primary').addClass('layui-btn-disabled')
+      $(id).html("重新发送(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+</script>
+
+</body>
+</html>

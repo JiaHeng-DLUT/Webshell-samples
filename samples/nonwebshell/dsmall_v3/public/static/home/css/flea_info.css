@@ -1,0 +1,311 @@
+@charset "utf-8";
+/* CSS Document */
+/* 
+	@名称: base
+	@功能: 重设浏览器默认样式
+*/
+
+/* 防止用户自定义背景颜色对网页的影响 */
+html{
+	color:#000;background:#fff;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+	margin:0;padding:0;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,button,input,select,textarea{
+	font: 12px/1.5 微软雅黑,\5b8b\4f53;
+}
+input,select,textarea{
+	font-size:100%;
+}
+
+/* 去掉各Table  cell 的边距并让其边重合 */
+table{
+	border-collapse:collapse;border-spacing:0;
+}
+
+/* IE bug fixed: th 不继承 text-align*/
+th{
+	text-align:inherit;
+}
+
+/* 去除默认边框 */
+fieldset,img{
+	border:0;
+}
+
+/* ie6 7 8(q) bug 显示为行内表现 */
+iframe{
+	display:block;
+	vertical-align:bottom;
+}
+
+/* 去掉 firefox 下此元素的边框 */
+abbr,acronym{
+	border:0;font-variant:normal;
+}
+
+/* 一致的 del 样式 */
+del {
+	text-decoration:line-through;
+}
+
+address,caption,cite,code,dfn,em,th,var {
+	font-style:normal;
+	font-weight:500;
+}
+
+/* 去掉列表前的标识, li 会继承 */
+ol,ul {
+	list-style:none;
+}
+
+/* 对齐是排版最重要的因素, 别让什么都居中 */
+caption,th {
+	text-align:left;
+}
+
+/* 来自yahoo, 让标题都自定义, 适应多个系统应用 */
+h1,h2,h3,h4,h5,h6 {
+	font-size:100%;
+	font-weight:500;
+}
+
+q:before,q:after {
+	content:'';
+}
+
+/* 统一上标和下标 */
+sup {
+	vertical-align:text-top;
+}
+sub {
+	vertical-align:text-bottom;
+}
+/* 定义链接颜色 */
+a{ color:#555;}
+a.blue{ color:#2953A6;}
+a:hover{ color:#f60;}
+
+/* 让链接在 hover 状态下显示下划线 */
+a:hover {
+	text-decoration:underline;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+ins,a {
+	text-decoration:none;
+}
+
+/* 清理浮动 */
+.fn-clear:after {
+	visibility:hidden;
+	display:block;
+	font-size:0;
+	content:" ";
+	clear:both;
+	height:0;
+}
+.fn-clear {
+	zoom:1; /* for IE6 IE7 */
+}
+
+/* 隐藏, 通常用来与 JS 配合 */
+body .fn-hide {
+	display:none;
+}
+
+/* 设置内联, 减少浮动带来的bug */
+.fn-left,.fn-right{display:inline}
+.fn-left{float:left}
+.fn-right{float:right}
+.content{width:1200px;margin:10px auto 0}
+
+/*图片等比例缩放*/
+.thumb{display:table-cell;vertical-align:middle;text-align:center}
+.size20{width:20px;height:20px}
+.size40{width:40px;height:40px}
+.size50{width:50px;height:50px}
+.size60{width:60px;height:60px}
+.size76{width:76px;height:76px}
+.size120{width:120px;height:120px}
+.size125{width:125px;height:125px}
+.size160{width:160px;height:160px}
+
+
+
+
+/*==============================*/
+/* 商品信息页面样式 */
+/*==============================*/
+.content_780{ width:980px;}
+.content_208{ width:208px;}
+.flea_info_main{ width:1200px; overflow:hidden; margin-top:12px;}
+#flea_info_slider{width:1200px; height:88px;position:relative;}
+#flea_info_slider #slider{width:1100px;height: 90px;overflow: hidden;}
+#slider li.sell_two{height:88px;margin:0;padding:0}
+#slider li{width:100px;float:left}
+#nextBtn2,#prevBtn2{display:block;width:24px;height:64px;position:absolute;left:10px;top:9px;}
+#nextBtn2,#slider1next2{left:1166px}
+#nextBtn2 a,#prevBtn2 a{width:100%;height:100%;display:block;line-height:64px;text-align:center;color:#fff;  border: none;  -webkit-box-sizing: border-box;     -moz-box-sizing: border-box;box-sizing: border-box;  -webkit-transition-property: all;transition-property: all;  -webkit-transition-duration: .3s;transition-duration: .3s;    -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);    border-color: #ff2939;    background: -webkit-gradient(linear, left top, left bottom, from(#ff5c69), to(#ff2939));    background: linear-gradient(#ff5c69, #ff2939);}
+#nextBtn2 a:hover,#prevBtn2 a:hover{text-decoration:none;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);    text-decoration: none;color: #ff1022;    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 0px white;    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 0px white;    border-color: #ff1022;    }
+
+.sell_two .pic{ width:76px; height:76px; border:1px solid #e8e8e8; padding:2px; margin:1px 9px; position:relative;}
+.sell_two .pic .time{ width:80px; height:18px; line-height:18px; color:#fff; opacity:0.7;-moz-opacity: 0.7; -khtml-opacity: 0.7; filter: alpha(Opacity=70); background:#ff2a39; position:absolute; left:0; bottom:0; text-align:center; overflow:hidden;}
+.sell_two .bor{border-color:#ff2939;border-style:solid;border-width:2px 2px 2px;margin: 0 8px;}
+
+.ware_title{color: #3E3E3E; height:40px;line-height: 40px;}
+.ware_title strong{ font-size:16px; }
+
+/*闲置物品信息预览*/
+#flea_info_goods{ width:300px;}
+#property{ width:655px; overflow:hidden;}
+.item_info{padding: 0 0 10px;}
+.item_info li{ color: #656565;line-height: 34px;overflow: hidden;}
+.item_info em {font-style: normal;white-space: nowrap;width: 60px;}
+.item_info .price strong{background:none repeat scroll 0 50% transparent;color:#ff2e3d;font-family:tahoma,arial,'impact';font-size:24px;padding:0 4px}
+.rank_new{position:relative}
+.item_info li .tb-tips{width:206px}
+.tb-tips{text-align:center;background:none repeat scroll 0 0 #F6F6F6;border-color:#E6E6E6;border-style:solid;border-width:1px ;height:23px;line-height:23px;margin:0 5px 0 10px;position:absolute;top:3px}
+.tb-tips a{color:#36c}
+.tb-tips a:hover{color:#f60}
+.tb-tips-l{background-position:0 -26px;float:left;margin-left:-10px;width:10px}
+.tb-tips-l{position:relative;display:block;height:23px}
+.tb-tips-l:after,.tb-tips-l:before{content:' ';border:6px solid transparent;border-right-color:#E6E6E6;display:block;width:0;height:0;position:absolute;top:6px;right:1px}
+.tb-tips-l:before{border-right-color:#F6F6F6;right:0px;z-index:2}
+#contact{width:651px;}
+.grey-box{background:none repeat scroll 0 0 #FFF;padding:1px}
+.grey-box .bd{background:none repeat scroll 0 0 #F7F7F7;color:#656565;padding:10px}
+#contact ul{border-bottom:1px dashed #DFDFDF;margin-bottom:8px;padding-bottom:8px}
+#contact ul li{float:left;height:28px;line-height:28px;max-width:100%;min-width:49%;overflow:hidden}
+#contact p{line-height:19px}
+.flea_btn{background: #f42424;font-family:"microsoft yahei" !important; height: 40px !important;line-height: 40px;float: left;margin-right: 10px;font-size: 18px;color: #fff;padding: 0 32px !important;cursor: pointer;border: 0;margin-bottom: 10px;}
+.flea_btn:hover {background-color: #ec5151;text-decoration:none;color:#fff}
+/*信息页面右侧样式*/
+.flea_gray{ width:204px; background:#fff; border:1px solid #ebebeb; padding:1px; float:left;}
+.flea_time{ width:184px; background:#f7f7f7; line-height:20px; padding:10px; overflow:hidden;}
+.flea_time p{ color:#666;}
+.flea_time p span{ color:#555;}
+
+#seller_info{ margin-top:5px;}
+#seller_info h2.title{ width:184px; background:#f7f7f7; line-height:24px; padding:0 10px; overflow:hidden; border-bottom:1px solid #ebebeb;}
+#seller_info p{ line-height:24px; padding-top:5px; padding-left:15px;}
+#seller_info p a img{ margin-left:5px; display:inline; vertical-align: middle;}
+
+.flea_option_box { width: 740px; padding: 0 20px; margin-bottom: 10px; _overflow-x:auto; }
+.flea_wrap-inside{ margin:0 auto 10px; width:96%;}
+.flea_goods{ float:left; border-bottom:1px dashed #ccc; padding:10px 0;}
+.flea_goods:last-child{border:none}
+.flea_goods .pic{border: 1px solid #e8e8e8;height: 60px;margin: 0 0 8px;padding: 5px;width: 60px; float:left;}
+.flea_goods dl{ padding-left:5px; float:left; width:118px;}
+.flea_goods dt{ line-height:18px; height:36px; overflow:hidden;}
+.flea_goods dt a{ line-height:18px; height:36px; color:#36c;}
+.flea_goods dd{ color:#c8c8c8;}
+.flea_goods dd a{color:#c8c8c8}
+.flea_wrap-inside .more{background-color: #ff4040;width:72px; height:28px; line-height:28px; text-align:center; display:inline-block; margin-left:66px; margin-top:10px;}
+#seller_info .sell{ border-bottom: 1px dashed #CCCCCC;line-height: 20px;margin: 10px; padding-bottom: 10px;width: 184px;}
+#seller_info .sell a{ color:#36c;}
+#seller_info .sell a:hover{ color:#f60;}
+.flea_wrap-inside .more:hover{background-color: #ff4040;}
+.flea_wrap-inside .more a{ color:#FFFFFF; text-decoration:none;}
+
+.col-sub a{ width:208px;line-height:42px; height:42px; display:block; margin-bottom:5px; background:#ffefef;font-size:24px;text-align:center;color:#f73636;border:1px solid #f73636;box-sizing:border-box}
+.col-sub a:hover{text-decoration:none}
+/*信息页面下部样式*/
+#Tab1{float:left;margin:20px auto 0;padding:0;width:1200px}
+#Tab1 .message_text{width:1030px}
+.Menubox{height:29px;line-height:28px;width:100%}
+.Menubox ul{border-bottom:1px solid #e8e8e8;height:32px;margin:0;padding:0;position:relative}
+.Menubox li{border-color:#E6E6E6 #E6E6E6 #FFF;border-style:solid;border-width:1px;bottom:0;color:#656565;cursor:pointer;display:block;font-size:14px;font-weight:700;position:absolute;text-align:center;width:110px}
+.Menubox li#one1{left:5px}
+.Menubox li#one2{left:116px}
+.Menubox li#one4{left:545px}
+.Menubox li.hover{background:none repeat scroll 0 0 #FFF;border-top:2px solid #ff2e3d;bottom:-1px;color:#ff2e3d;font-weight:700;height:31px;line-height:31px;padding:0;position:absolute;}
+.Contentbox{border-top:medium none;clear:both;float:left;margin-bottom:100px;margin-top:0;padding:10px}
+.Contentbox #con_one_2{padding-top:10px}
+.Contentbox dt{color:#000;font-weight:600;line-height:20px;padding-left:30px;padding-right:30px;padding-top:8px}
+.Contentbox dd{color:red;line-height:20px;padding-right:30px;padding-top:5px}
+#comments-content{float:left;padding-bottom:10px;width:1200px}
+.comment-line{border-bottom:1px solid #D1D7DC;color:#656565;float:left;font-size:14px;font-weight:700;line-height:32px;margin:30px 0;width:1180px}
+.comment-edit{float:left}
+.comment-edit .comment-user{display:inline;float:left;height:60px;margin:5px 5px 0;width:60px}
+.comment-edit .comment-user img{height:60px;width:60px}
+.comment-add{float:left;margin-top:5px}
+.comment-add textarea{border:1px solid #E2E2E2;font-size:12px;height:50px;padding:4px;width:896px}
+.comment-act{float:right;margin-top:3px}
+.comment-act a{width: 118px;height: 38px;line-height: 38px;text-align: center;font-size: 14px;margin-top: 12px;margin-left:30px;background: #f42424;border-radius:3px;border-color: #f42424;color: #fff;display:inline-block}
+.comment-act a:active{background:-moz-linear-gradient(center top ,#E5E5E5 0,#FFF 100%) repeat scroll 0 0 transparent}
+.comment-list{float:left;padding-left:70px}
+.comment-list li{border-top:1px dashed #D5D5D5;margin-top:5px;overflow:hidden;padding:7px 7px 2px;width:882px}
+.comment-list .comment-user{float:left;height:40px;margin-right:30px;width:40px}
+.comment-list .comment-user img{height:40px;width:40px}
+.comment-list li p{color:#404040;padding-top:5px}
+.comment-list li p.words{font-size:16px}
+.comment-list li p.time{color:gray}
+.comment-list li .words .user_name{color:#36C}
+#other_items{float:left;margin-left:12px;margin-top:20px;width:100%}
+#other_items li{float:left;margin-bottom:30px;margin-right:30px;width:162px}
+#other_items li .pic{border:1px solid #CCC;height:160px;width:160px}
+#other_items li h3{font-size:12px;height:40px;line-height:20px;margin:5px 0;overflow:hidden;width:160px}
+#other_items li h3 a{color:#36C;font-weight:400}
+#other_items li h3 a:hover{color:#F60}
+#other_items li .price{color:#666;float:left}
+#other_items li .price b{color:#F60;font-weight:400}
+#other_items li .time{color:#666;float:right}
+.message_text{border-bottom:1px dotted #BABABA;float:left;line-height:24px;overflow:hidden;padding:15px 25px;position:relative;text-align:center;width:730px}
+.pagination{float:right;margin-top:10px;padding:2px}
+.pagination ul{font-size:12px;margin:0;padding:0;text-align:left}
+.pagination ul li{display:inline;float:left;list-style-type:none}
+#tb-detail-tips{width:980px;margin:0 auto;padding-bottom:20px}
+#tb-detail-tips .tb-buy-tips{background:none repeat scroll 0 0 #F7F7F7;border:1px solid #DDD}
+#tb-detail-tips .tb-buy-tips ul{float:left;padding:20px 10px}
+#tb-detail-tips .tb-buy-tips ul li{color:#656565;line-height:28px;padding-left:16px}
+#tb-detail-tips .tb-buy-tips .tb-pub-free{border-left:1px solid #EBEBEB;color:#676767;display:block;float:right;font-family:'Microsoft Yahei','微软雅黑';font-size:18px;height:67px;line-height:67px;margin:15px 0;position:relative;text-align:center;text-decoration:underline;width:266px;display:block}
+#tb-detail-tips .tb-buy-tips .tb-pub-free i{background-position:-119px -366px;display:block;height:11px;overflow:hidden;position:absolute;right:32px;text-indent:-9999px;top:30px;width:6px}
+#tb-detail-tips .train-type{border-top:#ddd 1px solid;border-right:#ddd 1px solid;border-left:#ddd 1px solid;background-color:#F7F7F7;margin-right:0;padding:10px 0 15px 19px}
+#tb-detail-tips .train-type h6{color:#000;font:700 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;margin-bottom:10px}
+#tb-detail-tips .train-type li{border-left:1px solid #FFF;float:left;height:104px;padding:0 0 0 25px;width:430px}
+#tb-detail-tips .train-type li.first-child{border-left:0 none;border-right:1px solid #DDD;padding-left:0;padding-right:25px}
+#tb-detail-tips .info{margin-bottom:80px}
+.clearfix:after{clear:both;content:" ";display:block;height:0}
+
+
+/*放大镜*/
+.ware_pic { float: left; }
+.big_pic{background:none repeat scroll 0 0 #FFF;border:1px solid #E7E7E7;height:300px;margin:0;width:300px}
+.jqzoom{ width:300px; height:300px; position:relative; padding: 0; cursor:crosshair;display: table-cell;vertical-align:middle;text-align:center;/* hack for ie */*display: block;*font-size: 200px;/* end */}
+.jqzoom .ico {  position: absolute; z-index: 999; right: 0px; bottom: 0px; width: 24px; height: 24px; opacity: 0.8; -moz-opacity: 0.8; -khtml-opacity: 0.8; filter: alpha(Opacity=80);}
+.jqzoom img{ text-align:center;vertical-align:middle;}
+div.zoomdiv { display:none; text-align: center; width: 100px; height: 100px; background: #fff; border:1px solid #ccc; position: absolute; z-index: 100; top:0px; left:0px; overflow: hidden;}
+div.jqZoomPup { repeat; opacity: 0.5; -moz-opacity: 0.5; -khtml-opacity: 0.5; filter: alpha(Opacity=50); position: absolute; z-index: 10; top:0px; left:0px; visibility: hidden;}
+.bottom_btn { width: 300px; height: 64px; position: relative; }
+.ware_box { width: 300px; height: 60px; position: absolute; left: 0px; top: 10px; overflow: hidden; }
+.ware_box ul { position: absolute; top: 0; left: 0; width: 300px;}
+.ware_box li { /* if IE7/8/9*/ *text-align: center;  display: inline; width: 40px; height: 40px; float: left; padding: 5px; margin-right: 8px; border: solid 1px #EBEBEB; overflow: hidden; cursor: pointer; }
+.ware_box li.ware_pic_hover {border: solid 1px #ff2939;}
+/*分享css*/
+.share{ float:left; width:310px; margin-top:10px; color:#3e3e3e;}
+.share span{ margin:0 3px; float:left;}
+.share span a{ float:left;}
+.share span a img{ float:left; margin-top:0px;}
+
+.flea_keywords {padding:3px 5px;border:1px solid #eee;color:#999;margin-right:10px}
+.flea_left_title{width:100px;display:inline-block}
+.flea_goods_right{float:right}
+.flea_goods_right .split{color:#ddd;margin:0 6px}
+.flea_goods_right font{margin:0 5px}
+/*搜索页面成色划分css*/
+#flea_dialog{padding:5px}
+#flea_dialog li{padding:20px 0;border-top:1px dashed #DFDFDF}
+#flea_dialog li.first_dialog{border:none}
+#flea_dialog dt{color:#000;display:block;float:left;font-size:14px;font-weight:700;text-align:right;width:90px}
+#flea_dialog dd{color:#676767;display:block;float:left;width:280px}

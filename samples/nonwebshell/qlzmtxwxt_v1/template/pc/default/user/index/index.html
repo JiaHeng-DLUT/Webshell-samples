@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>文章列表 - 用户中心</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  {include file="public/css"}
+</head>
+<body>
+
+<!-- 头部开始 -->
+{include file="public/header"}
+<!-- 头部结束 -->
+
+<div class="layui-main fly-marginTop fly-user-main ">
+
+<div class="user-left-menu" style="">
+
+    
+<!-- 会员中心导航菜单 -->
+{include file="public/left_menu"}
+</div>
+        <div class="fly-panel fly-panel-user user-right-content" pad20>
+
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+              <li data-type="mine-jie" lay-id="index" class="layui-this">文章列表</li>
+             
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+            <!-- 筛选 -->
+            <form class="layui-form" action="">
+               <div class="layui-form-item">
+                   <label class="layui-form-label" style="width:60px;">标题</label>
+                  <div class="layui-input-inline" style="width:250px;">
+                    <input type="text" name="title" placeholder="请输入交易标题" autocomplete="off" class="layui-input">
+                  </div>
+
+   
+                    <div class="layui-input-inline" style="width:100px;">
+                      <button class="layui-btn layui-btn-normal" lay-submit lay-filter="form">搜 索</button>
+                
+                    </div>
+              </div>
+              </form>
+           </div>
+
+                <!-- 表格内容 -->
+
+                 <div class="layui-row">    
+
+
+                   <table class="layui-table" id="demo">
+                      <colgroup>
+                        <!-- <col width="50"> -->
+                        <col width="310">
+                        <col width="80">
+                        <col width="80">
+                        <col width="150">
+                        <col width="100">
+                        <col width="120">
+                      </colgroup>
+                      <thead>
+                  <tr>
+                    <!-- <th><input type="checkbox" class="id"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th> -->
+                    <th>标题</th>
+                    <th>阅读</th>
+                    <th>评论</th>
+                    <th>时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr> 
+                </thead>
+                <tbody>
+
+            {volist name='list' id='vo'}
+                  <tr>
+                    <!-- <td><input type="checkbox" name="aid[]" class="id " title=""  lay-skin="primary" value="{$vo.aid}"></td> -->
+                    <td><a href="{:url("@portal/article/detail",array("aid"=>$vo["aid"]))}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.hits}</td>
+                    <td>{$vo.comment}</td>
+                    
+                   
+
+                  
+                    <td>{$vo.create_time|date="Y-m-d H:i:s"}</td>
+                     <td>{if $vo.status ==1}<span class="layui-badge layui-bg-blue">已发表</span>{elseif $vo.status ==2 /}<span class="layui-badge">未通过</span>{else /}<span class="layui-badge layui-bg-gray">待审核</span>{/if}</td>
+                      <td>
+                    <div >
+
+                 
+                      <a class="layui-btn layui-btn-xs layui-btn-normal" id="edit" href="{:url("@user/index/edit",array("aid"=>$vo["aid"]))}" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                  
+                  
+                      <a class="layui-btn layui-btn-xs layui-btn-primary"  style="margin-left:10px;"  onclick="del('{:url("@user/index/del",array("aid"=>$vo["aid"]))}')" > <i class="layui-icon">&#xe640;</i></a>
+                    
+                     </div>
+             </td>
+                  </tr>
+            {/volist}
+
+                </tbody>
+              </table>
+              <div id="page">{$list|raw}</div>
+                </div>          
+       
+
+           </div>
+           </div>
+        </div>
+        </div>
+    
+</div>
+{include file="public/js"}
+<!-- 会员底部文件 -->
+{include file="public/footer"}
+
+
+
+<script>
+
+layui.use(['form','table','laypage','laydate'], function(){
+  var form = layui.form;
+$(function(){
+ //全选批量删除
+        var id = []; //定义空数组
+        var url ="{:url('admin/del')}"; //请求的url
+        var data = {"id":id};   //传递的表单数据
+        var delButton = "#del"; //删除节点class 或者ID
+        var checkboxClass = ".id"; //多选框class
+       
+         $(delButton).click(function(){
+              $(checkboxClass).each(function() {
+              if(this.checked == true){
+                   id.push($(this).val()); 
+              }
+              });              
+         if(id.length == 0){
+            parent.layer.alert('你没有选中任何分类',{title:'批量删除提示'});
+         }else{
+                     var index =parent.layer.confirm('批量删除后，数据不可恢复', {
+                      btn: ['确定删除','取消'] //按钮
+                      ,title:'是否批量删除'
+                      ,shadeClose:true
+                      ,icon: 3
+                      ,anim: 5  //动画类型
+                    }, function(){
+                       parent.layer.close(index);
+                    // 确定ajax 删除数据
+                                $.post(url,data        
+                                     ,function(json){
+                                      if(json.code == 0){
+                                          layer.msg(json.msg);
+                                               setTimeout(function(){ 
+                                                     window.location.reload();  //页面刷新
+                                                },1000);
+                                           }
+                                         }
+                                       );
+
+                    }, function(){
+                       // 取消
+
+                    });
+
+         }
+
+    });
+
+
+
+});
+});
+</script>
+
+<script type="text/html" id="titleTpl">
+   <a href="{{d.url}}" target="_blank">{{d.title}}</a>
+</script>
+<script type="text/html" id="statusTpl">
+  {{#  if(d.status == 0){ }}
+    待审核
+  {{#  } else if(d.status == 1){ }}
+    已发表
+  {{#  } }}
+</script>
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
+
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</body>
+</html>

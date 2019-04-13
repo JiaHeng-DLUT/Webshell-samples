@@ -1,0 +1,42 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>{@SL_表单标题}-{@SL_网站标题}</title>
+<link href="{@SL_安装目录}{@SL_网站ico}" rel="shortcut icon" />
+<meta name="keywords" content="{@SL_表单keywords}">
+<meta name="description" content="{@SL_表单description}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/amazeui.css">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/main.css">
+</head>
+<body>
+ 
+<script src="{@SL_安装目录}wap/w95/style/js/jquery.min.js"></script> 
+{@SL_网站顶部}
+<div class="list-main">
+  <div class="am-container">
+    <div class="list-nav" data-am-sticky="">
+      <ul class="am-cf">
+{$left_list(<li id="%左侧type%-%左侧typeID%"><a href="%左侧链接%" title="%左侧标题%">%左侧标题%</a></li>,{@SL_菜单ID})}
+</ul>
+      <div class="curBg"></div>
+      <div class="cls"></div>
+    </div>
+    <div><img src="{@SL_安装目录}{@SL_表单页面}" class="am-img-responsive" alt=""></div>
+    <div class="list-pag"> Position：<a href="{@SL_首页链接}">Home</a> > <a href="">{@SL_表单标题}</a> </div>
+    <div class="list-center">
+      <div class="list-single">
+        {@SL_表单内容}</div>
+</div>
+<br>
+      </div>
+    </div>
+  
+{@SL_网站底部}<script>$('#form-{@SL_表单ID}').attr('class','list-active');</script></body>
+</html>

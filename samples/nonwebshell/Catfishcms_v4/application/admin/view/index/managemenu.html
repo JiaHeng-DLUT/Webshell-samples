@@ -1,0 +1,76 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All menus')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="well">
+            <form class="form-inline" method="post" action="">
+                <div class="form-group">
+                    <label>{:lang('Menu category')}：</label>
+                    <select class="form-control" name="caidanfenlei">
+                        {volist name="cdfenlei" id="vo"}
+                        <option value="{$vo.navcid}"{if condition="$cid eq $vo.navcid"} selected{/if}>{$vo.nav_name}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;{:lang('Find')}</button>
+            </form>
+        </div>
+    </div>
+    <form class="form-inline" method="post" action="">
+    <div>
+        <p>
+            <input type="hidden" name="paixu" value="paixu">
+            <input type="hidden" name="verification" value="{$verification}">
+            <button type="submit" id="pshanchu" class="btn btn-primary btn-sm">{:lang('Sort')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="width: 80px;">{:lang('Sort')}</th>
+                    <th>ID</th>
+                    <th>{:lang('The name of the menu')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>
+                        <input type="text" value="{$vo.listorder}" name="{$vo.id}" class="form-control" maxlength="8" style="width: 80px;">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.label}</td>
+                    <td>
+                        {if condition="$vo.status eq 1"}<h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Display')}</h5>
+                        {else /}<h5 class="text-muted">{:lang('Not show')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <a href="{:Url('addmenu')}?c={$vo.id}&cid={$cid}">{:lang('Add a submenu')}</a>
+                        &nbsp;|&nbsp;
+                        <a href="{:Url('modifymenu')}?c={$vo.id}">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="{:Url('managemenu')}?d={$vo.id}&f={$vo.parent_id}&cid={$cid}&verification={$verification}">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </form>
+</div><br>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete the menu item? Can not be restored after deletion!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/managemenu.js"></script>
+{include file="index/footer" /}

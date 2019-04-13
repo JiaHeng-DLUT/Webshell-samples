@@ -1,0 +1,136 @@
+{include file="index/header" /}
+<div class="row">
+    <br><br><br>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <div class="panel panel-default">
+            {include file="index/head" /}
+            <div class="panel-body">
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>1</em></span> {:lang('Environment')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-muted"><span class="badge"><em>2</em></span> {:lang('Create the data')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-muted"><span class="badge"><em>3</em></span> {:lang('Finish installation')}</h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{:lang('Environmental testing items')}</th>
+                                <th>{:lang('Recommended configuration')}</th>
+                                <th>{:lang('Current condition')}</th>
+                                <th>{:lang('Minimum requirements')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{:lang('Operating system')}</td>
+                                <td>{:lang('Unix-like')}</td>
+                                <td><span class="glyphicon glyphicon-ok text-success"></span> {$data.os}</td>
+                                <td>{:lang('Not limited')}</td>
+                            </tr>
+                            <tr>
+                                <td>{:lang('PHP version')}</td>
+                                <td>5.4.x</td>
+                                <td>{$data.phpversion}</td>
+                                <td>5.4.0</td>
+                            </tr>
+                            <tr>
+                                <td>PDO</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.pdo}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                            <tr>
+                                <td>PDO_MySQL</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.pdo_mysql}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                            <tr>
+                                <td>{:lang('Attachment upload')}</td>
+                                <td>>2M</td>
+                                <td>{$data.upload_size}</td>
+                                <td>{:lang('Not limited')}</td>
+                            </tr>
+                            <tr>
+                                <td>Curl</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.curl}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                            <tr>
+                                <td>GD</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.gd}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                            <tr>
+                                <td>ZipArchive</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.ZipArchive}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                            <tr>
+                                <td>Session</td>
+                                <td>{:lang('Open')}</td>
+                                <td>{$data.session}</td>
+                                <td>{:lang('Open')}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>{:lang('Directory, file permissions check')}</th>
+                            <th>{:lang('Write')}</th>
+                            <th>{:lang('Read')}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name="$data.folders" item="vo" key="dir"}
+                        <tr>
+                            <td>./{$dir}</td>
+                            <td>
+                                {if condition="$vo.w == true"}
+                                <span class="glyphicon glyphicon-ok text-success"></span> {:lang('Writable')}
+                                {else /}
+                                <span class="glyphicon glyphicon-remove text-danger"></span> {:lang('Not writable')}
+                                {/if}
+                            </td>
+                            <td>
+                                {if condition="$vo.r == true"}
+                                <span class="glyphicon glyphicon-ok text-success"></span> {:lang('Readable')}
+                                {else /}
+                                <span class="glyphicon glyphicon-remove text-danger"></span> {:lang('Unreadable')}
+                                {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-body">
+                <br>
+                <div class="row text-center">
+                    <a href="step1"><button type="button" class="btn btn-primary">{:lang('Re-test')}</button></a>&nbsp;&nbsp;
+                    {if condition="$error neq 0"}
+                    <button type="button" class="btn btn-primary" disabled="disabled">{:lang('Next step')}</button>
+                    {else /}
+                    <a href="step2"><button type="button" class="btn btn-primary">{:lang('Next step')}</button></a>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="index/footer" /}

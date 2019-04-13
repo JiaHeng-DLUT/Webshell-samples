@@ -1,0 +1,96 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('setting_menu.html'));}-->
+	<div class="right_main">
+		<div class="tixing corg">
+			<p>短信接口需要付费给移动/联通等运营商，详情见<a href="http://www.phpshe.com/article/133" class="cblue" target="_blank">《简好网络短信接口说明》</a></p>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150">短信key：</td>
+			<td><input type="text" name="info[sms_key]" value="{$info['sms_key']['setting_value']}" class="inputall input300" /></td>
+		</tr>
+		<tr>
+			<td align="right">短信签名：</td>
+			<td><input type="text" name="info[sms_sign]" value="{$info['sms_sign']['setting_value']}" class="inputall input300" /> <span class="c999">（例：简好网络）</span></td>
+		</tr>
+		<tr>
+			<td align="right">短信余额：</td>
+			<td>
+				<span class="fl mar20 strong corg" id="point"><img src="{$pe['host_tpl']}images/load.gif" class="mat5" /></span>
+				<a href="http://www.phpshe.com" target="_blank" class="fl cblue">[充值]</a>
+				<div class="clear"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">管理员手机号：</td>
+			<td>
+				<input type="text" name="info[sms_admin]" value="{$info['sms_admin']['setting_value']}" class="inputall input300" />
+				<a href="javascript:;" class="admin_btn mal10" id="sms_test" />发送测试短信</a>
+				<span class="c888">（用于接收订单通知，多个用“,”隔开）</span>	
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="hidden" name="pesubmit" />
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="submit" value="提 交" class="tjbtn" />
+			</td>
+		</tr>
+		</table>
+		</form>
+	</div>
+	<div class="now">
+		<a href="javascript:;" class="sel">短信通知<i></i></a>
+	</div>
+	<!--{foreach(array('user'=>'会员', 'admin'=>'管理员') as $user_type=>$user_name):}-->
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="50">序号</th>
+			<th class="bgtt" width="">通知类型</th>
+			<th class="bgtt" width="250">通知用户</th>
+			<th class="bgtt" width="250">通知模板</th>
+			<th class="bgtt" width="250">启用状态</th>
+		</tr>
+		<!--{$num=1}-->
+		<!--{foreach($notice_list[$user_type] as $k=>$v):}-->
+		<tr>
+			<td>{$num++}</td>
+			<td>{$v['notice_name']}</td>
+			<td>{$user_name}</td>
+			<td>
+				<a href="admin.php?mod=notice&act=edit&type=sms&id={$v['notice_id']}" class="admin_edit" onclick="return pe_dialog(this, '修改短信模板', 850, 500, 'notice')">编辑</a>
+			</td>
+			<td class="layui-form">
+				<input type="checkbox" <!--{if($v['notice_sms_state']):}-->checked<!--{endif;}--> lay-skin="switch" lay-text="开启|关闭" url="admin.php?mod=notice&act=sms_state&id={$v['notice_id']}&token={$pe_token}" />
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+	</div>
+	<!--{endforeach;}-->
+</div>
+<link rel="stylesheet" href="{$pe['host_root']}include/plugin/layui/css/layui.css">
+<script src="{$pe['host_root']}include/plugin/layui/layui.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.getJSON("http://www.phpshe.com/api.php?mod=sms&act=point&key={$info['sms_key']['setting_value']}&ver=0.1&callback=?", function(json){
+		if (!json.result) json.point = 0;
+		$("#point").html(json.point+' 条');
+	})
+	$("#sms_test").click(function(){
+		$(this).attr("href", "admin.php?mod=setting&act=sms_test&user="+$(":input[name='info[sms_admin]']").val()+"&token={$pe_token}");
+	})
+})
+layui.use(['form'], function(){
+	form = layui.form;
+	form.on('switch', function(data){
+		var url = $(this).attr("url") + "&value=" + (this.checked ? 1 : 0)
+		pe_getinfo(url);
+	});
+});
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

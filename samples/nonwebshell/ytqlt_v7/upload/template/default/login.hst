@@ -1,0 +1,97 @@
+<script src="template/puyuetianUI/js/md5.min.js"></script>
+<div class="pk-container">
+	<div class=" pk-background-color-white pk-padding-15 pk-padding-top-30">
+		<form name="form_login" method="post" action="index.php?c=chklogin&referer={urlencode($_GET['referer'])}&return=json">
+			<div id="hadsky-loginbox" class="pk-row pk-margin-left-right-auto" style="max-width:240px;border:solid 1px #0099FF;position:relative;">
+				<div class="pk-w-sm-12 pk-text-center pk-text-md pk-padding-top-15 pk-padding-bottom-15 pk-text-bold pk-text-secondary">用户登录</div>
+
+				<input type="hidden" name="autologin" value="1">
+				<input type="hidden" name="enpw" value="{$_G['SET']['SECURELOGIN']}">
+				<input type="hidden" name="code" value="">
+
+				<div class="pk-w-sm-12 pk-margin-bottom-15">
+					<input type="text" class="pk-textbox" name="username" value="" placeholder="邮箱/UID/用户名/手机号" required minlength="1" />
+				</div>
+
+				<div class="pk-w-sm-12 pk-margin-bottom-15">
+					<input type="password" class="pk-textbox" name="password" value="" placeholder="密码" required minlength="5" maxlength="16" />
+				</div>
+
+				{loadVerifycode('login','login')}
+
+				<div class="pk-w-sm-12 pk-text-center pk-margin-bottom-15">
+					<button id="loginbtn" type="button" class="pk-btn pk-btn-secondary">登录</button> &nbsp;
+					<a href="{ReWriteURL('reg','','regway='.$_G['SET']['REGWAY'])}" class="pk-btn pk-btn-default">注册</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	$(function() {
+		$('#hadsky-loginbox input').keydown(function(e) {
+			if(e.keyCode == 13) {
+				$('#loginbtn').click();
+			}
+		});
+
+		$('#loginbtn').click(function() {
+			if(!$('#hadsky-loginbox input[name="username"]').val()) {
+				ppp({
+					type: 3,
+					content: '请输入用户名',
+					icon: 0,
+					close: function() {
+						$('#hadsky-loginbox input[name="username"]').focus();
+					}
+				});
+				return false;
+			}
+
+			if(!$('#hadsky-loginbox input[name="password"]').val()) {
+				ppp({
+					type: 3,
+					content: '请输入密码',
+					icon: 0,
+					close: function() {
+						$('#hadsky-loginbox input[name="password"]').focus();
+					}
+				});
+				return false;
+			}
+
+			$(this).prop('disabled', true).html('登录中...');
+			//数据打包
+			if(Cnum(form_login.enpw.value)) {
+				form_login.code.value = randomString(32);
+				$(form_login.password).attr({
+					maxLength: 32
+				}).val(md5(md5(form_login.password.value) + form_login.code.value));
+			}
+			var formstring = FormDataPackaging('form[name="form_login"]:eq(0)');
+			$.post($('form[name="form_login"]:eq(0)').attr('action'), formstring, function(data) {
+				if(data['state'] == 'ok') {
+					ppp({
+						type: 4,
+						content: '登录成功，正在跳转...'
+					});
+					location.href = (data['referer'] || 'index.php');
+				} else {
+					$('form[name="form_login"] input[name="password"]').val('');
+					$('form[name="form_login"] input[name="verifycode"]').val('');
+					$('#verifycodeimageobject').click();
+					ppp({
+						content: (data['msg'] || '未知错误'),
+						icon: 2,
+						close: function() {
+							$('#loginbtn').prop('disabled', false).html('登录');
+						}
+					});
+				}
+			}, 'json').error(function() {
+				$('form[name="form_login"]').attr('action', $('form[name="form_login"]').attr('action').replace('&return=json', ''));
+				form_login.submit();
+			});
+		});
+	});
+</script>

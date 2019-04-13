@@ -1,0 +1,59 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('All users')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>{:lang('User name')}</th>
+                    <th>{:lang('Nickname')}</th>
+                    <th>{:lang('Role')}</th>
+                    <th>{:lang('Head portrait')}</th>
+                    <th>{:lang('E-mail')}</th>
+                    <th>{:lang('Last login time')}</th>
+                    <th>{:lang('Last login IP')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_login}</td>
+                    <td>{$vo.user_nicename}</td>
+                    <td>{if condition="$vo.user_type eq 3"}{:lang('Administrator')}{elseif condition="$vo.user_type eq 5"/}{:lang('Editor')}{elseif condition="$vo.user_type eq 6"/}{:lang('Author')}{else /} {/if}</td>
+                    <td>{notempty name="$vo.avatar"}<img src="{$vo.avatar}" width="50">{/notempty}</td>
+                    <td>{$vo.user_email}</td>
+                    <td>{$vo.last_login_time}</td>
+                    <td>{$vo.last_login_ip}</td>
+                    <td>
+                        {if condition="$vo.user_status eq 0"}<h5 class="text-muted">{:lang('Disabled')}</h5>
+                        {elseif condition="$vo.user_status eq 1"/}<h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Normal')}</h5>
+                        {else /}<h5 class="text-muted">{:lang('Unverified')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <input class="hidden" value="{$vo.user_status}">
+                        <a href="{:Url('modifymanage')}?c={$vo.id}">{:lang('Edit')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="lahei{if condition="$vo.user_status neq 1"} hidden{/if}" href="#!">{:lang('Prohibit')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                        <a class="qiyong{if condition="$vo.user_status eq 1"} hidden{/if}" href="#!">{:lang('Enabled')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div>
+<div class="hidden" id="jinyong">{:lang('Disabled')}</div>
+<div class="hidden" id="zhengchang">{:lang('Normal')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/js/manageuser.js"></script>
+{include file="index/footer" /}

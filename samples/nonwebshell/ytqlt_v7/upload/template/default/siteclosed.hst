@@ -1,0 +1,16 @@
+<div class="pk-container">
+	<div id="sitecloseddiv" style="background-color:#effaff;">
+		<div class="pk-row">
+			<div class="pk-w-sm-12 pk-padding-15 pk-text-white pk-background-color-primary">温馨提示</div>
+			<div class="pk-w-sm-12">
+				<div class="pk-w-sm-12 pk-text-center pk-padding-15 pk-text-lg" style="border-bottom:1px solid #a7dfef;">该网站暂时无法访问</div>
+			</div>
+			<div class="pk-w-sm-12 pk-padding-15">
+				<div class="pk-w-sm-12 pk-text-sm">{$_G['SET']['SITECLOSEDTIP']}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('#sitecloseddiv').css('margin-top', (($(window).height() - $('#sitecloseddiv').height()) / 3) + 'px');
+</script>

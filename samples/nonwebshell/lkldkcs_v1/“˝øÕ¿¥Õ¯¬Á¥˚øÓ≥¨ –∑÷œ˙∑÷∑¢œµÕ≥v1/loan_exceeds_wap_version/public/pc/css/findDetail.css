@@ -1,0 +1,54 @@
+.article{
+    padding: 50px 40px 30px;
+}
+.article .findTitle h2{
+    font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 1px;
+    color: #3d3d3f;
+}
+.findTime{
+    font-size: 14px;
+	letter-spacing: 1px;
+	color: #acacac;
+}
+.findTime label{
+    color: #3d3d3f;
+    line-height: 20px;
+}
+.abstract{
+    height: 108px;
+    background-color:rgba(47, 117, 236, .05);
+    font-size: 16px;
+	line-height: 20px;
+	letter-spacing: 1px;
+	color: #202124;
+}
+.likeBtn{
+    width: 122px;
+	height: 71px;
+	background-color: #f2752e;
+    border-radius: 36px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin: 40px auto 30px;
+}
+.recommend{
+    padding: 40px 40px 30px;
+    width: 100%;
+}
+.recommend_box li{
+  width: 30%;
+}
+.recommend_box li h3{
+    font-size: 16px;
+	font-weight: bold;
+	line-height: 18px;
+	letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 10px;
+}
+.find_icon{
+    letter-spacing: 1px;
+	color: #acacac;
+}

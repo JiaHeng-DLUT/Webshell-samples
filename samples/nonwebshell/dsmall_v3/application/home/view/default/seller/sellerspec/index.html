@@ -1,0 +1,152 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="alert mt15 mb5"><strong>{$Think.lang.operating_instructions}：</strong>
+    <ul>
+        <li>{$Think.lang.sellerspec_tip1}</li>
+        <li>{$Think.lang.sellerspec_tip2}<font color="red">{$Think.lang.sellerspec_tip3}</font>{$Think.lang.sellerspec_tip4}</li>
+        <li>{$Think.lang.sellerspec_tip5}</li>
+    </ul>
+</div>
+
+<table class="search-form">
+    <tr>
+        <td class="w20">&nbsp;</td>
+        <td class="w120"><strong>{$Think.lang.select_business_category}</strong></td>
+        <td>
+            <span dstype="gc1">
+                {notempty name="gc_list"}
+                <select dstype="gc" data-param="{deep:1}">
+                    <option>{$Think.lang.ds_please_choose}</option>
+                    {foreach name="gc_list" item="val"}
+                    <option value="{$val.gc_id}">{$val.gc_name}</option>
+                    {/foreach}
+                </select>
+                {/notempty}
+            </span>
+            <span dstype="gc2"></span>
+            <span dstype="gc3"></span>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+
+
+<div dstype="class_spec" class="dssc-goods-spec">
+    <div dstype="spec_ul" class="spec-tabmenu"></div>
+    <div dstype="spec_iframe" class="spec-iframe">
+        <div class="norecord tc">
+            <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script>
+    $(function () {
+        gcategoryInit("gcategory");
+    });
+</script>-->
+
+
+<script>
+    $(function() {
+        // 查询下级分类，分类不存在显示当前分类绑定的规格
+        $('select[dstype="gc"]').change(function() {
+            $(this).parents('td:first').nextAll().html('');
+            $('div[dstype="spec_ul"]').html('');
+            $('div[dstype="spec_iframe"]').html('');
+            getClassSpec($(this));
+        });
+    });
+
+    // ajax选择商品分类
+    function getClassSpec($this) {
+        var id = parseInt($this.val());
+        var data_str = '';
+        eval('data_str =' + $this.attr('data-param'));
+        var deep = data_str.deep;
+        if (isNaN(id)) {
+            // 清理分类
+            clearClassHtml(parseInt(deep) + 1);
+        }
+        $.getJSON('ajax_class?id=' + id + '&deep=' + deep, function(data) {
+            $('div[dstype="spec_iframe"]').empty();
+            $('div[dstype="spec_ul"]').empty();
+            if (data) {
+                if (data.type == 'class') {
+                    nextClass(data.data, data.deep);
+                } else if (data.type == 'spec') {
+                    specList(data.data, data.deep, data.gcid);
+                }
+            }
+        });
+    }
+
+    // 下一级商品分类
+    function nextClass(data, deep) {
+        $('span[dstype="gc' + deep + '"]').html('').append('<select data-param="{deep:' + deep + '}"></select>')
+                .find('select').change(function() {
+            getClassSpec($(this));
+        }).append('<option>{$Think.lang.ds_please_choose}</option>');
+        $.each(data, function(i, n) {
+            if (n != null) {
+                $('span[dstype="gc' + deep + '"] > select').append('<option value="' + n.gc_id + '">' + n.gc_name + '</option>');
+            }
+        });
+        // 清理分类
+        clearClassHtml(parseInt(deep) + 1);
+    }
+
+    // 列出规格信息
+    function specList(data, deep, gcid) {
+        if (typeof(data) != 'undefined' && data != '') {
+            var $_ul = $('<ul></ul>');
+            $.each(data, function(i, n) {
+                $_ul.append('<li><a href="javascript:void(0);" dstype="editSpec" data-param="{spid:' + n.sp_id + ',gcid:' + gcid + '}">{$Think.lang.ds_edit}' + n.sp_name + '{$Think.lang.specifications}</a></li>');
+            });
+            $_ul.find('a').click(function() {
+                $_ul.find('li').removeClass('selected');
+                $(this).parents('li:first').addClass('selected');
+                editSpecvalue($(this));
+            });
+            $_ul.find('a:first').click();
+            $('div[dstype="spec_ul"]').append($_ul);
+        } else {
+            $('div[dstype="spec_ul"]').append('<div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.category_cannot_add_specifications}</span></div>');
+        }
+        // 清理分类
+        clearClassHtml(deep);
+    }
+
+    // 清理二级分类信息
+    function clearClassHtml(deep) {
+        switch (deep) {
+            case 2:
+                $('span[dstype="gc2"]').empty();
+            case 3:
+                $('span[dstype="gc3"]').empty();
+                break;
+        }
+    }
+
+    // ajax编辑规格值
+    function editSpecvalue(o) {
+        $('div[dstype="spec_iframe"]').html('');
+        var data_str = '';
+        eval('data_str =' + o.attr('data-param'));
+        $_iframe = $('<iframe id="iframepage" name="iframepage" frameBorder=0 scrolling=no width="100%" height="630px" ' + 'src="{:url('Sellerspec/add_spec')}?spid=' + data_str.spid + '&gcid=' + data_str.gcid + '" ></iframe>'
+                )
+                ;
+        $('div[dstype="spec_iframe"]').append($_iframe);
+    }
+
+</script>
+
+{/block}
+
+
+
+

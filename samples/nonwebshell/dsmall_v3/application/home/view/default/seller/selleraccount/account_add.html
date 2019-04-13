@@ -1,0 +1,135 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<div class="dssc-form-default">
+  <form id="add_form" action="" method="post">
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.front_desk_user_name}{$Think.lang.ds_colon}</dt>
+      <dd><input class="w120 text" name="member_name" type="text" id="member_name" value="" />
+          <span></span>
+        <p class="hint">{$Think.lang.must_registered_account}</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.user_password}{$Think.lang.ds_colon}</dt>
+      <dd><input class="w120 text" name="password" type="password" id="password" value="" />
+          <span></span>
+        <p class="hint"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.login_account}{$Think.lang.ds_colon}</dt>
+      <dd><input class="w120 text" name="seller_name" type="text" id="seller_name" value="" />
+          <span></span>
+        <p class="hint">{$Think.lang.login_information}</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.account_group}{$Think.lang.ds_colon}</dt>
+      <dd><select name="group_id">
+            {foreach name="seller_group_list" item="value" }
+            <option value="{$value.sellergroup_id}">{$value.sellergroup_name}</option>
+            {/foreach}
+          </select>
+          <span></span>
+        <p class="hint"></p>
+      </dd>
+    </dl>
+    <div class="bottom">
+      <label class="submit-border">
+        <input type="submit" class="submit" value="{$Think.lang.ds_submit}">
+      </label>
+    </div>
+  </form>
+</div>
+<script>
+$(document).ready(function(){
+    jQuery.validator.addMethod("seller_name_exist", function(value, element, params) { 
+        var result = true;
+        $.ajax({  
+            type:"GET",  
+            url:"{:url('Selleraccount/check_seller_name_exist')}",  
+            async:false,  
+            data:{seller_name: $('#seller_name').val()},  
+            success: function(data){  
+                if(data == 'true') {
+                    $.validator.messages.seller_name_exist = "{$Think.lang.account_already_exists}";
+                    result = false;
+                }
+            }  
+        });  
+        return result;
+    }, '');
+
+    jQuery.validator.addMethod("check_member_password", function(value, element, params) { 
+        var result = true;
+        $.ajax({  
+            type:"GET",  
+            url:"{:url('Selleraccount/check_seller_member')}",  
+            async:false,  
+            data:{member_name: $('#member_name').val(), password: $('#password').val()},  
+            success: function(data){  
+                if(data != 'true') {
+                    $.validator.messages.check_member_password = "{$Think.lang.user_authentication_failed}";
+                    result = false;
+                }
+            }  
+        });  
+        return result;
+    }, '');
+
+    $('#add_form').validate({
+        onkeyup: false,
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+    	submitHandler:function(form){
+    		ds_ajaxpost('add_form', 'url', "{:url('Selleraccount/account_list')}");
+    	},
+        rules: {
+            member_name: {
+                required: true
+            },
+            password: {
+                required: true,
+                check_member_password: true
+            },
+            seller_name: {
+                required: true,
+                maxlength: 50, 
+                seller_name_exist: true
+            },
+            group_id: {
+                required: true
+            }
+        },
+        messages: {
+            member_name: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.foreground_username_cannot_empty}'
+            },
+             password: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.user_password_cannot_empty}',
+                remote: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.wrong_username_password}'
+            },
+            seller_name: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.seller_account_cannot_empty}',
+                maxlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.seller_account_number_limit}'
+            },
+            group_id: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.select_account_group}'
+            }
+        }
+    });
+});
+</script> 
+        
+        
+        
+        
+        
+
+
+
+
+{/block}

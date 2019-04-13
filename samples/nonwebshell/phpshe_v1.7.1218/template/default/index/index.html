@@ -1,0 +1,145 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="content" style="padding-top:5px">
+	<div class="jdt_banner">
+		<ul class="banList">
+			<!--{$index_jdt = 1;}-->
+			<!--{foreach($cache_ad['pc']['index_jdt'] as $k=>$v):}-->
+			<li <!--{if($index_jdt++==1):}-->class="active1"<!--{endif;}-->><a href="{$v['ad_url']}" target="_blank"><img src="{pe_thumb($v['ad_logo'])}"/></a></li>
+			<!--{endforeach;}-->
+		</ul>
+		<div style="position:relative; width:725px; margin:0 auto; z-index:100">
+		<div class="fomW">
+			<div class="jsNav">
+				<!--{$index_jdt = 1;}-->
+				<!--{foreach($cache_ad['pc']['index_jdt'] as $v):}-->
+				<a href="javascript:;" class="trigger <!--{if($index_jdt++==1):}-->current<!--{endif;}-->"></a>
+				<!--{endforeach;}-->
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="fr top_right">
+		<div class="action_list">
+			<div class="action_tt">
+				<h3 class="fl">{$cache_class[1]['class_name']}</h3>
+				<a class="fr" href="{pe_url('article-list-1')}">更多 ></a>
+				<div class="clear"></div>
+			</div>
+			<ul>
+				<!--{foreach($notice_list as $k=>$v):}-->
+				<li <!--{if($k>=7):}-->style="border-bottom:0"<!--{endif;}-->><a href="{pe_url('article-'.$v['article_id'])}" title="{$v['article_name']}" target="_blank">{$v['article_name']}</a>{pe_date($v['article_atime'], 'm-d')}</li>
+				<!--{endforeach;}-->
+			</ul>
+		</div>
+		<div class="top_fuwu">
+			<ul>
+			<li>
+				<i class="i_1"></i>
+				<h3>正品保证</h3>
+			</li>
+			<li>
+				<i class="i_3"></i>
+				<h3>闪电发货</h3>
+			</li>
+			<li style="border-right:0">
+				<i class="i_4"></i>
+				<h3>退货保障</h3>
+			</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<!--限时折扣 Start-->
+	<!--{if(count($product_zhekou)):}-->
+	<div class="mx_tt">
+		<span class="fl">限时折扣</span>
+		<a href="{pe_url('huodong-zhekou')}" class="fr">更多></a>
+		<div class="clear"></div>
+	</div>
+	<div class="mx_box">
+		<!--{foreach($product_zhekou as $k=>$v):}-->
+		<div class="mx_pro" <!--{if(($k+1)%5==0):}-->style="padding-right:0; border-right:0"<!--{endif}-->>
+			<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank">
+			<div class="ms_pro">
+				<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['product_logo'], 400, 400)}" title="{$v['product_name']}" width="195" height="195" class="js_imgload" />
+				<div class="ms_time">
+					剩余 <span class="huodong_time" endtime="{$v['huodong_etime']}"></span>
+				</div>
+				<div class="ms_bg"></div>
+			</div>
+			<div style="padding:5px 0 0">
+				<p class="prolist_name1">{$v['product_name']}</p>
+				<div class=""><s class="c999 font12">原价：¥{product_money($v['product_smoney'])}</s></div>
+				<div class="ms_jg">
+					<span class="ms_jg_l">
+						<span class="money3">¥{product_money($v['product_money'])}</span>
+					</span> 
+					<span class="ms_jg_r">立即抢购</span>
+					<div class="clear"></div>
+				</div>	
+				<div class="clear"></div>
+			</div>
+			</a>
+		</div>
+		<!--{endforeach;}-->
+		<div class="clear"></div>
+	</div>
+	<!--{endif;}-->
+	<!--限时折扣 End-->
+	<!--分类1 Start-->
+	<!--{foreach($category_indexlist as $category):}-->
+	<div class="prolist_html mat20">
+		<div class="prolist_tt">
+			<div class="fl"><h3>{$category['category_name']}</h3></div>
+			<a href="{pe_url('product-list-'.$category['category_id'])}" title="{$category['category_name']}" target="_blank" class="fr c999">更多 ></a>
+			<!--{if(is_array($cache_category_arr[$category['category_id']])):}-->
+			<div class="prolist_ttfl">
+				热门分类：
+				<span style="overflow:hidden; height:16px;">
+				<!--{foreach($cache_category_arr[$category['category_id']] as $k=>$v):}-->
+				<a href="{pe_url('product-list-'.$k)}" title="{$v['category_name']}" target="_blank">{$v['category_name']}</a>
+				<span class="mal10 mar10 xian"></span>
+				<!--{endforeach;}-->
+				</span>
+			</div>
+			<!--{endif;}-->
+			<div class="clear"></div>
+		</div>
+		<!--{foreach($category['product_list'] as $k=>$v):}-->
+		<div class="prolist" <!--{if(($k+1)%4==0):}-->style="margin-right:0"<!--{endif;}-->>
+			<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank">
+			<div class="pro_bq">
+				<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['product_logo'], 400, 400)}" title="{$v['product_name']}" width="250" height="250" class="js_imgload" />
+				<!--{if($v['huodong_tag']):}--><div class="bq_name">{$v['huodong_tag']}</div><!--{endif;}-->
+			</div>
+			<p class="prolist_name">{$v['product_name']}</p>
+			<p class="mat8">
+				<span class="money1 fl"><span class="num font18 mar3">¥</span>{product_money($v['product_money'])}</span></span> 
+				<span class="font12 fr c999">已售{$v['product_sellnum']}件</span>
+			</p>
+			<div class="clear"></div>
+			</a>
+		</div>
+		<!--{endforeach;}-->
+		<div class="clear"></div>
+	</div>
+	<!--{endforeach;}-->
+	<!--分类1 End-->
+	<div class="yl_list">
+		<div class="yl_tt"><span>友情链接</span></div>
+		<div class="yl_name">
+			<!--{foreach($cache_link as $v):}-->
+			<a href="{$v['link_url']}" target="_blank" title="{$v['link_name']}">{$v['link_name']}</a>
+			<!--{endforeach;}-->
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="{$pe['host_tpl']}js/jquery.banner.js"></script>
+<script type="text/javascript">
+$(function(){
+	pe_jstime(".huodong_time", '{time()}', 'html');
+	$(".jdt_banner").swBanner();
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

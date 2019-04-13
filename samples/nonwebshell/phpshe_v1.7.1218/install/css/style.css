@@ -1,0 +1,66 @@
+/*公共样式表部分开始*/
+body {background:#fff; margin:0 auto; font-size:12px; font-family:"宋体",Arial, Helvetica, sans-serif; color:#333; line-height:20px;}
+a,a:hover{color:#333;text-decoration:none;}
+a:hover{color:#FF5A00;}
+ol,ul,li,dl,dd,dt{list-style:none;}
+h1,h2,h3{font-size:14px;}
+.clear{clear:both; height:0; overflow:hidden;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;}
+.center{text-align:center;}
+img{border:0;}
+.cred{color:#F14D59;}
+.cred1{color:#C70404;}
+.corg{color:#FF5A00;}
+.cgreen{color:#090;}
+.cblue{color:#244395;}
+.c666{color:#666}
+.c888{color:#888}
+.c333{color:#333}
+.fl{float:left;}
+.fr{float:right;}
+.mat5{margin-top:5px;}
+.mat8{margin-top:8px;}
+.mat10{margin-top:10px;}
+.mat15{margin-top:15px;}
+.mab5{margin-bottom:5px;}
+.mab10{margin-bottom:10px;}
+.mar5{margin-right:5px;}
+.mar10{margin-right:10px;}
+.mal5{margin-left:5px;}
+.mal10{margin-left:10px;}
+.font12{font-size:12px;}
+.font14{font-size:14px;}
+.font16{font-size:16px;}
+.font18{font-size:18px;}
+.more{float:right; color:#999;font-size:12px;padding-right:10px;font-weight:normal;}
+.more a:hover{color:#ff4400;}
+.num{font-family:"Arial";}
+.strong{font-weight:bold;}
+.normal{font-weight:normal;}
+.xuxian{border-bottom:1px dashed #ccc;}
+/*公共样式表部分结束*/
+body{background:#f5f5f5;}
+.content{width:800px; margin:0 auto;}
+.logo{text-align:center; margin-top:10px; font-size:24px; height:50px; line-height:50px; font-family:'微软雅黑'}
+.liucheng{width:270px; margin-left:270px; font-size:14px; margin-bottom:5px; color:#666;}
+.liucheng td{padding:5px;}
+.liucheng td span.sel{color:#ff0000;}
+.main_l{background:url(../images/main_l.gif) no-repeat; width:20px; height:566px; float:left; overflow:hidden;}
+.main_r{background:url(../images/main_r.gif) no-repeat; width:20px; height:566px; float:left; overflow:hidden;}
+.main_m{background:#fff; width:730px; height:516px; float:left; padding:30px; padding-bottom:0; border:1px #eee solid;}
+.xieyi{border:1px #eee solid; background:#f8f8f8; padding:10px; padding-right:5px; margin-top:10px}
+.xieyi_text{padding:5px; color:#888; height:350px; overflow-y:auto;}
+.xieyi td{padding:8px; border:1px #eee solid; color:#666;}
+.xieyi .input50{width:50px; height:24px; line-height:24px; border:1px #ccc solid; padding:0 5px;}
+.xieyi .input150{width:150px; height:24px; line-height:24px; border:1px #ccc solid; padding:0 5px;}
+.xieyi .input200{width:200px; height:24px; line-height:24px; border:1px #ccc solid; padding:0 5px;}
+.btn{background:url(../images/anzhuang.gif) no-repeat; width:133px; height:34px; border:0; cursor:pointer;}
+.main{background:#fff; width:500px; height:170px; margin:0 auto; border:1px #ddd solid; padding:40px 30px 30px; margin-top:20px;}
+.main a{color:#244395; text-decoration:underline;}
+.mat20{margin-top:20px;}
+.cg_ts{background:url(../images/dui.png) no-repeat; padding-left:60px; height:31px; font-size:14px; margin-left:60px;}
+.demo_btn01{margin-top:15px; text-align:center; float:left;width:120px; margin:50px 20px 0 122px}
+.demo_btn01 a{background:#FF6D00; display:block; margin:0 auto; width:120px; height:35px; line-height:35px; text-align:center; color:#fff; border-radius:4px; font-size:14px; text-decoration:none;}
+.demo_btn02{margin-top:15px; text-align:center; float:left;width:120px; margin:50px 0 0 0}
+.demo_btn02 a{background:#49B0F6; display:block; margin:0 auto;  width:120px; height:35px; line-height:35px; text-decoration:none; text-align:center; color:#fff; border-radius:4px; font-size:14px;}

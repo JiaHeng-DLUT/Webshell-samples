@@ -1,0 +1,62 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class File extends Model
+{
+   Protected $autoCheckFields = true;
+   
+   public  function getFile(){
+
+     return $list = $this->where("pid = 0")->order('order','desc')->select();
+  
+   }
+
+   public function addFile($data){
+   	    if(empty($data)){ 
+   	    	return false;
+   	    }
+
+        $md5 = $data['md5'];
+        $where = ['md5'=>$md5];
+        
+
+
+
+        if($this->data($data)->save()){
+            return true;
+        }else{
+	    	    return false;
+	      }
+ 
+
+  }
+
+   public function updateFile($post){
+        if(empty($post) || !is_array($post) ){ 
+          return false;
+        }
+
+        if($this->update($post)){
+            return true;
+        }else{
+             return false;
+      }
+ 
+
+  }
+   public function delFile($id){
+
+        if(empty($id) || !is_array($id) ){ 
+          return false;
+        }   
+        if($this->destroy($id)){
+           return true;
+        }else{
+          return false;
+      }
+ 
+  }
+
+
+}

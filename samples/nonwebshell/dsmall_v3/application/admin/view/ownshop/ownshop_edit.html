@@ -1,0 +1,114 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>可以修改自营店铺的店铺名称以及店铺状态是否为开启状态</li>
+            <li>可以修改自营店铺的店主商家中心登录账号</li>
+            <li>如需修改店主登录密码，请到会员管理中，搜索“店主账号”相应的会员并编辑</li>
+            <li>已绑定所有类目的自营店，如果将“绑定所有类目”设置为“否”，则会下架其所有商品，请谨慎操作！</li>
+        </ul>
+    </div>
+    <form id="store_form" method="post">
+        <input type="hidden" name="store_id" value="{$store_array.store_id}" />
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td class="required w120"><label class="validation" for="store_name">店铺名称:</label></td>
+                    <td class="vatop rowform"><input type="text" value="{$store_array.store_name}" id="store_name" name="store_name" class="txt" /></td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label for="store_name">开店时间:</label></td>
+                    <td class="vatop rowform">{notempty name="$store_array.store_addtime"}{$store_array.store_addtime|date='Y-m-d',###}{/notempty}</td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label>店主账号:</label></td>
+                    <td class="vatop rowform">{$store_array.member_name}</td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label class="validation" for="seller_name">店主卖家账号:</label></td>
+                    <td class="vatop rowform">{$store_array.seller_name}</td>
+                    <td class="vatop tips">用于登录商家中心，可与店主账号不同</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class="noborder">
+                    <td class="required"><label><label for="bind_all_gc">绑定所有类目:</label></label></td>
+                    <td class="vatop rowform onoff">
+                        <label for="bind_all_gc1" class="cb-enable {if $store_array.bind_all_gc == '1'}selected{/if}" ><span>是</span></label>
+                        <label for="bind_all_gc0" class="cb-disable {if $store_array.bind_all_gc == '0'}selected{/if}" ><span>否</span></label>
+                        <input id="bind_all_gc1" name="bind_all_gc" {if $store_array.bind_all_gc == '1'}checked="checked"{/if} value="1" type="radio">
+                        <input id="bind_all_gc0" name="bind_all_gc" {if $store_array.bind_all_gc == '0'}checked="checked"{/if} value="0" type="radio">
+                    </td>
+                    <td class="vatop tips"></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr class="noborder">
+                    <td class="required"><label><label for="state">状态:</label></label></td>
+                    <td class="vatop rowform onoff"><label for="store_state1" class="cb-enable {if $store_array.store_state == '1'}selected{/if}" ><span>{$Think.lang.open}</span></label>
+                        <label for="store_state0" class="cb-disable {if $store_array.store_state == '0'}selected{/if}" ><span>{$Think.lang.close}</span></label>
+                        <input id="store_state1" name="store_state" {if $store_array.store_state == '1'}checked="checked"{/if} onclick="$('#tr_store_close_info').hide();" value="1" type="radio">
+                        <input id="store_state0" name="store_state" {if $store_array.store_state == '0'}checked="checked"{/if} onclick="$('#tr_store_close_info').show();" value="0" type="radio">
+                    </td>
+                    <td class="vatop tips"></td>
+                </tr>
+            </tbody>
+            <tbody id="tr_store_close_info">
+                <tr >
+                    
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label for="store_close_info">关闭原因:</label></td>
+                    <td class="vatop rowform"><textarea name="store_close_info" rows="6" class="tarea" id="store_close_info">{$store_array.store_close_info}</textarea></td>
+                    <td class="vatop tips"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfoot">
+                    <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        $('input[name=store_state][value={$store_array.store_state}]').trigger('click');
+                //按钮先执行验证再提交表单
+                $("#submitBtn").click(function () {
+            if ($("#store_form").valid()) {
+                $("#store_form").submit();
+            }
+        });
+        $('#store_form').validate({
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parentsUntil('tr').parent().find('td:last'));
+            },
+            rules: {
+                store_name: {
+                    required: true,
+                    remote: "{:url('Ownshop/ckeck_store_name',['store_id'=>$store_array.store_id])}"
+                }
+            },
+            messages: {
+                store_name: {
+                    required: '请输入店铺名称',
+                    remote: '店铺名称已存在'
+                }
+            }
+        });
+    });
+</script>

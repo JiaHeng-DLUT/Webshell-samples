@@ -1,0 +1,56 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>开店首页</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>排序显示规则为排序小的在前</li>
+        </ul>
+    </div>
+    
+    <table class="ds-default-table">
+        <thead>
+        <tr class="thead">
+            <th>{$Think.lang.ds_sort}</th>
+            <th>标题</th>
+            <th class="align-center">更新时间</th>
+            <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {notempty name="help_list"}
+        {foreach name="help_list" item="val"}
+        <tr class="hover">
+            <td class="w48 sort">{$val.help_sort}</td>
+            <td>{$val.help_title}</td>
+            <td class="w150 align-center">{$val.help_updatetime|date="Y-m-d H:i:s",###}</td>
+            <td class="w150 align-center">
+                <a href="{:url('Storejoin/edit_help',['help_id'=>$val.help_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+            </td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr class="no_data">
+            <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+        </tbody>
+    </table>
+
+
+</div>

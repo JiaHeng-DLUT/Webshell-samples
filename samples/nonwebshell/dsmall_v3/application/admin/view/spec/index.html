@@ -1,0 +1,45 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>规格管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+
+    <table class="ds-default-table">
+        <thead>
+            <tr>
+                <th>{$Think.lang.sp_id}</th>
+                <th>{$Think.lang.sp_name}</th>
+                <th>{$Think.lang.gc_name}</th>
+                <th>{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach name="spec_list" item="spec"}
+            <tr id="ds_row_{$spec.sp_id}">
+                <td>{$spec.sp_id}</td>
+                <td>{$spec.sp_name}</td>
+                <td>{$spec.gc_name}</td>
+                <td>
+                    <a href="javascript:dsLayerOpen('{:url('Spec/spec_edit',['sp_id'=>$spec.sp_id])}','{$Think.lang.ds_edit}-{$spec.sp_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    {if $spec.sp_id != 1}
+                    <a href="javascript:dsLayerConfirm('{:url('Spec/spec_drop',['sp_id'=>$spec.sp_id])}','您确定删除此规格',{$spec.sp_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    {$show_page}
+</div>

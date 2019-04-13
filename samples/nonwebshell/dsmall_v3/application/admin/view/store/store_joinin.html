@@ -1,0 +1,116 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_name}</dt>
+                <dd><input type="text" value="" name="store_name" id="store_name" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.store_user}</dt>
+                <dd><input type="text" value="" name="owner_and_name" id="owner_and_name" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.belongs_level}</dt>
+                <dd>
+                    <select name="grade_id">
+                        <option value="">{$Think.lang.ds_please_choose}...</option>
+                        {notempty name="grade_list"}
+                        {foreach name="grade_list" item="v" key="k" }
+                        <option value="{$v.storegrade_id}" {if condition="$Request.param.grade_id eq $v.storegrade_id"}selected{/if}>{$v.storegrade_name}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select>
+                </dd>
+                <dd>
+                    <select name="joinin_state">
+                        <option value="">{$Think.lang.ds_please_choose}...</option>
+                        {notempty name="joinin_state_array"}
+                        {foreach name="joinin_state_array" item="v" key="k" }
+                        <option value="{$k}" {if condition="$Request.param.joinin_state eq $k"}selected{/if}>{$v}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <input type="submit" class="btn" value="搜索">
+                {if $filtered}
+                <a href="{:url('Store/store_joinin')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                {/if}
+            </div>
+        </div>
+        
+    </form>
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>点击审核按钮可以对开店申请进行审核，点击查看按钮可以查看开店信息</li>
+        </ul>
+    </div>
+    
+    <form method="post" id="store_form" name="store_form">
+        <table class="ds-default-table">
+            <thead>
+                <tr class="thead">
+                    <th class="w200">{$Think.lang.store_name}</th>
+                    <th class="w200">{$Think.lang.store_user_name}</th>
+                    <th class="w200">{$Think.lang.location}</th>
+                    <th class="w200">{$Think.lang.belongs_level}</th>
+                    <th class="w200">{$Think.lang.state}</th>
+                    <th class="">{$Think.lang.ds_handle}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {notempty name="store_list"}
+                {foreach name="store_list" item="v" key="k" }
+                <tr class="hover edit">
+                    <td>{$v.store_name}</td>
+                    <td>{$v.member_name}</td>
+                    <td>{$v.company_address}</td>
+                    <td>{$v.storegrade_name}</td>
+                    <td>{$joinin_state_array[$v['joinin_state']]}</td>
+                    <td>
+                        <?php if(in_array(intval($v['joinin_state']), array(STORE_JOIN_STATE_NEW, STORE_JOIN_STATE_PAY))) { ?>
+                        <a href="javascript:dsLayerOpen('{:url('Store/store_joinin_detail',['member_id'=>$v.member_id])}','{$Think.lang.ds_verify}-{$v.store_name}')" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_verify}</a>
+                        <?php } else { ?>
+                        <a href="javascript:dsLayerOpen('{:url('Store/store_joinin_detail',['member_id'=>$v.member_id])}','{$Think.lang.ds_view}-{$v.store_name}')" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+                        <?php } ?>
+                        {if intval($v.joinin_state)<40}
+                        &nbsp;&nbsp; <a href="javascript:dsLayerConfirm('{:url('Store/del_join',['member_id'=>$v.member_id])}','{$Think.lang.ds_ensure_del}')" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                        {/if}
+                    </td>
+                </tr>
+                {/foreach}
+                {else /}
+                <tr class="no_data">
+                    <td colspan="10">{$Think.lang.ds_no_record}</td>
+                </tr>
+                {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+</div>
+<script>
+    function audit_submit(type) {
+        $('#type').val(type);
+        $("#store_form").submit();
+        return true;
+    }
+</script>

@@ -1,0 +1,36 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="membertag_form" method="post" enctype="multipart/form-data">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation" for="inviterclass_name">{$Think.lang.inviter_class}:</label></td>
+                <td class="vatop rowform"><input type="text" value="{$inviterclass_info.inviterclass_name|default=''}" name="inviterclass_name" id="inviterclass_name" class="txt"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            
+            <tr class="noborder">
+                <td class="required"><label class="validation" for="inviterclass_amount">{$Think.lang.inviterclass_amount}:</label></td>
+                <td class="vatop rowform"><input type="text" value="{$inviterclass_info.inviterclass_amount|default=''}" name="inviterclass_amount" id="inviterclass_amount" class="txt"></td>
+                <td class="vatop tips">{$Think.lang.inviterclass_amount_tips}</td>
+            </tr>
+            
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function() {
+                $("#membertag_form").submit();
+        });
+        });
+</script>        

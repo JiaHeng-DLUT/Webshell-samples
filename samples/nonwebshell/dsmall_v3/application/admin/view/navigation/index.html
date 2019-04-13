@@ -1,0 +1,65 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>导航管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <table class="ds-default-table">
+        <thead>
+            <tr>
+                <th class="w24"></th>
+                <th>{$Think.lang.nav_sort}</th>
+                <th>{$Think.lang.nav_title}</th>
+                <th>{$Think.lang.nav_url}</th>
+                <th>{$Think.lang.nav_location}</th>
+                <th>{$Think.lang.nav_new_open}</th>
+                <th>{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach name="nav_list" item="nav"}
+            <tr id="ds_row_{$nav.nav_id}">
+                <td><input type="checkbox" class="checkitem" name="nav_id[]" value="{$nav.nav_id}" /></td>
+                <td>{$nav.nav_sort}</td>
+                <td>{$nav.nav_title}</td>
+                <td>{$nav.nav_url}</td>
+                <td>{if $nav.nav_location eq 'header'}{$Think.lang.nav_top}{elseif $nav.nav_location eq 'middle'}{$Think.lang.nav_midd}{else}{$Think.lang.nav_foo}{/if}</td>
+                <td>{if $nav.nav_new_open eq '0'}否{else}是{/if}</td>
+                <td>
+                    <a href="javascript:dsLayerOpen('{:url('Navigation/edit',['nav_id'=>$nav.nav_id])}','{$Think.lang.ds_edit}{$nav.nav_title}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Navigation/drop',['nav_id'=>$nav.nav_id])}','{$Think.lang.ds_ensure_del}',{$nav.nav_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+        <tfoot>
+            {notempty name="nav_list"}
+            <tr class="tfoot">
+                <td><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                <td colspan="16"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp;<a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                </td>
+            </tr>
+            {/notempty}
+        </tfoot>
+    </table>
+    {$show_page}
+</div>
+
+<script type="text/javascript">
+    
+    function submit_delete(ids_str) {
+        _uri = ADMINSITEURL + "/Navigation/drop.html?nav_id=" + ids_str;
+        dsLayerConfirm(_uri, '{$Think.lang.ds_ensure_del}');
+    }
+
+</script>

@@ -1,0 +1,113 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<form method="get" action="">
+    <input type="hidden" name="lock" value="{$Request.param.lock}" />
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.refund_order_add_time}</th>
+            <td class="w240">
+                <input name="add_time_from" id="add_time_from" type="text" class="text w70" value="{$Request.param.add_time_from}" />
+                <label class="add-on"><i class="fa fa-calendar"></i></label> &#8211; 
+                <input name="add_time_to" id="add_time_to" type="text" class="text w70" value="{$Request.param.add_time_to}" />
+                <label class="add-on"><i class="fa fa-calendar"></i></label>
+            </td>
+            <th class="w60">{$Think.lang.processing_state}</th>
+            <td class="w80">
+                <select name="state">
+                    <option value="" {if condition="$Request.param.state eq ''"}selected{/if}>{$Think.lang.ds_all}</option>
+                    <option value="1" {if condition="$Request.param.state eq '1'"}selected{/if}>{$Think.lang.refund_state_confirm}</option>
+                    <option value="2" {if condition="$Request.param.state eq '2'"}selected{/if}>{$Think.lang.refund_state_yes}</option>
+                    <option value="3" {if condition="$Request.param.state eq '3'"}selected{/if}>{$Think.lang.refund_state_no}</option>
+                </select>
+            </td>
+            <th class="w120">
+                <select name="type">
+                    <option value="order_sn" {if condition="$Request.param.type eq 'order_sn'"}selected{/if}>{$Think.lang.refund_order_ordersn}</option>
+                    <option value="refund_sn" {if condition="$Request.param.type eq 'refund_sn'"}selected{/if}>{$Think.lang.refund_order_refundsn}</option>
+                    <option value="buyer_name" {if condition="$Request.param.type eq 'buyer_name'"}selected{/if}>{$Think.lang.refund_order_buyer}</option>
+                </select>
+            </th>
+            <td class="w160"><input type="text" class="text" name="key" value="{$Request.param.key}" /></td>
+
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_search}" />
+                </label>
+            </td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th colspan="2">{$Think.lang.merchandise_order_refund}</th>
+            <th class="w70">{$Think.lang.refund_order_refund}</th>
+            <th class="w90">{$Think.lang.refund_order_buyer}</th>
+            <th class="w120">{$Think.lang.refund_order_add_time}</th>
+            <th class="w80">{$Think.lang.processing_state}</th>
+            <th class="w80">{$Think.lang.platform_confirm}</th>
+            <th class="w90">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="refund_list"}
+        {foreach name="refund_list" item="val" key="key" }
+        <tr class="bd-line" >
+            <td></td>
+            {if $val.goods_id > 0}
+            <td class="w50"><div class="pic-thumb">
+                    <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank"><img src="{:goods_thumb($val, 240)}"/></a></div></td>
+            <td class="tl" title="{$val.store_name}">
+                <dl class="goods-name">
+                    <dt><a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}" target="_blank">{$val.goods_name}</a></dt>
+                    <dd>{$Think.lang.refund_order_ordersn}{$Think.lang.ds_colon}<a href="{:url('Sellerorder/show_order',['order_id'=>$val.order_id])}" target="_blank">{$val.order_sn}</a></dd>
+                    <dd>{$Think.lang.refund_order_refundsn}{$Think.lang.ds_colon}{$val.refund_sn}</dd></dl></td>
+            {else /}
+            <td class="tl" title="{$val.store_name}" colspan="2">
+                <dl class="goods-name">
+                    <dt>{$val.goods_name}</dt>
+                    <dd>{$Think.lang.refund_order_ordersn}{$Think.lang.ds_colon}<a href="{:url('Sellerorder/show_order',['order_id'=>$val.order_id])}" target="_blank">{$val.order_sn}</a></dd>
+                    <dd>{$Think.lang.refund_order_refundsn}{$Think.lang.ds_colon}{$val.refund_sn}</dd></dl></td>
+            {/if}
+            <td>{$Think.lang.currency}{$val.refund_amount}</td>
+            <td>{$val.buyer_name}</td>
+            <td>{$val.add_time|date="Y-m-d H:i:s",###}</td>
+            <td>{$state_array[$val['seller_state']]}</td>
+            <td>{if $val['seller_state']==2}{$admin_array[$val['refund_state']]}{else/}{$Think.lang.there_no}{/if}</td>
+            <td class="dscs-table-handle">
+                {if $val.seller_state == 1}
+                <span><a href="{:url('Sellerrefund/edit',['refund_id'=>$val.refund_id])}" class="btn-blue"><i class="fa fa-pencil-square"></i><p>{$Think.lang.deal_with}</p></a></span>
+                {else /}
+                <span><a href="{:url('Sellerrefund/view',['refund_id'=>$val.refund_id])}" class="btn-orange"><i class="fa fa-eye"></i><p>{$Think.lang.ds_view}</p></a></span>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning">&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+       {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="refund_list"}
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+<script>
+    $(function () {
+        $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+</script>
+
+
+
+{/block}

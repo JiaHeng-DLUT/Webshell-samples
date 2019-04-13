@@ -1,0 +1,61 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=payment" class="sel">{$menutitle}（{$tongji['all']}）<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="40">排序</th>
+			<th class="bgtt" width="150">图标</th>
+			<th class="bgtt" width="130">支付名称</th>
+			<th class="bgtt">支付描述</td>
+			<th class="bgtt" width="90">启用状态</th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td>{$v['payment_id']}</td>
+			<td><input type="text" name="payment_order[{$v['payment_id']}]" value="{$v['payment_order']}" class="inputtext input30 center" /></td>
+			<td style="padding:15px 0"><img src="{$pe['host_root']}include/plugin/payment/{$v['payment_type']}/logo.png" style="height:29px" /></td>
+			<td>{$v['payment_name']}</td>
+			<td class="aleft">{$v['payment_desc']}</td>
+			<td>
+				<!--{if($v['payment_state']==1):}-->
+				<a href="admin.php?mod=payment&act=state&state=0&id={$v['payment_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/dui.png" /></a>
+				<!--{else:}-->
+				<a href="admin.php?mod=payment&act=state&state=1&id={$v['payment_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/cuo.png" /></a>
+				<!--{endif;}-->
+			</td>
+			<td>
+				<a href="admin.php?mod=payment&act=edit&id={$v['payment_id']}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=payment&act=uninstall&id={$v['payment_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '卸载')">卸载</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		<!--{foreach($new_list as $v):}-->
+		<tr>
+			<td>-</td>
+			<td>-</td>
+			<td style="padding:15px 0"><img src="{$pe['host_root']}include/plugin/payment/{$v['type']}/logo.png" style="height:29px" /></td>
+			<td>{$v['name']}</td>
+			<td class="aleft">{$v['desc']}</td>
+			<td>-</td>
+			<td><a href="admin.php?mod=payment&act=install&type={$v['type']}&token={$pe_token}" class="admin_btn">安装</a></td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<button href="admin.php?mod=payment&act=order&token={$pe_token}" onclick="pe_doall(this,'form')">更新排序</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

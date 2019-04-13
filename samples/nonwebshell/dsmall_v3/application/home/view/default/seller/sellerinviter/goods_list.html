@@ -1,0 +1,115 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a class="dssc-btn dssc-btn-green" href="{:url('Sellerinviter/goods_add')}"><i class="fa fa-plus-square"></i>{$Think.lang.goods_add}</a>
+
+
+{/block}
+{block name="seller_main"}
+
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.sellerinviter_notice_1}</li>
+        <li>{$Think.lang.sellerinviter_notice_2}</li>
+        {present name="isPlatformStore"}
+        {else /}
+        <li>{$Think.lang.sellerinviter_notice_3}</li>
+        {/present}
+    </ul>
+</div>
+
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th class="w110">{$Think.lang.goods_name}</th>
+            <td class="w160"><input type="text" class="text w150" name="goods_name" value="{$Request.get.goods_name}"/></td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}"/></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w80"></th>
+            <th class="">{$Think.lang.goods_name}</th>
+            <th class="w180">{$Think.lang.inviter_ratio}</th>
+            <th class="w80">{$Think.lang.goods_price}</th>
+            <th class="w80">{$Think.lang.inviter_total_quantity}</th>
+            <th class="w100">{$Think.lang.inviter_total_amount}</th>
+            <th class="w100">{$Think.lang.inviter_amount}</th>
+            
+            <th class="">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody id="goods_list">
+        {notempty name="goods_list"}
+        {foreach name="goods_list" item="val"}
+        <tr class="bd-line">
+            <td><div class="pic-thumb"><a href="{:url('Goods/index',['goods_id'=>$storage_array[$val['goods_commonid']]['goods_id']])}" target="_blank"><img src="{:goods_thumb($val, 240)}"/></a></div></td>
+            <td><a href="{:url('Goods/index',['goods_id'=>$storage_array[$val['goods_commonid']]['goods_id']])}" target="_blank">{$val.goods_name}</a></td>
+            <td>
+            <p>{$Think.lang.inviter_ratio_1}{$val.inviter_ratio_1}{$Think.lang.ds_percent}</p>
+            <p>{$Think.lang.inviter_ratio_2}{$val.inviter_ratio_2}{$Think.lang.ds_percent}</p>
+            <p>{$Think.lang.inviter_ratio_3}{$val.inviter_ratio_3}{$Think.lang.ds_percent}</p>
+            </td>
+            <td>{$Think.lang.currency}{$val.goods_price}</td>
+            <td>{$val.inviter_total_quantity}</td>
+            <td>{$Think.lang.currency}{$val.inviter_total_amount}</td>
+            <td>{$Think.lang.currency}{$val.inviter_amount}</td>
+            <td class="dscs-table-handle tr">
+                <span>
+                    <a href="{:url('Sellerinviter/goods_edit','goods_commonid='.$val.goods_commonid)}" class="btn-blue">
+                        <i class="fa fa-pencil-square"></i>
+                        <p>{$Think.lang.ds_edit}</p>
+                    </a>
+                </span>
+                <span>
+                    <a href="javascript:;" dstype="btn_drop_inviter_goods" data-goods-commonid={$val.goods_commonid} class="btn-red">
+                        <i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_del}</p>
+                    </a>
+                </span>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr id="goods_list_norecord">
+            <td class="norecord" colspan="8">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="goods_list"}
+        <tr>
+            <td colspan="8">
+                <div class="pagination">{$show_page}</div>
+            </td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+<form id="submit_form" action="" method="post">
+    <input type="hidden" id="goods_commonid" name="goods_commonid" value="">
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[dstype="btn_drop_inviter_goods"]').on('click', function () {
+            var action = "{:url('Sellerinviter/goods_del')}";
+            var goods_commonid = $(this).attr('data-goods-commonid');
+            layer.confirm('{$Think.lang.ds_ensure_del}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#submit_form').attr('action', action);
+                $('#goods_commonid').val(goods_commonid);
+                ds_ajaxpost('submit_form', 'url', "{:url('Sellerinviter/goods_list')}", 1000);
+            });
+        });
+    });
+</script>
+
+{/block}

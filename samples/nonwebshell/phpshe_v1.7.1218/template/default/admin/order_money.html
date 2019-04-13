@@ -1,0 +1,108 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<div class="tixing corg">【商品优惠】减价50元：请输入 -50；&nbsp;加价50元，请输入+50。</div>
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list mat10">
+<tr>
+	<td class="bgtt" width="50" style="border-top:0"></td>
+	<td class="bgtt" width="" style="border-top:0">商品详情</td>
+	<td class="bgtt" width="81" style="border-top:0">单价(元)</td>
+	<td class="bgtt" width="81" style="border-top:0">数量</td>
+	<td class="bgtt" width="81" style="border-top:0">小计</td>
+	<td class="bgtt" width="81" style="border-top:0">商品优惠</td>
+	<td class="bgtt" width="91" style="border-top:0">运费</td>
+	<!--<td class="bgtt" width="100" style="border-top:0">实付款(元)</td>-->	
+</tr>
+</table>
+<table border="0" cellspacing="0" cellpadding="0" class="list">
+<!--{foreach($product_list as $k=>$v):}-->
+<!--{$product_allmoney = pe_num($v['product_money']*$v['product_num'], 'round', 1);}-->
+<!--{$product_jjmoney = $v['product_jjmoney'] > 0 ? '+'.$v['product_jjmoney'] : $v['product_jjmoney']}-->
+<tr>
+	<td width="50"><img src="{pe_thumb($v['product_logo'], 100, 100)}" width="40" height="40" class="imgbg"></td>
+	<td style="text-align:left;">
+		<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank" class="cblue">{$v['product_name']}</a>
+		<p class="c888 mat5">{order_skushow($v['product_rule'])}</p>
+	</td>
+	<td width="80" style="border-left:1px solid #eee;"><span class="num">{$v['product_money']}</span></td>
+	<td width="80" style="border-left:1px solid #eee;"><span class="num">{$v['product_num']}</span></td>
+	<td width="80" style="border-left:1px solid #eee;"><span class="num">{$product_allmoney}</span></td>
+	<td width="80" style="border-left:1px solid #eee;"><input type="text" name="product_jjmoney[{$v['orderdata_id']}]" value="{$product_jjmoney}" product_allmoney="{$product_allmoney}" class="js_product_jjmoney inputtext input40 c666" /></td>
+	<!--{if($k==0):}-->
+	<td width="90" rowspan="{count($product_list)}" style="border-left:1px solid #eee;"><input type="text" name="order_wl_money" value="{pe_num($info['order_wl_money'], 'round', 1)}" class="inputtext input40 c666" id="wl_money" /></td>
+	<!--<td width="106" rowspan="{count($product_list)}" style="border-left:1px solid #eee;">
+		<span class="strong num font14 corg" id="order_money">{round($info['order_money'], 1)}</span>
+	</td>-->
+	<!--{endif;}-->
+</tr>
+<!--{endforeach;}-->
+</table>
+<div class="dingdan_heji">
+	<!--<span class="fl">交易获得：<span class="cgreen num">{$info['order_point_get']}</span> 积分</span>
+	<div class="fr">
+		<span class="mar20">商品总金额：<span class="cred num" id="order_product_money">{round($info['order_product_money'], 1)}</span></span>
+		<span class="mar20">运费：<span class="cred num" id="order_wl_money">{round($info['order_wl_money'], 1)}</span></span>
+		<span class="mar20">使用优惠券：<a class="cred num" href="javascript:;" title="{$info['order_quan_name']}">-{round($info['order_quan_money'], 1)}</a></span>
+		<span class="mar10">使用积分：<a class="cred num" href="javascript:;" title="使用{$info['order_point_use']}积分">-{round($info['order_point_money'], 1)}</a></span>
+	</div>
+	<div class="clear"></div>-->
+	<div class="dingdan_jiesuan" style="font-family:微软雅黑; font-size:12px; margin-top:0;">
+		<!--{if($info['order_point_get']):}-->
+		<div class="dingdan_jiesuan_l">可获得积分：<span class="cgreen num">{$info['order_point_get']}</span> 点</div>
+		<!--{endif;}-->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>商品金额：</td>
+			<td width="100" id="order_product_money">¥ {$info['order_product_money']}</td>
+		</tr>
+		<tr>
+			<td>运费：</td>
+			<td id="order_wl_money">¥ {$info['order_wl_money']}</td>
+		</tr>
+		<!--{if($info['order_quan_money']>0):}-->
+		<tr>
+			<td>使用优惠券：</td>
+			<td><a href="javascript:;" title="{$info['order_quan_name']}">- ¥ {$info['order_quan_money']}</a></td>
+		</tr>
+		<!--{endif;}-->
+		<!--{if($info['order_point_money']>0):}-->
+		<tr>
+			<td>使用积分：</td>
+			<td><a href="javascript:;" title="使用{$info['order_point_use']}积分">- ¥ {$info['order_point_money']}</a></td>
+		</tr>
+		<!--{endif;}-->
+		<tr>
+			<td>应付金额：</td>
+			<td class=" cred strong" id="order_money">¥ {$info['order_money']}</td>
+		</tr>
+		</table>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="acenter mat20">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" value="提 交" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+	$(".js_product_jjmoney").add("#wl_money").keyup(function(){
+		var product_money = 0, wl_money = 0;
+		$(".js_product_jjmoney").each(function(i){
+			product_money += pe_num($(this).attr("product_allmoney"), 'round', 1) + pe_num($(this).val(), 'round', 1);
+		})
+		product_money = pe_num(product_money, 'round', 1);		
+		wl_money = pe_num($("#wl_money").val(), 'round', 1);
+		var order_money = product_money + wl_money - parseFloat({$info['order_quan_money']}) - parseFloat({$info['order_point_money']});
+		order_money = pe_num(order_money, 'round', 1);
+		if (order_money < 0) order_money = 0;
+		product_money = pe_num(product_money, 'round', 1, true);
+		wl_money = pe_num(wl_money, 'round', 1, true);
+		order_money = pe_num(order_money, 'round', 1, true);
+		$("#order_product_money").html("¥ " + product_money);
+		$("#order_wl_money").html("¥ " + wl_money);
+		$("#order_money").html("¥ " + order_money);
+	})
+})
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

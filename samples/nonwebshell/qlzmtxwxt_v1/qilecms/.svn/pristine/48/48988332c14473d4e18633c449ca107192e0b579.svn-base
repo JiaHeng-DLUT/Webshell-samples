@@ -1,0 +1,20 @@
+<?php
+//配置文件
+return [
+    //模块名
+    'module' => 'task',
+    //别名
+    'name' => '任务',
+    //版本号
+    'version' => '1.0.0',
+
+    //模块描述
+    'description' => '任务模块，用户可以发起活动',
+    //开发者
+    'author' => '合肥奇乐网络科技有限公司',
+    //作者网站
+    'website' => 'http://www.baidu.com',
+
+//是否可以卸载
+    'uninstall' => 1
+];

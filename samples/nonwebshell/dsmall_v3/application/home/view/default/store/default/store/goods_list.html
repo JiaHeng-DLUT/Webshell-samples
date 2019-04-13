@@ -1,0 +1,83 @@
+{extend name="default/base/base_store" /}
+{block name="store_main"}
+
+
+<div class="w1200 mt20">
+  <div class="common_module">
+    <div class="common_title">
+      <h4>
+        {if condition="$Request.param.storegc_id"}{$storegc_name}{elseif condition="$Request.param.inkeyword"}{$Think.lang.show_store_index_include}{$Request.param.inkeyword}{$Think.lang.show_store_index_goods}{else/}{$Think.lang.ds_whole_goods}{/if}
+      </h4>
+    </div>
+    <div class="dss-goodslist-bar">
+      <ul class="dss-array">
+        <li class="{if $Request.param.key=='1'}selected{/if}"><a {if $Request.param.key == '1'}{if $Request.param.order == 1}asc{else/}desc{/if}{/if} href="{if $Request.param.key == 1 && $Request.param.order == 2}{:replaceParam(array('key' => '1', 'order'=>'1'))}{else/}{:replaceParam(array('key' => '1', 'order' => '2'))}{/if}">{$Think.lang.show_store_all_new}</a></li>
+        <li class="{if $Request.param.key=='2'}selected{/if}"><a {if $Request.param.key == '2'}{if $Request.param.order == 1}asc{else/}desc{/if}{/if} href="{if $Request.param.key == 2 && $Request.param.order == 2}{:replaceParam(array('key' => '2', 'order'=>'1'))}{else/}{:replaceParam(array('key' => '2', 'order' => '2'))}{/if}">{$Think.lang.show_store_all_price}</a></li>
+        <li class="{if $Request.param.key=='3'}selected{/if}"><a {if $Request.param.key == '3'}{if $Request.param.order == 1}asc{else/}desc{/if}{/if} href="{if $Request.param.key == 3 && $Request.param.order == 2}{:replaceParam(array('key' => '3', 'order'=>'1'))}{else/}{:replaceParam(array('key' => '3', 'order' => '2'))}{/if}">{$Think.lang.show_store_all_sale}</a></li>
+        <li class="{if $Request.param.key=='4'}selected{/if}"><a {if $Request.param.key == '4'}{if $Request.param.order == 1}asc{else/}desc{/if}{/if} href="{if $Request.param.key == 4 && $Request.param.order == 2}{:replaceParam(array('key' => '4', 'order'=>'1'))}{else/}{:replaceParam(array('key' => '4', 'order' => '2'))}{/if}">{$Think.lang.show_store_all_collect}</a></li>
+        <li class="{if $Request.param.key=='5'}selected{/if}"><a {if $Request.param.key == '5'}{if $Request.param.order == 1}asc{else/}desc{/if}{/if} href="{if $Request.param.key == 5 && $Request.param.order == 2}{:replaceParam(array('key' => '5', 'order'=>'1'))}{else/}{:replaceParam(array('key' => '5', 'order' => '2'))}{/if}">{$Think.lang.show_store_all_click}</a></li>
+      </ul>
+        <div class="dss-search">
+            <form id="" name="searchShop" method="get" action="{:url('Store/goods_all',['store_id'=>$store_info.store_id])}" >
+                <input type="text" class="text w120" name="inkeyword" value="{$Request.param.inkeyword}" placeholder="{$Think.lang.search_store_merchandise}">
+                <a href="javascript:document.searchShop.submit();" class="dss-btn">{$Think.lang.ds_search}</a>
+            </form>
+        </div>
+    </div>
+    {notempty name="recommended_goods_list"}
+    <div class="content dss-all-goods-list mb15">
+      <ul>
+        {foreach name="recommended_goods_list" item="value" }
+        <li>
+          <dl>
+              <dt><a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" class="goods-thumb" target="_blank"><img src="{:goods_thumb($value, 240)}" alt="{$value.goods_name}" /></a>
+              <ul class="goods-thumb-scroll-show">
+                  {if isset($value['image'])}
+                  {php}$i=0;{/php}
+                  {foreach name="$value.image" item="val" }
+                  {php}$i++;{/php}
+                  <li {if $i==1}class="selected"{/if}><a href="javascript:void(0);"><img src="{:goods_cthumb($val.goodsimage_url, 240)}"/></a></li>
+                  {/foreach}
+                  {else/}
+                  <li class="selected"><a href="javascript:void(0)"><img src="{:goods_thumb($value, 240)}"></a></li>
+                  {/if}
+              </ul>
+              </dt>
+            <dd class="goods-name"><a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" title="{$value.goods_name}" target="_blank">{$value.goods_name}</a></dd>
+            <dd class="goods-info"><span class="price">{$Think.lang.currency}
+              {$value.goods_promotion_price}
+              </span><span class="goods-sold">{$Think.lang.ds_sell_out}<strong>{$value.goods_salenum}</strong> {$Think.lang.ds_jian}</span>
+            </dd>
+            {if config('groupbuy_allow') && $value['goods_promotion_type'] == 1}
+            <dd class="goods-promotion"><span>{$Think.lang.snap_up_merchandise}</span></dd>
+            {elseif config('promotion_allow') && $value['goods_promotion_type'] == 2 /}
+            <dd class="goods-promotion"><span>{$Think.lang.limit_discount}</span></dd>
+            {/if}
+          </dl>
+        </li>
+        {/foreach}
+      </ul>
+    </div>
+    <div class="pagination">{$show_page}</div>
+    {else /}
+    <div class="content dss-all-goods-list">
+    <div class="no_results">
+      {$Think.lang.show_store_index_no_record}
+    </div></div>
+    {/notempty}
+  </div>
+</div>
+<script>
+$(function(){
+    // 图片切换效果
+    $('.goods-thumb-scroll-show').find('a').mouseover(function(){
+        $(this).parents('li:first').addClass('selected').siblings().removeClass('selected');
+        var _src = $(this).find('img').attr('src');
+        _src = _src.replace('_60.', '_240.');
+        $(this).parents('dt').find('.goods-thumb').find('img').attr('src', _src);
+    });
+});
+</script>
+
+
+{/block}

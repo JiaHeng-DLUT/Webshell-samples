@@ -1,0 +1,33 @@
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover
+{
+    background-color: #fff !important;
+}
+.fly-header .layui-nav .layui-nav-item a
+{
+	color: #fff !important;
+}
+.fly-user-main .layui-nav .layui-nav-item a
+{
+  color: #555 !important;
+  padding-left: 40px;
+}
+.layui-nav-tree .layui-nav-item a:hover
+{
+ background-color: #fff !important;	
+}
+.fly-nav-user{position:absolute !important;right:0px;top:0px;}
+
+.layui-btn-normal{background-color: #009966;}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover{
+	border-left: 2px solid #009966;
+}
+.layui-tab-brief > .layui-tab-title .layui-this{color:#009966 !important;}
+.layui-tab-brief > .layui-tab-more li.layui-this::after, .layui-tab-brief > .layui-tab-title .layui-this::after {
+
+    border-bottom: 2px solid #009966 !important;
+
+}
+.layui-nav-tree .layui-nav-bar{background-color:#009966;}
+.layui-form-radio > i:hover, .layui-form-radioed > i{color:#009966;}

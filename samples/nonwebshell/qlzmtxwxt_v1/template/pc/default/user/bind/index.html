@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>绑定账号</title>
+  {include  file="public/css"}
+</head>
+<body>
+
+  {include  file="public/header"}
+<div class="layui-main" style="padding-top:20px;width:600px;margin:0 auto;">
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">已有账号，请绑定</li>
+    <li> 没有账号，请完善资料</li>
+  </ul>
+  <div class="layui-tab-content">
+   <div class="layui-tab-item layui-show">
+   <div class="layui-card">
+  <div class="layui-card-body" style="background:#f9f9f9">完成绑定后可以QQ账号 一键登录哦~</div>
+
+</div>
+     <form class="layui-form" action="" style="width:600px;margin:0 auto;padding:20px;">
+          <div class="layui-form-item">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-inline" style="width:300px;">
+              <input type="text" name="title" required  lay-verify="required" placeholder="请输入已验证手机" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">验证码</label>
+            <div class="layui-input-inline">
+              <input type="text" name="smscode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux"><a href="javascript:;" id="activate">获取验证码</a></div>
+          </div>
+         
+          <div class="layui-form-item">
+            <div class="layui-input-block" style="width:300px;">
+              <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit lay-filter="form1">创建并绑定</button>
+            
+            </div>
+          </div>
+      </form>  
+   </div>
+    <div class="layui-tab-item">
+     <div class="layui-card-body" style="background:#f9f9f9">完成绑定后可以QQ账号 一键登录哦~</div>
+        <form class="layui-form" action="" style="width:600px;margin:0 auto;padding:20px;">
+             <div class="layui-form-item">
+                  <label class="layui-form-label">用户名</label>
+                  <div class="layui-input-inline" style="width:300px;">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                  </div>
+             </div>
+
+             <div class="layui-form-item">
+                  <label class="layui-form-label">密码</label>
+                  <div class="layui-input-inline" style="width:300px;">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                  </div>
+            </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">手机</label>
+                  <div class="layui-input-inline" style="width:300px;">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入手机" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">验证码</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="smscode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                  </div>
+                  <div class="layui-form-mid layui-word-aux"><a href="javascript:;" id="activate">获取验证码</a></div>
+                </div>
+                 <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-inline">
+                      <input type="checkbox" name="like[write]" lay-skin="primary" title="我已阅读并同意">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux"><a href="" >《用户注册协议》</a></div>
+                  </div>
+                <div class="layui-form-item">
+                  <div class="layui-input-block" style="width:300px;">
+                    <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit lay-filter="form2">立即注册</button>
+                  
+                  </div>
+                </div>
+            </form>  
+
+
+    </div>
+
+
+  </div>
+</div>   
+
+
+
+</div> 
+
+  {include  file="public/js"}
+  {include  file="public/footer"}
+ <script>
+// 发送验证码
+ var id = "#activate"; //发送验证码按钮id
+$(id).on('click',function(){
+  var email = $(this).attr('data-email');
+  var status = $(this).attr('data-status');
+  if(status == 2){
+     return false;
+  }
+  $.post("{:url('validate/sendEmail')}",{email:email},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                            layer.msg(json.msg, {icon: 1,
+                            skin: 'layui-layer-molv',});
+                        
+                    }else if(json.code == -1){
+                           
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});
+                       
+                    }else{
+                            time(id,0);
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});
+                       
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).attr("data-status",1);
+      $(id).html("发送邮件");
+
+    } else {
+   // 倒计时中 禁用按钮
+      $(id).attr("data-status",2);
+      $(id).html("重新发送邮件(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+</script>
+</body>
+</html>

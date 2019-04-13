@@ -1,0 +1,76 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="add_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation">{$Think.lang.admin_voucher_price_title}({$Think.lang.currency_zh}){$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform"><input type="text" id="voucher_price" name="voucher_price" class="txt" value="{$info.voucherprice|default=''}"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation">{$Think.lang.admin_voucher_price_describe}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform"><textarea name="voucher_price_describe" rows="6" class="tarea" id="voucher_price_describe">{$info.voucherprice_describe|default=''}</textarea></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation">{$Think.lang.admin_voucher_price_points}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform"><input type="text" id="voucher_points" name="voucher_points" class="txt" value="{$info.voucherprice_defaultpoints|default='0'}"></td>
+                <td class="vatop tips">{$Think.lang.admin_voucher_price_points_tip}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    //按钮先执行验证再提交表单
+    $(function(){
+        $("#submitBtn").click(function(){
+            $("#add_form").submit();
+        });
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+
+            rules : {
+                voucher_price_describe: {
+                    required : true,
+                    maxlength : 255
+                },
+                voucher_price: {
+                    required : true,
+                    digits : true,
+                    min : 1
+                },
+                voucher_points: {
+                    digits : true
+                }
+            },
+            messages : {
+                voucher_price_describe: {
+                    required : '{$Think.lang.admin_voucher_price_describe_error}',
+                    maxlength : '{$Think.lang.admin_voucher_price_describe_lengtherror}'
+                },
+                voucher_price: {
+                    required : '{$Think.lang.admin_voucher_price_error}',
+                    digits : '{$Think.lang.admin_voucher_price_error}',
+                    min : '{$Think.lang.admin_voucher_price_error}'
+                },
+                voucher_points: {
+                    digits : '{$Think.lang.admin_voucher_price_points_error}'
+                }
+            }
+        });
+    });
+</script>

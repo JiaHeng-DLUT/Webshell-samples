@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+{:search('添加规则',$select,'false','false',$date)}
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col width="110">
+      <col>
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>规则ID</th>
+        <th>规则标题</th>
+        <th>规则URL</th>
+        <th>规则模块</th>
+        <th>规则类型</th>
+        <th>规则条件</th>
+        <th>规则状态</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td><input type="checkbox" name="uid[]" class="id " title=""  lay-skin="primary" value="{$vo.uid}"></td>
+        <td>{$vo.id}</td>
+        <td>{$vo.title}</td>
+        <td>{$vo.name}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("member/edit",array("uid"=>$vo["uid"]))}')"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+<!-- 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+         -->  
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//删除
+    var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+           $.ajax({
+           type:'post',
+           data:{"uid":id},
+           dataType:'json',
+           url:"{:url('member/del')}",
+           success:function(json){
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+
+});
+$("#add").on("click",function(){
+  open('{:url("auth/add")}','添加规则','580px','80%');
+});
+
+
+function edit(url){
+ parent.layer.open({
+          type: 2,
+          title: '用户编辑',
+          shadeClose: true,
+          shade: 0.8,
+          area: ['880px', '90%'],
+          content: url //iframe的url
+        }); 
+}
+
+</script>
+</body>
+
+</html>

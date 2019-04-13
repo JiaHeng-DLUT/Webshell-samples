@@ -1,0 +1,77 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-empty"></div>
+    <form id="store_class_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td class="required w120"><label class="validation" class="storeclass_name">{$Think.lang.store_class_name}:</label></td>
+                    <td class="vatop rowform"><input type="text" value="{$storeclass.storeclass_name|default=''}" name="storeclass_name" id="storeclass_name" class="txt"></td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label class="validation" for="storeclass_name">{$Think.lang.store_class_bail}:</label></td>
+                    <td class="vatop rowform"><input type="text" value="{$storeclass.storeclass_bail|default=''}" name="storeclass_bail" id="storeclass_bail" class="txt"></td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label for="storeclass_sort">{$Think.lang.ds_sort}:</label></td>
+                    <td class="vatop rowform"><input type="text" value="{$storeclass.storeclass_sort|default='0'}" name="storeclass_sort" id="storeclass_sort" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.update_sort}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfoot">
+                    <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script>
+//按钮先执行验证再提交表单
+$(function(){$("#submitBtn").click(function(){
+    if($("#store_class_form").valid()){
+     $("#store_class_form").submit();
+	}
+	});
+});
+//
+$(document).ready(function(){
+	$('#store_class_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parent().parent().find('td:last'));
+        },
+
+        rules : {
+            storeclass_name : {
+                required : true    
+            },
+            storeclass_bail : {
+                required : true,
+                digits : true
+            },
+            storeclass_sort : {
+                number   : true,
+                min : 0
+            }
+        },
+        messages : {
+            storeclass_name : {
+                required : '{$Think.lang.store_class_name_no_null}',
+            },
+            storeclass_bail : {
+                required : '请输入保证金额',
+                digits: "只能输入数字",
+            },
+            storeclass_sort  : {
+                number   : '{$Think.lang.store_class_sort_only_number}',
+                min : '输入最小值为0'
+            }
+        }
+    });
+});
+</script>

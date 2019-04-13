@@ -1,0 +1,43 @@
+ 
+<?php
+/*
+	欢迎使用DM企业建站系统，本系统由www.demososo.com开发。
+*/
+if(!defined('IN_DEMOSOSO')) {
+	exit('this is wrong page,please back to homepage');
+}
+
+ $mobilecss = STAPATH.'assets/headercss/header_mobile.css';
+getcsssingle($mobilecss);
+?>
+<?php 
+ if($logoimg<>'') {
+ 		 echo '<div class="logo tc"><a href="'.BASEURLPATH.'">';
+		 echo '<img src="'.UPLOADPATHIMAGE.$logoimg.'" alt="" />'; 
+		 echo '</a></div>';}
+
+		 ?>
+ <div class="headermobi stickytop">
+  <?php 
+    block($bsheadersearch); 
+   block('prog_lang');
+   block('prog_shoppingbag');
+ 	  ?>
+   <button   class="dmmenumobi"> </button>
+
+<div class="menu needmenumob "> 
+		 <?php 
+		  $file =  TPLCURROOT.'tpl/menu.php'; 
+		 if(is_file($file))  require $file;
+		 else  require BLOCKROOT.'tpl/menu.php'; 
+		    ?> 
+</div><!-- end menu -->
+</div>
+
+
+ 
+
+
+
+
+ 

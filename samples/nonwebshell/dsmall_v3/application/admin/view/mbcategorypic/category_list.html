@@ -1,0 +1,74 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>分类图片设置</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="fixed-empty"></div>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.link_help1}</li>
+        </ul>
+    </div>
+
+
+    <table class="ds-default-table">
+        <thead>
+            <tr class="thead">
+                <th>&nbsp;</th>
+                <th>{$Think.lang.link_index_title}</th>
+                <th>{$Think.lang.link_index_pic_sign}</th>
+                <th class="align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty name="link_list"}
+            {foreach name="link_list" item="v"}
+            <tr class="hover edit" id="ds_row_{$v.gc_id}">
+                <td class="w24"><input type="checkbox" value="{$v.gc_id}" class="checkitem"></td>
+                <td>{$goods_class[$v.gc_id]['gc_name'] ?? ''}</td>
+                <td class="picture">
+                    {if $v.gc_thumb != ''}
+                    <div class="size-88x31">
+                        <span class='thumb size-88x31'><i></i><img height="31" src="{$v.gc_thumb}"/></span>
+                    </div>
+                    {/if}
+                </td>
+                <td class="w120 align-center">
+                    <a href="javascript:dsLayerOpen('{:url('Mbcategorypic/mb_category_edit',['gc_id'=>$v.gc_id])}','{$Think.lang.ds_edit}-{$goods_class[$v.gc_id]['gc_name'] ?? ''}')"  class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Mbcategorypic/mb_category_del',['gc_id'=>$v.gc_id])}','{$Think.lang.ds_ensure_del}',{$v.gc_id})"  class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+        </tbody>
+        {notempty name="link_list"}
+        <tfoot>
+            <tr class="tfoot" id="dataFuncs">
+                <td><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                <td colspan="16" id="batchAction"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp; <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+            </tr>
+        </tfoot>
+        {/notempty}
+    </table>
+
+</div>

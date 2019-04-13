@@ -1,0 +1,60 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺帮助</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>系统初始化的类型不能删除</li>
+            <li>帮助类型排序显示规则为排序小的在前，新增的在前</li>
+        </ul>
+    </div>
+    
+    <table class="ds-default-table">
+        <thead>
+        <tr class="thead">
+            <th>{$Think.lang.ds_sort}</th>
+            <th>类型名称</th>
+            <th class="align-center">显示</th>
+            <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {notempty name="helptype_list"}
+        {foreach name="helptype_list" item="val"}
+        <tr class="hover" id="ds_row_{$val.helptype_id}">
+            <td class="w48 sort">{$val.helptype_sort}</td>
+            <td>{$val.helptype_name}</td>
+            <td class="w150 align-center">{$val.helptype_show ==1 ? $Think.lang.ds_yes : $Think.lang.ds_no}</td>
+            <td class="w150 align-center">
+                <a href="javascript:dsLayerOpen('{:url('Storehelp/edit_type',['helptype_id'=>$val.helptype_id])}','{$Think.lang.ds_edit}-{$val.helptype_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                {eq name="val.helptype_code" value="auto"}
+                <a href="javascript:dsLayerConfirm('{:url('Storehelp/del_type',['helptype_id'=>$val.helptype_id])}','{$Think.lang.ds_ensure_del}',{$val.helptype_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+               {/eq}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+            <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+        </tbody>
+    </table>
+    {$show_page}
+</div>

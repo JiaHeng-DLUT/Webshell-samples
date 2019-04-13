@@ -1,0 +1,557 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/memberflea.css">
+
+
+<div class="dsm-default-form">
+    <form method="post" id="goods_form" action="{present name='goods.goods_id'}{:url('Memberflea/edit_save_goods')}{else /}{:url('Memberflea/save_goods')}{/present}">
+      <input type="hidden" name="goods_id" value="{$goods.goods_id|default=''}" />
+      <input type="hidden" name="spec_id" value="{$goods.spec_id|default=''}" />
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.store_goods_index_flea_goods_class}{$Think.lang.ds_colon}</dt>
+        <dd id="gcategory">
+            {notempty name="goods.fleaclass_id"}
+            <span class="f_l">{$goods.fleaclass_name}</span> <a class="edit_gcategory btn" href="javascript:void(0)">{$Think.lang.ds_edit}</a>
+          <select style="display:none">
+            <option value="0">{$Think.lang.ds_please_choose}</option>
+              {foreach name="goods_class" item="val"}
+              <option value="{$val.fleaclass_id}">{$val.fleaclass_name}</option>
+              {/foreach}
+          </select>
+            <input type="text" id="cate_id" name="cate_id" value="{$goods.fleaclass_id}" class="mls_id text" />
+          <input type="hidden" name="cate_name" value="{$goods.fleaclass_name}" class="mls_names text"/>
+           {else /}
+            <select>
+            <option value="0">{$Think.lang.ds_please_choose}</option>
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}">{$val.fleaclass_name}</option>
+                {/foreach}
+          </select>
+           <input type="text" id="cate_id" name="cate_id" value="" class="mls_id text" />
+          <input type="hidden" name="cate_name" value="" class="mls_names text"/>
+            {/notempty}
+            
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.store_goods_index_flea_goods_name}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <p>
+            <input type="text" class="text w400" name="goods_name" value="{$goods.goods_name|default=''}"  />
+          </p>
+          <p class="hint">{$Think.lang.store_goods_index_flea_title}</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.store_goods_index_flea_goods_tag}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <p>
+            <input type="text" class="text w400" name="goods_tag" value="{$goods.goods_tag|default=''}"/>
+          </p>
+          <p class="hint">{$Think.lang.store_goods_index_flea_multiple_tag}</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.store_goods_album_flea_goods_pic}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <div class="flea_pic_list">
+            <ul id="menu" class="menu">
+              <li class="active" id="li_1"><a href="javascript:void(0);">{$Think.lang.store_goods_album_flea_goods_pic}</a></li>
+            </ul>
+            <div class="content">
+              <div id="demo"></div>
+              <div class="standard">
+                <div id="goodsCoverPicture" class="big_pic">
+                  <div class="picture">
+                      <span class="thumb size182"><i></i>
+                      <img id="big_goods_image" src="{present name='goods.goods_image'}{$goods_image_path}{$goods.goods_image}{else /}{:goods_thumb()}{/present}" onload="javascript:ResizeImage(this,182,182);" alt="" />
+                    </span> 
+                  </div>
+                </div>
+                <div class="small_pic" >
+                  <ul id="goods_images">
+                    {for start="0" end="5"}
+                      <li ds_type="handle_pic" file_id="{$goods_image[$i]['fleaupload_id']|default=''}" thumbnail="{$goods_image[$i]['fleafile_name']|default=''}" id="thumbnail_{$i}">
+                      <input type="hidden" name="goods_file_id[]" value="{$goods_image[$i]['fleaupload_id']|default=''}">
+                      <div class="picture"><span class="thumb size72"><i></i>
+                      <img id="img_{$i}" src="{present name="$goods_image[$i]['fleafile_name']"}{$goods_image[$i]['fleafile_name']}{else /}{:goods_cthumb('')}{/present}"  onload="javascript:ResizeImage(this,72,72);"/>
+
+                      </span></div>
+                      <div ds_type="handler" class="bg" id="{$i}">
+                        {notempty name="goods_image[$i]['fleafile_name']"}
+                          <p class="operation"><span class="cut_in" ds_type="set_cover" ecm_title="{$Think.lang.store_goods_index_face}"></span><span class="delete" ds_type="drop_image" ecm_title="{$Think.lang.ds_del}"></span></p>
+                          {/notempty}
+                      </div>
+                      <div class="upload-btn"><a href="javascript:void(0);">
+                        <iframe id="iframe_{$i}" width="86" scrolling="no" height="30" frameborder="0" src="{empty name='goods_image[$i]'}{:url('Memberflea/image_upload',['id'=>$i,'item_id'=>$item_id])}{else /}{:url('Memberflea/image_upload',['id'=>$i,'item_id'=>$item_id,'file_id'=>$goods_image[$i]['fleaupload_id']])}{/empty}" ></iframe>
+                        </a>
+                      </div>
+                    </li>
+                      {/for}
+                  </ul>
+                  <div class="help">
+                    <p>{$Think.lang.store_goods_album_flea_description_one}</p>
+                    <p>{$Think.lang.store_goods_album_flea_description_two}</p>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="upload_btn" style=" display: none;"> </div>
+            </div>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.flea_old_deep}:</dt>
+        <dd>
+          <select name="sh_quality" class="w100">
+            <option value="0" {notpresent name="goods.flea_quality"} selected="selected"{/notpresent}>{$Think.lang.ds_please_choose}</option>
+
+              <option value="10" {present name="goods.flea_quality "}{if $goods.flea_quality == '10'} selected="selected"{/if}{/present}>{$Think.lang.flea_index_new}</option>
+              <option value="9"{present name="goods.flea_quality "}{if $goods.flea_quality == '9'} selected="selected"{/if}{/present}>{$Think.lang.flea_index_almost_new}</option>
+              <option value="8"{present name="goods.flea_quality "}{if $goods.flea_quality == '8'} selected="selected"{/if}{/present}>{$Think.lang.flea_index_gently_used}</option>
+              <option value="7"{present name="goods.flea_quality "}{if $goods.flea_quality == '7'} selected="selected"{/if}{/present}>{$Think.lang.flea_index_old}</option>
+
+          </select>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.flea_current_area}:</dt>
+        <dd>
+          <div class="select_add" id="region_flea" style="width:500px;border:1px solide red;">
+            {notempty name="goods.fleaarea_id"}
+              <span>{$goods.fleaarea_name}</span>
+            <input type="button" value="{$Think.lang.ds_edit}" class="edit_region" />
+            <select style="display:none;">
+              <option>{$Think.lang.ds_please_choose}</option>
+              {notempty name="area_one_level"}
+               {foreach name="area_one_level" item="v"}
+              <option value="{$v.fleaarea_id}">{$v.fleaarea_name}</option>
+                {/foreach}
+               {/notempty}
+            </select>
+              {else /}
+              <select>
+              <option>{$Think.lang.ds_please_choose}</option>
+                {notempty name="area_one_level"}
+                   {foreach name="area_one_level" item="v"}
+              <option value="{$v.fleaarea_id}">{$v.fleaarea_name}</option>
+                  {/foreach}
+                 {/notempty}
+            </select>
+              {/notempty}
+              <input type="hidden" name="area_id" id="area_id" value="{$goods.fleaarea_id ?$goods.fleaarea_id:''}" class="area_ids" />
+            <input type="hidden" name="area_info" id="area_info" value="{$goods.fleaarea_name|default=''}" class="area_names" />
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.store_goods_index_flea_goods_price}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input name="goods_price" class="text" value="{$goods.goods_price|default=''}" type="text" />
+        </dd>
+      </dl>
+      <dl>
+        <dt ds_type="no_spec" class="required"><em></em>{$Think.lang.store_goods_index_store_flea_price}{$Think.lang.ds_colon}</dt>
+        <dd ds_type="no_spec">
+          <input name="goods_store_price" class="text" value="{$goods.goods_store_price|default=''}" type="text" />
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.flea_contact_person}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input name="flea_pname" value="{$goods.flea_pname|default=''}" type="text" class="text" />
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required"><em class="pngFix"></em>{$Think.lang.flea_contact_tel}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input name="flea_pphone" value="{$goods.flea_pphone|default=''}" type="text" class="text" />
+        </dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.store_goods_index_flea_goods_seo_keywords}{$Think.lang.ds_colon}</dt>
+        <dd >
+          <p>
+            <input type="text" class="text w400" name="seo_keywords" value="{$goods.goods_keywords|default=''}" />
+          </p>
+          <p class="hint"> {$Think.lang.store_goods_index_goods_seo_keywords_help}</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.store_goods_index_goods_seo_description}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <p>
+            <textarea  class="w800" name="seo_description" rows="3" id="remark_input" >{$goods.goods_description|default=''}</textarea>
+          </p>
+          <p class="hint"> {$Think.lang.store_goods_index_goods_seo_description_help}</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.store_goods_index_flea_goods_desc}{$Think.lang.ds_colon}</dt>
+        <dd>
+            <p>
+                {present name='goods.goods_body'}
+                {:build_editor(['name'=>'content','content'=>htmlspecialchars_decode($goods.goods_body)])}
+                {else /}
+                {:build_editor(['name'=>'content'])}
+                {/present}
+                <textarea name="mct_introduce" id="content"></textarea>
+            </p>
+          <p class="info-album"><a class="des_demo" href="{:url('Fleaalbum/pic_list',['item'=>'des','goods_id'=>$Request.param.goods_id])}">{$Think.lang.store_goods_album_insert_users_flea_photo}</a></p>
+          <p id="des_demo" style="display:none;"></p>
+        </dd>
+      </dl>
+      <dl class="bottom">
+        <dt>&nbsp;</dt>
+        <dd>
+          <input type="submit" class="submit" value="{$Think.lang.ds_submit}" />
+        </dd>
+      </dl>
+    </form>
+    </div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.goods_demo').ajaxContent({
+        event:'click', //mouseover
+        loaderType:"img",
+        loadingMsg:"{$Think.HOME_SITE_ROOT}/images/loading.gif",
+        target:'#demo'
+    });
+    regionInit("region_flea");
+    $('input[class="edit_region"]').click(function(){
+        $(this).css('display','none');
+        $('#area_id').val('');
+        $(this).parent().children('select').css('display','');
+        $(this).parent().children('span').css('display','none');
+    });
+    $('.des_demo').ajaxContent({
+        event:'click', //mouseover
+        loaderType:"img",
+        loadingMsg:"{$Think.HOME_SITE_ROOT}/images/loading.gif",
+        target:'#des_demo'
+    });
+
+    /* 图片控制 */
+    var handle_pic, handler, drop, cover, insert;
+
+    $('*[ds_type="handle_pic"]').find('img:first').hover(function(){
+            $('*[ds_type="explain_layer"]').remove();
+            handle_pic = $(this).parents('*[ds_type="handle_pic"]');
+            handler = handle_pic.find('*[ds_type="handler"]');
+            var parents = handler.parents();
+            handler.show();
+            handler.hover(function(){
+                    $(this).show();
+                    set_zindex(parents, "999");
+                },
+                function(){
+                    $(this).hide();
+                    set_zindex(parents, "0");
+                });
+            set_zindex(parents, '999');
+
+            cover = handler.find('*[ds_type="set_cover"]');
+            cover.unbind('click');
+            cover.click(function(){
+                set_cover(handle_pic.attr("file_id"));
+            });
+
+            drop = handler.find('*[ds_type="drop_image"]');
+            drop.unbind('click');
+            drop.click(function(){
+                drop_image(handler.attr("id"));
+            });
+
+            insert = handler.find('*[ds_type="insert_editor"]');
+            insert.unbind('click');
+            insert.click(function(){
+                insert_editor(handle_pic.attr("file_name"),handle_pic.attr("goods_image_path"));
+                return false;
+            });
+        },
+        function(){
+            handler.hide();
+            var parents = handler.parents();
+            set_zindex(parents, '0');
+        });
+});
+
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/common_flea_select.js"></script>
+<script type="text/javascript">
+$(function(){
+    gcategoryInit("gcategory");
+    $('#li_1').click(function(){
+        $('#li_1').attr('class','active');
+        $('#li_2').attr('class','');
+        $('#demo').hide();
+    });
+    $('#goods_demo').click(function(){
+        $('#li_1').attr('class','');
+        $('#li_2').attr('class','active');
+        $('#demo').show();
+    });
+
+    $('.des_demo').click(function(){
+        if($('#des_demo').css('display') == 'none'){
+            $('#des_demo').show();
+        }else{
+            $('#des_demo').hide();
+        }
+    });
+});
+
+
+var item_id = '{$item_id}';
+function add_uploadedfile(file_data)
+{
+    file_data = jQuery.parseJSON(file_data);
+    if(file_data.state == 'false') {
+        alert(file_data.message);
+        return false;
+    }
+    if(file_data.instance == 'goods_image'){
+        id = file_data.id;
+        $('#thumbnail_'+id).attr('thumbnail','{$goods_image_path}'+file_data.file_name).attr('file_id',file_data.file_id);
+        $('#thumbnail_'+id).find('input[name="goods_file_id[]"]').val(file_data.file_id);
+        $('#img_'+id).attr('src','{$goods_image_path}'+ file_data.file_name);
+        $('#'+id).html('<p class="operation"><span class="cut_in" ds_type="set_cover" ecm_title="{$Think.lang.store_goods_index_face}"></span><span class="delete" ds_type="drop_image" ecm_title="{$Think.lang.ds_del}"></span></p>');
+        $('#iframe_'+id).attr('src',HOMESITEURL +'/memberflea/image_upload?id='+id+'&item_id='+item_id+'&file_id='+file_data.file_id);
+        if($('#big_goods_image').attr('src') == '{$Think.UPLOAD_SITE_URL}/{:default_goodsimage()}'){
+            set_cover(file_data.file_id);
+        }else if($('#goods_images li:first').attr('id')=='thumbnail_'+id){
+            set_cover(file_data.file_id);
+        }
+    }
+}
+function drop_image(id){
+    var url = HOMESITEURL  + '/memberflea/drop_image';
+    goods_file_id = $('#thumbnail_'+id).attr('file_id');
+    $.getJSON(url, {'id':goods_file_id}, function(data){
+        if (data.done)
+        {
+            $('#thumbnail_'+id).attr('thumbnail','').attr('file_id','');
+            $('#img_'+id).attr('src','{:goods_thumb()}');
+            $('#'+id).html('');
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+    if($('#big_goods_image').attr('src') == $('#img_'+id).attr('src')){
+        $('#big_goods_image').attr('src','{:goods_thumb()}');
+    }
+}
+function insert_editor(file_path){
+    ue.execCommand( 'inserthtml', '<img src="'+ file_path + '">');
+}
+
+function set_cover(file_id){
+    if(typeof(file_id) == 'undefined'){
+        $('#big_goods_image').attr('src','{$Think.HOME_SITE_ROOT}/images/member/default_image.png');
+        return;
+    }
+    var obj = $('*[file_id="'+ file_id +'"]');
+    $('*[file_id="'+ file_id +'"]').clone(true).prependTo('#goods_images');
+    $('*[ds_type="handler"]').hide();
+    $('#big_goods_image').attr('src',obj.attr('thumbnail'));
+    obj.remove();
+}
+function insert_img(id,item_url){
+    var url =  '{$Think.HOME_SITE_ROOT}/memberflea/insert_image';
+    var j	= 0;
+    var y	= 'sign';
+    for (var i = 0; i < 5; i++){
+        if($('#thumbnail_'+i).attr('file_id') ==  ''){
+            if(y == 'sign'){
+                y=i;
+            }
+        }else{
+            if($('#thumbnail_'+i).attr('thumbnail') == item_url){layer.msg('{$Think.lang.store_goods_index_goods_the_same}');return false;}
+            j++;
+        }
+    }
+    if(j==5){
+        layer.msg('{$Think.lang.store_goods_index_goods_not_add}');
+    }else{
+        $.getJSON(url, {'id':id,'item_id':item_id}, function(data){
+            if (data.done){
+                $('#thumbnail_'+y).attr('thumbnail','{$goods_image_path}'+data.file_name).attr('file_id',data.file_id);
+                $('#thumbnail_'+y).find('input[name="goods_file_id[]"]').val(data.file_id);
+                $('#img_'+y).attr('src','{$goods_image_path}'+ data.file_name);
+                $('#iframe_'+y).attr('src',HOMESITEURL +'/memberflea/image_upload?id='+y+'&item_id='+item_id+'&file_id='+data.file_id);
+                $('#'+y).html('<p class="operation"><span class="cut_in" ds_type="set_cover" ecm_title="{$Think.lang.store_goods_index_face}"></span><span class="delete" ds_type="drop_image" ecm_title="{$Think.lang.ds_del}"></span></p>');
+                if($('#big_goods_image').attr('src') == '{$Think.HOME_SITE_ROOT}/images/member/default_image.png'){
+                    set_cover(data.file_id);
+                }
+            }else{
+                alert(data.msg);
+            }
+        });
+    }
+}
+
+$(function(){
+    $('#goods_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        submitHandler:function(form){
+            ds_ajaxpost('goods_form', 'url', "{:url('Memberflea/index')}");
+        },
+        rules : {
+        {if isset($goods['goods_id'])}
+        cate_id    : {
+            required : true,
+                remote   : {
+                url  : HOMESITEURL+'/memberflea/check_class',
+                    type : 'get',
+                    data : {
+                    cate_id : function(){
+                        return $('#cate_id').val();
+                    }
+                }
+            }
+        },
+        {/if}
+        {if isset($goods['goods_id'])}
+        area_id: {
+            required: true,
+                remote   : {
+                url  : HOMESITEURL+'/index/flea_area?check=1',
+                    type : 'get',
+                    data : {
+                    region_id : function(){
+                        return $('#area_id').val();
+                    }
+                }
+            }
+        },
+        {/if}
+    goods_name : {
+        required   : true,
+            minlength  : 5,
+            maxlength  : 30
+    },
+    sh_quality : {
+        number   : true,
+            min		 : 7,
+            max		 : 10
+    },
+    goods_price    : {
+        required   : true,
+            number     : true
+    },
+    goods_store_price : {
+        required   : true,
+            number     : true
+    },
+    flea_pname    : {
+        required   : true
+    },
+    flea_pphone    : {
+        required   : true,
+            number     : true
+    }
+},
+    messages : {
+            {if isset($goods['goods_id'])}
+            cate_id     : {
+                required: '{$Think.lang.store_goods_index_goods_class_null}',
+                    remote  : '{$Think.lang.store_goods_index_goods_class_error}'
+            },
+            {/if}
+            {if isset($goods['goods_id'])}
+            area_id: {
+                required: '{$Think.lang.store_goods_index_flea_area}',
+                    remote: '{$Think.lang.store_goods_index_flea_next_area}'
+            },
+            {/if}
+        goods_name  : {
+            required   : '{$Think.lang.store_goods_index_flea_goods_name_null}',
+                minlength  : '{$Think.lang.store_goods_index_flea_title_limit}',
+                maxlength  : '{$Think.lang.store_goods_index_flea_title_limit}'
+        },
+        sh_quality  : {
+            number   : '{$Think.lang.store_goods_index_flea_choose_oldnew}',
+                min      : '{$Think.lang.store_goods_index_flea_choose_oldnew}',
+                max      : '{$Think.lang.store_goods_index_flea_choose_oldnew}'
+        },
+        goods_price : {
+            required: '{$Think.lang.store_goods_index_flea_goods_price_null}',
+                number     : '{$Think.lang.store_goods_index_flea_goods_price_error}'
+        },
+        goods_store_price : {
+            required: '{$Think.lang.store_goods_index_flea_store_price_null}',
+                number     : '{$Think.lang.store_goods_index_flea_store_price_error}'
+        },
+        flea_pname  : {
+            required   : '{$Think.lang.store_goods_index_flea_contact_unnull}'
+        },
+        flea_pphone  : {
+            required   : '{$Think.lang.store_goods_index_flea_tel_unnull}',
+                number     : '{$Think.lang.store_goods_index_flea_tel_number}'
+        }
+    }
+});
+
+    // init spec
+    spec_update();
+});
+</script>
+<script>
+function preventSelectDisabled(oSelect)
+{
+    //得到当前select选中项的disabled属性。
+    var isOptionDisabled = oSelect.options[oSelect.selectedIndex].disabled;
+    //如果是有disabled属性的话
+    if(isOptionDisabled)
+    {
+        //让他恢复上一次选择的状态，oSelect.defaultSelectedIndex属性是前一次选中的选项index
+        //oSelect.selectedIndex = oSelect.defaultSelectedIndex;
+        //让他恢复未选择状态
+        oSelect.selectedIndex = '0';
+        return false;
+    }
+    //如果没有disabled属性的话
+    else
+    {
+        var currentvalue = oSelect.value;
+        //为了实现下面的验证,先清空选择的项
+        oSelect.value = '0';
+        if(checkselected(currentvalue)){
+            //oSelect.defaultSelectedIndex属性，设置成当前选择的index
+            oSelect.value = currentvalue;
+        }else{
+            //alert("该分类已经选择,请选择其他分类");
+            layer.msg('{$Think.lang.store_goods_index_add_sclasserror}');
+        }
+        return true;
+    }
+}
+function checkselected(currentvalue){
+    var result = true;
+    jQuery.each($(".sgcategory"),function(){
+        if(currentvalue!=0 && currentvalue == $(this).val()){
+            result = false;
+        }
+    });
+    return result;
+}
+</script>
+
+
+
+{/block}
+
+

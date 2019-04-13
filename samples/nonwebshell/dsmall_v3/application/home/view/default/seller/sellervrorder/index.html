@@ -1,0 +1,149 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a href="{:url('Sellervrorder/exchange')}" class="dssc-btn dssc-btn-orange"><i class="fa fa-pencil-square"></i>{$Think.lang.check_exchange_code}</a>
+{/block}
+{block name="seller_main"}
+
+<form method="get" action="" target="_self">
+  <table class="search-form">
+    <input type="hidden" name="state_type" value="{$Request.param.state_type}" />
+    <tr>
+      <td>&nbsp;</td>
+      {if condition="$Request.param.state_type eq 'store_order'"}
+      <td>
+      <input type="checkbox" id="skip_off" value="1" {if $Request.get.skip_off==1}checked="checked"{/if} name="skip_off"> <label for="skip_off">{$Think.lang.not_show_closed_orders}</label></td>
+      {/if}
+      <th>{$Think.lang.store_order_add_time}</th>
+      <td class="w240">
+          <input type="text" class="text w70" name="query_start_date" id="query_start_date" value="{$Request.param.query_start_date}" />
+          <label class="add-on"><i class="fa fa-calendar"></i></label>&nbsp;&#8211;&nbsp;
+          <input id="query_end_date" class="text w70" type="text" name="query_end_date" value="{$Request.param.query_end_date}" />
+          <label class="add-on"><i class="fa fa-calendar"></i></label>
+      </td>
+      <th>{$Think.lang.store_order_buyer}</th>
+      <td class="w100"><input type="text" class="text w80" name="buyer_name" value="{$Request.param.buyer_name}" /></td>
+      <th>{$Think.lang.store_order_order_sn}</th>
+      <td class="w160"><input type="text" class="text w150" name="order_sn" value="{$Request.param.order_sn}" /></td>
+      <td class="w70 tc"><label class="submit-border">
+          <input type="submit" class="submit" value="{$Think.lang.store_order_search}" />
+        </label></td>
+    </tr>
+  </table>
+</form>
+<table class="dssc-default-table order">
+  <thead>
+    <tr>
+      <th class="w10"></th>
+      <th colspan="2">{$Think.lang.store_order_goods_detail}</th>
+      <th class="w100">{$Think.lang.store_order_goods_single_price}</th>
+      <th class="w40">{$Think.lang.store_show_order_amount}</th>
+      <th class="w110">{$Think.lang.store_order_buyer}</th>
+      <th class="w120">{$Think.lang.store_order_sum}</th>
+      <th class="w100">{$Think.lang.trading_status}</th>
+      <th class="w150">{$Think.lang.trading_operations}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {notempty name="order_list"}
+      {foreach name="order_list" item="order" key="order_id" }
+    <tr>
+      <td colspan="9" class="sep-row"></td>
+    </tr>
+    <tr>
+        <th colspan="9"><span class="ml10">{$Think.lang.store_order_order_sn}{$Think.lang.ds_colon}<em>{$order.order_sn}</em>{if $order.order_from == 2}<i class="fa fa-mobile-phone"></i>{/if}</span>
+            <span>{$Think.lang.store_order_add_time}{$Think.lang.ds_colon}<em class="goods-time">{$order.add_time|date="Y-m-d H:i:s",###}</em></span>
+        </th>
+    </tr>
+    
+    <tr>
+        <td class="bdl"></td>
+        <td class="w70"><div class="dssc-goods-thumb"><a href="{:url('Goods/index',['goods_id'=>$order.goods_id])}" target="_blank"><img src="{:goods_thumb($order,240)}"/></a></div></td>
+        <td class="tl">
+            <dl class="goods-name">
+                <dt><a target="_blank" href="{:url('Goods/index',['goods_id'=>$order.goods_id])}">{$order.goods_name}</a></dt>
+                <dd>{if $order.order_promotion_type == 1}<span class="sale-type">{$Think.lang.store_order_group}</span>{/if}</dd>
+            </dl>
+        </td>
+        <td>{$order.goods_price}</td>
+        <td>{$order.goods_num}</td>
+        <td class="bdl"><div class="buyer">{$order.buyer_name}
+                <p member_id="{$order.buyer_id}">
+                    {if $order.extend_member.member_qq}
+                    <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$order.extend_member.member_qq}&site=qq&menu=yes" ><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$order.extend_member.member_qq}:52" style=" vertical-align: middle;"/></a>
+                    {/if}
+                    {if $order.extend_member.member_ww}
+                    <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$order.extend_member.member_ww}&site=cntaobao&s=2&charset=utf-8" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$order.extend_member.member_ww}&site=cntaobao&s=2&charset=utf-8" alt="Wang Wang" style=" vertical-align: middle;" /></a>
+                    {/if}
+                </p>
+                <div class="buyer-info"> <em></em>
+                    <div class="con">
+                        <h3><i></i><span>{$Think.lang.store_order_buyer_info}</span></h3>
+                        <dl>
+                            <dt>{$Think.lang.store_order_receiver}{$Think.lang.ds_colon}</dt>
+                            <dd>{$order.buyer_name}</dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.store_order_phone}{$Think.lang.ds_colon}</dt>
+                            <dd>{$order.buyer_phone}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="bdl">
+            <p class="dssc-order-amount">{$order.order_amount}</p>
+            <p class="goods-pay" title="{$Think.lang.store_order_pay_method}{$Think.lang.ds_colon}{$order.payment_name}">{$order.payment_name}</p>
+        </td>
+        <td class="bdl bdr">
+            <p>{$order.state_desc}</p>
+            <!-- 订单查看 -->
+            <p><a href="{:url('Sellervrorder/show_order',['order_id'=>$order.order_id])}" target="_blank">{$Think.lang.store_order_view_order}</a></p>
+        </td>
+        <td class="bdl bdr">
+            <!-- 取消订单 -->
+            {if $order.if_cancel}
+            <p><a href="javascript:void(0)" class="dssc-btn dssc-btn-red mt5" ds_type="dialog" uri="{:url('Sellervrorder/change_state',['state_type'=>'order_cancel','order_sn'=>$order.order_sn,'order_id'=>$order.order_id])}" dialog_title="{$Think.lang.store_order_cancel_order}" dialog_id="seller_order_cancel_order" dialog_width="400" id="order{$order.order_id}_action_cancel" /><i class="fa fa-times-circle-o"></i>{$Think.lang.store_order_cancel_order}</a></p>
+            {/if}
+        </td>
+    </tr>
+    {/foreach}
+    {else/}
+    <tr>
+      <td colspan="9" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+    </tr>
+    {/notempty}
+  </tbody>
+  <tfoot>
+    {notempty name="order_list"}
+    <tr>
+      <td colspan="9">{$show_page}</td>
+    </tr>
+    {/notempty}
+  </tfoot>
+</table>
+<script type="text/javascript">
+$(function(){
+    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('.checkall_s').click(function(){
+        var if_check = $(this).prop('checked');
+        $('.checkitem').each(function(){
+            if(!this.disabled)
+            {
+                $(this).prop('checked', if_check);
+            }
+        });
+        $('.checkall_s').prop('checked', if_check);
+    });
+    $('#skip_off').click(function(){
+        url = location.href.replace(/&skip_off=\d*/g,'');
+        window.location.href = url + '&skip_off=' + ($('#skip_off').prop('checked') ? '1' : '0');
+    });
+});
+</script>
+        
+        
+        
+{/block}
+

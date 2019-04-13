@@ -1,0 +1,37 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('tongji_menu.html'));}-->
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				<input type="hidden" name="act" value="{$_g_act}" />
+				日期从：<input type="text" name="date1" value="{$_g_date1}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="height:22px" class="Wdate inputtext input100" />
+				至 <input type="text" name="date2" value="{$_g_date2}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="height:22px" class="Wdate inputtext input100" />
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="80">排行榜</th>
+			<th class="bgtt" width="150">用户名</th>
+			<th class="bgtt"></th>
+			<th class="bgtt" width="150">消费次数</th>
+			<th class="bgtt" width="150">消费金额(元)</th>
+		</tr>
+		<!--{foreach($info_list as $k=>$v):}-->
+		<tr>
+			<td><span class="<!--{if($k+1<=3):}-->rank_num1<!--{else:}-->rank_num2<!--{endif;}-->">{$k+1}</span></td>
+			<td>{$v['user_name']}</td>
+			<td></td>
+			<td class="num strong">{$v['num']}</td>
+			<td class="num strong"><span class="corg">{$v['money']}</span></td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/my97/WdatePicker.js"></script>
+<!--{include(pe_tpl('footer.html'));}-->

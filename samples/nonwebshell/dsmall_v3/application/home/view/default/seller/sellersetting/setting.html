@@ -1,0 +1,174 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <form method="post" enctype="multipart/form-data" id="my_store_form" >
+        <dl>
+            <dt>{$Think.lang.store_setting_grade}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <p>{$store_grade.storegrade_name}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_name}：</dt>
+            <dd>
+                <input type="text" value="{$store_info.store_name}" name="store_name" class="text w400">
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_setting_store_zy}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <textarea name="store_mainbusiness" rows="2" class="textarea w400"  maxlength="50" >{$store_info.store_mainbusiness}</textarea>
+                <p class="hint">{$Think.lang.store_create_store_zy_hint}</p>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>{$Think.lang.store_qr_code}：</dt>
+            <dd>
+                <p><img src="{:store_qrcode($store_info.store_id)}"  title="{$Think.lang.place_origin}{:url('Store/goods_all',['store_id'=>$store_info.store_id])}"></p>
+                <p class="hint">{$Think.lang.generate_new_qr_code}</p>
+            </dd>
+        </dl>
+        {if $miniprogram_code!=''}
+        <dl>
+            <dt>{$Think.lang.store_code}：</dt>
+            <dd>
+                <p><img src="{$miniprogram_code}" width="148"></p>
+                <p class="hint">{$Think.lang.generate_new_applet}</p>
+            </dd>
+        </dl>
+        {/if}
+
+        <dl>
+            <dt>{$Think.lang.store_setting_change_label}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <div class="dssc-upload-thumb store-logo">
+                    <p>
+                        <img src="{notempty name='store_info.store_logo'}{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_STORE}/{$Think.session.store_id}/{$store_info.store_logo}{/notempty}" id="img_store_logo" />
+                    </p>
+                </div>
+                <div class="dssc-upload-btn"> 
+                    <a href="javascript:void(0);">
+                        <span><input type="file" hidefocus="true" size="1" class="input-file" name="store_logo" id="store_logo" /></span>
+                        <p><i class="fa fa-upload"></i>{$Think.lang.image_upload}</p>
+                    </a>
+                </div>
+                <p class="hint">{$Think.lang.store_setting_label_tip}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_setting_change_banner}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <div class="dssc-upload-thumb store-banner">
+                    <p>
+                        <img src="{notempty name='store_info.store_banner'}{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_STORE}/{$Think.session.store_id}/{$store_info.store_banner}{/notempty}" id="img_store_banner" />
+                    </p>
+                </div>
+                <div class="dssc-upload-btn"> <a href="javascript:void(0);"><span>
+                            <input type="file" hidefocus="true" size="1" class="input-file" name="store_banner" id="store_banner" />
+                        </span>
+                        <p><i class="fa fa-upload"></i>{$Think.lang.image_upload}</p>
+                    </a> </div>
+                <p class="hint">{$Think.lang.store_setting_banner_tip}</p>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>{$Think.lang.store_setting_change_avatar}{$Think.lang.ds_colon} </dt>
+            <dd>
+                <div class="dssc-upload-thumb store-avatar">
+                    <p>
+                        <img src="{notempty name='store_info.store_avatar'}{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_STORE}/{$Think.session.store_id}/{$store_info.store_avatar}{/notempty}" id="img_store_avatar" />
+                    </p>
+                </div>
+                <div class="dssc-upload-btn"> 
+                    <a href="javascript:void(0);">
+                        <span><input type="file" hidefocus="true" size="1" class="input-file" name="store_avatar" id="store_avatar" /></span>
+                        <p><i class="fa fa-upload"></i>{$Think.lang.image_upload}</p>
+                    </a>
+                </div>
+                <p class="hint">{$Think.lang.store_setting_sign_tip}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>QQ{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="w200 text" name="store_qq" type="text"  id="store_qq" value="{$store_info.store_qq}" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_setting_wangwang}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="text w200" name="store_ww" type="text"  id="store_ww" value="{$store_info.store_ww}" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_phone}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="text w200" name="store_phone" maxlength="20" type="text"  id="store_phone" value="{$store_info.store_phone}" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_setting_seo_keywords}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <p>
+                    <input class="text w400" name="seo_keywords" type="text"  value="{$store_info.store_keywords}" />
+                </p>
+                <p class="hint">{$Think.lang.store_setting_seo_keywords_help}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_setting_seo_description}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <p>
+                    <textarea name="seo_description" rows="3" class="textarea w400" id="remark_input" >{$store_info.store_description}</textarea>
+                </p>
+                <p class="hint">{$Think.lang.store_setting_seo_description_help}</p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.store_goods_class_submit}" /></label>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/ajaxfileupload.js"></script> 
+<script>
+
+    $(function () {
+        var url = '{:url("Sellersetting/store_image_upload")}';
+        $('#my_store_form').find('input[type="file"]').unbind().change(function () {
+            var id = $(this).attr('id');
+            ajaxFileUpload(url, id);
+        });
+    });
+
+    function ajaxFileUpload(url, id)
+    {
+        $(document).off('change', "#store_banner").on('change', function () {
+            $.ajaxFileUpload({
+                url: url,
+                secureuri: false,
+                fileElementId: id,
+                dataType: 'json',
+                data: {id: id},
+                success: function (data)
+                {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        $("#img_" + id).attr('src', data.file_path);
+                    }
+                },
+                error: function (data, status, e)
+                {
+                    console.error(data);
+                }
+            })
+            return false;
+        });
+    }
+</script>    
+
+
+{/block}

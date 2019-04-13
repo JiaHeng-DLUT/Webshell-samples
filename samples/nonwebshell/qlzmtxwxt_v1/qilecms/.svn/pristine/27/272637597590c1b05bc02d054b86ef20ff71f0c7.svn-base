@@ -1,0 +1,18 @@
+<!--引入JS-->
+{load href="/public/static/js/jquery.min.js" /}
+{load href="/public/static/layui/layui.js" /}
+{load href="/public/static/webuploader/webuploader.js" /}
+
+
+  <script>
+layui.use(['element', 'layer','form',], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>

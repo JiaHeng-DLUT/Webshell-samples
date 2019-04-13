@@ -1,0 +1,12 @@
+  <!-- 用户信息 -->
+  <div class="layui-card user-info" >
+    <div class="layui-card-body">
+        <div class="user-head-img"><a href="{:url('@user/set/index#avatar')}">
+          {:avatar($user.uid,128)}
+        </a></div>
+        <div class="user-name"><a href="{:url('@user/home')}">{:get_nickname($user.uid)}</a></div>
+
+   
+    </div>
+
+  </div>

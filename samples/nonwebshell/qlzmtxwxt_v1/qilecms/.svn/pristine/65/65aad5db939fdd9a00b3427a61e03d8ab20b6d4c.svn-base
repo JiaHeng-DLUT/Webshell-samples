@@ -1,0 +1,335 @@
+=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.025001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ error ] [0]模板文件不存在:D:\WWW\tp5_qilecms./qilecms/admin/view\template\index.html[D:\WWW\tp5_qilecms\thinkphp\library\think\view\driver\Think.php:80]
+---------------------------------------------------------------
+[ 2017-12-14T16:36:30+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/template/wap.html
+[ info ] 127.0.0.1/index.php/admin/template/wap.html [运行时间：0.087005s][吞吐率：11.49req/s] [内存消耗：1,770.05kb] [文件加载：67]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.014001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ error ] [0]模板文件不存在:D:\WWW\tp5_qilecms./qilecms/admin/view\template\wap.html[D:\WWW\tp5_qilecms\thinkphp\library\think\view\driver\Think.php:80]
+---------------------------------------------------------------
+[ 2017-12-14T16:36:32+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/recharge/index.html
+[ info ] 127.0.0.1/index.php/admin/recharge/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：898.98kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:34+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/cash/index.html
+[ info ] 127.0.0.1/index.php/admin/cash/index.html [运行时间：0.042002s][吞吐率：23.81req/s] [内存消耗：898.95kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,applwith CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.009000s ]
+
+[ 2017-12-08T17:25:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.004000s ]
+
+[ 2017-12-08T17:26:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001001s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.007000s ]
+
+[ 2017-12-08T17:27:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.010001s ]
+
+[ 2017-12-08T17:28:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.008001s ]
+
+[ 2017-12-08T17:29:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.000000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.037002s ]
+
+[ 2017-12-08T17:30:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.013000s ]
+
+[ 2017-12-08T17:31:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.005000s ]
+
+[ 2017-12-08T17:32:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\4690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '125',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '/public/upload/images/20171211/b1adc625937ab1be7122b1855a41d08f.png',
+  'sort' => '3',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.018001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.013000s ]
+[ sql ] [ SQL ] 0 [ RunTime:0.006001s ]
+[ error ] [2]Missing argument 1 for think\Model::data(), called in D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php on line 58 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:103]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:105]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:111]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:121]
+[ error ] [4096]Argument 1 passed to think\db\Query::insert() must be of the type array, null given, called in D:\WWW\tp5_qilecms\thinkphp\library\think\Model.php on line 442 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2066]
+[ error ] [2]array_merge(): Argument #2 is not an array[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2070]
+---------------------------------------------------------------
+[ 2017-12-15T18:34:31+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.125008s][吞吐率：8.00req/s] [内存消耗：2,233.52kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` WHERE  `group_id` = 3 LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:34:32+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.118007s][吞吐率：8.47req/s] [内存消耗：2,082.17kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '48',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '3',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.016001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] 0 [ RunTime:0.010000s ]
+[ error ] [2]Missing argument 1 for think\Model::data(), called in D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php on line 58 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:103]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:105]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:111]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:121]
+[ error ] [4096]Argument 1 passed to think\db\Query::insert() must be of the type array, null given, called in D:\WWW\tp5_qilecms\thinkphp\library\think\Model.php on line 442 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2066]
+[ error ] [2]array_merge(): Argument #2 is not an array[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2070]
+---------------------------------------------------------------
+[ 2017-12-15T18:36:04+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.310018s][吞吐率：3.23req/s] [内存消耗：2,087.92kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.126

@@ -1,0 +1,81 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>预存款</h3>
+                <h5></h5>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-empty"></div>
+    <table class="ds-default-table">
+        <tbody>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_sn}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_sn}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_membername}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_member_name}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_cash_price}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_amount}&nbsp;{$Think.lang.currency_zh}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_cash_shoukuanbank}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_bank_name}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_cash_shoukuanaccount}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_bank_no}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_cash_shoukuanname}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_bank_user}</td>
+                <td class="vatop tips"></td>
+            </tr>
+            {notempty name="$info.pdc_payment_time"}
+            <tr>
+                <td colspan="2" class="required"><label>{$Think.lang.admin_predeposit_paytime}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">{$info.pdc_payment_time|date='Y-m-d H:i:s',###}
+                    ( {$Think.lang.admin_predeposit_adminname}: {$info.pdc_payment_admin} ) </td>
+                <td class="vatop tips"></td>
+            </tr>
+            {/notempty}
+        </tbody>
+        <?php if (!intval($info['pdc_payment_state'])) {?>
+        <tfoot id="submit-holder">
+            <tr class="tfoot">
+                <td colspan="2">
+                    <a class="btn" href="javascript:ds_get_confirm('{$Think.lang.admin_predeposit_cash_confirm}','{:url('Predeposit/pdcash_pay',['id'=>$info.pdc_id])}')"><span>{$Think.lang.admin_predeposit_payed}</span></a>
+                </td>
+            </tr>
+        </tfoot>
+        <?php } ?>
+    </table>
+</div>
+

@@ -1,0 +1,28 @@
+{include file="index/header" /}
+<div class="row">
+    <br><br><br>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <div class="panel panel-default">
+            {include file="index/head" /}
+            <div class="panel-body">
+                <p><h2 class="text-success text-center">{:lang('Congratulations! Installation has been completed!')}</h2></p>
+                <br>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-body bg-warning">
+                            {:lang('Thank you for your support of the Catfish CMS system!')}<br>
+                            {:lang('Is not still immersed in the installation of happiness, but the installation is over, then you will continue to use the site in the process of happiness, let us start!')}
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="row text-center">
+                    <a href="{:url('/')}"><button type="button" class="btn btn-primary">{:lang('Enter the home page')}</button></a>&nbsp;&nbsp;
+                    <a href="{:url('/admin')}"><button type="button" class="btn btn-primary">{:lang('Into the background')}</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="index/footer" /}

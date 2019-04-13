@@ -1,0 +1,55 @@
+<div class="pk-container pk-padding-0">
+	<div class="pk-row">
+		<div id="pk-body-left" class="pk-w-md-8 pk-w-sm-12 pk-padding-right-0 pk-padding-sm-0">
+			<div class="pk-row pk-background-color-white">
+				<div class="pk-w-sm-12">
+					{$_G['HTMLCODE']['OUTPUT']}
+				</div>
+			</div>
+		</div>
+		<div id="pk-body-right" class="pk-w-md-4 pk-hide-sm">
+			<div class="pk-row pk-margin-bottom-15 pk-background-color-white">
+				<div class="pk-w-sm-12 pk-padding-top-15 pk-padding-bottom-15">
+					{$_G['HTMLCODE']['LOGINHTML']}
+				</div>
+			</div>
+
+			<div class="pk-row">
+				{$_G['SET']['TEMPLATE_DEFAULT_AD1HTMLCODE']}
+			</div>
+
+			{$tjwzhtml}
+			{$jhwzhtml}
+			{$zrwzhtml}
+
+			<div class="pk-row">
+				{$_G['SET']['TEMPLATE_DEFAULT_AD2HTMLCODE']}
+			</div>
+		</div>
+	</div>
+</div>
+{$_G['TEMP']['FRIENDLINKS']}
+<script>
+	//右侧版块分类驱动
+	var $showbkdh = parseInt("{$_G['SET']['TEMPLATE_DEFAULT_SHOWBKDH']}");
+	if(!$showbkdh) {
+		var $pbkhtml = '<div id="bksortdiv" class="pk-row pk-text-sm pk-background-color-white pk-text-default pk-margin-bottom-15"><div class="pk-row pk-padding-left-10 pk-padding-top-10 pk-padding-bottom-10" style="border-bottom:solid 1px #eee;"><div class="pk-w-sm-12 pk-padding-0 pk-text-primary pk-text-md">版块导航</div></div>',
+			$bkdatas = eval(({$_G['TEMP']['BKDATAS']}));
+		for(var i = 0; i < $bkdatas['PBK'].length; i++) {
+			var $pid = $bkdatas['PBK'][i]['id'].toString();
+			if($bkdatas['CBK'][$pid].length) {
+				$pbkhtml += '<div class="pk-row pk-padding-10" style="border-bottom:solid 1px #eee;"><div class="pk-w-sm-8 pk-padding-0"><a class="pk-cursor-pointer pk-text-truncate" href="javascript:" onclick="$(this).parent().parent().next().toggleClass(\'pk-hide\');$(this).find(\'span:eq(0)\').toggleClass(\'fa-comments-o fa-comments\')"><span class="fa fa-comments">&nbsp;</span>' + $bkdatas['PBK'][i]['title'] + '</a></div><div class="pk-w-sm-4 pk-text-right pk-padding-0"><a href="index.php?c=edit&type=read&sortid=' + $bkdatas['PBK'][i]['id'] + '" class="pk-btn pk-btn-primary pk-btn-xs">发帖</a><a href="index.php?c=list&sortid=' + $bkdatas['PBK'][i]['id'] + '&page=1" class="pk-btn pk-btn-success pk-btn-xs">进入</a></div></div>';
+				$pbkhtml += '<div class="pk-row">'
+				for(var ii = 0; ii < $bkdatas['CBK'][$pid].length; ii++) {
+					$pbkhtml += '<div class="pk-row pk-padding-left-20 pk-padding-top-5 pk-padding-bottom-5 pk-padding-right-10" style="border-bottom:solid 1px #eee;"><div class="pk-w-sm-8 pk-padding-0"><a class="pk-cursor-pointer pk-text-truncate pk-hover-opacity" href="index.php?c=list&sortid=' + $bkdatas['CBK'][$pid][ii]['id'] + '&page=1"><span class="fa fa-comment-o">&nbsp;</span>' + $bkdatas['CBK'][$pid][ii]['title'] + '</a></div><div class="pk-w-sm-4 pk-padding-0 pk-text-right"><a href="index.php?c=edit&type=read&sortid=' + $bkdatas['CBK'][$pid][ii]['id'] + '" class="pk-btn pk-btn-primary pk-btn-xs">发帖</a></div></div>';
+				}
+				$pbkhtml += '</div>';
+			} else {
+				$pbkhtml += '<div class="pk-row pk-padding-10" style="border-bottom:solid 1px #eee;"><div class="pk-w-sm-8 pk-padding-0"><a class="pk-cursor-pointer pk-text-truncate pk-hover-opacity" href="index.php?c=list&sortid=' + $bkdatas['PBK'][i]['id'] + '&page=1"><span class="fa fa-comment-o">&nbsp;</span>' + $bkdatas['PBK'][i]['title'] + '</a></div><div class="pk-w-sm-4 pk-text-right pk-padding-0"><a href="index.php?c=edit&type=read&sortid=' + $bkdatas['PBK'][i]['id'] + '" class="pk-btn pk-btn-primary pk-btn-xs">发帖</a></div></div>';
+				//$pbkhtml += '<div class="pk-row pk-padding-left-20 pk-padding-top-5 pk-padding-bottom-5 pk-padding-right-10 pk-hide" style="border-bottom:solid 1px #eee;"><div class="pk-w-sm-12 pk-padding-0"><span class="fa fa-frown-o">&nbsp;</span>该版块下无子版块</div></div>';
+			}
+		}
+		$pbkhtml += '</div>';
+		$('#pk-body-right>div:eq(1)').after($pbkhtml);
+	}
+</script>

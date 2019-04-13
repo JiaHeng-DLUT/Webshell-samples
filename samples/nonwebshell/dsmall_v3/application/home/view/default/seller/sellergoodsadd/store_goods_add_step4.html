@@ -1,0 +1,47 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<ul class="add-goods-step">
+  <li><i class="icon fa fa-list-alt"></i>
+    <h6>STEP.1</h6>
+    <h2>{$Think.lang.select_category}</h2>
+    <i class="arrow fa fa-angle-right"></i> </li>
+  <li><i class="icon fa fa-pencil-square"></i>
+    <h6>STEP.2</h6>
+    <h2>{$Think.lang.fill_item_details}</h2>
+    <i class="arrow fa fa-angle-right"></i> </li>
+  <li><i class="icon fa fa-camera-retro "></i>
+    <h6>STEP.3</h6>
+    <h2>{$Think.lang.store_goods_index_upload_goods_pic}</h2>
+    <i class="arrow fa fa-angle-right"></i> </li>
+  <li class="current"><i class="icon fa fa-check-circle-o"></i>
+    <h6>STEP.4</h6>
+    <h2>{$Think.lang.store_goods_index_flow_chart_step3}</h2>
+  </li>
+</ul>
+<div class="alert alert-block hr32">
+  <h2><i class="fa fa-check-circle-o mr10"></i>{$Think.lang.store_goods_step3_goods_release_success}&nbsp;&nbsp;{if $Think.config.goods_verify}{$Think.lang.wait_administrator_review_goods}！{/if}</h2>
+  <div class="hr16"></div>
+  <div>
+    {if $allow_gift}
+      <a class="dssc-btn dssc-btn-green ml30" href="{:url('Sellergoodsonline/add_gift',['commonid'=>$Request.param.commonid])}"><i class="fa fa-gift"></i>{$Think.lang.adding_gift_bundles_item}</a>
+    {/if}
+    {if $allow_combo && $Think.config.goods_verify=='0'}
+    <a class="dssc-btn dssc-btn-orange ml10" href="{:url('Sellergoodsonline/add_combo',['commonid'=>$Request.param.commonid])}"><i class="fa fa-thumbs-up "></i>{$Think.lang.adding_recommended_combinations_item}</a>
+    {/if}
+  </div>  
+  <div class="hr16"></div>
+  <strong>
+    <a class="ml30" href="{:url('Goods/index',['goods_id'=>$goods_id])}" target="_blank">{$Think.lang.store_goods_step3_viewed_product}&gt;&gt;</a>
+    <a class="ml30" href="{:url('Sellergoodsonline/edit_goods',['commonid'=>$Request.param.commonid])}">{$Think.lang.store_goods_step3_edit_product}&gt;&gt;</a>
+  </strong>  
+  <div class="hr16"></div>
+  <h4 class="ml10">{$Think.lang.store_goods_step3_more_actions}</h4>
+  <ul class="ml30">
+    <li>1.  {$Think.lang.store_goods_step3_continue}&quot; <a href="{:url('Sellergoodsadd/index')}">{$Think.lang.store_goods_step3_release_new_goods}</a>&quot;</li>
+    <li>2. {$Think.lang.store_goods_step3_access} &quot; {$Think.lang.ds_seller}&quot;  {$Think.lang.store_goods_step3_manage}&quot;<a href="{:url('Sellergoodsonline/index')}">{$Think.lang.ds_member_path_goods_list}</a>&quot;</li>
+    <li>3.  {$Think.lang.store_goods_step3_participation}&quot; <a href="{:url('Selleractivity/index')}">{$Think.lang.store_goods_step3_special_activities}</a> &quot;</li>
+  </ul>
+</div>
+{/block}
+

@@ -1,0 +1,21 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class RuleCategory extends Model
+{
+   Protected $autoCheckFields = true;
+   public  function getRuleCategoryList(){
+
+     return $list = $this->select();
+  
+   }
+  public function getCategoryAll(){
+    return $result = $this->select();
+
+
+      
+  }
+
+ 
+}

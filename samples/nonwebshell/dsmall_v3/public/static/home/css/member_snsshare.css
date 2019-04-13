@@ -1,0 +1,95 @@
+/* 分享对话框
+---------------------------------------- */
+.dialog-share {margin: 0;}
+.dialog-share a { text-decoration: none; color: #07B;}
+/*分享设定部分*/
+.dialog-share .share-set { display: block; height: 24px; padding: 10px 20px;}
+
+/*同步*/
+.dialog-share .share-widget { float: left;}
+.dialog-share .share-widget .s-app { font-size: 0; *word-spacing:-1px/*IE6、7*/; vertical-align: middle; display: inline-block; height: 24px; *display: inline/*IE7*/; position: relative; z-index: 2; *zoom: 1/*IE7*/;}
+.dialog-share .share-widget .s-app li { vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; width: 24px; height: 24px; margin-right: 5px; *display: inline/*IE7*/; *zoom: 1/*IE7*/;}
+.dialog-share .share-widget .s-app i { background: url("../images/member/shareicon/shareicons.png") no-repeat 0 0; display: block; width: 24px; height: 24px; cursor: pointer;}
+.dialog-share .share-widget .s-app .i-qqzone { background-position: 0 -24px;}
+.dialog-share .share-widget .s-app .disable .i-qqzone { background-position: 0 -48px;}
+.dialog-share .share-widget .s-app .i-qqweibo { background-position: 0 -72px;}
+.dialog-share .share-widget .s-app .disable .i-qqweibo { background-position: 0 -96px;}
+.dialog-share .share-widget .s-app .i-sinaweibo { background-position: 0 -120px;}
+.dialog-share .share-widget .s-app .disable .i-sinaweibo { background-position: 0 -144px;}
+.dialog-share .share-widget .s-app .tip { font-size: 12px; color: #FD6D26; background-color: #FEF1D5; white-space: nowrap; padding: 0 9px; border: solid 1px #FFC66D; position: absolute; z-index: 1; top: 30px; left: -76px;}
+.dialog-share .share-widget .s-app .tip .arrow { background: url("../images/member/shareicon/shareicons.png") no-repeat -36px 0; display: block; width: 11px; height: 6px; position: absolute; z-index: 2; top: -6px; left: 20px;}
+.dialog-share .share-widget .s-app a { font-size: 12px; line-height: 24px; color: #07B; display: inline-block; margin-left: 30px; *display: inline/*IE7*/; *zoom: 1/*IE7*/;}
+
+/* 可见 */
+.share-privacy { line-height: 22px; display:block; height: 24px; float: right; position: relative; z-index: 1; cursor: pointer;}
+.share-privacy a { display: block;}
+.share-privacy a i { font-size: 14px; margin-right: 4px;}
+.share-privacy .privacytab { background-color: #FFF; border: solid 1px #EEE; position: absolute; z-index: 1; top: 24px; right: -10px;}
+.share-privacy .privacytab .arrow { background: url("../images/member/shareicon/shareicons.png") no-repeat -24px 0; display: block; width: 11px; height: 6px; margin-right: -6px; position: absolute; z-index: 2; top: -6px; right: 50%;}
+.share-privacy .privacytab ul { }
+.share-privacy .privacytab ul li { color: #666; width: 90px; height: 20px; padding: 5px;}
+.share-privacy .privacytab ul li span { vertical-align: middle; display: inline-block; width: 16px; height: 16px; margin-right: 5px; }
+.share-privacy .privacytab ul li .selected { background: url("../images/member/shareicon/shareicons.png") no-repeat -32px -20px;}
+.share-privacy .privacytab ul li:hover { background-color: #f0f0f0;}
+
+/*用户分享内容*/
+.dialog-share .share-content { display: block; padding: 0 20px;}
+.dialog-share .share-content .textarea-count { color: #999; text-align: right; height: 20px; padding: 5px 0;}
+.dialog-share .share-content .textarea-count em { font: 600 italic 16px/20px Georgia, Arial; color: #555; margin: 0 4px;}
+.dialog-share .share-content .textarea-count em.warning { color: #F60; background-color: transparent; width: auto; padding: 0; border: none;}
+.dialog-share .share-content .textarea-count em.exceeded { color: #F00;}
+.dialog-share .share-content .avatar { width: 40px; height: 40px; float: left; margin-top: 5px; position: relative; z-index: 1;}
+.dialog-share .share-content .avatar img { max-width: 40px; max-height: 40px; border-radius: 5px;}
+.dialog-share .share-content .avatar i { background: url("../images/member/shareicon/shareicons.png") no-repeat -30px -50px; width: 10px; height: 10px; position: absolute; z-index: 1; top: 10px; right: -15px;}
+.dialog-share .share-content .textarea { line-height: 18px; width: 374px; height: 54px; padding: 4px; float: right; border-color: #CCC #DDD #DDD; box-shadow: none; resize: none;}
+.dialog-share .share-content .textarea:focus { color: #333; border-color: #CCC #DDD #DDD;}
+
+/*分享店铺*/
+.dialog-share .ds-carousel-skin { clear: both; height: 92px; padding: 10px 0;}
+.dialog-share .ds-carousel-skin li{height: 92px;width:92px;float:left;}
+.dialog-share .ds-carousel-skin a {line-height: 0; background-color: #FFF; text-align: center; display: block; width: 90px; height: 90px; border: solid 1px #FFF; position: relative; z-index: 1; overflow: hidden;}
+.dialog-share .ds-carousel-skin a img { max-width: 90px; max-height: 90px; }
+.dialog-share .ds-carousel-skin a.selected { border: solid 1px #D93500;}
+.dialog-share .ds-carousel-skin a .extra { line-height: 20px; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#BFD93600', endColorstr='#BFD93600');background:rgba(217,54,0,0.75); color: #FFF; display: none; width: 90px; height: 20px; position: absolute; z-index: 1; bottom: 0; left: 0;}
+.dialog-share .ds-carousel-skin a.selected .extra { display: block;}
+.dialog-share .ds-carousel-prev { left: -12px !important;}
+.dialog-share .ds-carousel-next { right: -12px !important;}
+.dialog-share .sns-norecord { color: #999; display: block; text-align: center; width: auto; padding: 50px 0; margin: 0; clear: both;}
+
+/*分享的商品*/
+.dialog-share .share-goods { font-size: 0; *word-spacing: -1px/*IE6、7*/; display: block; clear: both; padding: 10px 0 10px 50px;}
+.dialog-share .share-goods .goods-thumb, 
+.dialog-share .share-goods .goods-intro { vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE7*/; *zoom: 1/*IE7*/;}
+.dialog-share .share-goods .goods-thumb { width: 100px; height: 100px;}
+.dialog-share .share-goods .goods-thumb a { line-height: 0; background-color: #FFF; text-align: center; vertical-align: middle; display: table-cell; *display: block; width: 100px; height: 100px; overflow: hidden;}
+.dialog-share .share-goods .goods-thumb a img { max-width: 100px; max-height: 100px; margin-top:expression(100-this.height/2); *margin-top:expression(50-this.height/2)/*IE6,7*/;}
+.dialog-share .share-goods .goods-intro { font-size: 12px; width: 250px; margin-left: 20px; }
+.dialog-share .share-goods .goods-intro dt { line-height: 18px; max-height: 36px; white-space: normal;}
+.dialog-share .share-goods .goods-intro dt a, 
+.dialog-share .share-goods .goods-intro dt a:hover { font-weight: 600; text-decoration: none; color: #555;}
+.dialog-share .share-goods .goods-intro dd { margin-top: 4px;}
+.dialog-share .share-goods .goods-intro dd span { color: #FFF; background-color: #C03; padding: 0 4px; margin-right: 6px;}
+.dialog-share .share-goods .goods-intro dd strong { font-size: 14px; color: #C03;}
+
+
+.dialog-share .seccode { background: #FFFFBF; display: none; padding: 8px; margin: 0; border-top: solid 1px #EEE;}
+.dialog-share .seccode input.text { vertical-align: middle; display: inline-block; *display: inline/*IE*/; width: 50px; padding: 2px 4px; *zoom: 1; }
+.dialog-share .seccode img { vertical-align: middle; display: inline-block; *display: inline/*IE*/; cursor: pointer; *zoom: 1;}
+.dialog-share .seccode span { color: #F60; margin-left: 10px;}
+
+.dialog-share label.error { font-size: 12px; color: #F00; line-height: 24px;}
+.dialog-share .bottom { background: #FAFAFA; text-align: center; padding: 10px 0; border-top: solid 1px #EEE;}
+.dialog-share .bottom .button { color: #FFF; background-color: #D93600; height: 28px; width: 80px; border: solid 1px #B22D00; cursor: pointer;}
+.dialog-share .bottom .cancel { color: #555; background-color: #EEE; vertical-align: top; display: inline-block; *display: inline; height: 20px; padding: 3px 10px; border: solid 1px #CCC; margin-left: 5px; *zoom:1;}
+
+/*绑定工具提示*/
+.bindtooltip { background-color: #FFF; overflow: hidden;}
+.bindtooltip dl {  font-size: 0; *word-spacing: -1px/*IE6、7*/;}
+.bindtooltip dl dt { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; text-align: right; display: inline-block; *display: inline/*IE*/; width: 23%; padding: 10px 0; margin: 0; *zoom: 1;}
+.bindtooltip dl dt img { width: 40px; height: 40px; margin: 5px 0 0;}
+.bindtooltip .hint { color: #F33;}
+.bindtooltip dl dd { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE*/; width: 74%; padding: 10px 0 10px 3% ; *zoom: 1;}
+.bindtooltip .bottom { background-color: #F9F9F9; text-align: center; padding: 12px 0; border-top: 1px solid #EAEAEA; }
+a.mini-btn { font: normal 12px/20px arial; color: #FFF;  background-color: #5BB75B; text-align: center; vertical-align: middle; display: inline-block; *display: inline/*IE*/; height: 20px; padding: 0 10px; margin-right: 8px; border-style: solid; border-width: 1px; border-color: #52A452 #52A452 #448944 #52A452; *zoom: 1; cursor: pointer;}
+a:hover.mini-btn { text-decoration: none; color: #FFF; background-color: #51A351; border-color: #499249 #499249 #3D7A3D #499249;}
+.bindtooltip .bottom span a { color: #0077BB; text-decoration: underline; margin-left: 8px;}

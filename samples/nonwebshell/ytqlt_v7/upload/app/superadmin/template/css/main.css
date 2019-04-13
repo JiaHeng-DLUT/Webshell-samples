@@ -1,0 +1,265 @@
+html,
+body,
+.pk-admin,
+.pk-admin-sm {
+	height: 100%;
+	overflow: hidden;
+}
+
+.pk-admin>.left {
+	position: relative;
+	float: left;
+	width: 12%;
+	height: 100%;
+	background-color: #009e73;
+	color: #FFFFFF;
+	overflow: hidden;
+}
+
+.pk-admin>.left .adminbox {
+	cursor: default;
+	height: 5.5rem;
+	width: 100%;
+	padding: 1rem 0;
+	text-align: center;
+}
+
+.pk-admin>.left .adminbox img {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+}
+
+.pk-admin>.left .adminbox p {
+	display: block;
+	padding-top: .25rem;
+	text-align: left;
+	font-size: .857rem;
+}
+
+.pk-admin>.left .nav {
+	overflow-y: auto;
+	border-top: solid 1px #fff;
+	background-color: #3c444d;
+}
+
+.pk-admin>.left .nav,
+.pk-admin>.left .nav ul {
+	float: left;
+	width: 100%;
+}
+
+.pk-admin>.left .nav ul,
+.pk-admin>.right .nav ul,
+.pk-admin>.right .inav ul {
+	list-style: none;
+}
+
+.pk-admin>.left .nav ul li {
+	float: left;
+	width: 100%;
+	font-size: .857rem;
+	text-align: left;
+	padding: 1rem 1rem;
+	cursor: pointer;
+}
+
+.pk-admin>.left .nav ul li.pk-active,
+.pk-admin>.left .nav ul li.pk-active:hover {
+	background-color: #009e73;
+}
+
+.pk-admin>.left .nav ul li:hover {
+	background-color: #777777
+}
+
+.pk-admin>.left .nav ul li.pk-active,
+.pk-admin>.right .nav ul li.pk-active {
+	cursor: default;
+}
+
+.pk-admin>.left .powered {
+	position: absolute;
+	font-size: .75rem;
+	padding: .5rem;
+	bottom: 0;
+	right: 1rem;
+	display: none;
+}
+
+.pk-admin>.right {
+	float: left;
+	width: 88%;
+	height: 100%;
+}
+
+.pk-admin>.right .nav ul li {
+	float: left;
+	background-color: #EEEEEE;
+	padding: 1rem .857rem;
+	font-size: .857rem;
+	color: #777;
+	cursor: pointer;
+}
+
+.pk-admin>.right .nav ul li:nth-of-type(1) {
+	background-color: #3c444d;
+	color: #FFFFFF;
+	border-radius: 0;
+}
+
+.pk-admin>.right>.pk-row:nth-of-type(1) {
+	border-bottom: solid 2px #009e73;
+}
+
+.pk-admin>.right .nav ul li.pk-active,
+.pk-admin>.right .nav ul li.pk-active:hover {
+	background-color: #009e73;
+	color: #FFFFFF;
+}
+
+.pk-admin>.right .nav ul li:hover {
+	background-color: #DDDDDD;
+}
+
+.pk-admin>.right .nav2 a {
+	float: right;
+	font-size: .857rem;
+	display: block;
+	height: 100%;
+	padding: 1rem .25rem 1rem .857rem;
+	background-color: #009e73;
+	color: #FFFFFF;
+}
+
+.pk-admin>.right .inav {
+	width: 100%;
+	float: left;
+	padding-top: .7rem;
+	background-color: #CCCCCC;
+	height: 2.2rem;
+	overflow: hidden;
+}
+
+.pk-admin>.right .inav ul {
+	float: left;
+	width: auto;
+	max-width: 100%;
+	height: 1.5rem;
+	overflow-y: auto;
+}
+
+.pk-admin>.right .inav ul li {
+	float: left;
+	background-color: #EEEEEE;
+	color: #777;
+	font-size: .75rem;
+	padding: 0 .25rem 0 .5rem;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	cursor: pointer;
+	border-right: solid 1px #CCCCCC;
+}
+
+.pk-admin>.right .inav ul li span {
+	margin-left: .75rem;
+}
+
+.pk-admin>.right .inav ul li span:hover {
+	color: #CC0033;
+	cursor: pointer;
+}
+
+.pk-admin>.right .inav ul li:hover {
+	background-color: #DDDDDD;
+}
+
+.pk-admin>.right .inav ul li.pk-active,
+.pk-admin>.right .inav ul li.pk-active:hover {
+	background-color: #FFFFFF;
+}
+
+.pk-admin>.right .inav ul li.pk-active {
+	cursor: default;
+}
+
+.pk-admin>.right #app-superadmin-mainshow {
+	border-left: solid 1px #fff;
+	border-top: solid 1px #fff;
+	float: left;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	background-image: url(../img/mainshow.png);
+	background-color: #09f;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.pk-admin>.right #app-superadmin-mainshow iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+	overflow: auto;
+}
+
+#app-superadmin-main-sm ._header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	padding: 10px;
+	z-index: 99;
+	background-color: #009e73;
+}
+
+#app-superadmin-main-sm ._header>div {
+	border: solid 1px #009e73;
+	background-color: #fff
+}
+
+#app-superadmin-main-sm ._header select {
+	border: 0;
+	display: block;
+	height: 38px;
+	line-height: 38px;
+	font-size: 14px;
+	width: 100%;
+	-webkit-appearance: none;
+}
+
+#app-superadmin-main-sm ._bodyer {
+	height: 100%;
+	padding: 60px 0 0;
+}
+
+.pk-admin-sm #app-superadmin-mainshow-sm {
+	width: 100%;
+	height: 100%;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+}
+
+.pk-admin-sm #app-superadmin-mainshow-sm iframe {
+	width: 100%;
+	height: 100%;
+	float: left;
+	border: none;
+}
+
+.start-div {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/starting.gif);
+	background-color: #09f;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 1000px) {
+	.start-div {
+		background-image: url(../img/starting-sm.gif);
+	}
+}

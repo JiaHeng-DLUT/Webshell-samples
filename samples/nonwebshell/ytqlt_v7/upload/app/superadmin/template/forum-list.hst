@@ -1,0 +1,174 @@
+<style>
+	.forumlist a {
+		color: #09f;
+	}
+	
+	.forumlist a:hover {
+		text-decoration: underline;
+	}
+	
+	.forumlist .parent {
+		height: 92px;
+		width: 100%;
+		padding: 10px 0;
+		border-bottom: solid 2px #eee;
+	}
+	
+	.forumlist .parent .pk-w-sm-3,
+	.forumlist .children .pk-w-sm-3 {
+		text-align: right;
+	}
+	
+	.forumlist .parent .pk-w-sm-3 img {
+		width: 72px;
+		height: 72px;
+	}
+	
+	.forumlist .parent .pk-w-sm-9 p {
+		display: block;
+		font-size: 14px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	.forumlist .parent .pk-w-sm-9 p:nth-of-type(1) {
+		padding: 4px 0;
+		font-size: 16px;
+	}
+	
+	.forumlist .children {
+		height: 78px;
+		width: 100%;
+		padding: 7px 0;
+		border-bottom: solid 1px #ccc;
+		background-color: #eee;
+	}
+	
+	.forumlist .children .pk-w-sm-3 img {
+		margin-top: 4px;
+		width: 54px;
+		height: 54px;
+	}
+	
+	.forumlist .children .pk-w-sm-9 p {
+		display: block;
+		font-size: 12px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	.forumlist .children .pk-w-sm-9 p:nth-of-type(1) {
+		padding: 2px 0;
+		font-size: 14px;
+	}
+</style>
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">版块列表</label>
+	<div class="pk-w-sm-8"></div>
+</div>
+
+<div class="pk-row forumlist" data-data="{htmlspecialchars($_G['TEMP']['BKDATAS'],ENT_QUOTES)}"></div>
+
+<script>
+	var bkdata = $('.forumlist').data('data') || [];
+	var _data = [];
+	for(var i in bkdata) {
+		_data[i] = bkdata[i];
+	}
+	bkdata = _data;
+	$(function() {
+		var data = [];
+		data['datas'] = bkdata;
+		for(var i = 0; i < data['datas'].length; i++) {
+			if(data['datas'][i]['pid'] == 0) {
+				$('.forumlist').append('<div id="bk-' + data['datas'][i]['id'] + '" class="pk-row parent"><div class="pk-w-sm-3"><img src="' + data['datas'][i]['src'] + '" onerror="this.src=\'app/superadmin/template/img/forum.png\'" /></div><div class="pk-w-sm-9"><p>' + data['datas'][i]['title'] + '（ID：' + data['datas'][i]['id'] + '）</p><p>' + (data['datas'][i]['content'] ? data['datas'][i]['content'] : '无简介') + '</p><p><a href="javascript:" onclick="_editforum(' + data['datas'][i]['id'] + ')">编辑</a>&nbsp;<a href="javascript:" onclick="_delforum(' + data['datas'][i]['id'] + ')">删除</a>&nbsp;' + (sfyzbk(data['datas'], data['datas'][i]['id']) ? '<a href="javascript:" onclick="zkzbk(' + data['datas'][i]['id'] + ',this)">展开子版块</a>' : '') + '</p></div></div>');
+			}
+		}
+		console.log(data);
+	});
+
+	function sfyzbk(data, pid) {
+		for(var i = 0; i < data.length; i++) {
+			if(data[i]['pid'] == pid) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function zkzbk(pid, This) {
+		var data = bkdata,
+			$fbk = '';
+		if($(This).html() == '展开子版块') {
+			$(This).html('收起子版块');
+			for(var i = 0; i < data.length; i++) {
+				if(data[i]['id'] == pid) {
+					$fbk = data[i]['title'] + '（ID:' + pid + '）';
+				}
+			}
+			for(var i = 0; i < data.length; i++) {
+				if(data[i]['pid'] == pid) {
+					$(This).parent().parent().parent().after('<div id="bk-' + data[i]['id'] + '" class="pk-row children pid-' + pid + '"><div class="pk-w-sm-3"><img src="' + data[i]['src'] + '" onerror="this.src=\'app/superadmin/template/img/forum.png\'" /></div><div class="pk-w-sm-9"><p>' + data[i]['title'] + '（ID：' + data[i]['id'] + '），父版块为“' + $fbk + '”</p><p>' + (data[i]['content'] ? data[i]['content'] : '无简介') + '</p><p><a href="javascript:" onclick="_editforum(' + data[i]['id'] + ')">编辑</a>&nbsp;<a href="javascript:" onclick="_delforum(' + data[i]['id'] + ')">删除</a>&nbsp;' + (sfyzbk(data, data[i]['id']) ? '<a href="javascript:" onclick="zkzbk(' + data[i]['id'] + ',this)">展开子版块</a>' : '') + '</p></div></div>');
+				}
+			}
+		} else {
+			$(This).html('展开子版块');
+			$('.forumlist .children.pid-' + pid).remove();
+		}
+	}
+
+	function _editforum(id) {
+		var _tmpstyle_h = $('html').css('overflow-y');
+		var _tmpstyle_b = $('body').css('overflow-y');
+		ppp({
+			title: "编辑版块[ID:" + id + "]",
+			content: '<iframe src="index.php?c=app&a=superadmin:index&s=forum&t=edit&id=' + id + '&nobackbtn=1" style="width:100%;height:100%;border:0;overflow-y:scroll"></iframe>',
+			area: ['100%', '100%', '0', '0', '0', '0'],
+			complete: function(id) {
+				$('#pkpopup_' + id + ' .pk-popup-body,body').css('overflow-y', 'hidden');
+				$('#pkpopup_' + id + ' .pk-popup-foot a:eq(0)').html('取消');
+			},
+			close: function() {
+				$('html').css('overflow-y', _tmpstyle_h);
+				$('body').css('overflow-y', _tmpstyle_b);
+			}
+		});
+	}
+
+	function _delforum(id) {
+		ppp({
+			type: 1,
+			icon: 3,
+			content: "将会一并删除该版块[ID:" + id + "]下的子版块及所有文章和回复，确认继续吗？",
+			submit: function() {
+				$.getJSON('index.php', {
+					c: 'app',
+					a: 'superadmin:index',
+					s: 'delete',
+					id: id,
+					table: 'readsort',
+					json: 1,
+					chkcsrfval: $_USER['CHKCSRFVAL']
+				}, function(data) {
+					if(data['state'] == 'ok') {
+						ppp({
+							type: 3,
+							icon: 1,
+							content: '删除成功'
+						});
+						setTimeout(function() {
+							location.reload();
+						}, 700);
+					} else {
+						ppp({
+							icon: 2,
+							content: data['datas']['msg']
+						});
+					}
+				});
+			}
+		})
+	}
+</script>

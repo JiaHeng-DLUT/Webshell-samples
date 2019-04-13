@@ -1,0 +1,151 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<form method="get" action="">
+            {if $Request.get.type eq 'to_replr' || $Request.get.type eq 'replied'}
+            <input type="hidden" name="type" value="{$Request.param.type}"/>
+            {/if}
+            <table class="search-form">
+                <tr>
+                    <td>&nbsp;</td>
+                    <th>{$Think.lang.store_consulting_type}</th>
+                    <td class="w160">
+                        <select name="ctid" class="w150">
+                            <option value="0">{$Think.lang.ds_all}</option>
+                            {if $consult_type}
+                            {foreach name="consult_type" item="data"}
+                            <option {if $Request.get.ctid eq $data.consulttype_id} selected="selected" {/if} value="{$data.consulttype_id}">
+                            {$data.consulttype_name}
+                            </option>
+                            {/foreach}
+                            {/if}
+                        </select>
+                    </td>
+                    <td class="tc w70">
+                        <label class="submit-border">
+                        <input type="submit" class="submit" value="{$Think.lang.ds_search}"/>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table class="dssc-default-table">
+            <thead>
+            <tr>
+                <th class="w30"></th>
+                <th>{$Think.lang.store_consult_reply}</th>
+                <th class="w30"></th>
+                <th class="w110">{$Think.lang.ds_handle}</th>
+            </tr>
+            {if $list_consult neq ''}
+            <tr>
+                <td class="tc"><input id="all" type="checkbox" class="checkall"/></td>
+                <td colspan="20">
+                    <label for="all">{$Think.lang.ds_select_all}</label>
+                    <a href="javascript:void(0);" class="dssc-btn-mini" ds_type="batchbutton" uri="{:url('Sellerconsult/drop_consult')}" name="id" confirm="{$Think.lang.ds_ensure_del}"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/if}
+            </thead>
+            <tbody>
+            {if $list_consult}
+            {foreach name="list_consult" item="consult"}
+            <tr>
+                <th colspan="20" class="tl"><input type="checkbox" value="{$consult.consult_id}" class="checkitem ml10 mr10"/>
+                    <span>
+                        <a href="{:url('Goods/index',['goods_id'=>$consult.goods_id])}" target="_blank">{$consult.goods_name}</a>
+                    </span>
+                    <span class="ml20">
+                        {$Think.lang.store_consult_list_consult_member}{$Think.lang.ds_colon}
+                    </span>
+                    {if $consult.member_id eq '0'}
+                    {$Think.lang.ds_guest}
+                    {else}
+                    {$consult.consult_isanonymous ? str_cut($consult.member_name,2)."***" : $consult.member_name}
+                    {/if}
+                    {if $consult.member_id gt '0' && $consult.consult_isanonymous eq '0'}
+                    <span member_id="{$consult.member_id}"></span>
+                    {/if}
+                    <span class="ml20">{$Think.lang.store_consult_list_consult_time}{$Think.lang.ds_colon}
+                        <em class="goods-time">{$consult.consult_addtime|date='Y-m-d H:i:s',###}</em>
+                    </span>
+                </th>
+            </tr>
+            <tr>
+                <td rowspan="2"></td>
+                <td class="tl">
+                    <strong>{$Think.lang.store_consult_list_consult_content}{$Think.lang.ds_colon}</strong>
+                    <span class="gray">{$consult.consult_content}</span>
+                </td>
+                <td rowspan="2"></td>
+                <td rowspan="2" class="dssc-table-handle vt">
+                    {if $consult.consult_reply eq ''}
+                    <span>
+                        <a href="javascript:void(0);" class="btn-acidblue" ds_type="dialog" dialog_id="my_qa_reply"
+                           dialog_title="{$Think.lang.store_consult_list_reply_consult}" dialog_width="460"
+                           uri="{:url('Sellerconsult/reply_consult',['id'=>$consult.consult_id])}">
+                            <i class="fa fa-comments-o"></i>
+                            <p>{$Think.lang.store_consult_list_reply}</p>
+                        </a>
+                    </span>
+                    {else}
+                    <span><a href="javascript:void(0);" ds_type="dialog" dialog_id="my_qa_edit_reply"
+                             dialog_title="{$Think.lang.store_consult_list_reply_consult}" dialog_width="480"
+                             uri="{:url('Sellerconsult/reply_consult',['id'=>$consult.consult_id])}"
+                             class="btn-blue"><i class="fa fa-pencil-square"></i><p>{$Think.lang.ds_edit}</p></a></span>
+                    {/if}
+                    <span><a href="javascript:void(0)"
+                             onclick="ds_ajaxget_confirm('{:url('Sellerconsult/drop_consult',['id'=>$consult.consult_id])}','{$Think.lang.ds_common_op_confirm}');"
+                             class="btn-red"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a> </span>
+                </td>
+            </tr>
+            <tr>
+                {if $consult.consult_reply}
+                <td class="tl">
+                    <strong>{$Think.lang.store_consult_list_my_reply}{$Think.lang.ds_colon}</strong>
+                    <span class="gray">{$consult.consult_reply}</span>
+                    <span class="ml10 goods-time">
+                    ({$consult.consult_replytime|date="Y-m-d H:i:s",###})
+                    </span>
+                </td>
+                {/if}
+            </tr>
+            {/foreach}
+            {else}
+            <tr>
+                <td colspan="20" class="norecord">
+                    <div class="warning-option">
+                        <i class="fa fa-warning"></i>
+                        <span>{$Think.lang.no_record}</span>
+                    </div>
+                </td>
+            </tr>
+            {/if}
+            </tbody>
+            <tfoot>
+            {if $list_consult}
+            <tr>
+                <th class="tc">
+                    <input id="all" type="checkbox" class="checkall"/>
+                </th>
+                <th colspan="20">
+                    <label for="all">{$Think.lang.ds_select_all}</label>
+                    <a href="javascript:void(0);" class="dssc-btn-mini" ds_type="batchbutton"
+                       uri="{:url('Sellerconsult/drop_consult')}" name="id"
+                       confirm="{$Think.lang.ds_ensure_del}">
+                        <i class="fa fa-trash-o"></i>
+                        {$Think.lang.ds_del}
+                    </a>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <div class="pagination">{$show_page}</div>
+                </td>
+            </tr>
+            {/if}
+            </tfoot>
+        </table>
+
+{/block}
+

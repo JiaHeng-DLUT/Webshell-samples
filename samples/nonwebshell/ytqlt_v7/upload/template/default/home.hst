@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="template/default/css/responsiveslides.css">
+<link rel="stylesheet" href="template/default/css/style.css">
+<script src="template/default/js/responsiveslides.min.js"></script>
+
+<div class="pk-container">
+	<div class="pk-background-color-white pk-padding-15">
+		<div class="pk-row pk-padding-bottom-5 pk-text-xs" style="border-bottom: solid 1px #458fce;">
+			<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+				昨日:<span class="pk-text-primary">{$_G['SET']['YESTODAYPOSTRR']}</span>篇&nbsp;&nbsp;今日:<span class="pk-text-primary">{$_G['SET']['TODAYPOSTRR']}</span>篇 &nbsp;&nbsp;总帖:<span class="pk-text-primary">{$_G['SET']['SUMPOSTRR']}</span>篇 &nbsp;&nbsp;会员:<span class="pk-text-primary">{$_G['SET']['MEMBERCOUNT']}</span>位
+			</div>
+			<div id="home-userbox" class="pk-w-sm-6 pk-text-right pk-padding-0 pk-hide-sm">
+				<script>
+					$(function(){
+						if(!parseInt($_USER["ID"])){
+							$('#home-userbox').html('<a class="pk-hover-underline pk-text-primary" href="index.php?c=login">登录</a> <a class="pk-hover-underline pk-text-primary" href="index.php?c=reg">注册</a>');
+						}else{
+							$('#home-userbox').html('欢迎您，<a class="pk-hover-underline pk-text-primary" href="index.php?c=user" title="个人中心">'+$_USER['NICKNAME']+'</a> <a class="pk-hover-underline pk-text-primary" href="javascript:" onclick="pkalert(\'您确定要退出当前用户么？\',\'确认操作\',\'location.href=\\\'index.php?c=login&type=out\\\'\')">退出</a>');
+						}
+					});
+				</script>
+			</div>
+		</div>
+		<div class="pk-row">
+			<div class="pk-w-sm-12 pk-background-color-primary" style="height: 5px;"></div>
+			<div class="pk-w-md-7 pk-w-sm-12 pk-padding-0" id="slidershow">
+				<div id="wrapper">
+					<div class="callbacks_container">
+						<ul class="rslides" id="slider4">{$hshtml}</ul>
+					</div>
+				</div>
+			</div>
+			<div id="sliderarticlelist" class="pk-w-md-5 pk-w-sm-12 pk-padding-0">
+				<div class="pk-row">
+					<div class="pk-w-sm-3 pk-padding-0">
+						<button class="pk-btn pk-btn-primary pk-btn-block" data-type="zxwz">最新文章</button>
+					</div>
+					<div class="pk-w-sm-3 pk-padding-0">
+						<button class="pk-btn pk-btn-block" data-type="zxhf">最新回复</button>
+					</div>
+					<div class="pk-w-sm-3 pk-padding-0">
+						<button class="pk-btn pk-btn-block" data-type="jhwz">精华文章</button>
+					</div>
+					<div class="pk-w-sm-3 pk-padding-0">
+						<button class="pk-btn pk-btn-block" data-type="rmwz">热门文章</button>
+					</div>
+				</div>
+				<div id="homearticlelist" class="pk-text-default pk-text-xs">{$zxwzhtml}</div>
+				<div id="homezxwzlist" class="pk-hide">{$zxwzhtml}</div>
+				<div id="homezxhflist" class="pk-hide">{$zxhfhtml}</div>
+				<div id="homejhwzlist" class="pk-hide">{$jhwzhtml}</div>
+				<div id="homermwzlist" class="pk-hide">{$rmwzhtml}</div>
+			</div>
+			<div class="pk-w-sm-12 pk-background-color-primary" style="height:2px;"></div>
+			<div class="pk-w-sm-12 pk-padding-0 pk-padding-top-10 pk-overflow-hidden" style="height: 101px;">
+				<div class="pk-background-color-primary pk-text-sm pk-text-white pk-padding-10 pk-float-left pk-margin-right-5" style="width: 36px;">新<br>会<br>员</div>
+				{$xhyhtml}
+			</div>
+			<div class="pk-w-sm-12 pk-background-color-primary" style="height:2px;"></div>
+		</div>
+		<div class="pk-row pk-padding-top-15">{$bkhtml}</div>
+		<div class="pk-row pk-padding-top-15 pk-padding-bottom-15">
+			<div class="pk-w-sm-12 pk-text-sm">
+				<div class="pk-padding-bottom-5 pk-margin-bottom-5" style="border-bottom: solid 1px #E0E0E0">我的小伙伴</div>
+			</div>
+			<div class="pk-w-sm-12 pk-text-xs">
+				<div class="pk-friendlink">{$_G['SET']['FRIENDLINKS']}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#slider4 img").height($("#sliderarticlelist").height());
+		$("#sliderarticlelist button").click(function() {
+			$('#sliderarticlelist button').removeClass('pk-btn-primary');
+			$("#homearticlelist").html($("#home" + $(this).data('type') + "list").html());
+			$(this).addClass('pk-btn-primary');
+		});
+		$("#slider4").responsiveSlides({
+			auto: true,
+			pager: false,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			before: function() {
+				$('.events').append("<li>before event fired.</li>");
+			},
+			after: function() {
+				$('.events').append("<li>after event fired.</li>");
+			}
+		});
+	});
+</script>

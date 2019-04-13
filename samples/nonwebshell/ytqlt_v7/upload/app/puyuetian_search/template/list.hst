@@ -1,0 +1,9 @@
+<div class="_l">
+	<p>
+		<a target="_blank" href="{$url}">{$title}</a>
+	</p>
+	<p>{$content}</p>
+	<p>
+		<a target="_blank" href="{$url}">{$url2}</a>
+	</p>
+</div>

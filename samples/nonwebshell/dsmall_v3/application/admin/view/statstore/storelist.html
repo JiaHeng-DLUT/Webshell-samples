@@ -1,0 +1,66 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺统计</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+  <div class="fixed-empty"></div>
+  <div style="width:100%; text-align:right;padding-top:10px;">
+  	<input type="hidden" id="export_type" name="export_type" data-param='{"url":"{$actionurl}&exporttype=excel"}' value="excel"/>
+  	<a class="btn btn-mini" href="javascript:void(0);" id="export_btn">导出Excel</a>
+  </div>
+  <form method="post" id="form_member">
+    <table class="ds-default-table nobdb">
+      <thead>
+        <tr class="thead">
+          <th class="align-center">店铺名称</th>
+          <th class="align-center">店主账号</th>
+          <th class="align-center">店主卖家账号</th>
+          <th class="align-center">所属等级</th>
+          <th class="align-center">有效期至</th>
+          <th class="align-center">开店时间</th>
+        </tr>
+      <tbody id="datatable">
+        {notempty name="store_list"}
+        {foreach name="store_list" item="v" key="k" }
+        <tr class="hover member">
+          <td class="align-center">{$v.store_name}</td>
+          <td class="align-center">{$v.member_name}</td>
+          <td class="align-center">{$v.seller_name}</td>
+          <td class="align-center"><?php echo ($t = $search_grade_list[$v['grade_id']])?$t:'平台店铺'; ?></td>
+          <td class="align-center"><?php echo $v['store_endtime']?date('Y-m-d', $v['store_endtime']):'无限制'; ?></td>
+          <td class="align-center">{$v.store_addtime|date="Y-m-d",###}</td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+          <td colspan="11">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+      </tbody>
+    </table>
+      {$show_page}
+  </form>
+
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<script>
+$(function(){
+    //导出图表
+    $("#export_btn").click(function(){
+        var item = $("#export_type");
+        var type = $(item).val();
+        if(type == 'excel'){
+            download_excel(item);
+        }
+    });
+});
+</script>

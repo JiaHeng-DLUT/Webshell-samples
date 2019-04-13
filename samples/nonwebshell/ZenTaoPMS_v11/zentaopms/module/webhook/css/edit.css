@@ -1,0 +1,4 @@
+.labelWidth .checkbox-primary {width: 20%; display:inline-block}
+.checkbox-primary + .checkbox-primary {margin-left: 0px;}
+.objectType {margin-right: 5px !important;}
+#paramsTR th{padding-left:30px;}

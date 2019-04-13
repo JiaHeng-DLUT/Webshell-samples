@@ -1,0 +1,153 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Other extends Common
+{
+	public function index(){
+// 关键词筛选  格式：字段名称加显示名称
+     $keywords  = ['attr_id'=>'属性ID','attr_name'=>'属性名称'];
+
+ //日期筛选    
+     $date = [
+              ['title'=>'发布时间','start_name'=>'开始时间','end_name'=>'结束时间']
+            ];
+// 自定义单个字段筛选
+     $customSingleField =[
+                            [
+                             'field'=>'status',
+                              'data'=> [ 0 =>'等待审核',1=>'正常',2=>'审核失败']
+                              ]
+                           ]; 
+ //数据库某个表中的字段筛选
+     $sqlTable = [];
+     $this->assign('keywords',$keywords);
+     $this->assign('customSingleField',$customSingleField);
+     $this->assign('sqlTable',$sqlTable);
+
+
+     $this->assign('date',$date);
+ //表单数据显示筛选结果
+    $post = request()->param();   
+    if($post){
+            $keywords = $post['keywords'];
+            $group_id   = $post['group_id'];
+            $status   =$post['status'];
+
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['name']){
+                 $where .= " and a.".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and a.create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+             if($status){
+                $where .=' and a.status = '.$status;
+             }
+        
+      }else{
+           $where .='';
+           $order = "a.create_time desc";
+      }   
+     $pageNum = 10;
+     $lists = DB::name('article_attr')->where($where)->order($order)->paginate($pageNum);
+     $page = $lists->render();
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+     return $this->fetch();
+	}
+//增加
+  public function add(){
+    $param = request()->param(); 
+    if(request()->isPost()){   
+
+        //验证
+        $rule =[
+          'title'=>'require|chsAlpha',
+          'name'=>'require',
+        ];
+        $msg= [
+         'title.require' =>'规则标题不能为空',
+         'title.chsAlpha' =>'规则标题只能是汉字或字母',
+         'name.require' =>'规则名称不能为空',   
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+              return error_json($error);
+         }
+         //表单数据
+          $data['title'] = $param['title'];
+          $data['name'] = $param['name'];
+          $data['type'] = $param['type'];
+          $data['condition'] = $param['condition'];
+          $data['status'] = !empty($param['status'])?1:0;
+
+       if(model('auth_rule')->add($data)){
+         return success_json('添加成功'); 
+       }
+   }else{
+        return $this->fetch();
+   }      
+  }
+  public function edit(){
+    $param = request()->param();
+    if(request()->isPost()){
+
+        //验证
+        $rule =[
+          'title'=>'require|chsAlpha',
+          'name'=>'require',
+        ];
+        $msg= [
+         'title.require' =>'规则标题不能为空',
+         'title.chsAlpha' =>'规则标题只能是汉字或字母',
+         'name.require' =>'规则名称不能为空',  
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+              return error_json($error);
+         }
+    
+        //表单数据       
+          $data['title'] = $param['title'];
+          $data['name'] = $param['name'];
+          $data['type'] = $param['type'];
+          $data['condition'] = $param['condition'];
+          $data['status'] = !empty($param['status'])?1:0;
+          $where['id'] = $param['id'];
+          $res = model('auth_rule')->edit($data,$where);
+          return success_json('编辑成功'); 
+    }else{
+         $rule = model('auth_rule')->getRuleInfoById($param['id']);
+         $this->assign('rule',$rule);
+         return $this->fetch();
+
+
+    }  
+  }
+  public function del(){
+      $param = input();
+     if(!$param['id']){  return error_json('请求参数错误');    }
+
+     $res= model('auth_rule')->del($param['id']);
+     if($res){
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+  }
+      
+	}
+
+}

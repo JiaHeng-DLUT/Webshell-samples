@@ -1,0 +1,164 @@
+<style>
+	body {
+		overflow-x: hidden;
+	}
+	
+	@media only screen and (min-width: 1000px) {
+		body {
+			background-image: url(template/default/img/body_bg.jpg);
+			background-repeat: repeat-x;
+			background-color: #e8eff5;
+			background-position: center top;
+		}
+	}
+	
+	@media only screen and (max-width: 1001px) {
+		body {
+			background-color: #fff;
+		}
+	}
+	
+	#PhoneNavigation {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		border-top: solid 1px #E0E0E0;
+		background: linear-gradient(to top, #EFEFF4, #E0E0E0);
+		font-size: 24px;
+		z-index: 77;
+	}
+	
+	#PhoneNavigation a {
+		float: left;
+		width: 20%;
+		height: 100%;
+		padding-top: 2px;
+		text-align: center;
+		color: #666;
+	}
+	
+	#PhoneNavigation a small {
+		display: block;
+		font-size: 10px;
+		padding-bottom: 2px;
+	}
+	
+	#PhoneNavigation a:hover,
+	#PhoneNavigation .pk-active {
+		background-color: #d0d0d0;
+	}
+</style>
+{$templatecolorstyle}
+<div class="pk-hide-md">
+	<div id="PhoneNavigation">
+		<a id="phonelistbtn" href="{ReWriteURL('list','')}"><span class="fa fa-fw fa-list-ul"></span><small>动态</small></a>
+		<a id="phoneforumbtn" href="{ReWriteURL('forum','')}"><span class="fa fa-fw fa-delicious"></span><small>版块</small></a>
+		<a id="phoneeditbtn" href="index.php?c=edit&type=read&id=0&sortid={$_G['GET']['SORTID']}"><span class="fa fa-fw fa-edit"></span><small>发帖</small></a>
+		<a id="phonefriendsbtn" href="index.php?c=friends"><span class="fa fa-fw fa-comments-o"></span><small>消息</small></a>
+		<a id="phoneuserbtn" href="index.php?c=user"><span class="fa fa-fw fa-user"></span><small>我的</small></a>
+	</div>
+</div>
+<script>
+	$(function() {
+		if($(window).width() < 1000) {
+			$('#PhoneNavigation #phone{$_G["GET"]["C"]}btn').addClass('pk-active');
+			$('textarea,input').focus(function() {
+				$('#PhoneNavigation').addClass('pk-hide');
+			});
+			$('textarea,input').blur(function() {
+				$('#PhoneNavigation').removeClass('pk-hide');
+			});
+			/*
+			setInterval(function() {
+				var $h = $(window).height() - $('#PhoneNavigation').height();
+				$('#PhoneNavigation').css({
+					'bottom': 'auto',
+					'top': $h
+				});
+			}, 1);
+			*/
+		}
+	});
+</script>
+{$_G['SET']['TEMPLATE_DEFAULT_HEADHTML']}
+<div class="pk-head-bar pk-background-color-white pk-text-xs pk-hide-sm">
+	<div class="pk-container pk-padding-0">
+		<div class="pk-row">
+			<div id="head-datetime" class="pk-w-md-4 pk-hide-sm">Loading...</div>
+			<div class="pk-w-md-8 pk-w-sm-12 pk-text-right pk-footlink">{$_G['SET']['HEADERHTMLCODE']}</div>
+		</div>
+	</div>
+</div>
+<div class="pk-container pk-padding-0 pk-hide-sm">
+	<div class="pk-row">
+		<div class="pk-w-md-12">
+			{$_G['SET']['TEMPLATE_DEFAULT_BANNER']}
+		</div>
+	</div>
+</div>
+<div class="pk-container pk-padding-0 pk-margin-bottom-15">
+	<div class="pk-row pk-hide-sm">
+		<div class="pk-w-sm-12 pk-padding-sm-0">
+			<div class="pk-nav pk-nav-primary pk-radius-top-left-4 pk-radius-top-right-4">
+				<ul id="nav">
+					{$_G['SET']['NAVHTMLCODE']}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="pk-row pk-text-md pk-text-primary pk-padding-top-15 pk-padding-bottom-5 pk-hide-md pk-background-color-white">
+		<div class="pk-w-sm-5 pk-text-nowrap pk-text-bold">
+			<a href="/">{$_G['SET']['LOGOTEXT']}</a>
+		</div>
+		<div class="pk-w-sm-7 pk-overflow-hidden pk-text-nowrap pk-text-sm pk-text-right">
+			{$_G['TEMP']['HEADRIGHT']}
+		</div>
+	</div>
+	<div class="pk-row">
+		<div class="pk-w-sm-12 pk-padding-sm-0">
+			<form method="get" action="index.php">
+				<input type="hidden" name="c" value="app" />
+				<input type="hidden" name="a" value="puyuetian_search:index" />
+				<div class="pk-row pk-padding-top-10 pk-padding-bottom-10 pk-background-color-white">
+					<div class="pk-w-md-4 pk-w-sm-10 pk-padding-right-0">
+						<input type="search" name="w" class="pk-textbox pk-textbox-noshadow pk-border-right-none pk-radius-top-left-4 pk-radius-bottom-left-4" value="{htmlspecialchars($_GET['w'])}" placeholder="搜索，就是这么简单~" required />
+					</div>
+					<div class="pk-w-md-1 pk-w-sm-2 pk-padding-left-0">
+						<button type="submit" class="pk-btn pk-btn-block pk-btn-primary pk-radius-bottom-right-4 pk-radius-top-right-4"><span class="fa fa-search"></span></button>
+					</div>
+					<div class="pk-w-md-7 pk-text-sm pk-text-nowrap pk-text-default pk-hide-sm" style="height:38px;line-height:38px">
+						{$_G['SET']['TEMPLATE_DEFAULT_SEARCHRIGHTHTML']}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<div class="pk-row pk-background-color-white pk-padding-bottom-sm-0 pk-padding-bottom-10">
+				<div class="pk-w-md-7 pk-w-sm-12 pk-padding-sm-0 pk-text-truncate pk-text-xs" style="color:#777;height:30px;line-height:30px">
+					<span class="fa fa-home pk-text-sm">&nbsp;</span>
+					<a href="index.php">首页</a>{$_G['TEMP']['GPSHTML']}
+				</div>
+				<div class="pk-w-md-5 pk-hide-sm pk-text-right">
+					<a class="pk-btn pk-btn-primary pk-radius-4 pk-btn-sm" href="index.php?c=edit&type=read&sortid={$sortid}"><span class="fa fa-edit"></span>&nbsp;发布新文章</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function() {
+		setInterval(function() {
+			var mydate = new Date();
+			$('#head-datetime').html(mydate.toLocaleString());
+		}, 1000);
+		$nava = $('#nav a');
+		for($i = 0; $i < $nava.length; $i++) {
+			if($nava[$i].href == location.href) {
+				$('#nav li')[$i].className = 'pk-active';
+			}
+		}
+	});
+</script>

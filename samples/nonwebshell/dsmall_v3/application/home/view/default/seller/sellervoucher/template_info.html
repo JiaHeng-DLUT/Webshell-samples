@@ -1,0 +1,66 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <dl>
+        <dt><em class="pngFix"></em>{$Think.lang.voucher_template_title}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_title}</dd>
+    </dl>
+    <dl>
+        <dt><em class="pngFix"></em>{$Think.lang.voucher_template_enddate}{$Think.lang.ds_colon}</dt>
+        <dd>{if $t_info.vouchertemplate_enddate}{:date('Y-m-d',$t_info.vouchertemplate_enddate)}{/if}</dd>
+    </dl>
+    <dl>
+        <dt>{$Think.lang.voucher_template_price}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_price}&nbsp;{$Think.lang.currency_zh}</dd>
+    </dl>
+    <dl>
+        <dt ><em class="pngFix"></em>{$Think.lang.voucher_template_total}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_total}&nbsp;{$Think.lang.voucher_template_eachlimit_unit}</dd>
+    </dl>
+    <dl>
+        <dt ><em class="pngFix"></em>{$Think.lang.voucher_template_eachlimit}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_eachlimit}&nbsp;{$Think.lang.voucher_template_eachlimit_unit}</dd>
+    </dl>
+    <dl>
+        <dt ><em class="pngFix"></em>{$Think.lang.voucher_template_orderpricelimit}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_limit}&nbsp;{$Think.lang.currency_zh}</dd>
+    </dl>
+    <dl>
+        <dt ><em class="pngFix"></em>{$Think.lang.voucher_template_describe}{$Think.lang.ds_colon}</dt>
+        <dd>
+            <textarea  name="txt_template_describe" rows="3" class="w300" readonly>{$t_info.vouchertemplate_desc}</textarea>
+        </dd>
+    </dl>
+    <dl>
+        <dt ><em class="pngFix"></em>{$Think.lang.voucher_template_image}{$Think.lang.ds_colon}</dt>
+        <dd>
+            <div style="clear:both; padding-top:10px;">
+                {if $t_info.vouchertemplate_customimg}
+                <img onload="javascript:ResizeImage(this,220,95);" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_VOUCHER}/{$Think.session.store_id}/{$t_info.vouchertemplate_customimg}"/>
+                {/if}
+            </div>
+        </dd>
+    </dl>
+    <dl>
+        <dt><em class="pngFix"></em>{$Think.lang.ds_status}{$Think.lang.ds_colon}</dt>
+        <dd>
+            {foreach name="templatestate_arr" item="v"}
+            {if $v.0 == $t_info.vouchertemplate_state}
+            {$v.1}
+            {/if}
+            {/foreach}
+        </dd>
+    </dl>
+    <dl>
+        <dt><em class="pngFix"></em>{$Think.lang.voucher_template_giveoutnum}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_giveout}&nbsp;{$Think.lang.voucher_template_eachlimit_unit}</dd>
+    </dl>
+    <dl>
+        <dt><em class="pngFix"></em>{$Think.lang.voucher_template_usednum}{$Think.lang.ds_colon}</dt>
+        <dd>{$t_info.vouchertemplate_used}&nbsp;{$Think.lang.voucher_template_eachlimit_unit}</dd>
+    </dl>
+    <div class="bottom"> <a href="javascript:void(0);" class="submit" onclick="window.location = '{:url('Sellervoucher/templatelist')}'" > {$Think.lang.voucher_template_backlist}</a> </div>
+</div>
+
+{/block}

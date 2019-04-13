@@ -1,0 +1,20 @@
+{extend name="default/base/base_store" /}
+{block name="store_main"}
+<style>
+    .dss-article{}
+    .dss-article .title{background-color: #FCFCFC; text-align: left; border-color: #ff4040 #E7E7E7 #E7E7E7; border-style: solid; border-width: 2px 1px 1px;}
+    .dss-article .title h4{font: 14px/20px "Microsoft Yahei"; color: #777777; display: inline-block; *dispaly: inline; padding: 6px 15px 5px; *zoom:1;}
+    .dss-article .content{}
+    .dss-article .content .default{padding:20px;}
+</style>
+<div class="w1200 mt20">
+    <div class="dss-article">
+        <div class="title">
+            <h4>{$store_navigation_info.storenav_title}</h4>
+        </div>
+        <div class="content">
+            <div class="default">{$store_navigation_info.storenav_content}</div>
+        </div>
+    </div>
+</div>
+{/block}

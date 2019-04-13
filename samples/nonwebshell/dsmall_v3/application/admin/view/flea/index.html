@@ -1,0 +1,105 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>闲置</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+<div class="fixed-empty"></div>
+<form method="get" name="formSearch">
+    <div class="ds-search-form">
+        <dl>
+            <dt><label for="search_goods_name"> 闲置物品名</label></dt>
+            <dd><input type="text" value="{$Request.param.search_goods_name}" name="search_goods_name" id="search_goods_name" class="txt"></dd>
+        </dl> 
+        <dl>
+        <dt>发布会员名</dt>
+        <dd><input type="text" value="{$Request.param.search_store_name}" name="search_store_name" class="queryInput" id="search_member_name"></dd>
+        </dl> 
+        <dl>
+        <dt>分类</dt>
+        <dd id="gcategory"><input type="hidden" id="cate_id" name="cate_id" value="" class="mls_id" />
+            <input type="hidden" id="cate_name" name="cate_name" value="" class="mls_names" />
+            <select class="querySelect">
+                <option>{$Think.lang.ds_please_choose}...</option>
+                {notempty name="goods_class"}
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}"{if $Request.param.cate_id == $val.fleaclass_id} selected{/if}>{$val.fleaclass_name}</option>
+                {/foreach}
+                {/notempty}
+            </select>
+        </dd>
+        </dl> 
+        <div class="btn_group">
+            <a href="javascript:document.formSearch.submit();" class="btn" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+            {if $filtered}
+            <a href="{:url('Flea/flea')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            {/if}
+        </div>
+    </div>
+</form>
+
+  <form method='post' id="form_goods">
+    <input type="hidden" name="type" id="type" value="" />
+    <table class="ds-default-table">
+      <thead>
+        <tr class="thead">
+          <th width="25px"></th>
+          <th colspan="2">闲置物品名</th>
+		  <th>发布会员名</th>
+          <th>分类</th>
+          <th class="align-center">浏览</th>
+          <th class="align-center">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      {notempty name="goods_list"}
+        {foreach name="goods_list" item="v"}
+
+        <tr class="hover edit">
+          <td class="w24"><input type="checkbox" name="del_id[]" value="{$v.goods_id}" class="checkitem"></td>
+          <td class="w60 picture">
+		  <div class="size-56x56"><span class="thumb size-56x56"><img height="56" width="56" src="{notempty name='v.goods_image'}{$v.goods_image}{else /}{:goods_thumb()}{/notempty}" onload="javascript:ResizeImage(this,56,56);"/></span></div></td>
+          <td class="goods-name w270"><p><span title="{$Think.lang.ds_editable}" class="editable-tarea tooltip" required="1" ajax_branch_textarea="goods_name" fieldid="{$v.goods_id}" fieldname="goods_name" ds_type="inline_edit_textarea">{$v.goods_name}</span></p></td>
+          <td class="w156">{$v.member_name}</td>
+          <td>{$v.fleaclass_name}</td>
+          <td class="align-center">{$v.goods_click}</td>
+          <td class="w60 align-center"><a href="{:url('Home/Fleagoods/index',['goods_id'=>$v.goods_id])}" target="_blank" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a></td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+          <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+      </tbody>
+      <tfoot>
+        <tr>
+            <td class="w24"><input type="checkbox" class="checkall" id="checkallBottom"></td>
+            <td colspan="16">
+                <label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                &nbsp;&nbsp;<a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+            </td>
+        </tr>
+      </tfoot>
+    </table>
+    {$show_page}
+  </form>
+</div>
+<script type="text/javascript" src="{$Think.ADMIN_SITE_ROOT}/js/jquery.edit.js" charset="utf-8"></script>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/common_flea_select.js" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+    gcategoryInit("gcategory");
+});
+function submit_delete(ids_str){
+    _uri = ADMINSITEURL+"/Flea/del.html?del_id=" + ids_str;
+    dsLayerConfirm(_uri,'{$Think.lang.goods_index_ensure_handle}');
+}
+</script>
+ {include file="public/footer" /}

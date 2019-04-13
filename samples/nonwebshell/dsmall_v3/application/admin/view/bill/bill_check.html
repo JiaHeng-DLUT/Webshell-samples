@@ -1,0 +1,28 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    
+    <div class="fixed-empty"></div>
+    <form method="post" name="form1" id="form1" action="{:url('Bill/bill_check',['ob_no'=>$Request.param.ob_no])}">
+        <table class="ds-default-table">
+            <tbody>
+                
+                
+                <tr>
+                    <td colspan="2" class="required"><label for="ob_admin_content">{$Think.lang.ob_admin_content}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><textarea name="ob_admin_content" rows="6" class="tarea" id="ob_admin_content"></textarea></td>
+                    <td class="vatop tips"><span class="vatop rowform"></span></td>
+                </tr>
+            </tbody>
+            <tfoot id="submit-holder">
+                <tr class="tfoot">
+                    <td colspan="2" ><a href="JavaScript:void(0);" id="dssubmit" class="btn" onclick='$("#form1").submit()'><span>{$Think.lang.ds_submit}</span></a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>

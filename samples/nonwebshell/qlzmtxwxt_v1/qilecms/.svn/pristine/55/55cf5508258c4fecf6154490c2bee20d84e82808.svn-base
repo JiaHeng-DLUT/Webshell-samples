@@ -1,0 +1,121 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\Db;
+class City extends Common
+{
+	public function index(){
+       $post = request()->param(); 
+       $input = input();
+       $where = 1;
+    if($post){
+    	     
+             $keywords = $post['keywords'];
+             
+             if($keywords['name']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+      
+ 
+
+      }else{
+         
+
+      }
+                $order = array(
+            	'city_id'=>'asc'
+           	 );
+     $select  = array('city_id'=>'城市ID','name'=>'城市名称','pinyin'=>'城市拼音','first_letter'=>'首字母');
+      //如期筛选   
+     $date = [] ;
+
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+	 $list = DB::name('city')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+     $this->assign('page', $page);
+	 $this->assign('list',$list);
+     return $this->fetch();
+	}
+	public function add(){
+      if(request()->isPost()){    
+		   	$post = input('post.');	
+                $name = $post['name'];
+                //表单验证
+				$rule = [
+				    'name'  => 'require|max:8'
+				];
+
+				$msg = [
+				    'name.require' => '城市名称不能为空',
+				    'name.max'     => '城市名称最多不能超过8个字符',
+				];
+                
+				$result = $this->checkSubmit($post,$rule,$msg);
+                if($result) {
+                	return error_json($result);
+				}
+
+                if(model('city')->isCityName($name)){
+                   return error_json('该城市已经存在，请勿重复添加');	
+                }
+
+                
+	            $result = model('city')->addCity($post);
+
+
+		        if($result){
+			        return success_json('添加成功');
+		        }else{
+		        	return error_json('添加失败');
+		        }
+
+	  }else{
+
+	  	 $param = input();
+	  	 // print_r($param);
+	  	 $city_id  =  $param['city_id'];
+	  	 $data =  model('city')->getCityName($city_id);
+	  	 $name = $data['name']?$data['name']:'顶级';
+		 $this->assign('name',$name); 
+         return $this->fetch();
+	 }
+
+	}
+	public function edit(){
+	 if(!request()->isPost()){ return error_json('非法请求');}
+	 $post['city_id'] = input('post.id');
+     $post['name'] = input('post.name');
+     $post['pid'] = input('post.pid'); 
+	 			$rule = [
+				    'name'  => 'require|max:8'
+				];
+
+				$msg = [
+				    'name.require' => '城市名称不能为空',
+				    'name.max'     => '城市名称最多不能超过8个字符',
+				];
+                
+				$result = $this->validate($post,$rule,$msg);
+                if($result) {
+                	return error_json($result);
+				}
+
+     model('city')->updateCity($post); 
+    return success_json('更新成功');
+
+	}
+	public function del(){
+       $param = request()->param();
+
+       $city_id = $param['city_id'];
+      if(model('city')->delCity($city_id)){
+        return success_json('删除成功');
+      }else{
+
+      	return error_json('删除失败');
+      }
+      
+	}
+
+}

@@ -1,0 +1,24 @@
+<div class="body">
+	<div class="read">
+		<div id="content">正在通过HadSky官网获取用户协议，请稍后...</div>
+	</div>
+</div>
+<div class="footer">
+	<button id="iagree" class="pk-btn pk-btn-success" onclick="location.href='index.php?step=2'">我同意</button>
+	<button class="pk-btn pk-btn-danger" onclick="window.close()">我不同意</button>
+</div>
+<script>
+	$(function() {
+		$("#iagree").prop('disabled', true);
+		$.getScript("//www.hadsky.com/index.php?c=app&a=zhanzhang:index3&s=getuseragreement&format=js", function(data) {
+			$("#content").html(UserAgreement.content);
+			$("#iagree").prop('disabled', false);
+		});
+		setTimeout(function() {
+			if($("#iagree").prop('disabled')) {
+				$("#content").html("协议获取失败，请<a target='_blank' href='http://www.hadsky.com/read-281-1.html'>访问官网</a>自行阅读。");
+				$("#iagree").prop('disabled', false);
+			}
+		}, 5000);
+	});
+</script>

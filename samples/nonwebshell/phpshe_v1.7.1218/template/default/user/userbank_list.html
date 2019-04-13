@@ -1,0 +1,31 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+			<a href="{$pe['host_root']}user.php?mod=userbank&act=add" class="fabu_btn">新增账户</a>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="200">账户类型</th>
+				<th>收款帐号</th>
+				<th width="200">收款人</th>
+				<th width="80">操作</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td>{$v['userbank_name']}</td>
+				<td>{$v['userbank_num']}</td>
+				<td>{$v['userbank_tname']}</td>
+				<td><a href="javascript:pe_confirm('删除该账户', 'user.php?mod=userbank&act=del&id={$v['userbank_id']}&token={$pe_token}')" class="tag_gray">删除</a></td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

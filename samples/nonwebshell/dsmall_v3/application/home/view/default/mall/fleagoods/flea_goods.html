@@ -1,0 +1,278 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<link href="{$Think.HOME_SITE_ROOT}/css/flea_info.css" rel="stylesheet" type="text/css">
+<!--放大镜BEGIN-->
+<script src="{$Think.BASE_SITE_ROOT}/static/home/default/store/styles/default/js/jquery.jqzoom.js"></script>
+<!--放大镜END-->
+<script charset="utf-8" type="text/javascript" src="{$Think.HOME_SITE_ROOT}/js/flea/goodsinfo.js"></script> 
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script> 
+<script>
+function collect_flea(fav_id){
+    if(!{$Think.session.member_id|default=0}){
+        layer.msg('{$Think.lang.goods_please_login_first}');return;
+    }
+    var url = '{$Think.HOME_SITE_URL}/memberflea/addfavorites';
+    $.getJSON(url, {'fav_id':fav_id}, function(data){
+        if (data.done)
+        {
+            layer.msg(data.msg);
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            layer.msg(data.msg);
+        }
+    });
+}
+function slideUp_fn()
+{
+    $('.ware_cen').slideUp('slow');
+}
+</script>
+<script type="text/javascript">
+function collect_goods(fav_id){
+    if(!{$Think.session.member_id|default=0}){
+        layer.msg({$Think.lang.goods_please_login_first});return;
+    }
+    var url = '{$Think.HOME_SITE_URL}/member/addfavorites';
+    $.getJSON(url, {'fav_id':fav_id}, function(data){
+        if (data.done)
+        {
+            layer.msg(data.msg);
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            layer.msg(data.msg);
+        }
+    });
+}
+
+$(document).ready(function(){
+
+    $('*[ds_type="dialog"]').click(function(){
+        var id = $(this).attr('dialog_id');
+        var title = $(this).attr('dialog_title') ? $(this).attr('dialog_title') : '';
+        var url = $(this).attr('uri');
+        var width = $(this).attr('dialog_width');
+        CUR_DIALOG = ajax_form(id, title, url, width,0);
+        return false;
+    });
+  $("#slider_high div").hover(
+  function () {
+    $(this).addClass("hightlight");
+  },
+  function () {
+    $(this).removeClass("hightlight");
+  }
+);
+});
+</script>
+
+<div class="content">
+  <div id="flea_info_slider">
+    <div id="slider" style="position:absolute; left:50px">
+        <ul id="slider_high">
+
+            {notempty name="goods_commend"}
+            {foreach name="goods_commend" item="comment_goods"}
+            <li class="sell_two">
+                <div class="pic fn-left {if $Request.param.goods_id == $comment_goods.goods_id} bor{/if}">
+                    <span class="thumb size76">
+                        <i></i>
+                        <a href="{$Think.HOME_SITE_URL}/fleagoods/index/?type=goods&goods_id={$comment_goods.goods_id}">
+                            <img height="76" width="76" onload="javascript:ResizeImage(this,76,76);" src="{:flea_thumb($comment_goods['goods_image'])}" title="{$comment_goods.goods_name}" />
+                        </a>
+                    </span>
+                </div>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+    </div>
+      <span id="prevBtn2"><a href="javascript:void(0);" class="fa fa-chevron-left"></a></span>
+      <span id="nextBtn2"><a href="javascript:void(0);" class="fa fa-chevron-right"></a></span>
+  </div>
+  <div class="flea_info_main">
+    <div class="content_780 fn-left" style="position: relative;" ds_type="jqzoom_relative">
+      
+      <div style=" float:left; width:302px;"> 
+      
+      <div class="ware_pic">
+          <div class="big_pic"><i><a href="javascript:void(0)">
+                      <span class="jqzoom">
+                          <div class="ico" style="display:none"></div>
+                          <img height="300" width="300" src="{if !isset($goods_image)}{:goods_thumb()}{else/}{$goods_image.thumb_small}{/if}"  onload="javascript:ResizeImage(this,300,300);" jqimg="{if !isset($goods_image)}{:goods_thumb()}{else/}{$goods_image.thumb_big}{/if}" />
+                          <div class='jqZoomPup'>&nbsp;</div>
+                      </span>
+                      <div class='zoomdiv' style='top:-9999em;'><img class='bigimg' src="{if !isset($goods_image)}{:goods_thumb()}{else/}{$goods_image.thumb_big}{/if}" /></div>
+                  </a></i>
+          </div>
+        <div class="bottom_btn">
+          <div class="ware_box">
+              <ul>
+                  {notempty name="desc_image"}
+                  {foreach name="desc_image" item="val" key="key" }
+                  <li {if $key == 0}class="ware_pic_hover"{/if} bigimg="{$val.thumb_big}">
+                      <span class="thumb size40"><i></i><img height="40" width="40" src="{$val.thumb_small}" onload="javascript:ResizeImage(this,40,40);" /></span>
+                  </li>
+                  {/foreach}
+                  {/notempty}
+              </ul>
+          </div>
+        </div>
+      </div>
+ 
+      </div>
+      <div class="ware_info">
+          <div id="property" class="fn-right">
+              <h1 class="ware_title">
+                  <strong class="fn-left">{$goods_title}</strong>
+              </h1>
+            <div class="flea_goods_right">{$Think.lang.goods_collection}<font color="red">{$goods.flea_collect_num}</font><span class="split">&nbsp;|&nbsp;</span>{$Think.lang.goods_page_views}<font color="red">{$goods.goods_click}</font></div>
+            <ul class="item_info">
+                <li class="price"><em class="flea_left_title">{$Think.lang.flea_transfer_price}</em><strong>{$goods.goods_store_price}</strong><em>{$Think.lang.flea_index_rmb}</em></li>
+                <li><em class="flea_left_title">{$Think.lang.flea_transfer_area}</em><a class="orange" href="{$Think.HOME_SITE_URL}/fleaclass/index/?area_input={$goods.fleaarea_id}">{$goods.fleaarea_name}</a></li>
+                <li class="rank_new">
+                    <em class="flea_left_title">{$Think.lang.flea_old_deep}</em>
+                    <span>{$goods.flea_quality}{$Think.lang.flea_as_new}</span>
+                    <span class="tb-tips">
+                        <s class="tb-tips-l"></s>
+                        {$Think.lang.flea_oldnew_choose}?
+                        <a class="ico3" style="text-decoration:none; cursor:pointer;" ds_type="dialog" dialog_id="friend_add" dialog_title="{$Think.lang.flea_oldnew_choose}" uri="{$Think.HOME_SITE_URL}/fleaclass/quality_inner" dialog_width="400">
+                            {$Think.lang.flea_look_fineness_division}
+                        </a>
+                    </span>          </li>
+                <li><em class="flea_left_title">{$Think.lang.goods_sellers}</em><a href="{$Think.HOME_SITE_URL}/Membermessage/sendmsg/?member_id={$flea_member_info.member_id}" target=_blank>{$flea_member_info.member_name}</a></li>
+                <li><em class="flea_left_title">{$Think.lang.goods_posted_on}</em><?php echo \app\home\controller\fleagoods::checkTime($goods['goods_addtime']) ;?>{$Think.lang.flea_index_front}</li>
+                <li>
+                    {notempty name='goods.goods_tag'}
+                    {foreach $goods.goods_tag as $val}
+                    {notempty name='val'}<a class="flea_keywords" href="{$Think.HOME_SITE_URL}/fleaclass/index/?key_input={:urlencode($val)}" target="_blank">{$val}</a>{/notempty}
+                    {/foreach}
+                    {/notempty}
+                </li>
+            </ul>
+            <div id="contact" class="grey-box">
+                <div class="bd">
+                    <ul class="fn-clear">
+                        <li>{$Think.lang.flea_contact_person}: {$goods.flea_pname}</li>
+                        <li>{$Think.lang.flea_contact_tel}: <img style="vertical-align: text-bottom;" src="{$Think.HOME_SITE_URL}/Pnum/index?pnum={$goods.flea_pphone}"></li>
+                    </ul>
+                    <p style="color:#a2a2a2">{$Think.lang.flea_explain_before_buy1}{$Think.lang.flea_explain_before_buy2}</p>
+                </div>
+            </div>
+            <div class="share">
+          <!-- Baidu Button BEGIN -->
+          <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"> <span class="bds_more flea_btn" style="background:#f42424 !important">{$Think.lang.flea_share}</span>  </div>
+          <script type="text/javascript" id="bdshare_js" data="type=tools" ></script> 
+          <script type="text/javascript" id="bdshell_js"></script> 
+          <script type="text/javascript">
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script> 
+          <!-- Baidu Button END --> 
+   <span><a href="#" class="flea_btn" onclick="javascrit:collect_flea({$goods.goods_id});return false;">{$Think.lang.flea_goods_collect_goods}</a></span>    </div>  
+      </div>
+      </div>
+    </div>   
+      <div class="content_208 fn-right">
+          <div class="col-sub">
+              <a href="{$Think.HOME_SITE_URL}/Memberflea/add_goods">{$Think.lang.goods_transfer_unused_goods}</a>
+          </div>
+          <div id="seller_info" class="flea_gray mb10">
+              <h2 class="title">{$Think.lang.flea_other_info}</h2>
+              <div class="flea_wrap-inside">
+                  {notempty name="goods_commend3"}
+                  {foreach name="goods_commend3" item="val"}
+                  <div class="flea_goods clearfix">
+                      <div class="pic">
+                          <span class="thumb size60">
+                              <i></i>
+                              <a title="{$val.goods_name}" href="{$Think.HOME_SITE_URL}/fleagoods/index/?type=goods&goods_id={$val.goods_id}"><img height="60" width="60" src="{:flea_thumb($val['goods_image'])}" onload="javascript:ResizeImage(this,60,60);"></a>
+                          </span>
+                      </div>
+                      <dl>
+                          <dt><a href="{$Think.HOME_SITE_URL}/fleagoods/index/?type=goods&goods_id={$val.goods_id}">{$val.goods_name}</a></dt>
+                          <dd>{$Think.lang.currency}<a href="{$Think.HOME_SITE_URL}/fleagoods/index/?type=goods&goods_id={$val.goods_id}">{$val.goods_store_price}</a></dd>
+                      </dl>
+                  </div>
+                  {/foreach}
+                  {/notempty}
+              </div>
+          </div>
+      </div>
+    <div id="Tab1">
+<div class="Menubox">
+<ul>
+<li id="one1" onclick="setTab('one',1,2)" class="hover">{$Think.lang.flea_goods_info}</li>
+<li id="one2" onclick="setTab('one',2,2)">{$Think.lang.flea_buyer_msg}</li>
+</ul>
+</div>
+<div class="Contentbox">
+<div id="con_one_1" class="hover">
+<div>{$goods.goods_body|htmlspecialchars_decode}</div>
+
+</div>
+<div id="con_one_2" style="display:none">
+  <div id="comments-content">
+     <div class="comment-edit">
+     <form method="post" id="save_consult_form2" action='{:url("Fleagoods/save_consult")}'>
+     <input type="hidden" name="goods_id" value="{$Request.param.goods_id}">
+     <input type="hidden" name="member_id" value="{$Think.session.member_id}">
+     <input type="hidden" name="email" value="{$Think.session.member_email}">
+     <input type="hidden" value="" name="type_name">
+       <div class="comment-user"><img src="{:get_member_avatar($Think.session.avatar)}"></div>
+       <div class="comment-add"><textarea name="content" type="text"></textarea></div>
+       <div class="comment-act"><input type="submit" class="btn" value="{$Think.lang.flea_index_commit}"></div>
+       </form>
+         <script type="text/javascript">
+             $(document).ready(function(){
+                 $('#save_consult_form2').validate({
+                     submitHandler:function(form){
+                         ds_ajaxpost('save_consult_form2');
+                     }
+                 });
+             });
+         </script>
+     </div> 
+      <ul class="comment-list">
+          {notempty name="consult_list"}
+          {foreach name="consult_list" item="val"}
+          <li>
+              <div class="comment-user"><img src="{:get_member_avatar($Think.session.avatar)}"></div>
+              <p class="words"><span>{$val.fleaconsult_content}</span></p>
+              <p class="time"><span class="user_name">{$val.member_name}</span>{$Think.lang.goods_message}<?php echo \app\home\controller\fleagoods::checkTime($val['fleaconsult_addtime']) ;?>{$Think.lang.flea_index_front}</p>
+          </li>
+          {/foreach}
+          {/notempty}
+      </ul>
+  </div>
+</div>
+
+
+    
+</div>
+</div>
+    <div class="fn-clear"></div>
+
+</div>
+
+
+<script type="text/javascript">
+function setTab(name,cursel,n){
+for(i=1;i<=n;i++){
+var menu=document.getElementById(name+i);
+var con=document.getElementById("con_"+name+"_"+i);
+menu.className=i==cursel?"hover":"";
+con.style.display=i==cursel?"block":"none";
+}
+}
+</script>
+<script type="text/javascript">
+		$(function(){	
+			jQuery("#flea_info_slider").slide({prevCell:"#prevBtn2",nextCell:"#nextBtn2",mainCell:"#slider_high",autoPage:true,effect:"left",vis:11});
+		});	
+</script>
+
+{/block}

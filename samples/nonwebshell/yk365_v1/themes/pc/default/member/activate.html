@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="<{$site_keywords}>">
+<meta name="description" content="<{$site_description}>">
+
+<script type="text/javascript">var sitepath = '<{$site_root}>'; var rewrite = '<{$cfg.is_enabled_rewrite}>';</script>
+
+<script type="text/javascript" src="<{$site_root}>public/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/layui/layui.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/js/common.js"></script>
+<link href="<{$site_root}>public/layui/css/layui.css" rel="stylesheet" type="text/css" />
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/login.css" rel="stylesheet" type="text/css" />
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/member.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="header">
+    	       <a href="<{$site_root}>">
+                    <img src="/public/images/logo.png">
+                </a>
+    </div>
+	<div class="tipbox">
+      	<h2>恭喜，您已正式成为<{$site_name}>会员！</h2>
+        <p><{$message}></p>
+    </div>
+    <div class="footer">
+    	<{$site_copyright}>
+    </div>
+</div>
+</body>
+</html>

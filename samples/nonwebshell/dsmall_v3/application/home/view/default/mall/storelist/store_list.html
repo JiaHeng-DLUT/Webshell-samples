@@ -1,0 +1,246 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+
+
+
+<script>
+var PURL = '{$purl}';
+
+$(document).ready(function(){
+    $('#area_info').ds_region();
+});
+</script>
+
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/store_list.css">
+
+<style type="text/css">
+.ds-carousel-skin .ds-carousel-clip-horizontal { width: 1000px !important; height: 225px !important;}
+.ds-carousel-skin .ds-carousel-item { height: 225px !important;}
+.ds-carousel-skin .ds-carousel-container-horizontal { width: 1000px !important;}
+</style>
+
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/Jquery.query.js" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+/* 替换参数 */
+function ss_replaceParam(key, value)
+{
+    location.assign($.query.set('key', key).set('order', value));
+}
+
+/* 替换参数 */
+function ss_dropParam(key1, key2)
+{
+	location.assign($.query.REMOVE(key1).REMOVE(key2));
+}
+
+/* 替换参数 */
+function ss_dropParam2(key1)
+{
+	location.assign($.query.REMOVE(key1));
+}
+
+/* 替换参数 */
+function ss_replaceParam2(key, value)
+{
+    location.assign($.query.set(key, value, value));
+}
+
+$(function (){
+    var order = '{$Request.param.order}';
+    var arrow = '';
+    var class_val = 'sort_desc';
+
+    switch (order){
+        case 'store_credit desc' : order = 'store_credit asc';  class_val = 'sort_desc'; break;
+        case 'store_credit asc'  : order = 'store_credit desc'; class_val = 'sort_asc' ; break;
+        default : order = 'store_credit asc';
+    }
+    $('#credit_grade').addClass(class_val);
+    $('#credit_grade').click(function(){query('order', order);return false;});
+}
+);
+
+function query(name, value){
+    $("input[name='"+name+"']").val(value);
+    $('#searchStore').submit();
+}
+
+//]]>
+</script>
+
+<div class="w1200">
+{notempty name='class_list'}    
+    <div class="cate_attr clearfix">
+        <div class="nav-tag">
+            <h5 class="filter-label-ab">{$Think.lang.classification}</h5>
+            <div class="cate_attr_con">
+                <div class="filter-all-ab">
+                    <a class="{empty name='Request.param.cate_id'}selected{/empty}" href="{:url('Storelist/index')}"><span>{$Think.lang.ds_all}</span></a>
+                </div>
+                <div class="district-tab">
+                    {foreach $class_list as $v}
+                    <a href="{:url('Storelist/index',['cate_id'=>$v.storeclass_id])}" class="{eq name='Request.param.cate_id' value='$v.storeclass_id'}selected{/eq}"><span>{$v.storeclass_name}</span></a>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+{/notempty}
+<div>
+  <div class="shop_con_list" id="main-nav-holder">
+    <nav class="ds-gl-sort-bar" id="main-nav">
+      <form id="store_list" method="GET" action="{:url('Storelist/index')}">
+        <input type="hidden" name="order" value="{$Request.param.order}"/>
+        <input type="hidden" name="cate_id" value="{$Request.param.cate_id}"/>
+        <div class="sort-bar"><!-- 排序方式S -->
+            <ul class="array">
+                <!-- 默认 -->
+                <li {if condition="$Request.param.key eq ''"}class="selected"{/if}><a href="javascript:void(0)" class="nobg" onclick="javascript:ss_dropParam('key','order');" title="{$Think.lang.goods_class_index_default_sort}">{$Think.lang.store_class_index_default}</a></li>
+                <!-- 销量 -->
+                <li {if condition="$Request.param.key eq 'store_sales'"}class="selected"{/if}><a href="javascript:void(0)" {if condition="$Request.param.key eq 'store_sales'"}{$Request.param.order}{/if} onclick="javascript:ss_replaceParam('store_sales','{if $Request.param.order=='desc' && $Request.param.key=='store_sales'}asc{else/}desc{/if}');" >{$Think.lang.store_class_index_sold}</a></li>
+                <!-- 信用 -->
+                <li {if condition="$Request.param.key eq 'store_credit'"}class="selected"{/if}><a href="javascript:void(0)" {if condition="$Request.param.key eq 'store_credit'"}{$Request.param.order}{/if} onclick="javascript:ss_replaceParam('store_credit','{if $Request.param.order=='desc' && $Request.param.key=='store_credit'}asc{else/}desc{/if}');" >{$Think.lang.store_class_index_credit}</a></li>
+            </ul>
+            <!-- 排序方式E -->
+            {if !config('fullindexer.open')}
+            <div class="sidebox">
+                <h5 class="title">{$Think.lang.member_map_store_name}{$Think.lang.ds_colon}</h5>
+                <div class="selectbox">
+                    <input class="text" type="text" name="keyword" value="{$Request.param.keyword}" style=" width:150px;"/>
+                </div>
+            </div>
+            <div class="sidebox">
+                <h5><label for="area_info">{$Think.lang.store_store_location}{$Think.lang.ds_colon}</label></h5>
+                <div class="selectbox">
+                    <input id="area_info" name="area_info" type="hidden" value=""/>
+                </div>
+            </div>
+            <div class="sidebox width5" style=" background-image: none">
+                <div class="selectbox">
+                    <input class="btn" type="submit" value="{$Think.lang.ds_search}" />
+                </div>
+            </div>
+            {/if}
+        </div>
+      </form>
+    </nav>
+  </div>
+</div>
+
+{notempty name='store_list'}  
+<div class="shop-list-wall">
+    {foreach name="store_list" item="store" key="skey"}
+    <div class="shop">
+        <div class="shop-info">
+            <div class="shop-tit">
+                <a href="{:url('Store/index',['store_id'=>$store.store_id])}" target="_blank">
+                    <img src="{:get_store_logo($store.store_avatar)}" class="shop-logo">
+                </a>
+                <div class="detail">
+                    <a href="{:url('Store/index',['store_id'=>$store.store_id])}" target="_blank">
+                        <p class="shop-name">{$store.store_name}</p>
+                    </a>
+
+                    <p class="shop-rank">
+                        {empty name='store.store_credit_average'}
+                        {$Think.lang.ds_common_credit_null}
+                        {else/}
+                        {for start="0" end="$store.store_credit_average"}
+                        <span class='fa fa-heart'></span>
+                        {/for}
+                        {/empty}
+                    </p>
+
+                    <p class="shop-extend">
+                        <label>{$Think.lang.store_seller}：</label>
+                    </p><div class="extend-right">
+                        <a target="_blank" href="{:url('Membermessage/sendmsg',['member_id'=>$store.member_id])}">
+                            <span class="btn-link">{$store.member_name}</span>
+                        </a>
+                        {notempty name='store.store_ww'}
+                        <span class="ww-light">
+                            <a target="_blank" href="http://amos.alicdn.com/getcid.aw?v=2&amp;uid={$store.store_ww}&amp;site=cntaobao&amp;s=2&amp;groupid=0&amp;charset=utf-8">
+                                <img border="0" src="http://amos.alicdn.com/online.aw?v=2&amp;uid={$store.store_ww}&amp;site=cntaobao&amp;s=2&amp;charset=utf-8">
+                                <span></span>
+                            </a>
+                        </span>
+                        {/notempty}
+                        {notempty name='store.store_qq'}
+                        <span class="ww-light">
+                            <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$store.store_qq}&site=qq&menu=yes">
+                                <img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$store.store_qq}:52">
+                                <span></span>
+                            </a>
+                        </span>
+                        {/notempty}
+                    </div>
+                    <p></p>
+                    <p class="like">
+                        <span>{$Think.lang.store_close_order}：<span class="num">{present name="store.num_sales_jq"}{$store.num_sales_jq}{else/}0{/present}</span></span>
+                        <span>{$Think.lang.ds_goods_num_one}<span class="num">{present name="store.goods_count"}{$store.goods_count}{else/}0{/present}</span>{$Think.lang.store_piece}</span>
+                    </p>
+                    <div class="evaluate">
+                        <label>{$Think.lang.store_class_index_praise_rate}：</label>
+                        <span>{present name="store.store_credit_percent"}{$store.store_credit_percent}%{else/}{$Think.lang.ds_common_rate_null}{/present}</span>
+                        <div class="item-icons">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="assess">
+                {foreach name="store.store_credit" item="value"}
+                <li>
+                    <p class="assess-name">{$value.text}</p>
+                    <p class="assess-score ">
+                        <span class="average">{$value.credit}</span>
+                    </p>
+                </li>
+                {/foreach}
+            </ul>
+
+        </div>
+        <ul class="goods-wall">
+            {notempty name='store.search_list_goods'}
+            {foreach name="store.search_list_goods" item="v" key='k'}
+            <li>
+                <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank" title="{$v.goods_name}">
+                    <img class="lazyload goods-pic" data-original="{:goods_thumb($v,'240')}">
+                    <div class="mask">
+                        <span class="price">¥{$v.goods_price}</span>
+                        <span class="sell">{$Think.lang.store_class_index_sold}{$v.goods_salenum}</span>
+                    </div>
+                </a>
+            </li>
+            {/foreach}
+            {/notempty}
+
+        </ul>
+    </div>
+    {/foreach}
+</div>
+{else/}
+<div class="no_results">{$Think.lang.store_class_index_no_record}</div>
+{/notempty}
+
+<div class="pagination">{$show_page} </div>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript">
+$(function(){
+    jQuery('.shop-list-wall .shop').slide({mainCell:".goods-wall",autoPlay:true,effect:"leftMarquee",vis:4,interTime:50,trigger:"click"});
+
+});
+</script>
+
+
+
+
+
+
+{/block}
+
+
+

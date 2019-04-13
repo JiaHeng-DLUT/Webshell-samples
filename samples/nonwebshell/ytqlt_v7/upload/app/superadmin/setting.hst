@@ -1,0 +1,27 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">超级后台管理 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">后台密码</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_superadmin_password" placeholder="留空为不设置，任意字符，任意长度，中英文都行" value="{$_G['SET']['APP_SUPERADMIN_PASSWORD']}" autocomplete="off">
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">超级管理员ID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="app_superadmin_adminuids" placeholder="填写可以进入超级后台的用户uid" value="{$_G['SET']['APP_SUPERADMIN_ADMINUIDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+		</div>
+	</div>
+</form>

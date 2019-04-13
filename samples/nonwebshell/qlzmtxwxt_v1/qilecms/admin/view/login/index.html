@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>后台管理中心登陆</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {include file="public/css"}
+</head>
+<body class="login-bg">
+
+<div class="login-main">
+<div class="login-title">后台管理中心</div>
+	<form class="layui-form layui-form-pane" action="">
+	  <div class="layui-form-item">
+			<label class="layui-form-label"><i class="fa fa-user" aria-hidden="true"></i>  </label>
+			<div class="layui-input-block">
+			  <input type="text" name="username"  lay-verify="username" placeholder="用户名" autocomplete="off" class="layui-input">
+        <span></span>
+			</div>
+		  </div>
+		  
+		  
+	  <div class="layui-form-item">
+		<label class="layui-form-label"><i class="fa fa-lock" aria-hidden="true"></i></label>
+		<div class="layui-input-block">
+		  <input type="password" name="password"  lay-verify="password" placeholder="密码" autocomplete="off" class="layui-input">
+		</div>
+	  </div>
+	    <div class="layui-form-item">
+  
+
+	  <div class="layui-form-item">
+  		<div class="layui-input-inline" style="width:180px;float:left">
+  		  <input type="text" name="verify_code" placeholder="验证码" autocomplete="off" class="layui-input">
+  		</div>
+    <div class="layui-input-inline" style="width:100px;float:left"><img src="{:captcha_src()}"   alt="captcha" style="height:40px;" onclick="this.src='{:captcha_src()}?'+Math.random()" id="captcha"/></div>
+	  </div>
+
+		  <button class="layui-btn layui-btn-normal" style="width:100%" lay-submit lay-filter="formLogin" id="login">登&nbsp;&nbsp;陆</button>
+	
+	  </div>
+       <div class="login-copyright">Powered By <a href="http://www.qilecms.com" target="_blank">QileCms</a></div>
+	  </form>
+	  
+	  
+</div>
+<!-- 引入js-->
+{include file="public/js"}
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+
+  form.verify({
+  username: function(value, item){ //value：表单的值、item：表单的DOM对象
+     if(value.length == 0 ){
+
+       return '用户名不能为空';
+
+    }
+    if(!/^[[a-zA-Z0-9_\u4e00-\u9fa5]{3,15}$/.test(value)){
+      return '请输入正确的格式用户名';
+    }
+
+  }
+
+  ,password:function(value, item){
+     if(value.length < 6){
+      return '密码太短，不得少于 6 个字符';
+    }
+    //  if(!/^[a-z]{1,}$/.test(value)){
+    //   return '密码太弱，密码中必须包含小写字母';
+    // }
+
+  }
+}); 
+
+  //监听提交
+  form.on('submit(formLogin)', function(data){
+  	var login =document.getElementById("login");
+  	   login.innerHTML="登录中..";
+  	   login.disabled =true;
+  	   login.className="layui-btn layui-btn-disabled";
+	 $.post("{:url('login/check')}",$("form").serialize(), function(data){
+	      if(data.code == 0){
+		    location.href="{:url('index/index')}";
+		  }else{
+        
+		        layer.msg(data.msg);
+             login.innerHTML="登&nbsp;&nbsp;陆";
+			  	   login.disabled =false;
+			  	   login.className="layui-btn layui-btn-normal";
+         var captcha =document.getElementById("captcha");
+             captcha.src='{:captcha_src()}?'+Math.random();
+		  }
+		});
+    return false;
+  }); 
+});
+</script>
+  
+</body>
+
+</html>

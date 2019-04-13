@@ -1,0 +1,177 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>运单模板</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form id="add_form" method="post" action="{:url('Waybill/waybill_save')}" enctype="multipart/form-data">
+        <input type="hidden" name="waybill_id" value="{$waybill_info.waybill_id|default=''}">
+        <input type="hidden" name="old_waybill_image" value="{$waybill_info.waybill_image|default=''}">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_name">模板名称{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_name|default=''}" name="waybill_name" id="waybill_name" class="txt"></td>
+                    <td class="vatop tips">运单模板名称，最多10个字</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required">
+                        <label class="validation" for="waybill_name">物流公司{$Think.lang.ds_colon}</label>
+                    </td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        <select name="waybill_express">
+                            {notempty name="express_list"}
+                            {foreach name="express_list" item="value"}
+                            <option value="{$value.express_id}|{$value.express_name}" {present name="value.selected" }selected{present}>
+                                {$value.express_name}
+                            </option>
+                            {/foreach}
+                            {/notempty}
+                        </select>
+                    </td>
+                    <td class="vatop tips">模板对应的物流公司</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_width">宽度{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_width|default=''}" name="waybill_width" id="waybill_width" class="txt"></td>
+                    <td class="vatop tips">运单宽度，单位为毫米(mm)</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_height">高度{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_height|default=''}" name="waybill_height" id="waybill_height" class="txt"></td>
+                    <td class="vatop tips">运单高度，单位为毫米(mm)</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_top">上偏移量{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_top|default='0'}" name="waybill_top" id="waybill_top" class="txt"></td>
+                    <td class="vatop tips">运单模板上偏移量，单位为毫米(mm)</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_left">左偏移量{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_left|default='0'}" name="waybill_left" id="waybill_left" class="txt"></td>
+                    <td class="vatop tips">运单模板左偏移量，单位为毫米(mm)</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_image">模板图片{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        {notempty name="waybill_info.waybill_image_url"}
+                        <span class="type-file-show">
+                            <img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                            <div class="type-file-preview"><img width="500" src="{$waybill_info.waybill_image_url}"></div>
+                        </span>
+                        {/notempty}
+                        <span class="type-file-box">
+                            <input type='text' name='waybill_image_name' id='waybill_image_name' class='type-file-text'/>
+                            <input type='button' name='button' id='button1' value='' class='type-file-button'/>
+                            <input name="waybill_image" type="file" class="type-file-file" id="waybill_image" size="30" hidefocus="true" ds_type="change_seller_center_logo">
+                        </span>
+                    </td>
+                    <td class="vatop tips">请上传扫描好的运单图片，图片尺寸必须与快递单实际尺寸相符</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_image">启用{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        <input id="waybill_usable_1" type="radio" name="waybill_usable" value="1" {if condition="isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable eq '1'"}checked{/if}>
+                        <label for="waybill_usable_1">是</label>
+                        <input id="waybill_usable_0" type="radio" name="waybill_usable" value="0" {if condition="isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable neq '1'"}checked{/if}>
+                        <label for="waybill_usable_0">否</label>
+                    </td>
+                    <td class="vatop tips">请首先设计并测试模板然后再启用，启用后商家可以使用</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <a id="submit" href="javascript:void(0)" class="btn"><span>{$Think.lang.ds_submit}</span></a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#waybill_image").change(function(){
+            $("#waybill_image_name").val($(this).val());
+        });
+
+        $("#submit").click(function(){
+            $("#add_form").submit();
+        });
+    });
+    $('#add_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parents('tr').prev().find('td:first'));
+        },
+        rules : {
+            waybill_name: {
+                required : true,
+                maxlength : 10
+            },
+            waybill_width: {
+                required : true,
+                digits: true
+            },
+            waybill_height: {
+                required : true,
+                digits: true
+            },
+            waybill_top: {
+                required : true,
+                number: true
+            },
+            waybill_left: {
+                required : true,
+                number: true
+            }
+        },
+        messages : {
+            waybill_name: {
+                required : "模板名称不能为空",
+                maxlength : "模板名称最多10个字"
+            },
+            waybill_width: {
+                required : "宽度不能为空",
+                digits: "宽度必须为数字"
+            },
+            waybill_height: {
+                required : "高度不能为空",
+                digits: "高度必须为数字"
+            },
+            waybill_top: {
+                required : "上偏移量不能为空",
+                number: "上偏移量必须为数字"
+            },
+            waybill_left: {
+                required : "左偏移量不能为空",
+                number: "左偏移量必须为数字"
+            }
+        }
+    });
+</script>

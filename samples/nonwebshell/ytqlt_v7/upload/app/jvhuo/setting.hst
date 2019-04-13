@@ -1,0 +1,69 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin&s=save&table=set">
+	<div class="_setpagetitle">
+		<span>商城设置</span>
+	</div>
+
+	<input type="hidden" name="app_jvhuo_load" value="1" />
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">APIURL</label>
+		<div class="pk-w-sm-8">
+			<input id="apiurl" class="pk-textbox" type="text" value="" readonly>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">APIUID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_jvhuo_apiuid" placeholder="商城个人中心 - API设置中" value="{htmlspecialchars($_G['SET']['APP_JVHUO_APIUID'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">APICODE</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_jvhuo_apicode" placeholder="商城个人中心 - API设置中" value="{htmlspecialchars($_G['SET']['APP_JVHUO_APICODE'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">发帖账号UID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="app_jvhuo_postuids" placeholder="输入UID即可，随机在里面抽取一个" value="{htmlspecialchars($_G['SET']['APP_JVHUO_POSTUIDS'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">发帖至版块ID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_jvhuo_postbkid" placeholder="输入版块ID即可，只能填一个" value="{htmlspecialchars($_G['SET']['APP_JVHUO_POSTBKID'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">发帖默认标签</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="app_jvhuo_postlabel" placeholder="输入标签即可" value="{htmlspecialchars($_G['SET']['APP_JVHUO_POSTLABEL'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">发帖模板</label>
+		<div class="pk-w-sm-8">
+			<button type="button" class="pk-btn pk-btn-success" onclick="window.open('index.php?c=app&a=filesmanager&type=edit&path={urlencode(realpath($_G[SYSTEM][PATH].'/app/jvhuo/template/postread-template1.hst'))}#workarea','_blank')">在线编辑</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+			<a target="_blank" class="pk-btn pk-btn-danger" href="http://www.jvhuo.com">商城首页</a>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		$('#apiurl').val(location.protocol + '//' + location.host + location.pathname + '?c=app&a=jvhuo:api');
+	});
+</script>

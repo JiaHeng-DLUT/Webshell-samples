@@ -1,0 +1,9 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class AdminGroup extends Common
+{
+	public function index(){
+		return $this->fetch();
+	}
+}

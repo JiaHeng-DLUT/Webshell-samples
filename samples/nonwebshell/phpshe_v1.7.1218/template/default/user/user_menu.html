@@ -1,0 +1,33 @@
+<div class="huiyuan_left">
+	<a href="user.php"><h3 class="hy_tb6"><s></s>个人中心</h3></a>
+	<h3 class="hy_tb2"><s></s>交易管理</h3>
+	<ul>
+		<li><a href="user.php?mod=order" <!--{if($menumark=='order'):}-->class="sel"<!--{endif;}-->>我的订单</a></li>
+		<li><a href="user.php?mod=comment" <!--{if($menumark=='comment'):}-->class="sel"<!--{endif;}-->>我的评价</a></li>
+		<li><a href="user.php?mod=collect" <!--{if($menumark=='collect'):}-->class="sel"<!--{endif;}-->>我的收藏</a></li>
+		<li><a href="user.php?mod=refund" <!--{if($menumark=='refund'):}-->class="sel"<!--{endif;}-->>退款/退货</a></li>
+	</ul>
+	<div class="xuxian"></div>
+	<h3 class="hy_tb4"><s></s>财务中心</h3>
+	<ul>
+		<li><a href="user.php?mod=moneylog" <!--{if($menumark=='moneylog'):}-->class="sel"<!--{endif;}-->>资金明细</a></li>
+		<li><a href="user.php?mod=pointlog" <!--{if($menumark=='pointlog'):}-->class="sel"<!--{endif;}-->>积分明细</a></li>
+		<li><a href="user.php?mod=pay" <!--{if(in_array($mod, array('pay', 'cashout'))):}-->class="sel"<!--{endif;}-->>充值/提现</a></li>
+	</ul>
+	<div class="xuxian"></div>
+	<h3 class="hy_tb3"><s></s>用户设置</h3>
+	<ul>
+		<li><a href="user.php?mod=setting&act=base" <!--{if($menumark=='setting_base'):}-->class="sel"<!--{endif;}-->>个人信息</a></li>
+		<li><a href="user.php?mod=setting&act=pw" <!--{if($menumark=='setting_pw'):}-->class="sel"<!--{endif;}-->>修改密码</a></li>
+		<li><a href="user.php?mod=userbank" <!--{if($menumark=='userbank'):}-->class="sel"<!--{endif;}-->>收款账户</a></li>
+		<li><a href="user.php?mod=useraddr" <!--{if($menumark=='useraddr'):}-->class="sel"<!--{endif;}-->>收货地址</a></li>
+	</ul>
+	<!--{if($cache_setting['tg_state']):}-->
+	<div class="xuxian"></div>
+	<h3 class="hy_tb5"><s></s>分销中心</h3>
+	<ul>
+		<li><a href="user.php?mod=tg" <!--{if($menumark=='tg_index'):}-->class="sel"<!--{endif;}-->>邀请好友</a></li>
+		<li style="padding-bottom:20px"><a href="user.php?mod=tg&act=list" <!--{if($menumark=='tg_list'):}-->class="sel"<!--{endif;}-->>我的收益</a></li>
+	</ul>
+	<!--{endif;}-->
+</div>

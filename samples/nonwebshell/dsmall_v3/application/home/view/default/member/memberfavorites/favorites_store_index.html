@@ -1,0 +1,80 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+
+<table class="dsm-default-table">
+            <thead>
+            <tr>
+                <th class="w30"></th>
+                <th colspan="2">{$Think.lang.favorite_store_name}</th>
+                <th class="w150">{$Think.lang.favorite_home}</th>
+                <th class="w150">{$Think.lang.favorite_date}</th>
+                <th class="w100">{$Think.lang.favorite_popularity}</th>
+                <th class="w110">{$Think.lang.favorite_handle}</th>
+            </tr>
+            {notempty name="favorites_list"}
+            <tr>
+                <td colspan="20">
+                    <input type="checkbox" id="all" class="checkall"/>
+                    <label for="all">{$Think.lang.ds_select_all}</label>
+                    <a href="javascript:void(0);" class="dsm-btn-mini" uri="{:url('Memberfavorites/delfavorites',['type'=>'store'])}" name="fav_id" confirm="{$Think.lang.ds_ensure_del}" ds_type="batchbutton"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a></td>
+            </tr>
+            {/notempty}
+            </thead>
+            {notempty name="favorites_list"}
+            <tbody>
+            {foreach name="favorites_list" item="favorites"}
+            <tr class="bd-line">
+                <td class="tc"><input type="checkbox" class="checkitem" value="{$favorites.fav_id}"/></td>
+                <td class="w70"><div class="dsm-goods-thumb"><a href="{:url('Store/index',['store_id'=>$favorites.store.store_id])}" ><img src="{:get_store_logo($favorites.store.store_avatar)}" /></a></div></td>
+                <td class="tl"><dl class="goods-name">
+                    <dt><a href="{:url('Store/index', ['store_id'=>$favorites.store.store_id])}" >{$favorites.store.store_name}</a> </dt>
+                    <dd>{$Think.lang.favorite_message}{$Think.lang.ds_colon}<span member_id="{$favorites.store.member_id}"></span>
+                        {notempty name="favorites.store.store_qq"}
+                        <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$favorites.store.store_qq}&site=qq&menu=yes" title="QQ: {$favorites.store.store_qq}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$favorites.store.store_qq}:52" style=" vertical-align: middle;"/></a>
+                        {/notempty}
+                        {notempty name="favorites.store.store_ww"}
+                        <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$favorites.store.store_ww}&site=cntaobao&s=2" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$favorites.store.store_ww}&site=cntaobao&s=2" alt="Wang Wang"  style=" vertical-align: middle;"/></a>
+                        {/notempty}
+                    </dd>
+                </dl></td>
+                <td>{$favorites.store.area_info}</td>
+                <td class="goods-time">{:date("Y-m-d",$favorites.fav_time)}</td>
+                <td>{$favorites.store.store_collect}</td>
+                <td class="dsm-table-handle"><span><a href="javascript:void(0)" class="btn-red" onclick="ds_ajaxget_confirm('{:url('Memberfavorites/delfavorites',['fav_id'=>$favorites.fav_id,'type'=>'store'])}','{$Think.lang.ds_ensure_del}');"><i class="fa fa-trash-o"></i>
+          <p>{$Think.lang.ds_del}</p>
+          </a></span></td>
+            </tr>
+            <tr id="store-goods-{$favorites.store.store_id}" class="shop-new-goods" style="display:none;">
+                <td colspan="20" style=" padding-top: 0;" ><div class="fr pr">
+                    <div class="arrow"></div>
+                    <ul class="ds-carousel-skin">
+                    </ul>
+                </div></td>
+            </tr>
+            {/foreach}
+            </tbody>
+          {else /}
+            <tbody>
+            <tr>
+                <td colspan="20" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+            </tr>
+            </tbody>
+            {/notempty}
+            {notempty name="favorites_list"}
+            <tfoot>
+            <tr>
+                <th colspan="20"><input type="checkbox" id="all2" class="checkall"/>
+                    <label for="all2">{$Think.lang.ds_select_all}</label>
+                    <a href="javascript:void(0);" class="dsm-btn-mini" uri="{:url('Memberfavorites/delfavorites',['type'=>'store'])}" name="fav_id" confirm="{$Think.lang.ds_ensure_del}" ds_type="batchbutton"><i class="fa fa-trash-o"></i>{$Think.lang.ds_del}</a> </th>
+            </tr>
+            <tr>
+                <td colspan="20"><div class="pagination">{$show_page}</div></td>
+            </tr>
+            </tfoot>
+            {/notempty}
+        </table>
+{/block}
+

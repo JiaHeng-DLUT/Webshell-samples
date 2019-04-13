@@ -1,0 +1,129 @@
+﻿<script type="text/javascript">
+var ks = 4,
+	columnshow=1,
+	classnow='10001',
+	lang='cn',
+	fliptext1='查看更多',
+	fliptext2='加载中...'
+	,Empty='不能为空'
+	,member_err1='两次密码输入不一致'
+	,member_err2='密码应大于等于6位！'
+	,member_err3=''
+	,member_err4='用户名不能小于3位'
+	,falsh_y='350'
+	,promaximgY='300'
+	,imgmaximgY='300'
+	,show1narrow='true'
+	,foot_oks='1'
+
+	;
+</script>
+<style type="text/css">
+body{ font-size:14px!important;}
+.flexslider li img{ height:350px;}
+.showproduct_slides img{ height:300px!important;}
+.showimg_slides img{ height:300px!important;}
+.dl-jqrun1 dt img,.dl-jqrun1 dt{ max-width:px;}
+.dl-jqrun2 dt img,.dl-jqrun2 dt{ max-width:px;}
+</style>
+</head>
+<body>
+	<div class="metcont">
+
+    <header data-value=0>
+	
+	
+		<div class="top">
+			<div class="top-logo">
+				<a href="{@SL_安装目录}wap_index.asp"><img src="{@SL_安装目录}{@SL_手机版logo}" alt="{@SL_网站标题}" title="{@SL_网站标题}" /></a>
+			</div>
+			<ul class="top-right">
+
+				</li>
+
+
+			</ul>
+		</div>
+
+<!--搜索框-->
+<div class="seachbox none topmorebox">
+	<div class="seachbox_box">
+			<i></i>
+			<form method="post" action="{@SL_安装目录}search.asp?action=search">
+                <input type="text" name="keyword" class="text" placeholder="请输入关键词" />
+                <input type="submit" name="Submit" value="立即搜索" class="submit" />
+            </form>
+	</div>
+</div>
+
+
+
+<!--导航方式1-->
+		<nav class="type1" id="nav">
+			<ul class="list-none">
+			{$getmenu(<li id='nav_%主菜单ID%'  ><a href='%主菜单链接%' 0 title='%主菜单标题%' class='hover-none nav'><span>%主菜单标题%</span></a></li>,,)}
+			
+			</ul>
+		</nav>
+
+
+
+	</header>
+<script type="text/javascript">
+//导航
+$("#nav li.navdown").addClass('ui-state-active');
+if($("nav").size()>0){
+var navsize = $('.navflipsnap li').size();
+	var navszlt = new Array();
+	if(columnshow==1){//内滚导航
+	
+	if(document.documentElement.clientWidth>800){
+		$(".metcont").width(340);
+	}
+	
+		function navmore(navsize,ks){
+			ks=ks>4?4:ks;
+			navszlt[1] = Math.round($('.metcont').width()/1);
+			navszlt[2] = Math.round($('.metcont').width()/2);
+			navszlt[3] = Math.round($('.metcont').width()/3);
+			navszlt[4] = Math.round($('.metcont').width()/4);
+			$('#nav li').width(navszlt[ks]);
+			$('#nav').navigator();
+		}
+		navmore(navsize,ks);
+		$(window).resize(function() {
+			navmore(navsize,ks);
+		});
+	}else if(columnshow==2){//普通导航
+		function navtype2(ks){
+			navszlt[1] = '100%';
+			navszlt[2] = '50%';
+			navszlt[3] = '33.3%';
+			navszlt[4] = '25%';
+			$('nav.type2 li,nav.type3 li').css("width",navszlt[ks]);
+			//if(ks==3)$('nav.type2 li,nav.type3 li').each(function(i){ i++; if(i%3==0){ $(this).css("width",'34%'); } });
+		}
+		navtype2(ks);
+		$(window).resize(function() {
+			navtype2(ks);
+		});
+	}
+}
+</script>
+
+        <!--搜索框-->
+		<div class="index_seach">
+			<form method="post" action="{@SL_安装目录}search.asp?action=search">
+                <input type="text" name="keyword" class="text" placeholder="请输入关键词" />
+                <input type="submit" name="Submit" value="搜索" class="submit" />
+            </form>
+					<div class="clear"></div>
+		</div>	
+
+
+
+<div class="index">
+
+
+
+<div class="clear"></div>

@@ -1,0 +1,69 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <form method="post" action="{:url('Sellernavigation/navigation_save')}" target="_parent" name="store_navigation_form" id="store_navigation_form" enctype="multipart/form-data">
+        <input type="hidden" name="storenav_id" value="{$sn_info.storenav_id}"/>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.store_navigation_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="w150 text" name="storenav_title" value="{$sn_info.storenav_title}" /><span></span>
+            </dd>
+        </dl>
+       
+        <dl>
+            <dt>{$Think.lang.store_goods_class_sort}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="w50 text" name="storenav_sort" value="{if $sn_info.storenav_sort neq ''}{$sn_info.storenav_sort}{else}255{/if}"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_navigation_content}{$Think.lang.ds_colon}</dt>
+            <dd>
+                {$build_editor}
+                <textarea id="storenav_content" name="storenav_content"></textarea>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_navigation_url}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <p>
+                    <input type="text" class="w300 text" name="storenav_url" value="{$sn_info.storenav_url}" />
+                </p>
+                <p class="hint">{$Think.lang.store_navigation_url_tip}</p>
+            </dd>
+        </dl>
+        
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.store_goods_class_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //页面输入内容验证
+        $('#store_navigation_form').validate({
+            errorPlacement: function (error, element) {
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            submitHandler:function(form){
+                ds_ajaxpost('store_navigation_form','url','{:url('Sellernavigation/index')}')
+            },
+            rules: {
+                storenav_title: {
+                    required: true,
+                    maxlength: 10
+                }
+            },
+            messages: {
+                storenav_title: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_navigation_name_null}',
+                    maxlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_navigation_name_max}'
+                }
+            }
+        });
+    });
+</script>
+
+{/block}
+

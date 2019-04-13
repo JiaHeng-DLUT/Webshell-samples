@@ -1,0 +1,60 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>会员等级折扣(店铺)</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="get" name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>店铺</dt>
+                <dd><input type="text" value="{$Request.param.store_name}" name="store_name" id="store_name" class="txt"></dd>
+            </dl>
+            <div class="btn_group">
+                <input type="submit" class="btn" value="搜索">
+                <a href="{:url('Store/store')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+
+
+
+
+    <table class="ds-default-table">
+        <thead>
+            <tr class="thead">
+                <th class="w200">{$Think.lang.goods_name}</th>
+                <th class="w120">{$Think.lang.goods_mgdiscount_arr}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty name="goods_list"}
+            {foreach name="goods_list" item="goods" key="k" }
+            <tr class="hover edit">
+                <td>
+                    {$goods.goods_name}
+                </td>
+                <td
+                    {foreach name="$goods.goods_mgdiscount_arr" item="goods_mgdiscount"}
+                    {$goods_mgdiscount.level_name}/{$goods_mgdiscount.level_discount}折<br/>
+                    {/foreach}
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="15">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+        </tbody>
+    </table>
+    {$show_page}
+</div>

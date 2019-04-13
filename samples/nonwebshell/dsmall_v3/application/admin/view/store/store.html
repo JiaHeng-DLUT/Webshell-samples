@@ -1,0 +1,110 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="get" name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt><label>{$Think.lang.belongs_level}</dt>
+                <dd>
+                    <select name="grade_id">
+                        <option value="">{$Think.lang.ds_please_choose}...</option>
+                        {notempty name="grade_list"}
+                        {foreach name="grade_list" item="v" key="k" }
+                        <option value="{$v.storegrade_id}" {if condition="$Request.param.grade_id eq $v.storegrade_id"}selected{/if}>{$v.storegrade_name}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.store_user}</dt>
+                <dd><input type="text" value="{$Request.param.owner_and_name}" name="owner_and_name" id="owner_and_name" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>店铺类型</dt>
+                <dd>
+                    <select name="store_type">
+                        <option value="">{$Think.lang.ds_please_choose}...</option>
+                        {notempty name="store_type"}
+                        {foreach name="store_type" item="v" key="k" }
+                        <option value="{$k}" {if condition="$Request.param.store_type eq $k"}selected{/if}>{$v}</option>
+                        {/foreach}
+                        {/notempty}
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺</dt>
+                <dd><input type="text" value="{$Request.param.store_name}" name="store_name" id="store_name" class="txt"></dd>
+            </dl>
+            <div class="btn_group">
+                <dd><input type="submit" class="btn" value="搜索"></dd>
+                <a href="{:url('Store/store')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    
+    <table class="ds-default-table">
+      <thead>
+        <tr class="thead">
+          <th class="w60">{$Think.lang.store_name}</th>
+          <th class="w60">{$Think.lang.store_user_name}</th>
+          <th class="w60">店主卖家账号</th>
+          <th class="w60">{$Think.lang.ds_store_money}</th>
+          <th class="w60">{$Think.lang.ds_store_deposit}</th>
+          <th class="align-center w36">{$Think.lang.belongs_level}</th>
+          <th class="align-center w36">{$Think.lang.period_to}</th>
+          <th class="align-center w36">{$Think.lang.state}</th>
+          <th class="align-center">{$Think.lang.ds_handle}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {notempty name="store_list"}
+        {foreach name="store_list" item="v" key="k" }
+        <tr class="hover edit {:get_store_state_classname($v)}" id="ds_row_{$v.store_id}">
+          <td>
+              <a href="{:url('/Home/Store/index',['store_id'=>$v.store_id])}" target="_blank">{$v.store_name}</a>
+          </td>
+          <td>{$v.member_name}</td>
+          <td>{$v.seller_name}</td>
+          <td class="align-center"><p>{$Think.lang.available}:&nbsp;<strong class="red">{$v.store_avaliable_money}</strong>&nbsp;{$Think.lang.currency_zh}</p>
+            <p>{$Think.lang.freeze}:&nbsp;<strong class="red">{$v.store_freeze_money}</strong>&nbsp;{$Think.lang.currency_zh}</p>
+          </td>
+          <td class="align-center">
+            <p><strong class="red">{$v.store_avaliable_deposit}</strong>&nbsp;{$Think.lang.currency_zh}</p>
+          </td>
+          <td class="align-center"><?php echo isset($search_grade_list[$v['grade_id']])?$search_grade_list[$v['grade_id']]:'';?></td>
+          <td class="nowarp align-center"><?php echo $v['store_endtime']?date('Y-m-d', $v['store_endtime']):lang('no_limit');?></td>
+          <td class="align-center w72"><?php echo $v['store_state']?lang('open'):lang('close');?></td>
+          <td class="align-center w200">
+            <a href="javascript:dsLayerOpen('{:url('Store/store_joinin_detail',['member_id'=>$v.member_id])}','{$Think.lang.ds_view}-{$v.store_name}')" href="" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+            <a href="{:url('Store/store_edit',['store_id'=>$v.store_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+            <a href="{:url('Store/store_bind_class',['store_id'=>$v.store_id])}" class="dsui-btn-view"><i class="iconfont"></i>经营类目</a>
+            <?php if (get_store_state_classname($v) != 'open' && cookie('remindRenewal'.$v['store_id']) == null) {?>
+            <a href="{:url('Store/remind_renewal',['store_id'=>$v.store_id])}" class="dsui-btn-view"><i class="iconfont"></i>提醒续费</a>
+            <?php }?>
+            &nbsp;&nbsp;
+            <!--<a href="javascript:dsLayerConfirm('{:url('Store/del',['id'=>$v.store_id,'member_id'=>$v.member_id])}','{$Think.lang.ds_ensure_del}',{$v.store_id})" class="dsui-btn-del"><i class="iconfont"></i>删除</a>-->
+            <a href="javascript:dsLayerOpen('{:url('Storemoney/adjust',['seller_id'=>$v.store_id])}','{$Think.lang.adjust_storemoney}-{$v.seller_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.adjust_storemoney}</a>
+            <a href="javascript:dsLayerOpen('{:url('Storedeposit/adjust',['seller_id'=>$v.store_id])}','{$Think.lang.adjust_storedeposit}-{$v.seller_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.adjust_storedeposit}</a>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr class="no_data">
+          <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+      </tbody>
+    </table>
+    {$show_page}
+    
+</div>

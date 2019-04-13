@@ -1,0 +1,39 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class Other extends Model
+{
+   protected $autoCheckFields = true;
+   public function getRuleInfoById($id){
+   	 $where['id'] = $id;
+     return $this->where($where)->find();
+    }
+
+   public function add($data){
+       if(empty($data) || !is_array($data) ){ 
+          return false;
+        }
+        return $this->data($data)->save();
+	}
+
+   public function edit($data,$where){
+    if(empty($data) || !is_array($data) ){ 
+          return false;
+        }
+	 return $this->save($data,$where);
+	}
+   public function del($id){
+      if(is_array($id)){
+          $idData = implode(',',$id);
+      }
+     $idData = $id;
+     $res = $this->where("id",'in',$idData)->delete();
+        if($res){
+           return true;
+        }else{
+           return false;
+        }
+	}  
+
+}

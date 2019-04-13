@@ -1,0 +1,47 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=brand" class="sel">品牌列表（{$tongji['all']}）<i></i></a>
+		<a href="admin.php?mod=brand&act=add" id="fabu">添加品牌</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'brand_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="60">排序</td>
+			<th class="bgtt" width="150">品牌名称</th>
+			<th class="bgtt" width="150">品牌图片</th>
+			<th class="bgtt">品牌简介</th>
+			<th class="bgtt" width="110">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td><input type="checkbox" name="brand_id[]" value="{$v['brand_id']}" /></td>
+			<td>{$v['brand_id']}</td>
+			<td><input type="text" name="brand_order[{$v['brand_id']}]" value="{$v['brand_order']}" class="inputtext input30 center" /></td>
+			<td><a href="{pe_url('brand-'.$v['brand_id'])}" target="_blank">{$v['brand_name']}</a></td>
+			<td><a href="{pe_url('brand-'.$v['brand_id'])}" target="_blank"><img src="{pe_thumb($v['brand_logo'])}" style="width:140px; height:56px;" /></a></td>
+			<td class="aleft" valign="top">{pe_cut(pe_text($v['brand_text']), 60, '...')}</td>
+			<td>
+				<a href="admin.php?mod=brand&act=edit&id={$v['brand_id']}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=brand&act=del&id={$v['brand_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'brand_id')" />
+			<button href="admin.php?mod=brand&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'brand_id', 'form', '批量删除')">批量删除</button>
+			<button href="admin.php?mod=brand&act=order&token={$pe_token}" onclick="pe_doall(this,'form')">更新排序</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,242 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+<link href="{$Think.HOME_SITE_ROOT}/css/flea.css"  rel="stylesheet" type="text/css" />
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+	$(function(){
+		jQuery("#idContainer2").slide({titCell:"#btnlistID",mainCell:"#KSS_moveBox ul",autoPage:true,effect:"left",autoPlay:true});
+                jQuery(".scrolldoorFrame").slide({titCell:".scrollUl li",mainCell:".cont .cc",effect:"left",titOnClassName:"sd01"});
+	});
+</script>
+<div id="category">
+  <div class="content">
+    <ul>
+      <li>
+          <div class="items_pic"><i class="fa fa-mobile"></i></div>
+        <div class="cat_list">
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$shuma.fcindex_id1}">{$shuma.fcindex_name1}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$shuma.fcindex_id2}">{$shuma.fcindex_name2}</a></p>
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$shuma.fcindex_id3}">{$shuma.fcindex_name3}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$shuma.fcindex_id4}">{$shuma.fcindex_name4}</a></p>
+        </div>
+      </li>
+      <li>
+        <div class="items_pic"><i class="fa fa-dropbox"></i></div>
+        <div class="cat_list">
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$zhuangban.fcindex_id1}">{$zhuangban.fcindex_name1}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$zhuangban.fcindex_id2}">{$zhuangban.fcindex_name2}</a></p>
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$zhuangban.fcindex_id3}">{$zhuangban.fcindex_name3}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$zhuangban.fcindex_id4}">{$zhuangban.fcindex_name4}</a></p>
+        </div>
+      </li>
+      <li>
+        <div class="items_pic"><i class="fa fa-desktop"></i></div>
+        <div class="cat_list">
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$jujia.fcindex_id1}">{$jujia.fcindex_name1}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$jujia.fcindex_id2}">{$jujia.fcindex_name2}</a></p>
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$jujia.fcindex_id3}">{$jujia.fcindex_name3}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$jujia.fcindex_id4}">{$jujia.fcindex_name4}</a></p>
+        </div>
+      </li>
+      <li>
+        <div class="items_pic"><i class="fa fa-book"></i></div>
+        <div class="cat_list">
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$xingqu.fcindex_id1}">{$xingqu.fcindex_name1}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$xingqu.fcindex_id2}">{$xingqu.fcindex_name2}</a></p>
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$xingqu.fcindex_id3}">{$xingqu.fcindex_name3}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$xingqu.fcindex_id4}">{$xingqu.fcindex_name4}</a></p>
+        </div>
+      </li>
+      <li>
+        <div class="items_pic"><i class="fa fa-camera"></i></div>
+        <div class="cat_list">
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$muying.fcindex_id1}">{$muying.fcindex_name1}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$muying.fcindex_id2}">{$muying.fcindex_name2}</a></p>
+          <p><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$muying.fcindex_id3}">{$muying.fcindex_name3}</a><a target="_blank" href="{$Think.HOME_SITE_URL}/Fleaclass/index/?cate_input={$muying.fcindex_id4}">{$muying.fcindex_name4}</a></p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="flea_goods content">
+  <div id="first_items">
+      <div id=idContainer2 class=container>
+          <div id="KinSlideshow" >
+              
+              {notempty name="loginpic"}
+              <div id='KSS_moveBox'>
+              <ul>
+              {foreach name="loginpic" item="val"}
+              <li><a href="{if ($val['url'] != '')}{$val.url}{else/}javascript:void(0);{/if}" target="_blank"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/{$val.pic}"></a></li>
+              {/foreach}
+              </ul>
+              </div>
+              <div class="KSS_titleBar" style="height: 30px; width: 100%; position: absolute; bottom: 0px; left: 0px; background: rgb(255, 255, 255); opacity: 0.5;"></div>
+              <div class="KSS_btnBox" style="position:absolute;right:10px;bottom:5px; z-index:100">
+                  <ul id="btnlistID" style="margin:0;padding:0; overflow:hidden">
+                      {foreach name="loginpic" item="val"}
+                      <li>{$key}</li>
+                      {/foreach}
+                  </ul>
+              </div>
+              {/notempty}
+          </div>
+      </div>
+      <div class="hotgoods">
+        <h2><strong class="head_title_1">{$Think.lang.flea_fresh_goods}</strong><i class="head_title_2">{$Think.lang.flea_prompt_words1}</i><a class="more gray2 fn-right" href="{$Think.HOME_SITE_URL}/Fleaclass/index/">{$Think.lang.flea_goods_more}</a></h2>
+        {notempty name="new_flea_goods"}
+        <div class="hotgoods_G">
+          <dl>
+            <dt class="fn-left">
+              <div class="pic">
+                <span class="thumb size100">
+                  <i></i>
+                  <a title="{$new_flea_goods.goods_name}" target="_blank" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$new_flea_goods.goods_id}"><img height="100" width="100" onload="javascript:ResizeImage(this,100,100);" src="{:flea_thumb($new_flea_goods['goods_image'])}" /></a>
+                </span>
+              </div>
+            </dt>
+            <dd class="fn-left">
+                {$Think.lang.flea_index_goods_1}{$new_flea_goods.flea_quality}{$Think.lang.flea_as_new}
+                {$Think.lang.flea_index_goods_2}{$new_flea_goods.goods_name}
+            </dd>
+            <dd class="fn-left"><span class="price orange">{$new_flea_goods.goods_store_price}</span>{$Think.lang.flea_index_rmbtransfer}</dd>
+            <dd class="fn-left"><span class="font-zr">{$Think.lang.flea_transfer}</span></dd>
+            <dd class="flea_message fn-left"><?php echo str_cut(trim(str_replace(array("\r\n","\n","\r",'&nbsp;'),' ',strip_tags($one_goods_title))),150); ?></dd>
+          </dl>
+        </div>
+        {/notempty}
+    </div>
+      <div class="sell">
+        	<div class="collect">
+              <h2><strong class="head_title_1">{$Think.lang.flea_love_collect}</strong><i class="head_title_2">{$Think.lang.flea_prompt_words2}</i></h2>
+              {notempty name="col_flea_goods"}
+              <div class="collect_goods">
+                <p class="collect_hot">{$Think.lang.flea_mostwell_goods}</p>
+                <div class="pic fn-left">
+                  <span class="thumb size76">
+                    <i></i>
+                    <a title="{$col_flea_goods.goods_name}" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$col_flea_goods.goods_id}" target="_blank"><img height="76" width="76" onload="javascript:ResizeImage(this,76,76);" src="{:flea_thumb($col_flea_goods['goods_image'])}" /></a>
+                  </span>
+                </div>
+                <div class="collect_info fn-left">
+                  <p class="details"><a class="blue2" target="_blank" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$col_flea_goods.goods_id}">{$col_flea_goods.goods_name}</a></p>
+                  <p>{$Think.lang.flea_all_count}<span>{$col_flea_goods.flea_collect_num}</span>{$Think.lang.flea_many_collect}</p>
+                  <p>{$Think.lang.flea_transfer_price}<span>{$col_flea_goods.goods_store_price}</span>{$Think.lang.flea_index_rmb}</p>
+                </div>
+              </div>
+              {/notempty}
+            </div>
+        <div id="buttonContainer"><a href="{$Think.HOME_SITE_URL}/Memberflea/add_goods" class="sell_btn2"><i class="fa fa-mail-forward "></i>&nbsp;{$Think.lang.flea_sell_spare}</a></div>
+      </div>
+  </div>
+  <div id="fir_items" class="fn-left">
+    <h2><strong class="head_title_1">{$Think.lang.flea_popular_search}</strong><i class="head_title_2">{$Think.lang.flea_prompt_words3}</i><a href="{$Think.HOME_SITE_URL}/Fleaclass/index/" class="gray2">{$Think.lang.flea_more_hot_goods}</a></h2>
+    <ul>
+        {notempty name="new_flea_goods2"}
+        {php}$i=1;{/php}
+        {foreach name="new_flea_goods2" item="val" }
+        <li {if ($i==7||$i==14)}class="cn"{/if}>
+            <div class="pic">
+                <span class="thumb size120">
+                    <i></i>
+                    <a target="_blank" title="{$val.goods_name}" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}"><img height="120" width="120" onload="javascript:ResizeImage(this,120,120);" src="{:flea_thumb($val['goods_image'])}" /></a>
+                </span>
+            </div>
+            <p>{$val.flea_quality}{$Think.lang.flea_as_new}<span class="orange">{$val.goods_store_price}</span>{$Think.lang.flea_index_transfer}</p>
+        </li>
+        {php}$i++;{/php}
+        {/foreach}
+        {/notempty}
+    </ul>
+  </div>
+  <div class="fn-clear"></div>
+  <div class="ad">
+      {dstaglib:adv ap_id='16' limit='10' item='v'}
+      <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+          <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+      </a>
+      {/dstaglib:adv}
+  </div>
+  <div id="third_items" class="fn-left">
+    <h2><strong class="head_title_1">{$Think.lang.flea_onlookers_area}</strong><i class="head_title_2">{$Think.lang.flea_walk}</i><a class="gray2" href="{$Think.HOME_SITE_URL}/Fleaclass/index/">{$Think.lang.flea_more_flea_goods}</a></h2>
+    <div class="content">
+        <ul class="look_items">
+            {notempty name="new_flea_goods3"}
+            {foreach name="new_flea_goods3" item="val"}
+            <li class="fn-left">
+                <div class="pic">
+                    <span class="thumb size125">
+                        <i></i>
+                        <a target="_blank" title="{$val.goods_name}" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$val.goods_id}"><img height="125" width="125" onload="javascript:ResizeImage(this,125,125);" src="{:flea_thumb($val['goods_image'])}" /></a>
+                    </span>
+                </div>
+                <p>{$val.flea_quality}{$Think.lang.flea_as_new}<span class="price orange">{$val.goods_store_price}</span>{$Think.lang.flea_index_transfer}</p>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+    </div>
+  </div>
+  <div class="fn-clear"></div>
+  <div id="fourth_items">
+    <h2><strong class="head_title_1">{$Think.lang.flea_shopping_theme}</strong><i class="head_title_2"></i></h2>
+    <ul>
+        <li class="fn-left">
+            {dstaglib:adv ap_id='17' limit='1' item='v'}
+            <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+            </a>
+            {/dstaglib:adv}
+        </li>
+        <li class="fn-left">
+            {dstaglib:adv ap_id='18' limit='1' item='v'}
+            <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+            </a>
+            {/dstaglib:adv}
+        </li>
+        <li class="fn-left">
+            {dstaglib:adv ap_id='19' limit='1' item='v'}
+            <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+            </a>
+            {/dstaglib:adv}
+        </li>
+        <li class="last fn-left">
+            {dstaglib:adv ap_id='20' limit='1' item='v'}
+            <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+            </a>
+            {/dstaglib:adv}
+        </li>
+    </ul>
+  </div>
+  <div class="fn-clear"></div>
+  <div id="five_items">
+      <div class="scrolldoorFrame">
+          <h2><strong class="head_title_1">{$Think.lang.flea_classification_goods}</strong><i class="head_title_2"></i></h2>
+          <ul class="scrollUl">
+              {notempty name="show_flea_goods_class_list"}
+              {php}$i=1;{/php}
+              {foreach name="show_flea_goods_class_list" item="val" }
+              <li class="sd0{if $i==1}{$i}{else/}2{/if}" id="m0{php}echo $i++;{/php}"><span>{$val.class_name}</span></li>
+              {/foreach}
+              {/notempty}
+          </ul>
+          <div class="bor03 cont">
+              <div class="cc">
+                  {notempty name="show_flea_goods_class_list"}
+                  {php}$i=1;{/php}
+                  {foreach name="show_flea_goods_class_list" item="val" }
+                  {php}$i++;{/php}
+                  <ul>
+                      {foreach name="$val.goods" item="v"}
+                      <li>
+                          <div class="pic">
+                              <span class="thumb size120">
+                                  <i></i>
+                                  <a target="_blank" title="{$v.goods_name}" href="{$Think.HOME_SITE_URL}/Fleagoods/index/?goods_id={$v.goods_id}"><img height="120" width="120" onload="javascript:ResizeImage(this,120,120);" src="{:flea_thumb($v['goods_image'])}" /></a></span></div>
+                          <p>{$v.flea_quality}{$Think.lang.flea_as_new}&nbsp;&nbsp;&nbsp;<span class="price orange">{:intval($v['goods_store_price'])}</span>{$Think.lang.flea_index_transfer}</p>
+                      </li>
+                      {/foreach}
+                  </ul> 
+                  {/foreach}
+                  {/notempty}
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{/block}

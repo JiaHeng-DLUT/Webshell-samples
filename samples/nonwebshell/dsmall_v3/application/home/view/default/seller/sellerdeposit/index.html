@@ -1,0 +1,78 @@
+{extend name="default/base/base_seller" /}
+
+{block name="seller_main"}
+
+<div class="alert"><span class="mr30">{$Think.lang.sellerdeposit_avaliable_money}{$Think.lang.ds_colon}<strong class="mr5 red" style="font-size: 18px;">{$store_info.store_avaliable_deposit}</strong>{$Think.lang.currency_zh}</span><span class='mr30'>{$Think.lang.sellerdeposit_freeze_money}{$Think.lang.ds_colon}<strong class="mr5 blue" style="font-size: 18px;">{$store_info.store_freeze_deposit}</strong>{$Think.lang.currency_zh}</span><span class="mr30">{$Think.lang.sellerdeposit_payable_money}{$Think.lang.ds_colon}<strong class="mr5 red" style="font-size: 18px;">{$store_info.store_payable_deposit}</strong>{$Think.lang.currency_zh}</span></div>
+
+<form method="get" target="_self">
+    <table class="dsm-search-table">
+        <input type="hidden" name= "recycle" value="{$Request.param.recycle}" />
+        <tr>
+            <td>&nbsp;</td>
+
+            <th>{$Think.lang.sellerdeposit_changetime}</th>
+            <td class="w240">
+                <input type="text" class="text w70" name="query_start_date" id="query_start_date" value="{$Request.param.query_start_date}"/>
+                <label class="add-on"><i class="fa fa-calendar"></i></label>&nbsp;&#8211;&nbsp;
+                <input type="text" class="text w70" name="query_end_date" id="query_end_date" value="{$Request.param.query_end_date}"/>
+                <label class="add-on"><i class="fa fa-calendar"></i></label>
+            </td>
+            <th>{$Think.lang.sellerdeposit_log_desc}</th>
+            <td class="w160"><input type="text" class="text w150" name="storedepositlog_desc" value="{$Request.param.storedepositlog_desc}"></td>
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_search}"/>
+                </label>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th>{$Think.lang.sellerdeposit_changetime}</th>
+            <th class="tl">{$Think.lang.sellerdeposit_avaliable_money}({$Think.lang.currency_zh})</th>
+            <th class="tl">{$Think.lang.sellerdeposit_freeze_money}({$Think.lang.currency_zh})</th>
+            <th class="tl">{$Think.lang.sellerdeposit_payable_money}({$Think.lang.currency_zh})</th>
+            <th class="tl">{$Think.lang.sellerdeposit_log_desc}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="list_log"}
+            {foreach name="list_log" item="v" key="k" }
+            <tr class="bd-line">
+                <td>{notempty name="$v.storedepositlog_add_time"}{$v.storedepositlog_add_time|date='Y-m-d H:i:s',###}{/notempty}</td>
+                <td class="tl"><?php echo floatval($v['store_avaliable_deposit']) ? (floatval($v['store_avaliable_deposit']) > 0 ? '+' : null ).$v['store_avaliable_deposit'] : null;?></td>
+                <td class="tl"><?php echo floatval($v['store_freeze_deposit']) ? (floatval($v['store_freeze_deposit']) > 0 ? '+' : null ).$v['store_freeze_deposit'] : null;?></td>
+                <td class="tl"><?php echo floatval($v['store_payable_deposit']) ? (floatval($v['store_payable_deposit']) > 0 ? '+' : null ).$v['store_payable_deposit'] : null;?></td>
+                <td class="tl">{$v.storedepositlog_desc}
+                </td>
+            </tr>
+           {/foreach}
+        {else /}
+        <tr>
+            <td colspan="5" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="list_log"}
+        <tr>
+            <td colspan="5"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+
+
+
+<script type="text/javascript">
+$(function(){
+    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+
+{/block}

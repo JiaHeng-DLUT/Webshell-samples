@@ -1,0 +1,162 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('live',['act'=>'add'])}>">+添加直播</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{url('live')}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+            <option value="move" style="color: #06c;">移动内容</option>
+            <option value="attr" style="color: #f60;">属性设置</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('id[]')==false){alert('请指定您要操作的直播ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+	
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('live')}>?&cate_id='+this.options[this.selectedIndex].value+'&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0" selected>所有分类</option>
+			<{$category_option}>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('live')}>?cate_id=<{$cate_id}>&sort='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="1"<{opt_selected($sort, 1)}>>按时间排列</option>
+			<option value="2"<{opt_selected($sort, 2)}>>按浏览排列</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{url('live')}>?cate_id=<{$cate_id}>&sort=<{$sort}>&order='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="DESC"<{opt_selected($order, 'DESC')}>>降序</option>
+			<option value="ASC"<{opt_selected($order, 'ASC')}>>升序</option>
+			</select>
+		</div>
+                    
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>直播标题</th>
+                <th>属性状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$lives item=item}>
+			<tr>
+				<td><input name="id[]" type="checkbox" value="<{$item.id}>"></td>
+				<td><{$item.id}></td>
+				<td><{$item.cate_name}></td>
+				<td><{$item.title}></td>
+                <td><{$item.attr}></td>
+				<td><{$item.operate}></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="7">无任何直播！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('live')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{url('live')}>" enctype="multipart/form-data" >
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+
+			<tr>
+				<th>直播标题：</th>
+				<td><input name="title" type="text" class="ipt" id="title" size="50" maxlength="100" value="<{if !empty($live.title)}><{$live.title}><{/if}>" /></td>
+			</tr>
+
+			<tr>
+				<th>直播流URL地址：</th>
+				<td><input name="video_url" type="text" class="ipt" id="video_url" size="100"  value="<{if !empty($live.video_url)}><{$live.video_url}><{/if}>" /><span class="tips">直播地址。</span></td>
+			</tr>
+
+			<tr>
+				<th>属性设置：</th>
+				<td>
+			
+				　<input name="isbest" type="checkbox" id="isbest" value="1"<{if !empty($isbest)}><{opt_checked($isbest, 1)}><{/if}> /><label for="isbest">推荐</label></td>
+			</tr> 
+	
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $live.id}>
+					<input name="id" type="hidden" id="id" value="<{$live.id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('live')}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+	<{if $action == 'move'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('live')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{url('live')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$lives item=item}><a href="<{url('live')}>&act=edit&id=<{$item.id}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$art.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>将以上内容移动至：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('live')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'attr'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('live')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{url('live')}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$lives item=item}><{$item.id}> - <a href="<{url('live')}>&act=edit&id=<{$item.id}>"><{$item.title}></a><input name="id[]" type="hidden" value="<{$item.id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td>
+				<input name="isbest" type="checkbox" id="isbest" value="1" /><label for="isbest">推荐</label>
+		
+
+			</tr>
+
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input name="act" type="hidden" id="act" value="<{$h_action}>">
+				<input type="submit" class="btn" value="保 存">&nbsp;
+				<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{url('live')}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+<{include file="footer.html"}>

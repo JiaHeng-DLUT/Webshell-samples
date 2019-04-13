@@ -1,0 +1,27 @@
+tr.LEMgroup td
+{
+background-color:lightgrey;
+}
+
+tr.LEMquestion
+{
+background-color:#EAF2D3;
+}
+
+tr.LEManswer td
+{
+background-color:white;
+}
+
+.LEMerror
+{
+color:red;
+font-weight:bold;
+}
+tr.LEMsubq td
+{
+background-color:lightyellow;
+}
+.expression-tooltip .tooltip-inner {
+    max-width: none;
+}

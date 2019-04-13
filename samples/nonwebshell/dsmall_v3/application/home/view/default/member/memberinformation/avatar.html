@@ -1,0 +1,126 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+        {if $newfile == ''}
+        <form action="{:url('Memberinformation/upload')}" enctype="multipart/form-data" id="form_avaster" method="post">
+            <div class="dsm-default-form">
+                <dl>
+                    <dt>{$Think.lang.home_member_avatar_thumb}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <div class="user-avatar"><span><img src="{:get_member_avatar($member_info.member_avatar)}?{:microtime()}>" alt="" ds_type="avatar" /></span></div>
+                        <p class="hint mt5">{$Think.lang.ds_member_avatar_hint}</p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>{$Think.lang.home_member_change_avatar}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <div class="dsm-upload-btn"> <a href="javascript:void(0);"><span>
+            <input type="file" hidefocus="true" size="1" class="input-file" name="pic" id="pic" file_id="0" multiple="" maxlength="0"/>
+            </span>
+                            <p><i class="fa fa-upload"></i>{$Think.lang.home_member_avatar_upload}</p>
+                            <input id="submit_button" style="display:none" type="button" value="&nbsp;" onClick="submit_form($(this))" />
+                        </a> </div>
+                    </dd>
+                </dl>
+            </div>
+        </form>
+        {else}
+        <form action="{:url('Memberinformation/cut')}" id="form_cut" method="post">
+            <input type="hidden" id="x1" name="x1" />
+            <input type="hidden" id="x2" name="x2" />
+            <input type="hidden" id="w" name="w" />
+            <input type="hidden" id="y1" name="y1" />
+            <input type="hidden" id="y2" name="y2" />
+            <input type="hidden" id="h" name="h" />
+            <input type="hidden" id="newfile" name="newfile" value="{$newfile}" />
+            <div class="pic-cut-120">
+                <div class="work-title">{$Think.lang.ds_comm_workarea}</div>
+                <div class="work-layer">
+                    <p><img id="dscropbox" src="{$newfile}?{:microtime()}"/></p>
+                </div>
+                <div class="thumb-title">{$Think.lang.ds_comm_cut_view}</div>
+                <div class="thumb-layer">
+                    <p><img id="preview" src="{$newfile}?{:microtime()}"/></p>
+                </div>
+                <div class="cut-help">
+                    <h4>{$Think.lang.ds_comm_op_help}</h4>
+                    <p>{$Think.lang.ds_comm_op_help_tip}</p>
+                </div>
+                <div class="cut-btn">
+                    <input type="button" id="dssubmit" class="submit" value="{$Think.lang.ds_submit}" />
+                </div>
+            </div>
+        </form>
+        {/if}
+
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jcrop/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jcrop/jquery.Jcrop.min.css">
+<script type="text/javascript">
+    $(function(){
+            {if $newfile != ''}
+            function showPreview(coords)
+            {
+                if (parseInt(coords.w) > 0){
+                    var rx = 120 / coords.w;
+                    var ry = 120 / coords.h;
+                    $('#preview').css({
+                        width: Math.round(rx * {$width}) + 'px',
+                        height: Math.round(ry * {$height}) + 'px',
+                        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+                        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+                });
+                }
+                $('#x1').val(coords.x);
+                $('#y1').val(coords.y);
+                $('#x2').val(coords.x2);
+                $('#y2').val(coords.y2);
+                $('#w').val(coords.w);
+                $('#h').val(coords.h);
+            }
+            $('#dscropbox').Jcrop({
+                aspectRatio:1,
+                setSelect: [ 0, 0, 120, 120 ],
+                minSize:[50, 50],
+                allowSelect:0,
+                onChange: showPreview,
+                onSelect: showPreview
+            });
+            $('#dssubmit').click(function() {
+                var x1 = $('#x1').val();
+                var y1 = $('#y1').val();
+                var x2 = $('#x2').val();
+                var y2 = $('#y2').val();
+                var w = $('#w').val();
+                var h = $('#h').val();
+                if(x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h==""){
+                    layer.msg("{$Think.lang.an_area_must_selected}");
+                    return false;
+                }else{
+                    $('#form_cut').submit();
+                }
+            });
+        {else}
+            $('#pic').change(function(){
+                var filepatd=$(this).val();
+                var extStart=filepatd.lastIndexOf(".");
+                var ext=filepatd.substring(extStart,filepatd.lengtd).toUpperCase();
+                if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+                    layer.msg("{$Think.lang.file_type_error}");
+                    $(this).attr('value','');
+                    return false;
+                }
+                if ($(this).val() == '') return false;
+                $("#form_avaster").submit();
+            });
+       {/if}
+    });
+</script>
+
+
+
+
+
+
+{/block}

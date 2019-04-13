@@ -1,0 +1,85 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\Db;
+class Weixin extends Common
+{
+		// 菜单
+	public function menu(){
+// 关键词筛选  格式：字段名称加显示名称
+     $keywords  = ['id'=>'菜单ID','name'=>'菜单名称'];
+
+ //日期筛选    
+     $date = [
+              ['title'=>'发布时间','start_name'=>'开始时间','end_name'=>'结束时间']
+            ];
+// 自定义单个字段筛选
+     $customSingleField =[
+                            [
+                             'field'=>'status',
+                              'data'=> [ 0 =>'等待审核',1=>'正常',2=>'审核失败']
+                              ]
+                           ]; 
+ //数据库某个表中的字段筛选
+     $sqlTable = [];
+     $this->assign('keywords',$keywords);
+     $this->assign('customSingleField',$customSingleField);
+     $this->assign('sqlTable',$sqlTable);
+
+
+     $this->assign('date',$date);
+ //表单数据显示筛选结果
+    $post = request()->param();   
+    if($post){
+            $keywords = $post['keywords'];
+            $status   =$post['status'];
+
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['name']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+             if($status){
+                $where .=' and status = '.$status;
+             }
+        
+      }else{
+           $where .='';
+           $order = "create_time desc";
+      }   
+     $pageNum = 10;
+     $list = DB::name('wx_menu')->where($where)->order($order)->paginate($pageNum);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+     return $this->fetch();
+	}
+
+	public function menuEdit(){
+	return $this->fetch();
+	}
+
+	// 自动回复
+	public function autoreply(){
+		return $this->fetch();
+	}
+	// 素材
+	public function material(){
+		return $this->fetch();
+	}
+
+}

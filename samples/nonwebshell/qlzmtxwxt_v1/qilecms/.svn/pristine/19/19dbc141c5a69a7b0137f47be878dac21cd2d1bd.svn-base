@@ -1,0 +1,11 @@
+<?php
+namespace app\bbs\controller;
+use think\Controller;
+class Index extends Controller
+{
+    public function index()
+    {
+       
+      $this->fetch();
+    }
+}

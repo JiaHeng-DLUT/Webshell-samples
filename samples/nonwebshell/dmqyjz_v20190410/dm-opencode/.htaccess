@@ -1,0 +1,51 @@
+RewriteEngine on
+#RewriteCond %{HTTP_HOST} ^yoursite.com$ [NC]
+#RewriteRule ^(.*)$ http://www.yoursite.com/$1 [L,R=301]
+
+
+DirectoryIndex index.php
+
+ 
+#index
+#RewriteRule ^index.html index.php?alias=index&ifalias=y&file=alias&page=1
+RewriteRule ^404.html index.php?file=404
+RewriteRule ^index.html index.php?file=404
+
+#cate sub
+RewriteRule ^category-([0-9]{1,}).html$ index.php?routeid=$1&ifalias=n&file=category&page=1
+RewriteRule ^category-([0-9]{1,})-([0-9]{1,}).html$ index.php?routeid=$1&ifalias=n&file=category&page=$2
+#cate detail
+RewriteRule ^detail-([0-9]{1,}).html$ index.php?detailid=$1&ifalias=n&file=category
+
+ #tag
+RewriteRule ^tag-([0-9]{1,}).html$ index.php?routeid=$1&ifalias=n&file=tag&page=1
+RewriteRule ^tag-([0-9]{1,})-([0-9]{1,}).html$ index.php?routeid=$1&ifalias=n&file=tag&page=$2
+ #link
+RewriteRule ^dmlink-([a-z0-9A-Z_]{1,})-([a-z0-9A-Z_]{1,})-([a-z0-9A-Z_]{1,}).html$ index.php?file=$1&alias=$2&page=$3
+ #member
+ 
+ RewriteRule ^cart.html$ index.php?file=member&alias=shop_cart
+ RewriteRule ^checkout.html$ index.php?file=member&alias=shop_checkout
+ RewriteRule ^order.html$ index.php?file=member&alias=shop_order&memact=list
+RewriteRule ^member-([a-z0-9A-Z_]{1,}).html$ index.php?file=member&alias=$1
+RewriteRule ^member-([a-z0-9A-Z_]{1,})-([a-z0-9A-Z_]{1,}).html$ index.php?file=member&alias=$1&memact=$2
+RewriteRule ^member-([a-z0-9A-Z_]{1,})-([a-z0-9A-Z_]{1,})-([a-z0-9A-Z_]{1,}).html$ index.php?file=member&alias=$1&memact=$2&memtid=$3
+
+#page
+RewriteRule ^page-([0-9]{1,}).html$ index.php?routeid=$1&ifalias=n&file=page&page=1
+
+ 
+#RewriteRule ^baidumap.html$ index.php?routeid=$1&ifalias=n&file=baidumap&page=1
+
+
+
+
+#404 need begin with http://...#
+ErrorDocument 404   /404.html
+
+#alias
+RewriteRule ^([a-z0-9A-Z-_]{1,})-([0-9]{1,}).html$ index.php?alias=$1&ifalias=y&file=alias&page=$2
+RewriteRule ^([a-z0-9A-Z-_]{1,}).html$ index.php?alias=$1&ifalias=y&file=alias&page=1
+
+
+ 

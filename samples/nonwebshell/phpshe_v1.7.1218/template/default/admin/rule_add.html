@@ -1,0 +1,105 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<form method="post" enctype="multipart/form-data">
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150">规格名称：</td>
+			<td><input type="text" name="info[rule_name]" value="{$info['rule_name']}" class="inputall input200" /></td>
+		</tr>
+		<tr>
+			<td align="right">规格备注：</td>
+			<td><input type="text" name="info[rule_memo]" value="{$info['rule_memo']}" class="inputall input200" /></td>
+		</tr>
+		</table>
+	</div>
+	<div class="now">
+		<a href="javascript:;" class="sel">选项列表<i></i></a>
+		<a href="javascript:ruledata_add();" id="fabu">添加选项</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list" id="rule_data">
+		<tr>
+			<th class="bgtt" width="150">序号</th>
+			<th class="bgtt" width="210">选项名称</th>
+			<th class="bgtt"></th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach((array)$info_list as $k=>$v):}-->
+		<tr class="ruledata_list">
+			<td>{$k+1}</td>
+			<td class="aleft">
+				<input type="hidden" name="id[]" value="{$v['ruledata_id']}" />
+				<input type="text" name="name[]" value="{$v['ruledata_name']}" class="inputall input200" />
+			</td>
+			<td></td>
+			<td>
+				<img style="cursor:pointer;" title="向上移动" class="icon_up mat3" src="{$pe['host_tpl']}images/icon_up.gif" />
+				<img style="cursor:pointer;" title="向上移动" class="icon_down mat3 mal10" src="{$pe['host_tpl']}images/icon_down.gif" />	
+				<img style="cursor:pointer;" title="删除" class="icon_del mat3 mal10" onclick="rule_del(this, '{$v['ruledata_id']}')" src="{$pe['host_tpl']}images/icon_del.gif" />
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		<tr class="ruledata_list" style="display:none">
+			<td>1</td>
+			<td class="aleft">
+				<input type="hidden" name="id[]" value="" />
+				<input type="text" name="name[]" value="" class="inputall input200" />
+			</td>
+			<td></td>
+			<td>
+				<img style="cursor:pointer;" title="向上移动" class="icon_up mat3" src="{$pe['host_tpl']}images/icon_up.gif" />
+				<img style="cursor:pointer;" title="向上移动" class="icon_down mat3 mal10" src="{$pe['host_tpl']}images/icon_down.gif" />	
+				<img style="cursor:pointer;" title="删除" class="icon_del mat3 mal10" onclick="rule_del(this, 0)" src="{$pe['host_tpl']}images/icon_del.gif" />
+			</td>
+		</tr>
+		</table>
+	</div>
+	<div class="mat20 center">
+		<input type="hidden" name="pe_token" value="{$pe_token}" />	
+		<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".icon_up").live("click", function(){
+	    var current = $(this).parents("tr");
+	    var prev = $(this).parents("tr").prev();
+	    if (current.index() > 1) {
+	    	current.insertBefore(prev);
+	    	var current_num = current.find("td:first").html();
+	    	var prev_num = prev.find("td:first").html();
+	    	current.find("td:first").html(prev_num)
+	    	prev.find("td:first").html(current_num)
+	    	current.find("td").css("background-color", "#fff").find(":input").slideUp(100).delay(100).fadeIn(200);
+	    }
+	})
+	$(".icon_down").live("click", function(){
+	    var current = $(this).parents("tr");
+	    var next = $(this).parents("tr").next();
+	    if (next.is("tr:visible")) {
+	    	current.insertAfter(next);
+	    	var current_num = current.find("td:first").html();
+	    	var next_num = next.find("td:first").html();
+	    	current.find("td:first").html(next_num)
+	    	next.find("td:first").html(current_num)
+	    	current.find("td").css("background-color", "#fff").find(":input").slideUp(100).delay(100).fadeIn(200);
+	    }
+	})
+}) 
+function rule_del(_this) {
+	$(_this).parents("tr").remove();
+}
+function ruledata_add() {
+	$("#rule_data").append($("#rule_data tr:last").clone(true));
+	var _num = $(".ruledata_list:visible").length > 0 ? parseInt($(".ruledata_list:visible:last").find("td:first").text()) : 0;
+	$(".ruledata_list:hidden:first").show().find("td:first").html(_num + 1);
+}
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,184 @@
+<link rel="stylesheet" href="template/default/css/friends.css">
+<!--好友JSON-->
+<div id="friendsdata" class="pk-hide">{$isfriendsarray}</div>
+<!--消息JSON-->
+<div id="messagedata" class="pk-hide">{$ismessagearray}</div>
+<!--好友列表页-->
+<div id="friendsdiv" class="pk-row"></div>
+<!--消息列表页-->
+<div id="messagediv" class="pk-row pk-hide">
+	<div class="pk-row pk-text-sm pk-padding-10 pk-background-color-primary">
+		<div class="pk-w-sm-4 pk-padding-0 pk-text-left">
+			<a class="pk-text-white" href="javascript:" onclick="$('#friendsdiv').removeClass('pk-hide');$('#messagediv').addClass('pk-hide');" style="text-decoration: none;">&lt;&nbsp;返回</a>
+		</div>
+		<div id="nickname" class="pk-w-sm-4 pk-text-truncate pk-text-center pk-text-bold pk-text-white">&nbsp;</div>
+		<div class="pk-w-sm-4 pk-padding-0 pk-text-right">
+			<a id="ckzla" class="pk-text-white" href="javascript:" onclick="window.open('index.php?c=user&id='+$(this).data('uid'),'_blank')">查看资料</a>
+			<a id="schya" class="pk-text-white" href="javascript:" onclick="pkalert('确定删除该好友？','提示','window.open(\'index.php?c=friends&type=del&uid=\'+$(\'#schya\').data(\'uid\'),\'pk-di\');location.reload()')">删除好友</a>
+		</div>
+	</div>
+	<div id="messagedivcontent" class="pk-row pk-text-white pk-padding-bottom-15 pk-text-sm pk-word-break-all" style="border: solid 1px #ddd;border-top: none;border-bottom: none;height: 555px;overflow-y: auto;"></div>
+	<div class="pk-row pk-padding-10" style="background-color: #EFEFEF;">
+		<div class="pk-w-sm-9 pk-padding-0">
+			<input type="text" name="content" class="pk-textbox pk-textbox-noshadow pk-radius-bottom-left-4 pk-radius-top-left-4" style="border: none;" autocomplete="off" placeholder="仅支持短消息发送" required />
+		</div>
+		<div class="pk-w-sm-3 pk-padding-0">
+			<button name="postbtn" type="button" class="pk-btn pk-btn-block pk-btn-primary pk-radius-bottom-right-4 pk-radius-top-right-4" style="border: none;" onclick="sendmessage()">发 送</button>
+		</div>
+	</div>
+</div>
+<script>
+	$('input[name="content"]').keydown(function(e) {
+		if(e.which == 13) {
+			$('button[name="postbtn"]').click();
+		}
+	});
+
+	if($('#friendsdata').html()) {
+		var $friendsdata = eval(({$friendsarray}));
+	} else {
+		var $friendsdata = new Array();
+	}
+	if($('#messagedata').html()) {
+		var $messagedata = eval(({$messagearray}));
+	} else {
+		var $messagedata = new Array();
+	}
+	var $friendsdiv = $('#friendsdiv');
+	var $friendshtml = '',
+		$friendshtml2 = '',
+		$friendshtml3 = '';
+	//列出好友
+	for(var i = 0; i < $friendsdata.length; i++) {
+		var $span = '',
+			$sex = '';
+		if($friendsdata[i]['sex'] == 'b') {
+			$sex = '<span class="pk-text-primary fa fa-mars"></span>&nbsp;';
+		} else if($friendsdata[i]['sex'] == 'g') {
+			$sex = '<span class="pk-text-danger fa fa-venus"></span>&nbsp;';
+		} else {
+			$sex = '<span class="pk-text-default fa fa-intersex"></span>&nbsp;';
+		}
+		if($friendsdata[i]['messagecount']) {
+			//有消息的
+			$span = '<span id="messagecount-' + $friendsdata[i]['uid'] + '">' + $friendsdata[i]['messagecount'] + '</span>';
+			$friendshtml += '<div class="pk-w-sm-12 pk-w-md-4"><a href="javascript:" onclick="chat(' + $friendsdata[i]['uid'] + ')" title="用户名：' + $friendsdata[i]['username'] + '"><div class="pk-row"><div class="pk-w-sm-4"><img src="userhead/' + $friendsdata[i]['uid'] + '.png" onerror="this.src=\'userhead/0.png\';this.onerror=\'\'">' + $span + '</div><div class="pk-w-sm-8 pk-padding-left-0"><div class="pk-text-primary">' + $sex + $friendsdata[i]['nickname'] + '</div><div>' + $friendsdata[i]['sign'] + '</div></div></div></a></div>';
+		} else {
+			//无信息的
+			if($friendsdata[i]['isfriend'] || $friendsdata[i]['uid'] == 0) {
+				//正常好友
+				$friendshtml2 += '<div class="pk-w-sm-12 pk-w-md-4"><a href="javascript:" onclick="chat(' + $friendsdata[i]['uid'] + ')" title="用户名：' + $friendsdata[i]['username'] + '"><div class="pk-row"><div class="pk-w-sm-4"><img src="userhead/' + $friendsdata[i]['uid'] + '.png" onerror="this.src=\'userhead/0.png\';this.onerror=\'\'"></div><div class="pk-w-sm-8 pk-padding-left-0"><div class="pk-text-default">' + $sex + $friendsdata[i]['nickname'] + '</div><div>' + $friendsdata[i]['sign'] + '</div></div></div></a></div>';
+			} else {
+				//单向好友
+				$friendshtml3 += '<div class="pk-w-sm-12 pk-w-md-4"><a href="javascript:" onclick="chat(' + $friendsdata[i]['uid'] + ')" title="用户名：' + $friendsdata[i]['username'] + '，对方暂未添加你为好友"><div class="pk-row"><div class="pk-w-sm-4"><img src="userhead/' + $friendsdata[i]['uid'] + '.png" onerror="this.src=\'userhead/0.png\';this.onerror=\'\'"></div><div class="pk-w-sm-8 pk-padding-left-0"><div class="pk-text-danger">' + $sex + $friendsdata[i]['nickname'] + '</div><div>' + $friendsdata[i]['sign'] + '</div></div></div></a></div>';
+			}
+		}
+	}
+	$($friendsdiv).append($friendshtml + $friendshtml2 + $friendshtml3);
+
+	function chat($uid) {
+		//清除消息
+		$('#messagecount-' + $uid).remove();
+		$.get('index.php?c=friends&uid=' + $uid);
+		//交互
+		$('input[name="content"]').data('uid', $uid);
+		$('#friendsdiv').addClass('pk-hide');
+		$('#messagediv').removeClass('pk-hide');
+		$('#ckzla').data('uid', $uid);
+		$('#schya').data('uid', $uid);
+		if($uid) {
+			$('input[name="content"]').attr('disabled', false);
+			$('button[name="postbtn"]').attr('disabled', false);
+			$('input[name="content"]')[0].value = '';
+			$('#ckzla').removeClass('pk-hide');
+			$('#schya').removeClass('pk-hide');
+			for(var i = 0; i < $friendsdata.length; i++) {
+				if($friendsdata[i]['uid'] == $uid) {
+					$('#nickname').html($friendsdata[i]['nickname']);
+					if(!$friendsdata[i]['isfriend']) {
+						$('input[name="content"]').attr('placeholder', '对方暂未把你加为好友，发送的消息将以陌生人形式呈现');
+					} else {
+						$('input[name="content"]').attr('placeholder', '相互好友，消息正常显示');
+					}
+				}
+			}
+			if(!$('#nickname').html()) {
+				$('#nickname').html('null');
+			}
+		} else {
+			$('input[name="content"]').attr('disabled', true);
+			$('button[name="postbtn"]').attr('disabled', true);
+			$('input[name="content"]')[0].value = '无法给系统用户组发消息';
+			$('#ckzla').addClass('pk-hide');
+			$('#schya').addClass('pk-hide');
+			$('#nickname').html('系统消息');
+		}
+		//加载消息
+		var mhtml = '';
+		var $mc = 0;
+		if($('#messagedata-' + $uid).html()) {
+			mhtml = $('#messagedata-' + $uid).html();
+			$mc = $('#messagedata-' + $uid).data('mc');
+		} else {
+			for(var i = $messagedata.length - 1; i >= 0; i--) {
+				if(($messagedata[i]['uid'] == $_USER['ID'] && $messagedata[i]['fid'] == $uid) || ($messagedata[i]['fid'] == $_USER['ID'] && $messagedata[i]['uid'] == $uid)) {
+					$mc++;
+					mhtml += '<div class="pk-row"><div class="pk-w-sm-12 pk-padding-top-15 pk-padding-bottom-5 pk-text-center pk-text-xs pk-text-default">' + getLocalTime($messagedata[i]['addtime']) + '</div></div>';
+					if($messagedata[i]['uid'] == $_USER['ID']) {
+						mhtml += '<div class="pk-row message-left"><div class="pk-w-sm-2 pk-text-right"><img class="pk-radius-all" src="userhead/' + $uid + '.png" onerror="this.src=\'userhead/0.png\';this.error=\'\'" style="width: 32px;height: 32px;"></div><div class="pk-w-sm-8 pk-padding-0"><div class="pk-background-color-secondary pk-radius-4 pk-padding-10 pk-text-left pk-overflow-hidden pk-display-table">' + $messagedata[i]['content'] + '</div></div><div class="pk-w-sm-2">&nbsp;</div></div>';
+					} else {
+						mhtml += '<div class="pk-row message-right"><div class="pk-w-sm-2">&nbsp;</div><div class="pk-w-sm-8 pk-padding-0"><div class="pk-background-color-secondary pk-radius-4 pk-padding-10 pk-text-left pk-overflow-hidden pk-display-table pk-float-right">' + $messagedata[i]['content'] + '</div></div><div class="pk-w-sm-2 pk-text-left"><img class="pk-radius-all" src="userhead/' + $_USER['ID'] + '.png" onerror="this.src=\'userhead/0.png\';this.error=\'\'" style="width: 32px;height: 32px;"></div></div>';
+					}
+				}
+			}
+		}
+		$('#nickname').append('&nbsp;(&nbsp;<span>' + $mc + '</span>&nbsp;)');
+		$('#messagedivcontent').data('mc', $mc);
+		$('#messagedivcontent').html(mhtml).scrollTop($('#messagedivcontent')[0].scrollHeight);
+	}
+
+	function sendmessage() {
+		if(!trim($('input[name="content"]').val())) {
+			return false;
+		}
+		/*
+		if($('input[name="content"]').val().length > 85) {
+			pkalert('消息内容太多了，请删掉一些，再发送~');
+			return false;
+		}
+		*/
+		var $uid = $('input[name="content"]').data('uid');
+		$.post('index.php?c=postmessage&uid=' + $uid, {
+			"content": trim($('input[name="content"]').val()),
+			"chkcsrfval": $_USER["CHKCSRFVAL"]
+		}, function(r) {
+			if(r['state'] == 'ok') {
+				//添加消息
+				$('#messagedivcontent').append('<div class="pk-row"><div class="pk-w-sm-12 pk-padding-top-15 pk-padding-bottom-5 pk-text-center pk-text-xs pk-text-default">' + getLocalTime() + '</div></div>');
+				$('#messagedivcontent').append('<div class="pk-row message-right"><div class="pk-w-sm-2">&nbsp;</div><div class="pk-w-sm-8 pk-padding-0"><div class="pk-background-color-secondary pk-radius-4 pk-padding-10 pk-text-left pk-overflow-hidden pk-display-table pk-float-right">' + $('input[name="content"]')[0].value + '</div></div><div class="pk-w-sm-2 pk-text-left"><img class="pk-radius-all" src="userhead/' + $_USER['ID'] + '.png" onerror="this.src=\'userhead/0.png\';this.error=\'\'" style="width: 32px;height: 32px;"></div></div>');
+				//数据保存
+				if(!$('#messagedata-' + $uid).html()) {
+					$('#messagedata-' + $uid).remove();
+					$('body').append('<div id="messagedata-' + $uid + '" class="pk-hide"></div>');
+				}
+				$('#messagedivcontent').data('mc', $('#messagedivcontent').data('mc') + 1);
+				$('#nickname>span:eq(0)').html($('#messagedivcontent').data('mc'));
+				$('#messagedata-' + $uid).data('mc', $('#messagedivcontent').data('mc'));
+				$('#messagedata-' + $uid).html($('#messagedivcontent').html());
+				$('input[name="content"]')[0].value = '';
+				$('#messagedivcontent').scrollTop($('#messagedivcontent')[0].scrollHeight);
+				$('input[name="content"]').attr('disabled', true);
+				$('button[name="postbtn"]').attr('disabled', true);
+				$('input[name="content"]')[0].value = '发消息间隔为5秒，请等待5秒~';
+				setTimeout(function() {
+					$('input[name="content"]').attr('disabled', false);
+					$('input[name="content"]')[0].focus();
+					$('input[name="content"]')[0].value = '';
+					$('button[name="postbtn"]').attr('disabled', false);
+				}, 5000);
+			} else {
+				pkalert(r['msg'], 'js:$(\'input[name="content"]\')[0].focus()');
+			}
+		}, 'json');
+	}
+</script>

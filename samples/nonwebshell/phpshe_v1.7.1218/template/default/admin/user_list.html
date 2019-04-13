@@ -1,0 +1,103 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=user" <!--{if(!$_g_userlevel_id):}-->class="sel"<!--{endif;}-->>会员列表（{$tongji['all']}）<i></i></a>
+		<!--{foreach($cache_userlevel as $k=>$v):}-->
+		<a href="admin.php?mod=user&userlevel_id={$k}" <!--{if($_g_userlevel_id==$k):}-->class="sel"<!--{endif;}-->>{$v['userlevel_name']}（{$tongji[$k]}）<i></i></a>		
+		<!--{endforeach;}-->
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+			<input type="hidden" name="mod" value="{$_g_mod}" />
+			<input type="hidden" name="userlevel_id" value="{$_g_userlevel_id}" />
+			用户名：<input type="text" name="name" value="{$_g_name}" class="inputtext input100 mar5"/>
+			手机号码：<input type="text" name="phone" value="{$_g_phone}" class="inputtext input100 mar5" />
+			电子邮箱：<input type="text" name="email" value="{$_g_email}" class="inputtext input150" />
+			<select name="orderby" class="selectmini">
+			<option value="" href="{pe_updateurl('orderby', '')}">= 默认排序 =</option>
+			<!--{$selnum=1;}-->
+			<!--{foreach(array('ltime|desc'=>'最近登录', 'point|desc'=>'最多积分', 'ordernum|desc'=>'最多订单') as $k=>$v):}-->
+			<option value="{$k}" href="{pe_updateurl('orderby', $k)}" <!--{if($_g_orderby==$k):}-->selected="selected"<!--{endif;}-->>{$selnum++}){$v}</option>
+			<!--{endforeach;}-->
+			</select>
+			<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'user_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt">用户名</th>
+			<th class="bgtt" width="100">等级</td>
+			<th class="bgtt" width="70">余额</td>
+			<th class="bgtt" width="70">积分</th>
+			<th class="bgtt" width="70">订单数</td>
+			<th class="bgtt" width="80">手机号码</th>
+			<!--<th class="bgtt" width="160">常用邮箱</th>-->
+			<th class="bgtt" width="70">注册日期</th>
+			<th class="bgtt" width="145">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td><input type="checkbox" name="user_id[]" value="{$v['user_id']}"></td>
+			<td class="num">{$v['user_id']}</td>
+			<td>{$v['user_name']}</td>
+			<td>{$cache_userlevel[$v['userlevel_id']]['userlevel_name']}</td>
+			<td><span class="num corg">{$v['user_money']}</span></td>
+			<td class="num">{$v['user_point']}</td>
+			<td class="num"><a href="admin.php?mod=order&user_id={$v['user_id']}" class="cblue" target="_blank">{$v['user_ordernum']}</a></td>
+			<td class="num">{$v['user_phone']}</td>
+			<!--<td class="num">{$v['user_email']}</td>-->
+			<td class="num">{pe_date_color(pe_date($v['user_atime'], 'Y-m-d'))}</span></td>
+			<td>
+				<a href="admin.php?mod=user&act=edit&id={$v['user_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=user&act=del&id={$v['user_id']}&token={$pe_token}" class="admin_del mar3" onclick="return pe_cfone(this, '删除')">删除</a>
+				<a href="admin.php?mod=user&act=login&id={$v['user_id']}&token={$pe_token}" class="admin_btn" target="_blank">登录</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'user_id')" />
+			<button href="admin.php?mod=user&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'user_id', 'form', '批量删除')">批量删除</button>
+			<!--<input type="button" value="批量发送邮件" id="sendemail" />-->
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	/*var ips = new Array();
+	$(".ipname").each(function(){
+		ips.push($(this).attr("ip"));
+	})
+	$.getJSON("http://www.phpshe.com/index.php?mod=api&act=ipname&ips="+ips.join(",")+"&callback=?", function(json){
+		$(".ipname").each(function(index){
+			$(this).find("a").html(json.ipname[index]);
+		})
+	})*/
+	$("#sendemail").click(function(){
+		if ($("input[name='user_id[]']:checked").length == 0) {
+			alert('请勾选需要发送的用户!');
+			return false;
+		}
+		var user_id = new Array();
+		$("input[name='user_id[]']:checked").each(function(){
+			user_id.push($(this).val());
+		})
+		url = 'admin.php?mod=user&act=email&id='+user_id.join(",");
+		art.dialog.open(url, {title:'发送邮件', width: 730, height: 470, id: 'sendemail'});
+	})
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

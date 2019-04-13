@@ -1,0 +1,29 @@
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!--引入JS-->
+{load href="__STATIC__/common/js/jquery.min.js" /}
+{load href="__PLUGIN__/layui/layui.js" /}
+<!-- 全局js -->
+{load href="__STATIC__/common/js/global.js" /}
+
+{load href="__STATIC__/portal/js/news.js" /}
+
+
+<script>
+
+
+</script>
+<script>
+$(document).ready(function(){
+  $(".layui-header .layui-nav-item").click(function(){
+   var i =$(this).index();
+   $(".layui-nav-tree").eq(i).show().siblings('.layui-nav-tree').hide();
+  });
+});
+</script>
+
+

@@ -1,0 +1,152 @@
+{extend name="default/base/base_store" /}
+{block name="store_main"}
+
+
+<div class="w1200 mt20">
+    <div class="ds_side">
+        {include file="default/store/default/store/store_info"}
+        <div class="common_module dss-search">
+            <div class="common_title">
+                <h2>{$Think.lang.ds_goods_class}</h2>
+            </div>
+            <ul class="dss-submenu">
+      <li><span class="ico-none"></span><a href="{:url('Store/goods_all',['store_id'=>$store_info.store_id])}">{$Think.lang.ds_whole_goods}</a></li>
+      {notempty name="goods_class_list"}
+      {foreach name="goods_class_list" item="value"}
+      {notempty name="$value.children"}
+      <li><span class="ico-none" onclick="class_list(this);" span_id="{$value.storegc_id}" style="cursor: pointer;"></span><a href="{:url('Store/goods_all',['store_id'=>$store_info.store_id,'storegc_id'=>$value.storegc_id])}">{$value.storegc_name}</a>
+        <ul id="stc_{$value.storegc_id}" class="class_child">
+          {foreach name="$value.children" item="value1" }
+          <li><a href="{:url('Store/goods_all',['store_id'=>$store_info.store_id,'storegc_id'=>$value1.storegc_id])}">{$value1.storegc_name}</a></li>
+          {/foreach}
+        </ul>
+      </li>
+      {else /}
+      <li> <span class="ico-none"></span><a href="{:url('Store/goods_all',['store_id'=>$store_info.store_id,'storegc_id'=>$value.storegc_id])}">{$value.storegc_name}</a></li>
+      {/notempty}
+      {/foreach}
+      {/notempty}
+    </ul>
+        </div>
+        <div class="common_module">
+            <div class="common_title">
+                <h2>{$Think.lang.commodity_ranking}</h2>
+            </div>
+            <div class="common_content">
+                <ul>
+                    {foreach name="hot_sales" item="val"}
+                    <li>
+                        <div class="p_img">
+                            <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}"><img src="{:goods_thumb($val, 240)}" width="85" height="85"></a>
+                        </div>
+                        <div class="p_num {if $key < 3 }active{/if}">{php}echo $key+1;{/php}</div>
+                        <div class="p_info">
+                            <div class="p_name">
+                                <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">{$val.goods_name}</a>
+                            </div>
+                            <div class="p_price">{$Think.lang.currency}<em>{$val.goods_promotion_price}</em></div>
+                            <div class="p_sales">{$Think.lang.ds_sell_out}<strong>{$val.goods_salenum}</strong>{$Think.lang.ds_bi}</div>
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <div class="common_module">
+            <div class="common_title">
+                <h2>{$Think.lang.merchandise_collection}</h2>
+            </div>
+            <div class="common_content">
+                <ul>
+                    {foreach name="hot_collect" item="val"  }
+                    <li>
+                        <div class="p_img">
+                            <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}"><img src="{:goods_thumb($val, 240)}" width="85" height="85"></a>
+                        </div>
+                        <div class="p_num {if $key < 3 }active{/if}">{php}echo $key+1;{/php}</div>
+                        <div class="p_info">
+                            <div class="p_name">
+                                <a href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">{$val.goods_name}</a>
+                            </div>
+                            <div class="p_price">{$Think.lang.currency}<em>{$val.goods_promotion_price}</em></div>
+                            <div class="p_sales">{$Think.lang.ds_collection_popularity}{$Think.lang.ds_colon}<strong>{$val.goods_collect}</strong></div>
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    <div class="ds_main">
+        {notempty name="store_slide"}
+        <div class="storeslider">
+            <ul class="slides">
+                {for start="0" end="5"}
+                {notempty name="$store_slide[$i]"}
+                <li><a href="{$store_slide_url[$i]}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_SLIDE}/{$store_slide[$i]}" width="940" height="400"></a></li>
+                {/notempty}
+                {/for}
+            </ul>
+            <a class="ctrl prev" href="javascript:void(0)">&lt;</a>
+            <a class="ctrl next" href="javascript:void(0)">&gt;</a>
+        </div>
+        {/notempty}
+        <div class="recommend-goods">
+            
+            <div class="dss-grid-list">
+                {notempty name="recommended_goods_list"}
+                <ul>
+                    {foreach name="recommended_goods_list" item="value" }
+                    <li class="grid-items">
+                        <a class="thumb" href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank">
+                            <p class="grid-img">
+                                <img alt="{$value.goods_name}" src="{:goods_thumb($value, 240)}">
+                            </p>
+                            <div class="grid-title">{$value.goods_name}</div>
+                            <p class="grid-desc">{$value.goods_advword}</p>
+                            <p class="grid-price">{$Think.lang.currency}{$value.goods_promotion_price}</p>
+                            <p class="grid-tips">
+                                <em class="thumb"><span>{$Think.lang.show_store_index_recommend}</span></em>
+                            </p>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div class="clear"></div>
+                {/notempty}
+            </div>
+        </div>
+        <div class="new-goods">
+            <div class="dss-grid-list">
+                {notempty name="new_goods_list"}
+                <ul>
+                    {foreach name="new_goods_list" item="value" }
+                    <li class="grid-items">
+                        <a class="thumb" href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank">
+                            <p class="grid-img">
+                                <img alt="{$value.goods_name}" src="{:goods_thumb($value, 240)}">
+                            </p>
+                            <div class="grid-title">{$value.goods_name}</div>
+                            <p class="grid-desc">{$value.goods_advword}</p>
+                            <p class="grid-price">{$Think.lang.currency}{$value.goods_promotion_price}</p>
+                            <p class="grid-tips">
+                                <em class="thumb"><span>{$Think.lang.show_store_index_new_goods}</span></em>
+                            </p>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+                {/notempty}
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+    jQuery(".storeslider").slide({mainCell: ".slides ", autoPlay: true, delayTime: 3000});
+</script>
+
+{/block}

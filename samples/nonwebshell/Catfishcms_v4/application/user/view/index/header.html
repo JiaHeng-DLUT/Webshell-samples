@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="copyright" content="Catfish CMS All Rights Reserved">
+    <meta name="robots" content="noindex,noarchive">
+    <title>{$title} | {$subtitle}</title>
+    <meta name="keywords" content="{$keyword}">
+    <meta name="description" content="{$description}">
+    <link rel="icon" href="{$domain}public/common/images/favicon.ico">
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+    <script src="{$domain}public/common/js/jquery.min.js"></script>
+    <script src="{$domain}public/common/js/bootstrap.min.js"></script>
+</head>
+<body style="padding-top: 70px; background-color:#f1f1f1;">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{:Url('/index')}">
+                <img alt="{:lang('Catfish CMS')}" src="{if condition="$logo eq ''"}{$domain}public/{$template}/images/catfish.png{else /}{$logo}{/if}" width="20" height="20">
+            </a>
+            <a class="navbar-brand" href="{:Url('/index')}">{$title}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="daohangcaidan">
+                {notempty name="menu"}
+                {volist name="menu.menu1" id="vo"}
+                {empty name="vo.children"}
+                <li><a href="{$vo.href}" target="{$vo.target}">{if condition="$vo.icon neq ''"}{$vo.icon} {/if}{$vo.label}</a></li>
+                {else /}
+                <li class="dropdown">
+                    <a href="{$vo.href}" class="dropdown-toggle" data-toggle="dropdown" target="{$vo.target}">{if condition="$vo.icon neq ''"}{$vo.icon} {/if}{$vo.label} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        {volist name="vo.children" id="voc"}
+                        <li><a href="{$voc.href}" target="{$voc.target}">{if condition="$voc.icon neq ''"}{$voc.icon} {/if}{$voc.label}</a></li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/empty}
+                {/volist}
+                {/notempty}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="weidenglu{notempty name="login"} hidden{/notempty}"><a href="{:Url('/login/index/register')}">{:lang('Sign up')}</a></li>
+                <li class="weidenglu{notempty name="login"} hidden{/notempty}"><a href="{:Url('/login')}">{:lang('Log in')}</a></li>
+                <li class="dropdown yidenglu{empty name="login"} hidden{/empty}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="dengluyonghuming">{$login}</span> <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{:Url('/index/Index/userCenter')}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{:lang('User center')}</a></li>
+                    <li><a href="{:Url('/index/Index/quit')}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{:lang('Sign out')}</a></li>
+                </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                {notempty name="user_menu_group_top"}
+                {volist name="user_menu_group_top" id="vogt" }
+                {assign name="kft" value="$key" /}
+                {volist name="vogt" id="vo"}
+                <a href="{:Url('/user/Index/plugingt/name/'.$vo.name.'.'.$kft)}" class="list-group-item{if condition="($active == $vo.name) AND ($isTop == '0') "} active{/if}">
+                {$vo.title}
+                </a>
+                {/volist}
+                <div style="height: 10px;"></div>
+                {/volist}
+                {/notempty}
+                {notempty name="user_menu_top"}
+                {volist name="user_menu_top" id="vo"}
+                <a href="{:Url('/user/Index/plugint/name/'.$vo.name)}" class="list-group-item{if condition="($active == $vo.name) AND ($isTop == '1') "} active{/if}">
+                {$vo.title}
+                </a>
+                {/volist}
+                {/notempty}
+                <a href="{:Url('ziliao')}" class="list-group-item{eq name="active" value="ziliao"} active{/eq}">
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;{:lang('Edit my profile')}
+                </a>
+                <a href="{:Url('gaimima')}" class="list-group-item{eq name="active" value="gaimima"} active{/eq}">
+                    <span class="glyphicon glyphicon-lock"></span>&nbsp;{:lang('Change password')}
+                </a>
+                <a href="{:Url('touxiang')}" class="list-group-item{eq name="active" value="touxiang"} active{/eq}">
+                    <span class="glyphicon glyphicon-user"></span>&nbsp;{:lang('Edit avatar')}
+                </a>
+                <a href="{:Url('shoucang')}" class="list-group-item{eq name="active" value="shoucang"} active{/eq}">
+                    <span class="glyphicon glyphicon-star"></span>&nbsp;{:lang('My collection')}
+                </a>
+                <a href="{:Url('pinglun')}" class="list-group-item{eq name="active" value="pinglun"} active{/eq}">
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;{:lang('My comments')}
+                </a>
+                {notempty name="user_menu_append"}
+                {volist name="user_menu_append" id="vo"}
+                <a href="{:Url('/user/Index/plugin/name/'.$vo.name)}" class="list-group-item{if condition="($active == $vo.name) AND ($isTop == '0') "} active{/if}">
+                {$vo.title}
+                </a>
+                {/volist}
+                {/notempty}
+                {notempty name="user_menu_group_append"}
+                {volist name="user_menu_group_append" id="vog" }
+                {assign name="kf" value="$key" /}
+                <div style="height: 10px;"></div>
+                {volist name="vog" id="vo"}
+                <a href="{:Url('/user/Index/plugingp/name/'.$vo.name.'.'.$kf)}" class="list-group-item{if condition="($active == $vo.name) AND ($isTop == '0') "} active{/if}">
+                {$vo.title}
+                </a>
+                {/volist}
+                {/volist}
+                {/notempty}
+            </div>
+        </div>
+        <div class="col-md-9">

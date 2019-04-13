@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="<{$site_keywords}>">
+<meta name="description" content="<{$site_description}>">
+
+<link href="<{$site_root}>public/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">var sitepath = '<{$site_root}>'; var rewrite = '<{$cfg.is_enabled_rewrite}>';</script>
+<script type="text/javascript" src="<{$site_root}>public/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/js/common.js"></script>
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="loginbanner clearfix">
+    <div class="loginlogo">
+        <div class="header">
+           <div class="loginlogo-left">
+                <a href="<{$site_root}>">
+                    <img src="/public/images/logo.png">
+                </a>
+           </div>
+           <div class="loginlogo-right">
+              <span>登录</span>
+           </div>
+        </div>
+    </div>
+    <div class="wrapper clearfix">
+    	<div class="loginform">
+        	<h3><span>用户登录</span></h3>
+            <form name="myform" method="post" action="">
+            <ul>
+                <li><label>用户名：</label><input type="text" name="nick_name" size="30" maxlength="50" class="ipt" /></li>
+            	<!-- <li><label>电子邮箱：</label><input type="text" name="email" size="30" maxlength="50" class="ipt" /></li> -->
+                <li><label>登录密码：</label><input type="password" name="pass" size="30" maxlength="50" class="ipt" /></li>
+                <li><label>&nbsp;</label><input type="hidden" name="action" value="login" /><input type="submit" value="登 录" class="btn" /></li>
+
+                <li>            
+                  <div class="youkeqq">
+                    <a href="<{url('member/connect',['type'=>'init'])}>" onclick='toQzoneLogin()'><i class="fa fa-qq youke-blue" aria-hidden="true"></i>&nbsp;QQ登录</a>
+                  </div>
+                  <div class="toplink">
+                    <a href="<{url('register')}>">免费注册 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                  </div>
+                  <div class="loginpass">
+                   <a href="<{url('getpwd')}>">忘记密码？</a>
+                  </div>
+                </li>
+            </ul>
+            </form>
+    	</div>
+     
+    </div>
+  
+</div>
+     <div class="footer">
+     
+    Powered by <a href="http://www.youke365.site/" target="_blank">Youke365</a> v<{$smarty.const.SYS_VERSION}>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,2 @@
+for kindeditor
+如果用kindeditor编辑器，上传的图片会放在这里。

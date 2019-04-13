@@ -1,0 +1,2 @@
+#projectModal .modal-dialog, #productModal .modal-dialog {top: auto!important; bottom: 90px;}
+.body-modal #projectModal .modal-dialog, .body-modal #productModal .modal-dialog {top: auto!important; bottom: 55px;}

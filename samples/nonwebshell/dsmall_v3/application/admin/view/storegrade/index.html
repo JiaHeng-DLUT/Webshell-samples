@@ -1,0 +1,69 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺等级</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form method="post" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_grade_name}</dt>
+                <dd><input type="text" value="{$like_storegrade_name|default=''}" name="like_storegrade_name" id="like_storegrade_name" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt></dt>
+                <dd></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {notempty name="like_storegrade_name"}
+                <a class="btn btn-small " href="{:url('Storegrade/index')}" title="{$Think.lang.cancel_search}"><span>{$Think.lang.cancel_search}</span></a>
+                {/notempty}
+            </div>
+        </div>
+    </form>
+
+    <table class="ds-default-table">
+        <thead>
+            <tr>
+                <th>{$Think.lang.storegrade_sort}</th>
+                <th>{$Think.lang.storegrade_name}</th>
+                <th>{$Think.lang.storegrade_goods_limit}</th>
+                <th>{$Think.lang.storegrade_album_limit}</th>
+                <th>{$Think.lang.storegrade_template_number}</th>
+                <th>{$Think.lang.storegrade_price}</th>
+                <th>{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty  name="storegrade_list"}
+            {foreach name="storegrade_list" item="storegrade"}
+            <tr id="ds_row_{$storegrade.storegrade_id}">
+                <td>{$storegrade.storegrade_sort}</td>
+                <td>{$storegrade.storegrade_name}</td>
+                <td>{$storegrade.storegrade_goods_limit}</td>
+                <td>{$storegrade.storegrade_album_limit}</td>
+                <td>{$storegrade.storegrade_template_number}</td>
+                <td>{$storegrade.storegrade_price}元/年</td>
+                <td>
+                    <a href="javascript:dsLayerOpen('{:url('Storegrade/edit',['storegrade_id'=>$storegrade.storegrade_id])}','{$Think.lang.ds_edit}-{$storegrade.storegrade_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Storegrade/drop',['storegrade_id'=>$storegrade.storegrade_id])}','您确定删除此店铺等级',{$storegrade.storegrade_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="20">{$Think.lang.no_record}</td>
+            </tr>
+            {/notempty}
+        </tbody>
+    </table>
+</div>

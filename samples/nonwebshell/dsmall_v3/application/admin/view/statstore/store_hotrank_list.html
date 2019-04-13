@@ -1,0 +1,60 @@
+<table class="ds-default-table">
+  	<thead class="thead">
+		<tr class="space">
+			<th colspan="15">店铺热卖TOP榜</th>
+		</tr>
+		<tr class="thead sortbar-array">
+			<th class="align-center">序号</th>
+            <th class="align-center">店铺名称</th>
+            <th class="align-center">{$sort_text}</th>
+        </tr>
+    </thead>
+    <tbody id="datatable">
+    {notempty name="statlist"}
+    {foreach name="statlist" item="v"}
+          <tr class="hover">
+          	<td>{$v.sort}</td>
+          	<td>{$v.store_name}</td>
+          	<td>{$v[$stat_field]}</td>
+          </tr>
+    {/foreach}
+    {else /}
+    <tr class="no_data">
+        	<td colspan="11">{$Think.lang.no_record}</td>
+        </tr>
+   {/notempty}
+    </tbody>
+  </table>
+
+  <div class="h36"></div>
+
+  <!-- 飙升榜 -->
+  <table class="ds-default-table">
+    <thead class="thead">
+    	<tr class="space">
+			<th colspan="15">店铺热卖飙升榜</th>
+		</tr>
+      <tr class="thead sortbar-array">
+        <th class="align-center">序号</th>
+        <th class="align-center">店铺名称</th>
+        <th class="align-center">{$sort_text}</th>
+        <th class="align-center">升降幅度</th>
+      </tr>
+    </thead>
+    <tbody id="datatable">
+    {notempty name="soaring_statlist"}
+   {foreach name="soaring_statlist" item="v"}
+          <tr class="hover">
+          	<td>{$v.sort}</td>
+          	<td>{$v.store_name}</td>
+          	<td>{$v[$stat_field]}<</td>
+          	<td>{$v.hb}%</td>
+          </tr>
+   {/foreach}
+    {else /}
+    <tr class="no_data">
+        	<td colspan="11">{$Think.lang.no_record}</td>
+        </tr>
+   {/notempty}
+    </tbody>
+  </table>

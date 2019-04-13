@@ -1,0 +1,57 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>{@SL_新闻分类标题}-{@SL_网站标题}</title>
+<link href="{@SL_安装目录}{@SL_网站ico}" rel="shortcut icon" />
+<meta name="keywords" content="{@SL_新闻分类keywords}">
+<meta name="description" content="{@SL_新闻分类description}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/amazeui.css">
+<link rel="stylesheet" href="{@SL_安装目录}wap/w95/style/css/main.css">
+</head>
+<body>
+ 
+<script src="{@SL_安装目录}wap/w95/style/js/jquery.min.js"></script> 
+ 
+{@SL_网站顶部}
+<div class="list-main">
+  <div class="am-container">
+    <div class="list-nav" data-am-sticky="">
+      <ul class="am-cf">
+{$left_list(<li id="%左侧type%-%左侧typeID%"><a href="%左侧链接%" title="%左侧标题%">%左侧标题%</a></li>,{@SL_菜单ID})}
+</ul>
+      <div class="curBg"></div>
+      <div class="cls"></div>
+    </div>
+    <div><img src="{@SL_安装目录}{@SL_新闻列表页}" class="am-img-responsive" alt=""></div>
+    <div class="list-pag"> Position：<a href="{@SL_首页链接}">Home</a> > <a href="">{@SL_新闻分类标题}</a> >  </div>
+    <div class="list-center">
+      <div class="list-news">
+        <ul id="more4">
+{$news_list2(,<li class="lnf4" id="more_element_3"><a href="%新闻链接%" title="%新闻标题%">
+            <div class="am-g am-g-collapse">
+              <div class="am-u-sm-2 am-u-md-1 am-u-lg-1 list-news-time"><span>%发表月%-%发表日%</span><br>
+                %发表年%</div>
+              <div class="am-u-sm-10 am-u-md-11 am-u-lg-11 list-news-nr"> <span>%新闻标题%</span>
+                <p> %新闻简述% </p>
+              </div>
+            </div>
+            </a></li>,10|{@SL_新闻分类page},{@SL_新闻分类ID},normal)}
+</ul>
+      </div>
+      <div class="pagess">
+        <ul>
+         {$getpage2(news,{@SL_新闻分类ID},10|{@SL_新闻分类page})}
+        </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{@SL_网站底部}<script>$('#news-{@SL_新闻分类ID}').attr('class','list-active');</script></body>
+</html>

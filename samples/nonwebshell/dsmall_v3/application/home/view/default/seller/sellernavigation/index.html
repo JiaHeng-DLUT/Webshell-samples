@@ -1,0 +1,34 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a href="{:url('Sellernavigation/navigation_add')}" class="dssc-btn dssc-btn-green" title="{$Think.lang.store_navigation_new}">{$Think.lang.store_navigation_new}</a>
+{/block}
+{block name="seller_main"}
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w60">{$Think.lang.store_goods_class_sort}</th>
+            <th class="tl">{$Think.lang.store_navigation_name}</th>
+            <th class="w110">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $navigation_list}
+        {foreach name="navigation_list" item="nav"}
+        <tr class="bd-line">
+            <td>{$nav.storenav_sort}</td>
+            <td class="tl"><dl class="goods-name"><dt><a href="{if $nav.storenav_url eq ''}{:url('Store/article',array('store_id' =>session('store_id'),'storenav_id'=>$nav.storenav_id))}{else}{$nav.storenav_url}{/if}">{$nav.storenav_title}</a></dt></dl></td>
+            <td class="dssc-table-handle">
+                <span><a href="{:url('Sellernavigation/navigation_edit',array('storenav_id' => $nav.storenav_id))}" class="btn-blue"><i class="fa fa-pencil-square"></i><p> {$Think.lang.ds_edit}</p></a></span>
+                <span> <a href="javascript:ds_ajaxget_confirm('{:url('Sellernavigation/navigation_del',['storenav_id'=>$nav.storenav_id])}','{$Think.lang.ds_ensure_del}');" class="btn-red" ><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span>
+            </td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/if}
+    </tbody>
+</table>
+{/block}
+

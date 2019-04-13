@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$article.title} - {$settings.site.sitename}</title>
+    <meta name="keywords" content="{if !empty($article.title)}{:get_keywords($article.title, $article.content)}{/if}" />
+    <meta name="description" content="{if !empty($article.content)}{:get_filter_str($article.content,255)}{/if}" />
+  {include file="public/css"}
+</head>
+<body>
+
+{include file="public/header"}
+
+<div class="layui-main news-detail">
+	<div class="layui-row layui-col-space40">
+		<div class="news-detail-left">
+		 	<div class="detail-main"  >
+
+		 	   <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+		 		<ul id="detail-handel">
+
+		 			<li class="review num"><a href="javascript:;"><i class="layui-icon layui-icon-news-review2"></i><span>{$article.comment}</span></a></li>
+		 			<li class="collect num" data-id="{$Request.param.aid}"  data-url="{:url('@ajax/user/collect')}"><a href="javascript:;"><i class="layui-icon layui-icon-news-collect" {if !empty($article.is_collect)} style="color:#F66" {/if}></i><span>{$article.collect}</span></a></li>
+		 		</ul>
+		 		</div>
+		 		<div class="detail-cont">
+		 			<h1>{$article.title}</h1>
+		 			<div class="newsClass"><span>{$article.cname}</span>{:get_nickname($article['uid'])} <b>{$article.create_time|date="Y-m-d"}</b> <i>收藏 {$article.collect}</i> <i>评论 {$article.comment}</i></div>
+		 			
+	 				{:htmlspecialchars_decode($article.content)}
+
+	 				<!-- 百度分享代码 -->
+	 				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":["mshare","qzone","tsina","weixin","tqq","kaixin001","tieba","douban","bdhome","sqq","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","fbook","twi","linkedin","h163","evernotecn","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+		 		</div>
+		 		<div class="detail-label">
+		 			<i class="layui-icon layui-icon-news-label"></i>
+		 			<span class="layui-breadcrumb">
+		 			 {volist name="article.tag" id="vo"}
+					  <a href="{:url('@portal/search/index')}?keywords={$vo}">{$vo}</a>/
+					 {/volist}
+		
+					</span>
+		 		</div>
+		 	{if $settings.article.comment_status ==1}  	
+		 		<div class="detail-comment">
+		 			<p>全部评论 <span>{$article.comment}</span></p>
+		 			<div class="addComment layui-form">
+		 				<div class="img"><span>{:avatar('',48)}</span></div><div class="content">
+		 					<textarea placeholder="写下您想说的评论吧..." class="layui-textarea"></textarea>
+		 					<div class="btn"><button class="layui-btn" id="comment-btn" data-aid="{$Request.param.aid}" data-pid="0">添加评论</button></div>
+		 				</div>
+		 			</div>
+	 				<ul id="replyCont">
+	 				   {volist name="article.comment_list" id="vo"}
+	 					<li>
+	 					
+	 						<div class="img"><a href="{:url('@user/home/index',['uid'=>$vo.uid])}">{:avatar($vo.uid,48)}</a></div><div class="readCom">
+	 							<p class="name"><a href="">{$vo.nickname}</a>
+	 							<span>{:format_time("Y-m-d",$vo.create_time)}</span>
+	 							<span class="goods" ><span>{$vo.zan}</span><i class="layui-icon layui-icon-news-good" data-id="{$vo.comment_id}" data-url="{:url('@ajax/user/zan')}"></i></span>
+	 							</p>
+	 							<p class="txt">{$vo.content}</p>
+	 							<a class="reply" href="javascript:;" data-pid="{$vo.comment_id}" data-aid="{$article.aid}" data-url="{:url('@ajax/user/comment')}">回复</a>
+	 							{if !empty($vo.child)}
+	 							 <a href="javascript:;" class="reply-count" data-id="{$vo.comment_id}" data-value="{if !empty($vo.child)}{:count($vo.child)}{else}0{/if}条回复" data-status='0'>{if !empty($vo.child)}{:count($vo.child)}{else}0{/if}条回复</a>
+	 							{/if}
+
+	 						</div>
+	 						{if !empty($vo.child)}
+	 						<!-- 二级回复 -->
+	 						<ul class="two-reply-content-{$vo.comment_id}" style="overflow:hidden;display:none" >
+                                   {volist name="vo.child" id="vo2"}
+                                    <li style="width:90%;float:right;margin-top:20px;overflow:hidden">
+	                                  <div class="img"><a href="{:url('@user/home/index',['uid'=>$vo2.uid])}">{:avatar($vo2.uid,48)}</a></div><div class="readCom">
+                                  
+		 							<p class="name"><a href="">{$vo2.nickname}</a><span>{:format_time('Y-m-d',$vo2.create_time)}</span><span class="goods" ><span>{$vo2.zan}</span><i class="layui-icon layui-icon-news-good" data-id="{$vo2.comment_id}</span>" data-url="{:url('@ajax/user/zan')}"></i></span></p>
+		 							<p class="txt">{$vo2.content}</p>
+		 							<a class="reply" href="javascript:;" data-pid="{$vo2.comment_id}" data-aid="{$article.aid}" data-url="{:url('@ajax/user/comment')}">回复</a> 
+		 							{if !empty($vo2.child)}
+		 							<a href="javascript:;" class="two-reply-count" data-id="{$vo2.comment_id}" data-value="{if !empty($vo2.child)}{:count($vo2.child)}{else}0{/if}条回复" data-status='0'>{if !empty($vo2.child)}{:count($vo2.child)}{else}0{/if}条回复</a>
+		 							{/if}
+	 						         </div>
+	 						          {if !empty($vo2.child)}
+	 						             <!-- 三级回复 -->
+	 						           		<ul  class="three-reply-content-{$vo2.comment_id}" style="overflow:hidden;display:none" >
+				                                 
+				                                   {volist name="vo2.child" id="vo3"}
+				                                    <li style="width:90%;float:right;margin-top:20px;overflow:hidden">
+					                                  <div class="img"><a href="{:url('@user/home/index',['uid'=>$vo3.uid])}">{:avatar($vo3.uid,48)}</a></div><div class="readCom">
+				                                  
+							 							<p class="name"><a href="">{$vo3.nickname}</a><span>{:format_time('Y-m-d',$vo3.create_time)}</span><span class="goods" ><span>{$vo3.zan}</span>
+							 							<i class="layui-icon layui-icon-news-good" data-id="{$vo3.comment_id}" data-url="{:url('@ajax/user/zan')}"></i>
+							 							</span></p>
+							 							<p class="txt">{$vo3.content}</p>
+							 						
+						 						         </div>
+					 						         </li>
+					 						       {/volist}
+					 						    
+				                                
+
+					 						</ul>
+					 				       {/if}
+					 				  </li>
+	 						       {/volist}
+                              
+	 						</ul>
+	 						   {/if}
+	 					</li>
+	 				  {/volist}
+	 				</ul>
+	 			<div id="page">{$comment|raw}</div>
+	 	
+		 		</div>
+		 	{/if}	
+		 	</div>
+		</div>
+		<div class="news-detail-right">
+			<div class="detail-side">
+				<div class="person">
+					<a class="img" href="{:url('@user/home/index',['uid'=>$article.uid])}">{:avatar($article.uid,128)}</a>
+					<span class="name">{:get_nickname($article['uid'])}</span>
+					<span class="num">{$article.article_count}篇文章</span>
+					{if $article.uid != $user.uid} 
+					  {if !empty($article.is_follow)}
+								<a href="javascript:;" class="layui-btn follow layui-btn-disabled" data-url="{:url('@ajax/user/follow')}" data-uid="{$article.uid}">取消关注</a>
+								{else}
+	                           <a href="javascript:;" class="layui-btn focusOn follow"  data-url="{:url('@ajax/user/follow')}" data-uid="{$article.uid}">关注</a>
+					  {/if}
+				
+					{/if}
+				</div>
+				<div class="list">
+					<p>热门推荐</p>
+					<ul>
+					{volist name="hot_article" id="vo"}
+						<li><a href="{:url('@portal/article/detail',['aid'=>$vo.aid])}" target="_blank" title="{$vo.title}"><img src="{$vo.thumb}" alt="{$vo.thumb}"><span>{$vo.title}</span></a></li>
+					{/volist}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="silde"><a id="refresh"><i class="layui-icon layui-icon-refresh"></i></a><a id="scroll"><i class="layui-icon layui-icon-up"></i></a></div>
+</div>
+
+{include file="public/footer"}
+
+
+  {include file="public/js"}
+ <script>
+   $(function(){
+   	var url ="{:url('@ajax/user/comment')}";
+          	
+   	  $("#comment-btn").on('click',function(){
+   	  		var aid =$(this).attr('data-aid');
+   	  		var content = $(".content .layui-textarea").val();
+   	  		if(aid ==''){
+                layer.msg('评论参数错误！');
+                return;
+   	  		}
+   	  		if(content ==''){
+                layer.msg('请输入评论内容！');
+                return;
+   	  		}
+   	  		var param = {aid:aid,content:content};
+         $.post(url,param,function(json){
+         	if(json.code ==0){
+         		layer.msg(json.msg);
+                location.reload();	
+         	}else{
+                layer.msg(json.msg);
+             	
+         	}
+ 
+         });
+   	  });
+
+  //回复展开
+  $(".reply-count").on('click',function(){
+
+  var id = 	$(this).attr('data-id');
+  var value = 	$(this).attr('data-value');
+   var v =  $(this).attr('data-status');
+   if(v ==1){
+      $(".two-reply-content-"+id).hide();
+      $(this).html(value);
+      $(this).attr('data-status',0);
+    }else{
+
+      $(this).html('收起回复');
+     $(".two-reply-content-"+id).show();
+     $(this).attr('data-status',1);
+    }
+   });
+// 二级点击三级展开
+  $(".two-reply-count").on('click',function(){
+   var id    = 	$(this).attr('data-id');
+   var value = 	$(this).attr('data-value');
+   var v     =  $(this).attr('data-status');
+  
+   if(v ==1){
+      
+      $(".three-reply-content-"+id).hide();
+      $(this).html(value);
+      $(this).attr('data-status',0);
+    }else{
+    	
+      $(this).html('收起回复');
+     $(".three-reply-content-"+id).show();
+     $(this).attr('data-status',1);
+    }
+   });
+  });
+ </script>
+</body>
+</html>

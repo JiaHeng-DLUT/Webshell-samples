@@ -1,0 +1,203 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-oredr-show">
+    <div class="dssc-order-info">
+        <div class="dssc-order-details">
+            <div class="title">{$Think.lang.virtual_order_information}</div>
+            <div class="content">
+                <dl>
+                    <dt>{$Think.lang.virtual_order_number}：</dt>
+                    <dd>{$order_info.order_sn}<a href="javascript:void(0);">{$Think.lang.ds_more}<i class="fa fa-angle-down"></i>
+                            <div class="more"><span class="arrow"></span>
+                                <ul>
+                                    <li>{$Think.lang.store_order_pay_method}：{:get_order_payment_name($order_info['payment_code'])}</li>
+                                    <li>{$Think.lang.store_order_add_time}：<span>{$order_info.add_time|date="Y-m-d H:i:s",###}</span></li>
+                                    {notempty name="$order_info.payment_time"}
+                                    <li>{$Think.lang.store_show_order_pay_time}：<span>{$order_info.payment_time|date="Y-m-d H:i:s",###}</span></li>
+                                    {/notempty}
+                                </ul>
+                            </div>
+                        </a></dd>
+                </dl>
+                <dl class="line">
+                    <dt>{$Think.lang.buyer_space}：</dt>
+                    <dd>{$order_info.buyer_name}</dd>
+                </dl>
+                <dl class="line">
+                    <dt>{$Think.lang.receive_mobile_phone}：</dt>
+                    <dd>{$order_info.buyer_phone}</dd>
+                </dl>
+                <dl class="line">
+                    <dt>{$Think.lang.store_show_order_buyer_message}：</dt>
+                    <dd>{$order_info.buyer_msg}</dd>
+                </dl>
+            </div>
+        </div>
+        {if $order_info['order_state'] == ORDER_STATE_CANCEL}
+        <div class="dssc-order-condition">
+            <dl>
+                <dt><i class="fa fa-power-off orange"></i>{$Think.lang.store_order_state}：</dt>
+                <dd>{$Think.lang.transaction_closure}</dd>
+            </dl>
+            <ul>
+                <li>{$order_info.close_time|date="Y-m-d H:i:s",###} {$Think.lang.transaction_closure_cause}：{$order_info.close_reason}</li>
+            </ul>
+        </div>
+        {/if}
+        {if $order_info['order_state'] == ORDER_STATE_NEW}
+        <div class="dssc-order-condition">
+            <dl>
+                <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+                <dd>{$Think.lang.order_has_been_generated}</dd>
+            </dl>
+            <ul>
+                <li>{$Think.lang.buyer_payment_process1}</li>
+                <li>{$Think.lang.buyer_payment_process2} <a href="javascript:void(0)" class="dssc-btn-mini" ds_type="dialog" dialog_width="480" dialog_title="{$Think.lang.store_order_cancel_order}" dialog_id="buyer_order_cancel_order" uri="{:url('Sellervrorder/change_state',['state_type'=>'order_cancel','order_id'=>$order_info.order_id,'order_sn'=>$order_info.order_sn])}"  id="order_action_cancel">{$Think.lang.store_order_cancel_order}</a>。 </li>
+                <li>{$Think.lang.buyer_payment_process3}
+                    <time>{$order_info.order_cancel_day|date="Y-m-d H:i:s",###}</time>
+                    {$Think.lang.buyer_payment_process4}</li>
+            </ul>
+        </div>
+        {/if}
+        {if $order_info['order_state'] == ORDER_STATE_PAY}
+        <div class="dssc-order-condition">
+            <dl>
+                <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+                <dd>{$Think.lang.buyers_payment}</dd>
+            </dl>
+            <ul>
+                <li>{$Think.lang.buyer_paid_process1}</li>
+                <li>{$Think.lang.buyer_paid_process2}
+                    <time>{$order_info.vr_indate|date="Y-m-d",###}</time>
+                    {$Think.lang.buyer_paid_process3}</li>
+            </ul>
+        </div>
+        {/if}
+        {if $order_info['order_state'] == ORDER_STATE_SUCCESS}
+        <div class="dssc-order-condition">
+            <dl>
+                <dt><i class="fa fa-check-circle-o green"></i>{$Think.lang.store_order_state}：</dt>
+                <dd>{$Think.lang.generate_orders}。</dd>
+            </dl>
+        </div>
+        {/if}
+    </div>
+    {if $order_info['order_state'] != ORDER_STATE_CANCEL}
+    <div class="dssc-order-step">
+        <dl class="step-first current">
+            <dt>{$Think.lang.generate_orders}</dt>
+            <dd class="bg"></dd>
+            <dd class="date" title="{$Think.lang.order_generation_time}">{$order_info.add_time|date="Y-m-d H:i:s",###}</dd>
+        </dl>
+        <dl class="{if $order_info.step_list.step2}current{/if}">
+            <dt>{$Think.lang.complete_payment}</dt>
+            <dd class="bg"> </dd>
+            <dd class="date" title="{$Think.lang.store_show_order_pay_time}"><?php echo @date('Y-m-d H:i:s',$order_info['payment_time']); ?></dd>
+        </dl>
+        <dl class="{if $order_info.step_list.step3}current{/if}">
+            <dt>{$Think.lang.issue_exchange_code}</dt>
+            <dd class="bg"> </dd>
+        </dl>
+        <dl class="long {if $order_info.step_list.step4}current{/if}">
+            <dt>{$Think.lang.order_finished}</dt>
+            <dd class="bg"> </dd>
+            <dd class="date" title="{$Think.lang.order_finished}">{$order_info.finnshed_time|date="Y-m-d H:i:s",###}</dd>
+        </dl>
+        <div class="code-list tip" title="{$Think.lang.prompt_information1}"><i class="arrow"></i>
+            <h5>{$Think.lang.e_exchange_code}</h5>
+            <div id="codeList">
+                <ul>
+                    {foreach name="$order_info.extend_vr_order_code" item="code_info" }
+                    <li class="{if $code_info.vr_state==1}used{/if}"><strong><?php echo $code_info['vr_state'] == '0' ? ($code_info['vr_indate'] < TIMESTAMP ? $code_info['vr_code'] : encrypt_show($code_info['vr_code'],7,12)) : $code_info['vr_code'];?></strong> {$code_info.vr_code_desc} </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {else/}
+    <br/>
+    {/if}
+  <div class="dssc-order-contnet">
+    <table class="dssc-default-table order">
+      <thead>
+        <tr>
+          <th class="w10"></th>
+          <th colspan="2">{$Think.lang.store_order_goods_detail}</th>
+          <th class="w100">{$Think.lang.store_order_goods_single_price}</th>
+          <th class="w60">{$Think.lang.store_show_order_amount}</th>
+          <th class="w240"><strong>{$Think.lang.prompt_information2}</strong></th>
+          <th class="w100">{$Think.lang.trading_status}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="20"><span class="ml10" title="{$Think.lang.virtual_order_number}">{$Think.lang.virtual_order_number}：{$order_info.order_sn}</span><span>{$Think.lang.place_order_time}：{$order_info.add_time|date="Y-m-d H:i",###}</span><span><a href="{:url('Store/index',['store_id'=>$order_info.store_id])}" title="{$order_info.store_name}">{$order_info.store_name}</a></span></th>
+        </tr>
+        <tr>
+          <td class="bdl"></td>
+          <td><div class="pic-thumb"><a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank"/><img src="{:goods_thumb($order_info, 240)}"/></a></div></td>
+          <td class="tl"><dl class="goods-name">
+              <dt><a href="{:url('Goods/index',['goods_id'=>$order_info.goods_id])}" target="_blank" title="{$order_info.goods_name}">{$order_info.goods_name}</a></dt>
+              <dd><span class="sale-type">{if $order_info.order_promotion_type == 1}{$Think.lang.store_order_group}，{/if}{$Think.lang.prompt_information3} {$order_info.vr_indate|date="Y-m-d",###}
+              {if $order_info.vr_invalid_refund == '0'}
+              {$Think.lang.prompt_information4}
+              {/if}
+              </span></dd>
+            </dl></td>
+          <td>{$order_info.goods_price}</td>
+          <td>{$order_info.goods_num}</td>
+          <td class="commis bdl bdr">
+          {if $order_info.commis_rate != 200}
+          {:ds_price_format($order_info['order_amount'])}*{$order_info['commis_rate']}%  = {:ds_price_format($order_info['order_amount'] * $order_info['commis_rate']/100)}
+          {/if}
+          </td>
+          <td class="bdl">{$order_info.state_desc}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        {notempty name="$order_info.voucher_code"}
+        <tr>
+          <th colspan="20"><dl class="dssc-store-sales">
+              {notempty name="$order_info.voucher_code"}
+              <dd><span>&emsp;{$Think.lang.prompt_information5} <strong>{$order_info.voucher_price}</strong> {$Think.lang.prompt_information6}：{$order_info.voucher_code}）</span></dd>
+              {/notempty}
+            </dl>
+          </th>
+        </tr>
+        {/notempty}
+        <tr>
+          <td colspan="20" class="transportation tl"><dl class="sum">
+              <dt>{$Think.lang.store_order_sum}：</dt>
+              <dd><em>{$order_info.order_amount}</em>{$Think.lang.ds_yuan}</dd>
+            </dl></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<script>
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js"></script>
+<script type="text/javascript">
+//兑换码列表过多时出现滚条
+$(function(){
+	$('#codeList').perfectScrollbar();
+	//title提示
+    	$('.tip').poshytip({
+            className: 'tip-yellowsimple',
+            showTimeout: 1,
+            alignTo: 'target',
+            alignX: 'left',
+            alignY: 'top',
+            offsetX: 5,
+            offsetY: -60,
+            allowTipHover: false
+        });
+});
+</script>
+
+
+{/block}
+

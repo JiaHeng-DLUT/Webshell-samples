@@ -1,0 +1,51 @@
+<div class="pk-row">
+	<div class="pk-row pk-overflow-hidden" style="border:solid 1px #CCCCCC">
+		<div class="pk-padding-15 pk-text-sm pk-padding-top-10 pk-padding-bottom-10" style="background:linear-gradient(to top,#ddd,#fff);color:#777">系统更新</div>
+		<div id="update-content" class="pk-w-sm-12 pk-padding-15 pk-text-sm">
+			<span class="fa fa-fw fa-spin fa-spinner"></span>正在连接HadSky官方服务器，请稍后...
+		</div>
+	</div>
+</div>
+<script>
+	setTimeout('chkupdate()', 1000);
+</script>
+<script>
+	function chkupdate() {
+		var $r = '';
+		$.get("index.php?c=app&a=superadmin:index&s=api&url=" + encodeURIComponent("http://www.hadsky.com/index.php?c=app&a=zhanzhang:index3&s=chkupdate&nowversion={$nowversion}"), function(r, s, x) {
+			if(s == 'success') {
+				try {
+					var $jsondata = eval('(' + r + ')');
+					if($jsondata['status'] == 'ok') {
+						if($jsondata['content']) {
+							$content = $jsondata['content'];
+						} else {
+							$content = '暂无说明';
+						}
+						$r = '可升级至：' + $jsondata['version'] + '<br>更新大小：' + ($jsondata['filesize'] / 1024) + ' KB<br>更新说明：' + $content + '<br><br><button id="updatebtn" class="pk-btn pk-btn-success" onclick="pkalert(\'确定升级至最新版？<br>为以防万一请做好数据的备份\',\'警告\',\'update()\')">升级至最新版</button>';
+					} else {
+						$r = '恭喜当前版本已是最新版';
+					}
+				} catch(e) {
+					$r = '数据异常，请稍后再试';
+				}
+			} else {
+				$r = '与官方通讯失败';
+			}
+			$('#update-content').html($r);
+		});
+	}
+
+	function update() {
+		var $r = '';
+		$('#updatebtn').prop('disabled', true).html('<span class="fa fa-fw fa-spin fa-spinner"></span>正在升级，请勿刷新或关闭本页...');
+		$.get("index.php?c=app&a=superadmin:index&s=update&do=update&rnd={$_G['RND']}", function(r, s, x) {
+			if(s == 'success') {
+				$r = r;
+			} else {
+				$r = '出错';
+			}
+			$('#update-content').html($r);
+		});
+	}
+</script>

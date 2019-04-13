@@ -1,0 +1,76 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+
+<div class="w1200">
+  <div class="dsh-container wrapper">
+  <div class="left">
+    <div class="dsh-module dsh-module-style01">
+      <div class="title">
+        <h3>{$Think.lang.article_article_article_class}</h3>
+      </div>
+      <div class="content">
+        <div class="dsh-sidebar-article-class">
+          <ul>
+            {foreach name="sub_class_list" item="v"}
+            <li><a href="{:url('Article/index',['ac_id'=>$v.ac_id])}">{$v.ac_name}</a></li>
+            {/foreach}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="dsh-module dsh-module-style03">
+      <div class="title">
+        <h3>{$Think.lang.article_article_new_article}</h3>
+      </div>
+      <div class="content">
+        <ul class="dsh-sidebar-article-list">
+          {notempty name="new_article_list"}
+          {foreach name="new_article_list" item="v"}
+          <li><i class="fa fa-angle-right"></i>
+            <a {if $v.article_url !=""}target="_blank"{/if} href="{if $v.article_url != ''} {$v.article_url}{else /} {:url('Article/show',['article_id'=>$v.article_id])}{/if}">
+            {$v.article_title}
+            </a>
+          </li>
+         {/foreach}
+          {else /}
+          <li>{$Think.lang.article_article_no_new_article}</li>
+         {/notempty}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="dsh-article-con">
+      <h1>{$article.article_title}</h1>
+      <h2>{:date('Y-m-d H:i',$article.article_time)}</h2>
+      <div class="default">
+        <p>{$article.article_content|htmlspecialchars_decode}</p>
+      </div>
+      <div class="more_article">
+        <span class="fl">{$Think.lang.article_show_previous}：
+          {notempty name="pre_article"}
+        <a {if $pre_article.article_url !=""}target="_blank"{/if} href="{if $pre_article.article_url !=''}{$pre_article.article_url}{else /}{:url('Article/show',['article_id'=>$pre_article.article_id])}{/if}">
+          {$pre_article.article_title}
+          </a>
+          <time>{:date('Y-m-d H:i',$pre_article.article_time)}</time>
+        {else /}
+        {$Think.lang.article_article_not_found}
+       {/notempty}
+        </span> <span class="fr">{$Think.lang.article_show_next}：
+        {notempty name="next_article"}
+        <a {notempty name="next_article.article_url"}target="_blank"{/notempty} href="{notempty name="next_article.article_url"}{$next_article.article_url}{else /}{:url('Article/show',['article_id'=>$next_article.article_id])}{/notempty} ">{$next_article.article_title}</a>
+        <time>{:date('Y-m-d H:i',$next_article.article_time)}</time>
+        {else /}
+        {$Think.lang.article_article_not_found}
+        {/notempty}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+{/block}

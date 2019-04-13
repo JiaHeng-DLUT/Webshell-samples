@@ -1,0 +1,72 @@
+<style>
+	pre {
+		border: solid 1px #ccc;
+		border-radius: 1px;
+		margin: 0;
+		font-size: 15px;
+	}
+</style>
+<div class="pk-row">
+	<div class="pk-padding-20">
+		<h4 class="pk-padding-bottom-5">安装环境检测</h4>
+		<pre id="checkup-pre"><span class="fa fa-fw fa-spin fa-spinner"></span>正在检测当前主机环境...</pre>
+		<div id="qzaz" class="pk-text-xs pk-row pk-padding-top-5 pk-hide">
+			<div class="pk-w-sm-1" style="padding:2px 0 0;width:15px;">
+				<input id="ignorebtn" type="checkbox" value="1" />
+			</div>
+			<div class="pk-w-sm-11 pk-padding-0">强制安装（可能出现不可预计的问题）</div>
+		</div>
+		<div class="pk-padding-top-15 pk-text-center">
+			<button id="nextbtn" class="pk-btn pk-btn-success">下一步</button>
+		</div>
+	</div>
+</div>
+<script>
+	$(function() {
+		$('#nextbtn').prop('disabled', true);
+		$.getJSON('index.php', {
+			'step': 0,
+			'submit': 'yes'
+		}, function(data) {
+			if(data['state'] == 'ok') {
+				$('#nextbtn').prop('disabled', false);
+				var html = '';
+				var datas = data['datas'];
+				for(key in datas) {
+					html += key + '：';
+					if(datas[key] === true) {
+						html += '<span style="color:green">支持</span>';
+					} else {
+						if(datas[key] === false) {
+							html += '<span style="color:red">不支持</span>';
+							$('#qzaz').removeClass('pk-hide');
+							$('#nextbtn').prop('disabled', true);
+						} else {
+							html += datas[key];
+						}
+					}
+					html += "\r\n";
+				}
+				$("#checkup-pre").html(html);
+			} else {
+				ppp({
+					icon: 2,
+					shade: 1,
+					content: '环境检测出错'
+				});
+			}
+		});
+
+		$('#ignorebtn').change(function() {
+			if($(this).prop('checked')) {
+				$('#nextbtn').prop('disabled', false);
+			} else {
+				$('#nextbtn').prop('disabled', true);
+			}
+		});
+
+		$('#nextbtn').click(function() {
+			location.href = 'index.php?step=1';
+		});
+	});
+</script>

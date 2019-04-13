@@ -1,0 +1,35 @@
+#forumlabel {
+	padding: 10px;
+	padding-top: 5px;
+}
+
+#forumlabel:before,
+#forumlabel:after {
+	content: " ";
+	display: table;
+}
+
+#forumlabel:after {
+	clear: both;
+}
+
+#forumlabel>a {
+	float: left;
+	padding: 2px 5px;
+	border: solid 1px #777;
+	border-radius: 2px;
+	font-size: 12px;
+	margin-left: 5px;
+	margin-top: 5px;
+	color: #777;
+}
+
+#forumlabel>a.pk-active {
+	background-color: #999;
+	color: white !important;
+	border: solid 1px #999 !important;
+}
+
+#forumlabel>a:hover {
+	opacity: 0.8;
+}

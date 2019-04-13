@@ -1,0 +1,486 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+  <div class="homepage-focus" dstype="editStoreContent">
+      <ul class="tab-menu">
+          <li class="current">店铺信息</li>
+          <li>注册信息</li>
+      </ul>
+      <form id="store_form" method="post">
+          <input type="hidden" name="store_id" value="{$store_array.store_id}" />
+          <table class="ds-default-table">
+              <tbody>
+                  <tr class="noborder">
+                      <td colspan="2" class="required"><label>{$Think.lang.store_user_name}:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform">{$store_array.member_name}</td>
+                      <td class="vatop tips"></td>
+                  </tr>
+                  <tr>
+                      <td colspan="2" class="required"><label class="validation" for="seller_name">店主卖家账号:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform">{$store_array.seller_name}</td>
+                      <td class="vatop tips">用于登录商家中心，可与店主账号不同</td>
+                  </tr>
+                  <tr>
+                      <td colspan="2" class="required"><label class="validation" for="store_name">店铺名称:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform"><input type="text" value="{$store_array.store_name}" id="store_name" name="store_name" class="txt"></td>
+                      <td class="vatop tips"></td>
+                  </tr>
+                  <tr>
+                      <td colspan="2" class="required"><label for="store_addtime">开店时间:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform">{notempty name="$store_array.store_addtime"}{$store_array.store_addtime|date='Y-m-d',###}{/notempty}</td>
+                      <td class="vatop tips"></td>
+                  </tr>
+                  <tr>
+                      <td colspan="2" class="required"><label>{$Think.lang.belongs_class}:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform"><select name="storeclass_id">
+                              <option value="0">{$Think.lang.ds_please_choose}...</option>
+                              {notempty name="class_list"}
+                              {foreach name="class_list" item="v" key="k" }
+                              <option {if $store_array.storeclass_id == $v.storeclass_id}selected="selected" {/if} value="{$v.storeclass_id}">{$v.storeclass_name}</option>
+                              {/foreach}
+                              {/notempty}
+                          </select></td>
+                      <td class="vatop tips"></td>
+                  </tr>
+              </tbody>
+              <tbody>
+                  <tr>
+                      <td colspan="2" class="required"><label>
+                              <label for="grade_id"> {$Think.lang.belongs_level}: </label>
+                          </label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform">
+                          <select id="grade_id" name="grade_id">
+                              {notempty name="grade_list"}
+                              {foreach name="grade_list" item="v" key="k" }
+                              <option {if $store_array.grade_id == $v.storegrade_id}selected="selected"{/if} value="{$v.storegrade_id}">{$v.storegrade_name}</option>
+                              {/foreach}
+                              {/notempty}
+                          </select>
+                      </td>
+                      <td class="vatop tips"></td>
+                  </tr>
+                  <tr>
+                      <td colspan="2" class="required">{$Think.lang.period_to}:</td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform"><input type="text" value="{$store_array.store_endtime}" id="end_time" name="end_time" class="txt date"></td>
+                      <td class="vatop tips">{$Think.lang.formart}</td>
+                  </tr>
+              <td class="vatop tips"></td>
+              </tr>
+              <tr>
+                  <td colspan="2" class="required"><label for="store_tq">店铺保障服务开关:</label></td>
+              </tr>
+              <tr>
+                  <td>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_baozh1" class="cb-enable {if $store_array.store_baozh == '1'}selected{/if}" ><span>保障</span></label>
+                          <label for="store_baozh0" class="cb-disable {if $store_array.store_baozh == '0'}selected{/if}" ><span>图标</span></label>
+                          <input id="store_baozh1" name="store_baozh" {if $store_array.store_baozh == '1'}checked="checked"{/if} value="1" type="radio">
+                          <input id="store_baozh0" name="store_baozh" {if $store_array.store_baozh == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      
+                  </td>
+              </tr>
+
+              <tr>
+                  <td colspan="2" class="required"><label for="store_tq">保障内容开关:</label></td>
+              </tr>		
+              <tr>
+                  <td>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_zhping1" class="cb-enable {if $store_array.store_zhping == '1'}selected{/if}" ><span>正品</span></label>
+                          <label for="store_zhping0" class="cb-disable {if $store_array.store_zhping == '0'}selected{/if}" ><span>保障</span></label>
+                          <input id="store_zhping1" name="store_zhping" {if $store_array.store_zhping == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_zhping0" name="store_zhping" {if $store_array.store_zhping == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_shiti1" class="cb-enable {if $store_array.store_shiti == '1'}selected{/if}" ><span>实体</span></label>
+                          <label for="store_shiti0" class="cb-disable {if $store_array.store_shiti == '0'}selected{/if}" ><span>店铺</span></label>
+                          <input id="store_shiti1" name="store_shiti" {if $store_array.store_shiti == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_shiti0" name="store_shiti" {if $store_array.store_shiti == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_qtian1" class="cb-enable {if $store_array.store_qtian == '1'}selected{/if}" ><span>七天</span></label>
+                          <label for="store_qtian0" class="cb-disable {if $store_array.store_qtian == '0'}selected{/if}" ><span>退换</span></label>
+                          <input id="store_qtian1" name="store_qtian" {if $store_array.store_qtian == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_qtian0" name="store_qtian" {if $store_array.store_qtian == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_tuihuo1" class="cb-enable {if $store_array.store_tuihuo == '1'}selected{/if}" ><span>退换</span></label>
+                          <label for="store_tuihuo0" class="cb-disable {if $store_array.store_tuihuo == '0'}selected{/if}" ><span>承诺</span></label>
+                          <input id="store_tuihuo1" name="store_tuihuo" {if $store_array.store_tuihuo == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_tuihuo0" name="store_tuihuo" {if $store_array.store_tuihuo == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_shiyong1" class="cb-enable {if $store_array.store_shiyong == '1'}selected{/if}" ><span>试用</span></label>
+                          <label for="store_shiyong0" class="cb-disable {if $store_array.store_shiyong == '0'}selected{/if}" ><span>中心</span></label>
+                          <input id="store_shiyong1" name="store_shiyong" {if $store_array.store_shiyong == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_shiyong0" name="store_shiyong" {if $store_array.store_shiyong == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_erxiaoshi1" class="cb-enable {if $store_array.store_erxiaoshi == '1'}selected{/if}" ><span>2H</span></label>
+                          <label for="store_erxiaoshi0" class="cb-disable {if $store_array.store_erxiaoshi == '0'}selected{/if}" ><span>发货</span></label>
+                          <input id="store_erxiaoshi1" name="store_erxiaoshi" {if $store_array.store_erxiaoshi == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_erxiaoshi0" name="store_erxiaoshi" {if $store_array.store_erxiaoshi == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_huodaofk1" class="cb-enable {if $store_array.store_huodaofk == '1'}selected{/if}" ><span>货到</span></label>
+                          <label for="store_huodaofk0" class="cb-disable {if $store_array.store_huodaofk == '0'}selected{/if}" ><span>付款</span></label>
+                          <input id="store_huodaofk1" name="store_huodaofk" {if $store_array.store_huodaofk == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_huodaofk0" name="store_huodaofk" {if $store_array.store_huodaofk == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                      <div class="onoff" style="float:left;margin-right:10px;">
+                          <label for="store_xiaoxie1" class="cb-enable {if $store_array.store_xiaoxie == '1'}selected{/if}" ><span>消费者</span></label>
+                          <label for="store_xiaoxie0" class="cb-disable {if $store_array.store_xiaoxie == '0'}selected{/if}" ><span>保障</span></label>
+                          <input id="store_xiaoxie1" name="store_xiaoxie" {if $store_array.store_xiaoxie == '1'}checked="checked"{/if} value="1" type="radio">
+                                 <input id="store_xiaoxie0" name="store_xiaoxie" {if $store_array.store_xiaoxie == '0'}checked="checked"{/if} value="0" type="radio">
+                      </div>
+                  </td>
+              </tr>
+                  <tr>
+                      <td colspan="2" class="required"><label>
+                          <label>店铺类型:</label>
+                      </label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform onoff"><label class="cb-enable {if $joinin_detail.store_type == '0'}selected{/if}" ><span>企业</span></label>
+                          <label class="cb-disable {if $joinin_detail.store_type == '1'}selected{/if}" ><span>个人</span></label>
+                          <input name="store_type" {if $joinin_detail.store_type == '0'}checked="checked"{/if} onclick="$('#tr_store_close_info').hide();" value="1" type="radio">
+                          <input name="store_type" {if $joinin_detail.store_type == '1'}checked="checked"{/if} onclick="$('#tr_store_close_info').show();" value="0" type="radio"></td>
+                      <td class="vatop tips"></td>
+                  </tr>
+                  <input type="hidden" name="member_id" value="{$joinin_detail.member_id}" />
+                  <tr>
+              <tr>
+                  <td colspan="2" class="required"><label>
+                          <label for="state">{$Think.lang.state}:</label>
+                      </label></td>
+              </tr>
+              <tr class="noborder">
+                  <td class="vatop rowform onoff"><label for="store_state1" class="cb-enable {if $store_array.store_state == '1'}selected{/if}" ><span>{$Think.lang.open}</span></label>
+                      <label for="store_state0" class="cb-disable {if $store_array.store_state == '0'}selected{/if}" ><span>{$Think.lang.close}</span></label>
+                      <input id="store_state1" name="store_state" {if $store_array.store_state == '1'}checked="checked"{/if} onclick="$('#tr_store_close_info').hide();" value="1" type="radio">
+                             <input id="store_state0" name="store_state" {if $store_array.store_state == '0'}checked="checked"{/if} onclick="$('#tr_store_close_info').show();" value="0" type="radio"></td>
+                  <td class="vatop tips"></td>
+              </tr>
+              </tbody>
+              <tbody id="tr_store_close_info">
+                  <tr >
+                      <td colspan="2" class="required"><label for="store_close_info">{$Think.lang.store_close_info}:</label></td>
+                  </tr>
+                  <tr class="noborder">
+                      <td class="vatop rowform"><textarea name="store_close_info" rows="6" class="tarea" id="store_close_info">{$store_array.store_close_info}</textarea></td>
+                      <td class="vatop tips"></td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                  <tr class="tfoot">
+                      <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+                  </tr>
+              </tfoot>
+          </table>
+    </form>
+      <form id="joinin_form" enctype="multipart/form-data" method="post" action="{:url('Store/edit_save_joinin')}" style="display:none;">
+          <input type="hidden" name="member_id" value="{$joinin_detail.member_id}" />
+          {if $joinin_detail.store_type != 1}
+
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="20">公司及联系人信息</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th class="w150">公司名称：</th>
+                      <td colspan="20"><input type="text" class="txt" name="company_name" value="{$joinin_detail.company_name}"></td>
+                  </tr>
+                  <tr>
+                      <th>公司所在地：</th>
+                      <td><input type="hidden" name="company_address" id="company_address" value="{$joinin_detail.company_address}"></td>
+                      <th>公司详细地址：</th>
+                      <td><input type="text" class="txt w300" name="company_address_detail" value="{$joinin_detail.company_address_detail}"></td>
+                      <th>注册资金：</th>
+                      <td><input type="text" class="txt w72" name="company_registered_capital" value="{$joinin_detail.company_registered_capital}">&nbsp;万元 </td>
+                  </tr>
+                  <tr>
+                      <th>联系人姓名：</th>
+                      <td><input type="text" class="txt" name="contacts_name" value="{$joinin_detail.contacts_name}"></td>
+                      <th>联系人电话：</th>
+                      <td><input type="text" class="txt" name="contacts_phone" value="{$joinin_detail.contacts_phone}"></td>
+                      <th>电子邮箱：</th>
+                      <td><input type="text" class="txt" name="contacts_email" value="{$joinin_detail.contacts_email}"></td>
+                  </tr>
+              </tbody>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="20">营业执照信息（副本）</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th class="w150">营业执照号：</th>
+                      <td><input type="text" class="txt" name="business_licence_number" value="{$joinin_detail.business_licence_number}"></td></tr><tr>
+
+                      <th>营业执照所在地：</th>
+                      <td><input type="hidden" name="business_licence_address" id="business_licence_address" value="{$joinin_detail.business_licence_address}"></td></tr><tr>
+
+                      <th>营业执照有效期：</th>
+                      <td><input type="text" class="txt" name="business_licence_start" id="business_licence_start" value="{$joinin_detail.business_licence_start}"> - <input type="text" class="txt" name="business_licence_end" id="business_licence_end" value="{$joinin_detail.business_licence_end}"></td>
+                  </tr>
+                  <tr>
+                      <th>法定经营范围：</th>
+                      <td colspan="20"><input type="text" class="txt w300" name="business_sphere" value="{$joinin_detail.business_sphere}"></td>
+                  </tr>
+                  <tr>
+                      <th>营业执照<br />电子版：</th>
+                      <td colspan="20">
+                          {notempty name="joinin_detail.business_licence_number_electronic"}
+                          <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}"> <img src="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}" height="100"/> </a>
+                          <input class="w200" type="file" name="business_licence_number_electronic">
+                          {/notempty}
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="20">开户银行信息：</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th class="w150">银行开户名：</th>
+                      <td><input type="text" class="txt w300" name="bank_account_name" value="{$joinin_detail.bank_account_name}"></td>
+                  </tr><tr>
+                      <th>公司银行账号：</th>
+                      <td><input type="text" class="txt w300" name="bank_account_number" value="{$joinin_detail.bank_account_number}"></td></tr>
+                  <tr>
+                      <th>开户银行支行名称：</th>
+                      <td><input type="text" class="txt w300" name="bank_name" value="{$joinin_detail.bank_name}"></td>
+                  </tr>
+                  <tr>
+                      <th>开户银行所在地：</th>
+                      <td colspan="20"><input type="hidden" name="bank_address" id="bank_address" value="{$joinin_detail.bank_address}"></td>
+                  </tr>
+           
+              </tbody>
+
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="20">结算账号信息：</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th class="w150">银行开户名：</th>
+                      <td><input type="text" class="txt w300" name="settlement_bank_account_name" value="{$joinin_detail.settlement_bank_account_name}"></td>
+                  </tr>
+                  <tr>
+                      <th>公司银行账号：</th>
+                      <td><input type="text" class="txt w300" name="settlement_bank_account_number" value="{$joinin_detail.settlement_bank_account_number}"></td>
+                  </tr>
+                  <tr>
+                      <th>开户银行支行名称：</th>
+                      <td><input type="text" class="txt w300" name="settlement_bank_name" value="{$joinin_detail.settlement_bank_name}"></td>
+                  </tr>
+
+                  <tr>
+                      <th>开户银行所在地：</th>
+                      <td><input type="hidden" name="settlement_bank_address" id="settlement_bank_address" value="{$joinin_detail.settlement_bank_address}"></td>
+                  </tr>
+              </tbody>
+
+          </table>
+
+          {else /}
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="6">店铺及联系人信息</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th>公司名称：</th>
+                      <td><input type="text" class="txt" name="company_name" value="{$joinin_detail.company_name}"></td>
+                      <th>所在地：</th>
+                      <td><input type="hidden" name="company_address" id="company_address" value="{$joinin_detail.company_address}"></td>
+                      <th>详细地址：</th>
+                      <td colspan="3"><input type="text" class="txt w300" name="company_address_detail" value="{$joinin_detail.company_address_detail}"></td>
+                  </tr>
+                  <tr>
+                      <th>联系人姓名：</th>
+                      <td><input type="text" class="txt" name="contacts_name" value="{$joinin_detail.contacts_name}"></td>
+                      <th>联系人电话：</th>
+                      <td><input type="text" class="txt" name="contacts_phone" value="{$joinin_detail.contacts_phone}"></td>
+                      <th>电子邮箱：</th>
+                      <td><input type="text" class="txt" name="contacts_email" value="{$joinin_detail.contacts_email}"></td>
+                  </tr>
+              </tbody>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="2">身份证信息</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th>身份证姓名：</th>
+                      <td colspan="20"><input type="text" class="txt w300" name="business_sphere" value="{$joinin_detail.business_sphere}"></td>
+                  </tr>
+                  <tr>
+                      <th>身份证号码：</th>
+                      <td><input type="text" class="txt" name="business_licence_number" value="{$joinin_detail.business_licence_number}"></td></tr>
+
+                  <tr>
+                      <th>身份证扫描件：</th>
+                      <td colspan="20">
+                          {notempty name="joinin_detail.business_licence_number_electronic"}
+                          <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}"> <img src="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}" height="100" /> </a>
+                          {/notempty}
+                          <!--<input class="w200" type="file" name="business_licence_number_electronic">-->
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+
+          <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+              <thead>
+                  <tr>
+                      <th colspan="2">结算（支付宝）账号信息：</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th>支付宝帐户名：</th>
+                      <td><input type="text" class="txt w300" name="settlement_bank_account_name" value="{$joinin_detail.settlement_bank_account_name}"></td>
+                  </tr>
+                  <tr>
+                      <th>支付宝账号：</th>
+                      <td><input type="text" class="txt w300" name="settlement_bank_account_number" value="{$joinin_detail.settlement_bank_account_number}"></td>
+                  </tr>
+              </tbody>
+
+          </table>
+   {/if}
+          <div><a id="btn_fail" class="btn" href="JavaScript:void(0);"><span>{$Think.lang.ds_submit}</span></a></div>
+      </form>
+</div>
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("#company_address").ds_region();
+    $("#business_licence_address").ds_region();
+    $("#bank_address").ds_region();
+    $("#settlement_bank_address").ds_region();
+    $('#end_time').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#business_licence_start').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#business_licence_end').datepicker({dateFormat: 'yy-mm-dd'});
+    $('input[name=store_state][value={$store_array.store_state}]').trigger('click');
+
+    //按钮先执行验证再提交表单
+    $("#submitBtn").click(function(){
+//        if($("#store_form").valid()){
+            $("#store_form").submit();
+//        }
+    });
+
+    $("#btn_fail").click(function(){
+        $("#joinin_form").submit();
+    });
+    
+    $('#store_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parentsUntil('tr').parent().prev().find('td:first'));
+        },
+        rules : {
+             store_name: {
+                 required : true,
+                 remote : "{:url('Store/ckeck_store_name',['store_id'=>$store_array.store_id])}"
+              }
+        },
+        messages : {
+            store_name: {
+                required: '{$Think.lang.please_input_store_name}',
+                remote : '店铺名称已存在'
+            }
+        }
+    });
+    $('#joinin_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parentsUntil('tr').parent().find('td:last'));
+        },
+        rules : {
+              business_licence_start:{
+                required: true,
+              },
+              business_licence_end:{
+                required: true,
+              }
+        },
+        messages : {
+            business_licence_start:{
+                required: '营业执照有效期必填',
+            },
+            business_licence_end:{
+                required: '营业执照有效期必填',
+            }
+        }
+    });
+    
+    
+    
+    $('div[dstype="editStoreContent"] > ul').find('li').click(function(){
+        $(this).addClass('current').siblings().removeClass('current');
+        var _index = $(this).index();
+        var _form = $('div[dstype="editStoreContent"]').find('form');
+        _form.hide();
+        _form.eq(_index).show();
+    });
+});
+</script>

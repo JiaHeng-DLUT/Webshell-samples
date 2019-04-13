@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加管理员</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<!-- 后台面包屑导航 -->
+{:get_admin_breadcrumb()}
+
+<!-- 搜索表单 -->
+{:create_search_form("添加管理员",$keywordsData,$customSingleField,$groupData,$dateData,$orderData)}
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="50">
+      <col width="110">
+      <col width="100">
+      <col width="50">
+      <col width="50">
+
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>管理员ID</th>
+        <th>管理员账号</th>
+        <th>角色组</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+{volist name='list' id='vo'}
+      <tr>
+        <td>{if $vo.uid !=1}<input type="checkbox" name="id[]" class="id" title=""  lay-skin="primary" value="{$vo.uid}">{/if}</td>
+        <td>{$vo.uid}</td>
+        <td>{$vo.username}</td>
+        <td>{$vo.role_name}</td>
+        <td>{if $vo.status ==1}启用{else /}禁用{/if}</td>
+        <td>
+        <div class="layui-btn-group">
+        
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="blank('{:url("admin/edit",['id'=>$vo.uid])}','编辑管理员','580px','60%')"> <i class="layui-icon">&#xe642;</i></button>
+          {if $vo.uid !=1}
+        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="del('{:url("admin/del",array("id"=>$vo["uid"]))}')"> <i class="layui-icon">&#xe640;</i></button>
+        {/if}
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+{if empty($list)}
+ <div class="layui-form-item">
+    <div class="empty">
+     <div class="img"></div>
+     <p>暂无内容</p></div>
+ </div>
+</div>
+{/if}
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-primary" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 批量删除</button>
+</div>
+
+
+<script>
+$(function(){
+ //全选批量删除
+        var id = []; //定义空数组
+        var url ="{:url('admin/del')}"; //请求的url
+        var data = {"id":id};   //传递的表单数据
+        var delButton = "#del"; //删除节点class 或者ID
+        var checkboxClass = ".id"; //多选框class
+       
+         $(delButton).click(function(){
+              $(checkboxClass).each(function() {
+              if(this.checked == true){
+                   id.push($(this).val()); 
+              }
+              });              
+         if(id.length == 0){
+            parent.layer.alert('你没有选中任何分类',{title:'批量删除提示'});
+         }else{
+                     var index =parent.layer.confirm('批量删除后，数据不可恢复', {
+                      btn: ['确定删除','取消'] //按钮
+                      ,title:'是否批量删除'
+                      ,shadeClose:true
+                      ,icon: 3
+                      ,anim: 5  //动画类型
+                    }, function(){
+                       parent.layer.close(index);
+                    // 确定ajax 删除数据
+                                $.post(url,data        
+                                     ,function(json){
+                                      if(json.code == 0){
+                                          layer.msg(json.msg);
+                                               setTimeout(function(){ 
+                                                     window.location.reload();  //页面刷新
+                                                },1000);
+                                           }
+                                         }
+                                       );
+
+                    }, function(){
+                       // 取消
+
+                    });
+
+         }
+
+    });
+
+$("#add").on("click",function(){
+    blank('{:url("admin/add")}','添加管理员','580px','70%');
+   });
+
+
+});
+
+</script>
+
+</body>
+
+</html>

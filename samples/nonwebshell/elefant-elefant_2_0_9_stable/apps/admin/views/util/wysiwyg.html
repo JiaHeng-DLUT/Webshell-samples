@@ -1,0 +1,40 @@
+<script>
+$(function () {
+	/**
+	 * This initializes the Redactor editor with the integration
+	 * points/plugins that tie into Elefant's pages, files, and
+	 * dynamic objects embedding.
+	 */
+	$.fn.extend ({
+		wysiwyg: function (options) {
+			var buttons = {{buttons|json_encode}},
+				defaults = {
+					lang: '{{language}}',
+					replaceDivs: false,
+					linkTooltip: false,
+					buttonSource: true,
+					plugins: {{plugins|json_encode}},
+					buttons: buttons,
+					focusCallback: function (evt) {
+						autosave_focused = true;
+					}
+				};
+
+			options = $.extend (defaults, options);
+
+			return this.each (function () {
+				$(this).redactor (options);
+			});
+		}
+	});
+
+	{% if field_id %}
+	document.getElementById ('{{ field_id }}').setAttribute ('data-wysiwyg', 1);
+	$('#{{ field_id }}').wysiwyg ();
+	{% end %}
+
+	if ($.Redactor.prototype.links) {
+		$.Redactor.prototype.links.editor_id = '#{{ field_id }}';
+	}
+});
+</script>

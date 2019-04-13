@@ -1,0 +1,74 @@
+<?php
+namespace app\admin\controller;
+use think\Controller;
+use think\Captcha;
+
+class Login extends Controller
+{
+	public function index(){
+		return $this->fetch();
+	}
+	public function check(){
+		if(!input('post.')){
+			return error_json('非法请求');		  
+		}
+		$post = input('post.');
+		//表单数据验证
+		    $rule = [
+		    'username'  => 'require',
+		    'password'   => 'require|min:6',
+		    'verify_code'   => 'require',
+		    
+			];
+			$msg = [
+			    'username.require' => '账号不能为空',
+			    'password.require'   => '密码不能为空',
+			    'password.min'  => '密码至少6位数',
+			    'verify_code.require'  => '验证码不能为空',
+			];
+			$validate = Validate()->make($rule)->message($msg);
+			$result = $validate->check($post);
+			if(!$result){
+			   return error_json($validate->getError());
+			}
+
+        $username = $post['username'];
+		$where = "username = '$username'";
+//验证验证码
+        $captcha  = $post['verify_code'];
+        if(!captcha_check($captcha)){
+		   return  error_json('验证码错误');
+		};
+       
+		// 数据库验证
+		$Admin = model('Admin')->getAdminInfo($where);
+		$password_key = password_key($post['username'],$post['password'],$Admin['passsalt']);
+		if(!$Admin || $Admin['password'] != $password_key){
+           return  error_json('账号或密码错误');
+		}
+         session('admin_id',$Admin['admin_id']);
+         session('username',$Admin['username']);
+         session('group_id',$Admin['group_id']);
+         //保存登陆日志
+         //
+         //更新登陆时间和IP
+         $info['last_time'] = time();
+         $info['last_ip'] = get_client_ip(); 
+         $admin_id = $Admin['admin_id'];        
+         model('Admin')->updateInfo($admin_id,$info);
+		 return  success_json('登录成功');
+
+	}
+	public function captcha_check(){
+		// $config =    [
+		//     // 验证码字体大小
+		//     'fontSize'    =>    30,    
+		//     // 验证码位数
+		//     'length'      =>    3,   
+		//     // 关闭验证码杂点
+		//     'useNoise'    =>    false, 
+		// ];
+		// $captcha = new Captcha($config);
+		// return $captcha->entry();
+	}
+}

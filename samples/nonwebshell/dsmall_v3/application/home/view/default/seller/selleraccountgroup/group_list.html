@@ -1,0 +1,59 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+ <a href="{:url('Selleraccountgroup/group_add')}" class="dssc-btn dssc-btn-green"  title="{$Think.lang.add_account}"><i class="fa fa-group"></i>{$Think.lang.add_group}</a>
+{/block}
+{block name="seller_main"}
+ 
+<table class="dssc-default-table">
+  <thead>
+    <tr>
+      <th class="w30"></th>
+      <th class="tl">{$Think.lang.group_name}</th>
+      <th class="w100">{$Think.lang.ds_handle}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {notempty name="seller_group_list"}
+    {foreach name="seller_group_list" item="value" key="key" }
+    <tr class="bd-line">
+      <td></td>
+      <td class="tl">{$value.sellergroup_name}</td>
+      <td class="dscs-table-handle"><span><a href="{:url('Selleraccountgroup/group_edit',['group_id'=>$value.sellergroup_id])}" class="btn-blue"><i class="fa fa-pencil-square"></i>
+        <p>{$Think.lang.ds_edit}</p>
+        </a></span><span><a dstype="btn_del_group" data-group-id="{$value.sellergroup_id}" href="javascript:;" class="btn-red"><i class="fa fa-trash-o"></i>
+        <p>{$Think.lang.ds_del}</p>
+        </a></span></td>
+    </tr>
+    {/foreach}
+    {else /}
+    <tr>
+      <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+    </tr>
+    {/notempty}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="20"><div class="pagination"></div></td>
+    </tr>
+  </tfoot>
+</table>
+<form id="del_form" method="post" action="{:url('Selleraccountgroup/group_del')}">
+  <input id="del_group_id" name="group_id" type="hidden" />
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('[dstype="btn_del_group"]').on('click', function() {
+            var group_id = $(this).attr('data-group-id');
+            layer.confirm('{$Think.lang.ds_ensure_del}', {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#del_group_id').val(group_id);
+                ds_ajaxpost('del_form');
+            });
+        });
+    });
+</script>
+
+
+{/block}

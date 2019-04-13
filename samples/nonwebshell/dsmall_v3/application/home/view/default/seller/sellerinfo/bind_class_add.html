@@ -1,0 +1,61 @@
+<style>
+    #gcategory select {margin-left:4px}
+</style>
+<div class="dssc-form-default">
+    <form method="post" action="{:url('Sellerinfo/bind_class_save')}" target="_parent" name="store_bind_class_form" id="store_bind_class_form">
+        <input id="goods_class" name="goods_class" type="hidden" value="">
+        <dl>
+            <dt>{$Think.lang.choose_classification}{$Think.lang.ds_colon}</dt>
+            <dd id="gcategory">
+                <select id="gcategory_class1" style="width: auto;">
+                    <option value="0">{$Think.lang.ds_please_choose}</option>
+                    {notempty name="gc_list"}
+                    {foreach name="gc_list" item="gc"}
+                    <option value="{$gc.gc_id}" data-explain="{$gc.commis_rate}">{$gc.gc_name}</option>
+                    {/foreach}
+                    {/notempty}
+                </select>
+                <span>
+                    <label id="error_message" style="display: none" class="error" for="storenav_title"><i class="fa fa-exclamation-circle"></i>{$Think.lang.choose_classification}</label>
+                </span>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="button" id="btn_add_bind_class" class="submit" value="{$Think.lang.ds_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        gcategoryInit("gcategory");
+        //页面输入内容验证
+        $('#btn_add_bind_class').on('click', function() {
+            $('#error_message').hide();
+            var category_id = '';
+            var validation = true;
+            $('#gcategory').find('select').each(function() {
+                if (parseInt($(this).val(), 10) > 0) {
+                    category_id += $(this).val() + ',';
+                } else {
+                    validation = false;
+                }
+            });
+            if (!validation) {
+                $('#error_message').show();
+                return false;
+            }
+            $('#goods_class').val(category_id);
+
+            var rate = $('#gcategory').find('select').last().find('option:selected').attr('data-explain') + '%';
+            
+                layer.confirm('{$Think.lang.percentage_commission_selected}' + rate + '{$Think.lang.confirm_application}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    ds_ajaxpost('store_bind_class_form');
+                });
+            
+        });
+    });
+</script> 

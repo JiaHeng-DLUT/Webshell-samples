@@ -1,0 +1,89 @@
+{include file="public/css"}
+{include file="public/js"}
+<body style="background:#eee" >
+
+{include file="index/update" /}
+
+<div class="" style="margin:10px;margin-top:10px;">
+
+  <div class="layui-row">
+    <div class="layui-col-md12">
+
+<!-- 系统信息    -->
+        <div class="layui-card">
+                  <div class="layui-card-header">系统信息</div>
+                                  <div class="layui-card-body layui-text">
+                                    <table class="layui-table">
+                                      <colgroup>
+                                        <col width="130">
+                                        <col>
+                                      </colgroup>
+                                      <tbody>
+                                         <tr>
+                                          <td>产品名称</td>
+                                          <td>
+                                              {:config('version.name')}  
+                                           
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>当前版本</td>
+                                          <td>
+                                              {:config('version.type')}  {:config('version.version')}
+                                              {:config('version.time')}
+                                           
+                                          </td>
+                                        </tr>
+                               
+                                          <td>服务器操作系统</td>
+                                          <td>{$sysinfo.os} </td>
+                                        </tr>
+                                        <tr>
+                                          <td>数据库版本</td>
+                                          <td style="padding-bottom: 0;">
+                                             {$sysinfo.mysql_version} 
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>上传限制</td>
+                                          <td style="padding-bottom: 0;">
+                                              {$sysinfo.max_upload} 
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>PHP版本</td>
+                                          <td style="padding-bottom: 0;">
+                                              {$sysinfo.php_version} 
+                                          </td>
+                                        </tr>
+                                         <tr>
+                                          <td>开发商</td>
+                                          <td style="padding-bottom: 0;">
+                                              奇乐网络
+                                          </td>
+                                        </tr>
+
+                                         <tr>
+                                          <td>软件官网</td>
+                                          <td style="padding-bottom: 0;">
+                                              <a href="http://www.qilecms.com" target="_blank">http://www.qilecms.com</a>
+                                          </td>
+                                        </tr>
+                                          </tr>
+                                           <tr>
+                                          <td>官方交流QQ群</td>
+                                          <td style="padding-bottom: 0;">
+                                             970930073 欢迎加入
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                         </div>            
+         </div>
+
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+
+<div class="dssc-flow-item">
+    <div class="title">{$Think.lang.relevant_commodity_transaction_information}</div>
+    <div class="item-goods">
+        {if $return_info.goods_list}
+        {foreach name="return_info.goods_list" item="goods"}
+        <dl>
+            <dt>
+            <div class="dssc-goods-thumb-mini"><a href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" target="_blank"> <img src="{:goods_thumb($goods,240)}"/> </a></div>
+            </dt>
+            <dd><a href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" target="_blank"> {$goods.goods_name} </a> {$Think.lang.currency}{$goods.goods_price}&nbsp;*&nbsp;{$goods.goods_num}<font color="#AAA">({$Think.lang.complain_text_num})</font>
+                <span>{:get_order_goodstype($goods['goods_type'])}</span></dd>
+        </dl>
+       {/foreach}
+        {/if}
+    </div>
+    <div class="item-order">
+        <dl>
+            <dt>{$Think.lang.freight_space}：</dt>
+            <dd>{$return_info.shipping_fee > 0 ? $return_info.shipping_fee : $Think.lang.ds_common_shipping_free}</dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.order_price}{$Think.lang.ds_colon}</dt>
+            <dd><strong>{$Think.lang.currency}{$return_info.order_amount}</strong></dd>
+        </dl>
+        <dl class="line">
+            <dt>{$Think.lang.order_sn}{$Think.lang.ds_colon}</dt>
+            <dd><a href="{:url('Sellerorder/show_order',['order_id'=>$return_info.order_id])}" target="_blank"> {$return_info.order_sn}</a><a href="javascript:void(0);" class="a">{$Think.lang.ds_more}<i class="fa fa-angle-down"></i>
+                <div class="more"> <span class="arrow"></span>
+                    <ul>
+                        {if $return_info.payment_code !== 'offline' && $return_info.order_state !== ORDER_STATE_CANCEL && $return_info.order_state !== ORDER_STATE_NEW}
+                        <li>{$Think.lang.payment_order}{$Think.lang.ds_colon}<span>{$return_info.pay_sn}</span></li>
+                        {/if}
+                        <li>{$Think.lang.store_order_pay_method}{$Think.lang.ds_colon}<span>{$return_info.payment_name}</span></li>
+                        <li>{$Think.lang.store_order_add_time}{$Think.lang.ds_colon}<span>{$return_info.add_time|date="Y-m-d H:i:s",###}</span></li>
+                        {if $return_info.payment_time >0}
+                        <li>{$Think.lang.store_show_order_pay_time}{$Think.lang.ds_colon}<span>{$return_info.payment_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/if}
+                        {if $return_info.order_common.shipping_time > 0}
+                        <li>{$Think.lang.store_show_order_send_time}{$Think.lang.ds_colon}<span>{$return_info.order_common.shipping_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/if}
+                        {if $return_info.finnshed_time > 0}
+                        <li>{$Think.lang.store_show_order_finish_time}{$Think.lang.ds_colon}<<span>{$return_info.finnshed_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/if}
+                    </ul>
+                </div>
+            </a></dd>
+        </dl>
+        {if $return_info.shipping_code}
+        <dl>
+            <dt>{$Think.lang.logistics_single_number}：</dt>
+            <dd>{$return_info.shipping_code} <a href="javascript:void(0);" class="a">{notempty name="express_name"}{$express_name}{/notempty}</a></dd>
+        </dl>
+        {/if}
+        <dl class="line">
+            <dt>{$Think.lang.consignee_space}：</dt>
+            <dd>{$return_info.order_common.reciver_name}<a href="javascript:void(0);" class="a">{$Think.lang.ds_more}<i class="fa fa-angle-down"></i>
+                <div class="more"><span class="arrow"></span>
+                    <ul>
+                        <li>{$Think.lang.store_order_address}{$Think.lang.ds_colon}<span>{$return_info.order_common.reciver_info.address}</span></li>
+                        <li>{$Think.lang.contact_phone_number}：<span>{$return_info.order_common.reciver_info.phone}</span></li>
+                    </ul>
+                </div>
+            </a>
+                <div><span member_id="{$return_info.buyer_id}"></span>
+                    {if $member.member_qq}
+                    <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$member.member_qq}&site=qq&menu=yes" title="QQ: {$member.member_qq}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$member.member_qq}:52" style=" vertical-align: middle;"/></a>
+                    {/if}
+                    {if $member.member_ww}
+                    <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$member.member_ww}&site=cntaobao&s=2&charset=utf-8"  class="vm" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$member.member_ww}&site=cntaobao&s=2&charset=utf-8" alt="Wang Wang"  style=" vertical-align: middle;"/></a>
+                    {/if}
+                </div>
+            </dd>
+        </dl>
+    </div>
+</div>
+
+

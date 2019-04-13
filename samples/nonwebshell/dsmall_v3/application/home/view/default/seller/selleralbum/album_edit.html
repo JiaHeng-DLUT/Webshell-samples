@@ -1,0 +1,65 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    <form id="category_form" method="post" target="_parent" action="{:url('Selleralbum/album_edit_save',['id'=>$class_info.aclass_id])}">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.album_class_add_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="w300 text" type="text" name="name" id="name" value="{$class_info.aclass_name}" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.album_class_add_des}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <textarea rows="3" class="textarea w300" name="description" id="description">{$class_info.aclass_des}</textarea>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.album_class_add_sort}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="text w50" name="sort" id="sort" value="{$class_info.aclass_sort}" />
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.album_class_add_submit}" />
+            </label>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#category_form').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function(form, validator) {
+                $('#warning').show();
+            },
+            submitHandler: function(form) {
+                ds_ajaxpost('category_form')
+            },
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 20
+                },
+                description: {
+                    maxlength: 100
+                },
+                sort: {
+                    digits: true
+                }
+            },
+            messages: {
+                name: {
+                    required: '{$Think.lang.album_class_add_name_null}',
+                    maxlength: '{$Think.lang.album_class_add_name_max}'
+                },
+                description: {
+                    maxlength: '{$Think.lang.album_class_add_des_max}'
+                },
+                sort: {
+                    digits: '{$Think.lang.album_class_add_sort_digits}'
+                }
+            }
+        });
+    });
+</script>

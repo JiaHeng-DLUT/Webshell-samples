@@ -1,0 +1,201 @@
+.productDetail {
+    width: 1020px;
+    background-color: #ffffff;
+}
+
+.main_content {
+    min-height: 724px;
+    max-height: auto;
+}
+
+/* 信用卡意向 */
+.cardBtn {
+    width: 121px;
+    height: 39px;
+    background-color: #2f75ec;
+    border-radius: 19px;
+    line-height: 39px;
+    color: #ffffff;
+}
+
+.cardBtn.off {
+    background-color: #d4d3d3;
+}
+
+.cardHead {
+    padding: 40px 40px 20px;
+}
+
+.cardHead p {
+    font-size: 20px;
+    line-height: 18px;
+    color: #202124;
+    text-align: center
+}
+
+.card_list li {
+    position: relative;
+}
+
+.card_pic {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.cardName {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 10px;
+}
+
+.cardPic {
+    width: 149px;
+    height: 93px;
+}
+
+.cardText {
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #3d3d3f;
+}
+
+.cardText.off {
+    color: #3d3d3f;
+    opacity: 0.5;
+}
+
+.soldOut {
+    position: absolute;
+    right: 56px;
+    bottom: 41px;
+}
+/* 贷款产品收藏 */
+.loan_product tbody{
+    position: relative;
+}
+.loan_product tbody tr.off{
+    opacity: .5;
+}
+.loan_product_soldOut{
+    position: absolute;
+    right: 355px;
+    top: 202px;
+}
+
+/* .loan_product tbody tr .proCost,.text.off {
+    color: #d1d1d1 !important;
+} */
+.lookBtn.off{
+    background-color: #d4d3d3;
+}
+
+
+/* 信用卡收藏 */
+.card_collect:not(:first-of-type) {
+    margin-top: 50px;
+}
+
+.card_collect .sold_out {
+    position: absolute;
+    top: -21px;
+    left: -23px;
+}
+
+.card_collect .card_pic {
+    width: 203px;
+    height: 115px;
+}
+
+.card_collect .card_pic.off {
+    opacity: 0.2;
+
+}
+
+.card_collect h3 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 16px;
+}
+
+.card_collect h3.off {
+    opacity: 0.5;
+}
+
+.card_collect p {
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-top: 10px;
+}
+
+.card_collect p.off {
+    opacity: 0.5;
+}
+
+/* 发现收藏 */
+.find_collect .sold_out {
+    position: absolute;
+    left: 30px;
+    top: 9px;
+
+}
+
+.find_collect li {
+    padding: 30px 60px;
+}
+/* 系统消息 */
+.system_info li{
+    display: flex;
+	justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    border-bottom: 1px solid #ededed;
+}
+.system_info li .q_a h3{
+    font-size: 18px;
+	font-weight: bold;
+	letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-bottom: 20px;
+}
+.system_info li .look_info{
+    color: #2f75ec;
+    cursor: pointer;
+}
+/* 意见反馈 */
+.opinion h2{
+    font-size: 18px;
+	font-weight: bold;
+	letter-spacing: 1px;
+    color: #3d3d3f;
+    margin-bottom: 20px;
+}
+.opinion_list span{
+    display: inline-block;
+    padding: 12px;
+    border-radius: 6px;
+    border: solid 1px #a1a8b2;
+    color: #a1a8b2;
+    margin-right: 10px;
+}
+.opinion_list span.active{
+    border: solid 1px #2f75ec;
+    color: #2f75ec;
+}
+.content_box{
+    width: 925px;
+	height: 409px;
+    background-color: #fafafa;
+    border: none;
+}
+.opinion .lookBtn{
+    margin: 40px auto 0;
+}

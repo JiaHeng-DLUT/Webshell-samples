@@ -1,0 +1,58 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=moneylog" class="sel">{$menutitle}（{$tongji['all']}）<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				用户名：<input type="text" name="user_name" value="{$_g_user_name}" class="inputtext inputtext_100" />
+				<select name="type" class="selectmini">
+				<option value="" href="{pe_updateurl('type', '')}">= 交易类型 =</option>
+				<!--{foreach($ini['moneylog_type'] as $k=>$v):}-->
+				<option value="{$k}" href="{pe_updateurl('type', $k)}" <!--{if($_g_type==$k):}-->selected="selected"<!--{endif;}-->><!--{echo ++$index}-->){$v}</option>
+				<!--{endforeach;}-->
+				</select>
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="130">交易日期</th>
+			<th class="bgtt" width="150">用户名</th>
+			<th class="bgtt" width="100">交易类型</th>
+			<th class="bgtt" width="100">增加(元)</th>
+			<th class="bgtt" width="100">减少(元)</th>
+			<th class="bgtt" width="100">结余(元)</th>
+			<th class="bgtt">备注</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td class="num">{pe_date_color(pe_date($v['moneylog_atime']))}</span></td>
+			<td>{$v['user_name']}</td>
+			<td>{$ini['moneylog_type'][$v['moneylog_type']]}</td>
+			<td><span class="num strong cgreen">{$v['moneylog_in']>0?'+'.$v['moneylog_in']:''}</span></td>
+			<td><span class="num strong cred">{$v['moneylog_out']>0?'-'.$v['moneylog_out']:''}</span></td>
+			<td><span class="num">{$v['moneylog_now']}</span></td>
+			<td class="aleft">{$v['moneylog_text']}</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

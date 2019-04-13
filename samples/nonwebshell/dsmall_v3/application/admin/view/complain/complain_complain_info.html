@@ -1,0 +1,137 @@
+<table class="ds-default-table">
+    <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.complain_message}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>{$Think.lang.complain_message}</th>
+        </tr>
+        <tr class="noborder hover">
+            <td><ul>
+                    <li><strong>{$Think.lang.complain_state}:</strong>
+                        <b>{$complain_info.complain_state_text}</b>
+                    </li>
+                    <li>
+                        <strong>{$Think.lang.complain_subject_content}:</strong>
+                        {$complain_info.complain_subject_content}</li>
+                    <li>
+                        <strong>{$Think.lang.complain_accuser}:</strong>
+                        {$complain_info.accuser_name}
+                    </li>
+                    <li>
+                        <strong>{$Think.lang.complain_evidence}:</strong>
+                        {if empty($complain_info.complain_pic1) && empty($complain_info.complain_pic2) && empty($complain_info.complain_pic3)}
+                        {$Think.lang.complain_pic_none}
+                        {else/}
+                        {notempty name="$complain_info.complain_pic1"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic1}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic1}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.complain_pic2"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic2}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic2}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.complain_pic3"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic3}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.complain_pic3}" width="50"></a>
+                        {/notempty}
+                        {/if}
+                    </li>
+                    <li>
+                        <strong>{$Think.lang.complain_datetime}:</strong>
+                        {$complain_info.complain_datetime|date="Y-m-d H:i:s",###}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.complain_goods}</th>
+        </tr>
+        <tr class="noborder">
+            <td><table class="ds-default-table">
+                    <tr>
+                        <th colspan="2">{$Think.lang.complain_goods_name}</th>
+                        <th>{$Think.lang.complain_text_num}</th>
+                        <th>{$Think.lang.complain_text_price}</th>
+                    </tr>
+                    {foreach name="complain_goods_list" item="complain_goods"}
+                    <tr>
+                        <td width="65" align="center" valign="middle"><a style="text-decoration:none;" href="{:url('home/Goods/index',['goods_id'=>$complain_goods.goods_id])}" target="_blank">
+                                <img width="50" src="{:goods_cthumb($complain_goods.goods_image)}" />
+                            </a></td>
+                        <td class="intro">
+                            <p><a href="{:url('home/Goods/index',['goods_id'=>$complain_goods.goods_id])}" target="_blank">{$complain_goods.goods_name} </a></p>
+                            <p>{:get_order_goodstype($complain_goods.goods_type)}</p>
+                        </td>
+                        <td width="10%">{$complain_goods.goods_num}</td>
+                        <td width="10%">{$Think.lang.currency}{$complain_goods.goods_price}</td>
+                    </tr>
+                    {/foreach}
+                </table></td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.complain_content}</th>
+        </tr>
+        <tr class="noborder">
+            <td><div class="complain-intro" style=" color: #06C; border-color: #A7CAED; ">{$complain_info.complain_content}</div></td>
+        </tr>
+    </tbody>
+</table>
+{notempty name="refund_list"}
+<table class="ds-default-table">
+    <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.refund_message}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {gt name="order_info.refund_amount" value="0"}
+                <p>{$Think.lang.refund_order_refund}:<b>{$Think.lang.currency}{$order_info.refund_amount}</b></p>
+                {/gt}
+                <p> {$Think.lang.complain_order_confirm_tips}</p>
+            </td>
+        </tr>
+        <tr class="noborder">
+            <td>
+                <table class="ds-default-table">
+                    <tr>
+                        <th colspan="2">{$Think.lang.complain_goods_name}</th>
+                        <th>{$Think.lang.complain_refund_amount}</th>
+                        <th>{$Think.lang.complain_goods_pay_price}</th>
+                        <th>{$Think.lang.complain_seller_state}</th>
+                        <th>{$Think.lang.complain_system_state}</th>
+                        <th>{$Think.lang.complain_goods_num}</th>
+                        <th>{$Think.lang.complain_text_price}</th>
+                    </tr>
+                    {foreach name="refund_list" item="val"}
+                    <tr>
+                        <td width="65" align="center" valign="middle">
+                            <a style="text-decoration:none;" href="{:url('home/Goods/index',['goods_id'=>$val.goods_id])}" target="_blank">
+                                <img width="50" src="" />
+                            </a>
+                        </td>
+                        <td class="intro">
+                            <p>
+                                <a href="{:url('home/Goods/index',['goods_id'=>$val.goods_id])}" target="_blank">
+                                    {$val.goods_name}
+                                </a>
+                            </p>
+                            <p>{:get_order_goodstype($val.goods_type)}</p>
+                        </td>
+                        <td width="10%">{$Think.lang.currency}{$val.extend_refund.refund_amount}</td>
+                        <td width="10%">{$Think.lang.currency}{$val.goods_pay_price}</td>
+                        <td width="10%">{$state_array[$val['extend_refund']['seller_state']]}</td>
+                        <td width="10%">{eq name="val.extend_refund.seller_state" value="2"}{$admin_array[$val.extend_refund.refund_state]}{else /}无{/eq}</td>
+                        <td width="10%">{$val.goods_num}</td>
+                        <td width="10%">{$Think.lang.currency}{$val.goods_price}</td>
+                    </tr>
+                    {/foreach}
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{/notempty}
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>

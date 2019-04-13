@@ -1,0 +1,30 @@
+<div class="pk-container pk-margin-top-15">
+	<div class="pk-row pk-background-color-white pk-padding-30">
+		<div class="pk-w-sm-12 pk-padding-15">
+			<div class="pk-margin-left-right-auto pk-radius-4" style="max-width:480px;border:solid 1px #458fce;">
+				<div class="pk-text-sm pk-background-color-primary pk-padding-15 pk-padding-top-5 pk-padding-bottom-5 pk-text-white">提示</div>
+				<div class="pk-text-center pk-text-sm pk-padding-15 pk-padding-bottom-5">{$_G['HTMLCODE']['TIP']}</div>
+				<div class="pk-text-center pk-padding-15">
+					<button id="tipbtn" type="button" class="pk-btn pk-btn-danger">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function() {
+		var $js = "{$_G['HTMLCODE']['TIPJS']}";
+		$('#tipbtn').click(function() {
+			if($js) {
+				eval($js);
+			} else {
+				if(document.referrer) {
+					history.back();
+				}
+				setTimeout(function() {
+					location.href = 'index.php';
+				}, 200);
+			}
+		});
+	});
+</script>

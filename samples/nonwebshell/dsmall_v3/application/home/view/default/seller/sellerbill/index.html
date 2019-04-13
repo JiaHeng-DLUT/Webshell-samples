@@ -1,0 +1,74 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<form method="get" action="" target="_self">
+    <table class="search-form">
+        <tr>
+            <td></td>
+            <th>{$Think.lang.billing_status}</th>
+            <td class="w160">
+                <select name="bill_state">
+                    <option>{$Think.lang.ds_please_choose}</option>
+                    <option {if condition="$Request.param.bill_state eq BILL_STATE_CREATE"}selected{/if} value="{$Think.BILL_STATE_CREATE}">{$Think.lang.has_chuzhang}</option>
+                    <option {if condition="$Request.param.bill_state eq BILL_STATE_STORE_COFIRM"}selected{/if} value="{$Think.BILL_STATE_STORE_COFIRM}">{$Think.lang.merchant_has_confirme}</option>
+                    <option {if condition="$Request.param.bill_state eq BILL_STATE_SUCCESS"}selected{/if} value="{$Think.BILL_STATE_SUCCESS}">{$Think.lang.settlement_completion}</option>
+                </select>
+            </td>
+            <th>{$Think.lang.settlement_number}</th>
+            <td class="w160"><input type="text" class="text w150" name="ob_no" value="{$Request.param.ob_no}" /></td>
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_common_search}" />
+                </label>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="dssc-default-table">
+            <thead>
+                <tr>
+                    <th class="w10"></th>
+                    <th>{$Think.lang.settlement_number}</th>
+                    <th>{$Think.lang.start_end_time}</th>
+                    <th>{$Think.lang.current_receivables}</th>
+                    <th>{$Think.lang.settlement_status}</th>
+                    <th class="w120">{$Think.lang.ds_handle}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {notempty name="bill_list"}
+                {foreach name="bill_list" item="bill_info" }
+                <tr class="bd-line">
+                    <td></td>
+                    <td>{$bill_info.ob_no}</td>
+                    <td>{$bill_info.ob_startdate|date="Y-m-d",###} - {$bill_info.ob_enddate|date="Y-m-d",###}</td>
+                    <td>{$bill_info.ob_result_totals}</td>
+                    <td>{:get_bill_state($bill_info['ob_state'])}</td>
+                    <td><a href="{:url('Sellerbill/show_bill',['ob_no'=>$bill_info.ob_no])}">{$Think.lang.ds_view}</a></td>
+                </tr>
+                {/foreach}
+                {else/}
+                <tr>
+                    <td colspan="6" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+                </tr>
+                {/notempty}
+            </tbody>
+            <tfoot>
+                {notempty name="bill_list"}
+                <tr>
+                    <td colspan="6"><div class="pagination">{$show_page}</div></td>
+                </tr>
+                {/notempty}
+            </tfoot>
+        </table>
+        <script type="text/javascript">
+        $(function(){
+            $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+            $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+        });
+        </script>
+
+
+{/block}
+

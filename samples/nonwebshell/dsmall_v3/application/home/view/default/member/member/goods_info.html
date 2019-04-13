@@ -1,0 +1,49 @@
+<div class="pt20">
+        <div class="mc-title">
+            <h3>{$Think.lang.ds_merchandise_collection}</h3>
+        </div>
+        <div class="mc-list">
+            {notempty name="favorites_list"}
+            {foreach name="favorites_list" item="favorites" }
+            <div class="mc-item">
+                <a href='{:url('Goods/index',['goods_id'=>$favorites.goods.goods_id])}' target='_blank' title="{$favorites.goods.goods_name}">
+                <img src="{:goods_thumb($favorites['goods'], 240)}">
+                </a>
+            </div>
+            {/foreach}
+            {else /}
+            <dl class="null-tip pb10">
+                <dt class="fa fa-shopping-bag"></dt>
+              <dd>
+                <h4>{$Think.lang.have_no_collections_yet}</h4>
+                <h5>{$Think.lang.new_promotions_price_cuts}</h5>
+              </dd>
+            </dl>
+            {/notempty}
+        </div>
+    </div>
+    <div class="pt20">
+        <div class="mc-title">
+            <h3>{$Think.lang.store_collections}</h3>
+        </div>
+        <div class="mc-list">
+            {notempty name="favorites_store_list"}
+            {foreach name="favorites_store_list" item="favorites" }
+            <div class="mc-item">
+                <a href='{:url('Store/index',['store_id'=>$favorites.store.store_id])}' target='_blank' title="{$favorites.store.store_name}">
+                <img src="{:get_store_logo($favorites['store']['store_avatar'])}">
+                </a>    
+            </div>
+            {/foreach}
+            {else /}
+            <dl class="null-tip pb10">
+                <dt class="fa fa-university"></dt>
+              <dd>
+                <h4>{$Think.lang.no_collection_shop}</h4>
+                <h5>{$Think.lang.stores_latest_merchandise_promotions}</h5>
+              </dd>
+            </dl>
+            {/notempty}
+        </div>
+    </div>
+

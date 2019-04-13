@@ -1,0 +1,37 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">嵌入相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">head嵌入</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _codemirrorbox" rows="12" name="embed_headmarks" placeholder="<head></head>内">{htmlspecialchars($_G['SET']['EMBED_HEADMARKS_OLD'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">模板加载前嵌入</label>
+		<div class="pk-w-sm-8">
+			<textarea class="_codemirrorbox pk-textarea" rows="12" name="embed_head" placeholder="<body>之后，一般是style样式">{htmlspecialchars($_G['SET']['EMBED_HEAD_OLD'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">模板加载后嵌入</label>
+		<div class="pk-w-sm-8">
+			<textarea class="_codemirrorbox pk-textarea" rows="12" name="embed_foot" placeholder="</body>之前，一般是javascript">{htmlspecialchars($_G['SET']['EMBED_FOOT_OLD'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

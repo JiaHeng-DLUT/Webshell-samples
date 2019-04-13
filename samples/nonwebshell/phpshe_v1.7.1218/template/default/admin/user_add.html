@@ -1,0 +1,105 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150">用&nbsp;&nbsp;户 名：</td>
+			<td>
+				<span class="fl" style="width:218px">{$info['user_name']} </span>
+				<span class="c999 mal10">（微信Openid：<!--{if($info['user_wx_openid']):}-->{$info['user_wx_openid']}<!--{else:}-->未绑定微信<!--{endif;}-->）</span>
+				<div class="clear"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">登录密码：</td>
+			<td><input type="text" name="user_pw" class="inputall input200" /><span class="c999 mal10">（不修改请留空）</span></td>
+		</tr>
+		<tr>
+			<td align="right">支付密码：</td>
+			<td><input type="text" name="user_paypw" class="inputall input200" /><span class="c999 mal10">（不修改请留空）</span></td>
+		</tr>
+		<tr>
+			<td align="right">用户等级：</td>
+			<td>
+				<select name="info[userlevel_id]" class="inputselect" style="width:218px">
+				<option value="0">无符合等级，自动计算</option>
+				<optgroup label="自动升级">
+				<!--{foreach($cache_userlevel_arr['auto'] as $v):}-->
+				<!--{$disabled = ($v['userlevel_id'] == $info['userlevel_id']) ? '' : 'disabled="disabled"'}-->
+				<option value="{$v['userlevel_id']}" <!--{if($v['userlevel_id']==$info['userlevel_id']):}-->selected="selected"<!--{endif;}--> {$disabled}>├ {$v['userlevel_name']}（{$v['userlevel_zhe']*100}%）</option>
+				<!--{endforeach;}-->
+				</optgroup>
+				<optgroup label="手动指定">
+				<!--{foreach($cache_userlevel_arr['hand'] as $v):}-->
+				<option value="{$v['userlevel_id']}" <!--{if($v['userlevel_id']==$info['userlevel_id']):}-->selected="selected"<!--{endif;}-->>├ {$v['userlevel_name']}（{$v['userlevel_zhe']*100}%）</option>
+				<!--{endforeach;}-->
+				</optgroup>
+				</select><span class="c999 mal10">（累计消费：{$info['user_money_cost']} 元）</span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">账户余额：</td>
+			<td>
+				<span class="num corg fl" style="width:110px">{$info['user_money']} 元</span>
+				<a href="admin.php?mod=user&act=addmoney&id={$info['user_id']}" class="admin_edit mar10" onclick="return pe_dialog(this, '账户充值', 550, 330)">充值</a>
+				<a href="admin.php?mod=user&act=delmoney&id={$info['user_id']}" class="admin_del " onclick="return pe_dialog(this, '账户扣款', 550, 330)">扣款</a>
+				<div class="clear"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">积分余额：</td>
+			<td>
+				<span class="num fl" style="width:110px">{$info['user_point']} 个</span>
+				<a href="admin.php?mod=user&act=addpoint&id={$info['user_id']}" class="admin_edit mar10" onclick="return pe_dialog(this, '积分充值', 550, 330)">充值</a>
+				<a href="admin.php?mod=user&act=delpoint&id={$info['user_id']}" class="admin_del " onclick="return pe_dialog(this, '积分扣除', 550, 330)">扣除</a>
+				<div class="clear"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">真实姓名：</td>
+			<td><input type="text" name="info[user_tname]" value="{$info['user_tname']}" class="inputall input200" /></td>
+		</tr>
+		<tr>
+			<td align="right">手机号码：</td>
+			<td><input type="text" name="info[user_phone]" value="{$info['user_phone']}" class="inputall input200" /></td>
+		</tr>
+		<tr>
+			<td align="right">电子邮箱：</td>
+			<td><input type="text" name="info[user_email]" value="{$info['user_email']}" class="inputall input200" /></td>
+		</tr>
+		<tr>
+			<td align="right">注册地区：</td>
+			<td><a href="http://www.ip138.com/ips138.asp?ip={$info['user_ip']}" target="_blank" class="ipname"></a><span class="num mal10">（IP：{$info['user_ip']}）</span></td>
+		</tr>
+		<tr>
+			<td align="right">注册日期：</td>
+			<td class="num">{pe_date($info['user_atime'])}</td>
+		</tr>
+		<tr>
+			<td align="right">上次登录：</td>
+			<td class="num">{pe_date($info['user_ltime'])}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+			</td>
+		</tr>
+		</table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$.getJSON("http://www.phpshe.com/index.php?mod=api&act=ipname&ip={$info['user_ip']}&callback=?", function(json){
+		$(".ipname").html(json.ipname);
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

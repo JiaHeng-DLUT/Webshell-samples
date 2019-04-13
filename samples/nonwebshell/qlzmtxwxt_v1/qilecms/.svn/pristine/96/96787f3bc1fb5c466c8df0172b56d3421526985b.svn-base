@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+<!-- <div class="layui-btn-group demoTable">
+
+</div> -->
+<div class="layui-btn-group">
+  <button class="layui-btn layui-btn-normal" id="backup">备份当前数据表（{$total}）</button>
+  <button class="layui-btn layui-btn-normal" id="optimize">优化数据表</button>
+  <button class="layui-btn layui-btn-normal" id="repair" >修复数据表</button>
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col width="110">
+      <col>
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"   id="selectAll" lay-skin="primary" lay-filter="selectAll"></th>
+        <th>表名</th>
+        <th>表注释</th>
+        <th>索引</th>
+        <th>数据记录</th>
+        <th>数据大小</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name="list" id="vo" } 
+      <tr>
+        <td><input type="checkbox"  name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.Name}"></td>
+        <td>{$vo.Name}</td>
+        <td>{$vo.Comment}</td>
+        <td>{$vo.Engine}</td>
+        <td>{$vo.Rows} 条</td>
+        <td>{if $vo.Data_length > 0}{:formatSize($vo.Data_length)}{else /}0{/if}</td>
+        <td>{$vo.Create_time}</td>
+        <td>{$vo.Update_time}</td>
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("sql/edit",array("id"=>$key+1))}')"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+  
+    if(data.elem.checked){   
+        $(".id:checkbox").prop("checked", true);
+         form.render('checkbox');   
+    }else{   
+       $(".id:checkbox").prop("checked", false);
+         form.render('checkbox'); 
+    }   
+
+
+  });
+
+});
+</script>
+
+<script>
+$(function(){
+//全选删除
+      var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            });              
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+        layer.msg('您确定要批量删除吗？', {
+          time: 0 //不自动关闭
+          ,btn: ['确定', '取消']
+          ,yes: function(index){
+            layer.close(index);
+             $.post("{:url('sql/del')}"
+            ,{"id":id}        
+           ,function(json){
+            if(json.code == 0){
+                layer.msg(json.msg);
+                     setTimeout(function(){ 
+                     window.location.reload();  //页面刷新
+                     },1000);
+                 }
+               }
+             );
+          }
+        }); 
+       }
+  });
+
+
+
+
+//备份数据表
+    var id = [];
+      $("#backup").click(function(){
+
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+           var index = layer.load(1, {
+                  shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
+
+           $.ajax({
+           type:'post',
+           data:{"id":id},
+           dataType:'json',
+           url:"{:url('sql/backup')}",
+           success:function(json){
+             layer.close(index);
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+//优化数据表
+    var id = [];
+      $("#optimize").click(function(){
+
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+          var index = layer.load(1, {
+                 shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
+           $.ajax({
+           type:'post',
+           data:{"id":id},
+           dataType:'json',
+           url:"{:url('sql/optimize')}",
+           success:function(json){
+            layer.close(index);
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+//修复数据表
+    var id = [];
+      $("#repair").click(function(){
+
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+                   var index = layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+              });
+           $.ajax({
+           type:'post',
+           data:{"id":id},
+           dataType:'json',
+           url:"{:url('sql/repair')}",
+           success:function(json){
+             layer.close(index);
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+});
+$("#add").on("click",function(){
+  open('{:url("auth/add")}','添加规则','580px','80%');
+});
+
+
+function edit(url){
+ parent.layer.open({
+          type: 2,
+          title: '用户编辑',
+          shadeClose: true,
+          shade: 0.8,
+          area: ['880px', '90%'],
+          content: url //iframe的url
+        }); 
+}
+
+</script>
+</body>
+
+</html>

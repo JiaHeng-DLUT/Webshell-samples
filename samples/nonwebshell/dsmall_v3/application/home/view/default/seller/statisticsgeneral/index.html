@@ -1,0 +1,165 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<div class="alert mt10" style="clear:both;">
+    <ul class="mt5">
+        <li>{$Think.lang.statistical_information1}</li>
+        <li>{$Think.lang.statistical_information2}</li>
+    </ul>
+</div>
+<div class="alert alert-info mt10" style="clear:both;">
+    <ul class="mt5">
+        <li>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.nearly_orders_money_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.nearly_orders_money}：<strong>{$statnew_arr.orderamount}{$Think.lang.currency_zh}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.nearly_orders_members_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.nearly_orders_members}：<strong>{$statnew_arr.ordermembernum}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.nearly_orders_number_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.nearly_orders_number}：<strong>{$statnew_arr.ordernum}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.nearly_orders_shop_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.nearly_orders_shop}：<strong>{$statnew_arr.ordergoodsnum}</strong>
+            </span>
+        </li>
+        <li>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.average_guest_price_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.average_guest_price}：<strong>{$statnew_arr.avgorderamount}{$Think.lang.currency_zh}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.average_price_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.average_price}：<strong>{$statnew_arr.avggoodsprice}{$Think.lang.currency_zh}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.merchandise_inventory_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.merchandise_inventory}：<strong>{$statnew_arr.gcollectnum}</strong>
+            </span>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.goods_total_number_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.goods_total_number}：<strong>{$statnew_arr.goodsnum}</strong>
+            </span>
+        </li>
+        <li>
+            <span class="w200 fl h30" style="display:block;">
+                <i title="{$Think.lang.store_stock_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.store_stock}：<strong>{$statnew_arr.store_collect}</strong>
+            </span>
+            <span class="w400 fl h30" style="display:block;">
+                <i title="{$Think.lang.order_peak_title}" class="tip fa fa-question-circle"></i>
+                {$Think.lang.order_peak}：<strong>{$statnew_arr.hothour ?$statnew_arr.hothour :lang('temporary_no')}</strong>
+            </span>
+        </li>
+    </ul>
+    <div style="clear:both;"></div>
+</div>
+
+<div id="container"></div>
+
+<div class="w450 fl mr50">
+    <div class="alert alert-info" style="margin-bottom:0px;"><strong>{$Think.lang.recommended_promotion}</strong>
+        &nbsp;<i title="{$Think.lang.recommended_promotion_title}" class="tip fa fa-question-circle"></i>
+    </div>
+    <table class="dssc-default-table">
+        <thead>
+            <tr class="sortbar-array">
+                <th class="align-center">{$Think.lang.serial_number}</th>
+                <th class="align-center">{$Think.lang.commodity_name}</th>
+                <th class="align-center">{$Think.lang.sales}</th>
+            </tr>
+        </thead>
+        <tbody id="datatable">
+            {notempty name="goodstop30_arr"}
+            {foreach name="goodstop30_arr" item="v"}
+            <tr class="bd-line">
+                <td class="w50">{$key+1}</td>
+                <td class="tl">
+                    <span class="over_hidden w340 h20">
+                        <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">{$v.goods_name}</a>
+                    </span>
+                </td>
+                <td class="w50">{$v.ordergoodsnum}</td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr>
+                <td colspan="20" class="norecord">
+                    <div class="warning-option">
+                        <i class="fa fa-warning"></i>
+                        <span>{$Think.lang.no_record}</span>
+                    </div>
+                </td>
+            </tr>
+            {/notempty}
+        </tbody>
+    </table>
+</div>
+<div class="w450 fl">
+    <div class="alert alert-info" style="margin-bottom:0px;">
+        <strong>{$Think.lang.peer_selling}</strong>
+        &nbsp;<i title="{$Think.lang.peer_selling_title}" class="tip fa fa-question-circle"></i>
+    </div>
+    <table class="dssc-default-table">
+        <thead>
+            <tr class="sortbar-array">
+                <th class="align-center">{$Think.lang.serial_number}</th>
+                <th class="align-center">{$Think.lang.commodity_name}</th>
+                <th class="align-center">{$Think.lang.sales}</th>
+            </tr>
+        </thead>
+        <tbody id="datatable">
+            {notempty name="othergoodstop30_arr" id="v"}
+            {foreach name="othergoodstop30_arr" item="v"}
+            <tr class="bd-line">
+                <td class="w50">{$key+1}</td>
+                <td class="tl">
+                    <span class="over_hidden w340 h20">
+                        <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">{$v.goods_name}</a>
+                    </span>
+                </td>
+                <td class="w50">{$v.ordergoodsnum}</td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr>
+                <td colspan="20" class="norecord">
+                    <div class="warning-option">
+                        <i class="fa fa-warning"></i>
+                        <span>{$Think.lang.no_record}</span>
+                    </div>
+                </td>
+            </tr>
+            {/notempty}
+        </tbody>
+    </table>
+</div>
+<div class="h30 cb">&nbsp;</div>
+<script>
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script>
+$(function(){
+    //Ajax提示
+    $('.tip').poshytip({
+        className: 'tip-yellowsimple',
+        showTimeout: 1,
+        alignTo: 'target',
+        alignX: 'center',
+        alignY: 'top',
+        offsetY: 5,
+        allowTipHover: false
+    });
+
+    $('#container').highcharts({$stattoday_json});
+});
+</script>
+
+{/block}

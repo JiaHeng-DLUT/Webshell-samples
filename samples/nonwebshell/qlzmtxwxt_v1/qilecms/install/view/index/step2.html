@@ -1,0 +1,109 @@
+{include file="public/header" /}
+<style type="text/css">
+.layui-table td, .layui-table th{text-align:left;}
+.layui-table tbody tr.no{background-color:#f00;color:#fff;}
+</style>
+<div class="install-box">
+
+<div class="ui-steps-round steps-round-auto steps-4">
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>安装协议</label>
+  </div>
+  <div class="current">
+    <div class="wrap">
+      <div class="round">2</div>
+      <div class="bar"></div>
+    </div>
+    <label>环境检测</label>
+  </div>
+  <div class="todo">
+    <div class="wrap">
+      <div class="round">3</div>
+      <div class="bar"></div>
+    </div>
+    <label>程序安装</label>
+  </div>
+  <div class="todo last">
+    <div class="wrap">
+      <div class="round">4</div>
+    </div>
+    <label>成功</label>
+  </div>
+</div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>运行环境检测</legend>
+    </fieldset>
+    <table class="layui-table" lay-skin="line">
+        <thead>
+            <tr>
+                <th width="200">环境名称</th>
+                <th width="200">所需配置</th>
+                <th>当前配置</th>
+            </tr> 
+        </thead>
+        <tbody>
+            {volist name="data.env" id="vo"}
+            <tr >
+                <td>{$vo[0]}</td>
+                <td>{$vo[2]}</td>
+                <td>{if $vo[4] == 'no'}
+                <i class="layui-icon layui-icon-close" style="color:#FF5722"></i>
+                {else}
+                <i class="layui-icon layui-icon-ok" style="color:#5FB878"></i> {/if}
+{$vo[3]}
+</td>
+                
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+    <table class="layui-table" lay-skin="line">
+        <thead>
+            <tr>
+                <th width="200">目录/文件</th>
+                <th width="200">所需权限</th>
+                <th>当前权限</th>
+            </tr> 
+        </thead>
+        <tbody>
+            {volist name="data.dir" id="vo"}
+            <tr >
+                <td>{$vo[1]}</td>
+                <td><i class="layui-icon layui-icon-ok" style="color:#5FB878"></i> {$vo[2]}</td>
+                <td>{if $vo[4] == 'no'}
+                <i class="layui-icon layui-icon-close" style="color:#FF5722"></i>
+                {else}<i class="layui-icon layui-icon-ok" style="color:#5FB878
+"></i> {/if}{$vo[3]}</td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+    <table class="layui-table" lay-skin="line">
+        <thead>
+            <tr>
+                <th width="200">函数/扩展</th>
+                <th width="200">类型</th>
+                <th>结果</th>
+            </tr> 
+        </thead>
+        <tbody>
+            {volist name="data.func" id="vo"}
+            <tr >
+                <td>{$vo[0]}</td>
+                <td>{$vo[3]}</td>
+                <td>{if $vo[2] == 'no'}<i class="layui-icon layui-icon-close" style="color:#FF5722"></i>{else}<i class="layui-icon layui-icon-ok" style="color:#5FB878
+"></i> {/if}{$vo[1]}</td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+    <div class="step-btns">
+        <a href="/" class="layui-btn layui-btn-primary layui-btn-big ">返回上一步</a>
+        <a href="?step=3" class="layui-btn layui-btn-big layui-btn-normal ">下一步</a>
+    </div>
+</div>
+{include file="public/footer" /}

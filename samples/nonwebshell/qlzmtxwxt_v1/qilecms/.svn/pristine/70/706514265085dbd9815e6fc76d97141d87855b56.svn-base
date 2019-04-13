@@ -1,0 +1,61 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class AdminNav extends Model
+{
+   Protected $autoCheckFields = true;
+    // protected $resultSetType = 'collection';
+   public  function getNavTree(){
+      $order['create_time'] = 'desc';
+      $order['order'] = 'desc';
+      $list = $this->order($order)->select()->toArray();
+      return get_tree($list,'id');
+  
+   }
+  public function getAdminNavInfoById($id){
+     $where['id'] = $id;
+     return $this->where($where)->find();
+  }
+
+   public function add($data){
+   	   if(empty($data) || !is_array($data)){ 
+   	    	return false;
+   	    }
+        return $this->data($data)->save();
+  }
+  public function edit($data,$where){
+      if(empty($data) || !is_array($data)){ 
+          return false;
+        }
+      return $this->save($data,$where);
+  }
+   public function updateNav($post){
+        if(empty($post) || !is_array($post) ){ 
+          return false;
+        }
+
+        if($this->update($post)){
+            return true;
+        }else{
+             return false;
+      }
+ 
+
+  }
+   public function del($id){
+      if(is_array($id)){
+          $idData = implode(',',$id);
+      }
+     $idData = $id;
+     $res = $this->where("id",'in',$idData)->delete();
+        if($res){
+           return true;
+        }else{
+           return false;
+        }
+ 
+
+  }
+
+}

@@ -1,0 +1,101 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=user&t=search">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">用户搜索</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<div class="pk-w-md-2 pk-hide-sm">&nbsp;</div>
+		<div class="pk-w-md-2 pk-w-sm-3 pk-padding-right-0 pk-text-right">
+			<select class="pk-textbox" data-value="{$type}" name="type">
+				<option value="id">用户ID</option>
+				<option value="username">用户名</option>
+				<option value="nickname">用户昵称</option>
+			</select>
+		</div>
+		<div class="pk-w-md-3 pk-w-sm-6 pk-padding-0">
+			<input type="text" class="pk-textbox pk-border-left-none pk-border-right-none pk-textbox-noshadow" name="value" value="{$value}" />
+		</div>
+		<div class="pk-w-md-2 pk-w-sm-3 pk-padding-0">
+			<button class="pk-btn pk-btn-primary">搜索</button>
+		</div>
+	</div>
+
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<table class="pk-table pk-table-bordered pk-width-all pk-text-sm">
+				<tr>
+					<th style="text-align:center;width:77px">ID</th>
+					<th style="text-align:center">用户组</th>
+					<th style="text-align:center">用户名</th>
+					<th class="pk-hide-sm" style="text-align:center">昵称</th>
+					<th class="pk-hide-sm" style="text-align:center;width:77px">{$_G['SET']['JIFENNAME']}</th>
+					<th class="pk-hide-sm" style="text-align:center;width:77px">{$_G['SET']['TIANDOUNAME']}</th>
+					<th class="pk-hide-sm" style="text-align:center;width:200px">注册日期</th>
+					<th style="width:200px;text-align:center">管理</th>
+				</tr>
+				{$userlist}
+				<tr>
+					<td colspan="99" style="text-align:center">
+						<a class="pk-btn pk-btn-sm pk-btn-secondary" href="index.php?c=app&a=superadmin:index&s=user&t=search&page={htmlspecialchars({$page}-1)}">上一页</a>
+						<a class="pk-btn pk-btn-sm pk-btn-success" href="javascript:">{$page}</a>
+						<a class="pk-btn pk-btn-sm pk-btn-secondary" href="index.php?c=app&a=superadmin:index&s=user&t=search&page={htmlspecialchars({$page}+1)}">下一页</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+<script>
+	function _superedituser(uid) {
+		var _tmpstyle_h = $('html').css('overflow-y');
+		var _tmpstyle_b = $('body').css('overflow-y');
+		ppp({
+			title: "编辑用户[UID:" + uid + "]",
+			content: '<iframe src="index.php?c=app&a=superadmin:index&s=user&t=seniormanagement&id=' + uid + '" style="width:100%;height:100%;border:0;overflow-y:scroll"></iframe>',
+			area: ['100%', '100%', '0', '0', '0', '0'],
+			complete: function(id) {
+				$('#pkpopup_' + id + ' .pk-popup-body,body').css('overflow-y', 'hidden');
+				$('#pkpopup_' + id + ' .pk-popup-foot a:eq(0)').html('取消');
+			},
+			close: function() {
+				$('html').css('overflow-y', _tmpstyle_h);
+				$('body').css('overflow-y', _tmpstyle_b);
+			}
+		});
+	}
+
+	function _superdeluser(uid, This) {
+		ppp({
+			type: 1,
+			content: "确认删除该用户[UID:" + uid + "]？",
+			icon: 3,
+			sumbit: function() {
+				$.getJSON('index.php', {
+					c: 'app',
+					a: 'superadmin:index',
+					s: 'delete',
+					table: 'user',
+					id: uid,
+					json: 1,
+					chkcsrfval: $_USER['CHKCSRFVAL']
+				}, function(data) {
+					if(data['state'] == 'ok') {
+						ppp({
+							type: 3,
+							icon: 1,
+							content: "删除成功"
+						});
+						$(This).parents('tr:eq(0)').remove();
+					} else {
+						ppp({
+							type: 1,
+							icon: 2,
+							content: data['datas']['msg']
+						});
+					}
+				});
+			}
+		});
+	}
+</script>

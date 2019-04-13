@@ -1,0 +1,267 @@
+<style>
+	#app-superadmin-backbtn {
+		display: none;
+	}
+</style>
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=usergroup&id={$_G['GET']['ID']}">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">用户组管理</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">用户组</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox " data-value="{$_G['GET']['ID']}" name="id" onchange="location.href='index.php?c=app&a=superadmin:index&s=user&t=group&id='+this.value">
+				<option value="0">新建用户组</option>
+				{$_G['TEMP']['UGS']}
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户组名称</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox " name="usergroupname" value="{htmlspecialchars($usergroupdata['usergroupname'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户组权限</label>
+		<div class="pk-w-sm-8">
+			<input type="text" name="quanxian" readonly class="pk-textbox " value="{$usergroupdata['quanxian']}">
+		</div>
+		<div class="pk-row">
+			<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+			<div class="pk-w-sm-8 pk-text-sm">
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="bbcode"> 帖子解析BB标签
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="download"> 下载帖子附件
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="login"> 允许登录
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookread"> 浏览帖子
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="lookuser"> 浏览用户信息
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postread"> 发表主题
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postreply"> 发表回复
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="search"> 搜索
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadfile"> 上传附件
+						</label>
+					</div>
+					<div class="pk-w-sm-6">
+						<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="uploadhead"> 上传头像
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delread"> 可删除自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="delreply"> 可删除自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editread"> 可编辑自己发布的文章
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="editreply"> 可编辑自己发布的回复
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreadcheck"> 免除文章审核
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostreplycheck"> 免除回复审核
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="noverifycode"> 免除所有验证码验证
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="nopostingtimeinterval"> 免除发帖时间间隔验证
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger" title="可编辑/删除用户帖子">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="admin"> 普通管理员
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger" title="可编辑用户资料">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="superman"> 超级管理员
+						</label>
+					</div>
+				</div>
+				<div class="pk-row pk-padding-top-10">
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="htmlcode"> 发帖HTML解析
+						</label>
+					</div>
+					<div class="pk-w-sm-6 pk-text-danger">
+						<label class="am-checkbox-inline am-danger am-padding-top-0">
+							<input type="checkbox" onclick="if(!this.checked)$('input[name=quanxian]').prop('readonly',true);else {$('input[name=quanxian]').prop('readonly',false);$('input[name=quanxian]').focus()}"> 自定义权限
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">阅读权限</label>
+		<div class="pk-w-sm-8">
+			<input type="number" class="pk-textbox " name="readlevel" value="{Cnum($usergroupdata['readlevel'])}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可用的HTML标签</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="data-htmlcodemarks" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['htmlcodemarks']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可用的HTML属性</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="data-htmlcodeattrs" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['htmlcodeattrs']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">签名可用的HTML标签</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="data-signcodemarks" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['signcodemarks']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">签名可用的HTML属性</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" name="data-signcodeattrs" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['signcodeattrs']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">允许上传的最大文件</label>
+		<div class="pk-w-sm-5">
+			<input type="number" class="pk-textbox " name="data-uploadsize" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['uploadsize']}">
+		</div>
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">每日共可上传文件大小</label>
+		<div class="pk-w-sm-5">
+			<input type="number" class="pk-textbox " name="data-dayuploadfilesize" placeholder="留空则应用系统默认" value="{$usergroupdata['data']['dayuploadfilesize']}">
+		</div>
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-nowrap">KB</label>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+			<a id="delbtn" class="pk-hide pk-btn pk-btn-danger " href="javascript:" onclick="pkalert('确认删除该用户组吗？','提示','location.href=\'index.php?c=app&a=superadmin:index&s=delete&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=usergroup&id={$_G['GET']['ID']}&chkcsrfval={$_G['CHKCSRFVAL']}\'')">删除</a>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		TextboxAndCheckbox("input[name='quanxian']", "input[class='qx-checkbox'][type='checkbox']");
+		if(Cnum($_URI['ID'])) {
+			$('#delbtn').removeClass('pk-hide');
+		}
+		labelStrSwitch('input[name="data-htmlcodemarks"]', '><', false, '<', '>');
+		labelStrSwitch('input[name="data-signcodemarks"]', '><', false, '<', '>');
+		$('#SubmitBtn').data({
+			before: function() {
+				$('input[name="readlevel"]').val(Cnum($('input[name="readlevel"]').val()));
+				var strs = {
+					usergroupname: '用户组名称'
+				};
+				for(var i in strs) {
+					if(!trim($('input[name="' + i + '"]').val())) {
+						ppp({
+							type: 3,
+							icon: 2,
+							content: strs[i] + "不能为空"
+						});
+						submitReturn = true;
+						$('input[name="' + i + '"]').focus();
+						return false;
+					}
+				}
+				labelStrSwitch('input[name="data-htmlcodemarks"]', '><', true, '<', '>');
+				labelStrSwitch('input[name="data-signcodemarks"]', '><', true, '<', '>');
+			},
+			after: function() {
+				labelStrSwitch('input[name="data-htmlcodemarks"]', '><', false, '<', '>');
+				labelStrSwitch('input[name="data-signcodemarks"]', '><', false, '<', '>');
+			}
+		});
+	});
+</script>

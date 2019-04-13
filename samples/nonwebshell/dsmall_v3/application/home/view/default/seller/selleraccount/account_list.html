@@ -1,0 +1,53 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}<a href="{:url('Selleraccount/account_add')}" class="dssc-btn dssc-btn-green"  title="{$Think.lang.add_account}">{$Think.lang.add_account}</a>{/block}
+{block name="seller_main"}
+<table class="dssc-default-table">
+    <thead>
+        <tr><th class="w60"></th>
+            <th class="tl">{$Think.lang.member_name}</th>
+            <th class="tl">{$Think.lang.account_name}</th>
+            <th class="w200">{$Think.lang.account_group}</th>
+            <th class="w100">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="seller_list"}
+        {foreach name="seller_list" item="seller" key="key" }
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">{$seller.member_name}</td>
+            <td class="tl">{$seller.seller_name}</td>
+            <td>{$seller_group_array[$seller['sellergroup_id']]['sellergroup_name']}</td>
+            <td class="dscs-table-handle">
+                <span><a href="{:url('Selleraccount/account_edit',['seller_id'=>$seller.seller_id])}" class="btn-blue"><i class="fa fa-pencil-square"></i><p>{$Think.lang.ds_edit}</p></a></span>
+                <span><a dstype="btn_del_account" data-seller-id="{$seller.seller_id}" href="javascript:;" class="btn-red"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span>
+            </td>
+        </tr>
+        {/foreach}
+       {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+       {/notempty}
+    </tbody>
+</table>
+        <form id="del_form" method="post" action="{:url('Selleraccount/account_del')}">
+            <input id="del_seller_id" name="seller_id" type="hidden" />
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('[dstype="btn_del_account"]').on('click', function() {
+                    var seller_id = $(this).attr('data-seller-id');
+                    layer.confirm('{$Think.lang.ds_ensure_del}', {
+                        btn: ['确定', '取消'],
+                        title: false,
+                    }, function () {
+                        $('#del_seller_id').val(seller_id);
+                        ds_ajaxpost('del_form');
+                    });
+                });
+            });
+        </script>
+
+
+{/block}

@@ -1,0 +1,40 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=adminlevel" class="sel">{$menutitle}（{$tongji['all']}）<i></i></a>
+		<a href="admin.php?mod=adminlevel&act=add" id="fabu">添加权限</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="200">权限名称</th>
+			<th class="bgtt"></th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td>{$v['adminlevel_id']}</td>
+			<td>{$v['adminlevel_name']}</td>
+			<td></td>
+			<td>
+				<!--{if($v['adminlevel_id'] == 1):}-->
+				<span class="cred">-</span>
+				<!--{else:}-->
+				<a href="admin.php?mod=adminlevel&act=edit&id={$v['adminlevel_id']}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=adminlevel&act=del&id={$v['adminlevel_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+				<!--{endif;}-->
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

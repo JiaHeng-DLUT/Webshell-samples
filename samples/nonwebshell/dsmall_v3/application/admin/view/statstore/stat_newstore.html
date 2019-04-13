@@ -1,0 +1,185 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺统计</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+   <div class="fixed-empty"></div>
+
+  <form method="get"  name="formSearch" id="formSearch">
+      <div class="ds-search-form">
+            <dl>
+                <dt></dt>
+                <dd>
+                    <select name="search_sclass" id="search_sclass" class="querySelect">
+                        <option value="" selected >店铺分类</option>
+                        {foreach name="store_class" item="v"}
+                        <option value="{$v.storeclass_id}" {$Request.param.search_sclass == $v.storeclass_id ?'selected':''}>{$v.storeclass_name}</option>
+                        {/foreach}
+                    </select>
+                </dd>
+                <dd>
+                    <select name="search_type" id="search_type" class="querySelect">
+                        <option value="day" {$Request.param.search_type == 'day'?'selected':''}>按照天统计</option>
+                        <option value="week" {$Request.param.search_type == 'week'?'selected':''}>按照周统计</option>
+                        <option value="month" {$Request.param.search_type == 'month'?'selected':''}>按照月统计</option>
+                    </select>
+                </dd>
+                <dd id="searchtype_day" style="display:none;">
+                    <input class="txt date" type="text" value="{$search_time}" id="search_time" name="search_time">
+                </dd>
+                <dd id="searchtype_week" style="display:none;">
+                    <select name="search_time_year" class="querySelect">
+                        {foreach name="year_arr" item="v"}
+                        <option value="{$key}" {$current_year == $key ?'selected':''}>{$v}</option>
+                        {/foreach}
+                    </select>
+                    <select name="search_time_month" class="querySelect">
+                        {foreach name="month_arr" item="v"}
+                        <option value="{$key}" {$current_month == $key ?'selected':''}>{$v}</option>
+                        {/foreach}
+                    </select>
+                    <select name="search_time_week" class="querySelect">
+                        {foreach name="week_arr" item="v"}
+                        <option value="{$v.key}" {$current_week == $v.key ?'selected':''}>{$v.val}</option>
+                        {/foreach}
+                    </select>
+                </dd>
+                <dd id="searchtype_month" style="display:none;">
+                    <select name="search_time_year" class="querySelect">
+                        {foreach name="year_arr" item="v"}
+                        <option value="{$key}" {$current_year == $key ?'selected':''}>{$v}</option>
+                        {/foreach}
+                    </select>
+                    <select name="search_time_month" class="querySelect">
+                        {foreach name="month_arr" item="v"}
+                        <option value="{$key}" {$current_month == $key ?'selected':''}>{$v}</option>
+                        {/foreach}
+                    </select>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:void(0);" id="dssubmit" class="btn tooltip" title="">{$Think.lang.ds_query}</a>
+                <a href="{:url('Statstore/newstore')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+  </form>
+   
+ <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>统计图展示了时间段内新增店铺数的走势和与前一时间段的对比</li>
+            <li>统计表展示了时间段内新增店铺数值和与前一时间段的同比数值，点击每条记录后的“查看”，了解新增店铺的详细信息</li>
+            <li>点击列表上方的“导出Excel”，将列表数据导出为Excel文件</li>
+        </ul>
+    </div>
+
+  <div id="container" class="w100pre close_float" style="height:400px"></div>
+
+  <div style="text-align:right;">
+  	<input type="hidden" id="export_type" name="export_type" data-param='{"url":"{$actionurl}&exporttype=excel"}' value="excel"/>
+  	<a class="btn btn-mini" href="javascript:void(0);" id="export_btn">导出Excel</a>
+  </div>
+  <table class="ds-default-table">
+    <thead>
+      <tr class="thead">
+        {foreach name="statlist.headertitle" item="v"}
+        <th class="align-center">{$v}</th>
+        {/foreach}
+        <th class="align-center">操作</th>
+      </tr>
+    </thead>
+    <tbody id="datatable">
+    {notempty name="statlist.data"}
+    {foreach name="statlist.data" item="v"}
+      <tr class="hover">
+        <td class="align-center">{$v.timetext}</td>
+        <td class="align-center">{$v.updata}</td>
+        <td class="align-center">{$v.currentdata}</td>
+        <td class="align-center">{$v.tbrate}</td>
+        <td class="align-center">
+          <a href="{:url('Statstore/showstore',['type'=>'newbyday','t'=>$v.seartime,'scid'=>$Request.param.search_sclass])}" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.ds_view}</a>
+        </td>
+      </tr>
+    {/foreach}
+    {else /}
+    <tr class="no_data">
+       	<td colspan="5">{$Think.lang.no_record}</td>
+    </tr>
+   {/notempty}
+    </tbody>
+  </table>
+
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<script>
+//展示搜索时间框
+function show_searchtime(){
+    s_type = $("#search_type").val();
+    $("[id^='searchtype_']").hide();
+    $("#searchtype_"+s_type).show();
+}
+$(function () {
+    //统计数据类型
+    var s_type = $("#search_type").val();
+    $('#search_time').datepicker({dateFormat: 'yy-mm-dd'});
+
+    show_searchtime();
+    $("#search_type").change(function(){
+        show_searchtime();
+    });
+
+    //更新周数组
+    $("[name='search_time_month']").change(function(){
+        var year = $("[name='search_time_year']").val();
+        var month = $("[name='search_time_month']").val();
+        $("[name='search_time_week']").html('');
+        $.getJSON(ADMINSITEURL+'/Common/getweekofmonth',{y:year,m:month},function(data){
+            if(data != null){
+                for(var i = 0; i < data.length; i++) {
+                    $("[name='search_time_week']").append('<option value="'+data[i].key+'">'+data[i].val+'</option>');
+                }
+            }
+        });
+    });
+
+    $('select[name="search_time_year"]').change(function(){
+        var s_year = $(this).val();
+        $('select[name="search_time_year"]').each(function(){
+            $(this).val(s_year);
+        });
+    });
+    $('select[name="search_time_month"]').change(function(){
+        var s_month = $(this).val();
+        $('select[name="search_time_month"]').each(function(){
+            $(this).val(s_month);
+        });
+    });
+
+    $('#container').highcharts({$stat_json});
+
+    $('#dssubmit').click(function(){
+        $('#formSearch').submit();
+    });
+
+    //导出图表
+    $("#export_btn").click(function(){
+        var item = $("#export_type");
+        var type = $(item).val();
+        if(type == 'excel'){
+            download_excel(item);
+        }
+    });
+});
+</script>

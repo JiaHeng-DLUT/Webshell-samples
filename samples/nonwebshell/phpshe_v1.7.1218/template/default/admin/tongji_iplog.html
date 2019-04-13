@@ -1,0 +1,46 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<!--{include(pe_tpl('tongji_menu.html'));}-->
+	<div class="right_main">
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="100">ID号</th>
+			<th class="bgtt" width="200">访客所在地</th>
+			<th class="bgtt" width="200">访客IP</th>
+			<th class="bgtt" width="200">访问日期</th>
+			<th class="bgtt" width="200">访问时间</th>
+			<th class="bgtt"></th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td class="num">{$v['iplog_id']}</td>
+			<td class="ipname" ip="{$v['iplog_ip']}"><img src="{$pe['host_tpl']}images/load.gif" /></td>
+			<td class="num"><a href="http://www.ip138.com/ips.asp?ip={$v['iplog_ip']}" target="_blank">{$v['iplog_ip']}</a></td>
+			<td class="num">{pe_date_color(pe_date($v['iplog_atime']))}</td>
+			<td class="num">{pe_dayago($v['iplog_atime'])}</td>
+			<td></td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	var ips = new Array();
+	$(".ipname").each(function(){
+		ips.push($(this).attr("ip"));
+	})
+	$.getJSON("http://www.phpshe.com/index.php?mod=api&act=ipname&ips="+ips.join(",")+"&callback=?", function(json){
+		$(".ipname").each(function(index){
+			$(this).html(json.ipname[index]);
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

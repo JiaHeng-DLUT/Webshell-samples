@@ -1,0 +1,79 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="content">
+	<div class="now">{$nowpath}</div>
+	<div class="">		
+		<div class="list_sx">
+			<div class="pinpai_fl mal10">
+				<span class="list_sx_l">分类：</span>
+				<div class="list_sx_r">
+				<a href="{pe_url('product-list-'.$category_zk_id)}" title="全部" <!--{if($category_id==$category_zk_id):}-->class="sel"<!--{endif;}-->>全部</a>
+				<!--{if(is_array($cache_category_arr[$category_zk_id])):}-->
+				<!--{foreach($cache_category_arr[$category_zk_id] as $k=>$v):}-->				
+				<a href="{pe_url('product-list-'.$v['category_id'])}" title="{$v['category_name']}" <!--{if($category_id==$k):}-->class="sel"<!--{endif;}-->>{$v['category_name']}</a>
+				<!--{endforeach;}-->
+				<!--{endif;}-->
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="shixian mat15 mab15"></div>
+			<!--{if(count($brand_list)):}-->
+			<div class="pinpai_fl mal10">
+				<span class="list_sx_l">品牌：</span>
+				<div class="list_sx_r">
+				<a href="{pe_updateurl('brand', '')}" title="全部" <!--{if(!$_g_brand):}-->class="sel"<!--{endif;}-->>全部</a>
+				<!--{foreach($brand_list as $v):}-->
+				<a href="{pe_updateurl('brand', $v['brand_id'])}" title="{$v['brand_name']}" <!--{if($_g_brand==$v['brand_id']):}-->class="sel"<!--{endif;}-->>{$v['brand_name']}</a>
+				<!--{endforeach;}-->
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="shixian mat15 mab15"></div>
+			<!--{endif;}-->
+			<div class="pinpai_fl mal10">
+				<span class="list_sx_l">排序：</span>
+				<div class="list_sx_r">
+				<ul>
+					<li class="prolist_px"><a href="{pe_updateurl('orderby', '')}" <!--{if(!$_g_orderby):}-->class="sel"<!--{endif;}-->>综合排序</a></li>
+					<li class="prolist_px"><a href="{pe_updateurl('orderby', 'sellnum_desc')}" <!--{if($_g_orderby=='sellnum_desc'):}-->class="sel"<!--{endif;}-->>销量</a></li>
+					<li class="prolist_px">
+						<!--{if($_g_orderby=='money_asc'):}-->
+						<a href="{pe_updateurl('orderby', 'money_desc')}" class="sel">价格<i class="i4"></i></a>
+						<!--{elseif($_g_orderby=='money_desc'):}-->
+						<a href="{pe_updateurl('orderby', 'money_asc')}" class="sel">价格<i class="i1"></i></a>
+						<!--{else:}-->
+						<a href="{pe_updateurl('orderby', 'money_desc')}"><span class="fl">价格</span></a>
+						<!--{endif;}-->
+					</li>
+					<li class="prolist_px"><a href="{pe_updateurl('orderby', 'commentnum_desc')}" <!--{if($_g_orderby=='commentnum_desc'):}-->class="sel"<!--{endif;}-->>评价数</a></li>
+					<li class="prolist_px"><a href="{pe_updateurl('orderby', 'clicknum_desc')}" <!--{if($_g_orderby=='clicknum_desc'):}-->class="sel"<!--{endif;}-->>人气</a></li>
+				</ul>
+				</div>
+				<!--<span class="fr mat8 mar10 c888">已找到 <strong>{$db->page->listnums}</strong> 个商品</span>-->
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="prolist_html">
+			<!--{foreach($info_list as $k=>$v):}-->
+			<div class="prolist" <!--{if(($k+1)%4==0):}-->style="margin-right:0"<!--{endif;}-->>
+				<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank">
+				<div class="pro_bq">
+					<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['product_logo'], 400, 400)}" title="{$v['product_name']}" width="250" height="250" class="js_imgload" />
+					<!--{if($v['huodong_tag']):}--><div class="bq_name">{$v['huodong_tag']}</div><!--{endif;}-->
+				</div>
+				<p class="prolist_name">{$v['product_name']}</p>
+				<p class="mat8">
+					<span class="money1 fl"><span class="num font18 mar3">¥</span>{product_money($v['product_money'])}</span>
+					<span class="font12 fr c999">已售{$v['product_sellnum']}件</span>
+				</p>
+				<div class="clear"></div>
+				</a>
+			</div>
+			<!--{endforeach;}-->
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="fenye mat15">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,31 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="membertag_form" method="post" enctype="multipart/form-data">
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation" for="member_name">{$Think.lang.inviter_name}:</label></td>
+                <td class="vatop rowform"><input type="text" value="" name="member_name" id="member_name" class="txt"></td>
+                <td class="vatop tips"></td>
+            </tr>
+
+            
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function() {
+                $("#membertag_form").submit();
+        });
+        });
+</script>        

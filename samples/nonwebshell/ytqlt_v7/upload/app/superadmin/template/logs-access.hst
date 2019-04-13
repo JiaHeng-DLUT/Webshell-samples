@@ -1,0 +1,112 @@
+<style>
+	.pk-table tr td,
+	.pk-table tr th {
+		text-align: center;
+		padding: 10px 15px;
+	}
+	
+	.pk-table tr td {
+		font-size: 14px;
+	}
+	
+	.pk-table tr td a {
+		color: #1094FA;
+	}
+	
+	.pk-table tr td a:hover {
+		opacity: 0.8;
+	}
+</style>
+<table id="access_table" class="pk-table pk-table-bordered pk-width-all">
+	<thead>
+		<tr>
+			<th width="200">日期</th>
+			<th>IP量</th>
+			<th>PV量</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+<script>
+	var access_data = {$_G['TEMP']['ACCESS_DATA']};
+	$(function() {
+		var _obj = $('#access_table tbody');
+		var _htm = '';
+		for(var key in access_data) {
+			if(key.indexOf('pv') > -1) {
+				continue;
+			}
+			if(key.length == 4) {
+				var _key = key + '年总量&nbsp;<a data-date="' + key + '" href="javascript:"><i class="fa fa-fw fa-plus"></i></a>';
+			} else if(key.length == 7) {
+				var _key = key.substr(5) + '月总量&nbsp;<a data-date="' + key + '" href="javascript:"><i class="fa fa-fw fa-plus"></i></a>';
+			} else {
+				var _key = '<p>' + key + '</p><p><a data-date="' + key + '" href="javascript:">访问详情</a>&nbsp;<a data-date="attack" href="javascript:">攻防日志</a></p>';
+			}
+			_htm += '<tr class="' + (key.length == 4 ? '' : 'pk-hide') + '" data-date="' + key + '" id="access_table_' + key + '"><td>' + _key + '</td><td>' + access_data[key] + '</td><td>' + access_data[key + '_pv'] + '</td></tr>';
+			_obj.html(_htm);
+			_obj.find('a').on('click', function() {
+				var _date = $(this).data('date').toString();
+				if(_date.length == 10) {
+					//每日详情
+					var _pid = ppp({
+						area: ['60%', '70%'],
+						title: _date + '访量详情',
+						content: "正在加载，请稍后..."
+					});
+					$.getJSON('index.php?c=app&a=superadmin:logs&s=access&type=look&date=' + _date, function(data) {
+						if(data['state'] != 'ok') {
+							pkpopup.close(_pid);
+							ppp({
+								content: "数据初始化失败",
+								icon: 2
+							});
+							return false;
+						}
+						var _htm = '<table class="pk-table pk-table-bordered pk-width-all"><thead><tr><th>IP地址</th><th>访问次数</th><th>日志大小</th><th>详情操作</th></tr></thead><tbody>';
+						for(var i = 0; i < data['datas'].length; i++) {
+							_htm += '<tr><td>' + data['datas'][i]['ip'] + '</td><td>' + data['datas'][i]['pv'] + '</td><td>' + data['datas'][i]['size'] + 'KB</td><td><a class="pk-hover-underline pk-text-primary" target="_blank" href="index.php?c=app&a=superadmin:logs&s=look&type=access&date=' + _date + '&ip=' + data['datas'][i]['ip'] + '">查看</a> <a class="pk-hover-underline pk-text-primary" target="_blank" href="index.php?c=app&a=superadmin:logs&s=look&type=access&date=' + _date + '&ip=' + data['datas'][i]['ip'] + '&download=yes">下载</a></td></tr>';
+						}
+						_htm += '</tbody></table>';
+						$('#pkpopup_' + _pid + ' .pk-popup-body').html(_htm);
+					});
+					return false;
+				}
+				if(_date == 'attack') {
+					//攻防日志
+					var _url = 'index.php?c=app&a=superadmin:logs&s=look&type=attack&date=' + $(this).prev('a').data('date');
+					var _pid = ppp({
+						type: 5,
+						title: "提示",
+						content: "查看还是下载" + $(this).prev('a').data('date') + "攻防日志？",
+						btnshtml: '<a target="_blank" href="' + _url + '" onclick="pkpopup.close(this)">查看</a>&nbsp;&nbsp;<a target="_blank" href="' + _url + '&download=yes" style="background-color:#1094FA" onclick="pkpopup.close(this)">下载</a>'
+					});
+					return false;
+				}
+				var _trs = _obj.find('tr');
+				//console.log(_trs);
+				$(this).find('i').toggleClass('fa-plus fa-minus');
+				for(var i = 0; i < _trs.length; i++) {
+					var _d = $(_trs[i]).data('date').toString();
+					//console.log(_d);
+					if(_date.length == 4) {
+						//展开或收起年
+						//展开年下面的月
+						if(_d.substr(0, 4) == _date && _d.length == 7) {
+							$(_trs[i]).toggleClass('pk-hide').find('i').addClass('fa-plus').removeClass('fa-minus');
+						}
+						//收起年下的每日
+						if($(this).find('i').hasClass('fa-plus') && _d.substr(0, 4) == _date && _d.length == 10) {
+							$(_trs[i]).addClass('pk-hide');
+						}
+					} else if(_date.length == 7) {
+						//展开或收起月
+						if(_d.substr(0, 7) == _date && _d.length == 10) {
+							$(_trs[i]).toggleClass('pk-hide');
+						}
+					}
+				}
+			});
+		}
+	});
+</script>

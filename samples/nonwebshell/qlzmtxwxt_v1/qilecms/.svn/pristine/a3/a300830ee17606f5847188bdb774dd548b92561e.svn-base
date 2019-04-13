@@ -1,0 +1,138 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class AuthRule extends Common
+{
+	//权限列表
+	public function index(){
+  $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and reg_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and reg_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and reg_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+                    //排序
+
+      }else{
+            $where =array(
+       );
+           $order =  array(
+ 
+            );
+      }
+  
+      
+     $select  = array('id'=>'规则ID','title'=>'规则标题','name'=>'规则名');
+      //如期筛选   
+     $date = [];
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('auth_rule')
+     // ->alias('m')->join('member_group g','m group_id = g.group_id')
+     ->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+	  return $this->fetch();
+	}
+
+	public function add(){
+    $param = request()->param(); 
+    if(request()->isPost()){   
+
+        //验证
+        $rule =[
+          'title'=>'require|chsAlpha',
+          'name'=>'require',
+        ];
+        $msg= [
+         'title.require' =>'规则标题不能为空',
+         'title.chsAlpha' =>'规则标题只能是汉字或字母',
+         'name.require' =>'规则名称不能为空',   
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+              return error_json($error);
+         }
+         //表单数据
+          $data['title'] = $param['title'];
+          $data['name'] = $param['name'];
+          $data['type'] = $param['type'];
+          $data['condition'] = $param['condition'];
+          $data['status'] = !empty($param['status'])?1:0;
+
+       if(model('auth_rule')->add($data)){
+         return success_json('添加成功'); 
+       }
+   }else{
+        return $this->fetch();
+   }      
+	}
+	public function edit(){
+    $param = request()->param();
+    if(request()->isPost()){
+
+        //验证
+        $rule =[
+          'title'=>'require|chsAlpha',
+          'name'=>'require',
+        ];
+        $msg= [
+         'title.require' =>'规则标题不能为空',
+         'title.chsAlpha' =>'规则标题只能是汉字或字母',
+         'name.require' =>'规则名称不能为空',  
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+              return error_json($error);
+         }
+    
+        //表单数据       
+          $data['title'] = $param['title'];
+          $data['name'] = $param['name'];
+          $data['type'] = $param['type'];
+          $data['condition'] = $param['condition'];
+          $data['status'] = !empty($param['status'])?1:0;
+          $where['id'] = $param['id'];
+          $res = model('auth_rule')->edit($data,$where);
+          return success_json('编辑成功'); 
+    }else{
+         $rule = model('auth_rule')->getRuleInfoById($param['id']);
+         $this->assign('rule',$rule);
+         return $this->fetch();
+
+
+    }  
+	}
+	public function del(){
+      $param = input();
+     if(!$param['id']){  return error_json('请求参数错误');    }
+
+     $res= model('auth_rule')->del($param['id']);
+     if($res){
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+	}
+
+}

@@ -1,0 +1,34 @@
+<{include file="header.html"}>
+
+            <div class="content">
+            	<div class="title"><{$pagename}></div>
+                <div class="body">
+        			<{if $action == 'list'}>
+        			<div id="listbox">
+						<table width="100%" border="0" cellspacing="1" cellpadding="0">
+							<tr>
+								<th>ID</th>
+								<th>网站名称</th>
+								<th>收藏次数</th>
+								<th>收藏时间</th>
+								<th>操作选项</th>
+							</tr>
+							<{foreach from=$favorites item=row}>
+							<tr>
+								<td><{$row.fav_id}></td>
+								<td class="textleft"><{$row.web_name}></td>
+								<td><{$row.web_fnum}></td>
+								<td><{$row.fav_time}></td>
+								<td><a href="?mod=favorite&act=del&fid=<{$row.fav_id}>" onClick="return confirm('确认执行此操作吗？');">删除</a></td>
+							</tr>
+							<{foreachelse}>
+							<tr><td colspan="5">您还未收藏任何网站！</td></tr>
+							<{/foreach}>
+						</table>
+					</div>
+        			<div id="showpage" class="clearfix"><{$showpage}></div>
+        			<{/if}>
+                </div>
+            </div>
+            
+<{include file="footer.html"}>

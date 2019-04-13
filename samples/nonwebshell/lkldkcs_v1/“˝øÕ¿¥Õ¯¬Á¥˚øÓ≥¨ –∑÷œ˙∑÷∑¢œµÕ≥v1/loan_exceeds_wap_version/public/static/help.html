@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>新手帮助</title>
+</head>
+<style>
+  html {
+    background-color: #f8f8f9;
+  }
+
+  body,
+  html,
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul,
+  li {
+    list-style: none;
+  }
+
+  .help {
+    padding: 0 .4rem;
+    margin-top: .2rem;
+    background-color: #fff;
+    height: calc(100vh - 1.08rem);
+  }
+
+  li {
+    padding: .4rem 0;
+    border-bottom: 1px solid #edeff5;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+  }
+
+  li .titleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  li .title {
+    font-weight: bold;
+    font-size: .3rem;
+    width: 90%;
+    color: #101d37;
+    letter-spacing: .01rem;
+    margin: 0;
+  }
+
+  li img {
+    width: 0.24rem;
+    height: 0.12rem;
+    display: inline-block;
+    text-align: right;
+  }
+
+  li .ask {
+    color: #7f8799;
+    font-size: .28rem;
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  li img {
+    transition: all 0.5s;
+  }
+
+  li .ask {
+    transition: height 0.5s;
+  }
+
+  .on .ask {
+    height: auto;
+    margin-top: .3rem;
+    line-height: 1.5em;
+  }
+
+  .on .titleBox img {
+    transform: rotateX(180deg);
+  }
+
+</style>
+
+<body>
+  <div class="help">
+    <ul class="item">
+      
+    </ul>
+  </div>
+
+  <script src="./js/jquery.min.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px'
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //生成随机数
+    function guid() {
+      function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+      }
+      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
+    }
+    var header = {
+      'Device': guid(), // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Authentication': getUrlParam('token') || ''
+    }
+
+    function agreement() {
+      $.ajax({
+        url: 'https://api.daidaihu365.com/api/v1/help',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        success: function (res) {
+          if (res.code === 200) {
+            data = res.data;
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+				html +=
+                '<li onclick="ck($(this))">'+
+                  '<div class="titleBox">'+
+                    '<p class="title">'+data[i].question+'</p>'+
+                    '<img class="icon" src="./img/bang_zhu_xia_la@2x.png" alt="">'+
+                  '</div>'+
+                  '<div class="ask">'+data[i].answer.replace(/\n/g,"</br>")+'</div>'+
+				'</li>'
+            }
+            $('.item').append(html);
+          } else {
+            // console.log(res.info)
+          }
+        },
+        error: function () {
+          flag = false
+        }
+      })
+    }
+    agreement();
+
+    function ck(e) {
+      var chi = $(e);
+      var btn = chi.hasClass('on')
+      $('.item li').each(function () {
+        $(this).removeClass('on')
+      })
+      if (btn) {
+        chi.removeClass('on');
+      } else {
+        chi.addClass('on');
+      }
+    }
+
+  </script>
+</body>
+
+</html>

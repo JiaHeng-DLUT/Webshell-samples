@@ -1,0 +1,59 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    {if $order_info}
+    <form id="changeform" method="post" action="{:url('Sellerorder/change_state',['state_type'=>'spay_price','order_id'=>$order_info.order_id])}">
+        <dl>
+            <dt>{$Think.lang.store_order_buyer_with}{$Think.lang.ds_colon}</dt>
+            <dd>{$order_info.buyer_name}</dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_order_sn}{$Think.lang.ds_colon}</dt>
+            <dd><span class="num">{$order_info.order_sn}</span></dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_order_modify_price}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="text" id="goods_amount" name="goods_amount" value="{$order_info.goods_amount}"/>
+            </dd>
+        </dl>
+        <dl class="bottom">
+            <dt>&nbsp;</dt>
+            <dd>
+                <input type="submit" class="submit" id="confirm_button" value="{$Think.lang.ds_ok}" />
+            </dd>
+        </dl>
+    </form>
+    {else /}
+    <p style="line-height:80px;text-align:center">{$Think.lang.store_order_not_exist}</p>
+    {/if}
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#changeform').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function (form, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    $('#warning').show();
+                } else {
+                    $('#warning').hide();
+                }
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('changeform');
+            },
+            rules: {
+                goods_amount: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                goods_amount: {
+                    required: '{$Think.lang.store_order_modify_price_gpriceerror}',
+                    number: '{$Think.lang.store_order_modify_price_gpriceerror}'
+                }
+            }
+        });
+    });
+</script>

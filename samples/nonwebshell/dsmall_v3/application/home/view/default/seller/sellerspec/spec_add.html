@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/common.css">
+    <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/seller.css">
+    <link href="{$Think.PLUGINS_SITE_ROOT}/colorpicker/evol.colorpicker.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+ body{background-color: transparent;}
+.evo-colorind, .evo-colorind-ie, .evo-colorind-ff{width: 21px;height: 28px;border: solid #CCC;border-width: 1px 1px 1px 0;float: right;}
+.iframe-box{width: 100%;max-height: 550px;overflow: hidden;position: relative;}
+.iframe-content{width: 100%;}
+    </style>
+</head>
+
+<body>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<form id="spec_form" method="post" action="{:url('Sellerspec/save_spec')}">
+    <input type="hidden" name="sp_id" value="{$sp_info.sp_id}" />
+    <input type="hidden" name="gc_id" value="{$gc_info.gc_id}" />
+    <div class="dssc-spec-info" style=" width: 960px;"><span>{$Think.lang.specification_name}：{$sp_info.sp_name}</span><span>{$Think.lang.belong_classification}：{$gc_info.gc_name}</span><a href="javascript:void(0);" dstype="add_sv" class="dssc-btn"><i class="fa fa-th-list"></i>{$Think.lang.add_specification_value}</a></div>
+    <table class="dssc-default-table" style="width: 960px;">
+        <thead>
+        <tr>
+            <th class="w80">{$Think.lang.ds_sort}</th>
+            <th class="tl">{$Think.lang.specification_value_name}</th>
+            {if $sp_info.sp_id== $Think.DEFAULT_SPEC_COLOR_ID}
+            <th class="w300 tl">{$Think.lang.color_block}</th>
+           {/if}
+            <th class="w110">{$Think.lang.ds_handle}</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="iframe" class="iframe-box" style=" width: 960px;">
+        <div class="iframe-content">
+            <table class="dssc-default-table">
+                <tbody dstype="spec_tbody">
+                {notempty name="sp_value_list"}
+               {foreach name="sp_value_list" item="value"}
+                <tr class="bd-line">
+                    <td class="w80"><input type="text" class="text w40" name="sv[old][{$value.spvalue_id}][sort]" value="{$value.spvalue_sort}" /></td>
+                    <td class="tl"><input type="text" class="text w250" name="sv[old][{$value.spvalue_id}][name]" value="{$value.spvalue_name}" /></td>
+                    {if $sp_info.sp_id == $Think.DEFAULT_SPEC_COLOR_ID}
+                    <td class="w300 tl"><input type="text" class="text w100" name="sv[old][{$value.spvalue_id}][color]" value="{$value.spvalue_color}" dstype="spec_color" /></td>
+                   {/if}
+                    <td class="w110 dscs-table-handle"><span><a href="javascript:void(0);" class="btn-red" dstype="spec_del" data-param="{id:{$value.spvalue_id}}"><i class="fa fa-trash-o"></i>
+              <p>{$Think.lang.ds_del}</p>
+              </a></span></td>
+                </tr>
+                {/foreach}
+               {else /}
+                <tr class="bd-line">
+                    <td class="w80"><input type="text" class="text w40" name="sv[new][1][sort]" value="0" /></td>
+                    <td class="tl"><input type="text" class="text w250" name="sv[new][1][name]" /></td>
+                    {if $sp_info.sp_id == $Think.DEFAULT_SPEC_COLOR_ID}
+                    <td class="w300 tl"><input type="text" class="text w100" name="sv[new][1][color]" dstype="spec_color" /></td>
+                   {/if}
+                    <td class="w110 dscs-table-handle"><span><a href="javascript:void(0);" class="btn-orange" dstype="tr_remove"><i class="fa fa-minus-circle"></i>
+              <p>{$Think.lang.remove}</p>
+              </a></span></td>
+                </tr>
+               {/notempty}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="20" class="bottom"><a href="javascript:void(0);" dstype="submit-btn" class="submit mt20">{$Think.lang.submit_save_specification_values}</a></td></tr><tr>
+                    <td colspan="20" class="h200"></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script>
+    var BASESITEROOT = "{$Think.BASE_SITE_ROOT}";
+    var HOMESITEROOT = "{$Think.HOME_SITE_ROOT}";
+    var BASESITEURL = "{$Think.BASE_SITE_URL}";
+    var HOMESITEURL = "{$Think.HOME_SITE_URL}";
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/layer/layer.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery-ui/jquery-ui.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.validate.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/common.js"></script>
+<script src="{$Think.HOME_SITE_ROOT}/js/member.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/colorpicker/evol.colorpicker.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.js"></script>
+<script>
+    $(function(){
+        // 提交表单
+        $('a[dstype="submit-btn"]').click(function(){
+            var _submit = true;
+            $('#spec_form').find('input[name$="[name]"]').each(function(){
+                if ($(this).val() == '') {
+                    _submit = false;
+                    if (!$(this).hasClass('error')) {
+                        $(this).addClass('error').parents('td:first').append('<label class="error"><i class="fa fa-exclamation-circle"></i>{$Think.lang.please_fill_content}</label>');
+                    }
+                }
+            });
+            if (_submit) {
+                ds_ajaxpost('spec_form');
+            }
+        });
+
+        // 颜色选择器
+        $('input[dstype="spec_color"]').colorpicker({showOn:'both'}).removeAttr('dstype');
+
+        // 移除
+        $('a[dstype="tr_remove"]').click(function(){
+            $(this).parents('tr:first').remove();
+        });
+
+        // 删除
+        $('a[dstype="spec_del"]').click(function(){
+            var $this = $(this);
+            eval('data_str = ' + $this.attr('data-param'));
+            $.getJSON("{:url('Sellerspec/ajax_delspec')}"+'?id='+data_str.id, function(data){
+                if(data){
+                    $this.parents('tr:first').remove();
+                }
+            });
+        });
+
+        // 添加规格值
+        var i = 2;  // 自增，防止冲突
+        $('a[dstype="add_sv"]').click(function(){
+            var _tr = $('<tr class="bd-line"></tr>');
+            $('<td class="w80"><input type="text" class="text w40" name="sv[new]['+ i +'][sort]" value="0" /></td>').appendTo(_tr);   // 排序
+            $('<td class="tl"><input type="text" class="text w250" name="sv[new]['+ i +'][name]" /></td>').appendTo(_tr);      // 规格名称
+            {if $sp_info.sp_id == $Think.DEFAULT_SPEC_COLOR_ID}
+                $('<td class="w300 tl"><input type="text" class="text w100" name="sv[new]['+ i +'][color]" dstype="spec_color" /></td>').appendTo(_tr);  // 颜色色块
+            {/if}
+
+            $('<td class="w110 dscs-table-handle"><span><a href="javascript:void(0);" class="btn-orange"><i class="fa fa-minus-circle"></i><p>{$Think.lang.remove}</p></a</span></td>').find('a').click(function(){
+                $(this).parents('tr:first').remove();
+            }).end().appendTo(_tr);   // 操作
+            _tr.appendTo('tbody[dstype="spec_tbody"]');
+            // 颜色选择器
+            $('tbody[dstype="spec_tbody"]').find('input[dstype="spec_color"]').colorpicker({showOn:'both'}).removeAttr('dstype');
+            i++;
+        });
+    });
+    //超出父级页面iframe设定高度时滚动条
+    $(document).ready(function() {
+        $('#iframe').perfectScrollbar();
+    });
+</script>

@@ -1,0 +1,134 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="alert mt10" style="clear:both;">
+    <ul class="mt5">
+        <li>{$Think.lang.statistical_information1}</li>
+        <li>{$Think.lang.goodslist_information2}</li>
+        <li>{$Think.lang.goodslist_information3}</li>
+        <li>{$Think.lang.goodslist_information4}</li>
+        <li>{$Think.lang.goodslist_information5}</li>
+        <li>{$Think.lang.goodslist_information6}</li>
+    </ul>
+</div>
+<form method="get"  target="_self" id="formSearch">
+    <table class="search-form">
+        <input type="hidden" id="orderby" name="orderby" value="{$orderby}"/>
+        <tr>
+            <td class="tr">
+                <div class="fr">&nbsp;&nbsp;{$Think.lang.commodity_name}
+                    <input type="text" class="text w150" name="search_gname" value="{$Request.param.search_gname}" />
+                    <label class="submit-border">
+                        <input type="submit" class="submit" value="{$Think.lang.ds_common_search}" />
+                    </label>
+                </div>
+                <div class="fr">{$Think.lang.classification_goods}&nbsp;
+                    <span id="searchgc_td"></span>
+                    <input type="hidden" id="choose_gcid" name="choose_gcid" value="0"/>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr class="sortbar-array">
+            <th></th>
+            <th>{$Think.lang.commodity_name}</th>
+            <th>{$Think.lang.price}</th>
+            <th class="align-center">
+                <a title="{$Think.lang.click_proceed_sorting}" ds_type="orderitem" data-param='{"orderby":"ordergoodsnum"}' class="{if !$orderby || $orderby=='ordergoodsnum desc'}selected desc{/if}{if $orderby=='ordergoodsnum asc'}selected asc{/if}">{$Think.lang.nearly_orders_shop}<i></i>
+                </a>
+            </th>
+            <th class="align-center">
+                <a title="{$Think.lang.click_proceed_sorting}" ds_type="orderitem" data-param='{"orderby":"ordergamount"}' class="{if $orderby=='ordergamount desc'}selected desc{/if}{if $orderby=='ordergamount asc'}selected asc{/if}">{$Think.lang.nearly_orders_money}<i></i>
+                </a>
+            </th>
+            <th class="w120">{$Think.lang.ds_handle}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="goodslist"}
+        {foreach name="goodslist" item="v"}
+        <tr class="bd-line">
+            <td>
+                <div class="pic-thumb">
+                    <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">
+                        <img src="{:goods_thumb($v)}"/>
+                    </a>
+                </div>
+            </td>
+            <td class="tl">
+                <span class="over_hidden w400 h20">
+                    <a href="{:url('Goods/index',['goods_id'=>$v.goods_id])}" target="_blank">{$v.goods_name}</a>
+                </span>
+            </td>
+            <td>{$v.goods_price}</td>
+            <td>{$v.ordergoodsnum}</td>
+            <td>{$Think.lang.currency}{$v.ordergamount}</td>
+            <td>
+                <a href="javascript:void(0);" ds_type='showdata' data-param='{"gid":"{$v.goods_id}"}'>{$Think.lang.movements_figure}</a>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord">
+                <div class="warning-option">
+                    <i class="fa fa-warning"></i>
+                    <span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    {notempty name="goodslist"}
+    <tfoot>
+        <tr>
+            <td colspan="20"><div class="pagination">{$show_page}</div></td>
+        </tr>
+    </tfoot>
+    {/notempty}
+</table>
+<table class="dssc-default-table">
+    <tbody>
+        <tr>
+    <div id="goodsinfo_div" class="close_float" style="text-align:center;"></div>
+</tr>
+</tbody>
+</table>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript">
+$(function(){
+    //商品分类
+    init_gcselect({$gc_choose_json},{$gc_json});
+
+    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+
+    //加载商品详情
+    {notempty name="goodslist"}
+        getStatdata({$goodslist.0.goods_id});
+    {/notempty}
+    $("[ds_type='showdata']").click(function(){
+        var data_str = $(this).attr('data-param');
+        eval('data_str = '+data_str);
+        getStatdata(data_str.gid);
+    });
+    //排序
+    $("[ds_type='orderitem']").click(function(){
+        var data_str = $(this).attr('data-param');
+        eval( "data_str = "+data_str);
+        if($(this).hasClass('desc')){
+            $("#orderby").val(data_str.orderby + ' asc');
+        } else {
+            $("#orderby").val(data_str.orderby + ' desc');
+        }
+        $('#formSearch').submit();
+    });
+});
+function getStatdata(gid){
+    $('#goodsinfo_div').load(HOMESITEURL+'/Statisticsgoods/goodsinfo?gid='+gid);
+}
+</script>
+
+{/block}

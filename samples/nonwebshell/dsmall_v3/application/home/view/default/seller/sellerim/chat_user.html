@@ -1,0 +1,24 @@
+<div id="chatUserList" class="dssc-chat-user-list">
+    {notempty name="member_list"}
+    <ul>
+        {foreach name="member_list" item="val"}
+        <li class="normal" user_id="{$val.u_id}">
+            <a href="javascript:void(0)" onclick="user_chat_log('{$val.u_id}','{$val.u_name}');" title="{$Think.lang.with} {$val.u_name} {$Think.lang.last_dialogue_time}：{$val.time}">
+                <span class="avatar"><img src="{$val.avatar}"/></span>{$val.u_name} </a></li>
+       {/foreach}
+    </ul>
+   {else /}
+    <div class="warning-option"><i class="fa fa-warning">&nbsp;</i><span>{$Think.lang.no_record}</span></div>
+    {/notempty}
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.js"></script>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/perfect-scrollbar.min.css">
+<script type="text/javascript">
+    $('#store_chat_log .demo').ajaxContent({
+        target:'#store_chat_log'
+    });
+    //自定义滚定条
+    $('#chatUserList').perfectScrollbar();
+</script>

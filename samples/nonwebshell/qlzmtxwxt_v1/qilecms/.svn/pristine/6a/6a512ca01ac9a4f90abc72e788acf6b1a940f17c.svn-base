@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body style="background:#eee">
+
+<div class="layui-row layui-col-space10">
+  <div class="layui-col-md3">
+    财务
+  </div>
+  <div class="layui-col-md3">
+    会员
+  </div>
+  <div class="layui-col-md3">
+    文章
+  </div>
+    <div class="layui-col-md3">
+    1/3
+  </div>
+</div>
+
+<div id="main"  style="height:400px;"></div>
+<div id="mainMap"  style="height:400px;"></div>
+<div id="mainM"  style="height:400px;"></div>
+{load href="__STATIC__/echarts/echarts.js" /}
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '__STATIC__/echarts'
+            }
+        });
+        
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line',
+                'echarts/chart/map',
+                'echarts/chart/pie'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['销量']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"销量",
+                            "type":"bar",
+                            "data":[5, 20, 40, 10, 10, 20]
+                        }
+                    ]
+                };
+                               // 为echarts对象加载数据 
+                 myChart.setOption(option);
+
+                            // --- 地图 ---
+            var myChart2 = ec.init(document.getElementById('mainMap'));
+            myChart2.setOption({
+                tooltip : {
+                    trigger: 'item',
+                    formatter: '{b}'
+                },
+                series : [
+                    {
+                        name: '中国',
+                        type: 'map',
+                        mapType: 'china',
+                        selectedMode : 'multiple',
+                        itemStyle:{
+                            normal:{label:{show:true}},
+                            emphasis:{label:{show:true}}
+                        },
+                        data:[
+                            {name:'广东',selected:true}
+                        ]
+                    }
+                ]
+            });
+
+ var myChart3 = ec.init(document.getElementById('mainM')); 
+                               option3 = {
+                      title : {
+                          text: '某站点用户访问来源',
+                          subtext: '纯属虚构',
+                          x:'center'
+                      },
+                      tooltip : {
+                          trigger: 'item',
+                          formatter: "{a} <br/>{b} : {c} ({d}%)"
+                      },
+                      legend: {
+                          orient : 'vertical',
+                          x : 'left',
+                          data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                      },
+                      toolbox: {
+                          show : true,
+                          feature : {
+                              mark : {show: true},
+                              dataView : {show: true, readOnly: false},
+                              magicType : {
+                                  show: true, 
+                                  type: ['pie', 'funnel'],
+                                  option: {
+                                      funnel: {
+                                          x: '25%',
+                                          width: '50%',
+                                          funnelAlign: 'left',
+                                          max: 1548
+                                      }
+                                  }
+                              },
+                              restore : {show: true},
+                              saveAsImage : {show: true}
+                          }
+                      },
+                      calculable : true,
+                      series : [
+                          {
+                              name:'访问来源',
+                              type:'pie',
+                              radius : '55%',
+                              center: ['50%', '60%'],
+                              data:[
+                                  {value:335, name:'直接访问'},
+                                  {value:310, name:'邮件营销'},
+                                  {value:234, name:'联盟广告'},
+                                  {value:135, name:'视频广告'},
+                                  {value:1548, name:'搜索引擎'}
+                              ]
+                          }
+                      ]
+                  };
+        myChart3.setOption(option3);                
+
+        
+ 
+            }
+        );
+    </script>
+
+<!-- <div class="layui-collapse" lay-filter="test">
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">系统信息</h2>
+    <div class="layui-colla-content">
+      <p>有不少其他答案说是因为JS太差。我下面的答案已经说了，这不是根本性的原因。但除此之外，我还要纠正一些对JS具体问题的误解。JS当初是被作为脚本语言设计的，所以某些问题并不是JS设计得差或者是JS设计者的失误。比如var的作用域问题，并不是“错误”，而是当时绝大部分脚本语言都是这样的，如perl/php/sh等。模块的问题也是，脚本语言几乎都没有模块/命名空间功能。弱类型、for-in之类的问题也是，只不过现在用那些老的脚本语言的人比较少，所以很多人都误以为是JS才有的坑。另外有人说JS是半残语言，满足不了开发需求，1999年就该死。半残这个嘛，就夸张了。JS虽然有很多问题，但是设计总体还是优秀的。——来自知乎@贺师俊</p>
+    </div>
+  </div>
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">为什么前端工程师多不愿意用 Bootstrap 框架？</h2>
+    <div class="layui-colla-content">
+      <p>因为不适合。如果希望开发长期的项目或者制作产品类网站，那么就需要实现特定的设计，为了在维护项目中可以方便地按设计师要求快速修改样式，肯定会逐步编写出各种业务组件、工具类，相当于为项目自行开发一套框架。——来自知乎@Kayo</p>
+    </div>
+  </div>
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
+    <div class="layui-colla-content">
+      <p>在前端技术快速变革的今天，layui 仍然坚持语义化的组织模式，甚至于模块理念都是采用类AMD组织形式，并非是有意与时代背道而驰。layui 认为以jQuery为核心的开发方式还没有到完全消亡的时候，而早期市面上基于jQuery的UI都普通做得差强人意，所以需要有一个新的UI去重新为这一领域注入活力，并采用一些更科学的架构方式。
+      <br><br>
+      因此准确地说，layui 更多是面向那些追求开发简单的前端工程师们，以及所有层次的服务端程序员。</p>
+    </div>
+  </div>
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">贤心是男是女？</h2>
+    <div class="layui-colla-content">
+      <p>man！ 所以这个问题不要再出现了。。。</p>
+    </div>
+  </div>
+</div>
+ -->
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>
+<script>
+layui.use('upload', function(){
+  var upload = layui.upload;
+   
+  //执行实例
+  var uploadInst = upload.render({
+    elem: '#test1' //绑定元素
+    ,url: "{:url('upload/index')}" //上传接口
+    ,done: function(res){
+      //上传完毕回调
+    }
+    ,error: function(){
+      //请求异常回调
+    }
+  });
+});
+</script>
+</body>
+
+</html>

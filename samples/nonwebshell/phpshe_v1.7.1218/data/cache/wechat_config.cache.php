@@ -1,0 +1,3 @@
+<?php
+return unserialize('a:11:{s:11:"wechat_name";N;s:12:"wechat_appid";s:0:"";s:16:"wechat_appsecret";s:0:"";s:12:"wechat_token";s:19:"phpshe590d6a7331976";s:19:"wechat_access_token";N;s:19:"wechat_jsapi_ticket";N;s:12:"wechat_mchid";s:0:"";s:10:"wechat_key";s:0:"";s:10:"notify_url";s:78:"http://localhost/phpshe/1.7/gaoji/include/plugin/payment/wechat/notify_url.php";s:10:"refund_url";s:78:"http://localhost/phpshe/1.7/gaoji/include/plugin/payment/wechat/refund_url.php";s:4:"time";i:1534420713;}');
+?>

@@ -1,0 +1,90 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>自营店铺</h3>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>平台在此处统一管理自营店铺，可以新增、编辑、删除平台自营店铺</li>
+            <li>可以设置未绑定全部商品类目的平台自营店铺的经营类目</li>
+            <li>已经发布商品的自营店铺不能被删除</li>
+            <li>删除平台自营店铺将会同时删除店铺的相关图片以及相关商家中心账户，请谨慎操作！</li>
+        </ul>
+    </div>
+    
+
+    <form method="get" name="formSearch" id="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>店铺</dt>
+                <dd><input type="text" value="{$Request.param.store_name}" name="store_name" id="store_name" class="txt" /></dd>
+            </dl>
+            <div class="btn_group">
+                <input type="submit" class="btn" value="搜索">
+                <a href="{:url('Ownshop/index')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+
+
+    <form method="post" id="store_form">
+        <table class="ds-default-table">
+            <thead>
+                <tr class="thead">
+                    <th>店铺名称</th>
+                    <th>店主账号</th>
+                    <th>店主卖家账号</th>
+                    <th class="align-center">状态</th>
+                    <th class="align-center">绑定所有类目</th>
+                    <th class="align-center">操作</th>
+                </tr>
+            </thead>
+            {notempty name="store_list"}
+            <tbody>
+                {foreach name="store_list" item="v" key="k" }
+                <tr class="" id="ds_row_{$v.store_id}">
+                    <td>
+                        <a target="_blank" href="{:url('/Home/store/index',['store_id'=>$v.store_id])}" >{$v.store_name}</a>
+                    </td>
+                    <td>{$v.member_name}</td>
+                    <td>{$v.seller_name}</td>
+                    <td class="align-center w72">
+                        {if $v.store_state}{$Think.lang.open}{else/}{$Think.lang.close}{/if}
+                    </td>
+                    <td class="align-center w120">{if $v.bind_all_gc}是{else/}否{/if}</td>
+                    <td class="align-center w200">
+                        <a href="javascript:dsLayerOpen('{:url('Ownshop/edit',['id'=>$v.store_id])}','{$Think.lang.ds_edit}-{$v.member_name}')" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                        {empty name="$v.bind_all_gc"}
+                        <a href="{:url('Ownshop/bind_class',['id'=>$v.store_id])}" class="dsui-btn-view"><i class="iconfont"></i>经营类目</a>
+                        {/empty}
+                        <!--<a href="javascript:dsLayerConfirm('{:url('Ownshop/del',['id'=>$v.store_id])}','{$Think.lang.ds_ensure_del}',{$v.store_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>-->
+                    </td>
+                </tr>
+               {/foreach}
+            </tbody>
+            {else/}
+            <tbody>
+                <tr class="no_data">
+                    <td colspan="15">{$Think.lang.ds_no_record}</td>
+                </tr>
+            </tbody>
+            {/notempty}
+        </table>
+        {$show_page}
+    </form>
+</div>

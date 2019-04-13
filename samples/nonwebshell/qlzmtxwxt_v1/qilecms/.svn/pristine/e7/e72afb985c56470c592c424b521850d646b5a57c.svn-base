@@ -1,0 +1,128 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+
+class Area extends Common
+{
+	public function index(){
+       $post = request()->param(); 
+       $input = input();
+       $pid =   !empty($input['pid'])?$input['pid']:0;
+       $where = 1;
+       $where .= " and pid = '$pid'";
+    if($post){
+    	     
+             $keywords = $post['keywords'];
+             
+             if($keywords['name']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+      
+ 
+
+      }else{
+         
+
+      }
+                $order = array(
+            	'id'=>'asc'
+           	 );
+     $select  = array('id'=>'地区ID','name'=>'地区名称','pid'=>'上级ID');
+      //如期筛选   
+     $date = array(
+                  // array('title'=>'创建时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+	 $list = DB::name('area')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+     $this->assign('page', $page);
+	 $this->assign('list',$list);
+     return $this->fetch();
+	}
+	public function add(){
+      if(request()->isPost()){    
+		   	$post = input('post.');	
+                $name = $post['name'];
+                //表单验证
+				$rule = [
+				    'name'  => 'require|max:8'
+				];
+
+				$msg = [
+				    'name.require' => '地区名称不能为空',
+				    'name.max'     => '地区名称最多不能超过8个字符',
+				];
+                
+				$result = $this->checkSubmit($post,$rule,$msg);
+                if($result) {
+                	return error_json($result);
+				}
+
+                if(model('area')->isAreaName($name)){
+                   return error_json('该地区已经存在，请勿重复添加');	
+                }
+
+                
+	            $result = model('area')->addArea($post);
+
+
+		        if($result){
+			        return success_json('添加成功');
+		        }else{
+		        	return error_json('添加失败');
+		        }
+
+	  }else{
+
+	  	 $param = input();
+	  	 // print_r($param);
+	  	 $id  =  $param['id'];
+	  	 $data =  model('area')->getAreaName($id);
+	  	 $name = $data['name']?$data['name']:'顶级';
+		 $this->assign('name',$name); //上级名称
+		 $this->assign('pid',$id); //上级ID
+         return $this->fetch();
+	 }
+
+	}
+	public function edit(){
+	 if(!request()->isPost()){ return error_json('非法请求');}
+	 $post['id'] = input('post.id');
+     $post['name'] = input('post.name');
+     $post['pid'] = input('post.pid'); 
+	 			$rule = [
+				    'name'  => 'require|max:8'
+				];
+
+				$msg = [
+				    'name.require' => '地区名称不能为空',
+				    'name.max'     => '地区名称最多不能超过8个字符',
+				];
+                
+				$result = $this->validate($post,$rule,$msg);
+                if($result) {
+                	return error_json($result);
+				}
+
+     model('area')->updateArea($post); 
+    return success_json('更新成功');
+
+	}
+	public function del(){
+       $param = request()->param();
+
+       $id = $param['id'];
+      if(model('area')->delArea($id)){
+        return success_json('删除成功');
+      }else{
+
+      	return error_json('删除失败');
+      }
+      
+	}
+
+}

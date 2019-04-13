@@ -1,0 +1,8 @@
+{
+	"title": "系统默认编辑器",
+	"type": "app",
+	"author": "puyuetian",
+	"dir": "puyuetianeditor",
+	"version": "2.0.0.20190318",
+	"description": "HS默认富文本编辑器，不可删除。"
+}

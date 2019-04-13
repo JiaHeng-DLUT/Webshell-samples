@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/seller.css" />
+        <style type="text/css">
+            body { background: #FFF none;
+            }
+        </style>
+        <script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/common.js" charset="utf-8"></script>
+        <script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery.printarea.js" charset="utf-8"></script>
+        <title>{$Think.lang.member_printorder_print}--{$store_info.store_name}{$Think.lang.member_printorder_title}</title>
+        <link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/font-awesome/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        {notempty name="order_info"}
+        <div class="print-layout">
+            <div class="print-btn" id="printbtn" title="{$Think.lang.member_printorder_print_tip}"><i></i><a href="javascript:void(0);">{$Think.lang.member_printorder_print}</a></div>
+            <div class="a5-size"></div>
+            <dl class="a5-tip">
+                <dt>
+                    <h1>A5</h1>
+                    <em>Size: 210mm x 148mm</em></dt>
+                <dd>{$Think.lang.member_printorder_print_tip_A5}</dd>
+            </dl>
+            <div class="a4-size"></div>
+            <dl class="a4-tip">
+                <dt>
+                    <h1>A4</h1>
+                    <em>Size: 210mm x 297mm</em></dt>
+                <dd>{$Think.lang.member_printorder_print_tip_A4}</dd>
+            </dl>
+            <div class="print-page">
+                <div id="printarea">
+                    {foreach name="goods_list" item="item_v" key="item_k" }
+                    <div class="orderprint">
+                        <div class="top">
+                            {notempty name="$store_info.store_logo"}
+                            <div class="full-title">{$store_info.store_name} {$Think.lang.member_printorder_title}</div>
+                            {else /}
+                            <div class="logo" ><img src="{:get_store_logo($store_info.store_logo,'store_logo')}" width="60" height="60"/></div>
+                            <div class="logo-title">{$store_info.store_name}{$Think.lang.member_printorder_title}</div>
+                            {/notempty}
+                        </div>
+                        <table class="buyer-info">
+                            <tr>
+                                <td class="w200">{$Think.lang.member_printorder_truename}{$Think.lang.ds_colon}{$order_info['extend_order_common']['reciver_name']}</td>
+                                <td>{$Think.lang.member_printorder_tel_phone}{$Think.lang.ds_colon}{$order_info['extend_order_common']['reciver_info']['phone']}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">{$Think.lang.member_printorder_address}{$Think.lang.ds_colon}{$order_info['extend_order_common']['reciver_info']['address']}</td>
+                            </tr>
+                            <tr>
+                                <td>{$Think.lang.member_printorder_orderno}{$Think.lang.ds_colon}{$order_info.order_sn}</td>
+                                <td>{$Think.lang.member_printorder_orderadddate}{$Think.lang.ds_colon}{$order_info.add_time|date="Y-m-d",###}</td>
+                                <td>{if isset($order_info.shippin_code)}
+                                    <span>{$Think.lang.member_printorder_shippingcode}{$Think.lang.ds_colon}{$order_info.shipping_code}</span>
+                                    {/if}
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="order-info">
+                            <thead>
+                                <tr>
+                                    <th class="w40">{$Think.lang.member_printorder_serialnumber}</th>
+                                    <th class="tl">{$Think.lang.member_printorder_goodsname}</th>
+                                    <th class="w70 tl">{$Think.lang.member_printorder_goodsprice}({$Think.lang.currency_zh})</th>
+                                    <th class="w50">{$Think.lang.member_printorder_goodsnum}</th>
+                                    <th class="w70 tl">{$Think.lang.member_printorder_subtotal}({$Think.lang.currency_zh})</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach name="item_v" item="v" key="k" }
+                                <tr>
+                                    <td>{$k}</td>
+                                    <td class="tl">{$v.goods_name}</td>
+                                    <td class="tl">{$Think.lang.currency}{$v.goods_price}</td>
+                                    <td>{$v.goods_num}</td>
+                                    <td class="tl">{$Think.lang.currency}{$v.goods_all_price}</td>
+                                </tr>
+                                {/foreach}
+                                <tr>
+                                    <th></th>
+                                    <th colspan="2" class="tl">{$Think.lang.member_printorder_amountto}</th>
+                                    <th>{$goods_all_num}</th>
+                                    <th class="tl">{$Think.lang.currency}{$goods_total_price}</th>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="10"><span>{$Think.lang.member_printorder_totle}{$Think.lang.ds_colon}{$Think.lang.currency}{$goods_total_price}</span><span>{$Think.lang.member_printorder_freight}{$Think.lang.ds_colon}{$Think.lang.currency}{$order_info.shipping_fee}</span><span>{$Think.lang.member_printorder_privilege}{$Think.lang.ds_colon}{$Think.lang.currency}{$promotion_amount}</span><span>{$Think.lang.member_printorder_orderamount}{$Think.lang.ds_colon}{$Think.lang.currency}{$order_info.order_amount}</span><span>{$Think.lang.member_printorder_shop}{$Think.lang.ds_colon}{$store_info.store_name}</span>
+                                        {if !empty($store_info['store_qq'])}
+                                        <span>QQ：{$store_info.store_qq}</span>
+                                        {elseif !empty($store_info['store_ww']) /}
+                                        <span>{$Think.lang.member_printorder_shopww}{$Think.lang.ds_colon}{$store_info.store_ww}</span>
+                                        {/if}
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {notempty name="$store_info.store_seal"}
+                        <div class="explain">
+                            {$store_info.store_printexplain}
+                        </div>
+                        {else /}
+                        <div class="explain">
+                            {$store_info.store_printexplain}
+                        </div>
+                        <div class="seal"><img src="{$store_info.store_seal}" onload="javascript:ResizeImage(this, 120, 120);"/></div>
+                        {/notempty}
+                        <div class="tc page">{$Think.lang.member_printorder_pagetext_1}{$item_k}{$Think.lang.member_printorder_pagetext_2}/{$Think.lang.member_printorder_pagetext_3}{:count($goods_list)}{$Think.lang.member_printorder_pagetext_2}</div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        {/notempty}
+    </body>
+    <script>
+        var HOMESITEURL = "{$Think.HOME_SITE_URL}";
+        $(function () {
+            $("#printbtn").click(function () {
+                $("#printarea").printArea();
+            });
+        });
+
+        //打印提示
+        $('#printbtn').poshytip({
+            className: 'tip-yellowsimple',
+            showTimeout: 1,
+            alignTo: 'target',
+            alignX: 'center',
+            alignY: 'bottom',
+            offsetY: 5,
+            allowTipHover: false
+        });
+    </script>
+</html>

@@ -1,0 +1,35 @@
+{include file="public/default/header.html" /}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <ol class="breadcrumb">
+                <li><a href="{$url.href}">首页</a></li>
+                {notempty name="daohang"}
+                {volist name="daohang" id="vo"}
+                <li>{if condition="$vo.icon neq ''"}{$vo.icon} {/if}<a href="{$vo.href}">{$vo.label}</a></li>
+                {/volist}
+                {/notempty}
+                <li class="active">{$page.biaoti|subtext=28}</li>
+            </ol>
+            {$page_top}
+            <div class="page-header">
+                <h1>{$page.biaoti}</h1>
+            </div>
+            <div>
+                {$page_mid}
+                {$page.zhengwen}
+                {$page_bottom}
+            </div>
+        </div>
+        <div class="col-md-3">
+            {$page_side_top_group}
+            <ul class="nav nav-pills nav-stacked" role="tablist">
+                {volist name="hunhe.hunhe2.neirong" id="vo" offset="0" length='6'}
+                <li role="presentation"><a href="{$vo.href}">{$vo.biaoti}</a></li>
+                {/volist}
+            </ul>
+            {$page_side_bottom_group}
+        </div>
+    </div>
+</div>
+{include file="public/default/footer.html" /}

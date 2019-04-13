@@ -1,0 +1,218 @@
+.no_results{border:1px solid #f7eae7;font-weight:700;font-size:14px;color:#333;padding:60px 0px 60px 115px;}
+
+
+.error { color:#F00;}
+/*店铺样式*/
+.common_module{border: 1px solid #ececec;margin-bottom: 5px;}
+.common_title{background: #f6f6f6;height: 38px;line-height: 38px;font-size: 14px;padding: 0 14px;}
+.common_title h2{font-size: 14px;font-weight:600;}
+.common_content{margin-bottom:10px;}
+.common_content ul{padding: 0 10px;}
+.common_content li{clear: both;height: 85px;position: relative;margin-top:10px;}
+.common_content li .p_img{float: left;margin-right: 5px;}
+.common_content li .p_info{}
+.common_content li .p_name{line-height:18px;height:36px;overflow:hidden;min-height:36px;margin-bottom:5px}
+.common_content li .p_price{color:#e4393c;}
+.common_content li .p_price em{font-size:14px;font-family:Verdana;font-weight:700}
+.common_content li .p_sales{line-height:20px;height:20px;overflow:hidden}
+.common_content li .p_num{position:absolute;left:-5px;top:-5px;width:20px;height:20px;line-height:20px;border-radius:10px;background-color:#aaa;color:#fff;text-align:center}
+.common_content li .p_num.active{background-color:#e4393c;}
+
+/*侧边搜索 BEGIN*/
+.dss-search .dss-submenu{padding:10px;}
+.dss-search .dss-submenu .class_child{margin-left: 10px;}
+/*侧边搜索 END*/
+
+.ds_side{width: 210px;float: left;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+.ds_main{width: 968px;float: right;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+.ds_main .title { background-color: #FCFCFC; text-align: left; border-color: #ff4040 #E7E7E7 #E7E7E7; border-style: solid; border-width: 2px 1px 1px;}
+.ds_main .title h4 { font: 14px/20px "Microsoft Yahei"; color: #777777; display: inline-block; *dispaly: inline; padding: 6px 15px 5px; *zoom:1; }
+.ds_main .title span { float:right; margin: 4px 12px 0 0; line-height: 24px;}
+.ds_main .title span a { color: #999;}
+
+/* 焦点图轮换 */ 
+.storeslider { background: #fff; position: relative; zoom: 1;width: 938px; clear:both; margin: 0 auto 30px auto; *margin: 0 auto 5px auto; padding: 0;}
+.storeslider .slides {zoom: 1;}
+.storeslider .slides img { max-width: 100%; display: block;}
+.storeslider .slides > li { position: relative;}
+.storeslider .ctrl{display:block;position:absolute;top:50%;margin-top:-31px;z-index:9;width:30px;height:62px;line-height:62px;color:white;text-align:center;font-size:36px;font-family:simsun;font-weight:500;background:#000;filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5; }
+.storeslider .ctrl:hover{color:#fff;filter:alpha(opacity=80); -moz-opacity:0.8; -khtml-opacity: 0.8; opacity: 0.8;}
+.storeslider .prev{position:absolute;left:0%;}
+.storeslider .next{position:absolute;right:0%;}
+
+
+
+
+/* 商品列表 */
+.dss-goods-list { overflow:hidden;}
+.dss-goods-list ul { font-size: 0; *word-spacing:-1px/*IE6、7*/; margin-right: -1px; margin-bottom: -1px;}
+.dss-goods-list ul li { font-size: 12px; color: #666; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block;  *display: inline/*IE7*/; width: 25%; *zoom:1;}
+.dss-goods-list ul li dl { border: solid #E7E7E7; border-width: 0 1px 1px 0; padding: 9px; position: relative; z-index: 1;}
+.dss-goods-list ul li dt { width: 160px; margin: 5px auto;}
+.dss-goods-list ul li dt a.goods-thumb { line-height: 0; background-color: #FFF; text-align: center; vertical-align: middle; display: table-cell; *display: block; width: 160px; height: 160px; overflow: hidden;}
+.dss-goods-list ul li dt a.goods-thumb img { max-width: 160px; max-height: 160px; margin-top:expression(160-this.height/2); *margin-top:expression(80-this.height/2)/*IE6,7*/;}
+.dss-goods-list ul li dt .goods-thumb-scroll-show { font-size: 0; *word-spacing:-1px/*IE6、7*/; margin-top: 5px;}
+.dss-goods-list ul li dt .goods-thumb-scroll-show li { vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *dispaly: inline; width: 24px; height: 24px; padding: 1px; border: solid 1px #F5F5F5; margin-right: 4px;}
+.dss-goods-list ul li dt .goods-thumb-scroll-show li.selected { border-color: #ff4040;}
+.dss-goods-list ul li dt .goods-thumb-scroll-show li a { line-height: 0; background-color: #FFF; text-align: center; vertical-align: middle; display: table-cell; *display: block; width: 24px; height: 24px; overflow: hidden;}
+.dss-goods-list ul li dt .goods-thumb-scroll-show li a img { max-width: 24px; max-height: 24px; margin-top:expression(24-this.height/2); *margin-top:expression(12-this.height/2)/*IE6,7*/;}
+.dss-goods-list ul li dd { width: 160px; margin: 0 auto;}
+.dss-goods-list ul li dd.goods-name { line-height: 16px; display: block; height: 32px; overflow: hidden; margin-bottom: 5px;}
+.dss-goods-list ul li dd.goods-info { font-size: 0; *word-spacing:-1px/*IE6、7*/;}
+.dss-goods-list ul li dd.goods-info span { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *dispaly: inline; width: 50%; *zoom: 1;}
+.dss-goods-list ul li dd.goods-promotion { font: normal normal normal 14px/1 FontAwesome;color: #FFFFFF; height: 30px; text-align: center; width: 30px;  z-index: 2; position: absolute; right: 35px; top: 14px;}
+.dss-goods-list ul li dd.goods-promotion:before{    content: "\f02e";color:#e12323;font-size:45px;    position: absolute;top:-4px;right: 0px;}
+.dss-goods-list ul li dd.goods-promotion span{font: 700 12px/15px "microsoft yahei";position:relative;z-index:2 ;}
+
+.dss-all-goods-list { overflow:hidden;}
+.dss-all-goods-list ul { font-size: 0; *word-spacing:-1px/*IE6、7*/; margin-right: -1px; margin-bottom: -1px;}
+.dss-all-goods-list ul li { font-size: 12px; color: #666; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block;  *display: inline/*IE7*/; width: 25%; *zoom:1;}
+.dss-all-goods-list ul li dl { border: solid #E7E7E7; border-width: 0 1px 1px 0; padding: 9px; position: relative; z-index: 1;}
+.dss-all-goods-list ul li dt { width: 200px; margin: 10px auto;}
+.dss-all-goods-list ul li dt a.goods-thumb { line-height: 0; background-color: #FFF; text-align: center; vertical-align: middle; display: table-cell; *display: block; width: 200px; height: 200px; overflow: hidden;}
+.dss-all-goods-list ul li dt a.goods-thumb img { max-width: 200px; max-height: 200px; margin-top:expression(200-this.height/2); *margin-top:expression(100-this.height/2)/*IE6,7*/;}
+.dss-all-goods-list ul li dt .goods-thumb-scroll-show { font-size: 0; *word-spacing:-1px/*IE6、7*/; margin-top: 5px;}
+.dss-all-goods-list ul li dt .goods-thumb-scroll-show li { vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *dispaly: inline; width: 32px; height: 32px; padding: 1px; border: solid 1px #F5F5F5; margin-right: 4px;}
+.dss-all-goods-list ul li dt .goods-thumb-scroll-show li.selected { border-color: #ff4040;}
+.dss-all-goods-list ul li dt .goods-thumb-scroll-show li a { line-height: 0; background-color: #FFF; text-align: center; vertical-align: middle; display: table-cell; *display: block; width: 32px; height: 32px; overflow: hidden;}
+.dss-all-goods-list ul li dt .goods-thumb-scroll-show li a img { max-width: 32px; max-height: 32px; margin-top:expression(32-this.height/2); *margin-top:expression(32-this.height/2)/*IE6,7*/;}
+.dss-all-goods-list ul li dd { width: 220px; margin: 0 auto;}
+.dss-all-goods-list ul li dd.goods-name { line-height: 16px; display: block; height: 32px; overflow: hidden; margin-bottom: 5px;}
+.dss-all-goods-list ul li dd.goods-info { font-size: 0; *word-spacing:-1px/*IE6、7*/;}
+.dss-all-goods-list ul li dd.goods-info span { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *dispaly: inline; width: 50%; *zoom: 1;}
+.dss-all-goods-list ul li dd.goods-promotion { font: normal normal normal 14px/1 FontAwesome; color: #FFFFFF; height: 30px; text-align: center;  width: 30px;  z-index: 2; position: absolute; right: 45px; top: 18px;}
+.dss-all-goods-list ul li dd.goods-promotion:before{    content: "\f02e";color:#e12323;font-size:45px;    position: absolute;top:-4px;right: 0px;}
+.dss-all-goods-list ul li dd.goods-promotion span{font: 700 12px/15px "microsoft yahei";position:relative;z-index:2 ;}
+
+
+
+.dss-article { width: 100%;}
+
+/* 列表排序 */
+.dss-goodslist-bar { background: #F7F7F7; height:28px; border-bottom: solid 1px #D8D8D8; padding:6px 0;}
+.dss-array { display:block; float:left; padding:6px 8px 6px 4px; margin-left:24px; _margin-left:12px/* IE6 */; }
+.dss-array li { display: inline-block; margin: 0 1px;}
+.dss-array li { *display:inline/* IE7*/; _float:left;}
+.dss-array li a {  position: relative;display:inline-block; width:28px; padding:0 14px 0 4px;}
+.dss-array li a:after{position: absolute;right:7px;top:2px;content: "\f0de";font: normal normal normal 14px/1 FontAwesome;color:#DDDDDD}
+.dss-array li a:before{position: absolute;right:7px;top:2px;content: "\f0dd";font: normal normal normal 14px/1 FontAwesome;color:#DDDDDD}
+.dss-array li a[desc]:before{color:#E31939}
+.dss-array li a[asc]:after{color:#E31939}
+.dss-array li a { *display:inline/* IE7 */;}
+.dss-array li a.nobg, .sort-bar .array li.selected a.nobg { background:none; padding:0 4px !important;}
+.dss-array li.selected a { font-weight:700; color:#F60;}
+.dss-array li.selected a.asc { background-position:32px -96px;}
+.dss-array li.selected a.desc { background-position:32px -116px;}
+
+.price-search { display: block; float: left; margin-top: 4px; margin-left:24px; _margin-left:12px/* IE6 */;}
+.price-search i { display: inline-block; padding: 0 6px;}
+.price-search a { border: solid 1px #F60; text-decoration:none; border-radius: 4px; background-color:#F90; color:#FFF; padding:2px 6px; line-height:14px; text-shadow: 1px 1px 0 rgba(255,110,0,.8); box-shadow: 1px 1px 1px 0 rgba(0,0,0,.1); -moz-box-shadow: 1px 1px 1px 0 rgba(0,0,0,.1); -webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,.1); margin-left: 8px;}
+.price-search a:hover { background-color: #FC0; color:#FFF;}
+
+
+
+
+/* ========================================= */
+/* 店铺动态页面 -> store_snshome.php           */
+/* ========================================= */
+/* 表情模块 */
+.smilies-module { display:none; border:1px solid #D5E5F5; height:94px; width:224px; position:absolute; z-index:999; background-color:#FFFFFF; padding:6px;}
+.seccode { font-size:12px !important; line-height:26px; background:#FFFFBF; border: solid 1px #DDD; display: none; height:26px; padding:8px; margin: 5px 0; }
+.seccode label { color: #555; float:left; }
+.seccode input.text { height: 20px !important; line-height:20px; float:left; width:50px;}
+.seccode img { float:left; margin:0 6px; _margin:0 3px; cursor: pointer;}
+.seccode span { color: #F60;  float:left;}
+/* 转播样式 */
+/* 动态评论样式 */
+.forward-widget, .comment-widget  { font-size:12px; background-color: #FFF; border: solid 1px #D5E5F5; padding: 10px; clear:both; margin-top:10px;overflow:hidden;}
+.forward-widget .forward-edit { }
+.forward-widget .forward-add { }
+.forward-widget textarea, .comment-widget textarea { font-size: 12px; word-wrap: break-word; width: 98%; height: 40px; border: solid 1px; border-color:#D5E5F5; overflow: auto; resize: none;}
+.comment-widget textarea{width:100%}
+.forward-widget .forward-add .act, .comment-widget .comment-add .act { height:25px padding-bottom: 5px; padding-top: 3px; clear:both;}
+.forward-widget .skin-blue, .comment-widget .skin-blue { float: right;}
+.comment-widget .skin-blue{box-sizing: unset;}
+.forward-widget .skin-blue .btn, .comment-widget .skin-blue .btn { background: none repeat scroll 0 0 transparent; display: inline-block; width: 49px; height:24px; margin:0 0 0 5px; border-radius: 2px;}
+.comment-widget .skin-blue .btn{padding:0}
+.forward-widget span.btn a, .comment-widget span.btn a { font-size: 12px; font-weight: normal; line-height: 24px; color: #000; background: -moz-linear-gradient(center top , #FFFFFF, #E5E5E5) repeat scroll 0 0 transparent; display: block; width: 25px; height: 24px; padding: 0 11px; border: 1px solid #AAAAAA; cursor: pointer;}
+.comment-widget span.btn a{box-sizing:unset}
+.comment-widget .comment-list { margin-top:10px;}
+.forward-widget li, .comment-widget li { padding: 7px 7px 2px; margin-top: 5px; border-top: 1px dashed #D5D5D5; overflow: hidden; zoom:1;}
+.forward-widget li .clogo, .comment-widget li .clogo { float: left; margin-right: 10px; border: 0 none;}
+.forward-widget .forward-list .detail, .comment-widget .comment-list .detail { color: #404040; padding-left: 40px;}
+.forward-widget .forward-list .name, .comment-widget .comment-list .name { margin-right: 5px;}
+.forward-widget .opt, .comment-widget .opt { float: right;}
+.forward-widget .opt a, .comment-widget .opt a { display: inline-block; vertical-align: middle;}
+.forward-widget .more, .comment-widget .more { background-image: none; text-align: right; padding: 7px;}
+.face {color: #0066CC; line-height: 20px; text-decoration: none;}
+.face::before{content:"\f118";font: normal normal normal 14px/1 FontAwesome;}
+
+/*店铺store_info*/
+.dss-info { width: 210px; background-color: #FFF; margin-bottom: 10px;}
+.dss-info .title { background-color: #F5F5F5; padding: 5px 10px; border: solid 1px #E6E6E6;}
+.dss-info .title h4 { font: 600 14px/20px arial,"microsoft yahei"; color: #555;}
+.dss-info .title h4 em{color:#ff4040;border:1px solid #ff4040;border-radius: 3px;padding:3px;}
+.dss-info .content { border: solid #E6E6E6; border-width: 0 1px 1px;}
+.dss-info .content dl { font-size: 0; *word-spacing:-1px/*IE6、7*/; display: block; border-bottom: solid 1px #E6E6E6; padding: 6px 0;}
+.dss-info .content dl dt { font-size: 12px; color: #666; vertical-align: top; letter-spacing: normal; word-spacing: normal; text-align: right; display: inline-block;  *display: inline/*IE7*/; width: 68px; *zoom:1;}
+.dss-info .content dl dd { font-size: 12px; color: #333; vertical-align: top; letter-spacing: normal; word-spacing: normal; white-space: nowrap; text-overflow: ellipsis; display: inline-block; *display: inline/*IE7*/; width: 130px; overflow: hidden; *zoom:1;}
+.dss-info .all-rate .rating { background: url(../images/2014grate.png) no-repeat 0 -18px ; vertical-align: middle; display: inline-block;  *display: inline/*IE7*/; width: 79px; height: 17px; *zoom:1;}
+.dss-info .all-rate .rating span { background: url(../images/2014grate.png) no-repeat 100% 0; display: block; height: 18px;}
+.dss-info .all-rate em { color: #DA542E; font-weight: 600; vertical-align: middle; margin-right: 2px;}
+.dss-info .content .detail-rate { clear: both;}
+.dss-info .store-name { font-weight: 600; color: #555; height: 20px; padding: 6px 9px; border-bottom: solid 1px #E6E6E6;}
+.dss-detail-rate { color: #999; padding: 8px; border-bottom: dotted 1px #E6E6E6;}
+.dss-detail-rate h5 { color: #777; margin-bottom: 4px;}
+.dss-detail-rate h5 strong { font-weight: 700; margin-right: 30px;}
+.dss-detail-rate li { padding: 2px 0;}
+.dss-detail-rate .credit { color: #555; display: inline-block; width: 35px; margin-left: 4px;}
+.dss-detail-rate .high { color: #DA542E; display: inline-block;}
+.dss-detail-rate .high i { background: url(../images/2014grate.png) no-repeat 0 -40px; vertical-align: middle; display: inline-block; width: 9px; height: 8px; margin-right: 4px;}
+.dss-detail-rate .high em { color: #FFF; background-color: #DA542E; text-align: center; display: inline-block; width: 40px; margin-left: 2px;}
+.dss-detail-rate .equal { color: #DA542E; display: inline-block;}
+.dss-detail-rate .equal i { background: url(../images/2014grate.png) no-repeat -18px -40px; vertical-align: middle; display: inline-block; width: 9px; height: 8px; margin-right: 4px;}
+.dss-detail-rate .equal em { color: #FFF; background-color: #DA542E; text-align: center; display: inline-block; width: 40px; margin-left: 2px;}
+.dss-detail-rate .low { color: #28B779; display: inline-block;}
+.dss-detail-rate .low i { background: url(../images/2014grate.png) no-repeat -9px -40px; vertical-align: middle; display: inline-block; width: 9px; height: 8px; margin-right: 4px;}
+.dss-detail-rate .low em { color: #FFF; background-color: #28B779; text-align: center; display: inline-block; width: 40px; margin-left: 2px;}
+.dss-info .goto { text-align: center;line-height: 36px;}
+.dss-info .goto a {}
+.dss-info .no-border { border: 0!important; padding-bottom: 0!important;}
+
+.dss-info-btn-map,.dss-info-btn-qrcode{border-left: 1px solid #eee;cursor: pointer;display: inline-block;flex: 1;text-align: center;line-height: 36px;}
+.dss-info-btn-map:before,.dss-info-btn-qrcode:before{font-size: 16px}
+.shop-other { width: 208px; height: 36px;display: flex;position: relative;}
+.shop-other .goto{flex: 2;display: flex;}
+.shop-other .goto a{flex: 1;border-left: 1px solid #eee}
+.shop-other .goto a:first-child{border: 0}
+.shop-other .shop_btn{flex: 1;display: flex;}
+.shop-other .dss-info-qrcode,.shop-other .dss-info-map { display: none; border: solid #E7E7E7; border-width: 0px 1px 1px 1px; background: #FFF url(../images/loading.gif) no-repeat 50% 50%; position: absolute; top: 35px; text-align:center;zoom:1}
+.dss-info-btn-map:hover .dss-info-map {display:block; left:-1px; z-index:1; height: 310px; background-color:#FFF}
+.dss-info-btn-map:hover .dss-info-map .box {margin: 1px}
+.dss-info-btn-qrcode:hover .dss-info-qrcode {display:block; right:-1px; z-index:1; height: 208px}
+.dss-info-btn-qrcode:hover .dss-info-qrcode em { background: #F7F7F7; line-height: 16px; width: 180px; height:32px; display:inline-block; margin: 5px auto; overflow: hidden; padding: 4px}
+
+
+.dss-grid-list .grid-items {float: left;position: relative;-webkit-transition: all .2s linear 0s;-moz-transition: all .2s linear 0s;-ms-transition: all .2s linear 0s;-o-transition: all .2s linear 0s;transition: all .2s linear 0s;height: 290px;z-index: 1;width: 230px;background: #f9f9f9;border-radius: 10px;margin-left: 12px;margin-bottom: 12px;margin-top: 0;}
+.dss-grid-list .grid-items .thumb {display: inline-block;width: 100%;height: 100%;text-align: center;}
+.dss-grid-list .grid-items .grid-img {width: 150px;height: 150px;margin: 35px auto 0;}
+.dss-grid-list .grid-items .grid-img img {width: 150px;height: 150px;}
+.dss-grid-list .grid-items .grid-title {font-size: 14px;font-weight: 400;color: #3a3a3a;vertical-align: bottom;width: 210px;display: block;margin: 0 auto;padding: 0;margin-top: 12px;height: 21px;line-height: 21px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.dss-grid-list .grid-items .grid-desc {font-size: 12px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #777;line-height: 18px;height: 18px;padding: 0 10px;margin: 4px 20px 6px;}
+.dss-grid-list .grid-items .grid-price {font-size: 14px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #d0021b;line-height: 21px;}
+.dss-grid-list .grid-items .grid-tips {position: absolute;width: 100%;height: 48px;right: 35px;top: 0px;left: 0;z-index: 2;}
+.dss-grid-list .grid-items .thumb {display: inline-block;width: 100%;height: 100%;text-align: center;}
+.dss-grid-list .grid-tips span {display: inline-block;padding: 0 9px;margin: 0 auto;height: 22px;line-height: 22px;color: #fff;border-radius: 0 0 6px 6px;font-style: normal;background: #ff8486;}
+.dss-grid-list .grid-items:hover {-webkit-transform: none;-moz-transform: none;-ms-transform: none;-o-transform: none;transform: none;box-shadow: 0 12px 36px rgba(0,0,0,0.1);}
+.recommend-goods .dss-grid-list .grid-tips span{background: #FF6A6E}
+.new-goods .dss-grid-list .grid-tips span{background: #68BEFF}
+/* 新加保障体系图标开始 */
+#certMatershiti { background: url(../images/legend.png) no-repeat; width: 16px; height: 16px; background-position: 0 -210px;}
+#certMaterqtian { background: url(../images/legend.png) no-repeat; width: 16px; height: 16px; background-position: 0 -70px;}
+#certMaterzhping { background: url(../images/legend.png) no-repeat;  width: 16px;  height: 16px;  background-position: 0 -130px;}
+#certMatererxiaoshi { background: url(../images/legend.png) no-repeat; width: 16px; height: 16px; background-position: 0 -151px;}
+#certMaterhuodaofk { background: url(../images/legend.png) no-repeat;  width: 16px;  height: 16px;  background-position: 0 -109px;}
+#certMatershiyong{ background: url(../images/legend.png) no-repeat; width: 16px; height: 16px; background-position: 0 -170px;}
+#certMaterxiaoxie { background: url(../images/legend.png) no-repeat; width: 16px; background-position: 0 -389px; height: 16px;}
+#certMatertuihuo { background: url(../images/legend.png) no-repeat; width: 16px; height: 16px; background-position: 0 -90px;}
+/* 新加保障体系图标结束 */

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="copyright" content="Catfish CMS All Rights Reserved">
+    <meta name="robots" content="noindex,noarchive">
+    <title>{:lang('Catfish CMS Backstage')}</title>
+    <link rel="icon" href="{$domain}public/common/images/favicon.ico">
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+    <script src="{$domain}public/common/js/jquery.min.js"></script>
+    <script src="{$domain}public/common/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:#eee;">
+<div class="row">
+    <nav id="navbar-example" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-example-js-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{:Url('/admin')}">
+                    <img alt="{:lang('Catfish Management Center')}" src="{$domain}public/common/images/catfish_white.png" width="20" height="20">
+                </a>
+                <a class="navbar-brand" href="{:Url('/admin')}">{:lang('Catfish Management Center')}</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{:Url('/index')}" title="{:lang('Home')}" target="_blank"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a href="{:Url('/admin/Index/write')}" title="{:lang('Write an article')}"><span class="glyphicon glyphicon-pencil"></span></a></li>
+                    <li><a href="{:Url('/admin/Index/personal')}" title="{:lang('Modify personal information')}"><span class="glyphicon glyphicon-list-alt"></span></a></li>
+                    <li><a href="{:Url('/admin/Index/change')}" title="{:lang('Modify the login password')}"><span class="glyphicon glyphicon-lock"></span></a></li>
+                    <li><a href="{:Url('/admin/Index/pinglun')}" title="{:lang('My comments')}"><span class="glyphicon glyphicon-edit"></span></a></li>
+                    <li><a href="{:Url('/admin/Index/shoucang')}" title="{:lang('My collection')}"><span class="glyphicon glyphicon-heart"></span></a></li>
+                    {if condition="$permissions < 6"}
+                    <li><a href="{:Url('/admin/Index/clearcache')}" title="{:lang('Clear cache')}"><span class="glyphicon glyphicon-repeat"></span></a></li>
+                    {/if}
+                    <li><a href="{:Url('/admin/Common/quit')}" title="{:lang('Sign out')}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown">
+                        <a id="drop3" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {:lang('Welcome')}，{$user}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{:Url('/admin/Index/change')}"><span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;{:lang('Modify the login password')}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{:Url('/admin/Index/personal')}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;{:lang('Modify personal information')}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{:Url('/admin/Common/quit')}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{:lang('Sign out')}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        {include file="index/sidebar" /}
+        <div class="col-xs-12 col-sm-9 col-md-10 pull-right" style="background-color:#FFFFFF;">

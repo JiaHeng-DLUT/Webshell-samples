@@ -1,0 +1,40 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="120">退款单号：</td>
+	<td>{$info['refund_id']} </td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">退款类型：</td>
+	<td>{$ini['refund_type'][$info['refund_type']]}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">商品退款：</td>
+	<td>{$info['refund_product_money']} 元 <span class="cbbb mal10">（最多可退{$refund_maxmoney['product']}元）</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">运费退款：</td>
+	<td>{$info['refund_wl_money']} 元 <span class="cbbb mal10">（最多可退{$refund_maxmoney['wl']}元）</span></td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">审核说明：</td>
+	<td><textarea name="refund_text" style="width:405px; height:70px; resize:none"></textarea></td>
+</tr>
+</table>
+<div class="acenter mat20">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="button" value="拒绝申请" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		pe_submit('{pe_nowurl()}', function(json){
+			if (json.result) pe_open('dialog', 1000);
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

@@ -1,0 +1,25 @@
+<style>
+    body, td, input, textarea, select, button {
+        color: #555555;
+        font: 14px/150% Arial,Verdana;
+        line-height:40px;
+    }
+    body, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<table style="width:800px;font-size:15px;margin-top:50px" align="center">
+    <tr><td colspan="2"><img height="32" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{if $Think.config.member_logo == ''}{$Think.config.site_logo}{else/}{$Think.config.member_logo}{/if}"></td></tr>
+    <tr><td colspan="4" style="border-bottom:1px solid #ccc"><h3 style="font-size:20px Arial,Verdana;line-height:60px">{$Think.config.site_name} - {$Think.lang.bill_print_order}{$Think.lang.bill_print_seller_bills}</h3></td></tr>
+    <tr>
+        <td width="80px">{$Think.lang.bill_print_seller}</td><td colspan="3">{$bill_info.ob_store_name}</td>
+    </tr>
+    <tr><td>{$Think.lang.bill_print_odd_numbers}</td><td width="130px">{$bill_info.ob_no}</td><td width="100px">{$Think.lang.bill_print_range}</td><td>{$bill_info.ob_startdate|date='Y-m-d',###} &nbsp;{$Think.lang.bill_print_zhi}&nbsp; {$bill_info.ob_enddate|date='Y-m-d',###}</td></tr>
+    <tr><td>{$Think.lang.bill_print_out_time}</td><td>{$bill_info.ob_createdate|date='Y-m-d',###}</td>
+        <td>{$Think.lang.bill_print_state}：</td><td>{:get_bill_state($bill_info['ob_state'])}</td></tr>
+
+    <tr><td>{$Think.lang.bill_print_seller_get}</td><td>{$bill_info.ob_result_totals}</td></tr>
+    <tr><td colspan="2">{$Think.lang.bill_print_details}</td></tr>
+    <tr><td colspan="4">{$bill_info.ob_order_totals} ({$Think.lang.order_price_from}) - {$bill_info.ob_commis_totals} ({$Think.lang.bill_print_commision}) - {$bill_info.ob_order_return_totals} ({$Think.lang.bill_refund_price}) + {$bill_info.ob_commis_return_totals} ({$Think.lang.bill_refund_commision}) - {$bill_info.ob_inviter_totals} ({$Think.lang.ob_inviter_totals}) + {$bill_info.ob_vr_order_totals} ({$Think.lang.bill_ob_vr_order_totals}) - {$bill_info.ob_vr_order_return_totals} ({$Think.lang.bill_ob_vr_order_return_totals}) - {$bill_info.ob_vr_commis_totals} ({$Think.lang.bill_ob_vr_commis_totals}) + {$bill_info.ob_vr_commis_return_totals} ({$Think.lang.bill_ob_vr_commis_return_totals}) - {$bill_info.ob_vr_inviter_totals} ({$Think.lang.bill_ob_vr_inviter_totals}) - {$bill_info.ob_store_cost_totals} ({$Think.lang.bill_print_store_promotion})</td></tr>
+</table>

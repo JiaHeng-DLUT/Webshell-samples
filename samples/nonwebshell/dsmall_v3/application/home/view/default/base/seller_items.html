@@ -1,0 +1,7 @@
+{notempty name="seller_item"}
+<ul>
+    {foreach name="seller_item" item="item" }
+    <li {if condition="$item.name eq $curitem"}class="current"{/if}><a href="{$item.url}">{$item.text}</a></li>
+    {/foreach}
+</ul>
+{/notempty}

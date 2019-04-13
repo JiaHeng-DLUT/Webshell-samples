@@ -1,0 +1,72 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">SEO相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">网站标题</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="webtitle" value="{$_G['SET']['WEBTITLE']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">网站关键词</label>
+		<div class="pk-w-sm-8">
+			<textarea rows="5" class="pk-textarea  pk-width-all" name="webkeywords">{$_G['SET']['WEBKEYWORDS']}</textarea>
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">网站文字介绍</label>
+		<div class="pk-w-sm-8">
+			<textarea rows="5" class="pk-textarea  pk-width-all" name="webdescription">{$_G['SET']['WEBDESCRIPTION']}</textarea>
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">网站优化追加词</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox" name="webaddedwords" value="{$_G['SET']['WEBADDEDWORDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">伪静态</label>
+		<div class="pk-w-sm-8">
+			<select name="rewriteurl" data-value="{$_G['SET']['REWRITEURL']}" class="pk-textbox">
+				<option value="1">开启</option>
+				<option value="0">关闭</option>
+			</select>
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-xs pk-text-danger">
+			若开启后网站404，请关闭该功能。
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">所有用户伪静态</label>
+		<div class="pk-w-sm-8">
+			<select name="mustrewriteurl" data-value="{$_G['SET']['MUSTREWRITEURL']}" class="pk-textbox">
+				<option value="0">关闭（伪静态仅对游客起作用）</option>
+				<option value="1">开启（对所有用户起作用）</option>
+			</select>
+		</div>
+		<div class="am-u-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

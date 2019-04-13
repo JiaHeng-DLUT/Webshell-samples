@@ -1,0 +1,38 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+			<a href="user.php?mod=useraddr&act=add" class="fabu_btn">新增地址</a>
+			<div class="clear"></div>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="100">收货人</th>
+				<th width="120">手机号码</th>
+				<th>收货地址</th>
+				<th width="130">操作</td>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td>{$v['user_tname']}</td>
+				<td>{$v['user_phone']}</td>
+				<td class="aleft">
+					<!--{if($v['address_default']):}--><span class="cred">[默认]</span><!--{endif;}-->
+					{$v['address_province']} {$v['address_city']} {$v['address_area']} {$v['address_text']}
+				</td>
+				<td>
+					<a href="user.php?mod=useraddr&act=edit&id={$v['address_id']}" class="tag_gray mar5">修改</a>
+					<a href="javascript:pe_confirm('删除该地址', 'user.php?mod=useraddr&act=del&id={$v['address_id']}&token={$pe_token}')" class="tag_gray">删除</a>				
+				</td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

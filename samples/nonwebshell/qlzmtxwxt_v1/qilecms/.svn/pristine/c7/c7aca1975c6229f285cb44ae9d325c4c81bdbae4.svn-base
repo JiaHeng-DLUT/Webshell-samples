@@ -1,0 +1,43 @@
+<?php
+namespace app\api\controller;
+use  think\Controller;
+use think\Db;
+class Category extends Controller
+{
+	protected $allow =['article_category','guarantee_category'
+	];
+    public function getCategory()
+    {
+            
+      $param = input();
+      if(!request()->isPost()){ return error_json('非法请求');}
+      $pid = $param['pid'];
+      $type = $param['type'];
+
+      if(!in_array($type,$this->allow) || !$pid){ return error_json('请求参数错误');}
+
+      $arr = cache($type);
+	  if(empty($arr)){
+	      $arr = DB::name($type)->select(); 
+	      cache($this->allow[$type],$arr); 
+	  }
+		$cateArr= [];
+		  foreach($arr as $v){
+		     if($v['pid'] == $pid && $pid != ''){
+		       array_push($cateArr,$v);
+		     }
+		  }
+	  if(!empty($cateArr)){
+			  $html ='<option value="">请选择</option>';
+		      foreach($cateArr as $k=>$v){  
+		        $html .='<option value="'.$v['cid'].'">'.$v['cname'].'</option>';
+
+		      }
+		       return success_json('获取成功',$html);
+	  }else{
+	  	 return error_json('没有子分类');
+	  }
+
+   
+    }
+}

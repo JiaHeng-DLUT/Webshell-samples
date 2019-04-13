@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+  <meta name="format-detection" content="telephone=no" />
+  <title>下载APP</title>
+  <link rel="stylesheet" href="./../../css/layer.css">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .yxdub {
+    display: -webkit-box;
+    display: box;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .yxdub-pc {
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+
+  .yxdub-pac {
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .down-btn {
+    background: url('./../../img/down_btn.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 3.5rem;
+    height: 2rem;
+    margin: 0 auto;
+    color: #f02d56;
+    border-radius: .45rem;
+  }
+
+  .down-btn img {
+    width: .34rem;
+    height: .34rem;
+    margin-right: .3rem;
+  }
+
+  .mb25 {
+    margin-bottom: .25rem;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .container img {
+    display: block;
+    width: 100%;
+  }
+
+  .downLoadBox {
+    position: absolute;
+    bottom: 1.92rem;
+    left: 0;
+    right: 0;
+  }
+
+  .downapp_tip {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, .7) url(./../../img/downapp_tip.png) no-repeat top right;
+    background-size: 100% auto;
+  }
+
+</style>
+
+<body class="downApp">
+  <div class="container">
+    <img src="./../../img/downLoadBg.png" alt="">
+    <div class="down_app" id="downApp">
+      <div class="downLoadBox" id="yxd-ios">
+        <a href="https://down.daidaihu360.com" class="down-btn yxdub yxdub-pc"></a>
+      </div>
+      <div class="downLoadBox" id="yxd-android">
+        <a href="javascript:;" onclick="androidWownload()" class="down-btn yxdub yxdub-pac"></a>
+      </div>
+    </div>
+    <div class="downapp_tip"></div>
+  </div>
+  <script src="./../../js/jquery.min.js"></script>
+  <script src="./../../js/jquery.base64.js"></script>
+  <script src="./../../js/layer.mobile.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+    var time = Date.parse(new Date()) / 1000;
+    var deviceid_ = localStorage.deviceid_;
+    if (!deviceid_ || deviceid_ == 'null' || deviceid_ == null || deviceid_ == undefined || deviceid_ == 'undefined') {
+      uuid()
+    }
+
+    var Base_url = 'https://api.daidaihu365.com/'
+    // var Base_url = 'http://api.daidai123.cn/'
+    var img_url = 'http://image.daidaihu365.com/'
+    var header = {
+        'Device': localStorage.deviceid_, // 平台
+        'Version': '1.0.1', // 渠道下App版本
+        'System': '1.0.1', // 操作系统版本
+        'source': 'wap', // 平台
+        'Authentication': sessionStorage.token,
+        'Channel': localStorage.Channel_code
+      },
+      com_Data = '';
+    getToken()
+
+    function getToken() {
+      $.ajax({
+        url: Base_url + 'api/v1/token',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        data: {},
+        success: function (res) {
+          if (res.code === 200) {
+            sessionStorage.token = res.data.token
+            header.Authentication = sessionStorage.token
+            getPage()
+          } else if (res.code === 4002) {
+            getToken()
+          }
+        },
+        error: function () {}
+      })
+    }
+    // 获取页面信息
+    function getPage() {
+      var u = window.location.pathname === '/template/appDown.html' ? getUrlParam('t') : getUrlParam1();
+      $.ajax({
+        url: Base_url + 'api/v1/page/' + u,
+        type: 'Get',
+        dataType: "json",
+        data: {},
+        headers: header,
+        success: function (res) {
+          if (res.code === 200 && res.data && res.data.page) {
+            header.Channel = localStorage.Channel_code = res.data.page.channel_code || 100001;
+            getDownUrl()
+          } else {
+            com_Data = null
+          }
+        }
+      })
+    }
+    // 获取安卓下载链接
+    function getDownUrl() {
+      $.ajax({
+        url: Base_url + 'api/v1/page/download',
+        type: 'Get',
+        dataType: "json",
+        data: {},
+        headers: header,
+        success: function (res) {
+          if (res.code === 200 && res.data) {
+            com_Data = res.data
+          } else if (res.code === 2004) {
+            com_Data = res.data
+          }
+        }
+      })
+    }
+
+    function getUrlParam1() {
+      var url = window.location.href;
+      var urlArr = url.split('?');
+      var k = urlArr[0],
+        appU = k.split('/');
+      var L = appU[appU.length - 1];
+      var nameArr = L.split('.');
+      var t = $.base64.atob(nameArr[0]).split('=');
+      localStorage.Channel_code = appU[appU.length - 2];
+      header.Channel = localStorage.Channel_code;
+      header.PageId = decodeURI(t[1]);
+      return null != t ? decodeURI(t[1]) : null
+
+    }
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //判断访问终端
+    var browser = {
+      versions: function () {
+        var u = navigator.userAgent,
+          app = navigator.appVersion;
+        return {
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+          weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+          qq: u.match(/\sQQ/i) == " qq" //是否QQ
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+    // ru
+    if (browser.versions.android) {
+      $('#yxd-android').css('display', 'block')
+      $('#yxd-ios').css('display', 'none')
+    } else if (browser.versions.ios||browser.versions.iPhone) {
+      $('#yxd-android').css('display', 'none')
+      $('#yxd-ios').css('display', 'block');
+    } else {
+      alert('请在移动端手机下载')
+    }
+
+    function androidWownload() {
+      if (com_Data === '') {
+        layer.open({
+          content: '请稍后',
+          skin: 'msg',
+          time: 2
+        })
+        return
+      } else if (com_Data && com_Data.download_url) {
+        if (browser.versions.weixin) {
+          $(".downapp_tip").show();
+        } else {
+          window.location.href = com_Data.download_url;
+        }
+
+      } else if (com_Data === null) {
+        layer.open({
+          content: '暂无可下载的安装包',
+          skin: 'msg',
+          time: 2
+        })
+      }
+    }
+
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4";
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+
+class Nav extends Model
+{
+   Protected $autoCheckFields = true;
+    // protected $resultSetType = 'collection';
+   public  function getNav(){
+
+     return $list = $this->where("pid = 0")->order('order','desc')->select();
+  
+   }
+
+   public function addNav($data){
+   	    if(empty($data) || !is_array($data) ){ 
+   	    	return false;
+   	    }
+        if($this->save()){
+            return true;
+        }else{
+	    	return false;
+	    }
+ 
+
+  }
+
+   public function updateNav($post){
+        if(empty($post) || !is_array($post) ){ 
+          return false;
+        }
+
+        if($this->update($post)){
+            return true;
+        }else{
+             return false;
+      }
+ 
+
+  }
+   public function delNav($id){
+
+        if(empty($id) || !is_array($id) ){ 
+          return false;
+        }   
+        if($this->destroy($id)){
+           return true;
+        }else{
+          return false;
+      }
+ 
+
+  }
+
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seo['title']}</title>
+<link href="{$pe['host_tpl']}css/style.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="{$pe['host_tpl']}css/style.css" rel="stylesheet" media="print" type="text/css" />
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/global.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.printarea.js"></script>
+<style type="text/css">
+body{padding-bottom:50px !important;}
+#express_html{line-height:20px; font-size:14px; position:relative; display:block; color:#000}
+#express_logo{position:absolute; top:0; left:0; z-index:1px;}
+.order_tag{position:absolute; z-index:999; height:22px; width:120px; font-weight:bold}
+.foot_btn{position:fixed; display:block; bottom:0; left:0; height:45px; line-height:45px; width:100%; color:#fff; border-top:1px solid #ddd; background:#f2f2f2; text-align:center; font-size:14px; z-index:1;}
+.select_btn{display:block; padding:0 20px; border-right:1px solid #ddd}
+.select_btn.sel{background:#fff;color:#ff6600}
+.print_btn{background:#ffa500; font-weight:bold; text-align:center; color:#fff; display:block;}
+.print_btn:hover{color:#fff}
+@media print {#express2_logo {display:none;} }
+</style>
+</head>
+<body style="background:#fff;padding:5px;">
+<div style="width:{$info['express_width']}mm; height:{$info['express_height']}mm; margin:0 auto">
+<!--startprint1-->
+<div id="express_html" style="width:{$info['express_width']}mm; height:{$info['express_height']}mm;">
+	<div id="express_logo"><!--{if($info['express_logo']):}--><img src="{pe_thumb($info['express_logo'])}"  style="width:{$info['express_width']}mm; height:{$info['express_height']}mm;" /><!--{endif;}--></div>
+	<!--{foreach($tag_list as $k=>$v):}-->
+	<!--{$tag_position = explode('|', $v['position'])}-->
+	<!--{$tag_css = "width:".$tag_position[0]."mm;height:".$tag_position[1]."mm;top:".$tag_position[2]."mm;left:".$tag_position[3]."mm"}-->
+	<!--{if ($v['name'] == 'duigou'):}-->
+	<div class="order_tag" style="{$tag_css}">√</div>	
+	<!--{else:}-->
+	<!--{if ($v['type'] == 'tag') $v['value'] = $order[$v['name']]}-->
+	<div class="order_tag" style="{$tag_css}">{$v['value']}</div>	
+	<!--{endif;}-->
+	<!--{endforeach;}-->
+</div>
+<!--endprint1-->
+</div>
+<div class="foot_btn">
+	<!--{foreach($express_list as $k=>$v):}-->
+	<a href="{pe_updateurl('express_id', $v['express_id'])}" class="fl select_btn <!--{if($express_id == $v['express_id']):}-->sel<!--{endif;}-->">{$v['express_name']}</a>
+	<!--{endforeach;}-->
+	<a href="javascript:printhtml(1);" class="fr print_btn" style="width:20%">打印快递单 >></a>
+</div>
+<script type="text/javascript">
+function printhtml(num) {  
+	if (num < 10) {
+		html = window.document.body.innerHTML;//获取当前页的html代码  
+		sprnstr = "<!--startprint"+num+"-->";//设置打印开始区域  
+		eprnstr = "<!--endprint"+num+"-->";//设置打印结束区域  
+		prnhtml = html.substring(html.indexOf(sprnstr)+18); //从开始代码向后取html  
+		prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html  
+		window.document.body.innerHTML = prnhtml;  
+		window.print();  
+		window.document.body.innerHTML = html;  
+	}
+	else {
+		window.print();  
+	} 
+}
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+</body>
+</html>

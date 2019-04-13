@@ -1,0 +1,106 @@
+@charset "utf-8";
+/* global */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {margin: 0; padding: 0;}
+body, button, input, select, textarea {font: 12px/1.5 "Segoe UI", tahoma, arial, \5b8b\4f53, sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-size: 100%;}
+address, cite, dfn, em, var {font-style: normal;}
+code, kbd, pre, samp {font-family: courier new, courier, monospace;}
+small{font-size:12px;}
+ul, ol{list-style:none;}
+a {text-decoration:none;}
+a:hover{text-decoration:underline;}
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+legend{color:#000;}
+fieldset, img{border:0;}
+button, input, select, textarea{font-size:100%;}
+table {border-collapse:collapse;border-spacing:0;}
+/* clear float */
+.clearfix:after{clear:both;content: '.';display:block;font-size:0;height:1;visibility:hidden;}
+*html .clearfix{zoom:1;}
+*:first-child+html .clearfix{zoom:1;}
+
+/* custom */
+body{margin:0;padding:0;}
+body, button, input, select, textarea {color:#1c1c1c;font-family:Arial, 'ËÎÌå';}
+a {color:#1c1c1c;text-decoration:none;}
+a:hover {color:#1864c7;text-decoration:underline;}
+.blank10 {clear:both;display:block;font-size:10px;height:10px;line-height:10px;width:100%;}
+/* input, button */
+.ipt {border: solid 1px #e4e4e4;
+    font-size: 14px;
+    padding: 5px 8px;
+    border-radius: 5px;}
+.btn {background:#3ebd43;border:solid 1px #3ebd43;color:#fff;padding:5px 99px;border-radius:2px;}
+.btn:hover{background:#339337;border:1px solid #339337;cursor:pointer;}
+/* wrapper */
+.wrapper {margin:0 auto;width:1000px;}
+.header {width:1000px;height:90px;margin:0 auto;}
+.logo {display:block;float:left;color:#3ebd43;font:30px normal;height:70px;line-height:70px;margin-top:10px;}
+.logo h1 {display:inline-block;}
+.toplink {color:#666;float:left;width:102px;border:1px solid #3ebd43;height:30px;border-radius:3px;text-align:center;line-height:30px;margin:0 0 10px 10px}
+.toplink a {color:#3ebd43;}
+.toplink a:hover{color:#3797CE;text-decoration:none}
+/* loginform */
+.loginform {background:#fff;padding:0px 0;width:380px;height:340px;float:right;margin-top: 45px;margin-bottom: 50px;border-radius: 4px;}
+.loginform h3 {font:bold 14px normal;margin-top:15px;}
+.loginform h3 span {color:#000;padding:0px 25px;font-size:16px;}
+.loginform ul {font:13px normal;margin:0 auto;padding:20px 0; width: 350px;}
+.loginform li {padding:12px 0;}
+.loginform li label {display:block;float:left;padding-top:8px;text-align:left;width:70px;}
+.loginform li p {color:#ccc;float:left;font-size:12px;padding:8px 0 0 70px;}
+.tipinfo {border-left:solid 1px #dadada;padding:20px;}
+a.nowlink {background:#f60;border:solid 1px #f30;color:#fff;font-size:14px;padding:5px 10px;width:80px;}
+.loginpass{width:70px;height:30px;float:right;line-height:30px;}
+.loginbanner{width:100%;height:100%;background:url(1.jpg) no-repeat center top;background-size: 100% 100%;}
+.loginlogo{width:100%;height:90px;margin:0 auto;background:#fff;margin-bottom: 10px;}
+.loginlogo-left{width:190px;height:90px;float:left;}
+.loginlogo-left img{padding:10px 0;}
+.loginlogo-right{width:225px;float:left;margin-top:17px;}
+.loginlogo-right span{font-size:25px;color:#999;display:block;padding:21px 12px;border-left:1px solid #ccc;height:15px;line-height:16px;}
+/* combox */
+#combox {background: #fff;}
+/* regform */
+.regbanner{height:100%;background:url(2.jpg) no-repeat center top;background-size:100%;}
+.regform {background:#fff;padding:10px 0;border-radius: 10px;background: #f9f9f9;
+border: 1px solid #eee;}
+.regform h3 {font:bold 14px normal; margin-top: 20px;}
+.regform h3 span {color:#000;padding:0px 25px;font-size:16px;}
+.regform ul {font:12px normal; margin:0 auto;padding:20px 0;width:500px;}
+.regform li {padding:5px 0;}
+.regform li label {display:block;float:left;padding-top:8px;text-align:left;width:85px;font-size:14px;}
+.regform li p {color:#999;font-size:12px;padding:6px 0 0 100px;}
+.regform li span {color: #666; font: 12px normal; padding-left: 5px;}
+.textinfo {background: #fdfdf4; border: dashed 1px #f60; line-height: 30px; margin: 10px; padding: 10px;}
+/* tipbox */
+#tipbox {border: solid 1px #e8e8e8; padding: 1px;}
+#tipbox h2 {background: url(tbg.png) repeat-x; color: #fff; font: bold 14px normal; padding: 10px;}
+#tipbox p {font-size: 14px; padding: 100px 0; text-align: center;}
+/* footer */
+.footer {margin-top:10px;padding:10px 0;text-align:center;color:#929292;width:100%;height: 34px;}
+.footer a,.footer a:link{color:#929292;}
+
+.youkeqq{width:100px;height:30px;line-height:30px;border:1px solid #3ebd43;text-align:center;border-radius:3px;float:left;margin-bottom:10px}
+.youkeqq a{color:#3ebd43;width:100%;display:inline-block;}
+.youkeqq a:hover{text-decoration:none;color:#fff;background:#3ebd43;}
+.youke-blue{color:#3ebd43;}
+
+
+#regform{width:700px;height:470px;margin:0 auto;background:#fff;}
+#regform h2{height:30px;line-height:30px;font-size:16px;padding:10px 80px;}
+#form1{width:545px;height:350px;margin:10px auto;overflow:hidden;}
+#form1 ul li{width:546px;height:50px;}
+#form1 ul li p{float:left;height:30px;line-height:30px;padding-left:10px;}
+#form1 ul li label{width:80px;height:33px;float:left;line-height:33px;}
+#form1 ul li input{float:left;}
+
+#form2{width:545px;height:350px;margin:10px auto;overflow:hidden;}
+#form2 ul li{width: 340px;height: 30px;margin: 16px auto;}
+#form2 ul li input{}
+
+#header{width:1200px;margin:0 auto;}
+#toplink{margin-top:20px;}
+#footer{text-align:center;color:#f1f1f1;height:25px;line-height:32px;}
+#wrapper{margin:0 auto;}
+#mycode{margin-left:10px;}
+

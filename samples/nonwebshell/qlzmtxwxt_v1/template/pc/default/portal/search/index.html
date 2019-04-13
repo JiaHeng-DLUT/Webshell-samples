@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>新闻-搜索页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {include file="public/css"}
+</head>
+<body class="bgcolor">
+
+{include file="public/header"}
+
+<div class="news-search">
+  <div class="layui-container">
+    <div class="layui-row layui-col-space30">
+      <div class="layui-col-sm8 layui-col-lg9 searchList">
+        <div class="search-list" >
+          <ul id="search-list">
+             <!-- 显示搜索文章列表 -->
+          </ul>
+          
+        </div>
+      </div>
+      <div class="layui-col-sm4 layui-col-lg3 userList">
+        <dl class="search-user">
+          <dt>相关用户</dt>
+          {volist name="searchUser" id="vo"}
+          <dd class="first-child">
+            <a href="" class="img">{:avatar($vo.uid)}
+            <p class="title">{$vo.username}</p>
+            <p><span>102</span>篇文章</p>
+            <a class="layui-btn layui-btn-news focusOn">关注</a>
+          </dd>
+          {/volist}
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+{include file="public/footer"}
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  {include file="public/js"}
+<script>
+layui.use('flow', function(){
+  var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+  var flow = layui.flow;
+
+// 初始化加载
+  var keywords = "{$Request.param.keywords}";
+   load(keywords);
+
+
+ function load(keywords){
+      flow.load({
+      elem: '#search-list' //指定列表容器
+      // ,isAuto:false
+      ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+        var lis = [];
+  
+        //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+        $.get("{url('search/index')}"+'?keywords='+keywords+'&page='+page, function(res){
+          //假设你的列表返回在data集合中
+          layui.each(res.data, function(index, item){
+
+
+          var html='';
+              html+='<li><a href="'+item.url+'">';
+              html+='<p class="title">'+item.title+'</p>';
+              html+='<p class="content">'+item.content+'</p>';
+              html+='<p><span class="author">'+item.username+'</span><span class="pushTime"></span></p>';
+              html+='</a></li>';
+            lis.push(html);
+          }); 
+          
+          //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+          //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+          next(lis.join(''), page < res.pages);    
+        });
+      }
+    });
+ }
+});
+</script>
+</body>
+</html>

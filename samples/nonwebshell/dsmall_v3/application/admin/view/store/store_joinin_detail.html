@@ -1,0 +1,351 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    {if $joinin_detail.store_type != 1}
+    <table border="0" cellpadding="0" cellspacing="0" class="ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="20">公司及联系人信息</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th class="w150">公司名称：</th>
+               <td colspan="20">{$joinin_detail.company_name}</td>
+           </tr>
+           <tr>
+               <th>公司所在地：</th>
+               <td>{$joinin_detail.company_address}</td>
+               <th>公司详细地址：</th>
+               <td>{$joinin_detail.company_address_detail}</td>
+               <th>注册资金：</th>
+               <td>{$joinin_detail.company_registered_capital}&nbsp;万元 </td>
+           </tr>
+           <tr>
+               <th>联系人姓名：</th>
+               <td>{$joinin_detail.contacts_name}</td>
+               <th>联系人电话：</th>
+               <td>{$joinin_detail.contacts_phone}</td>
+               <th>电子邮箱：</th>
+               <td>{$joinin_detail.contacts_email}</td>
+           </tr>
+       </tbody>
+   </table>
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="20">营业执照信息（副本）</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th class="w150">营业执照号：</th>
+               <td>{$joinin_detail.business_licence_number}</td></tr><tr>
+
+               <th>营业执照所在地：</th>
+               <td>{$joinin_detail.business_licence_address}</td></tr><tr>
+
+               <th>营业执照有效期：</th>
+               <td>{$joinin_detail.business_licence_start} - {$joinin_detail.business_licence_end}</td>
+           </tr>
+           <tr>
+               <th>法定经营范围：</th>
+               <td colspan="20">{$joinin_detail.business_sphere}</td>
+           </tr>
+           <tr>
+               <th>营业执照<br />电子版：</th>
+               <td colspan="20">
+                   {notempty name="joinin_detail.business_licence_number_electronic"}
+                   <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}">
+                       <img src="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}" alt="" height="200"/>
+                   </a>
+                   {/notempty}
+               </td>
+           </tr>
+       </tbody>
+   </table>
+  
+
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="20">开户银行信息：</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th class="w150">银行开户名：</th>
+               <td>{$joinin_detail.bank_account_name}</td>
+           </tr><tr>
+               <th>公司银行账号：</th>
+               <td>{$joinin_detail.bank_account_number}</td></tr>
+           <tr>
+               <th>开户银行支行名称：</th>
+               <td>{$joinin_detail.bank_name}</td>
+           </tr>
+           <tr>
+               <th>开户银行所在地：</th>
+               <td colspan="20">{$joinin_detail.bank_address}</td>
+           </tr>
+       </tbody>
+   </table>
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="20">结算账号信息：</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th class="w150">银行开户名：</th>
+               <td>{$joinin_detail.settlement_bank_account_name}</td>
+           </tr>
+           <tr>
+               <th>公司银行账号：</th>
+               <td>{$joinin_detail.settlement_bank_account_number}</td>
+           </tr>
+           <tr>
+               <th>开户银行支行名称：</th>
+               <td>{$joinin_detail.settlement_bank_name}</td>
+           </tr>
+
+           <tr>
+               <th>开户银行所在地：</th>
+               <td>{$joinin_detail.settlement_bank_address}</td>
+           </tr>
+       </tbody>
+   </table>
+
+   {else /}
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="6">店铺及联系人信息</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th>公司名称：</th>
+               <td>{$joinin_detail.company_name}</td>
+               <th>所在地：</th>
+               <td>{$joinin_detail.company_address}</td>
+               <th>详细地址：</th>
+               <td>{$joinin_detail.company_address_detail}</td>
+           </tr>
+           <tr>
+               <th>联系人姓名：</th>
+               <td>{$joinin_detail.contacts_name}</td>
+               <th>联系人电话：</th>
+               <td>{$joinin_detail.contacts_phone}</td>
+               <th>电子邮箱：</th>
+               <td>{$joinin_detail.contacts_email}</td>
+           </tr>
+       </tbody>
+   </table>
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="2">身份证信息</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th>身份证姓名：</th>
+               <td colspan="20">{$joinin_detail.business_sphere}</td>
+           </tr>
+           <tr>
+               <th>身份证号码：</th>
+               <td>{$joinin_detail.business_licence_number}</td></tr>
+
+           <tr>
+               <th>身份证扫描件：</th>
+               <td colspan="20">
+                   {notempty name="$joinin_detail.business_licence_number_electronic"}
+                   <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}"> <img src="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}"  height="100"/> </a>
+                   {/notempty}
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+
+   <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+       <thead>
+           <tr>
+               <th colspan="2">结算（支付宝）账号信息：</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th>支付宝帐户名：</th>
+               <td>{$joinin_detail.settlement_bank_account_name}</td>
+           </tr>
+           <tr>
+               <th>支付宝账号：</th>
+               <td>{$joinin_detail.settlement_bank_account_number}</td>
+           </tr>
+       </tbody>
+   </table>
+   {/if}
+  <form id="form_store_verify" action="{:url('Store/store_joinin_verify')}" method="post">
+    <input id="verify_type" name="verify_type" type="hidden" />
+    <input name="member_id" type="hidden" value="{$joinin_detail.member_id}" />
+    <table border="0" cellpadding="0" cellspacing="0" class="store-joinin ds-default-table">
+      <thead>
+        <tr>
+          <th colspan="20">店铺经营信息</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="w150">卖家账号：</th>
+          <td>{$joinin_detail.seller_name}</td>
+        </tr>
+        <tr>
+          <th class="w150">店铺名称：</th>
+          <td>{$joinin_detail.store_name}</td>
+        </tr>
+        <tr>
+          <th>店铺等级：</th>
+          <td>{$joinin_detail.storegrade_name}（开店费用：{$joinin_detail.storegrade_price|default="0"}元/年）</td>
+        </tr>
+        <tr>
+          <th class="w150">开店时长：</th>
+          <td>{$joinin_detail.joinin_year} 年</td>
+        </tr>
+        <tr>
+          <th>店铺分类：</th>
+          <td>{$joinin_detail.storeclass_name}（开店保证金：{$joinin_detail.storeclass_bail} 元）</td>
+        </tr>
+        <tr>
+          <th>应付总金额：</th>
+          <td>
+          {if intval($joinin_detail.joinin_state) === 10}
+          <input type="text" value="{$joinin_detail.paying_amount}" name="paying_amount" /> 元
+          {else /}
+          {$joinin_detail.paying_amount} 元
+          {/if}
+          </td>
+        </tr>
+        <tr>
+          <th>经营类目：</th>
+          <td colspan="2"><table border="0" cellpadding="0" cellspacing="0" id="table_category" class="type">
+              <thead>
+                <tr>
+                  <th>分类1</th>
+                  <th>分类2</th>
+                  <th>分类3</th>
+                  <th>比例</th>
+                </tr>
+              </thead>
+              <tbody>
+                {notempty name="joinin_detail.store_class_names"}
+                <?php $store_class_names = unserialize($joinin_detail['store_class_names']);?>
+                <?php if(!empty($store_class_names) && is_array($store_class_names)) {?>
+                <?php $store_class_commis_rates = explode(',', $joinin_detail['store_class_commis_rates']);?>
+                <?php for($i=0, $length = count($store_class_names); $i < $length; $i++) {?>
+                <?php $s_c_n = explode(',', $store_class_names[$i]);?>
+                <?php $class1=isset($s_c_n[0])?$s_c_n[0]:'';?>
+                <?php $class2=isset($s_c_n[1])?$s_c_n[1]:'';?>
+                <?php $class3=isset($s_c_n[2])?$s_c_n[2]:'';?>
+                <tr>
+                  <td>{$class1}</td>
+                  <td>{$class2}</td>
+                  <td>{$class3}</td>
+                  <td>
+                {if intval($joinin_detail.joinin_state) === 10}
+                  <input type="text" dstype="commis_rate" value="<?php echo $store_class_commis_rates[$i];?>" name="commis_rate[]" class="w100" /> %
+                {else /}
+                <?php echo $store_class_commis_rates[$i];?> %
+                {/if}
+                </td>
+                </tr>
+                <?php } ?>
+                <?php } ?>
+                {/notempty}
+                </tbody>
+        </table></td>
+    </tr>
+    <?php if(in_array(intval($joinin_detail['joinin_state']), array(STORE_JOIN_STATE_PAY, STORE_JOIN_STATE_FINAL))) {?>
+    <tr>
+        <th>付款凭证：</th>
+        <td>
+            {notempty name="joinin_detail.paying_money_certificate"}
+            <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['paying_money_certificate'])}"> <img src="{:get_store_joinin_imageurl($joinin_detail['paying_money_certificate'])}"  height="100"/> </a>
+            {/notempty}
+        </td>
+    </tr>
+    <tr>
+        <th>付款凭证说明：</th>
+        <td>{$joinin_detail.paying_money_certificate_explain}</td>
+    </tr>
+    <?php } ?>
+   <?php if(in_array(intval($joinin_detail['joinin_state']), array(STORE_JOIN_STATE_NEW, STORE_JOIN_STATE_PAY))) { ?>
+    <tr>
+        <th>审核意见：</th>
+        <td colspan="2"><textarea id="joinin_message" name="joinin_message"></textarea></td>
+    </tr>
+    <?php } ?>
+    </tbody>
+    </table>
+   <?php if(in_array(intval($joinin_detail['joinin_state']), array(STORE_JOIN_STATE_NEW, STORE_JOIN_STATE_PAY))) { ?>
+    <div id="validation_message" style="color:red;display:none;"></div>
+    <div><a id="btn_fail" class="btn" href="JavaScript:void(0);"><span>拒绝</span></a> <a id="btn_pass" class="btn" href="JavaScript:void(0);"><span>通过</span></a></div>
+    <?php } ?>
+  </form>
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#btn_fail').on('click', function() {
+            if($('#joinin_message').val() == '') {
+                $('#validation_message').text('请输入审核意见');
+                $('#validation_message').show();
+                return false;
+            } else {
+                $('#validation_message').hide();
+            }
+            layer.confirm("确认拒绝申请？", {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#verify_type').val('fail');
+                $('#form_store_verify').submit();
+            });
+        });
+        $('#btn_pass').on('click', function() {
+            var valid = true;
+            $('[dstype="commis_rate"]').each(function(commis_rate) {
+                rate = $(this).val();
+                if(rate == '') {
+                    valid = false;
+                    return false;
+                }
+
+                var rate = Number($(this).val());
+                if(isNaN(rate) || rate < 0 || rate >= 100) {
+                    valid = false;
+                    return false;
+                }
+            });
+            if(valid) {
+                $('#validation_message').hide();
+                layer.confirm("确认通过申请？", {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    $('#verify_type').val('pass');
+                    $('#form_store_verify').submit();
+                });
+            } else {
+                $('#validation_message').text('请正确填写分佣比例');
+                $('#validation_message').show();
+            }
+        });
+    });
+</script>

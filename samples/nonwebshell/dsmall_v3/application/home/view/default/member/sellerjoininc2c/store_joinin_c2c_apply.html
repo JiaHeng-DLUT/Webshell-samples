@@ -1,0 +1,87 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+<div class="breadcrumb"><span class="fa fa-home"></span><span><a href="">{$Think.lang.homepage}</a></span> <span class="arrow">></span> <span>{$Think.lang.merchant_entry_application}</span> </div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.merchant_entry_application}</h3>
+        </div>
+        <div class="content">
+            <dl>
+                <dt class="{if $sub_step == 'step0'}current{/if}"> <i class="hide"></i>{$Think.lang.enter_agreement}</dt>
+            </dl>
+            <dl show_id="0">
+                <dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>{$Think.lang.submit_application}</dt>
+                <dd>
+                    <ul>
+                        <li class="{if $sub_step == 'step1'}current{/if}"><i></i>{$Think.lang.store_qualification_information}</li>
+                        <li class="{if $sub_step == 'step2'}current{/if}"><i></i>{$Think.lang.financial_qualification_information}</li>
+                        <li class="{if $sub_step == 'step3'}current{/if}"><i></i>{$Think.lang.store_operation_information}</li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="{if $sub_step == 'pay'}current{/if}"> <i class="hide"></i>{$Think.lang.contract_signing_payment}</dt>
+            </dl>
+            <dl>
+                <dt> <i class="hide"></i>{$Think.lang.store_opening}</dt>
+            </dl>
+        </div>
+        <div class="title">
+            <h3>{$Think.lang.platform_contact}</h3>
+        </div>
+        <div class="content">
+            <ul>
+                <li>{$Think.lang.phone}：{$Think.config.site_phone}</li>
+                <li>{$Think.lang.email}：{$Think.config.site_email}</li>
+            </ul> 
+        </div>
+    </div>
+    <div class="right-layout">
+        <div class="joinin-step">
+            <ul>
+                <li class="step1 {if $sub_step >= 'step0'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.enter_agreement}</span></li>
+                <li class="{if $sub_step >= 'step1'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.store_qualification_information}</span></li>
+                <li class="{if $sub_step >= 'step2'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.financial_qualification_information}</span></li>
+                <li class="{if $sub_step >= 'step3'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.store_operation_information}</span></li>
+                <li class="{if $sub_step >= 'step4'}current{/if} {if $sub_step == 'pay'}current{/if}"><span>{$Think.lang.contract_signing_payment}</span></li>
+                <li class="step6"><span>{$Think.lang.store_opening}</span></li>
+            </ul>
+        </div>
+        <div class="joinin-concrete">
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- 协议 -->
+            <?php require('store_joinin_c2c_apply.'.$sub_step.'.php'); ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+{/block}

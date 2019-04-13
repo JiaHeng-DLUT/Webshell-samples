@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>{$_G['SET']['WEBTITLE']} - Powered by HadSky</title>
+		<meta name="description" content="{$_G['SET']['WEBDESCRIPTION']}">
+		<meta name="keywords" content="{$_G['SET']['WEBKEYWORDS']}">
+		<meta name="generator" content="HadSky">
+		<meta name="author" content="puyuetian qq632827168">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		{$_G['SET']['EMBED_HEADMARKS']}
+	</head>
+
+	<body>
+		{$_G['SET']['EMBED_HEAD']}{$_G['HTMLCODE']['MAIN']}{$_G['SET']['EMBED_FOOT']}
+		<!--
+			{$_G['APP']['LOADINFO']}
+		-->
+	</body>
+
+</html>
+<!-- Powered by HadSky v{htmlspecialchars(HADSKY_VERSION)} -->

@@ -1,0 +1,53 @@
+<div class="eject_con">
+  <div class="adds" style=" min-height:240px;">
+    <table class="dssc-default-table">
+    {notempty name="address_list"}
+      <thead>
+        <tr>
+          <th class="w80">{$Think.lang.store_deliver_man}</th>
+          <th>{$Think.lang.store_deliver_daddress}</th>
+          <th class="w100">{$Think.lang.store_deliver_telphone}</th>
+          <th class="w80">{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        {foreach name="address_list" item="value" key="key" }
+        <tr class="bd-line">
+          <td class="tc">{$value.seller_name}</td>
+          <td>{$value.area_info} {$value.daddress_detail}</td>
+          <td class="tc">{$value.daddress_telphone}</td>
+          <td class="tc"><a href="javascript:void(0);" ds_type="select" class="dssc-btn" address_id="{$value.daddress_id}" address_value="{$value.seller_name}&nbsp;{$value.daddress_telphone}&nbsp;{$value.area_info}&nbsp;{$value.daddress_detail}">{$Think.lang.ds_common_button_select}</a></td>
+        </tr>
+        {/foreach}
+        <tr class="bd-line">
+          <td colspan="20"></td>
+        </tr>
+      </tbody>
+      {else /}
+      <tboby><tr><td colspan="5">{$Think.lang.store_deliver_none_set}</td></tr></tboby>
+      {/notempty}
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('a[ds_type="select"]').on('click',function(){
+        var daddress_id = $(this).attr('address_id');
+        var address_value = $(this).attr('address_value');
+        $.post(
+            "{:url('Sellerdeliver/send_address_save')}",
+            {order_id: {$order_id}, daddress_id: daddress_id}
+        )
+        .done(function(data) {
+            if(data == 'true') {
+                $('#daddress_id').val(daddress_id);
+                $('#seller_address_span').html(address_value);
+                DialogManager.close('modfiy_daddress');
+            } else {
+                layer.msg('{$Think.lang.modification_failed}');
+            }
+        }); 
+	});
+});
+</script>

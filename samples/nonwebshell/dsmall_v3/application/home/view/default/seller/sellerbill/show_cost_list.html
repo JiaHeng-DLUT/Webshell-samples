@@ -1,0 +1,84 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+
+<style>
+.bill-alert-block{padding-bottom:14px;padding-top:14px}
+.bill_alert{background-color:#F9FAFC;border:1px solid #F1F1F1;margin-bottom:20px;padding:8px 35px 8px 14px;text-shadow:0 1px 0 rgba(255,255,255,.5);line-height:30px}
+</style>
+<div class="bill_alert bill-alert-block mt10">
+    <div style="width:800px"><h3 style="float:left">{$Think.lang.current_settlement}</h3><div style="float:right;">
+            {if $bill_info['ob_state'] == BILL_STATE_CREATE}
+            <a class="dssc-btn mt5" ds_type="dialog" dialog_title="{$Think.lang.ds_common_button_confirm}{$Think.lang.current_settlement}" dialog_id="confirm_bill"  uri=" {:url('Sellerbill/confirm_bill',['ob_no'=>$bill_info.ob_no])}" dialog_width="550" title="{$Think.lang.ds_common_button_confirm}{$Think.lang.current_settlement}" href="javascript:void(0)">{$Think.lang.current_settlement_correct}</a>
+            {elseif $bill_info['ob_state'] == BILL_STATE_SUCCESS /}
+            <a class="dssc-btn mt5" target="_blank" href="{:url('Sellerbill/bill_print',['ob_no'=>$bill_info.ob_no])}">{$Think.lang.print_statement}</a>
+            {/if}
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <ul>
+        <li>{$Think.lang.settlement_number}：{$bill_info.ob_no}&emsp;{$bill_info.ob_startdate|date="Y-m-d",###} &nbsp;{$Think.lang.sellerbill_to}&nbsp; {$bill_info.ob_enddate|date="Y-m-d",###}</li>
+        <li>{$Think.lang.chuzhang_time}：{$bill_info.ob_createdate|date="Y-m-d",###}</li>
+        <li>{$Think.lang.current_receivables}：{$bill_info.ob_result_totals} = {$bill_info.ob_order_totals} ({$Think.lang.order_amount}) - {$bill_info.ob_commis_totals} ({$Think.lang.commission_amount}) - {$bill_info.ob_order_return_totals} ({$Think.lang.refund_amount}) + {$bill_info.ob_commis_return_totals} ({$Think.lang.return_commission}) - {$bill_info.ob_inviter_totals} ({$Think.lang.distribution_commission}) + {$bill_info.ob_vr_order_totals} ({$Think.lang.ob_vr_order_totals}) - {$bill_info.ob_vr_order_return_totals} ({$Think.lang.ob_vr_order_return_totals}) - {$bill_info.ob_vr_commis_totals} ({$Think.lang.ob_vr_commis_totals}) + {$bill_info.ob_vr_commis_return_totals} ({$Think.lang.ob_vr_commis_return_totals}) - {$bill_info.ob_vr_inviter_totals} ({$Think.lang.ob_vr_inviter_totals}) - {$bill_info.ob_store_cost_totals} ({$Think.lang.promotional_expenses})</li>
+        <li>{$Think.lang.settlement_status}：{:get_bill_state($bill_info['ob_state'])}
+        </li>
+        {if $bill_info.ob_seller_content}
+            <li><b>{$Think.lang.ob_seller_content}：{$bill_info.ob_seller_content}</b>
+                </li>
+            {/if}
+            {if $bill_info.ob_admin_content}
+            <li><b>{$Think.lang.ob_admin_content}：{$bill_info.ob_admin_content}</b>
+                </li>
+            {/if}
+    </ul>
+</div>
+<!--区分部分 BEGIN-->
+
+
+
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th>{$Think.lang.promotion_name}</th>
+            <th>{$Think.lang.promotional_expenses}</th>
+            <th>{$Think.lang.application_date}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="cost_list"}
+        {foreach name="cost_list" item="cost_info"}
+        <tr class="bd-line">
+            <td></td>
+            <td>{$cost_info.storecost_remark}</td>
+            <td>{:ds_price_format($cost_info['storecost_price'])}</td>
+            <td>{$cost_info.storecost_time|date="Y-m-d",###}</td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="4" class="norecord"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="cost_list"}
+        <tr>
+            <td colspan="4"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+
+
+
+<!--区分部分 END-->
+<script type="text/javascript">
+                $(document).ready(function() {
+                    $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd'});
+                    $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd'});
+                });
+</script>
+
+{/block}

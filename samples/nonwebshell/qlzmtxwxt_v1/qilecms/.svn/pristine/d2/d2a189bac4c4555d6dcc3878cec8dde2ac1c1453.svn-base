@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>城市管理</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+{:search('添加城市',$select,'','',$date)}
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="50">
+      <col width="110">
+      <col width="110">
+      <col width="110">
+      <col width="110">
+      <col width="110">
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>城市ID</th>
+        <th>城市名称</th>
+        <th>首字母索引</th>
+        <th>城市拼音</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr data-id="{$vo.id}" data-pid="">
+        <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.city_id}"></td>
+        <td>{$vo.city_id}</td>
+        <td>{$vo.name}</td>
+        <td>{$vo.first_letter}</td>
+        <td>{$vo.pinyin}</td>
+        <td>{$vo.sort}</td>
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" 
+          onclick="edit('{:url("city/edit",array("city_id"=>$vo["city_id"]))}','编辑','560px','45%')" title="编辑城市" >   <i class="layui-icon">&#xe642;</i></button>      
+          <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="del('{:url("city/del",array("city_id"=>$vo["city_id"]))}')" > <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//全选删除
+      var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            });              
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+        layer.msg('您确定要批量删除吗？', {
+          time: 0 //不自动关闭
+          ,btn: ['确定', '取消']
+          ,yes: function(index){
+            layer.close(index);
+                 $.post("{:url('city/del')}"
+            ,{"id":id}        
+           ,function(json){
+            if(json.code == 0){
+                layer.msg(json.msg);
+                     setTimeout(function(){ 
+                     window.location.reload();  //页面刷新
+                     },1000);
+                 }
+               }
+             );
+          }
+        }); 
+       }
+  });
+
+
+
+$("#add").on("click",function(){
+  add('{:url("city/add")}','添加城市','560px','45%');
+});
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>

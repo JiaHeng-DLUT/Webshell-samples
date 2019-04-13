@@ -1,0 +1,43 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright">通知类型</td>
+	<td>{$info['notice_name']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright" width="120">通知用户</td>
+	<td>{$info['notice_obj']=='admin'?'管理员':'会员'}</td>
+</tr>
+<!--{if($_g_type == 'email'):}-->
+<tr>
+	<td class="bgtt aright">邮件标题</td>
+	<td><input name="info[notice_email_name]" class="inputall input600" value="{$info[notice_email_name]}" /></td>
+</tr>
+<tr>
+	<td class="bgtt aright">邮件内容</td>
+	<td><textarea name="info[notice_email_text]" id="editortext" style="width:615px;height:210px">{htmlspecialchars($info['notice_email_text'])}</textarea></td>
+</tr>
+<!--{else:}-->
+<tr>
+	<td class="bgtt aright">短信内容</td>
+	<td><textarea name="info[notice_sms_text]" style="width:610px;height:210px">{$info['notice_sms_text']}</textarea></td>
+</tr>
+<!--{endif;}-->
+</table>
+<div class="mat20 center">
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/editor/kindeditor.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/editor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8">
+var editor;
+KindEditor.ready(function(K) {
+	editor = K.create('#editortext', {
+		allowFlashUpload :false
+	});
+});
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

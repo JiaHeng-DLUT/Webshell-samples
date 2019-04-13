@@ -1,0 +1,502 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class Article extends Common
+{
+	public function set(){
+		return $this->fetch();
+	}
+
+	public function index(){
+
+    $post = request()->param();   
+    if($post){
+            $keywords = $post['keywords'];
+            $group_id   = $post['group_id'];
+            $status   =$post['status'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['name']){
+                 $where .= " and a.".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and a.create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+             if($status){
+                $where .=' and a.status = '.$status;
+             }
+        
+      }else{
+          $where .='';
+           $order =  array(
+              'create_time'=>'desc'
+            );
+      }   
+     $select  = array('aid'=>'文章ID','title'=>'文章名称');
+      //如期筛选   
+     $date = array(
+                 array('title'=>'发布时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+	 $one_where = array(
+	         array('field'=>'status','data'=>array( 0 =>'等待审核',1=>'正常',2=>'审核失败')),
+	  );
+     $two_where = array();
+     $this->assign('two_where',$two_where);
+     $this->assign('one_where',$one_where);
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+
+     $lists = DB::name('article')->alias('a')->field('a.aid,a.title,a.attr_value,a.author,a.create_time,a.status,b.cname')->join('article_category b','a.cid = b.cid',"LEFT")->where($where)->order($order)->paginate(10);
+     // echo DB::name('article')->getLastSql();
+     $page = $lists->render();
+     $array = to_array($lists);
+     $list = $array['data'];
+     foreach($list as $k => $v){
+       $result = DB::name('article_attr')->where('attr_value','in',$v['attr_value'])->select();
+       $list[$k]['attr'] = $result;
+     }
+    
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+	  return $this->fetch();
+	} 
+
+
+	public function add(){
+    //获得属性
+      
+    // print_r($_SESSION);
+     if(request()->isPost()){
+      $post =input();
+
+           $cate = input("post.cate/a");
+           $attrValue = input("post.attr_value/a");
+              // 构造表单
+            $param = [
+            'title'=>'title',
+            'source'=>'source',
+            'introduction'=>'introduction',
+            'hits'=>'hits',
+            'content'=>'content',
+            'author'=>'author',
+            'thumb'=>'thumb',
+            'status'=>'status',
+            'keywords'=>'keywords',
+            'video_thumb'=>'video_thumb',
+            'video_url'=>'video_url'
+             ]; 
+            $data  = $this->buildParam($param);
+           //表单验证
+           $rule =[
+              'title'=>'require|max:150',
+              'content'=>'require',
+            ];
+            $msg= [
+             'title.require' =>'文章标题不能为空',
+             'title.max' =>'文章标题不能超过150个字',
+             'content.require' =>'文章内容不能为空',
+            
+            ];
+             $error = $this->checkSubmit($data,$rule,$msg);  
+            if($error){
+                return error_json($error);
+             }
+                 if(!empty($cate['three'])){
+                        $data['cid'] = $cate['three'];
+                  }else{
+                     if(!empty($cate['two'])){
+                         $data['cid'] = $cate['two'];
+                     }else{
+                        if(!empty($cate['one'])){
+                         $data['cid'] = $cate['one']; 
+                        }
+                     }
+                  }
+           if(!empty($attrValue)){
+              $data['attr_value']  = implode(',',$attrValue);
+            }   
+            $data['create_time'] = time();
+            $result =  model('article')->add($data);
+          
+       if($result){
+              return success_json('添加成功');
+             
+            }else{
+               return error_json('添加失败'); 
+            }
+           
+   
+        }else{
+
+           //获得文章属性
+           $articleAttr =  model('article_attr')->getArticleAttr();
+           $this->assign('articleAttr',$articleAttr);
+           return $this->fetch();
+
+        }
+
+	}
+
+
+	public function edit(){
+      $param = input();
+     if(request()->isPost()){
+             $param = input("post.");
+                      if(!empty($param['cate']['three'])){
+                            $param['cid'] = $param['cate']['three'];
+                      }else{
+                         if(!empty($param['cate']['two'])){
+                             $param['cid'] = $param['cate']['two'];
+                         }else{
+                            if(!empty($param['cate']['one'])){
+                             $param['cid'] = $param['cate']['one']; 
+                            }
+                         }
+                      }
+               //表单验证
+               $rule =[
+                  'title'=>'require|max:150',
+                  'content'=>'require',
+                ];
+                $msg= [
+                 'title.require' =>'文章标题不能为空',
+                 'title.max' =>'文章标题不能超过150个字',
+                 'content.require' =>'文章内容不能为空',
+                
+                ];
+                 $error = $this->checkSubmit($param,$rule,$msg);  
+                if($error){
+                    return error_json($error);
+                 }
+                if(!empty($param['attr_value'])){
+                  $param['attr_value']  = implode(',',$param['attr_value']);
+                }
+                $data['create_time'] = time();
+                $data['title'] =$param['title'];
+                $data['source'] =$param['source'];
+                $data['introduction'] =$param['introduction'];
+                $data['hits'] = $param['hits'];
+                $data['content'] = $param['content'];
+                $data['attr_value'] =$param['attr_value'];
+                $data['thumb'] = $param['thumb'];
+                $data['video_thumb'] = $param['video_thumb'];
+                $data['video_url'] = $param['video_url'];
+                $data['cid'] = $param['cid'];
+                $data['aid'] = $param['aid'];
+                $data['keywords'] = $param['keywords'];
+                $data['author'] = $param['author'];
+                $data['status'] = isset($param['status'])?$param['status']:'';
+               
+                $result =  model('article')->edit($data);
+                if($result){
+                    return success_json('更新成功');
+                     
+                  }else{
+                     return error_json('更新失败');
+                  }
+                  
+
+         }else{
+               if(!$param['aid']){  return error_json('请求参数错误');}
+                     $article = model('article')->getArticleInfo($param['aid']);
+              $attrArr = explode(',',$article['attr_value']);
+               //获得文章属性
+              $articleAttr =  model('article_attr')->getArticleAttr();
+              $this->assign('articleAttr',$articleAttr);
+          
+              $this->assign('attrArr',$attrArr);
+              $this->assign('article',$article);
+              return $this->fetch();
+         }
+
+	}
+	public function del(){
+     $param = input();
+     if(!$param['aid']){  return error_json('请求参数错误');    }
+
+     $res= model('article')->del($param['aid']);
+     if($res){
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+
+	}
+  
+   public  function category(){
+	    $post = request()->param(); 
+      $where = 1;
+	    if($post){
+	            $keywords = $post['keywords'];
+	            $group_id   = $post['group_id'];
+	            foreach($post['date'] as $k=>$v){
+	              $post['date'][] = strtotime($v);
+	            }
+	              $date = $post['date'];
+	             
+	             if($keywords['name']){
+	                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+	              }
+
+	      }else{
+	            $order =  array(
+	              'sort'=>'asc'
+	            );
+	      }   
+	     $select  = array('cid'=>'分类ID','name'=>'分类名称');
+	      //如期筛选   
+	     $date = array(
+	            );
+	  	 $one_where = array(
+		         // array('field'=>'status','data'=>array('0'=>'等待审核','1'=>'正常','2'=>'审核失败')),
+		  );
+	     $two_where = array();
+	     $this->assign('two_where',$two_where);
+	     $this->assign('one_where',$one_where);
+	     $this->assign('select',$select);
+	     $this->assign('date',$date);
+
+	  
+
+       if(!empty($post['pid'])){
+         $pid = $post['pid'];
+         $where .= " and pid = '$pid'";
+       }else{
+         $where .= " and pid = 0";
+       }
+	
+	     $list = DB::name('article_category')->where($where)->order($order)->paginate(10);
+	     $page  = $list->render();
+       $lists = to_array($list);
+       $list = $lists['data'];
+       foreach($list as $k=> $v){  
+             $pid = $v['cid'];
+             $result = model('article_category')->getChildCategory($pid);        
+             $list[$k]['childrenNum'] = count($result);
+       }
+       
+   
+	     $this->assign('page', $page);
+	     $this->assign('list', $list);
+
+		 return $this->fetch();
+   }
+
+   public  function categoryAdd(){
+    $param = input();
+
+   	if(request()->isPost()){
+//验证
+      $rule =[
+        'cname'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'cname.require' =>'分类名称不能为空',
+       'cname.chsAlpha' =>'分类名称只能是汉字或字母',
+       'cname.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+            return error_json($result);
+       }else{
+         	 if(isset($param['status'])){
+            $param['status'] =1;
+         	 }
+            $r = model('article_category')->isExistsCategoryName($param['cname']);
+            if(!empty($r)){
+              return error_json('分类名已经存在');
+            }
+
+         	 $res = model('article_category')->add($param);
+           if($res){
+            $this->updateCategoryCache();
+           	return success_json('添加成功');
+           }else{
+           	return error_json('添加失败');
+           }
+         
+       }
+     
+
+       
+   	}else{
+       $cid = !empty($param['cid'])?$param['cid']:0;
+       $list = model('article_category')->getCategory($cid);
+       
+       $this->assign('pid',$cid); //父类ID
+       $this->assign('pname',$list['name']); //父类名称
+   	   return $this->fetch();	
+   	}
+	
+   }
+   public  function categoryEdit(){
+    $param = input();
+
+               
+  if(request()->isPost()){
+//验证
+      $rule =[
+        'name'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'name.require' =>'分类名称不能为空',
+       'name.chsAlpha' =>'分类名称只能是汉字或字母',
+       'name.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+         return error_json($result);
+       }else{
+         if(isset($param['status'])){
+          $param['status'] =1;
+         }
+
+         $res = model('article_category')->edit($param);
+         if($res){
+          $this->updateCategoryCache();
+          return success_json('编辑成功');
+         }else{
+          return error_json('编辑失败');
+         }
+         
+       }
+     
+
+       
+    }else{
+
+    $cid = $param['cid'];
+    $category = model('article_category')->getCategory($cid);
+    $this->assign('category',$category); //父类名称
+    return $this->fetch();
+    }
+   }
+   public  function categoryUpdate(){
+    $param = input();
+      if(request()->isPost()){
+         $res = model('article_category')->categoryUpdate($param);
+         return success_json('更新成功');
+
+      }
+   }
+   public  function categoryDel(){
+     $param = input();
+     if(!$param['id']){  return error_json('请求参数错误');    }
+
+     $res= model('article_category')->del($param['id']);
+     if(!$res){
+      $this->updateCategoryCache();
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+   }
+
+   protected function updateCategoryCache(){
+    //更新分类的js文件
+       $list = model('article_category')->select()->toArray();
+       // $catelist = get_tree($list);
+       cache('article_category',$list);
+  
+    }
+//文章评论操作
+   public function comment(){
+     $post = request()->param(); 
+    if($post){
+            $keywords = $post['keywords'];
+            $group_id   = $post['group_id'];
+            $status   =$post['status'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['name']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+             
+             if($status){
+                $where .=' and status = '.$status;
+             }
+        
+      }else{
+          $where .='';
+          $order = "";
+      }  
+  // 关键词筛选  格式：字段名称加显示名称
+     $keywords  = ['comment_id'=>'评论ID','nickname'=>'昵称','article_id'=>'文章ID'];
+
+ //日期筛选    
+     $date = [ ];
+// 自定义单个字段筛选
+     $customSingleField = []; 
+ //数据库某个表中的字段筛选
+     $sqlTable = [];
+
+     $this->assign('sqlTable',$sqlTable);
+     $this->assign('customSingleField',$customSingleField);
+     $this->assign('keywords',$keywords);
+     $this->assign('date',$date);
+     $pageNum = 10;
+     $list = DB::name('article_comment')->alias('a')->join('article b','a.article_id = b.aid',"LEFT")->field('a.comment_id,a.comment_content,a.nickname,a.create_time,a.status,a.like,a.unlike,a.ip,b.title')->where($where)->order($order)->paginate($pageNum);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+    return $this->fetch();
+  }
+
+// 文章评论添加
+   public function commentAdd(){
+    
+  }
+
+
+
+// 文章评论修改
+   public function commentEdit(){
+    $param = input();
+    if(!$param['comment_id']){  return error_json('缺少请求参数');    }
+    if(!$param['status']){  return error_json('缺少请求参数');    }
+    $data['status'] = $param['status'];
+    $res = model('article_comment')->edit($param['comment_id'],$data);
+     if($res){
+      return success_json('更新成功');
+     }else{
+      return error_json('更新失败');
+     }
+  }
+
+// 文章评论删除
+   public function commentDel(){
+     $param = input();
+     if(!$param['comment_id']){  return error_json('请求参数错误');    }
+
+     $res= model('article_comment')->del($param['comment_id']);
+     if($res){
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+  }
+}

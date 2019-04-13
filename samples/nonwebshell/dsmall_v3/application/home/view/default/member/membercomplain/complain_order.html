@@ -1,0 +1,80 @@
+
+<div class="dsm-flow-item">
+    <div class="title">{$Think.lang.related_commodity_transaction}</div>
+    <div class="item-goods">
+        {notempty name="goods_list"}
+        {foreach name="goods_list" item="val"}
+        <dl>
+            <dt>
+            <div class="dsm-goods-thumb-mini"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">
+                <img src="{:goods_thumb($val, 240)}" /></a></div>
+            </dt>
+            <dd><a target="_blank" href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">{$val.goods_name}</a>
+                {$Think.lang.currency}{$val.goods_price} * {$val.goods_num} <font color="#AAA">({$Think.lang.complain_text_num})</font>
+                <span>{:get_order_goodstype($val.goods_type)}</span>
+            </dd>
+        </dl>
+        {/foreach}
+        {/notempty}
+    </div>
+    <div class="item-order">
+        <dl>
+            <dt>{$Think.lang.freight_blank}</dt>
+            <dd>{gt name="return_info.shipping_fee" value="0"}{:ds_price_format($return_info.shipping_fee)}{else /}{$Think.lang.ds_common_shipping_free}{/gt}</dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.order_price}{$Think.lang.ds_colon}</dt>
+            <dd><strong>{$Think.lang.currency}{$return_info.order_amount}</strong></dd>
+        </dl>
+        <dl class="line">
+            <dt> {$Think.lang.order_sn}{$Think.lang.ds_colon}</dt>
+            <dd> <a href="{:url('Memberorder/show_order',['order_id'=>$return_info.order_id])}"  target="_blank"> {$return_info.order_sn} </a> <a href="javascript:void(0);" class="a">{$Think.lang.more}<i class="fa fa-angle-down"></i>
+                <div class="more"> <span class="arrow"></span>
+                    <ul>
+                        {if $return_info.payment_code != 'offline'}
+                        <li>{$Think.lang.payment_order_number}{$Think.lang.ds_colon}<span>{$return_info.pay_sn}</span></li>
+                        {/if}
+                        <li>{$Think.lang.payment_method}：<span>{$return_info.payment_name}</span> </li>
+                        <li>{$Think.lang.member_order_time}{$Think.lang.ds_colon}<span>{$return_info.add_time|date="Y-m-d H:i:s",###}</span></li>
+                        {gt name="return_info.payment_time" value="0"}
+                        <li>{$Think.lang.member_show_order_pay_time}{$Think.lang.ds_colon}<span>{$return_info.payment_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/gt}
+                        {gt name="return_info.order_common.shipping_time" value="0"}
+                        <li>{$Think.lang.member_show_order_send_time}{$Think.lang.ds_colon}<span>{$return_info.order_common.shipping_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/gt}
+                        {gt name="return_info.finnshed_time" value="0"}
+                        <li>{$Think.lang.member_show_order_finish_time}{$Think.lang.ds_colon}<span>{$return_info.finnshed_time|date="Y-m-d H:i:s",###}</span></li>
+                        {/gt}
+                    </ul>
+                </div>
+            </a> </dd>
+        </dl>
+        {notempty name="return_info.shipping_code"}
+        <dl>
+            <dt>{$Think.lang.logistics_number}：</dt>
+            <dd><a target="_blank" href="{:url('Memberorder/search_deliver',['order_id'=>$return_info.order_id])}">{$return_info.shipping_code}</a>
+                <a href="javascript:void(0);" class="a">{$return_info.express_name}</a></dd>
+        </dl>
+        {/notempty}
+        <dl class="line">
+            <dt>{$Think.lang.merchant_blank}</dt>
+            <dd>{$return_info.store_name}<a href="javascript:void(0);" class="a">{$Think.lang.more}<i class="fa fa-angle-down"></i>
+                <div class="more"><span class="arrow"></span>
+                    <ul>
+                        <li>{$Think.lang.member_address_location}{$Think.lang.ds_colon}<span>{$return_info.extend_store.store_address}</span></li>
+                        <li>{$Think.lang.contact_number}：<span>{$return_info.extend_store.store_phone}</span></li>
+                    </ul>
+                </div>
+            </a>
+                <div><span member_id="{$return_info.extend_store.member_id}"></span>
+                    {notempty name="return_info.store.store_qq"}
+                    <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$return_info.store.store_qq}&site=qq&menu=yes" title="QQ: {$return_info.store.store_qq}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$return_info.store.store_qq}:52" style=" vertical-align: middle;"/></a>
+                    {/notempty}
+                    {notempty name="return_info.store.store_ww"}
+                    <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$return_info.store.store_ww}&site=cntaobao&s=2&charset=utf-8"  class="vm" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$return_info.store.store_ww}&site=cntaobao&s=2&charset=utf-8" alt="Wang Wang"  style=" vertical-align: middle;"/></a>
+                    {/notempty}
+                </div>
+            </dd>
+        </dl>
+    </div>
+</div>

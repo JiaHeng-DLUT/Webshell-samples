@@ -1,0 +1,75 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class FinanceRecharge extends Common
+{
+  public function index(){
+  $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            $status = $post['status'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and update_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and update_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and update_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+                    //排序
+                 $where .= " and status = '$status'";
+      }else{
+           $where ='';
+           $order =  array(
+
+             );
+      }
+
+     $select  = array('id'=>'流水号','username'=>'会员名','bankname'=>'支付平台','editor'=>'操作人');
+    
+     $one_where = array(array('field'=>'status','data'=>array('0'=>'等待充值','1'=>'充值成功','-1'=>'充值失败')));
+     $two_where =array();
+
+     $date = array(
+                  array('title'=>'支付时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+     // ,'bankname'=>'支付平台'
+     $this->assign('add',$add);
+     $this->assign('one_where',$one_where);
+     $this->assign('two_where',$two_where);
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('finance_recharge')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list',$list);
+     return $this->fetch();
+  }
+
+  public function del(){
+
+    $param = request()->param();
+    $id = $param['id'];
+      if(empty($id)){
+        return error_json('非法请求！');
+      }
+     if(model('finance_recharge')->del($id)){  
+        return success_json('删除成功');
+      }else{
+        return error_json('删除失败');
+      }
+  }
+}

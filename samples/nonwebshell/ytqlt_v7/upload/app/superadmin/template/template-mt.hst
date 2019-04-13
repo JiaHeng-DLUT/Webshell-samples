@@ -1,0 +1,30 @@
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary">未安装模板</label>
+</div>
+
+{$newinstallhtml}
+
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary">已安装模板</label>
+</div>
+
+{$oldinstallhtml}
+
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set"><input id="templatetype" type="hidden"></form>
+
+<script>
+	function SetTemplate($type, $name, $obj) {
+		$('#templatetype').attr({
+			'name': $type,
+			'value': $name
+		});
+		$('form[name="form_save"]')[0].submit();
+	}
+
+	$(function() {
+		if($_GET('refresh')) {
+			//应用安装完成，自动刷新父页面
+			top.location.href = "index.php?c=app&a=superadmin:index&PIndex=4&CIndex=0";
+		}
+	});
+</script>

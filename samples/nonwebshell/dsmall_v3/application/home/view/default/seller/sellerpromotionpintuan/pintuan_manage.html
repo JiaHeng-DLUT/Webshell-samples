@@ -1,0 +1,66 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.ds_state}</th>
+            <td class="w100">
+                <select name="pintuangroup_state">
+                    {notempty name="pintuangroup_state_array"}
+                    {foreach name="pintuangroup_state_array" item="val"}
+                    <option value="{$key}" {if $key==$Request.get.pintuangroup_state}selected{/if}>{$val}</option>
+                    {/foreach}
+                    {/notempty}
+                </select>
+            </td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}"/></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w180">{$Think.lang.pintuangroup_starttime}</th>
+            <th class="w180">{$Think.lang.pintuangroup_state}</th>
+            <th class="w180">{$Think.lang.pintuangroup_joined}/{$Think.lang.pintuangroup_limit_number}</th>
+            <th class="w80">{$Think.lang.pintuangroup_headid}</th>
+            <th class="w150">{$Think.lang.pintuanorder}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="pintuangroup_list"}
+        {foreach name="pintuangroup_list" item="val"}
+        <tr class="bd-line">
+            <td>{$val.pintuangroup_starttime|date="Y-m-d H:i",###}</td>
+            <td>{$val.pintuangroup_state_text}({$val.pintuangroup_limit_hour}{$Think.lang.hour}/{$val.pintuangroup_limit_number}{$Think.lang.people})</td>
+            <td>{$val.pintuangroup_joined}/{$val.pintuangroup_limit_number}</td>
+            <td>{$val.member_name}</td>
+            <td>
+                {foreach name="val.order_list" item="order"}
+                <a href="{:url('Sellerorder/show_order',['order_id'=>$order.order_id])}" target="_blank">{$order.order_sn}</a><br/>
+                {/foreach}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td class="norecord" colspan="20">
+                <div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span>
+                </div>
+            </td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="pintuangroup_list"}
+        <tr>
+            <td colspan="20">
+                <div class="pagination">{$show_page}</div>
+            </td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+{/block}

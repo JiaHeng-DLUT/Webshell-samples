@@ -1,0 +1,63 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_bill}</h3>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <div class="fixed-empty"></div>
+    <form method="post" name="form1" id="form1" action="{:url('Bill/bill_pay',['ob_no'=>$Request.param.ob_no])}">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label>{$Think.lang.bill_ob_no}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">{$Request.param.ob_no}</td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="required">{$Think.lang.bill_pay_date} {$Think.lang.ds_colon}</td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input readonly id="pay_date" class="" name="pay_date" value="" type="text" /></td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="required"><label for="pay_content">{$Think.lang.bill_pay_remark}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><textarea name="pay_content" rows="6" class="tarea" id="pay_content"></textarea></td>
+                    <td class="vatop tips"><span class="vatop rowform">{$Think.lang.bill_pay_payment_voucher}</span></td>
+                </tr>
+            </tbody>
+            <tfoot id="submit-holder">
+                <tr class="tfoot">
+                    <td colspan="2" ><a href="JavaScript:void(0);" id="dssubmit" class="btn"><span>{$Think.lang.ds_submit}</span></a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#pay_date').datepicker({dateFormat:'yy-mm-dd', maxDate: '{$Think.TIMESTAMP|date="Y-m-d",###}'});
+        $('#dssubmit').click(function() {
+            if ($('#pay_date').val() == '')
+                return false;
+            
+            layer.confirm("操作提醒：\n该操作不可撤销\n提交前请务必确认店铺是否已收到付款\n继续操作吗?", {
+                btn: ['确定', '取消'],
+                title: false,
+            }, function () {
+                $('#form1').submit();
+            });
+        });
+    });
+</script> 

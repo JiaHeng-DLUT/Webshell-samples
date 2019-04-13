@@ -1,0 +1,69 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=article" <!--{if($act=='index' && !$_g_type):}-->class="sel"<!--{endif;}-->>资讯中心（{$tongji['news']}）<i></i></a>
+		<a href="admin.php?mod=article&type=help" <!--{if($act=='index' && $_g_type=='help'):}-->class="sel"<!--{endif;}-->>帮助中心（{$tongji['help']}）<i></i></a>
+		<a href="admin.php?mod=article&act=add" id="fabu">添加文章</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+				<input type="hidden" name="mod" value="{$_g_mod}" />
+				<input type="hidden" name="type" value="{$_g_type}" />
+				文章名称：<input type="text" name="name" value="{$_g_name}" class="inputtext input200" />
+				<select name="class_id" class="selectmini">
+				<option value="" href="{pe_updateurl('class_id', '')}">= 所有分类 =</option>
+				<!--{$selnum=1;}-->
+				<!--{foreach($cache_class_arr[$_g_type?'help':'news'] as $v):}-->
+				<option value="{$v['class_id']}" href="{pe_updateurl('class_id', $v['class_id'])}" <!--{if($_g_class_id==$v['class_id']):}-->selected="selected"<!--{endif;}-->>{$selnum++}){$v['class_name']}</option>
+				<!--{endforeach;}-->
+				</select>
+				<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'article_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt aleft">文章名称</th>
+			<th class="bgtt" width="120">分类名称</th>
+			<th class="bgtt" width="120">发布日期</th>
+			<th class="bgtt" width="70">浏览量</th>
+			<th class="bgtt" width="110">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td><input type="checkbox" name="article_id[]" value="{$v['article_id']}"></td>
+			<td>{$v['article_id']}</td>
+			<td class="aleft"><a href="{pe_url('article-'.$v['article_id'])}" target="_blank">{$v['article_name']}</a></td>
+			<td>{$cache_class[$v['class_id']]['class_name']}</td>
+			<td class="num">{pe_date($v['article_atime'])}</td>
+			<td class="num">{$v['article_clicknum']}</td>
+			<td>
+				<a href="admin.php?mod=article&act=edit&id={$v['article_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=article&act=del&id={$v['article_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'article_id')" />
+			<button href="admin.php?mod=article&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'article_id', 'form', '批量删除')">批量删除</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,126 @@
+<?php
+namespace app\admin\controller;
+use app\admin\controller\Common;
+class AdminNav extends Common
+{
+
+  public function index(){
+//显示导航
+    $AdminNav =  model('AdminNav');
+    $list  = $AdminNav->getNavTree();  
+    $this->assign('list',$list);
+    return $this->fetch();
+  } 
+
+  public function add(){
+   $param = request()->param(); 
+    if(request()->isPost()){   
+
+        //验证
+        $rule =[
+          'name'=>'require',
+        ];
+        $msg= [
+         'name.require' =>'导航标题不能为空',  
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+             return error_json($error);
+         }
+         //表单数据
+          $data['name'] = $param['name'];
+          $data['url'] = $param['url'];
+          $data['icon'] = $param['icon'];
+          $data['pid'] = $param['pid'];
+          $data['sort'] = $param['sort'];
+          $data['create_time'] = time();
+          $data['status'] = !empty($param['status'])?1:0;
+
+       if(model('admin_nav')->add($data)){
+         return success_json('添加成功'); 
+       }
+   }else{
+
+        return $this->fetch();
+   }      
+  }
+  public function edit(){
+    $param = request()->param();
+    if(request()->isPost()){
+
+         //验证
+        $rule =[
+          'name'=>'require',
+        ];
+        $msg= [
+         'name.require' =>'导航标题不能为空',  
+        ];
+         $error = $this->checkSubmit($param,$rule,$msg);  
+       if($error){
+             return error_json($error);
+         }
+         //表单数据
+          $data['name'] = $param['name'];
+          $data['url'] = $param['url'];
+          $data['icon'] = $param['icon'];
+          $data['pid'] = $param['pid'];
+          $data['sort'] = $param['sort'];
+          $data['create_time'] = time();
+          $data['status'] = !empty($param['status'])?1:0;
+
+          $where['id'] = inval($param['id']);
+          $res = model('admin_nav')->edit($data,$where);
+          return success_json('编辑成功'); 
+    }else{
+         $adminNav = model('admin_nav')->getAdminNavInfoById($where['id']);
+         $this->assign('adminNav',$adminNav);
+         return $this->fetch();
+
+
+    }  
+  }
+
+  public function update()
+    {
+      $post = input('post.');
+      $AdminNav = model('AdminNav');
+
+
+
+      if($AdminNav->updateNav($post)){
+        $result = ['code'=>'1','msg'=>'菜单更新成功'];
+      }else{
+        $result = ['code'=>'0','msg'=>'菜单更新失败'];
+
+      }
+
+     return json($result);
+  }
+
+
+
+  public function del()
+    {
+     $param = input();
+     if(!$param['id']){  return error_json('请求参数错误');    }
+
+     $res= model('admin_nav')->del($param['id']);
+     if($res){
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+}

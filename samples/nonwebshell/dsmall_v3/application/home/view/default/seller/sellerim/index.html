@@ -1,0 +1,71 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="alert mt10"> <strong>{$Think.lang.ds_explain}{$Think.lang.ds_colon}</strong> {$Think.lang.can_only_query}“{$minDate}”{$Think.lang.to}“{$maxDate}{$Think.lang.customer_service_dialogue_member} </div>
+<div class="seller_items">
+    <ul>
+        {notempty name="seller_list"}
+        {foreach name="seller_list" item="val"}
+        <li seller_id="{$val.seller_id}" class="{$val.seller_id == $seller_id  ? 'current':'normal'}"> <a href="JavaScript:void(0);" onclick="select_seller({$val.seller_id});" class="msg-button">{$val.seller_name}</a></li>
+        {/foreach}
+        {/notempty}
+    </ul>
+</div>
+<div class="dssc-chat-layout"><table class="search-form">
+        <tr><td class="w10"></td>
+            <td class="w180"><strong>{$Think.lang.last_contact}</strong></td>
+            <td>&nbsp;</td>
+            <th>{$Think.lang.keyword}</th>
+            <td class="w90"><input name="msg_key" id="msg_key" type="text" class="text w70" value="" /></td>
+            <th>{$Think.lang.commencement_date}</th>
+            <td class="w240"><input name="add_time_from" id="add_time_from" type="text" class="text w70" value="{$Request.param.add_time_from}" /><label class="add-on"><i class="fa fa-calendar"></i></label>&nbsp;&#8211;&nbsp;<input name="add_time_to" id="add_time_to" type="text" class="text w70" value="{$Request.param.add_time_to}" /><label class="add-on"><i class="fa fa-calendar"></i></label></td>
+            <td class="w70 tc">
+                <label class="submit-border">
+                    <input type="button" onclick="submit_chat_log();" class="submit" value="{$Think.lang.query}" />
+                </label>
+            </td>
+        </tr>
+    </table>
+    <div class="left" id="store_user_list"></div>
+    <div class="right" id="store_chat_log">
+    </div>
+</div>
+<script>
+    var select_id = '';
+    var chat_user = '';
+    function select_seller(seller_id) {
+        select_id = seller_id;
+        chat_user = '';
+        var obj = $("#seller_list");
+        obj.find("li").removeClass().addClass("normal");
+        obj.find("li[seller_id='" + seller_id + "']").removeClass().addClass("active");
+        var ajaxurl = "{:url('Sellerim/get_user_list')}" + '?seller_id=' + select_id;
+        $("#store_user_list").load(ajaxurl);
+        $("#store_chat_log").html('<div class="warning-option"><span>{$Think.lang.queries_within_time_period}</span></div>');
+    }
+    function submit_chat_log() {
+        if (chat_user != '') {
+            store_chat_log(chat_user);
+        }
+    }
+    function store_chat_log(user_id) {
+        var ajaxurl = "{:url('Sellerim/get_chat_log')}" + '?seller_id=' + select_id;
+        $("#store_chat_log").load(ajaxurl + '&' + $.param({'add_time_from': $('#add_time_from').val(), 'add_time_to': $('#add_time_to').val(), 'msg_key': $('#msg_key').val(), 't_id': user_id}));
+    }
+    function user_chat_log(user_id, user_name) {
+        chat_user = user_id;
+        var obj = $("#store_user_list ul");
+        obj.find("li").removeClass().addClass("normal");
+        obj.find("li[user_id='" + user_id + "']").removeClass().addClass("active");
+        store_chat_log(user_id);
+    }
+    $(function () {
+        select_seller({$seller_id});
+        $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd', minDate: '{$minDate}'});
+        $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd', maxDate: '{$maxDate}'});
+    });
+</script>
+
+{/block}
+
+

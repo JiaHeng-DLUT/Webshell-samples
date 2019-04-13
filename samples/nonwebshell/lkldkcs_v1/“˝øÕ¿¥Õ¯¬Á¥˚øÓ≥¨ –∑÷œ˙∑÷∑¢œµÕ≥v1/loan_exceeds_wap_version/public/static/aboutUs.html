@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>关于我们</title>
+</head>
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  /* 弹出框 */
+  .overflowhide {
+    overflow: hidden;
+  }
+
+  /* 遮罩层 */
+  .msgbox-shadow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .4;
+    background-color: #000;
+    z-index: 10000;
+  }
+
+  /* 弹出层父级 */
+  #mask {
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=5);
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+  }
+
+  /* #login {
+    position: fixed;
+    left: 30%;
+    top: 30%;
+    z-index: 1001;
+  } */
+
+  .maskbox {
+    /* width: 100vw; */
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: .2rem;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: 0 3.5%;
+  }
+
+  .maskbox p {
+    width: 93%;
+    height: 1rem;
+    font-size: .36rem;
+    line-height: 1rem;
+    border-radius: .16rem;
+    letter-spacing: .01rem;
+    color: #2e6eec;
+    text-align: center;
+    /* margin: .1rem; */
+    background-color: #fff;
+    z-index: 10;
+  }
+
+  .maskbox a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    color: #2e6eec;
+  }
+
+  .maskbox #close {
+    font-size: .4rem;
+    font-weight: 600;
+    letter-spacing: .02rem;
+    margin: 0;
+  }
+
+  .main {
+    /* padding: 0 .4rem; */
+    padding: .2rem .4rem 0;
+  }
+
+  .content p {
+    font-size: .28rem;
+    line-height: .42rem;
+    letter-spacing: .01rem;
+    color: #101d37;
+  }
+
+  .tel {
+    font-size: .28rem;
+    letter-spacing: .01rem;
+    color: #7f8799;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .tel #callBtn {
+    color: #2e6eec;
+    font-size: .28rem;
+  }
+
+  .maskbox .block {
+    display: block;
+  }
+
+  .none {
+    display: none;
+  }
+
+</style>
+
+<body>
+  <div class="main">
+    <div class="content"></div>
+    <p class="tel none">联系电话：<span id="callBtn"></span></p>
+    <!-- <button id="callBtn"></button> -->
+
+    <div class='maskbox' style="display:none">
+      <p class="call">
+        <a href='tel:02886783282' class="callnum"> 呼叫</a>
+      </p>
+      <p id='close'>取消</p>
+    </div>
+  </div>
+  <script src="./js/jquery.min.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px'
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //生成随机数
+    function guid() {
+      function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+      }
+      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
+    }
+    var header = {
+      'Device': guid(), // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Authentication': ''
+    }
+    //判断访问终端
+    var browser = {
+      versions: function () {
+        var u = navigator.userAgent,
+          app = navigator.appVersion;
+        return {
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+          weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+          qq: u.match(/\sQQ/i) == " qq" //是否QQ
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+    // 接口
+    function agreement() {
+      $.ajax({
+        url: 'https://api.daidaihu365.com/api/v1/about/',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        success: function (res) {
+          if (res.code === 200) {
+            // console.log(res);
+            content = res.data.content
+            call = res.data.company_phone
+            $('.content').append(content)
+            $('#callBtn').append(call)
+            $('.callnum').append(call)
+            $('.tel').removeClass('none')
+          } else {
+            console.log(res.info)
+          }
+        },
+        error: function () {
+          flag = false
+        }
+      })
+    }
+    agreement();
+
+    function openNew() {
+      //获取页面的高度和宽度
+      var sHeight = document.documentElement.scrollHeight;
+      var sWidth = document.documentElement.scrollWidth;
+      //获取可视区域高度，宽度与页面内容的宽度一样
+      var wHeight = document.documentElement.clientHeight;
+      //创建遮罩层div并插入body
+      var oMask = document.createElement("div");
+      oMask.id = "mask";
+      oMask.style.height = sHeight + "px";
+      //宽度直接用100%在样式里
+      document.body.appendChild(oMask);
+
+      //创建div并插入body
+      // var oLogin = document.getElementsByClassName("maskbox");
+      // var html = "<div class='maskbox'><p><a href='tel:02886783282'> 呼叫028-86783282</a></p><p id='close'>取消</p></div>";
+      // if (browser.versions.ios) {
+      //   html = "<div class='maskbox'><p><a href='tel://02886783282'> 呼叫028-86783282</a></p><p id='close'>取消</p></div>";
+      // }
+      // oLogin.id = "login";
+      // oLogin.innerHTML = html
+      // document.body.appendChild(oLogin);
+      //获取宽度和高度并设置偏移值
+      // var dHeight = oLogin.offsetHeight;
+      // var dWidth = oLogin.offsetWidth;
+      // oLogin.style.left = (sWidth - dWidth) / 1 + "px";
+      // oLogin.style.top = (wHeight - dHeight) / 1 + "px";
+      $('.maskbox').css("display", "block")
+      //获取关闭按钮
+      var oClose = document.getElementById("close");
+      oMask.onclick = oClose.onclick = function () {
+        document.body.removeChild(oMask);
+        // document.body.removeChild(oLogin);
+        $('.maskbox').css("display", "none")
+      }
+    }
+    window.onload = function () {
+      var oBtn = document.getElementById("callBtn");
+      oBtn.onclick = function () {
+        openNew();
+      }
+    }
+
+  </script>
+</body>
+
+</html>

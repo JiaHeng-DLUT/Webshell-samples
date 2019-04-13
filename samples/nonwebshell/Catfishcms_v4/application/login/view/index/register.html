@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="copyright" content="Catfish CMS All Rights Reserved">
+    <meta name="robots" content="noindex,noarchive">
+    <title>{:lang('New user')}</title>
+    <link rel="icon" href="{$domain}public/common/images/favicon.ico">
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$domain}public/common/css/catfishBottom.css">
+    <script src="{$domain}public/common/js/jquery.min.js"></script>
+</head>
+<body style="background-color: #159f9f;{notempty name="registration_background"} background: url('{$registration_background}');background-size: cover;{/notempty}">
+<div class="container-fluid" id="catfishContentBlock">
+    <div class="row">
+        <br>
+        <div class="hidden-xs"><br><br></div>
+        <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
+            <h1 class="text-center" style="color:#fff;">
+                <img src="{if condition="$logo eq ''"}{$domain}public/common/images/catfish_white.png{else /}{$logo}{/if}" width="32" height="32">
+                {if condition="$title eq ''"}Catfish{else /}{$title}{/if} <small>{:lang('New user')}</small>
+            </h1><br>
+            <div class="panel panel-default" id="zhucekuang">
+                <div class="panel-body">
+                    <form method="post" action="">
+                        <div class="form-group">
+                            <label>{:lang('User name')}</label>
+                            <input type="text" class="form-control" name="user" placeholder="{:lang('User name')}" maxlength="50" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label>{:lang('Password')}</label>
+                            <input type="password" class="form-control" name="pwd" placeholder="{:lang('Password')}">
+                        </div>
+                        <div class="form-group">
+                            <label>{:lang('Confirm password')}</label>
+                            <input type="password" class="form-control" name="repeat" placeholder="{:lang('Confirm password')}">
+                        </div>
+                        <div class="form-group">
+                            <label>{:lang('Email')}</label>
+                            <input type="email" class="form-control" name="email" placeholder="{:lang('Email')}">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-default">{:lang('Sign up')}</button>
+                        </div>
+                        <a href="{:Url('/index')}">{:lang('Home')}</a>
+                        <a href="{:Url('/login')}" class="pull-right">{:lang('Log in')}</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="catfishFooter">
+    <div class="row">
+        <div>{$catfish}</div>
+    </div>
+</div>
+{notempty name="registration_background"}
+<script>
+    $(document).ready(function(){
+        $("#zhucekuang").css("opacity",0.85);
+        $("input").css({"background-color":"#eee"});
+    });
+</script>
+{/notempty}
+<script src="{$domain}public/common/js/user/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+  <form id="add_form" action="{:url('Selleraccountgroup/group_save',['group_id'=>$group_info.sellergroup_id])}" method="post">
+    <dl>
+      <dt><i class="required">*</i>{$Think.lang.group_name}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <input class="w120 text" name="seller_group_name" type="text" id="seller_group_name" value="{if !empty($group_info)}{$group_info['sellergroup_name']}{/if}" />
+        <span></span>
+        <p class="hint">{$Think.lang.set_permission_group_name}</p>
+      </dd>
+    </dl>
+    <dl id="function_list">
+      <dt><i class="required">*</i>{$Think.lang.permissions}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <div class="dssc-account-all">
+          <input id="btn_select_all" name="btn_select_all" class="checkbox" type="checkbox" />
+          <label for="btn_select_all">{$Think.lang.ds_select_all}</label>
+          <span></span>
+        </div>
+          {notempty name="seller_menu"}
+          {foreach name="seller_menu" item="value" key="key" }
+          <div class="dssc-account-container">
+              <h4>
+                  <input id="{$key}" class="checkbox" dstype="btn_select_module" type="checkbox" />
+                  <label for="{$key}">{$value.text}</label>
+              </h4>
+              {notempty name="$value.submenu"}
+              <ul class="dssc-account-container-list">
+                  {foreach name="$value.submenu" item="submenu_value" }
+                  <li>
+                      <input id="{$submenu_value.controller}" class="checkbox" name="limits[]" value="{$submenu_value.controller}" <?php if(!empty($group_limits)) {if(in_array($submenu_value['controller'], $group_limits)) { echo 'checked'; }}?> type="checkbox" />
+                             <label for="{$submenu_value.controller}">{$submenu_value.text}</label>
+                  </li>
+                  {/foreach}
+              </ul>
+              {/notempty}
+          </div>
+          {/foreach}
+          {/notempty}
+        <p class="hint"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><i class="required"></i>{$Think.lang.message_receiving_permissions}{$Think.lang.ds_colon}</dt>
+      <dd>
+        <div class="dssc-account-all">
+          <input id="smt_select_all" class="checkbox" type="checkbox" />
+          <label for="smt_select_all">{$Think.lang.ds_select_all}</label>
+        </div>
+        <div class="dssc-account-container">
+          {notempty name="smt_list"}
+          <ul class="dssc-account-container-list" style=" width: 99%; padding-left: 1%;">
+            {foreach name="smt_list" item="val" }
+            <li style=" width: 25%;">
+              <input id="{$val.storemt_code}" class="checkbox" name="smt_limits[]" value="{$val.storemt_code}" {if !empty($smt_limits) && in_array($val['storemt_code'], $smt_limits)}checked{/if} type="checkbox" />
+              <label for="{$val.storemt_code}">{$val.storemt_name}</label>
+            </li>
+            {/foreach}
+          </ul>
+          {/notempty}
+        </div>
+        <p class="hint">{$Think.lang.set_message_receiving_authority}</p>
+      </dd>
+    </dl>
+    <div class="bottom">
+      <label class="submit-border">
+        <input type="submit" class="submit" value="{$Think.lang.ds_submit}{$Think.lang.set}">
+      </label>
+    </div>
+  </form>
+</div>
+<script>
+$(document).ready(function(){
+    $('#btn_select_all').on('click', function() {
+        if($(this).prop('checked')) {
+            $(this).parents('dd').find('input:checkbox').prop('checked', true);
+        } else {
+            $(this).parents('dd').find('input:checkbox').prop('checked', false);
+        }
+    });
+    $('[dstype="btn_select_module"]').on('click', function() {
+        if($(this).prop('checked')) {
+            $(this).parents('.dssc-account-container').find('input:checkbox').prop('checked', true);
+        } else {
+            $(this).parents('.dssc-account-container').find('input:checkbox').prop('checked', false);
+        }
+    });
+    $('#smt_select_all').on('click', function() {
+        if($(this).prop('checked')) {
+            $(this).parents('dl').find('input:checkbox').prop('checked', true);
+        } else {
+            $(this).parents('dl').find('input:checkbox').prop('checked', false);
+        }
+    });
+    jQuery.validator.addMethod("function_check", function(value, element) {       
+        var count = $('#function_list').find('input:checkbox:checked').length;
+        return count > 0;
+    });    
+    $('#add_form').validate({
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+            submitHandler:function(form){
+    		ds_ajaxpost('add_form', 'url', "{:url('Selleraccountgroup/group_list')}");
+    	},
+        rules : {
+            seller_group_name: {
+                required: true,
+                maxlength: 50 
+            },
+            btn_select_all: {
+                function_check: true 
+            }
+        },
+        messages: {
+            seller_group_name: {
+                required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.group_name_cannot_empty}',
+                maxlength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.group_name_limit}' 
+            },
+            btn_select_all: {
+                function_check: '{$Think.lang.please_select_permission}'
+            }
+        }
+    });
+
+    // 商品相关权限关联选择
+    $('#store_goods_add,#store_goods_online,#store_goods_offline').on('click', function() {
+        if($(this).prop('checked')) {
+            store_goods_select(true);
+        } else {
+            store_goods_select(false);
+        }
+    });
+
+    function store_goods_select(state) {
+        $('#store_goods_add').prop('checked', state);
+        $('#store_goods_online').prop('checked', state);
+        $('#store_goods_offline').prop('checked', state);
+    }
+});
+</script> 
+
+{/block}

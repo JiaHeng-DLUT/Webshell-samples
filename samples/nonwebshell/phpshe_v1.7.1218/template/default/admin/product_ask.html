@@ -1,0 +1,40 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td align="right" class="bgtt" width="120">咨询时间</td>
+	<td><input type="text" name="ask_atime" value="{pe_date(time())}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate inputall" /></td>
+</tr>
+<tr>
+	<td align="right" class="bgtt">咨询用户</td>
+	<td><input type="text" name="user_name" class="inputall input150" /> <span id="user_name_show"></span></td>
+</tr>
+<tr>
+	<td align="right" class="bgtt">咨询内容</td>
+	<td>
+		<textarea name="ask_text" style="width:350px;height:100px" class="fl"></textarea>
+		<span id="ask_text_show" style="margin-top:35px" class="fl mal5"></span>
+		<div class="clear"></div>
+	</td>
+</tr>
+<tr>
+	<td align="right" class="bgtt">回复内容</td>
+	<td><textarea name="ask_replytext" style="width:350px;height:100px"></textarea></td>
+</tr>
+</table>
+<div class="acenter mat20">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="button" value="提 交" class="tjbtn" />
+</div>
+</form>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/my97/WdatePicker.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/formcheck.js"></script>
+<script type="text/javascript">
+var form_info = [
+	{"name":"user_name", "mod":"str", "act":"blur", "arg":"", "show_id":"user_name_show","show_error":"必填", "must":true},
+	{"name":"ask_text", "mod":"str", "act":"blur", "arg":"", "show_id":"ask_text_show","show_error":"必填", "must":true}
+]
+$(":button").pe_submit(form_info, 'form');
+</script>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

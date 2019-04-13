@@ -1,0 +1,108 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>售后分析</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+   <div class="fixed-empty"></div>
+<form method="get"  name="formSearch" id="formSearch">
+    <input type="hidden" id="exporttype" name="exporttype" value=""/>
+    <input type="hidden" id="orderby" name="orderby" value="{$orderby ?$orderby:'avgdesccredit desc'}"/>
+    <div class="ds-search-form">
+            <dl>
+              <dd id="scategory">
+                <select class="querySelect" name="store_class">
+                  <option value="0">{$Think.lang.ds_please_choose}...</option>
+                  {notempty name="class_list"}
+                  {foreach name="class_list" item="v"}
+                  <option {if $Request.param.store_class == $v.storeclass_id}selected="selected"{/if} value="{$v.storeclass_id}">{$v.storeclass_name}</option>
+                  {/foreach}
+                  {/notempty}
+                </select>
+              </dd>
+              <dd>
+              	店铺名称<input type="text" name="storename" value="{present name="search_arr.storename"}{$search_arr.storename}{/present}"/>
+              </dd>
+            </dl>
+        
+              <div class="btn_group">
+                <a href="javascript:void(0);" id="dssubmit" class="btn tooltip" >{$Think.lang.ds_query}</a>
+                <a href="{:url('Stataftersale/evalstore')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                <a class="btn" href="javascript:void(0);" id="export_btn">导出Excel</a>
+              </div>
+    </div>
+  </form>
+   
+   <div class="explanation" id="explanation">
+       <div class="title" id="checkZoom">
+           <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+           <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+       </div>
+       <ul>
+           <li>统计列表为符合条件店铺的动态评分信息列表，并可以点击列表上方的“导出Excel”将列表数据导出为Excel文件</li>
+           <li>点击每列旁边的箭头对列表进行排序，默认按照“描述相符度”降序排列</li>
+       </ul>
+   </div>
+  <table class="ds-default-table">
+    <thead>
+      <tr class="thead sortbar-array">
+        <th class="align-center">店铺名称</th>
+        <th class="align-center">
+          <a href="javascript:void(0);" ds_type="orderitem" data-param='{"orderby":"avgdesccredit"}' class="">描述相符度<i></i></a>
+        </th>
+        <th class="align-center"><a href="javascript:void(0);" ds_type="orderitem" data-param='{"orderby":"avgservicecredit"}' class="">服务态度<i></i></a></th>
+        <th class="align-center"><a href="javascript:void(0);" ds_type="orderitem" data-param='{"orderby":"avgdeliverycredit"}' class="">发货速度<i></i></a></th>
+      </tr>
+    </thead>
+    <tbody id="datatable">
+    {notempty name="statlist"}
+    {foreach name="statlist" item="v"}
+          <tr class="hover">
+            <td class="align-center">{$v.seval_storename}</td>
+            <td class="align-center">{$v.avgdesccredit}</td>
+            <td class="align-center">{$v.avgservicecredit}</td>
+            <td class="align-center">{$v.avgdeliverycredit}</td>
+          </tr>
+    {/foreach}
+   {else /}
+    <tr class="no_data">
+        	<td colspan="4">{$Think.lang.no_record}</td>
+        </tr>
+   {/notempty}
+    </tbody>
+  </table>
+   {$show_page}
+</div>
+<script>
+$(function () {
+    $('#dssubmit').click(function(){
+        $("#exporttype").val('');
+        $('#formSearch').submit();
+    });
+
+    //导出图表
+    $("#export_btn").click(function(){
+        $("#exporttype").val('excel');
+        $('#formSearch').submit();
+    });
+
+    $("[ds_type='orderitem']").click(function(){
+        $("#exporttype").val('');
+        var data_str = $(this).attr('data-param');
+        eval( "data_str = "+data_str);
+        if($(this).hasClass('desc')){
+            $("#orderby").val(data_str.orderby + ' asc');
+        } else {
+            $("#orderby").val(data_str.orderby + ' desc');
+        }
+        $('#formSearch').submit();
+    });
+});
+</script>

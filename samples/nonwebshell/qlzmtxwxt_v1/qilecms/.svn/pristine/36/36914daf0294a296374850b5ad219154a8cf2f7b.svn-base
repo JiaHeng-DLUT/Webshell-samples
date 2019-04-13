@@ -1,0 +1,10 @@
+<?php
+namespace app\admin\controller;
+use think\Controller;
+class Logout extends Controller
+{
+	public function index(){
+		session(null);
+	    $this->redirect('/');
+	}
+}

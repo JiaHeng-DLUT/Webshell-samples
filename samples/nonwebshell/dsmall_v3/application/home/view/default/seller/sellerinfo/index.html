@@ -1,0 +1,179 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+    <thead>
+        <tr>
+            <th colspan="20">{$Think.lang.company_contact_information}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="w150">{$Think.lang.company_name}：</th>
+            <td colspan="20">{$joinin_detail.company_name}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.company_location}：</th>
+            <td>{$joinin_detail.company_address}</td>
+            <th>{$Think.lang.company_address}：</th>
+            <td colspan="20">{$joinin_detail.company_address_detail}</td>
+        </tr>
+        <tr>
+       
+            <th>{$Think.lang.registered_capital}：</th>
+            <td>{$joinin_detail.company_registered_capital}&nbsp;{$Think.lang.ten_thousand_yuan} </td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.contact_name}：</th>
+            <td>{$joinin_detail.contacts_name}</td>
+            <th>{$Think.lang.contact_number}：</th>
+            <td>{$joinin_detail.contacts_phone}</td>
+            <th>{$Think.lang.e_mail}：</th>
+            <td>{$joinin_detail.contacts_email}</td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+    <thead>
+        <tr>
+            <th colspan="20">{$Think.lang.business_license_information}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="w150">{$Think.lang.business_license_number}：</th>
+            <td>{$joinin_detail.business_licence_number}</td></tr><tr>
+
+            <th>{$Think.lang.place_business_license}：</th>
+            <td>{$joinin_detail.business_licence_address}</td></tr><tr>
+
+            <th>{$Think.lang.validity_business_license}：</th>
+            <td>{$joinin_detail.business_licence_start} - {$joinin_detail.business_licence_end}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.legal_scope_business}：</th>
+            <td colspan="20">{$joinin_detail.business_sphere}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.business_license}<br />
+                {$Think.lang.electronic_version}：</th>
+            <td colspan="20">
+                {notempty name="joinin_detail.business_licence_number_electronic"}
+                <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail.business_licence_number_electronic)}"> <img src="{:get_store_joinin_imageurl($joinin_detail.business_licence_number_electronic)}" alt="" /> </a>
+                {/notempty}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+    <thead>
+        <tr>
+            <th colspan="20">{$Think.lang.bank_information}：</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="w150">{$Think.lang.bank_name}：</th>
+            <td>{$joinin_detail.bank_account_name}</td>
+        </tr><tr>
+            <th>{$Think.lang.company_bank_account}：</th>
+            <td>{$joinin_detail.bank_account_number}</td></tr>
+        <tr>
+            <th>{$Think.lang.name_branch_bank}：</th>
+            <td>{$joinin_detail.bank_name}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.location_bank_account}：</th>
+            <td colspan="20">{$joinin_detail.bank_address}</td>
+        </tr>
+
+    </tbody>
+
+</table>
+<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+    <thead>
+        <tr>
+            <th colspan="20">{$Think.lang.settlement_account_information}：</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="w150">{$Think.lang.settlement_account_information}：</th>
+            <td>{$joinin_detail.settlement_bank_account_name}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.company_bank_account}：</th>
+            <td>{$joinin_detail.settlement_bank_account_number}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.name_branch_bank}：</th>
+            <td>{$joinin_detail.settlement_bank_name}</td>
+        </tr>
+
+        <tr>
+            <th>{$Think.lang.location_bank_account}：</th>
+            <td>{$joinin_detail.settlement_bank_address}</td>
+        </tr>
+    </tbody>
+
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+    <thead>
+        <tr>
+            <th colspan="20">{$Think.lang.store_operation_information}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="w150">{$Think.lang.seller_account}：</th>
+            <td>{$joinin_detail.seller_name}</td>
+        </tr>
+        <tr>
+            <th class="w150">{$Think.lang.store_name}：</th>
+            <td>{$joinin_detail.store_name}</td>
+        </tr>
+        <tr>
+            <th class="w150">{$Think.lang.shop_level}：</th>
+            <td>{$store_grade_name}</td>
+        </tr>
+        <tr>
+            <th class="w150">{$Think.lang.shop_classification}：</th>
+            <td>{$store_class_name}</td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.business_category}：</th>
+            <td colspan="2"><table border="0" cellpadding="0" cellspacing="0" id="table_category" class="type">
+                    <thead>
+                        <tr>
+                            <th>{$Think.lang.classification_1}</th>
+                            <th>{$Think.lang.classification_2}</th>
+                            <th>{$Think.lang.classification_3}</th>
+                            <th>{$Think.lang.ratio}</th>
+                        </tr>
+                    </thead>
+                    {notempty name="store_bind_class_list"}
+                    {foreach name="store_bind_class_list" item="val"}
+                    <tr>
+                        <td>{$val.class_1_name}</td>
+                        <td>{$val.class_2_name}</td>
+                        <td>{$val.class_3_name}</td>
+                        <td>{$val.commis_rate}%</td>
+                    </tr>
+                    {/foreach}
+                    {/notempty}
+    </tbody>
+</table></td>
+</tr>
+<tr>
+    <th>{$Think.lang.audit_opinion}：</th>
+    <td colspan="2">{$joinin_detail.joinin_message}</td>
+</tr>
+</tbody>
+</table>
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+
+{/block}

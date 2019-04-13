@@ -1,0 +1,106 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <form method="post" id="add_form">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder"> 
+                    <td class="required w120">{$Think.lang.admin_index_username}</td>
+                    <td class="vatop rowform"><input id="admin_name" name="admin_name" value="" class="input-txt" type="text"></td>
+                    <td class="vatop tips">{$Think.lang.admin_add_username_tip}</td>
+                </tr>
+                <tr class="noborder"> 
+                    <td class="required w120">{$Think.lang.admin_index_password}</td>
+                    <td class="vatop rowform"><input id="admin_password" name="admin_password" value="" class="input-txt" type="password"></td>
+                    <td class="vatop tips">{$Think.lang.admin_add_password_tip}</td>
+                </tr>
+                <tr class="noborder"> 
+                    <td class="required w120">{$Think.lang.admin_rpassword}</td>
+                    <td class="vatop rowform"><input id="admin_rpassword" name="admin_rpassword" value="" class="input-txt" type="password"></td>
+                    <td>{$Think.lang.admin_add_password_tip}</td>
+                </tr>
+                <tr class="noborder"> 
+                    <td class="required w120">{$Think.lang.gadmin_name}</td>
+                    <td class="vatop rowform">
+                        <select name="gid">
+                            {foreach name="gadmin" item="v"}
+                            <option value="{$v.gid}">{$v.gname}</option>
+                            {/foreach}
+                        </select>
+                    </td>
+                    <td class="vatop tips">{$Think.lang.admin_add_gid_tip}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfoot">
+                    <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn">{$Think.lang.ds_confirm_submit}</a>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<script>
+//按钮先执行验证再提交表
+    $(document).ready(function() {
+        $("#submitBtn").click(function() {
+            if ($("#add_form").valid()) {
+                $("#add_form").submit();
+            }
+        });
+        $("#add_form").validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules: {
+                admin_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 20,
+                    remote: {
+                        url: ADMINSITEURL+'/Admin/ajax.html?branch=check_admin_name',
+                        type: 'get',
+                        data: {
+                            admin_name: function() {
+                                return $('#admin_name').val();
+                            }
+                        }
+                    }
+                },
+                admin_password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20
+                },
+                admin_rpassword: {
+                    required: true,
+                    equalTo: '#admin_password'
+                },
+                gid: {
+                    required: true
+                }
+            },
+            messages: {
+                admin_name: {
+                    required: '{$Think.lang.admin_add_username_null}',
+                    minlength: '{$Think.lang.admin_add_username_max}',
+                    maxlength: '{$Think.lang.admin_add_username_max}',
+                    remote: '{$Think.lang.admin_add_admin_not_exists}'
+                },
+                admin_password: {
+                    required: '{$Think.lang.admin_add_password_null}',
+                    minlength: '{$Think.lang.admin_add_password_max}',
+                    maxlength: '{$Think.lang.admin_add_password_max}'
+                },
+                admin_rpassword: {
+                    required: '{$Think.lang.admin_add_password_null}',
+                    equalTo: '{$Think.lang.admin_edit_repeat_error}'
+                },
+                gid: {
+                    required: '{$Think.lang.admin_add_gid_null}',
+                }
+            }
+        });
+    });
+</script>

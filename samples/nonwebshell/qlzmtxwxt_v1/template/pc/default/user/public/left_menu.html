@@ -1,0 +1,22 @@
+
+{include file="public/userinfo"}
+<ul class="layui-nav layui-nav-tree  " lay-filter="user" style="background:none" lay-shrink="all">
+    <li class="layui-nav-item {if $Request.controller == 'home'}layui-this{/if}">
+      <a href="{:url('@user/home/index',['uid'=>$user.uid])}">我的主页 </a>
+    </li>
+
+    <li class="layui-nav-item {if $Request.controller == 'Index' && $Request.action == 'index'} layui-this {/if}">
+     <a href="{:url('index/index')}">内容管理</a>
+
+    </li>
+    <li class="layui-nav-item {if $Request.controller == 'Index' && $Request.action == 'publish'} layui-this {/if}">
+     <a href="{:url('@user/index/publish')}">发布新闻</a>
+    </li>
+
+    <li class="layui-nav-item layui-nav-itemed  {if $Request.controller == 'Set'} layui-this {/if}">
+      <a href="{:url('set/index')}">
+        基本设置
+      </a>
+    </li>
+
+  </ul>

@@ -1,0 +1,48 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<tr>
+	<td class="bgtt aright c888" width="120">订单编号：</td>
+	<td>{$info['order_id']} </td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">实付金额：</td>
+	<td>
+		<span class="num strong corg">{$info['order_money']} 元</span>
+		<!--{if($info['order_ptime']):}-->
+		<span class="cgreen mal10">[已支付]</span>
+		<!--{else:}-->
+		<span class="corg mal10">[未支付]</span>
+		<!--{endif}-->
+	</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收 货 人：</td>
+	<td>{$info['user_tname']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">手机号码：</td>
+	<td>{$info['user_phone']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">收货地址：</td>
+	<td>{$info['user_address']}</td>
+</tr>
+<tr>
+	<td class="bgtt aright c888">支付方式：</td>
+	<td>
+		<select name="order_payment" class="inputselect">
+		<!--{foreach($payment_list as $k=>$v):}-->
+		<option value="{$k}" <!--{if($k==$info['order_payment']):}-->selected="selected"<!--{endif;}-->>{$v['payment_name']}<!--{if($k=='balance'):}-->（余额：{$user_money}元）<!--{endif;}--></option>
+		<!--{endforeach;}-->
+		</select>
+	</td>
+</tr>
+</table>
+<div class="acenter mat30">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" value="付 款" class="tjbtn" />
+</div>
+</form>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

@@ -1,0 +1,119 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+<div class="eject_con">
+    <div class="adds">
+        <div class="alert alert-success">
+            <ul>
+                <li>{$Think.lang.address_description}</li>
+            </ul>
+        </div>
+        <div id="warning"></div>
+        <form method="post" action="{:url('Memberaddress/delivery_add')}" id="address_form" target="_parent">
+            <input type="hidden" name="address_id" value="{$address_info.address_id|default=''}" />
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.region_selection}：</dt>
+                <dd>{$Think.lang.find}
+                    <span id="region">
+                        <input type="hidden" value="{$address_info.city_id|default=''}" name="city_id" id="city_id">
+                        <select>
+                        </select>
+                    </span>{$Think.lang.scope_since_mention_service}。
+                </dd>
+            </dl>
+            <div class="dsmc-delivery" id="zt_address"></div>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.name_of_consignee}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="text w100" name="true_name" value="{$address_info.address_realname|default=''}"/>
+                    <p class="hint"></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.consignee_number}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="text w200" name="tel_phone" value="{$address_info.address_tel_phone|default=''}"/>
+                    <p class="hint">{$Think.lang.area_code_extension}</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.mobile_phone}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    <input type="text" class="text w200" name="mob_phone" value="{$address_info.address_mob_phone|default=''}"/>
+                </dd>
+            </dl>
+            <div class="bottom">
+                <label class="submit-border">
+                    <input type="submit" class="submit" value="{$Think.lang.ds_common_button_save}" />
+                </label>
+                <a class="dsm-btn ml5" href="javascript:DialogManager.close('daisou');">{$Think.lang.ds_cancel}</a> </div>
+        </form>
+    </div>
+</div>
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript">
+            $(document).ready(function () {
+                regionInit("region");
+                $('#address_form').validate({
+                    submitHandler: function (form) {
+                        if ($('input[type="radio"]:checked').size() == 1) {
+                            ds_ajaxpost('profile_form');
+                        }
+                    },
+                    rules: {
+                        true_name: {
+                            required: true
+                        },
+                        tel_phone: {
+                            required: check_phone,
+                            minlength: 6,
+                            maxlength: 20
+                        },
+                        mob_phone: {
+                            required: check_phone,
+                            minlength: 11,
+                            maxlength: 11,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        true_name: {
+                            required: '{$Think.lang.please_fill_name_consignee}'
+                        },
+                        tel_phone: {
+                            required: '{$Think.lang.fill_least_one_phone}',
+                            minlength: '{$Think.lang.please_correct_fill_phone_number}',
+                            maxlength: '{$Think.lang.please_correct_fill_phone_number}'
+                        },
+                        mob_phone: {
+                            required: '{$Think.lang.fill_least_one_phone}',
+                            minlength: '{$Think.lang.please_fill_phone_number_correctly}',
+                            maxlength: '{$Think.lang.please_fill_phone_number_correctly}',
+                            digits: '{$Think.lang.please_fill_phone_number_correctly}'
+                        }
+                    },
+                    groups: {
+                        phone: 'tel_phone mob_phone'
+                    }
+                });
+                $('#address_form').on('change', 'select', function () {
+                    area_id = $('#address_form').find('select').last().val();
+                    if (area_id != '{$Think.lang.ds_please_choose}') {
+                    $('#zt_address').load("{$Think.HOME_SITE_URL}/memberaddress/delivery_list.html?dlyp_id={$address_info.dlyp_id|default=''}&area_id=" + area_id);
+                }
+                });
+                {if intval($Request.param.id)}
+                $('#zt_address').load("{$Think.HOME_SITE_URL}/memberaddress/delivery_list.html?dlyp_id={$address_info.dlyp_id|default=''}&area_id={$address_info.area_id|default=''}");
+                setTimeout("$('select').eq(0).val({$address_info.province_id|default=''}).change();", 500);
+                setTimeout("$('select').eq(1).val({$address_info.city_id|default=''}).change();", 1000);
+                setTimeout("$('select').eq(2).val({$address_info.area_id|default=''});", 1500);
+                {/if}
+            });
+            function check_phone() {
+                return ($('input[name="tel_phone"]').val() == '' && $('input[name="mob_phone"]').val() == '');
+            }
+</script>
+
+
+{/block}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>hsht</title>
+        <style>
+            body { margin: 0; }
+            .waybill_area { position: relative; width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px; }
+            .waybill_back { position: relative; width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px; }
+            .waybill_back img { width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px; }
+            .waybill_design { position: absolute; left: 0; top: 0; width: {$waybill_info.waybill_pixel_width}px; height: {$waybill_info.waybill_pixel_height}px; }
+            .waybill_item { position: absolute; left: 0; top: 0; width:100px; height: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="waybill_design">
+            {notempty name="$waybill_info.waybill_data"}
+            {foreach name="$waybill_info.waybill_data" item="value" key="key" }
+            {if isset($value['check']) && $value['show']}
+            <div class="waybill_item" style="left:{$value.left}px; top:{$value.top}px; width:{$value.width}px; height:{$value.height}px;">{$value.content}</div>
+            {/if}
+            {/foreach}
+            {/notempty}
+        </div>
+        <div class="control">
+            <a id="btn_print" href="javascript:;">{$Think.lang.deliver_print}</a>
+            {$Think.lang.other_template}：
+            <select id="waybill_list" >
+                {notempty name="storewaybill_list"}
+                {foreach name="storewaybill_list" item="value"  }
+                <option value="{$value.storewaybill_id}" {if condition="$Request.param.storewaybill_id eq $value.storewaybill_id"}selected{/if}>{$value.waybill_name}</option>
+                {/foreach}
+                {/notempty}
+            </select>
+            <a id="btn_change" href="javascript:;">{$Think.lang.replace_template}</a>
+        </div>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#btn_print').on('click', function() {
+                    pos();
+
+                    $('.waybill_back').hide();
+                    $('.control').hide();
+
+                    window.print();
+                });
+
+                var pos = function () {
+                    var top = '{$waybill_info.waybill_pixel_top}';
+                    var left = '{$waybill_info.waybill_pixel_left}';
+
+                    $(".waybill_design").each(function(index) {
+                        var offset = $(this).offset();
+                        var offset_top = offset.top + top;
+                        var offset_left = offset.left + left;
+                        $(this).offset({ top: offset_top, left: offset_left})
+                    });
+                };
+
+                //更换模板
+                $('#btn_change').on('click', function() {
+                    var storewaybill_id = $('#waybill_list').val(); 
+                    var url = document.URL + '&storewaybill_id=' + storewaybill_id;
+                    window.location.href = url;
+                });
+            });
+        </script>
+
+    </body>
+</html>
+

@@ -1,0 +1,59 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Welcome page')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{:lang('System information')}</h3>
+            </div>
+            <div class="panel-body">
+                <h4>{:lang('System name')}：{$Think.config.version.name}&nbsp;{$Think.config.version.description}</h4>
+                <h4>{:lang('System version')}：{$Think.config.version.number}</h4>
+                <h4>{:lang('The latest version')}：<span id="latestversion"><span><small>{:lang('The latest version is being detected')}</small>&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></span></h4>
+                <h4>{:lang('Official website')}：<a id="catfishgw" href="http://www.{$Think.config.version.official}" target="_blank">www.{$Think.config.version.official}</a></h4>
+            </div>
+        </div>
+        {notempty name="zxwenzhang"}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{:lang('Latest articles')}&nbsp;<small>[<a href="{:Url('articles')}">{:lang('All articles')}</a>]</small></h3>
+            </div>
+            <div class="panel-body">
+                {volist name="zxwenzhang" id="vo"}
+                <h5><a href="{:Url('/article/'.$vo.id)}" target="_blank">{$vo.post_title}</a></h5>
+                {/volist}
+            </div>
+        </div>
+        {/notempty}
+        {notempty name="zxpinglun"}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{:lang('Latest comment')}{if condition="$permissions < 6"}&nbsp;<small>[<a href="{:Url('comments')}">{:lang('All comments')}</a>]</small>{/if}</h3>
+            </div>
+            <div class="panel-body">
+                {volist name="zxpinglun" id="vo"}
+                <h5><a href="{$vo.url}" target="_blank">{$vo.content}</a></h5>
+                {/volist}
+            </div>
+        </div>
+        {/notempty}
+        {if condition="$permissions < 5"}
+        {notempty name="zxliuyan"}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{:lang('Latest message')}{if condition="$permissions < 6"}&nbsp;<small>[<a href="{:Url('messages')}">{:lang('All messages')}</a>]</small>{/if}</h3>
+            </div>
+            <div class="panel-body">
+                {volist name="zxliuyan" id="vo"}
+                <h5><a href="{:Url('messages')}">{$vo.msg|subtext=100}</a></h5>
+                {/volist}
+            </div>
+        </div>
+        {/notempty}
+        {/if}
+    </div>
+</div><br>
+<script src="{$domain}public/common/js/index.js"></script>
+{include file="index/footer" /}

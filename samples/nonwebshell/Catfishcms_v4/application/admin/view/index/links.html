@@ -1,0 +1,72 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All links')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <form class="form-inline" method="post" action="">
+        <div>
+            <p>
+                <input type="hidden" name="paixu" value="paixu">
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" id="pshanchu" class="btn btn-primary btn-sm">{:lang('Sort')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            </p>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 80px;">{:lang('Sort')}</th>
+                        <th>ID</th>
+                        <th>{:lang('Name')}</th>
+                        <th>{:lang('Link address')}</th>
+                        <th>{:lang('Icon')}</th>
+                        <th>{:lang('Home Link')}</th>
+                        <th>{:lang('Status')}</th>
+                        <th>{:lang('Operation')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="data" id="vo"}
+                    <tr>
+                        <td>
+                            <input type="text" value="{$vo.listorder}" name="{$vo.link_id}" class="form-control" maxlength="8" style="width: 80px;">
+                        </td>
+                        <td>{$vo.link_id}</td>
+                        <td>{$vo.link_name}</td>
+                        <td>{$vo.link_url}</td>
+                        <td><img src="{$vo.link_image}" width="100"></td>
+                        <td>{if condition="$vo.link_location eq 1"}{:lang('Yes')}{else /}{:lang('No')}{/if}</td>
+                        <td>
+                            {if condition="$vo.link_status eq 1"}<h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Display')}</h5>
+                            {else /}<h5 class="text-muted">{:lang('Not show')}</h5>
+                            {/if}
+                        </td>
+                        <td>
+                            <input class="hidden" value="{$vo.link_status}">
+                            <a href="{:Url('modifylink')}?c={$vo.link_id}">{:lang('Edit')}</a>
+                            &nbsp;|&nbsp;
+                            <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="#!">{:lang('Delete')}</a>
+                            &nbsp;|&nbsp;
+                            <a class="yincang{if condition="$vo.link_status neq 1"} hidden{/if}" href="#!">{:lang('Hide')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                            <a class="qiyong{if condition="$vo.link_status eq 1"} hidden{/if}" href="#!">{:lang('Enabled')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div><br>
+<div class="hidden" id="buxianshi">{:lang('Not show')}</div>
+<div class="hidden" id="xianshi">{:lang('Display')}</div>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete the link? Delete can not be restored!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/links.js"></script>
+{include file="index/footer" /}

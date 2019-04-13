@@ -1,0 +1,76 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>推荐展位</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>店铺名称</dt>
+                <dd><input type="text" value="{$Request.get.store_name}" name="store_name" id="store_name" class="txt" style="width:100px;"></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Promotionbooth/booth_quota')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    <!-- 帮助 -->
+    
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>卖家购买推荐展位活动的列表。</li>
+        </ul>
+    </div>
+    
+    
+    <!-- 列表 -->
+    <form id="list_form" method="post">
+        <input type="hidden" id="object_id" name="object_id"  />
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th>店铺名称</th>
+                <th class="align-center">开始时间</th>
+                <th class="align-center">结束时间</th>
+                <th class="align-center">{$Think.lang.ds_status}</th>
+                <th class="align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+            </thead>
+            <tbody id="treet1">
+            {notempty name="booth_list"}
+            {foreach name="booth_list" item="val"}
+            <tr class="hover">
+                <td class="align-left"><a href="{:url('home/Store/index',['store_id'=>$val.store_id])}" ><span>{$val.store_name}</span></a></td>
+                <td class="align-center">{$val.boothquota_starttime|date="Y-m-d",###}</td>
+                <td class="align-center">{$val.boothquota_endtime|date="Y-m-d",###}</td>
+                <td class="align-center">
+                    {$state_array[$val.boothquota_state]}
+                </td>
+                <td class="align-center"><a href="{:url('Promotionbooth/index',['store_id'=>$val.store_id])}" class="dsui-btn-view"><i class="iconfont"></i>查看商品</a></td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="16">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+    
+</div>

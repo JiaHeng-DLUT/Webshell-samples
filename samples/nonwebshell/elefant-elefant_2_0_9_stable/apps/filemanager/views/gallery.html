@@ -1,0 +1,18 @@
+<style type="text/css">
+	a.cboxElement {outline: 0;}
+</style>
+<script>
+$(function () {
+	$('.gallery').colorbox ({ 
+		scalePhotos:true,
+		maxWidth:"90%",
+		maxHeight:"90%"
+	});
+});
+</script>
+
+<div id="gallery">
+{% foreach files %}
+	<div><a href="/{{ loop_value->path }}" rel="gallery-{{ gallery }}" class="gallery"{% if desc === 'yes' %} title="{{ loop_value->desc }}"{% end %}><img src="/{{ loop_value->path|filemanager_get_thumbnail }}" alt="{% if desc === 'yes' %}{{ loop_value->desc }}{% end %}" /></a></div>
+{% end %}
+</div>

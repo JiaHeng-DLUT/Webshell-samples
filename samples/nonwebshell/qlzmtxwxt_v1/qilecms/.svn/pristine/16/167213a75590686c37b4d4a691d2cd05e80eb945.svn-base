@@ -1,0 +1,38 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+class Guarantee extends Model
+{
+   protected $autoCheckFields = true;
+
+   public  function getGuaranteeInfo($id){
+      $where['id'] = $id;
+      $info = $this->field("a.id,a.title,a.buyer,a.seller,a.free_type,a.buyer_pay,a.seller_get,a.status,a.price,a.free_ratio,b.cname")->alias('a')->join("guarantee_category b","a.cid = b.cid","LEFT")->where($where)->find();
+      return $info;
+   }
+
+   public function add($data){ 
+     $result = $this->create($post);    
+     return $result;
+
+   }
+   public function edit($data){
+     $where['id'] = $data['id'];
+     $result = $this->where($where)->update($data);
+     return $result;
+
+   }
+  public function del($id){
+  	  if(is_array($id)){
+           $idData = implode(',',$id);
+      }
+     $idData = $id;
+     $res = $this->where("id",'in',$idData)->delete();
+        if($res){
+           return true;
+        }else{
+           return false;
+        }
+  }
+
+}

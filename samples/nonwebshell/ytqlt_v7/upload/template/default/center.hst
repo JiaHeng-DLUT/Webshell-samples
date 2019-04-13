@@ -1,0 +1,254 @@
+<link rel="stylesheet" href="template/default/css/center.css" />
+<div class="pk-container">
+	<div id="center-main" class="pk-background-color-white">
+		<div class="pk-row">
+			<div class="userheadbar" class="pk-w-sm-12">
+				<img class="pk-hide-sm" src="userhead/{$_G['TEMPUSER']['ID']}.png" alt="{$_G['TEMPUSER']['USERNAME']}" onerror="this.src='userhead/0.png'">
+				<div>
+					<h2>{$_G['TEMPUSER']['NICKNAME']}</h2>
+					<p>粉丝：{$_G['TEMPUSER']['FANSCOUNT']}</p>
+					<p>用户名：{$_G['TEMPUSER']['USERNAME']}</p>
+					<p class="pk-hide-sm">个性签名：{$_G['TEMPUSER']['SIGN']}</p>
+				</div>
+				<a id="logoutbtn" href="javascript:" class="pk-hide">
+					<i class="fa fa-sign-out"></i>
+					<span>退出登录</span>
+				</a>
+				<div id="userinteractivebtns" class="pk-hide">
+					<a class="_Interactive_btn idolbtn" href="javascript:" onclick="Interactive('addidol','{$_G[TEMPUSER][ID]}',this)"><i class="fa fa-fw fa-heart"></i>加关注</a>
+					<a class="_Interactive_btn friendbtn" href="javascript:" onclick="Interactive('addfriend','{$_G[TEMPUSER][ID]}',this)"><i class="fa fa-fw fa-group"></i>加好友</a>
+					<a href="javascript:" onclick="PostMessageBox({uid:'{$_G[TEMPUSER][ID]}',username:'{$_G[TEMPUSER][USERNAME]}'})"><i class="fa fa-fw fa-envelope"></i>发消息</a>
+				</div>
+			</div>
+			<div id="center-nav" class="pk-w-md-3 pk-w-sm-12">
+				<div>
+					<ul id="center_nav">
+						<li class="pk-active my" data-v="my">
+							<span>个人资料</span>
+						</li>
+						<li class="dynamic" data-v="dynamic">
+							<span>个人动态</span>
+						</li>
+						<li class="message pk-hide" data-v="message">
+							<span>我的消息</span>
+						</li>
+						<li class="friend pk-hide" data-v="friend">
+							<span>我的好友</span>
+						</li>
+						<li class="heart pk-hide" data-v="heart">
+							<span>我的收藏</span>
+						</li>
+						<li class="idol pk-hide" data-v="idol">
+							<span>我的关注</span>
+						</li>
+						<li class="fans pk-hide" data-v="fans">
+							<span>我的粉丝</span>
+						</li>
+						<li class="gear pk-hide" data-v="gear">
+							<span>安全设置</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="center-body" class="pk-w-md-9 pk-w-sm-12">
+				<div class="center-body-dom" id="center_body_my">
+					<ul class="center-mybox">
+						<li class="_title">
+							<span>基本信息</span>
+						</li>
+						<li id="center_name_uid_li">
+							<p>UID</p>
+							<p>{$_G['TEMPUSER']['ID']}</p>
+						</li>
+						<li id="center_name_userhead_li">
+							<p>头像</p>
+							<p data-name="userhead">
+								<img class="userhead" src="userhead/{$_G['TEMPUSER']['ID']}.png" onerror="this.src='userhead/upload.png'" alt="{$_G['TEMPUSER']['USERNAME']}">
+								<input type="hidden" name="_submittype" value="1">
+								<input type="hidden" name="id" value="{$_G['TEMPUSER']['ID']}">
+							</p>
+						</li>
+						<li id="center_name_usergroupname_li">
+							<p>用户组</p>
+							<p>{$_G['TEMPUSERGROUP']['USERGROUPNAME']}</p>
+						</li>
+						<li id="center_name_nickname_li">
+							<p>昵称</p>
+							<p data-name="nickname">{$_G['TEMPUSER']['NICKNAME']}</p>
+						</li>
+						<li id="center_name_sex_li">
+							<p>性别</p>
+							<p data-name="sex">{$_G['TEMPUSER']['SEX']}</p>
+						</li>
+						<li id="center_name_sign_li">
+							<p>签名</p>
+							<p data-name="sign">{$_G['TEMPUSER']['SIGN']}</p>
+						</li>
+						<li id="center_name_birthday_li">
+							<p>生日</p>
+							<p data-name="birthday">{$_G['TEMPUSER']['BIRTHDAY']}</p>
+						</li>
+						<li class="_title">
+							<span>通讯信息</span>
+						</li>
+						<li id="center_name_email_li">
+							<p>邮箱</p>
+							<p>{$_G['TEMPUSER']['EMAIL']}</p>
+						</li>
+						<li id="center_name_qq_li">
+							<p>QQ</p>
+							<p data-name="qq">{$_G['TEMPUSER']['QQ']}</p>
+						</li>
+						<li id="center_name_phone_li">
+							<p>手机</p>
+							<p data-name="phone">{$_G['TEMPUSER']['PHONE']}</p>
+						</li>
+						<li id="center_name_adress_li">
+							<p>地址</p>
+							<p data-name="adress">{$_G['TEMPUSER']['ADRESS']}</p>
+						</li>
+						<li class="_title">
+							<span>统计信息</span>
+						</li>
+						<li id="center_name_jifen_li">
+							<p>{$_G['SET']['JIFENNAME']}</p>
+							<p>{$_G['TEMPUSER']['JIFEN']}</p>
+						</li>
+						<li id="center_name_tiandou_li">
+							<p>{$_G['SET']['TIANDOUNAME']}</p>
+							<p>{$_G['TEMPUSER']['TIANDOU']}</p>
+						</li>
+						<li id="center_name_readlevel_li">
+							<p>阅读权限</p>
+							<p>{$_G['TEMPUSER']['READLEVEL']}</p>
+						</li>
+						<li id="center_name_postreadcount_li">
+							<p>发表文章数</p>
+							<p>{$_G['TEMPUSER']['READCOUNT']}</p>
+						</li>
+						<li id="center_name_postreplycount_li">
+							<p>回复文章数</p>
+							<p>{$_G['TEMPUSER']['REPLYCOUNT']}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_dynamic">
+					<ul class="pk-timeline">
+						<li>
+							<a href="javascript:" data-page="1">加载更多</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_message">
+					<ul class="center-msgbox">
+						<li>
+							<a href="javascript:" data-page="1">加载更多</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_friend">
+					<ul class="center-friends">
+						<li>
+							<p class="pk-text-center">正在加载...</p>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_heart">
+					<ul class="center-heartbox">
+						<li>
+							<p class="pk-text-center">正在加载...</p>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_idol">
+					<ul class="pk-timeline">
+						<li>
+							<a href="javascript:" data-page="1">加载更多</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_fans">
+					<div class="center-fans">
+						<p>你已经被<b>{$_G['TEMPUSER']['FANSCOUNT']}</b>个人关注啦~</p>
+						<p class="pk-text-xs">（再接再厉，继续努力哦，注：你是无法查看谁关注了你的）</p>
+					</div>
+				</div>
+				<div class="pk-hide center-body-dom" id="center_body_gear">
+					<ul class="center-mybox">
+						<li class="_title">
+							<span>隐私设置</span>
+						</li>
+						<li id="center_name_privacysettings_li">
+							<p>个人资料</p>
+							<p style="padding-top:7px;padding-bottom:7px">
+								<select name="data-privacysettings" data-value="{JsonData($_G['TEMPUSER']['DATA'],'privacysettings')}">
+									<option value="0">完全公开</option>
+									<option value="1">仅公开基本信息</option>
+								</select>
+								<input type="hidden" name="_submittype" value="2">
+							</p>
+						</li>
+						<li class="_title">
+							<span>绑定相关</span>
+						</li>
+						<li id="center_name_binding_li">
+							<p>第三方登录</p>
+							<p>Loading...</p>
+						</li>
+						<li class="_title">
+							<span>密码修改</span>
+						</li>
+						<li id="center_name_oldpassword_li">
+							<p>原密码</p>
+							<p style="padding-top:7px;padding-bottom:7px">
+								<input type="password" name="oldpassword" autocomplete="off" />
+							</p>
+						</li>
+						<li id="center_name_newpassword_li">
+							<p>新密码</p>
+							<p style="padding-top:7px;padding-bottom:7px">
+								<input type="password" name="password" autocomplete="off" />
+							</p>
+						</li>
+						<li id="center_name_newpassword2_li">
+							<p>确认新密码</p>
+							<p style="padding-top:7px;padding-bottom:7px">
+								<input type="password" name="password2" autocomplete="off" />
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="template/default/js/center.js"></script>
+<script>
+	$(function() {
+		$usergl = '';
+		if("{$_G['TEMPUSER']['EMAIL']}" == "") {
+			$usergl += '<span class="fa fa-envelope-square pk-text-default pk-cursor-pointer" title="暂未设置邮箱"></span>&nbsp;';
+		} else {
+			$usergl += '<span class="fa fa-envelope-square pk-text-warning pk-cursor-pointer" title="已设置邮箱"></span>&nbsp;';
+		}
+		if("{$_G['TEMPUSER']['QQOPENID']}" == "") {
+			if("{$_G['SET']['APP_PUYUETIAN_QQLOGIN_LOAD']}" == "0") {
+				$usergl += '<span class="fa fa-qq pk-text-default pk-cursor-pointer" title="暂未绑定QQ号"></span>&nbsp;';
+			} else {
+				$usergl += '<a target="_blank" title="绑定QQ号" href="index.php?c=app&a=puyuetian_qqlogin:index"><span class="fa fa-qq pk-text-default"></span></a>&nbsp;';
+			}
+		} else {
+			if("{$_G['SET']['APP_PUYUETIAN_QQLOGIN_LOAD']}" == "0") {
+				$usergl += '<span class="fa fa-qq pk-text-secondary pk-cursor-pointer" title="已绑定QQ号"></span>&nbsp;';
+			} else {
+				$usergl += '<a target="_blank" title="换绑QQ号" href="index.php?c=app&a=puyuetian_qqlogin:index"><span class="fa fa-qq pk-text-secondary"></span></a>&nbsp;';
+			}
+		}
+		if("{$_G['TEMPUSER']['WXOPENID']}" == "") {
+			$usergl += '<span class="fa fa-weixin pk-text-default pk-cursor-pointer" title="暂未绑定微信"></span>&nbsp;';
+		} else {
+			$usergl += '<span class="fa fa-weixin pk-text-success pk-cursor-pointer" title="已绑定微信"></span>&nbsp;';
+		}
+		$('#center_name_binding_li>p:eq(1)').html($usergl);
+	});
+</script>

@@ -1,0 +1,54 @@
+<div class="content">
+  {notempty name="help_list"}
+      {foreach name="help_list" item="val"}
+      <dl show_id="{$val.helptype_id}">
+        <dt onclick="show_list('{$val.helptype_id}');">
+            <i class="{$val.helptype_id == $helptype_id ? 'fa fa-chevron-circle-down':'fa fa-chevron-circle-right'}"></i>{$val.helptype_name}
+        </dt>
+        <dd style="display: {$val.helptype_id == $helptype_id ? 'block':'none'};">
+            <ul>
+                {notempty name="val.help_list"}
+                {foreach name="val.help_list" item="v"}
+                <li class="{$v.help_id == $help_id ? 'curren' : ''}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                    {empty name="v.help_url"}
+                    <a href="{:url('Showhelp/index',['t_id'=>$v.helptype_id,'help_id'=>$v.help_id])}">{$v.help_title}</a>
+                    {else /}
+                    <a href="{$v.help_url}">{$v.help_title}</a>
+                    {/empty}
+                </li>
+                {/foreach}
+                {/notempty}
+            </ul>
+        </dd>
+      </dl>
+  {/foreach}
+  {/notempty}
+    </div>
+    <div class="title">
+      <h3>{$Think.lang.platform_contact}</h3>
+    </div>
+    <div class="content">
+        <ul>
+          {notempty name="phone_array"}
+          {foreach name="phone_array" item="val"}
+          <li>{$Think.lang.phone}{$val}</li>
+         {/foreach}
+          {/notempty}
+          <li>{$Think.lang.email}{$Think.lang.ds_colon}{$Think.config.site_email}</li>
+        </ul>
+    </div>
+
+<script type="text/javascript">
+    function show_list(t_id) {
+        var obj = $(".sidebar dl[show_id='" + t_id + "']");
+        var show_class = obj.find("dt i").attr('class');
+        if (show_class == 'fa fa-chevron-circle-right') {
+            obj.find("dd").show();
+            obj.find("dt i").attr('class', 'fa fa-chevron-circle-down');
+        } else {
+            obj.find("dd").hide();
+            obj.find("dt i").attr('class', 'fa fa-chevron-circle-right');
+        }
+    }
+</script>

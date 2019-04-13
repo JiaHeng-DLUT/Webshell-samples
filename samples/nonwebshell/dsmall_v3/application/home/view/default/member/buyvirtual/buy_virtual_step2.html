@@ -1,0 +1,229 @@
+    {include file="default/base/mall_top" /}
+    <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/home_cart.css">
+    <div class="dsc-header">
+        <div class="logo">
+            <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+        </div>
+    </div>
+
+<div class="dsc-main">
+ <div class="dsc-title">
+    <h3>{$Think.lang.cart_index_ensure_info}</h3>
+    <h5>{$Think.lang.exchange_code_send_phone}</h5>
+ </div>
+  <form action="{:url('Buyvirtual/buy_step3')}" method="POST" id="form_buy" name="form_buy">
+  <input type="hidden" name="goods_id" value="{$goods_info.goods_id}">
+  <input type="hidden" name="quantity" value="{$goods_info.quantity}">
+    <div class="dsc-receipt-info">
+      <div class="dsc-receipt-info-title">
+        <h3>{$Think.lang.electronic_exchange_code}</h3></div>
+      <div id="invoice_list" class="dsc-candidate-items">
+        <ul style="overflow: visible;">
+          <li>{$Think.lang.cart_step1_mobile_num}：
+            <div class="parentCls"><input name="buyer_phone" class="text" autocomplete = "off"  type="text" id="buyer_phone" value="{$member_info.member_mobile}" maxlength="11"></div>
+          </li>
+        </ul>
+        <p><i class="fa fa-info-circle"></i>{$Think.lang.exchange_code_instructions}</p>
+      </div>
+    </div><div class="dsc-receipt-info"><div class="dsc-receipt-info-title">
+      <h3>{$Think.lang.virtual_service_goods_list}</h3><a href="{:url('Buyvirtual/buy_step1',['goods_id'=>$Request.post.goods_id,'quantity'=>$Request.post.quantity])}">{$Think.lang.back_up}</a></div>
+    <table class="dsc-table-style" ds_type="table_cart">
+      <thead>
+        <tr>
+          <th colspan="3">{$Think.lang.cart_index_store_goods}</th>
+          <th class="w150">{$Think.lang.cart_index_price}({$Think.lang.currency_zh})</th>
+          <th class="w80">{$Think.lang.cart_index_amount}</th>
+          <th class="w150">{$Think.lang.cart_index_sum}({$Think.lang.ds_yuan})</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th colspan="20">{$Think.lang.cart_step1_store}：<a href="{:url('Store/index',['store_id'=>$store_info.store_id])}">{$store_info.store_name}</a> <span member_id="{$store_info.member_id}"></span>
+          </th>
+        </tr>
+
+        <tr class="shop-list">
+          <td class="w10"></td>
+          <td class="w60"><a href="{:url('Goods/index',['goods_id'=>$goods_info.goods_id])}" target="_blank" class="dsc-goods-thumb"><img src="{:goods_thumb($goods_info)}" alt="{$goods_info.goods_name}" /></a></td>
+          <td class="tl"><dl class="dsc-goods-info">
+              <dt><a href="{:url('Goods/index',['goods_id'=>$goods_info.goods_id])}" target="_blank">{$goods_info.goods_name}</a></dt>
+                <dd>
+                    {present name="goods_info.ifgroupbuy"}
+                  <span class="groupbuy">{$Think.lang.snap_up}</span>
+                  {/present}
+                </dd>
+            </dl></td>
+          <td class="w120"><em id="item_price">{$goods_info.goods_price}</em></td>
+          <td class="w120">{$goods_info.quantity}</td>
+          <td><em id="item_subtotal">{$goods_info.goods_total}</em></td>
+        </tr>
+
+        <!-- S 留言 -->
+		<tr>
+			<td class="w10"></td>
+			<td class="tl" colspan="2">{$Think.lang.buyer_message}：
+				<textarea name="buyer_msg" class="dsc-msg-textarea" maxlength="150" placeholder="{$Think.lang.trade_show}" title="{$Think.lang.trade_show}"></textarea></td>
+			<td class="tl" colspan="10"></td>
+		</tr>
+        <!-- E 留言 -->
+
+        <!-- S 预存款/充值卡 -->
+        {if $member_info.available_predeposit > 0 || $member_info.available_rc_balance > 0}
+     <tr id="pd_panel">
+        <td class="pd-account" colspan="20"><div class="dsc-pd-account">
+            {if $member_info.available_rc_balance > 0}
+            <div class="mt5 mb5"><label><input type="checkbox" class="vm mr5" value="1" name="rcb_pay">{$Think.lang.use_top_up_cards}<em>{$member_info.available_rc_balance}</em>{$Think.lang.ds_yuan}）</label></div>
+          {/if}
+            {if $member_info.available_predeposit}
+            <div class="mt5 mb5"><label><input type="checkbox" class="vm mr5" value="1" name="pd_pay">{$Think.lang.pre_deposit}<em>{$member_info.available_predeposit}</em>{$Think.lang.ds_yuan}）</label></div>
+          {/if}
+            {if $member_info.available_predeposit >0 && $member_info.available_rc_balance >0}
+      <div class="mt5 mb5">{$Think.lang.system_priority}&nbsp;&nbsp;</div>
+         {/if}
+          <div id="pd_password" style="display: none">{$Think.lang.pay_the_password}：<input type="password" class="text w120" value="" name="password" id="pay-password" maxlength="35">
+            <input type="hidden" value="" name="password_callback" id="password_callback">
+              <a class="dsc-btn-mini dsc-btn-orange" id="pd_pay_submit" href="javascript:void(0)">{$Think.lang.use}</a>
+              {if !$member_info.member_paypwd}
+            {$Think.lang.no_payment_password_set}，<a href="{:url('Membersecurity/auth',['type'=>'modify_paypwd'])}" target="_blank">{$Think.lang.set_up_immediately}</a>
+           {/if}
+             </div>
+          </div></td>
+      </tr>
+       {/if}
+        <!-- E 预存款 -->
+
+        <!-- S voucher list -->
+        {notempty name="store_voucher_list"}
+        <tr>
+        <td class="tr" colspan="20"><div class="dsc-store-account">
+            <dl class="voucher">
+              <dt>
+                <select dstype="voucher" name="voucher">
+                  <option value="|0.00">{$Think.lang.cart_step1_select_voucher}</option>
+                    {foreach name="store_voucher_list" item="voucher"}
+                  <option value="{$voucher.vouchertemplate_id}|{$voucher.voucher_price}">{$voucher.desc}</option>
+                 {/foreach}
+                </select> ：
+              <dd>￥<em id="storeVoucher">-0.00</em></dd>
+            </dl>
+          </div></td>
+      </tr>
+        {/notempty}
+        <!-- E voucher list -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="20"><div class="dsc-all-account">{$Think.lang.total_price}<em id="orderTotal">{$goods_info.goods_total}</em>{$Think.lang.ds_yuan}</div></td>
+        </tr>
+      </tfoot>
+    </table>
+
+</div></form>
+  <div class="dsc-bottom"><a id="submitOrder" href="javascript:void(0)" class="dsc-btn dsc-btn-acidblue fr">{$Think.lang.cart_index_submit_order}</a></div>
+
+<script>
+
+//计算应支付金额计算
+function calcOrder() {
+    var allTotal = parseFloat($('#item_subtotal').html());
+    if ($('#storeVoucher').length > 0) {
+        allTotal += parseFloat($('#storeVoucher').html());
+    }
+    $('#cartTotal').html(number_format(allTotal,2));
+}
+
+$(document).ready(function(){
+
+    $('select[dstype="voucher"]').on('change',function(){
+        if ($(this).val() == '') {
+            $('#storeVoucher').html('-0.00');
+        } else {
+            var items = $(this).val().split('|');
+            $('#storeVoucher').html('-'+number_format(items[1],2));
+        }
+        calcOrder();
+    });
+    {if $member_info.available_predeposit > 0 || $member_info.available_rc_balance > 0}
+        function showPaySubmit() {
+            if ($('input[name="pd_pay"]').prop('checked') || $('input[name="rcb_pay"]').prop('checked')) {
+                $('#pay-password').val('');
+                $('#password_callback').val('');
+                $('#pd_password').show();
+            } else {
+                $('#pd_password').hide();
+            }
+        }
+   {/if}
+       {if $member_info.available_rc_balance > 0}
+        $('input[name="rcb_pay"]').on('change',function(){
+            showPaySubmit();
+            if ($(this).prop('checked') && !$('input[name="pd_pay"]').prop('checked')) {
+                if ({$member_info.available_rc_balance}>= parseFloat($('#orderTotal').html())) {
+                    $('input[name="pd_pay"]').prop('checked',false).prop('disabled',true);
+                }
+            } else {
+                $('input[name="pd_pay"]').prop('disabled',false);
+            }
+        });
+  {/if}
+      {if $member_info.available_predeposit}
+        $('input[name="pd_pay"]').on('change',function(){
+            showPaySubmit();
+            if ($(this).prop('checked') && !$('input[name="rcb_pay"]').prop('checked')) {
+                if ({$member_info.available_predeposit} >= parseFloat($('#orderTotal').html())) {
+                    $('input[name="rcb_pay"]').prop('checked',false).prop('disabled',true);
+                }
+            } else {
+                $('input[name="rcb_pay"]').prop('disabled',false);
+            }
+        });
+   {/if}
+
+    $('#pd_pay_submit').on('click',function(){
+        if ($('#pay-password').val() == '') {
+            layer.alert('{$Think.lang.enter_payment_password}');return false;
+        }
+        $('#password_callback').val('');
+        $.get("{:url('Buy/check_pd_pwd')}", {'password':$('#pay-password').val()}, function(data){
+            if (data == '1') {
+                $('#password_callback').val('1');
+                $('#pd_password').hide();
+            } else {
+                $('#pay-password').val('');
+                layer.alert('{$Think.lang.password_mistake}');
+            }
+        });
+    });
+
+    var SUBMIT_FORM = true;
+    $('#submitOrder').on('click',function(){
+        if (!$("#form_buy").valid()) return;
+        if (!SUBMIT_FORM) return;
+        if (($('input[name="pd_pay"]').prop('checked') || $('input[name="rcb_pay"]').prop('checked')) && $('#password_callback').val() != '1') {
+            layer.alert('{$Think.lang.enter_payment_password}');
+            return;
+        }
+        SUBMIT_FORM = false;
+        $('#form_buy').submit();
+    });
+
+    $("#form_buy").validate({
+        onkeyup: false,
+        rules: {
+            buyer_phone : {
+                required : true,
+                digits : true,
+                minlength : 11
+            }
+        },
+        messages: {
+            buyer_phone : {
+                required : "{$Think.lang.write_mobile_number}",
+                digits : "{$Think.lang.write_correct_mobile_number}",
+                minlength : "{$Think.lang.write_correct_mobile_number}",
+            }
+        }
+    });
+});
+</script>
+{include file="default/base/mall_footer" /}

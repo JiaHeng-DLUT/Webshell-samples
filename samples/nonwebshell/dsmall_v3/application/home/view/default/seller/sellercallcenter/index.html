@@ -1,0 +1,171 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+ <div class="dssc-form-default">
+            <div class="alert"><strong>{$Think.lang.ds_explain}{$Think.lang.ds_colon}</strong>{$Think.lang.store_callcenter_notes}
+                </li>
+            </div>
+            <form method="post" action="{:url('Sellercallcenter/save')}" id="callcenter_form" class="dss-message">
+                <dl dstype="pre">
+                    <dt>{$Think.lang.store_callcenter_presales_service}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <div class="dss-message-title"><span class="name">{$Think.lang.store_callcenter_service_name}</span><span class="tool">{$Think.lang.store_callcenter_service_tool}</span><span class="number">{$Think.lang.store_callcenter_service_number}</span></div>
+                        {empty name="storeinfo.store_presales"}
+                        <div class="dss-message-list"><span class="name tip" title="{$Think.lang.store_callcenter_name_title}">
+                                <input type="text" class="text w60" value="{$Think.lang.store_callcenter_presales}1" name="pre[1][name]" maxlength="10" />
+                            </span><span class="tool tip" title="{$Think.lang.store_callcenter_tool_title}">
+                                <select name="pre[1][type]">
+                                    <option value="0">{$Think.lang.store_callcenter_please_choose}</option>
+                                    <option value="1">QQ</option>
+                                    <option value="2">{$Think.lang.store_callcenter_wangwang}</option>
+                                    <option value="3">{$Think.lang.standing_im}</option>
+                                </select>
+                            </span><span class="number tip" title="{$Think.lang.store_callcenter_number_title}">
+                                <input name="pre[1][num]" type="text" class="text w180" maxlength="25" />
+                            </span><span class="del"><a dstype="del" href="javascript:void(0);" class="dssc-btn" onclick="del_service(this)"><i class="fa fa-trash-o"></i>{$Think.lang.ds_delete}</a></span></div>
+                        {else}
+                        {foreach name="storeinfo.store_presales" item="val"}
+                        <div class="dss-message-list"><span class="name tip" title="{$Think.lang.store_callcenter_name_title}">
+                                <input type="text" class="text w60" value="{$val.name}" name="pre[{$key}][name]" maxlength="10" />
+                            </span><span class="tool tip" title="{$Think.lang.store_callcenter_tool_title}">
+                                <select name="pre[{$key}][type]">
+                                    <option value="1" {if $val.type == 1}selected="selected"{/if}>QQ</option>
+                                    <option value="2" {if $val.type == 2}selected="selected"{/if}>{$Think.lang.store_callcenter_wangwang}</option>
+                                    <option value="3"{if $val.type == 3}selected="selected"{/if}>{$Think.lang.standing_im}</option>
+                                </select>
+                            </span><span class="number tip" title="{$Think.lang.store_callcenter_number_title}">
+                                <input name="pre[{$key}][num]" type="text" class="text w180" value="{$val.num}" maxlength="25" />
+                            </span><span class="del"><a dstype="del" href="javascript:void(0);" class="dssc-btn" onclick="del_service(this)"><i class="fa fa-trash-o"></i>{$Think.lang.ds_delete}</a></span> </div>
+                        {/foreach}
+                        {/empty}
+                        <p><span><a href="javascript:void(0);" onclick="add_service('pre');" class="dssc-btn dssc-btn-acidblue mt10"><i class="fa fa-plus"></i>{$Think.lang.store_callcenter_add_service}</a></span></p>
+                    </dd>
+                </dl>
+                <dl dstype="after" >
+                    <dt>{$Think.lang.store_callcenter_aftersales_service}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <div class="dss-message-title"><span class="name">{$Think.lang.store_callcenter_service_name}</span><span class="tool">{$Think.lang.store_callcenter_service_tool}</span><span class="number">{$Think.lang.store_callcenter_service_number}</span></div>
+                        {empty name="storeinfo.store_aftersales"}
+                        <div class="dss-message-list"><span class="name tip" title="{$Think.lang.store_callcenter_name_title}">
+                                <input type="text" class="text w60" value="{$Think.lang.store_callcenter_aftersales}1" name="after[1][name]" maxlength="10" />
+                            </span><span class="tool tip" title="{$Think.lang.store_callcenter_tool_title}">
+                                <select name="after[1][type]">
+                                    <option value="0">{$Think.lang.store_callcenter_please_choose}</option>
+                                    <option value="1">QQ</option>
+                                    <option value="2">{$Think.lang.store_callcenter_wangwang}</option>
+                                    <option value="3">{$Think.lang.standing_im}</option>
+                                </select>
+                            </span><span class="number tip" title="{$Think.lang.store_callcenter_number_title}">
+                                <input type="text" class="text w180" name="after[1][num]" maxlength="25" />
+                            </span><span><a dstype="del" href="javascript:void(0);" class="dssc-btn" onclick="del_service(this)"><i class="fa fa-trash-o"></i>{$Think.lang.ds_delete}</a></span> </div>
+                        {else}
+                        {foreach name="storeinfo.store_aftersales" item="val"}
+                        <div class="dss-message-list"><span class="name tip" title="{$Think.lang.store_callcenter_name_title}">
+                                <input type="text" class="text w60" value="{$val.name}" name="after[{$key}][name]" maxlength="10" />
+                            </span><span class="tool tip" title="{$Think.lang.store_callcenter_tool_title}">
+                                <select name="after[{$key}][type]">
+                                    <option value="1" {if $val.type == 1}selected="selected"{/if}>QQ</option>
+                                    <option value="2" {if $val.type == 2}selected="selected"{/if}>{$Think.lang.store_callcenter_wangwang}</option>
+                                    <option value="3" {if $val.type == 3}selected="selected"{/if}>{$Think.lang.standing_im}</option>
+                                </select>
+                            </span><span class="number tip" title="{$Think.lang.store_callcenter_number_title}">
+                                <input type="text" class="text w180" name="after[{$key}][num]" maxlength="25" value="{$val.num}" />
+                            </span><span class="del"><a dstype="del" href="javascript:void(0);" class="dssc-btn" onclick="del_service(this)"><i class="fa fa-trash-o"></i>{$Think.lang.ds_delete}</a></span> </div>
+                        {/foreach}
+                        {/empty}
+                        <p><span><a href="javascript:void(0);" onclick="add_service('after');" class="dssc-btn dssc-btn-acidblue mt10"><i class="fa fa-plus"></i>{$Think.lang.store_callcenter_add_service}</a></span></p>
+                    </dd>
+                </dl>
+                <dl >
+                    <dt><em class="pngFix">{$Think.lang.store_callcenter_working_time}{$Think.lang.ds_colon}</em></dt>
+                    <dd>
+                        <div class="dss-message-title"><span>{$Think.lang.store_callcenter_working_time_title}</span></div>
+                        <div>
+                            <textarea name="working_time" class="textarea w500 h50">{$storeinfo.store_workingtime}</textarea>
+                        </div>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_common_button_submit}" /></label>
+                </div>
+            </form>
+        </div>
+
+<script>
+
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#callcenter_form').validate({
+            submitHandler:function(form){
+                ds_ajaxpost('callcenter_form','url',"{:url('Sellercallcenter/index')}")
+            },
+        });
+    });
+
+    var seller_option = '';
+    {notempty name="seller_list"}
+    {foreach name='seller_list' item="val"}
+            seller_option += '<option value="{$val.member_id}">{$val.seller_name}</option>';
+       {/foreach}
+   {/notempty}
+    $('#callcenter_form').find('.tool select').on('change', function(){
+        var obj = $(this).parent().parent();
+        var input_obj = obj.find(".number input");
+        var input_name = input_obj.attr("name");
+        var input_val = input_obj.val();
+        var select_val = $(this).val();
+        if ( select_val == 3 ) {
+            obj.find(".number").html('<input type="hidden" name="'+input_name+'" value="'+input_val+'" /><select name="'+
+                input_name+'">'+seller_option+'</select>');
+            obj.find(".number select").val(input_val);
+        } else {
+            obj.find(".number").html('<input class="text w180" type="text" name="'+input_name+'" value="'+input_val+'" />');
+        }
+    });
+    $('#callcenter_form').find('.tool select').trigger("change");
+    $(function(){
+        titleTip();
+    });
+    function del_service(obj){
+        $(obj).parents('div:first').remove();
+    }
+    function add_service(param){
+        if(param == 'pre'){
+            var text = '{$Think.lang.store_callcenter_presales}';
+        }else if(param == 'after'){
+            var text = '{$Think.lang.store_callcenter_aftersales}';
+        }
+        obj = $('dl[dstype="'+param+'"]').children('dd').find('p');
+        len = $('dl[dstype="'+param+'"]').children('dd').find('div').length;
+        key = 'k'+len+Math.floor(Math.random()*100);
+        var add_html = '';
+        add_html += '<div class="dss-message-list">';
+        add_html += '<span class="name tip" title="{$Think.lang.store_callcenter_name_title}">';
+        add_html += '<input type="text" class="text w60" value="'+text+len+'" name="'+param+'['+key+'][name]" /></span>';
+        add_html += '<span class="tool tip" title="{$Think.lang.store_callcenter_tool_title}"><select name="'+param+'['+key+'][type]">';
+        add_html += '<option class="" value="0">{$Think.lang.store_callcenter_please_choose}</option><option value="1">QQ</option>';
+        add_html += '<option value="2">{$Think.lang.store_callcenter_wangwang}</option><option value="3">{$Think.lang.standing_im}</option></select></span>';
+        add_html += '<span class="number tip" title="{$Think.lang.store_callcenter_number_title}"><input class="text w180" type="text" name="'+param+'['+key+'][num]" /></span>';
+        add_html += '<span class="del"><a dstype="del" href="javascript:void(0);" class="dssc-btn" onclick="del_service(this)"><i class="fa fa-trash-o"></i>{$Think.lang.ds_delete}</a></span>';
+        add_html += '</div>';
+        obj.before(add_html);
+        titleTip();
+    }
+    function titleTip(){
+        $('.tip').unbind().poshytip({
+            className: 'tip-yellowsimple',
+            showTimeout: 1,
+            alignTo: 'target',
+            alignX: 'center',
+            alignY: 'top',
+            offsetX: 5,
+            offsetY: 0,
+            allowTipHover: false
+        });
+    }
+</script>
+{/block}
+
+

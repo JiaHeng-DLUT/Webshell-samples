@@ -1,0 +1,77 @@
+<{include file="header.html"}>
+		
+            <div class="content">
+            	<div class="title"><{$pagename}></div>
+                <div class="body">
+        			<{if $action == 'list'}>
+        			<div id="listbox">
+						<table width="100%" border="0" cellspacing="1" cellpadding="0">
+							<tr>
+								<th>ID</th>
+								<th>所属分类</th>
+								<th>文章标题</th>
+								<th>属性状态</th>
+								<th>发布时间</th>
+								<th>操作选项</th>
+							</tr>
+							<{foreach from=$articles item=row}>
+							<tr>
+								<td><{$row.art_id}></td>
+								<td><{$row.cate_name}></td>
+								<td class="textleft"><a href="<{url('home/artinfo',['aid'=>$row.art_id])}>" target="_blank"><{$row.art_title}></a></td>
+								<td><{$row.art_attr}></td>
+								<td><{$row.art_ctime|date_format:"Y-m-d H:i:s"}></td>
+								<td><a  href="<{url('article',['act'=>'edit','aid'=>$row.art_id])}>" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i></a></td>
+							</tr>
+							<{foreachelse}>
+							<tr><td colspan="6">您还未发布任何文章！</td></tr>
+							<{/foreach}>
+						</table>
+					</div>
+        			<div id="showpage" class="clearfix"><{$showpage}></div>
+        			<{/if}>
+        
+        			<{if $action == 'add' || $action == 'edit'}>
+        			<div id="formbox">
+						<form name="myfrom" id="myfrom" method="post" action="?mod=article">
+        				<ul>
+        					<li><strong>选择分类：</strong><select name="cate_id"><{$category_option}></select></li>
+        					<li><strong>文章标题：</strong><input name="art_title" type="text" class="ipt" id="art_title" size="50" maxlength="100" value="<{if !empty($row)}><{$row.art_title}><{/if}>" /></li>
+            			
+            				<li><strong>内容来源：</strong><input name="copy_from" type="text" class="ipt" id="copy_from" size="50" maxlength="50" value="<{if !empty($row)}><{$row.copy_from}><{/if}>" /></li>
+							<li><strong>来源地址：</strong><input name="copy_url" type="text" class="ipt" id="copy_url" size="50" maxlength="200" value="<{if !empty($row)}><{$row.copy_url}><{/if}>" /></li>
+							
+                			<li>
+                			<strong>文章内容：</strong>
+<span style="overflow:hidden;display:inline-block;">
+				<!-- 加载编辑器的容器 -->
+<script name="art_content" id="art_content" type="text/plain"  style="width:730px;height:400px;padding:0px"><{if !empty($row.art_content)}><{$row.art_content}><{/if}>
+</script>
+<!-- 样式文件 -->
+<link rel="stylesheet" href="/public/umeditor/themes/default/css/umeditor.css">
+
+<!-- 配置文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.js"></script>
+
+<!-- 实例化编辑器代码 -->
+<script type="text/javascript">
+    $(function(){
+        window.um = UM.getEditor('art_content', {
+        	/* 传入配置参数,可配参数列表看umeditor.config.js */
+        });
+    });
+ </script>
+</span>
+
+                    		</li>
+            				<li><strong>&nbsp;</strong><input type="hidden" name="art_id" id="art_id" value="<{$row.art_id}>"><input type="hidden" name="do" id="do" value="<{$do}>"><input type="submit" class="btn" value="提 交"> <input type="reset" class="btn" value="重 填"></li>
+        				</ul>
+        				</form>
+    				</div>
+					<{/if}>
+            	</div>
+			</div>
+            
+<{include file="footer.html"}>

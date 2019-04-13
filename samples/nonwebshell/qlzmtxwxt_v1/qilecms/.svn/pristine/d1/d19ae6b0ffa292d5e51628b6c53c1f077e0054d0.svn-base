@@ -1,0 +1,1046 @@
+Listen 80
+<VirtualHost _default_:9096>
+DocumentRoot "D:\phpStudy\WWW"
+  <Directory "D:\phpStudy\WWW">
+    Options -Indexes +FollowSymLinks +ExecCGI
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    Require all granted
+  </Directory>
+</VirtualHost>
+
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\aliyun"
+    ServerName 127.0.0.2
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\aliyun">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\shipin"
+    ServerName 127.0.0.3
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\shipin">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\thinksdk"
+    ServerName 127.0.0.4
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\thinksdk">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test2"
+    ServerName 127.0.0.5
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\test2">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test"
+    ServerName 127.0.0.6
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\test">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\alipay"
+    ServerName 127.0.0.7
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\alipay">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\diguo"
+    ServerName 127.0.0.8
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\diguo">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kpp2"
+    ServerName 127.0.0.9
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\kpp2">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\a5"
+    ServerName 127.0.0.10
+    ServerAlias www.test.com
+  <Directory "D:\WWW\a5">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\qilecms"
+    ServerName 127.0.0.11
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\qilecms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\email"
+    ServerName 127.0.0.12
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\email">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\caiji"
+    ServerName 127.0.0.13
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\caiji">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\qq"
+    ServerName 127.0.0.14
+    ServerAlias 
+  <Directory "D:\WWW\qq">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\honmau"
+    ServerName 127.0.0.15
+    ServerAlias 
+  <Directory "D:\WWW\honmau">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\youke"
+    ServerName 127.0.0.16
+    ServerAlias 
+  <Directory "D:\WWW\youke">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\youkeSY"
+    ServerName 127.0.0.17
+    ServerAlias 
+  <Directory "D:\WWW\youkeSY">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\destoon"
+    ServerName 127.0.0.18
+    ServerAlias 
+  <Directory "D:\WWW\destoon">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\qlb2b"
+    ServerName 127.0.0.19
+    ServerAlias 
+  <Directory "D:\WWW\qlb2b">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\qijike"
+    ServerName 127.0.0.20
+    ServerAlias 
+  <Directory "D:\WWW\qijike">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\onethink"
+    ServerName 127.0.0.21
+    ServerAlias 
+  <Directory "D:\WWW\onethink">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test3"
+    ServerName 127.0.0.22
+    ServerAlias 
+  <Directory "D:\WWW\test3">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\chinabank"
+    ServerName 127.0.0.23
+    ServerAlias 
+  <Directory "D:\WWW\chinabank">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\auth"
+    ServerName 127.0.0.24
+    ServerAlias 
+  <Directory "D:\WWW\auth">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\yunbao"
+    ServerName 127.0.0.25
+    ServerAlias 
+  <Directory "D:\WWW\yunbao">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\tp5.0cms"
+    ServerName 127.0.0.26
+    ServerAlias 
+  <Directory "D:\WWW\tp5.0cms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\thinkcmf5.0\public"
+    ServerName 127.0.0.27
+    ServerAlias 
+  <Directory "D:\WWW\thinkcmf5.0\public">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\thinkcmf"
+    ServerName 127.0.0.28
+    ServerAlias 
+  <Directory "D:\WWW\thinkcmf">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\ecshop2.7.3"
+    ServerName 127.0.0.29
+    ServerAlias 
+  <Directory "D:\WWW\ecshop2.7.3">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\tp5.0"
+    ServerName 127.0.0.30
+    ServerAlias 
+  <Directory "D:\WWW\tp5.0">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\baocms"
+    ServerName 127.0.0.60
+    ServerAlias 
+  <Directory "D:\WWW\baocms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\wstmall1.9"
+    ServerName 127.0.0.61
+    ServerAlias 
+  <Directory "D:\WWW\wstmall1.9">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\tpshop"
+    ServerName 127.0.0.62
+    ServerAlias 
+  <Directory "D:\WWW\tpshop">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\TPshop5.0_2.0.4"
+    ServerName 127.0.0.63
+    ServerAlias 
+  <Directory "D:\WWW\TPshop5.0_2.0.4">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\chart"
+    ServerName 127.0.0.95
+    ServerAlias 
+  <Directory "D:\WWW\chart">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\pigcms"
+    ServerName 127.0.0.65
+    ServerAlias 
+  <Directory "D:\WWW\pigcms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\xiaomi"
+    ServerName 127.0.0.67
+    ServerAlias 
+  <Directory "D:\WWW\xiaomi">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_dsc"
+    ServerName 127.0.0.69
+    ServerAlias 
+  <Directory "D:\WWW\kehu_dsc">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\weixin"
+    ServerName 127.0.0.70
+    ServerAlias 
+  <Directory "D:\WWW\weixin">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\dedecms"
+    ServerName 127.0.0.72
+    ServerAlias 
+  <Directory "D:\WWW\dedecms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test_youkesy"
+    ServerName 127.0.0.76
+    ServerAlias 
+  <Directory "D:\WWW\test_youkesy">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\dz_test"
+    ServerName 127.0.0.75
+    ServerAlias 
+  <Directory "D:\WWW\dz_test">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\yunbao"
+    ServerName 127.0.0.77
+    ServerAlias 
+  <Directory "D:\WWW\yunbao">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\k_miqi"
+    ServerName 127.0.0.78
+    ServerAlias 
+  <Directory "D:\WWW\k_miqi">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\k_fenxiang"
+    ServerName 127.0.0.79
+    ServerAlias 
+  <Directory "D:\WWW\k_fenxiang">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test_yfcmf"
+    ServerName 127.0.0.80
+    ServerAlias 
+  <Directory "D:\WWW\test_yfcmf">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\waibao"
+    ServerName 127.0.0.81
+    ServerAlias 
+  <Directory "D:\WWW\waibao">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\workerman"
+    ServerName 127.0.0.82
+    ServerAlias 
+  <Directory "D:\WWW\workerman">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\server"
+    ServerName 127.0.0.83
+    ServerAlias 
+  <Directory "D:\WWW\server">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\yunbao"
+    ServerName 127.0.0.84
+    ServerAlias 
+  <Directory "D:\WWW\yunbao">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\yunbao_kehu"
+    ServerName 127.0.0.85
+    ServerAlias 
+  <Directory "D:\WWW\yunbao_kehu">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\destoon_GBK"
+    ServerName 127.0.0.86
+    ServerAlias 
+  <Directory "D:\WWW\destoon_GBK">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\socket.io"
+    ServerName 127.0.0.87
+    ServerAlias 
+  <Directory "D:\WWW\socket.io">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\wx_pay"
+    ServerName 127.0.0.89
+    ServerAlias 
+  <Directory "D:\WWW\wx_pay">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_ecshop2.7"
+    ServerName 127.0.0.91
+    ServerAlias 
+  <Directory "D:\WWW\kehu_ecshop2.7">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\test_weixinlogin"
+    ServerName 127.0.0.92
+    ServerAlias 
+  <Directory "D:\WWW\test_weixinlogin">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_bocai"
+    ServerName 127.0.0.93
+    ServerAlias 
+  <Directory "D:\WWW\kehu_bocai">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\xiguacms"
+    ServerName 127.0.0.94
+    ServerAlias 
+  <Directory "D:\WWW\xiguacms">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\baocmso2o"
+    ServerName 127.0.0.97
+    ServerAlias 
+  <Directory "D:\WWW\baocmso2o">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_boli"
+    ServerName 127.0.0.98
+    ServerAlias 
+  <Directory "D:\WWW\kehu_boli">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\niushop_b2b2c"
+    ServerName 127.0.0.99
+    ServerAlias 
+  <Directory "D:\WWW\niushop_b2b2c">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\niushop_b2c"
+    ServerName 127.0.0.100
+    ServerAlias 
+  <Directory "D:\WWW\niushop_b2c">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\laychat"
+    ServerName 127.0.0.101
+    ServerAlias 
+  <Directory "D:\WWW\laychat">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\foxphp"
+    ServerName 127.0.0.102
+    ServerAlias 
+  <Directory "D:\WWW\foxphp">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\layui_IM"
+    ServerName 127.0.0.103
+    ServerAlias www.test.com
+  <Directory "D:\WWW\layui_IM">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\opensns"
+    ServerName 127.0.0.104
+    ServerAlias 
+  <Directory "D:\WWW\opensns">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_a5"
+    ServerName 127.0.0.105
+    ServerAlias www.test2.com
+  <Directory "D:\WWW\kehu_a5">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kpp3\public"
+    ServerName 127.0.0.13
+    ServerAlias phpStudy.net
+  <Directory "D:\WWW\kpp3\public">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_bocai2"
+    ServerName 127.0.0.106
+    ServerAlias 
+  <Directory "D:\WWW\kehu_bocai2">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_bcms1"
+    ServerName 127.0.0.107
+    ServerAlias 
+  <Directory "D:\WWW\kehu_bcms1">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\foxphp"
+    ServerName 127.0.0.108
+    ServerAlias 
+  <Directory "D:\WWW\foxphp">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\GatewayWorker"
+    ServerName 127.0.0.109
+    ServerAlias 
+  <Directory "D:\WWW\GatewayWorker">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_test"
+    ServerName 127.0.0.112
+    ServerAlias 
+  <Directory "D:\WWW\kehu_test">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\node"
+    ServerName 127.0.0.32
+    ServerAlias 
+  <Directory "D:\WWW\node">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\youku"
+    ServerName 127.0.0.113
+    ServerAlias 
+  <Directory "D:\WWW\youku">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\Testyouke365"
+    ServerName 127.0.0.115
+    ServerAlias 
+  <Directory "D:\WWW\Testyouke365">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\fangwei_p2p"
+    ServerName 127.0.0.116
+    ServerAlias 
+  <Directory "D:\WWW\fangwei_p2p">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\fastadmin\public"
+    ServerName 127.0.0.117
+    ServerAlias 
+  <Directory "D:\WWW\fastadmin\public">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\unionpay"
+    ServerName 127.0.0.118
+    ServerAlias 
+  <Directory "D:\WWW\unionpay">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\ckplayer"
+    ServerName 127.0.0.119
+    ServerAlias 
+  <Directory "D:\WWW\ckplayer">
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "D:\WWW\kehu_huolian"
+    ServerName 127.0.0.120
+    ServerAlias 
+  <Directory "D:\WWW\kehu_huolian">
+      Options

@@ -1,0 +1,127 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+<div class="dsm-message-send">
+            <div class="dsm-message-send-form">
+                <div class="dsm-default-form">
+                    <form method="post" id="send_form" action="{:url('Membermessage/savemsg')}">
+                        <dl>
+                            <dt><i class="required">*</i>{$Think.lang.home_message_reveiver}{$Think.lang.ds_colon}</dt>
+                            <dd>
+                                <input type="text" class="text w500" name="to_member_name" value="{present name='member_name'}{$member_name}{/present}" {notempty name="member_name"}readonly{/notempty}/>
+                                <p class="hint">{$Think.lang.home_message_separate}</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>{$Think.lang.home_message_type}：</dt>
+                            <dd><span class="mr10">
+              <input type="radio" class="radio vm" value="2" name="msg_type" checked="checked" />
+                                {$Think.lang.home_message_open}</span><span>
+              <input type="radio" class="radio vm" name="msg_type" value="0" />
+                                {$Think.lang.home_message_close}</span></dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="required">*</i>{$Think.lang.home_message_content}{$Think.lang.ds_colon}</dt>
+                            <dd>
+                                <textarea name="msg_content" rows="3" class="textarea w500 h100"></textarea>
+                                <p class ="error"></p>
+                            </dd>
+                        </dl>
+                        <div class="bottom">
+                            <label class="submit-border">
+                                <input type="submit" class="submit" value="{$Think.lang.home_message_ensure_send}" />
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="dsm-message-send-friend">
+                <h3>{$Think.lang.home_message_friend}</h3>
+                {notempty name="friend_list"}
+                <ul>
+                {foreach name="friend_list" item="val"}
+                <li><a href="javascript:void(0);" id="{$val.friend_tomname}" ds_type="to_member_name">
+                    <div class="avatar"><img src="{:get_member_avatar($val.friend_tomavatar)}"></div>
+                    <p>{$val.friend_tomname}</p>
+                </a></li>
+               {/foreach}
+            </ul>
+                {else /}
+                <div class="nomessage"><p>{$Think.lang.home_message_no_friends}</p>
+                    <a href="{:url('Membersnsfriend/index')}" class="dsm-btn-mini" target="_blank">{$Think.lang.home_add_buddy}</a>
+                </div>
+                {/notempty}
+            </div>
+        </div>
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $('a[ds_type="to_member_name"]').click(function (){
+            var str = $('input[name="to_member_name"]').val();
+            var id = $(this).attr('id');
+            if(str.indexOf(id+',') < 0){
+                doFriend(id+',', 'add');
+            }else{
+                doFriend(id, 'delete');
+            }
+        });
+    });
+    $(function(){
+        $('#send_form').validate({
+            errorPlacement: function(error, element){
+                $(element).next('p').html(error);
+            },
+            submitHandler:function(form){
+                ds_ajaxpost('send_form', 'url', "{:url('Membermessage/privatemsg')}")
+            },
+            rules : {
+                to_member_name : {
+                    required   : true
+                },
+                msg_content : {
+                    required   : false
+                }
+            },
+            messages : {
+                to_member_name : {
+                    required : '{$Think.lang.home_message_receiver_null}.'
+                },
+                msg_content : {
+                    required   : '{$Think.lang.home_message_content_null}.'
+                }
+            }
+        });
+    });
+    function doFriend(user_name, action){
+        var input_name = $("input[name='to_member_name']").val();
+        var key, i = 0;
+        var exist = false;
+        var arrOld = new Array();
+        var arrNew = new Array();
+        input_name = input_name.replace(/\uff0c/g,',');
+        arrOld     = input_name.split(',');
+        for(key in arrOld){
+            arrOld[key] = $.trim(arrOld[key]);
+            if(arrOld[key].length > 0){
+                arrOld[key] == user_name &&  action == 'delete' ? null : arrNew[i++] = arrOld[key]; //剔除好友
+                arrOld[key] == user_name ? exist = true : null; //判断好友是否已选
+            }
+        }
+        if(action == 'delete' && arrNew !=''){
+            arrNew = arrNew+',';
+        }
+        if(!exist && action == 'add'){
+            arrNew[i] = user_name;
+        }
+        $("input[name='to_member_name']").val(arrNew);
+    }
+</script> 
+
+
+
+
+{/block}

@@ -1,0 +1,91 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>?act=add">+添加新链接</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{$fileurl}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('link_id[]')==false){alert('请指定您要操作的链接ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+        </div>
+        
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+    		<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>网站名称</th>
+				<th>链接地址</th>
+				<th>是否可见</th>
+				<th>排列顺序</th>
+                <th>操作选项</th>
+    		</tr>
+            <{foreach from=$links item=link}>
+    		<tr>
+				<td><input name="link_id[]" type="checkbox" value="<{$link.link_id}>"></td>
+				<td><{$link.link_id}></td>
+				<td><{$link.link_name}></td>
+				<td><{$link.link_url}></td>
+				<td><{$link.link_display}></td>
+				<td><{$link.link_order}></td>
+                <td><{$link.link_operate}></td>
+    		</tr>
+			<{foreachelse}>
+			<tr><td colspan="7">无任何链接！</td></tr>
+			<{/foreach}>
+		</table>
+        </form>
+        <div class="pagebox"><{$showpage}></div>
+    </div>
+    <{/if}>
+    
+    <{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+    <div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>网站名称：</th>
+				<td><input name="link_name" type="text" class="ipt" id="link_name" size="50" maxlength="50" value="<{if !empty($link.link_name)}><{$link.link_name}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>网站地址：</th>
+				<td><input name="link_url" type="text" class="ipt" id="link_url" size="50" maxlength="255" value="<{if !empty($link.link_url)}><{$link.link_url}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>图标地址：</th>
+				<td><input name="link_logo" type="text" class="ipt" id="link_logo" size="50" maxlength="255" value="<{if !empty($link.link_logo)}><{$link.link_logo}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>是否显示：</th>
+				<td><input name="link_display" type="radio" id="link_display1" value="1"<{opt_checked($display, 1)}>><label for="link_display1">显示</label>　<input name="link_display" type="radio" id="link_display2" value="2"<{opt_checked($display, 2)}>><label for="link_display2">隐藏</label></td>
+			</tr>
+			<tr>
+				<th>排列顺序：</th>
+				<td><input name="link_order" type="number" class="ipt" id="link_order" size="10" maxlength="3" value="<{if !empty($link.link_order)}><{$link.link_order}><{else}>0<{/if}>" /></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $link.link_id}>
+					<input name="link_id" type="hidden" id="link_id" value="<{$link.link_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+<{include file="footer.html"}>

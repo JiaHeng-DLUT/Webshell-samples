@@ -1,0 +1,20 @@
+{{open_tag|none}}
+
+
+$this->require_acl ('admin', '{{plural}}', 'admin/delete');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+	$this->redirect ('/{{plural}}/admin');
+}
+
+${{appname}} = new {{plural}}{{backslash}}{{appname|cli\Filter::camel}};
+${{appname}}->remove ($_POST['id']);
+
+if (${{appname}}->error) {
+	error_log ('Error deleting {{appname}}: ' . DB::error ());
+	$this->add_notification (__ ('Unable to delete {{appname|cli\Filter::spaces}}.'));
+	$this->redirect ('/{{plural}}/admin');
+}
+
+$this->add_notification (__ ('{{appname|cli\Filter::label}} deleted.'));
+$this->redirect ('/{{plural}}/admin');

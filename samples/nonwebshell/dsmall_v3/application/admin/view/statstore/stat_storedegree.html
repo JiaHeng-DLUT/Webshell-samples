@@ -1,0 +1,70 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺统计</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+   <div class="fixed-empty"></div>
+
+  <form method="get" name="formSearch" id="formSearch">
+      <div class="ds-search-form">
+            <dl>
+                <dd>
+                    <select name="search_sclass" id="search_sclass" class="querySelect">
+                        <option value="" selected>店铺分类</option>
+                        {foreach name="store_class" item="v"}
+                        <option value="{$v.storeclass_id}" {$Request.param.search_sclass== $v.storeclass_id ?'selected':''}>{$v.storeclass_name}</option>
+                        {/foreach}
+                    </select>
+                </dd>
+            </dl>
+			<div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Statstore/degree')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+  </form>
+   
+ <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+           <li>统计图展示各店铺分类中店铺等级的分布情况</li>
+        </ul>
+    </div>
+
+     <table class="ds-default-table">
+  	<tbody id="datatable">
+    {present name="stat_json"}
+    <tr class="hover">
+        <td class="align-center"><div id="container" class="w100pre close_float" style="height:400px"></div></td>
+      </tr>
+    {else /}
+    <tr class="no_data">
+          <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+   {/present}
+    </tbody>
+  </table>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/highcharts/highcharts.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<script>
+$(function(){
+    {present name="stat_json"}
+        $('#container').highcharts({$stat_json});
+   {/present}
+    $('#dssubmit').click(function(){
+        $('#formSearch').submit();
+    });
+});
+</script>

@@ -1,0 +1,50 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/datetimepicker/jqueryui/jquery-ui.min.css" type="text/css" rel="stylesheet">
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;{:lang('Edit my profile')}</a></li>
+</ul>
+<div class="tab-content"><br>
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <div>
+            <form method="post" action="">
+                <div class="form-group">
+                    <label>{:lang('Nickname')}</label>
+                    <input type="text" class="form-control" value="{$user.user_nicename}" name="nicheng" placeholder="{:lang('Nickname')}">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('Gender')}</label>
+                    <select class="form-control" name="xingbie">
+                        <option value="0"{if condition="$user.sex == 0"} selected{/if}>{:lang('Secrecy')}</option>
+                        <option value="1"{if condition="$user.sex == 1"} selected{/if}>{:lang('Male')}</option>
+                        <option value="2"{if condition="$user.sex == 2"} selected{/if}>{:lang('Female')}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>{:lang('Birthday')}</label>
+                    <input type="text" class="form-control" value="{$user.birthday}" name="shengri" placeholder="{:lang('Birthday')}" id="datepicker">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('E-mail')}</label>
+                    <input type="email" class="form-control" value="{$user.user_email}" name="youxiang" maxlength="100" placeholder="{:lang('E-mail')}" id="youxiang">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('Mobile phone')}</label>
+                    <input type="text" class="form-control" value="{$user.mobile}" name="shouji" maxlength="20" placeholder="{:lang('Mobile phone')}" id="shouji">
+                </div>
+                <div class="form-group">
+                    <label>{:lang('Personal URL')}</label>
+                    <input type="text" class="form-control" value="{$user.user_url}" name="gerenwangzhi" maxlength="100" placeholder="http://">
+                </div>
+                {notempty name="user_info"}{$user_info}{/notempty}
+                <div class="form-group">
+                    <label>{:lang('Signature')}</label>
+                    <textarea class="form-control" name="qianming" rows="3">{$user.signature}</textarea>
+                </div>
+                <button type="submit" class="btn btn-default">{:lang('Save')}</button>
+            </form>
+        </div>
+    </div>
+</div><br><br>
+<script src="{$domain}public/common/datetimepicker/jqueryui/jquery-ui.min.js"></script>
+<script src="{$domain}public/common/js/user/ziliao.js"></script>
+{include file="index/footer" /}

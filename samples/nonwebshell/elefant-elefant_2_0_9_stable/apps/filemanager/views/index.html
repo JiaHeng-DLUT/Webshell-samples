@@ -1,0 +1,132 @@
+{! admin/util/dates !}
+{! admin/util/modal !}
+{! admin/util/fontawesome !}
+
+<script type="text/x-jquery-tmpl" id="tpl_dir">
+	<tr>
+		<td><div class="dropzone draggable" data-folder="${path}"><img src="/apps/admin/css/admin/folder.png" alt="${name}" style="padding-right: 5px; margin-top: -2px" /> <a href="/filemanager?path=${path}">${name}</a></div></td>
+		<td>\{{html mtime}}</td>
+		<td>&nbsp;</td>
+		<td style="text-align: right">
+			<a href="#" onclick="return $.filemanager ('mv', {file: '${path}', name: '${name}'})">{"Rename"}</a> | 
+			<a href="#" onclick="return $.filemanager ('rmdir', {file: '${_path}'})">{"Delete"}</a>
+		</td>
+	</tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tpl_file">
+	<tr>
+		<td><div class="draggable" data-file="${_path}"><img src="/apps/admin/css/admin/file.png" alt="${name}" style="padding-right: 5px; margin-top: -2px" /> <a href="/${conf_root}${path}" target="_blank"\{{if is_img}} class="file-img"\{{/if}}>${name}</a></div></td>
+		<td>\{{html mtime}}</td>
+		<td>${fsize}</td>
+		<td style="text-align: right">
+			\{{if zip_file}}
+			<a href="#" onclick="return $.filemanager ('unzip', {file: '${_path}', name: '${_name}'})">{"Unzip"}</a> |
+			\{{/if}}
+			\{{if image_file}}
+			<a href="#" onclick="return $.filemanager ('img', {file: '${_path}', name: '${_name}'})">{"Edit"}</a> |
+			\{{/if}}
+			\{{if text_file}}
+			<a href="/filemanager/edit?file=${path}">{"Edit"}</a> |
+			\{{/if}}
+			<a href="#" onclick="return $.filemanager ('bitly', {file: '${_path}', name: '${_name}'})">{"Bitly"}</a> |
+			<a href="#" onclick="return $.filemanager ('prop', {file: '${_path}', name: '${_name}'})">{"Properties"}</a> |
+			<a href="#" onclick="return $.filemanager ('mv', {file: '${_path}', name: '${_name}'})">{"Rename"}</a> | 
+			<a href="#" onclick="return $.filemanager ('rm', {file: '${_path}'})">{"Delete"}</a>
+		</td>
+	</tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tpl_edit_txt">
+	<textarea cols="70" rows="20" id="tpl-edit-txt">\{{html txt}}</textarea>
+</script>
+
+<script type="text/javascript">
+$(function () {
+	$.filemanager_init ({
+		path: '{{path}}',
+		aviary_key: {% if aviary_key %}'{{ aviary_key }}'{% else %}false{% end %},
+		max_filesize: {{ (int) ini_get ('upload_max_filesize')}},
+		token: '{{csrf_token}}'
+	});
+
+	// Image preview on hover
+	$(document).on (
+		'mouseenter',
+		'.file-img',
+		function () {
+			$(this).append (
+				$('<img>')
+					.attr ('src', $(this).attr ('href'))
+					.addClass ('file-img-preview')
+			);
+		}
+	);
+
+	// Remove image preview
+	$(document).on (
+		'mouseleave',
+		'.file-img',
+		function () {
+			$(this).children ('.file-img-preview').remove ();
+		}
+	);
+});
+var i18n = {
+	no_files: '{"Please select a file to upload."}',
+	invalid_name: '{"The file name contains invalid characters."}'
+};
+</script>
+
+<p style="float: right; margin-top: 6px;"><a href="/filemanager/settings">{"Settings"}</a></p>
+
+<h2>
+{% if path == '' %}
+	{"Files"}
+{% else %}
+	<a href="/filemanager" class="dropzone" data-folder="">{"Files"}</a>
+	{% foreach parts %}
+		{% if loop_index == $data->lastpath %}
+			/ {{ loop_index }}
+		{% else %}
+			/ <a href="/filemanager?path={{ loop_value }}" class="dropzone" data-folder="{{ loop_value }}">{{ loop_index }}</a>
+		{% end %}
+	{% end %}
+{% end %}
+</h2>
+
+<div id="filemanager-dropzone" title="{"Drag files here to upload."}">
+
+<p>
+	<form action="/filemanager/upload" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="path" value="{{ path }}" />
+	<input type="hidden" name="_token_" value="{{ csrf_token }}" />
+	<a href="#" onclick="return $.filemanager ('mkdir', {file: '{{ path }}'})">{"New folder"}</a>
+	&nbsp;|&nbsp;
+	<span id="filemanager-upload-form">
+	{"New file"} ({"max"} {{ ini_get ('upload_max_filesize')}}B): <input type="file" name="file[]" id="file-upload" multiple="multiple" /> <input type="submit" value="{"Upload"}" onclick="err = $.filemanager_verify_files ($('#file-upload')[0].files); if (err) { alert (i18n[err]); return false; } this.value = 'Uploading...'; this.disabled = true; this.form.submit ()" />
+	</span>
+	<span id="filemanager-upload-progress">
+		<div id="filemanager-upload-progress-bar"></div>
+		<div id="filemanager-upload-progress-text">{"Uploading..."}</div>
+	</span>
+	</form>
+</p>
+
+</div>
+
+<p>
+<table width="100%">
+	<tr>
+		<th width="45%">{" Name "}</th>
+		<th width="18%">{" Last modified "}</th>
+		<th width="8%">{" File size "}</th>
+		<th width="29%">&nbsp;</th>
+	</tr>
+	<tbody id="file-list"></tbody>
+</table>
+</p>
+
+{% if aviary_key %}
+<img src="/apps/admin/css/admin/spacer.png" id="aviary-tmp" height="0" width="0" display: none" />
+{% end %}

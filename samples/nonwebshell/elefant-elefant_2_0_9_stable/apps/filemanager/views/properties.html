@@ -1,0 +1,20 @@
+<form>
+<input type="hidden" name="file" value="{{file}}" />
+
+<p>
+	{"Link"}:<br />
+	<input type="text" id="link" size="50" value="{{link}}" />
+</p>
+
+<p>
+	{"Description"}:<br />
+	<textarea id="desc" rows="4" cols="60">{{desc}}</textarea>
+</p>
+
+<p>
+	<input type="submit" value="{"Save"}" onclick="return $.filemanager_prop (this.form)" />
+	&nbsp;
+	<a href="#" onclick="return $.close_dialog ()">{"Cancel"}</a>
+</p>
+
+</form>

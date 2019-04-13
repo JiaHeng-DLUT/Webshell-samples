@@ -1,0 +1,31 @@
+<?php
+/**
+* 根据有Id修改信息 无Id 新增信息
+* #User: Mikkle
+* #Email:776329498@qq.com
+* #Date:
+* @param $data
+* @return false|int|string
+* @throws
+ */
+namespace app\admin\model;
+use think\Model;
+
+class Commmon extends Model
+{
+   protected $autoCheckFields = true;
+//增加数据  
+   public function addData(){
+
+   }
+//修改数据
+   public function editData(){
+
+   }
+
+// 删除数据
+   public function delData(){
+
+   }
+
+}

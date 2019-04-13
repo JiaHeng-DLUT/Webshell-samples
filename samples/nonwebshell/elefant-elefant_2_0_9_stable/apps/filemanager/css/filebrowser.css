@@ -1,0 +1,98 @@
+#filebrowser-dropzone {
+	height: 100%;
+	border: 2px solid #fafafa;
+}
+
+	#filebrowser-dropzone.filebrowser-over {
+		border: 2px dashed #ddd;
+	}
+
+#filebrowser-list {
+	margin-top: 8px;
+}
+
+#filebrowser-col-a, #filebrowser-col-b {
+	list-style-type: none;
+	margin-left: 0px;
+	padding-left: 0px;
+	width: 50%;
+	float: left;
+}
+
+#filebrowser-col-a li, #filebrowser-col-b li {
+	list-style-type: none;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-bottom: 5px;
+}
+
+.filebrowser-thumb {
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #fafafa;
+}
+
+.filebrowser-thumb img {
+	max-width: 100px;
+	border: 1px solid #ddd;
+}
+
+#filebrowser-upload {
+	float: right;
+}
+
+#filebrowser-upload-progress {
+	display: none;
+	width: 150px;
+	border: 1px solid #ddd;
+}
+
+#filebrowser-upload-progress-bar {
+	display: inline-block;
+	background-color: #ddd;
+	height: 18px;
+	width: 5%;
+	z-index: 0;
+}
+
+#filebrowser-upload-progress-text {
+	z-index: 1;
+	margin-top: -24px;
+	margin-left: 2px;
+}
+
+#filebrowser-select-block {
+	clear: both;
+}
+
+#filebrowser-file {
+	outline-width: 0;
+}
+
+.filebrowser-file.filebrowser-selected {
+	font-weight: bold;
+	color: #B347AF;
+}
+
+.filebrowser-selected {
+	border: 0;
+}
+
+.filebrowser-selected img {
+	border-collapse: collapse;
+	border: 2px solid #B347AF;
+}
+
+@media (max-width: 480px) {
+	#filebrowser-upload {
+		float: none;
+		margin-bottom: 8px;
+	}
+	
+	#filebrowser-col-a,
+	#filebrowser-col-b {
+		width: 97%;
+	}
+}

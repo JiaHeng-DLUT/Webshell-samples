@@ -1,0 +1,18 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Template extends Common
+{
+	public function index(){
+		return $this->fetch();
+	}
+	public function sms(){
+		return $this->fetch();
+	}
+	public function mail(){
+		return $this->fetch();
+	}
+	public function mobile(){
+		return $this->fetch();
+	}
+}

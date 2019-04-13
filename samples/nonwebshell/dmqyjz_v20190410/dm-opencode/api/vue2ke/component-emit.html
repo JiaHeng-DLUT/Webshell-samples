@@ -1,0 +1,79 @@
+
+
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>组件 - vue2入门与提高视频教程 </title>
+ 
+ <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.css" rel="stylesheet">
+
+<script src="vue.js" type="text/javascript"></script>
+ 
+
+</head>
+<body  >
+ 
+ 
+<div id="app">
+
+
+
+<button @click="open">open</button>
+ 
+ 
+
+<modal :openmodal="modalclass" v-on:closemodal="close"></modal>
+
+
+ </div>
+
+ <script>
+
+ Vue.component('modal', {
+
+     props:['openmodal'],
+      template: '<div :class="openmodal">modal...<button v-on:click="close">close</button>  {{ openmodal }}</div>',
+    
+     methods:{
+           close:function(){
+               this.$emit('closemodal')
+           }
+        }
+ 
+})
+ 
+ 
+ 
+
+var vm = new Vue({ 
+
+    el:'#app',
+    data:{
+
+      modalclass:'dn'
+    },
+    methods:{
+      open:function(){
+
+           this.modalclass='db';
+      } ,
+      close:function(){
+
+           this.modalclass='dn';
+      } 
+
+    } 
+
+
+})
+ </script>
+
+ <style>
+    .dn {display:none;}
+    .db {display:block;}
+ </style>
+</body>
+</html>
+ 
+ 
+
+

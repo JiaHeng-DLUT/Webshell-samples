@@ -1,0 +1,70 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}
+<a class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.sellermoney_apply_withdraw}" uri="{:url('Sellermoney/withdraw_add')}"> <i class="fa fa-money"></i>{$Think.lang.sellermoney_apply_withdraw} </a>
+{/block}
+{block name="seller_main"}
+
+
+
+
+<div class="alert"><span class="mr30">{$Think.lang.sellermoney_avaliable_money}{$Think.lang.ds_colon}<strong class="mr5 red" style="font-size: 18px;">{$store_info.store_avaliable_money}</strong>{$Think.lang.currency_zh}</span><span>{$Think.lang.sellermoney_freeze_money}{$Think.lang.ds_colon}<strong class="mr5 blue" style="font-size: 18px;">{$store_info.store_freeze_money}</strong>{$Think.lang.currency_zh}</span></div>
+<form method="get" action="">
+    <table class="dsm-search-table">
+        <tr>
+            <th></th><td></td>
+            <th>{$Think.lang.sellermoney_state}{$Think.lang.ds_colon}</th>
+            <td class="w90">
+                <select id="paystate_search" name="paystate_search">
+                    <option value="">{$Think.lang.ds_please_choose}</option>
+                    <option value="2" {if condition="$Request.param.paystate_search eq '2'"}selected="selected"{/if}>{$Think.lang.sellermoney_wait}</option>
+                        <option value="3" {if condition="$Request.param.paystate_search eq '3'"}selected="selected"{/if}>{$Think.lang.sellermoney_agree}</option>
+                        <option value="4" {if condition="$Request.param.paystate_search eq '4'"}selected="selected"{/if}>{$Think.lang.sellermoney_reject}</option>
+                </select>
+            </td>
+            
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+        </tr>
+    </table>
+</form>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th>{$Think.lang.sellermoney_createtime}</th>
+            <th>{$Think.lang.sellermoney_withdraw_money}({$Think.lang.currency_zh})</th>
+            <th>{$Think.lang.sellermoney_log_desc}</th>
+            <th class="w150">{$Think.lang.sellermoney_state}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="withdraw_list"}
+        {foreach name="withdraw_list" item="v"  }
+        <tr class="bd-line">
+                <td class="nowrap align-center">{notempty name="$v.storemoneylog_add_time"}{$v.storemoneylog_add_time|date='Y-m-d H:i:s',###}{/notempty}</td>
+                <td class="align-center">{$v.store_freeze_money}</td>
+                <td>{$v.storemoneylog_desc}</td>
+                <td class="align-center">{if $v.storemoneylog_state==2}{$Think.lang.sellermoney_wait}{elseif $v.storemoneylog_state==3}{$Think.lang.sellermoney_agree}{elseif $v.storemoneylog_state==4}{$Think.lang.sellermoney_reject}{/if}</td>
+                
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="4" class="norecord"><div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        {notempty name="withdraw_list"}
+        <tr>
+            <td colspan="4"><div class="pagination">{$show_page}</div></td>
+        </tr>
+        {/notempty}
+    </tfoot>
+</table>
+
+
+
+
+
+
+
+{/block}

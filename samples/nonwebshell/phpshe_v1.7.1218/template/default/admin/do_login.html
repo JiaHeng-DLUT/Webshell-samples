@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seo['title']}</title>
+<meta name="keywords" content="{$seo['keywords']}" />
+<meta name="description" content="{$seo['description']}" />
+<link rel="shortcut icon" type="image/ico" href="{$pe['host_root']}/favicon.ico">
+<link type="text/css" rel="stylesheet" href="{$pe['host_tpl']}css/style.css" />
+<script type="text/javascript" src="{$pe['host_root']}include/js/jquery.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/global.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/js/arttpl.js"></script>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/layer/layer.js"></script>
+<style type="text/css">
+html,body{font-family:'Microsoft Yahei','Simsun',"宋体"; height:100%; width:100%}
+input{outline:none;}
+.login_tt{font-size:24px; line-height:30px; color:#666; text-align:center; margin-bottom:40px; background:url({$pe['host_tpl']}images/login_logo.png) no-repeat; width:268px; height:40px;}
+.login{width:282px;  top:50%; margin-top:-200px; left:50%; margin-left:-142px; position:absolute;}
+.user_box{border:1px #ddd solid; border-radius:4px; width:280px; height:38px; line-height:38px; position:relative; background:#fff;}
+.user_box i{background:url({$pe['host_tpl']}images/username_bg.png) no-repeat; display:block; width:24px; height:24px; position:absolute; left:5px; top:6px; }
+.user_box1{margin-top:15px;}
+.user_box1 i{background:url({$pe['host_tpl']}images/password_bg.png) no-repeat; display:block; width:24px; height:24px; position:absolute; left:5px; top:6px; }
+.user_name{width:235px; border:0; margin-left:32px; padding:0 5px; line-height:38px; height:38px;}
+.user_box2{position:relative; margin-top:15px;}
+.user_box2 i{background:url({$pe['host_tpl']}images/yzm_bg.png) no-repeat; display:block; width:24px; height:24px; position:absolute; left:5px; top:7px; }
+.user_yzm{width:145px; border:0; margin-left:32px; padding:0 5px; line-height:38px; height:38px;}
+.user_box2 img{cursor:pointer; position:absolute; right:1px; top:1px; height:36px;}
+.login_btn{margin:25px 0 0 0;}
+.login_btn input{background:#fb7f35; border-radius:4px; color:#fff; font-size:16px; font-family:'微软雅黑'; width:282px; border:0; height:40px; cursor:pointer;}
+.copyright{text-align:center; color:#BECAD6;}
+.copyright a,.copyright a:hover{color:#BECAD6;}
+.login .input_name{float:left; margin-top:3px; display:block;}
+.login_line{background:url({$pe['host_tpl']}images/login_line.jpg) no-repeat; width:3px; border:0px solid #ff6600;position:absolute;left:60%;top:0;z-index:10000;display:none; margin-le1ft:-3px}
+.user_main{width:100%; min-width:1200px; height:100%; min-height:500px; color:#666;}
+.user_login_l{float:left; width:60%; position:relative; background:#1f7efe; height:100%; }
+.user_l_bg{width:580px; height:556px; position:absolute; left:50%; top:50%; margin-top:-278px; margin-left:-290px; z-index:99;}
+.user_login_r{float:right; width:40%; position:relative; background:#f8f8f8; height:100%; }
+</style>
+</head>
+<body>
+<div class="user_main" style="position:relative">
+	<div class="user_login_l">
+		<div class="user_l_bg">
+		<img src="{$pe['host_tpl']}images/login_l.png" />
+		</div>
+	</div>
+	<div class="user_login_r">
+		<form method="post" id="form">
+		<div class="login">
+			<div class="login_tt"></div>
+			<div class="user_box">
+				<i></i>
+				<input class="user_name" type="text" name="admin_name" placeholder="登录帐号" />
+			</div>
+			<div class="user_box user_box1">
+				<i></i>
+				<input class="user_name" type="password" name="admin_pw" placeholder="登录密码" />
+			</div>
+			<div class="user_box user_box2">
+				<i></i>
+				<input class="user_yzm" type="text" name="authcode" placeholder="图形验证码" />
+				<img src="{$pe['host_root']}include/class/authcode.class.php?w=90&h=36" onclick="pe_yzm(this)" style="" />
+			</div>
+			<div class="login_btn">
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="hidden" name="pesubmit" />
+				<input type="button" value="登 录" />
+			</div>
+		</div>
+		</form>
+	</div>
+	<div class="login_line"></div>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	$(window).keydown(function (event) {
+		if (event.keyCode == 13) $(":button").click();
+	});
+	$(":button").click(function(){
+		if ($(":input[name='admin_name']").val() == '') {
+			pe_tip('请填写登录帐号')
+			return false;
+		}
+		if ($(":input[name='admin_pw']").val() == '') {
+			pe_tip('请填写登录密码')
+			return false;
+		}
+		$(".login_line").show().animate({"height":$(window).height()}, 1500, function(){
+			$(".login_line").hide().css('height', 0);
+		});
+		pe_submit("admin.php?mod=do&act=login", function(json){
+			if (json.result) {
+				pe_open('admin.php', 1000);
+			}
+		})
+	})
+})
+</script>
+</html>

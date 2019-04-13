@@ -1,0 +1,52 @@
+<style>
+	body {
+		background-color: #eee;
+	}
+</style>
+<div style="max-width:560px;margin:7% auto;padding:35px 15px;background-color:#fff;">
+	<div class="pk-row">
+		<div class="pk-w-sm-12 pk-margin-bottom-20 pk-text-center">
+			<img class="pk-radius-all" src="userhead/{$_G['USER']['ID']}.png" onerror="this.src='userhead/0.png'" style="width:77px;height:77px;" />
+		</div>
+		<div class="pk-w-sm-12 pk-margin-bottom-10">请输入<span style="color:#f60;">{$_G['USER']['EMAIL']}</span>收到的验证码进行账号验证及激活：</div>
+		<div class="pk-w-sm-12 pk-margin-bottom-10">
+			<input id="verifycode" type="text" class="pk-textbox" value="" />
+		</div>
+		<div class="pk-w-sm-12 pk-margin-bottom-20 pk-text-center pk-text-xs">若超过60秒未收到请刷新本页重新发送验证码</div>
+		<div class="pk-w-sm-12 pk-margin-bottom-10 pk-text-center">
+			<button id="evbtn" type="button" class="pk-btn pk-btn-primary">进行验证及激活</button>
+		</div>
+	</div>
+</div>
+<script>
+	$(function() {
+		$('#evbtn').on('click', function() {
+			var _vc = $('#verifycode').val();
+			var _svf = "{$_G['TEMP']['SVF']}";
+			if(!_vc) {
+				pktip('请输入验证码', 'warning', 1500, function() {
+					$('#verifycode').focus();
+				});
+				return false;
+			}
+			$('#evbtn').prop('disabled', true);
+			$.post('index.php?c=app&a=systememail:emailverify', {
+				'verifycode': _vc,
+				'safeverifycode': _svf
+			}, function(data) {
+				$('#evbtn').prop('disabled', false);
+				if(data['state'] == 'ok') {
+					pktip('恭喜账号验证及激活成功！', 'success', 1500, function() {
+						location.href = 'index.php';
+					});
+				} else {
+					pkalert(data['datas']['msg']);
+				}
+			}, 'json').error(function(e) {
+				pkalert('出错了');
+				$('#evbtn').prop('disabled', true);
+				console.log(e);
+			});
+		});
+	});
+</script>

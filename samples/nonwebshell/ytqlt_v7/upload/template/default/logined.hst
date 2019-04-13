@@ -1,0 +1,46 @@
+<div id="userbox" class="pk-row pk-padding-bottom-5" style="height: 47px;overflow: hidden;">
+	<div class="pk-w-sm-2 pk-padding-0">
+		<img class="pk-radius-all pk-cursor-pointer" src="userhead/{$_G['USER']['ID']}.png" onerror="this.src='userhead/upload.png'" onclick="location.href='index.php?c=user'" alt="" title="个人设置" style="width: 42px;height: 42px;">
+	</div>
+	<div class="pk-w-sm-10 pk-padding-left-5 pk-padding-right-5">
+		<div class="pk-text-truncate pk-display-block pk-text-xs" style="height: 18px;padding-top: 2px;color: #999;">
+			{mb_substr($_G['USER']['NICKNAME'],0,6)}
+			<span id="userbox-sex" class="pk-radius-4 pk-cursor-pointer" style="display:inline-block;height:16px;width:16px;text-align:center;font-size:10px;background:gray;color:white" title="妖精怪"><span class="fa fa-fw fa-intersex"></span></span>
+			<a class="pk-text-secondary pk-float-right" href="javascript:" onclick="pkalert('您确定要退出当前用户么？','确认操作','location.href=\'index.php?c=login&type=out\'')" title="退出登录"><span class="fa fa-sign-out"></span>&nbsp;退出</a>
+		</div>
+		<div class="pk-row">
+			<div id="userbox-lvbox" class="pk-w-sm-2 pk-padding-0 pk-text-truncate pk-cursor-pointer" title="等级{$lv}级">
+				<span class="pk-text-xs" style="color: orangered;">Lv{$lv}</span>
+			</div>
+			<div class="pk-w-sm-10 pk-padding-0">
+				<div class="pk-display-block pk-text-truncate pk-text-default pk-text-sm" style="height: 24px;padding-top: 8px">
+					<div id="exp-progress" class="pk-cursor-pointer" style="border: solid 1px #458fce;height: 12px;padding: 1px;border-radius: 6px;" title="{$_G['SET']['JIFENNAME']}：{$_G['USER']['JIFEN']}，距升级还差 {$hcexp} {$_G['SET']['JIFENNAME']}">
+						<div id="exp-progress" class="pk-text-center pk-background-color-primary pk-text-white" style="height: 100%;border-radius: 8px;width: {$exp}%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="userbox-btnsbox" class="pk-row pk-padding-top-10">
+	<div class="pk-row">
+		<div class="pk-w-sm-6 pk-padding-right-0">
+			<a class="pk-btn pk-btn-block pk-btn-success pk-radius-top-left-4 pk-radius-bottom-left-4" href="index.php?c=user"><span class="fa fa-user"></span>&nbsp;个人设置</a>
+		</div>
+		<div class="pk-w-sm-6 pk-padding-left-0">
+			<a class="pk-btn pk-btn-block pk-btn-warning pk-radius-top-right-4 pk-radius-bottom-right-4" href="index.php?c=friends"><span id="userbox-msgbtn" class="fa fa-envelope"></span>&nbsp;消息中心</a>
+		</div>
+	</div>
+</div>
+{$_G['TEMP']['NMJS']}
+<script>
+	if($_USER['SEX'] == 'b') {
+		$('#userbox-sex').css('background', 'royalblue').attr('title', '硬汉子').html('<span class="fa fa-fw fa-mars"></span>');
+	}
+	if($_USER['SEX'] == 'g') {
+		$('#userbox-sex').css('background', 'hotpink').attr('title', '软妹纸').html('<span class="fa fa-fw fa-venus"></span>');
+	}
+	if($_USER['ID'] == 1) {
+		$('#userbox-btnsbox div:eq(0)').before('<div class="pk-row pk-margin-bottom-10"><div class="pk-w-sm-12"><a target="_blank" class="pk-btn pk-btn-block pk-btn-danger pk-radius-4" href="index.php?c=app&a=superadmin:index"><span class="fa fa-gear"></span>&nbsp;超级后台管理</a></div></div>');
+	}
+</script>

@@ -1,0 +1,84 @@
+ication/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:38+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/friendlink/index.html
+[ info ] 127.0.0.1/index.php/admin/friendlink/index.html [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：898.93kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:39+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/notice/index.html
+[ info ] 127.0.0.1/index.php/admin/notice/index.html [运行时间：0.054003s][吞吐率：18.52req/s] [内存消耗：898.99kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:39+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/page/index.html
+[ info ] 127.0.0.1/index.php/admin/page/index.html [运行时间：0.042002s][吞吐率：23.81req/s] [内存消耗：898.95kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:39+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/feedback/index.html
+[ info ] 127.0.0.1/index.php/admin/feedback/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：898.98kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.{"strHtml":"\u003Cdiv class=\"link_wraper\" style=\"width:300px;font-family:Microsoft Yahei;margin:0;padding:0;font-size:12px;\"\u003E\n\t\u003Cdiv class=\"link_top\" style=\"width:100%;height:5px;background:url(http://gtms01.alicdn.com/tps/i1/T1icc0FcFiXXa4tmHx-300-20.png) no-repeat 0 0;overflow:hidden;\"\u003E\u003C/div\u003E\n\t\u003Cdiv class=\"link_con\" style=\"margin:-1px 0 0 0;padding:5px 9px;background:#fafafa;border:solid #dcdcdc;border-width:0 1px;overflow:hidden;*zoom:1;\"\u003E\n\t\t\u003Cdiv class=\"link_con_item\" style=\"overflow: hidden;*zoom:1;margin:0;padding:0;\"\u003E\n\t\t\t\t\t\t\u003Cdiv class=\"link_item_img\" style=\"position:relative;width:126px;height:126px;float:left;margin:0 8px 0 0;padding:0;background:#fff;\"\u003E\n\t\t\t\t                \u003Cul type=\"pic\" style=\"display:none;\"\u003E\n                                            \u003Cli\u003Ehttp://img02.taobaocdn.com:80/tfscom/i7/TB1barNRVXXXXalapXX2kdi9XXX_033853.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img01.taobaocdn.com:80/tfscom/i8/TB1iw9UKVXXXXbPXpXX3xIK8VXX_033559.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img01.taobaocdn.com:80/tfscom/i2/TB1n5WwKVXXXXaMapXXs2.18VXX_033711.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img03.taobaocdn.com:80/tfscom/TB1iW8BQXXXXXcYXFXXSutbFXXX.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img01.taobaocdn.com:80/tfscom/i2/TB1.fyHKVXXXXbSXVXXcUo.8VXX_033800.jpg_460x460.jpg\u003C/li\u003E\n                                    \u003C/ul\u003E\n\t\t\t\t\u003Cimg src=\"http://img02.taobaocdn.com:80/tfscom/i7/TB1barNRVXXXXalapXX2kdi9XXX_033853.jpg_460x460.jpg\"  master-pic=\"Y\" target-url=\"http://item.taobao.com/item.htm?id=543160324838&amp;tracelogww=ltckbburl\" dotting-url=\"http://gm.mmstat.com/ww.1.5.1.1.23?\" width=\"120\" height=\"120\" style=\"position:absolute;left:3px;top:3px;display:block;margin:0;padding:0;\" /\u003E\n\t\t\t\t                \t\t\t\t\t\t\t\u003C/div\u003E\n\t\t\t\u003Cdiv class=\"link_item_txt\" style=\"float: left;width:146px;margin:0;padding:0;overflow:hidden;\"\u003E\n\t\t\t\t\t\t\t\t\u003Cp class=\"lit_item_name\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap:break-word;word-break:break-all;white-space: normal;font-size:14px;font-weight:bold;height:40px;word-wrap: break-word;white-space: normal;margin:0;padding:0;\"\u003E\n\t\t\t\t\t\u003Ca href=\"http://item.taobao.com/item.htm?id=543160324838&amp;tracelogww=ltckbburl\" target=\"_blank\" title=\"\"\u003E【买3送3赠品】国珍牌破壁松花粉 3g/袋*30袋\u003C/a\u003E\n\t\t\t\t\u003C/p\u003E\n                                                        \u003Cp class=\"lit_shop_type\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap: keep-all;white-space: nowrap;margin:0;padding:0;\"\u003E价格：\u003Cdel\u003E￥236.00\u003C/del\u003E\u003C/p\u003E\n                                        \u003Cp class=\"lit_txt\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap: keep-all;white-space: nowrap;margin:0;padding:0;\"\u003E促销：\u003Cspan style=\"color:#f60;\"\u003E￥152.00\u003C/span\u003E\u003C/p\u003E\n                \t\t\t\t\t\t\t\t\u003Cp class=\"lit_txt\" style=\"line-height:20px;word-wrap:break-word;white-space: normal;margin:0;padding:0;\"\u003E运费：\n\t\t\t\t\t\t\t\t\t\u003Cspan style=\"color: #ccc;\"\u003E\n\t\t\t\t\t\t\t\t\t\t卖家承担运费\n\t\t\t\t\t\u003C/span\u003E\n\t\t\t\t\t\t\t\t\u003C/p\u003E\n\n\t\t\t\u003C/div\u003E\n\t\t\u003C/div\u003E\n\t\t\u003Cdiv class=\"link_con_other\" style=\"border-top:1px solid #dcdcdc;padding:8px 0 0 0;margin:5px 0 0 0;color:#999;*zoom:1;overflow:hidden;height:26px;\"\u003E\n\t\t\t\t\t\t\t\u003Ca href=\"http://item.taobao.com/item.htm?id=543160324838&on_comment=1\" dotting-url=\"http://gm.mmstat.com/ww.1.5.1.1.25?\" target=\"_blank\" style=\"color:#999;text-decoration:none;float:left;\" title=\"评价（5647）\"\u003E评价(5647)\u003C/a\u003E\n\t\t\t\t\t\u003C/div\u003E\n\t\t\t\u003C/div\u003E\n\t\u003Cdiv class=\"link_btm\" style=\"width:100%;height:10px;background:url(http://gtms01.alicdn.com/tps/i1/T1icc0FcFiXXa4tmHx-300-20.png) no-repeat 0 -10px;overflow:hidden;margin:-1px 0 0 0;padding:0;\"\u003E\u003C/div\u003E\n\u003C/div\u003E\n","strToken":"","vecPicUrls":["http://img02.taobaocdn.com:80/tfscom/i7/TB1barNRVXXXXalapXX2kdi9XXX_033853.jpg_460x460.jpg"]}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  

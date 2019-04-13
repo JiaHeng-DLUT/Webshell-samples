@@ -1,0 +1,31 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th colspan="2">商品信息</th>
+				<th width="100">价格</th>
+				<th width="100">收藏日期</th>
+				<th width="80">操作</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td width="50"><a href="{pe_url('product-'.$v['product_id'])}" class="dingdan_img" target="_blank"><img src="{pe_thumb($v['product_logo'], 100, 100)}" /></a></td>
+				<td class="aleft" style="padding-left:0"><a href="{pe_url('product-'.$v['product_id'])}" target="_blank" class="cblue">{$v['product_name']}</a></td>
+				<td>¥{$v['product_money']}</td>
+				<td>{pe_date($v['collect_atime'], 'Y-m-d')}</td>
+				<td><a href="javascript:pe_confirm('删除此收藏', 'user.php?mod=collect&act=del&id={$v['collect_id']}&token={$pe_token}');" class="tag_gray">删除</a></td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

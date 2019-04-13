@@ -1,0 +1,371 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+<div class="breadcrumb"><span class="fa fa-home"></span><span><a href="">{$Think.lang.homepage}</a></span> <span class="arrow">></span> <span>{$Think.lang.merchant_entry_application}</span> </div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.merchant_entry_application}</h3>
+        </div>
+        <div class="content">
+            {notempty name="help_list"}
+            {foreach name="help_list" item="val" key="key" }
+            <dl show_id="{$val.helptype_id}">
+                <dt onclick="show_list('{$val.helptype_id}');" style="cursor: pointer;"> <i class="hide"></i>{$val.helptype_name}</dt>
+                <dd style="display:none;">
+                    <ul>
+                        {notempty name="$val.help_list"}
+                        {foreach name="$val.help_list" item="v" key="k" }
+                        <li> <i></i>
+                            {notempty name="$v.help_url"}
+                            <a href="{:url('Showhelp/index',['t_id'=>$v.helptype_id,'help_id'=>$v.help_id])}" target="_blank">{$v.help_title}</a>
+                            {else /}
+                            <a href="{$v.help_url}" target="_blank">{$v.help_title}</a>
+                            {/notempty}
+                        </li>
+                        {/foreach}
+                        {/notempty}
+                    </ul>
+                </dd>
+            </dl>
+            {/foreach}
+            {/notempty}
+             <dl>
+                <dt class="{if $sub_step=='step0'}current{/if}"> <i class="hide"></i>{$Think.lang.enter_agreement}</dt>
+            </dl>
+            <dl show_id="0">
+                <dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>{$Think.lang.submit_application}</dt>
+                <dd>
+                    <ul>
+                        <li class="{if $step=='1'}current{/if}"><i></i>{$Think.lang.company_qualification_information}</li>
+                        <li class="{if $step=='2'}current{/if}"><i></i>{$Think.lang.financial_qualification_information}</li>
+                        <li class="{if $step=='3'}current{/if}"><i></i>{$Think.lang.store_operation_information}</li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="{if $step=='4'}current{/if}"> <i class="hide"></i>{$Think.lang.contract_signing_payment}</dt>
+            </dl>
+            <dl>
+                <dt> <i class="hide"></i>{$Think.lang.store_opening}</dt>
+            </dl>
+        </div>
+         <div class="title">
+            <h3>{$Think.lang.platform_contact}</h3>
+        </div>
+        <div class="content">
+            <ul>
+                {notempty name="phone_array"}
+                {foreach name="phone_array" item="val" key="key" }
+                {$Think.lang.phone}{$val}
+                {/foreach}
+                {/notempty}
+                <li>{$Think.lang.email}:{$Think.config.site_email}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-layout">
+       <div class="joinin-step">
+            <ul>
+                <li class="step1 {if $step >= 0}current{/if}"><span>{$Think.lang.enter_agreement}</span></li>
+                <li class="{if $step >= 1}current{/if}"><span>{$Think.lang.company_qualification_information}</span></li>
+                <li class="{if $step >= 2}current{/if}"><span>{$Think.lang.financial_qualification_information}</span></li>
+                <li class="{if $step >= 3}current{/if}"><span>{$Think.lang.store_operation_information}</span></li>
+                <li class="{if $step >= 4}current{/if}"><span>{$Think.lang.contract_signing_payment}</span></li>
+                <li class="step6"><span>{$Think.lang.store_opening}</span></li>
+            </ul>
+        </div>
+        <div class="joinin-concrete">
+            <!--区别部分 BEGIN-->
+
+
+            
+            
+            
+
+<!-- 店铺信息 -->
+
+<div id="apply_store_info" class="apply-store-info">
+  <div class="alert">
+    <h4>{$Think.lang.matters_needing_attention}：</h4>
+    {$Think.lang.merchant_information1}</div>
+  <form id="form_store_info" action="{:url('Sellerjoinin/step4')}" method="post" >
+    <table border="0" cellpadding="0" cellspacing="0" class="all">
+      <thead>
+        <tr>
+          <th colspan="20">{$Think.lang.store_operation_information}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="w150"><i>*</i>{$Think.lang.merchant_account}：</th>
+          <td><input id="seller_name" name="seller_name" type="text" class="w200"/>
+            <span></span>
+            <p class="emphasis">{$Think.lang.merchant_information2}</p></td>
+        </tr>
+        <tr>
+          <th class="w150"><i>*</i>{$Think.lang.store_name}：</th>
+          <td><input name="store_name" type="text" class="w200"/>
+            <span></span>
+            <p class="emphasis">{$Think.lang.merchant_information3}</p></td>
+        </tr>
+        <tr>
+            <th><i>*</i>{$Think.lang.store_level}：</th>
+            <td><select name="storegrade_id" id="storegrade_id">
+                <option value="">{$Think.lang.ds_please_choose}</option>
+                {notempty name="grade_list"}
+                {foreach name="grade_list" item="v" key="k" }
+                {php}$goods_limit = empty($v['storegrade_goods_limit'])? lang('no_limit'):$v['storegrade_goods_limit'];{/php}
+                {php}$explain = lang('commodity_number').'：'.$goods_limit.lang('template_number').' ：'.$v['storegrade_template_number'].lang('fee_standard').' ：'.$v['storegrade_price'].lang('additional_features').'：'.$v['function_str'];{/php}
+                <option value="{$v.storegrade_id}" data-explain="{$explain}">{$v.storegrade_name}</option>
+                {/foreach}
+                {/notempty}
+              </select>
+              <input id="storegrade_name" name="storegrade_name" type="hidden" />
+              <span></span>
+              <div id="grade_explain" class="grade_explain"></div></td>
+          </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.store_opening_hours}：</th>
+          <td><select name="joinin_year" id="joinin_year">
+              <option value="1">1 {$Think.lang.year}</option>
+              <option value="2">2 {$Think.lang.year}</option>
+            </select></td>
+        </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.store_classification}：</th>
+          <td><select name="storeclass_id" id="storeclass_id">
+              <option value="">{$Think.lang.ds_please_choose}</option>
+              {notempty name="store_class"}
+              {foreach name="store_class" item="v" key="k" }
+              <option value="{$v.storeclass_id}">{$v.storeclass_name} ({$Think.lang.margin}：{$v.storeclass_bail} {$Think.lang.ds_yuan})</option>
+              {/foreach}
+              {/notempty}
+            </select>
+            <span></span>
+            <p class="emphasis">{$Think.lang.merchant_information4}</p></td>
+        </tr>
+        <tr>
+          <th><i>*</i>{$Think.lang.business_category}：</th>
+          <td><a href="###" id="btn_select_category" class="btn">+{$Think.lang.select_add_class}</a>
+            <div id="gcategory" style="display:none;">
+              <select id="gcategory_class1">
+                <option value="0">{$Think.lang.ds_please_choose}</option>
+                {notempty name="gc_list"}
+                {foreach name="gc_list" item="gc" }
+                <option value="{$gc.gc_id}" data-explain="{$gc.commis_rate}">{$gc.gc_name}</option>
+                {/foreach}
+                {/notempty}
+              </select>
+              <input id="btn_add_category" type="button" value="{$Think.lang.ds_common_button_confirm}" />
+              <input id="btn_cancel_category" type="button" value="{$Think.lang.ds_cancel}" />
+            </div>
+            <input id="store_class" name="store_class" type="hidden" />
+            <span></span>
+	    <p class="emphasis" id="gc_classtip"></p>
+	    </td>
+        </tr>
+        <tr>
+          <td colspan="2"><table border="0" cellpadding="0" cellspacing="0" id="table_category" class="type">
+              <thead>
+                <tr>
+                  <th class="w120 tc">{$Think.lang.one_level_class}</th>
+                  <th class="w120 tc">{$Think.lang.two_level_class}</th>
+                  <th class="tc">{$Think.lang.three_level_class}</th>
+                  <th class="w50 tc">{$Think.lang.ds_common_button_operate}</th>
+                </tr>
+              </thead>
+            </table></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="20">&nbsp;</td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <div class="bottom"><a id="btn_apply_store_next" href="javascript:;" class="btn">{$Think.lang.submit_application}</a>
+  </div>
+</div>
+            <script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	gcategoryInit("gcategory");
+
+    jQuery.validator.addMethod("seller_name_exist", function(value, element, params) { 
+        var result = true;
+        $.ajax({  
+            type:"GET",  
+            url:"{:url('Sellerjoinin/check_seller_name_exist')}",  
+            async:false,  
+            data:{seller_name: $('#seller_name').val()},  
+            success: function(data){  
+                if(data == 'true') {
+                    $.validator.messages.seller_name_exist = "{$Think.lang.seller_account_already_exists}";
+                    result = false;
+                }
+            }  
+        });  
+        return result;
+    }, '');
+
+    $('#form_store_info').validate({
+        errorPlacement: function(error, element){
+            element.nextAll('span').first().after(error);
+        },
+        rules : {
+            seller_name: {
+                required: true,
+                maxlength: 50,
+                seller_name_exist: true
+            },
+            store_name: {
+                required: true,
+                maxlength: 50,
+                remote : "{:url('Sellerjoinin/checkname')}"
+            },
+            storegrade_id: {
+                required: true
+            },
+            storeclass_id: {
+                required: true
+            },
+            store_class: {
+                required: true,
+                min: 1
+            }
+        },
+        messages : {
+            seller_name: {
+                required: '{$Think.lang.fill_seller_user_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+            },
+            store_name: {
+                required: '{$Think.lang.fill_store_name}',
+                maxlength: jQuery.validator.format("{$Think.lang.most_words}"),
+                remote : '{$Think.lang.store_name_already_exists}'
+            },
+            storegrade_id: {
+                required: '{$Think.lang.select_store_level}'
+            },
+            storeclass_id: {
+                required: '{$Think.lang.select_store_category}'
+            },
+            store_class: {
+                required: '{$Think.lang.select_business_category}',
+                min: '{$Think.lang.select_business_category}'
+            }
+        }
+    });
+
+    $('#btn_select_category').on('click', function() {
+        $('#gcategory').show();
+        $('#btn_select_category').hide();
+        $('#gcategory_class1').val(0).nextAll("select").remove();
+    });
+
+    $('#btn_add_category').on('click', function() {
+        var tr_category = '<tr class="store-class-item">';
+        var category_id = '';
+        var category_name = '';
+        var class_count = 0;
+        var validation = true;
+        var i = 1;
+        $('#gcategory').find('select').each(function() {
+            if(parseInt($(this).val(), 10) > 0) {
+                var name = $(this).find('option:selected').text();
+                tr_category += '<td>';
+                tr_category += name;
+                if ($('#gcategory > select').size() == i) {
+                    //最后一级显示分佣比例
+                    tr_category += ' ({$Think.lang.commission_ratio}：' + $(this).find('option:selected').attr('data-explain') + '%)';
+                }
+                tr_category += '</td>';
+                category_id += $(this).val() + ',';
+                category_name += name + ',';
+                class_count++;
+            } else {
+                validation = false;
+		$('#gc_classtip').html('{$Think.lang.select_final_classification}');
+            }
+            i++;
+        });
+        if(validation) {
+            for(; class_count < 3; class_count++) {
+                tr_category += '<td></td>';
+            }
+            tr_category += '<td><a dstype="btn_drop_category" href="javascript:;">{$Think.lang.ds_delete}</a></td>';
+            tr_category += '<input name="store_class_ids[]" type="hidden" value="' + category_id + '" />';
+            tr_category += '<input name="store_class_names[]" type="hidden" value="' + category_name + '" />';
+            tr_category += '</tr>';
+            $('#table_category').append(tr_category);
+            $('#gcategory').hide();
+            $('#btn_select_category').show();
+            select_store_class_count();
+        } else {
+            layer.msg('{$Think.lang.select_classification}');
+        }
+    });
+
+    $('#table_category').on('click', '[dstype="btn_drop_category"]', function() {
+        $(this).parent('td').parent('tr').remove();
+        select_store_class_count();
+    });
+
+    // 统计已经选择的经营类目
+    function select_store_class_count() {
+        var store_class_count = $('#table_category').find('.store-class-item').length;
+        $('#store_class').val(store_class_count);
+    }
+
+    $('#btn_cancel_category').on('click', function() {
+        $('#gcategory').hide();
+        $('#btn_select_category').show();
+    });
+
+    $('#storegrade_id').on('change', function() {
+        if($(this).val() > 0) {
+            $('#grade_explain').text($(this).find('option:selected').attr('data-explain'));
+            $('#storegrade_name').val($(this).find('option:selected').text());
+        } else {
+            $('#storegrade_name').val('');
+        }
+    });
+    $('#storeclass_id').on('change', function() {
+        if($(this).val() > 0) {
+            $('#storeclass_name').val($(this).find('option:selected').text());
+        } else {
+            $('#storeclass_name').val('');
+        }
+    });
+    $('#btn_apply_store_next').on('click', function() {
+        $('#form_store_info').submit();
+    });
+});
+</script> 
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+
+            <!--区别部分 END-->
+        </div>
+    </div>
+</div>
+
+
+
+{/block}
+

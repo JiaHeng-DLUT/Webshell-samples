@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* custom */
+body {background:#ccc;}
+body, input, select, textarea {color: #555; font: normal 12px Verdana, Arial, Helvetica, sans-serif; vertical-align: middle;}
+a {color: #333; text-decoration: none;}
+a:hover {color: #f30; text-decoration: underline;}
+.sel {background: #fff url(ipt.png); border: solid 1px #dadada; height: 23px;}
+.ipt { border-top: solid 1px #dadada;border-left: solid 1px #dadada;padding: 7px;}
+.btn {    background: #62A1E2;
+    border: solid 1px #62A1E2;
+    color: #fff;
+    _padding: 0px 3px;
+    padding: 7px 15px 7px 15px;     margin-left: 28px; width: 148px;}
+.btn:hover{background:#2666A9;cursor:pointer;}
+/* loginbox */
+#loginbox {border: solid 1px #FFFFFF;margin: 100px auto 0px auto;width: 350px;box-shadow: 2px 4px 40px #BBB5B5;}
+#loginbox h2 {background: #62A1E2; color: #fff; font: bold 12px/120% normal; padding:15px 17px}
+#loginbox div {}
+#formbox {background: #fff; padding: 15px 0px 15px 30px;}
+#formbox table tr th {font: 12px normal; padding: 15px 5px; text-align: right; width: 35%;}
+#formbox table tr td {line-height: 25px;}
+#btnbox {background: #F9F9F9; border-top: solid 1px #ccc; clear: both; color: #be5050; padding: 10px; text-align: center;}
+.copyright{text-align:center;padding:10px;color: #9E9D9D;}
+.copyright a{color:#9E9D9D;}

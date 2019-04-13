@@ -1,0 +1,91 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\DB;
+use think\facade\Request;
+class MailLog extends Common
+{
+	public function index(){
+  $post = request()->param(); // 获取某个get变量
+    if($post){
+            $keywords = $post['keywords'];
+            $status = $post['status'];
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+              $where = 1;
+             if($keywords['value']){
+                 $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+             if(isset($status)){
+              $where .= " and status = '$status'";
+             }
+
+      }else{
+           $where ='';
+           $order =  array(
+
+             );
+      }
+
+     $select  = array('id'=>'邮件ID','send_username'=>'发件人','receive_username'=>'收件人','receive_email'=>'收件邮箱');
+    
+     $one_where = array(array('field'=>'status','data'=>array('0'=>'等待发送','1'=>'发送成功','2'=>'发送失败') ) );
+     $two_where = array();
+
+     $date = array(
+                  array('title'=>'发件时间','start_name'=>'开始时间','end_name'=>'结束时间'),
+            );
+     // ,'bankname'=>'支付平台'
+     $this->assign('add',$add);
+     $this->assign('one_where',$one_where);
+     $this->assign('two_where',$two_where);
+     $this->assign('select',$select);
+     $this->assign('date',$date);
+     $list = DB::name('mail_log')->where($where)->order($order)->paginate(10);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list',$list);
+     return $this->fetch();
+	}
+
+    public function del(){
+    // 删除
+    $param = request()->param();
+    $id = $param['id'];
+      if(empty($id)){
+        return error_json('非法请求');
+      }
+     if(model('mail_log')->del($id)){  
+        return success_json('删除成功');
+      }else{
+        return error_json('删除失败');
+      }
+  }
+    public function delAll(){
+    // 删除
+    if(!request()->isPost()){    return error_json('非法请求'); }
+    $type = input('post.type');
+
+      if($type != 'all'){
+        return error_json('请求参数错误');
+      }
+
+        model('mail_log')->delAll(); 
+        return success_json('清空成功');
+     
+  }
+
+}

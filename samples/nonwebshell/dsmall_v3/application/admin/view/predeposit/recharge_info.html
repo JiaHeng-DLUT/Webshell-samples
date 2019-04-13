@@ -1,0 +1,98 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>预存款</h3>
+                <h5></h5>
+            </div>
+        </div>
+    </div>
+
+    <table class="ds-default-table">
+        <tbody>
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_sn}:</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_sn}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_membername}:</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_member_name}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_recharge_price}({$Think.lang.currency_zh}):</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_amount}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_apptime}:</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_addtime|date="Y-m-d H:i:s",###}</td>
+                <td></td>
+            </tr>
+            {if $info.pdr_paymenttime}
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_payment}:</label></td>
+            </tr>
+            <tr>
+                <td>{:get_order_payment_name($info['pdr_payment_code'])}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_paytime}:</label></td>
+            </tr>
+            <tr>
+                <td>
+                    {if $info.pdr_paymenttime eq '0'}
+                    {$info.pdr_paymenttime|date="Y-m-d",###}
+                    {else}
+                    {$info.pdr_paymenttime|date="Y-m-d H:i:s",###}
+                    {/if}
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><label>第三方支付平台交易号:</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_trade_sn}</td>
+                <td></td>
+            </tr>
+            {/if}
+            <!-- 显示管理员名称 -->
+            {if $info.pdr_admin neq ''}
+            <tr>
+                <td colspan="2" ><label>{$Think.lang.admin_predeposit_adminname}:</label></td>
+            </tr>
+            <tr>
+                <td>{$info.pdr_admin}</td>
+                <td></td>
+            </tr>
+            {/if}
+        </tbody>
+        {if $info.pdr_payment_state eq '0'}
+        <tfoot >
+            <tr>
+                <td colspan="2">
+                    <a class="btn dsui-btn-add" href="{:url('Predeposit/recharge_edit',['id'=>$info.pdr_id])}"><span>{$Think.lang.admin_predeposit_payed}</span></a>
+                </td>
+            </tr>
+        </tfoot>
+        {/if}
+    </table>
+
+</div>

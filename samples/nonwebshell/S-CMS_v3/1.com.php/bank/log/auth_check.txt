@@ -1,0 +1,1 @@
+$_SESSION["auth"]=array("fail","1MHwwfHMxMXxzMTA0fHM5NHxzOTV8czk5fHM5Nnx3MXw=","-程序未授权","-powered by S-CMS","{@SL_网站名称}","{@SL_网站标题}");$authorization=$_SESSION["auth"][0];$auth4=$_SESSION["auth"][1];

@@ -1,0 +1,72 @@
+<div class="pk-container">
+	<div class=" pk-background-color-white pk-padding-15 pk-padding-top-30">
+		<form name="form_reg" method="post" action="index.php?c=savereg&return=json">
+			<div id="hadsky-regbox" class="pk-row pk-margin-left-right-auto" style="max-width:360px">
+				<div class="pk-w-sm-12 pk-text-center pk-text-xl pk-margin-bottom-15 pk-text-bold pk-text-primary">用户注册</div>
+
+				<input type="hidden" name="sex" value="s" />
+				<input type="hidden" name="nickname" value="闪亮的昵称~" />
+
+				<div class="pk-row pk-padding-15 pk-margin-bottom-15">
+					<div class="pk-w-sm-12 pk-text-center">
+						<img id="uploaduserheadbox" class="pk-display-block pk-margin-left-right-auto pk-cursor-pointer pk-radius-all" src="userhead/upload.png" alt="上传头像" style="width:80px;height:80px">
+						<input type="hidden" name="userhead" value="" />
+					</div>
+				</div>
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">用户名</label>
+					<div class="pk-w-sm-9">
+						<input type="text" class="pk-textbox" name="username" value="{$_G['TEMP']['REGUSERNAME']}" placeholder="{$_G['TEMP']['HANZI']}" title="{$_G['TEMP']['HANZI']}" autocomplete="off" required minlength="1" maxlength="24" onchange="form_reg.nickname.value=this.value" />
+					</div>
+				</div>
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">性别</label>
+					<div class="pk-w-sm-9">
+						<select id="sexSelect" name="sex" class="pk-textbox">
+							<option value="b">男生</option>
+							<option value="g">女生</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">邮箱</label>
+					<div class="pk-w-sm-9">
+						<input type="email" class="pk-textbox" name="email" value="{$_G['TEMP']['REGEMAIL']}" placeholder="Email地址，一但填写无法更改" autocomplete="off" required />
+					</div>
+				</div>
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">设置密码</label>
+					<div class="pk-w-sm-9">
+						<input type="text" class="pk-textbox" name="password" value="" placeholder="任意字符，5-16位" required minlength="5" maxlength="16" autocomplete="off" />
+					</div>
+				</div>
+
+				{loadVerifycode('reg','reg')}
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5"></label>
+					<div class="pk-w-sm-9 pk-text-xs">
+						<span class="fa fa-fw fa-check-square-o pk-cursor-pointer pk-text-primary pk-text-sm" onclick="if($(this).hasClass('fa-square-o')){$('#regbtn').prop('disabled',false)}else{$('#regbtn').prop('disabled',true)}$(this).toggleClass('fa-square-o fa-check-square-o')"></span>我已阅读并同意遵守
+						<a class="pk-text-secondary pk-hover-underline" href="javascript:" onclick="regagreement()">用户注册协议</a>
+					</div>
+				</div>
+
+				<div class="pk-row pk-margin-bottom-15">
+					<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+					<div class="pk-w-sm-9">
+						<button id="regbtn" type="button" class="pk-btn pk-btn-danger">立即注册</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<template id="regagreement_txt">{$_G['SET']['REGAGREEMENT']}</template>
+<script>
+	var _autohead = parseInt("{$_G['SET']['REGUSERHEADAUTO']}") || 0;
+</script>
+<script src="template/default/js/reg.js"></script>

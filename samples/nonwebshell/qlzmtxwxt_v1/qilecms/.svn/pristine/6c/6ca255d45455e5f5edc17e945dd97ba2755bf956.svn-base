@@ -1,0 +1,298 @@
+ 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.126007s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.021001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ error ] [2]Invalid argument supplied for foreach()[D:\WWW\tp5_qilecms\qilecms\admin\controller\Upload.php:15]
+---------------------------------------------------------------
+[ 2017-12-15T18:32:45+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.132007s][吞吐率：7.58req/s] [内存消耗：2,233.52kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=47',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.030002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` WHERE  `group_id` = 3 LIMIT 1 [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:32:46+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.115006s][吞吐率：8.70req/s] [内存消耗：2,082.00kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=47',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '48',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '3',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] 0 [ RunTime:0.016001s ]
+[ error ] [2]Missing argument 1 for think\Model::---------------
+[ 2017-12-15T18:30:56+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.115007s][吞吐率：8.70req/s] [内存消耗：2,081.95kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=47',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '52',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'group_icon' => '',
+  'sort' => '3',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] 0 [ RunTime:0.009000s ]
+[ error ] [2]Missing argument 1 for think\Model::data(), called in D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php on line 62 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:103]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:105]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:111]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\thinkphp\library\think\model\concern\Attribute.php:121]
+[ error ] [4096]Argument 1 passed to think\db\Query::insert() must be of the type array, null given, called in D:\WWW\tp5_qilecms\thinkphp\library\think\Model.php on line 442 and defined[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2066]
+[ error ] [2]array_merge(): Argument #2 is not an array[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Query.php:2070]
+---------------------------------------------------------------
+[ 2017-12-15T18:31:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.272015s][吞吐率：3.68req/s] [内存消耗：2,233.56kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=47',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.168009s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQd = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.023001s ]
+
+[ 2017-12-08T16:49:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.019001s ]
+INFO: [ route_check ] --END-- [ RunTime:0.019001s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.014000s ]
+
+[ 2017-12-08T16:50:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.000000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.011000s ]
+
+[ 2017-12-08T16:51:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: [ app_be------------------------------------------------
+[ 2017-12-17T12:17:03+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/finance_recharge/index.html
+[ info ] 127.0.0.1/admin/finance_recharge/index.html [运行时间：0.099006s][吞吐率：10.10req/s] [内存消耗：2,055.23kb] [文件加载：78]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.015000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_finance_recharge` [ RunTime:0.015001s ]
+[ error ] [8]Use of undefined constant where - assumed 'where'[D:\WWW\tp5_qilecms\qilecms\admin\model\FinanceRecharge.php:10]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'where' in 'where clause'[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Connection.php:650]
+---------------------------------------------------------------
+[ 2017-12-17T12:17:03+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/finance_recharge/index.html
+[ info ] 127.0.0.1/admin/finance_recharge/index.html [运行时间：0.106006s][吞吐率：9.43req/s] [内存消耗：2,055.23kb] [文件加载：78]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.014000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_finance_recharge` [ RunTime:0.015001s ]
+[ error ] [8]Use of undefined constant where - assumed 'where'[D:\WWW\tp5_qilecms\qilecms\admin\model\FinanceRecharge.php:10]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'where' in 'where clause'[D:\WWW\tp5_qilecms\thinkphp\library\think\db\Connection.php:650]
+---------------------------------------------------------------
+[ 2017-12-17T12:17:03+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/finance_recharge/index.html
+[ info ] 127.0.0.1/admin/finance_recharge/index.html [运行时间：0.099006s][吞吐率：10.10req/s] [内存消耗：2,055.23kb] [文件加载：78]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-langu﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="ICSharpCode.SharpZipLib" publicKeyToken="1b03e6acf1164f73" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-0.85.2.329" newVersion="0.85.2.329" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.6.8.0" newVersion="2.6.8.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Threading.Tasks" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.6.8.0" newVersion="2.6.8.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0,Profile=Client" /></startup></configuration>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" /></startup>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="ICSharpCode.SharpZipLib" publicKeyToken="1b03e6acf1164f73" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-0.85.2.329" newVersion="0.85.2.329" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.6.8.0" newVersion="2.6.8.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Threading.Tasks" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.6.8.0" newVersion="2.6.8.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

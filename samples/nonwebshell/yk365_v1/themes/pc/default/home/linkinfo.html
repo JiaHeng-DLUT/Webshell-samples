@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By www.youke365.site" />
+<link href="<{$site_root}>themes/default/skin/style.css" rel="stylesheet" type="text/css" />
+<{include file="base.html"}>
+</head>
+
+<body>
+<{include file="topbar.html"}>
+	<{include file="header.html"}>
+<div class="wrapper">
+
+    <div class="mainbox" class="clearfix">
+    	<div class="mainbox-left">
+        	<div class="linkinfo">
+            	<h1 class="linkname"><span style="float: right;"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=<{$user.user_qq}>&amp;site=<{$user.nick_name}>&amp;menu=yes" target="_blank"><img border="0" alt="点击这里给我发消息" src="http://wpa.qq.com/pa?p=2:<{$user.user_qq}>:41"></a></span><{$link.link_name}>(<{$link.web_url}>)</h1>
+				<div class="clearfix params">
+					<a href="<{$link.web_url}>" target="_blank"><img src="<{$link.web_pic}>" width="130" height="110" alt="<{$link.web_name}>" class="wthumb" /></a>
+					<ul class="linkitem">
+						<li><strong>交易类型：</strong><{$link.deal_type}></li>
+                        <li><strong>链接类型：</strong><{$link.link_type}></li>
+                        <li><strong>链接位置：</strong><{$link.link_pos}></li>
+                        <li><strong>链接价格：</strong><{$link.link_price}></li>
+                        <li><strong>浏览次数：</strong><{$link.link_views}> 次</li>
+                        <li></li>
+					</ul>
+				</div>
+                <div class="otherinfo">
+                <table class="layui-table " lay-even lay-skin="nob">
+                      <colgroup>
+                        <col width="50">
+                        <col width="200">
+                        <col>
+                      </colgroup>
+
+                      <tbody>
+                        <tr>
+                          <td>要 求 一 </td>
+                          <td>百度收录必须超过 <{$link.link_if1}> </td>
+                        </tr>
+                        <tr>
+                          <td>要 求 二 </td>
+                          <td>百度值 >= <{$link.link_if2}></td>
+                        </tr>
+                        <tr>
+                          <td>要 求 三 </td>
+                          <td>首页在百度的快照时间不超过 <{$link.link_if3}> </td>
+                        </tr>
+                        <tr>
+                          <td>要 求 四 </td>
+                          <td>首页外链不得超过 <{$link.link_if4}> </td>
+                        </tr>
+                        <tr>
+                          <td>补充说明 </td>
+                          <td><{$link.link_intro}> </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+				</div>
+            </div>
+        </div>
+        <div class="mainbox-right">
+
+            <div class="blank10"></div>
+            <div class="bestart">
+            	<h3>人气链接</h3>
+                <ul class="artlist_b">
+                    <{foreach from=get_linkinfo(0) item=vo }>
+                	<li>【<{$vo.deal_type}>】<a href="<{$vo.link_url}>"><{$vo.link_name}></a></li>
+
+                    <{/foreach}>
+                </ul>
+            </div>
+                <!-- 广告 开始 250*200-->
+            <div class="ad250x200"><{get_adcode(14)}></div>
+               <!-- 广告 结束 250*200-->
+        </div>
+    </div>
+  
+</div>
+  <{include file="footer.html"}>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<div class="eject_con">
+    <div id="warning" class="alert alert-error"></div>
+    <form method="post" id="cash_form" action="{:url('Sellerdeposit/recharge_add')}">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.sellerdeposit_recharge_deposit}：</dt>
+            <dd><input name="pdc_amount" type="text" class="text w50" id="pdc_amount" maxlength="10" ><em class="add-on">
+                    <i class="fa fa-cny"></i></em> <span></span>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit"  class="submit" value="{$Think.lang.ds_submit}" /></label>
+        </div>
+    </form>
+</div>
+<script>
+$(document).ready(function(){
+    $('#cash_form').validate({
+    	submitHandler:function(form){
+            ds_ajaxpost('cash_form');
+    	}
+    });
+});
+</script>

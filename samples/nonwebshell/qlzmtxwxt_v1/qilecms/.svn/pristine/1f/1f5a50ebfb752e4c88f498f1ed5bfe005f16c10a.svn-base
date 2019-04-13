@@ -1,0 +1,199 @@
+;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.016001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:52]
+---------------------------------------------------------------
+[ 2017-12-15T19:01:39+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/9.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/9.html [运行时间：0.167009s][吞吐率：5.99req/s] [内存消耗：2,233.37kb] [文件加载：79]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=49',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.072004s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.013001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.011000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` WHERE  `group_id` = 9 LIMIT 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-15T19:01:40+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/9.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/9.html [运行时间：0.080004s][吞吐率：12.50req/s] [内存消耗：2,079.84kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=49',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/9.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '49',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '32',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.016001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:52]
+---------------------------------------------------------------
+[ 2017-12-15T19:01:43+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/index/index.html
+[ info ] 127.0.0.1/index.php/admin/index/index.html [运行时间：0.100006s][吞吐率：10.00req/s] [内存消�HTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://127.0.0.1',
+  'accept' => '*/*',
+  'content-length' => '35',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'group_icon' => '',
+  'sort' => '32',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.007000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.024002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.003000s ]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:51]
+[ error ] [1]Call to undefined function app\admin\controller\alert()[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:52]
+---------------------------------------------------------------
+[ 2017-12-15T18:54:05+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/9.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/9.html [运行时间：0.130007s][吞吐率：7.69req/s] [内存消耗：2,066.41kb] [文件加载：76]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=49',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/9.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '49',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '32',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.016001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.013001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: data[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:51]
+[ error ] [1]Call to undefined function app\admin\controller\alert()[D:\WWW\tp5_qilecms\qilecms\admin\controller\MemberGroup.php:52]
+---------------------------------------------------------------
+[ 2017-12-15T18:54:05+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/group_id/9.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/group_id/9.html [运行时间：0.179011s][吞吐率：5.59req/s] [内存消耗：2,004.08kb] [文件加载：72]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=49',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/9.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://127.0.0.1',
+  'accept' => '*/*',
+  'content-length' => '35',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'group_icon' => '',
+  'sort' => '32',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] {"strHtml":"\u003Cdiv class=\"link_wraper\" style=\"width:300px;font-family:Microsoft Yahei;margin:0;padding:0;font-size:12px;\"\u003E\n\t\u003Cdiv class=\"link_top\" style=\"width:100%;height:5px;background:url(http://gtms01.alicdn.com/tps/i1/T1icc0FcFiXXa4tmHx-300-20.png) no-repeat 0 0;overflow:hidden;\"\u003E\u003C/div\u003E\n\t\u003Cdiv class=\"link_con\" style=\"margin:-1px 0 0 0;padding:5px 9px;background:#fafafa;border:solid #dcdcdc;border-width:0 1px;overflow:hidden;*zoom:1;\"\u003E\n\t\t\u003Cdiv class=\"link_con_item\" style=\"overflow: hidden;*zoom:1;margin:0;padding:0;\"\u003E\n\t\t\t\t\t\t\u003Cdiv class=\"link_item_img\" style=\"position:relative;width:126px;height:126px;float:left;margin:0 8px 0 0;padding:0;background:#fff;\"\u003E\n\t\t\t\t                \u003Cul type=\"pic\" style=\"display:none;\"\u003E\n                                            \u003Cli\u003Ehttp://img03.taobaocdn.com:80/tfscom/i1/TB1Bs8eGpXXXXbqXpXXXXXXXXXX_!!0-item_pic.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img01.taobaocdn.com:80/tfscom/i2/733172053/T2mrNiXdBOXXXXXXXX_!!733172053.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img02.taobaocdn.com:80/tfscom/i3/733172053/T2JUl7XiBcXXXXXXXX_!!733172053.jpg_460x460.jpg\u003C/li\u003E\n                                            \u003Cli\u003Ehttp://img01.taobaocdn.com:80/tfscom/i1/733172053/T24.p8XgtcXXXXXXXX_!!733172053.jpg_460x460.jpg\u003C/li\u003E\n                                    \u003C/ul\u003E\n\t\t\t\t\u003Cimg src=\"http://img03.taobaocdn.com:80/tfscom/i1/TB1Bs8eGpXXXXbqXpXXXXXXXXXX_!!0-item_pic.jpg_460x460.jpg\"  master-pic=\"Y\" target-url=\"http://item.taobao.com/item.htm?id=42296218463&amp;tracelogww=ltckbburl\" dotting-url=\"http://gm.mmstat.com/ww.1.5.1.1.23?\" width=\"120\" height=\"120\" style=\"position:absolute;left:3px;top:3px;display:block;margin:0;padding:0;\" /\u003E\n\t\t\t\t                \t\t\t\t\t\t\t\u003C/div\u003E\n\t\t\t\u003Cdiv class=\"link_item_txt\" style=\"float: left;width:146px;margin:0;padding:0;overflow:hidden;\"\u003E\n\t\t\t\t\t\t\t\t\u003Cp class=\"lit_item_name\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap:break-word;word-break:break-all;white-space: normal;font-size:14px;font-weight:bold;height:40px;word-wrap: break-word;white-space: normal;margin:0;padding:0;\"\u003E\n\t\t\t\t\t\u003Ca href=\"http://item.taobao.com/item.htm?id=42296218463&amp;tracelogww=ltckbburl\" target=\"_blank\" title=\"\"\u003E【带二维码】国珍牌破壁松花粉 3g/袋*30袋\u003C/a\u003E\n\t\t\t\t\u003C/p\u003E\n                                                        \u003Cp class=\"lit_shop_type\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap: keep-all;white-space: nowrap;margin:0;padding:0;\"\u003E价格：\u003Cdel\u003E￥236.00\u003C/del\u003E\u003C/p\u003E\n                                        \u003Cp class=\"lit_txt\" style=\"line-height:20px;overflow:hidden;text-overflow: ellipsis;word-wrap: keep-all;white-space: nowrap;margin:0;padding:0;\"\u003E促销：\u003Cspan style=\"color:#f60;\"\u003E￥199.00\u003C/span\u003E\u003C/p\u003E\n                \t\t\t\t\t\t\t\t\u003Cp class=\"lit_txt\" style=\"line-height:20px;word-wrap:break-word;white-space: normal;margin:0;padding:0;\"\u003E运费：\n\t\t\t\t\t\t\t\t\t\u003Cspan style=\"color: #ccc;\"\u003E\n\t\t\t\t\t\t\t\t\t\t卖家承担运费\n\t\t\t\t\t\u003C/span\u003E\n\t\t\t\t\t\t\t\t\u003C/p\u003E\n\n\t\t\t\u003C/div\u003E\n\t\t\u003C/div\u003E\n\t\t\u003Cdiv class=\"link_con_other\" style=\"border-top:1px solid #dcdcdc;padding:8px 0 0 0;margin:5px 0 0 0;color:#999;*zoom:1;overflow:hidden;height:26px;\"\u003E\n\t\t\t\t\t\u003C/div\u003E\n\t\t\t\u003C/div\u003E\n\t\u003Cdiv class=\"link_btm\" style=\"width:100%;height:10px;background:url(http://gtms01.alicdn.com/tps/i1/T1icc0FcFiXXa4tmHx-300-20.png) no-repeat 0 -10px;overflow:hidden;margin:-1px 0 0 0;padding:0;\"\u003E\u003C/div\u003E\n\u003C/div\u003E\n","strToken":"","vecPicUrls":["http://img03.taobaocdn.com:80/tfscom/i1/TB1Bs8eGpXXXXbqXpXXXXXXXXXX_!!0-item_pic.jpg_460x460.jpg"]}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:40+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/message/index.html
+[ info ] 127.0.0.1/index.php/admin/message/index.html [运行时间：0.051002s][吞吐率：19.61req/s] [内存消耗：898.99kb] [文件加载：55]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-12-14T16:36:41+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/index/main.html
+[ info ] 127.0.0.1/index.php/admin/index/main.html [运行时间：0.114006s][吞吐率：8.77req/s] [内存消耗：1,962.45kb] [文件加载：71]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  '

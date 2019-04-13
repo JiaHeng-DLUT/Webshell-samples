@@ -1,0 +1,99 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+<div class="dsm-friend-find"> 
+    <!-- 搜索好友start -->
+    <form method="post" id="search_form" action="{:url('Membersnsfriend/findlist')}">
+      <div class="search-form">
+        <div class="normal"> {$Think.lang.snsfriend_find_keytip}
+          <input type="text" class="text w400" name="searchname" id="searchname" value="{$Request.param.searchname}">
+          <a class="dsm-btn dsm-btn-green" dstype="search_submit">{$Think.lang.snsfriend_search}</a> <a href="javascript:void(0);" dstype="advanced_search" class="dsm-btn">{$Think.lang.snsfriend_advanced_search}</a> </div>
+        <div class="complex" dstype="advanced_search"> {$Think.lang.snsfriend_home}：
+          <select dstype="area" name="provinceid" id="provinceid">
+          </select>
+          <select dstype="area" name="cityid" id="cityid">
+            <option>{$Think.lang.snsfriend_city}</option>
+          </select>
+          <select dstype="area" name="areaid" id="areaid">
+            <option>{$Think.lang.snsfriend_county}</option>
+          </select>
+          {$Think.lang.snsfriend_age}:
+          <select name="age" id="age">
+            <option value="0">{$Think.lang.ds_please_choose}</option>
+            <option value="1">{$Think.lang.snsfriend_age_less_than_18}</option>
+            <option value="2">{$Think.lang.snsfriend_age_between_18_to_24}</option>
+            <option value="3">{$Think.lang.snsfriend_age_between_25_to_30}</option>
+            <option value="4">{$Think.lang.snsfriend_age_between_31_to_35}</option>
+            <option value="5">{$Think.lang.snsfriend_age_more_than_35}</option>
+          </select>
+          {$Think.lang.snsfriend_sex}:
+          <select name="sex" id="sex">
+            <option value="">{$Think.lang.ds_please_choose}</option>
+            <option value="1">{$Think.lang.snsfriend_man}</option>
+            <option value="2">{$Think.lang.snsfriend_woman}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div>
+        {notempty name="memberlist"}
+        <ul class="dsm-friend-list">
+            {foreach name="memberlist" item="v" key="k"}
+            <li id="recordone_{$v.member_id}">
+                <div class="avatar">
+                    <a href="javascript:void(0)" target="_blank">
+                        <img src="{$Think.UPLOAD_SITE_URL}/{if $v.member_avatar}{$Think.ATTACH_AVATAR}/{$v.member_avatar}{else/}{$Think.ATTACH_COMMON}/{$Think.config.default_user_portrait}{/if}" alt="{$v.member_name}" data-param="{'id':{$v.member_id}}" dstype="mcard" />
+                    </a>
+                </div>
+                <dl class="info">
+                    <dt><a href="javascript:void(0)" title="{$v.member_name}" target="_blank" data-param="{'id':{$v.member_id}}" dstype="mcard">{$v.member_name}</a><i class="{$v.sex_class}"></i></dt>
+                    <dd class="area">{$v.member_areainfo}</dd>
+                    <dd><a href="{:url('Membermessage/sendmsg',['member_id'=>$v.member_id])}" target="_blank"><i class="fa fa-envelope"></i>{$Think.lang.ds_message}</a></dd>
+                </dl>
+                <div class="follow" ds_type="signmodule">
+                    <p ds_type="mutualsign" style="{$v.followstate !=2?'display:none;':''}"><i></i>{$Think.lang.snsfriend_follow_eachother}</p>
+                    <p ds_type="followsign" style="{$v.followstate !=1?'display:none;':''}">{$Think.lang.snsfriend_followed}</p>
+                    <a href="javascript:void(0)" class="dsm-btn-mini dsm-btn-green" ds_type="followbtn" data-param='{"mid":"{$v.member_id}"}'style="{$v.followstate !=0?'display:none;':''}">{$Think.lang.snsfriend_followbtn}</a></div>
+            </li>
+            {/foreach}
+        </ul>
+        {else /}
+        <div class="warning-option"><i>&nbsp;</i><span>{$Think.lang.no_record}</span></div>
+        {/notempty}
+    </div>
+  </div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script src="{$Think.HOME_SITE_ROOT}/js/sns_friend.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('a[dstype="search_submit"]').click(function(){
+        // 验证用户名是否为空
+        if($('#searchname').val() != ''){
+            $('#search_form').submit();
+        }else{
+            $('#searchname').addClass('error').focus();
+        }
+    });
+
+    // 高级搜索显示与隐藏
+    $('a[dstype="advanced_search"]').click(function(){
+        $('div[dstype="advanced_search"]').toggle('fast');
+    });
+
+    // 地区
+    areaInit($('select[dstype="area"]:first'),0);
+    $('select[dstype="area"]').change(function(){
+        $(this).nextAll('select[dstype="area"]').each(function(){
+            if ($(this).attr('id') == 'cityid') $(this).html('<option>{$Think.lang.snsfriend_city}</option>');
+            if ($(this).attr('id') == 'areaid') $(this).html('<option>{$Think.lang.snsfriend_county}</option>');
+        });
+        if($(this).next().attr('dstype') == 'area' && !isNaN(parseInt($(this).val()))){
+            $('#area_ids').val($(this).val());
+            areaInit($(this).next().html(''), $(this).val());
+        }
+    });
+});
+</script> 
+
+
+{/block}

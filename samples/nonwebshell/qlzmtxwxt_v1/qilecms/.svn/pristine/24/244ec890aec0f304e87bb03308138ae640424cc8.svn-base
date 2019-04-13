@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<span class="layui-breadcrumb">
+  <a href="javascript:;">首页</a>
+  <a href="javascript:;">导航设置</a>
+  <a href="javascript:;">后台导航</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+
+<div class="layui-form">
+  <table class="layui-table" id="nav-table">
+    <colgroup>
+      <col width="50">
+      <col width="300">
+      <col width="300">
+      <col width="120">
+      <col width="50">
+      <col width="80">
+      <col width="280">
+
+    </colgroup>
+    <thead>
+      <tr>
+        <th><input type="checkbox" name="selectAll"  lay-skin="primary" id="selectAll" lay-filter="selectAll" ></th>
+
+        <th>导航名称</th>
+        <th>链接地址</th>
+        <th>图标</th>
+        <th>状态</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+  {volist name="list" id="vo"}
+      <tr data-id="{$vo.id}" data-pid="{$vo.pid}" >
+        <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo.id}" title="" class="id"  > </td>
+
+        <td><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo.id}" value="{$vo.name}"></td>
+
+        <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo.id}" value="{$vo.url}"></td>
+
+        <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo.id}" value="{$vo.icon}"></td>
+
+
+
+        <td><input type="checkbox" class="status_{$vo.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo['status'] ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="text" name="order" lay-verify="order" autocomplete="off" placeholder="" class="layui-input order_{$vo.id}" value="{$vo.order}"></td>
+        <td>
+        <button class="layui-btn layui-btn-primary layui-btn-sm add-nav" onclick="add('{:url("adminNav/add",array("pid"=>$vo.id))}','添加二级导航','500px','80%')" ><i class="layui-icon">添加二级导航</i></button>
+  
+      <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="del('{:url("adminNav/del",array("id"=>$vo.id))}')">
+      <i class="layui-icon"></i></button></td>
+      </tr>
+        {volist name="vo.children" id="vo2"}
+          <!-- 显示二级导航 -->
+              <tr data-id="{$vo2.id}" data-pid="{$vo2.pid}" >
+            <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo2.id}" title="" class="id"  > </td>
+
+            <td>
+            
+            <div class="layui-form-mid">|——</div>
+            <div class="layui-input-inline" style="width: 200px;float:left">
+            <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo2.id}" value="{$vo2.name}" ></div></td>
+
+            <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo2.id}" value="{$vo2.url}"></td>
+
+            <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo2.id}" value="{$vo2.icon}"></td>
+
+
+
+
+            <td><input type="checkbox" class="status_{$vo2.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo2['status'] ==1}checked{/if} lay-text="显|隐"></td>
+
+            <td><input type="text" name="order" lay-verify="order" autocomplete="off" placeholder="" class="layui-input order_{$vo2.id}" value="{$vo2.order}"></td>
+            <td>
+            <button class="layui-btn layui-btn-primary layui-btn-sm add-nav" onclick="add('{:url("adminNav/add",array("pid"=>$vo2.id))}','添加三级导航','500px','80%')" ><i class="layui-icon">添加三级导航</i></button>
+      
+          <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="del('{:url("adminNav/del",array("id"=>$vo2.id))}')"><i class="layui-icon"></i></button></td>
+          </tr>  
+                    {volist name="vo2.children" id="vo3"}
+              <!-- 显示三级导航 -->
+               <tr data-id="{$vo3.id}" data-pid="{$vo3.pid}" >
+                <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo3.id}" title="" class="id"  > </td>
+
+                <td><div class="layui-form-mid">|——|——</div>
+                <div class="layui-input-inline" style="width: 180px;float:left">
+                <input type="text" name="name" lay-verify="name"   autocomplete="off" placeholder="" class="layui-input name_{$vo3.id}" value="{$vo3.name}">
+                </div></td>
+
+                <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo3.id}" value="{$vo3.url}"></td>
+
+                <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo3.id}" value="{$vo3.icon}"></td>
+
+                <td><input type="checkbox" class="status_{$vo3.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo3['status'] ==1}checked{/if} lay-text="显|隐"></td>
+
+                <td><input type="text" name="order" lay-verify="order" autocomplete="off" placeholder="" class="layui-input order_{$vo3.id}" value="{$vo3.order}"></td>
+                <td>
+                <button class="layui-btn layui-btn-primary layui-btn-sm add-nav" onclick="add('{:url("adminNav/add",array("pid"=>$vo3.id))}','添加子导航','500px','80%')" ><i class="layui-icon">添加子导航</i></button>
+          
+              <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="del('{:url("adminNav/del",array("id"=>$vo3.id))}')"><i class="layui-icon"></i></button></td>
+              </tr>
+          {/volist}
+      {/volist}
+ {/volist}
+
+
+    <button  class="layui-btn layui-btn-normal" id="add-one-nav" lay-filter="addnav" data-url="" onclick="add('{:url("adminNav/add",array("pid"=>0))}','添加一级导航','500px','80%')">增加一级导航</button>
+    
+    </tbody>
+  </table>
+   <button class="layui-btn layui-btn-danger" id="del" >批量删除</button>
+</div>
+
+
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+
+
+form.render();
+form.on('switch(switchStatus)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var status = data.elem.checked;
+  if(status == true ){ status =1; }else{status = 0;}
+    $.post('{:url("adminNav/update")}',{"id":id,"status":status},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+     });
+
+
+});
+form.render();
+form.on('submit(addnav)', function(data){
+  // alert();
+ $("#add-one-nav").bind("click",function(){
+
+          $("#nav-table").append('<tr class="one-nav"  style="background:#F7F7F7" data-pid="0"><td><input type="checkbox" name="id" lay-skin="primary"  value="" title="" class="id"  > </td>'
+            +'<td><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name" value=""></td>'
+             +'<td><input type="text"  class="layui-input url" value=""></td>'
+             +'<td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon" value=""></td>'
+             +'<td><input type="checkbox" name="switch" lay-skin="switch"></td>'
+             +'<td><input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget"  lay-text="是|否"></td>'
+             +'<td><input type="text"  class="layui-input sort" value="0" style="width:50px"></td>'
+             +'<td></td></tr>');
+        });
+
+  });
+});
+
+
+ </script>
+
+<script>
+$(function(){
+//全选删除
+      var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            });              
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+        layer.msg('您确定要批量删除吗？', {
+          time: 0 //不自动关闭
+          ,btn: ['确定', '取消']
+          ,yes: function(index){
+            layer.close(index);
+                 $.post("{:url('adminNav/del')}"
+            ,{"id":id}        
+           ,function(json){
+            if(json.code == 0){
+                layer.msg(json.msg);
+                     setTimeout(function(){ 
+                     window.location.reload();  //页面刷新
+                     },1000);
+                 }
+               }
+             );
+          }
+        }); 
+       }
+  });
+
+
+
+  // 导航数据更新
+$("input").on("blur",function(){
+var id =$(this).parents("tr").attr("data-id");
+var pid = $(this).parents("tr").attr("data-pid");
+var name = $(".name_"+id).val();
+// var target = $(".target_"+id).attr('checked');
+var url = $(".url_"+id).val();
+
+
+// var status = $(".status_"+id).attr('checked');
+var order = $(".order_"+id).val();
+// console.log($(".target_"+id));
+    $.post('{:url("adminNav/update")}',{"id":id,"pid":pid,"name":name,"url":url,"order":order},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+   
+     }
+  );
+});
+  $("#add").on("click",function(){
+     window.location.href='{:url("admin_nav/add")}';
+  });
+
+});
+
+</script>
+</body>
+
+</html>

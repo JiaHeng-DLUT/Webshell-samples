@@ -1,0 +1,77 @@
+{include file="public/default/header.html" /}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <ol class="breadcrumb">
+                <li><a href="{$url.href}">首页</a></li>
+                {notempty name="daohang"}
+                {volist name="daohang" id="vo"}
+                <li>{if condition="$vo.icon neq ''"}{$vo.icon} {/if}<a href="{$vo.href}">{$vo.label}</a></li>
+                {/volist}
+                {/notempty}
+                <li class="active">{$page.biaoti|subtext=28}</li>
+            </ol>
+            {$page_top}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {empty name="page"}
+                    <h4 class="text-center"><span class="glyphicon glyphicon-send"></span>&nbsp;您查看的内容已经搬家了!</h4>
+                    {else /}
+                    <h3 class="text-center">{$page.biaoti}</h3>
+                    {/empty}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                {$page_mid}
+                {notempty name="page"}
+                <div class="panel-body">
+                    <h4 style="line-height: 1.5em">{$page.zhengwen}</h4>
+                </div>
+                {/notempty}
+                {$page_bottom}
+            </div>
+        </div>
+        <div class="col-md-4">
+            {$page_side_top_group}
+            {notempty name="tuijian"}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">推荐</h3>
+                </div>
+                <div class="panel-body">
+                    {volist name="tuijian" id="vo" offset="0" length='6'}
+                    <p>
+                        <a href="{$vo.href}" class="list-group-item" title="{$vo.biaoti}">
+                            {$vo.biaoti}
+                        </a>
+                    </p>
+                    {/volist}
+                </div>
+            </div>
+            {/notempty}
+            <div class="list-group">
+                {volist name="hunhe.hunhe2.neirong" id="vo" offset="0" length='6'}
+                <a href="{$vo.href}" class="list-group-item" title="{$vo.biaoti}">
+                    <h4 class="list-group-item-heading">{$vo.biaoti|subtext=17}</h4>
+                    <p class="list-group-item-text">{$vo.zhaiyao|subtext=22}</p>
+                </a>
+                {/volist}
+            </div>
+            {notempty name="tuwen.tuwen3.neirong"}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {volist name="tuwen.tuwen3.neirong" id="vo" offset="0" length='6'}
+                    <div class="col-xs-12 col-md-6">
+                        <a href="{$vo.href}" class="thumbnail" title="{$vo.biaoti}">
+                            <img src="{$vo.suolvetu}" class="img-responsive" alt="Responsive image">
+                        </a>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+            {/notempty}
+            {$page_side_bottom_group}
+        </div>
+    </div>
+</div>
+{include file="public/default/footer.html" /}

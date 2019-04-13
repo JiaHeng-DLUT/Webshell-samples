@@ -1,0 +1,28 @@
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^list-([0-9]+)-([0-9]+)\.html$ index\.php\?c=list&sortid=$1&page=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^list-high-([0-9]+)-([0-9]+)\.html$ index\.php\?c=list&type=high&sortid=$1&page=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^user-([0-9]+).html$ index\.php\?c=user&id=$1&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^forum-([0-9]+).html$ index\.php\?c=forum&id=$1&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^user-([0-9]+)-([0-9]+).html$ index\.php\?c=user&id=$1&page=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^center-([0-9]+).html$ index\.php\?c=center&uid=$1&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^center-([0-9]+)-([0-9]+).html$ index\.php\?c=center&uid=$1&page=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^app-([0-9a-zA-Z_]+)-([0-9a-zA-Z_]+)\.html$ index\.php?c=app&a=$1:$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^read-([0-9]+)-([0-9]+)\.html$ index\.php\?c=read&id=$1&page=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^([a-zA-Z][0-9a-zA-Z_]+)\.html$ index\.php\?c=$1&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(.*)\.hst$ - [F]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^logs/(.*)$ - [F]

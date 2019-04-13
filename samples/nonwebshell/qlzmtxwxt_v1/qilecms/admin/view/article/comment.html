@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>文章评论</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<!-- 后台面包导航 -->
+{:get_admin_breadcrumb()}
+<!-- 搜索表单 -->
+{:create_search_form("",$keywordsData,$customSingleField,$groupData,$dateData,$orderData)}
+
+<div class="layui-form">
+  <table class="layui-table" >
+    <colgroup>
+      <col width="50">
+      <col width="80">
+      <col width="180">
+      <col width="500">
+      <col width="80">
+      <col width="80">
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox" class="id"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>ID</th>
+        <th>回复人信息</th>
+        <th>回复</th>
+        <th>赞</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.comment_id}"></td>
+        <td>{$vo.comment_id}</td>
+        <td>
+        用户名：{$vo.username}
+        <hr>
+        昵称：{:get_nickname($vo.uid)}</td>
+        <td><span class="layui-badge  layui-bg-gray">文章标题 </span>{$vo.title}
+        <br>
+        <span class="layui-badge  layui-bg-gray">时间 </span>
+        {$vo.create_time|date="Y-m-d H:i:s"}
+        <br>
+        <span class="layui-badge  layui-bg-gray">IP </span>
+         {$vo.ip}
+        <hr>
+        <span class="layui-badge  layui-bg-blue">回复</span>  {$vo.content}
+        </td>
+        <td>{$vo.zan}</td>
+        <td>{if $vo.status ==0}<span class="layui-badge layui-bg-gray">未审核</span>{elseif $vo.status ==1/}<span class="layui-badge layui-bg-blue">正常</span>{elseif $vo.status ==2 /}<span class="layui-badge">未通过</span>{/if}</td>
+        <td>
+        <div class="layui-btn-group">
+        {if $vo.status ==0}
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="audit(this)" data-url="{:url("article/commentEdit",array("comment_id"=>$vo["comment_id"],"status"=>1))}" title="通过审核">通过</button>
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="audit(this)" data-url="{:url("article/commentEdit",array("comment_id"=>$vo["comment_id"],"status"=>2))}" title="审核失败">拒绝</button>
+        {/if}
+          <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="del('{:url("article/commentDel",array("comment_id"=>$vo["comment_id"]))}')" title="删除评论"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+<!-- 搜索为空显示 -->
+{if empty($list)}
+ <div class="layui-form-item">
+    <div class="empty">
+     <div class="img"></div>
+     <p>暂无内容</p></div>
+ </div>
+</div>
+{/if}
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//全选删除
+      var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            });              
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+        layer.msg('您确定要批量删除吗？', {
+          time: 0 //不自动关闭
+          ,btn: ['确定', '取消']
+          ,yes: function(index){
+            layer.close(index);
+                 $.post("{:url('article/commentDel')}"
+            ,{"comment_id":id}        
+           ,function(json){
+            if(json.code == 0){
+                layer.msg(json.msg);
+                     setTimeout(function(){ 
+                     window.location.reload();  //页面刷新
+                     },1000);
+                 }
+               }
+             );
+          }
+        }); 
+       }
+  });
+});
+
+$("#add").on("click",function(){
+  window.location.href='{:url("article/add")}';
+});
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>分类管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <div class="fixed-empty"></div>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>导出内容为商品分类信息的.csv文件</li>
+        </ul>
+    </div>
+
+
+    <form method="post" name="form1">
+        <input type="hidden" name="if_convert" value="1" />
+        <table class="ds-default-table">
+            <thead>
+                <tr class="thead">
+                    <th>导出您的商品分类数据?</th>
+                </tr></thead>
+            <tfoot><tr class="tfoot">
+                    <td><a href="JavaScript:document.form1.submit();" class="btn"><span>导出</span></a></td>
+                </tr></tfoot>
+        </table>
+    </form>
+
+</div>
+{include file="public/footer" /}

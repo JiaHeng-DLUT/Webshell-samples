@@ -1,0 +1,150 @@
+<?php
+
+
+$lang['store_order_order_sn']		= '订单编号';
+$lang['store_order_order_sn_search']= '输入您要查询的订单编号';
+$lang['store_order_comp_exp']		= '快递公司';
+$lang['store_order_goods_detail']		= '商品';
+$lang['store_order_goods_single_price']	= '单价（元）';
+$lang['store_order_sell_back']			= '售后';
+$lang['store_order_order_stateop']		= '状态与操作';
+$lang['store_order_order_confirm']		= '订单确认';
+$lang['store_order_confirm_order']		= '确认订单';
+$lang['store_order_shipping_order']		= '确认货到付款订单';
+$lang['store_order_add_time']		= '下单时间';
+$lang['store_order_buyer']			= '买家';
+$lang['store_order_search']			= '搜索';
+$lang['store_order_cancel_order']	= '取消订单';
+$lang['store_order_show_deliver']	= '查看物流';
+$lang['store_order_buyer_info']		= '联系信息';
+$lang['store_order_receiver']		= '姓名';
+$lang['store_order_phone']			= '电话';
+$lang['store_order_mobile']			= '手机';
+$lang['store_order_email']			= '电子邮件';
+$lang['store_order_area']			= '城市';
+$lang['store_order_address']		= '收货地址';
+$lang['store_order_zip_code']		= '邮政编码';
+$lang['store_order_pay_method']		= '支付方式';
+$lang['store_order_sum']			= '订单金额';
+$lang['store_order_state']			= '订单状态';
+$lang['store_order_group']			= '抢购';
+$lang['store_order_evaluated']		= '已评价';
+$lang['store_order_received_price']	= '收到货款';
+$lang['store_order_modify_price']	= '修改价格';
+$lang['store_order_modify_price_gpriceerror']	= '商品总价不能为空且必须为数字';
+$lang['store_order_send']			= '设置发货';
+$lang['store_order_refund']			= '退款';
+$lang['store_buyer_confirm']		= '退款待确认';
+$lang['store_order_return']			= '退货';
+$lang['store_order_modify_no']		= '修改单号';
+$lang['store_order_view_order']		= '订单详情';
+$lang['store_order_complain']	= '投诉';
+$lang['store_order_no_result']		= '暂时没有符合条件的订单';
+$lang['store_order_ensure_cancel']	= '您确实要取消该订单吗？';
+$lang['store_order_cancel_reason']	= '取消缘由';
+$lang['store_order_lose_goods']		= '无法备齐货物';
+$lang['store_order_invalid_order']	= '不是有效的订单';
+$lang['store_order_buy_apply']		= '买家主动要求';
+$lang['store_order_other_reason']	= '其他原因';
+$lang['store_order_buyer_with']		= '买&nbsp;家';
+$lang['store_order_sn']				= '订单号';
+$lang['store_order_modify_rule']	= '输入要修改的金额，只能为数字';
+$lang['store_order_ensure_receive_fee']	= '您确定已经收到货款了吗';
+$lang['store_order_handle_desc']		= '操作备注';
+$lang['store_order_shipping_no_null']	= '物流单号不能为空';
+$lang['store_order_input_shipping_no']	= '请输入您的物流单号';
+$lang['store_order_shipping_no']		= '物流单号';
+$lang['store_order_want_evaluate']	= '我要评价';
+$lang['store_show_order_detail']		= '订单详情';
+$lang['store_show_order_info']			= '订单信息';
+$lang['store_show_order_seller_info']	= '卖家信息';
+$lang['store_show_order_store_name']	= '店铺名';
+$lang['store_show_order_wangwang']		= '旺旺';
+$lang['store_show_order_goods_name']	= '商品';
+$lang['store_show_order_amount']		= '数量';
+$lang['store_show_order_price']			= '单价(元)';
+$lang['store_show_order_tp_fee']		= '运费';
+$lang['store_show_order_pay_message']	= '支付信息';
+$lang['store_show_order_pay_time']		= '付款时间';
+$lang['store_show_order_send_time']		= '发货时间';
+$lang['store_show_order_finish_time']	= '完成时间';
+$lang['store_show_order_shipping_info']	= '物流信息';
+$lang['store_show_order_receiver']		= '收&nbsp;&nbsp;货&nbsp;&nbsp;人';
+$lang['store_show_order_receiver_address']	= '收货地址';
+$lang['store_show_order_mobile']			= '手机号码';
+$lang['store_show_order_buyer_message']		= '买家留言';
+$lang['store_show_order_handle_history']	= '操作历史';
+$lang['store_show_system']				= '系统';
+$lang['store_show_order_at']				= '于';
+$lang['store_show_order_cur_state']			= '订单当前状态';
+$lang['store_show_order_next_state']		= '下一状态';
+$lang['store_show_order_reason']			= '原因';
+$lang['store_show_order_printorder']		= '打印发货单';
+$lang['store_show_order_shipping_han']		= '含';
+$lang['store_order_tip1']		= '平台收款，确认收款由系统自动或管理员手动完成，卖家不能进行收款操作，管理员可以取消未付款的线下支付订单';
+$lang['store_order_cancel_success']	= '成功取消了订单';
+$lang['store_order_edit_ship_success']	= '成功修改了运费';
+$lang['store_order_none_exist']	= '该订单不存在';
+$lang['store_order_edit_amount_fail']	    = '修改价格失败';
+$lang['store_order_edit_amount_success']	= '修改价格成功';
+
+//exchange
+$lang['e_exchange_code']	= '电子兑换码';
+$lang['enter_e_exchange_code']	= '请输入买家提供的电子兑换码';
+$lang['store_order_clear']	= '清除';
+$lang['store_order_back']	= '后退';
+$lang['submit_validation']	= '提交验证';
+$lang['exchange_codes_offset_consumption']	= '请输入买家提供的兑换码，核对无误后提交，每个兑换码抵消单笔消费。';
+$lang['order_message']	= '下单留言';
+$lang['exchange_successful']	= '兑换成功';
+$lang['conversion_code']	= '兑换码';
+
+//index
+$lang['check_exchange_code']	= '核验兑换码';
+$lang['not_show_closed_orders']	= '不显示已关闭的订单';
+$lang['trading_status']	= '交易状态';
+$lang['trading_operations']	= '交易操作';
+
+//show_order
+$lang['virtual_order_information']	= '虚拟订单信息';
+$lang['virtual_order_number']	= '虚拟单号';
+$lang['buyer_space']	= '买&#12288;&#12288;家';
+$lang['receive_mobile_phone']	= '接收手机';
+$lang['transaction_closure']	= '交易关闭';
+$lang['transaction_closure_cause']	= '交易关闭，原因';
+$lang['order_has_been_generated']	= '订单已经生成，等待买家付款';
+$lang['buyer_payment_process1']	= '1. 买家尚未对该订单进行支付。';
+$lang['buyer_payment_process2']	= '2. 如果该订单是一个无效订单，您可以点击';
+$lang['buyer_payment_process3']	= '3. 如果买家未对该笔订单进行支付，系统将于';
+$lang['buyer_payment_process4']	= '自动关闭该订单。';
+$lang['buyers_payment']	= '买家已付款，电子兑换码已发放';
+$lang['buyer_paid_process1']	= '1. 该笔订单的电子兑换码已由系统自动发送至买家接收。';
+$lang['buyer_paid_process2']	= '2. 本次交易从即日起至';
+$lang['buyer_paid_process3']	= '，逾期自动失效。';
+$lang['generate_orders']	= '生成订单';
+$lang['order_generation_time']	= '订单生成时间';
+$lang['complete_payment']	= '完成付款';
+$lang['issue_exchange_code']	= '发放兑换码';
+$lang['order_finished']	= '订单完成';
+$lang['prompt_information1']	= '如列表过长超出显示区域时可滚动鼠标进行查看';
+$lang['prompt_information2']	= '实付 * 佣金比 = 应付佣金(元)';
+$lang['virtual_order_number']	= '虚拟订单号';
+$lang['place_order_time']	= '下单时间';
+$lang['prompt_information3']	= '使用时效：即日起 至';
+$lang['prompt_information4']	= '，过期不退款';
+$lang['prompt_information5']	= '使用了';
+$lang['prompt_information6']	= '元 代金券（编码';
+
+//controller
+$lang['have_right_operate'] = '无权操作';
+$lang['exchange_code_format_error'] = '兑换码格式错误，请重新输入';
+$lang['exchange_code_not_exist'] = '该兑换码不存在';
+$lang['exchange_code_been_used'] = '该兑换码已被使用';
+$lang['exchange_code_expired'] = '该兑换码已过期，使用截止日期为：';
+$lang['exchange_code_been_applied_refund'] = '该兑换码已申请退款，不能使用';
+$lang['payment_been'] = '已付款';
+$lang['exchange_code'] = '兑换码兑换';
+$lang['error'] = '出错';
+
+return $lang
+?>

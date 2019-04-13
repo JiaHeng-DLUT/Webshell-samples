@@ -1,0 +1,52 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<form method="post">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150" class="c666">分类名称：</td>
+			<td><input type="text" name="info[category_name]" value="{$info['category_name']}" class="inputall input250" /></td>
+		</tr>
+		<tr>
+			<td align="right" class="c666">上级分类：</td>
+			<td>
+				<select name="info[category_pid]" class="inputselect" style="width:268px">
+				<option value="0">============ 无 ============</option>
+				<!--{foreach($category_treelist as $v):}-->
+				<option value="{$v['category_id']}" <!--{if($v['category_id']==$info['category_pid']):}-->selected="selected"<!--{endif;}--> <!--{if(in_array($v['category_id'], (array)$category_noid)):}-->disabled="disabled"<!--{endif;}-->>{$v['category_showname']}</option>
+				<!--{endforeach;}-->
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right" class="c666">分类排序：</td>
+			<td><input type="text" name="info[category_order]" value="{$info['category_order']}" class="inputall input80" /></td>
+		</tr>
+		<tr>
+			<td align="right" class="c666">页面标题：</td>
+			<td><input type="text" name="info[category_title]" value="{$info['category_title']}" class="inputall input500" /> <span class="c888">（SEO选项）</span></td>
+		</tr>
+		<tr>
+			<td align="right" class="c666">页面关键词：</td>
+			<td><input type="text" name="info[category_keys]" value="{$info['category_keys']}" class="inputall input500" /> <span class="c888">（SEO选项）</span></td>
+		</tr>
+		<tr>
+			<td align="right" class="c666">页面描述：</td>
+			<td><textarea name="info[category_desc]" style="width:500px;height:100px;">{$info['category_desc']}</textarea> <span class="c888">（SEO选项）</span></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+			</td>
+		</tr>
+		</table>
+		</form>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

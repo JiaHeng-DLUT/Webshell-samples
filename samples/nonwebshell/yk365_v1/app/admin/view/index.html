@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$smarty.const.SITE_NAME}> - 后台管理中心 - Powered by Youke365</title>
+<{include file="base.html"}>
+<script type="text/javascript">
+$(document).ready(function(){  
+    /*$("#main_frame").load(function(){
+        $(this).height($(this).height() - $("#main_frame").offset().top - 10);    
+    });
+	*/
+	$("#menu").treeview();
+	
+	var win_height = $(window).height() - $("#main_frame").offset().top - 5;
+	$("#main_frame").height(win_height);
+	$("#sidebar").css("height", win_height);
+});
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="header">
+    	    <a  id="logo" href="<{url('main')}>" target="main">
+                 Youke365 管理后台
+          </a>
+                  <div id="link">
+<a href="<{$smarty.const.youke365_auth_url}>forum.php?mod=forumdisplay&fid=39" target="_blank"  class="author"><i class="fa fa-window-maximize" aria-hidden="true"></i> 模板下载</a>
+          <a href="<{$smarty.const.youke365_auth_url}>" target="_blank"  class="author"><i class="fa fa-window-maximize" aria-hidden="true"></i> 官方网站</a>
+
+         
+            <a href="<{$site_root}>" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> 前台首页</a>  
+           <a href="<{url('cache')}>" target="main"><i class="fa fa-refresh" aria-hidden="true"></i> 缓存管理</a>
+           <a href="<{url('editpwd')}>" target="main"><i class="fa fa-cog" aria-hidden="true"></i> 修改密码</a>  <a href="<{url('login',['act'=>'logout'])}>" onclick="return confirm('确认退出吗？');"><i class="fa fa-power-off" aria-hidden="true"></i> 退 出</a>
+
+           </div>
+    </div>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+
+
+
+    <div id="mainer">
+    	<div id="mainer-left">
+    		<div id="sidebar">
+
+            <ul class="layui-nav layui-nav-tree" lay-filter="demo">
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;" target="main">系统设置</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('main')}>" target="main">后台首页</a></dd>
+      <dd><a href="<{url('option',['opt'=>'basic'])}>" target="main">站点信息</a></dd>
+      <dd><a href="<{url('option',['opt'=>'module'])}>" target="main">模块开关</a></dd>
+      <dd><a href="<{url('option',['opt'=>'misc'])}>" target="main">功能配置</a></dd>
+
+      <dd><a href="<{url('option',['opt'=>'template'])}>" target="main">模板配置</a></dd>
+      <dd><a href="<{url('option',['opt'=>'user'])}>" target="main">注册设置</a></dd>
+      <dd><a href="<{url('option',['opt'=>'mail'])}>" target="main">邮件设置</a></dd>
+      <dd><a href="<{url('option',['opt'=>'qq'])}>" target="main">QQ 登陆</a></dd>
+      <dd><a href="<{url('option',['opt'=>'comment'])}>" target="main">畅言接口</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">网站管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('category',['mod'=>'webdir'])}>" target="main">网站分类</a></dd>
+      <dd><a href="<{url('category',['mod'=>'webdir','act'=>'merge'])}>" target="main">分类合并</a></dd>
+      <dd><a href="<{url('website')}>" target="main">网站列表</a></dd>
+      <dd><a href="<{url('website',['act'=>'down'])}>" target="main">下载图片</a></dd>
+      <!-- <dd><a href="<{url('comment')}>" target="main">评论管理</a></dd> -->
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">友链交换大厅</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('weblink')}>" target="main">友链列表</a></dd>
+    </dl>
+  </li>
+
+  <li class="layui-nav-item"><a href="javascript:;">文章管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('category',['mod'=>'article'])}>" target="main">文章分类</a></dd>
+      <dd><a href="<{url('category',['mod'=>'merge'])}>" target="main">分类合并</a></dd>
+      <dd><a href="<{url('article')}>" target="main">文章列表</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="javascript:;">电视直播</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('category',['mod'=>'live'])}>" target="main">电视分类</a></dd>
+      <dd><a href="<{url('live')}>" target="main">电视列表</a></dd>
+    </dl>
+  </li>
+
+  <li class="layui-nav-item"><a href="javascript:;">小游戏管理</a>
+    <dl class="layui-nav-child">  
+      <dd><a href="<{url('category',['mod'=>'game'])}>" target="main">游戏分类</a></dd>
+      <dd><a href="<{url('game',['act'=>'add'])}>" target="main">游戏添加</a></dd>
+      <dd><a href="<{url('game')}>" target="main">游戏列表</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="javascript:;">视频管理</a>
+    <dl class="layui-nav-child"> 
+     <dd><a href="<{url('category',['mod'=>'video'])}>" target="main">视频分类</a></dd>
+      <dd><a href="<{url('video')}>" target="main">视频列表</a></dd>
+      <dd><a href="<{url('video',['act'=>'add'])}>" target="main">视频添加</a></dd>
+
+      </dl>
+  </li>
+
+  <li class="layui-nav-item"><a href="javascript:;">用户管理</a>
+    <dl class="layui-nav-child"> 
+      <dd><a href="<{url('user')}>" target="main">用户列表</a></dd>
+      </dl>
+  </li>
+  <li class="layui-nav-item"><a href="javascript:;">运营管理</a>
+    <dl class="layui-nav-child"> 
+      <dd><a href="<{url('adver')}>" target="main">网站广告</a></dd>
+      <dd><a href="<{url('link')}>" target="main">友情链接</a></dd>
+      <dd><a href="<{url('feedback')}>" target="main">意见反馈</a></dd>
+    </dl>
+
+  </li>
+  <li class="layui-nav-item"><a href="javascript:;">单页管理</a>
+
+    <dl class="layui-nav-child"> 
+  <dd><a href="<{url('page')}>" target="main">单页列表</a></dd>
+    </dl>
+
+  </li>
+  <li class="layui-nav-item"><a href="javascript:;">数据库管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="<{url('database',['act'=>'backup'])}>" target="main">数据库备份</a></dd>
+      <dd><a href="<{url('database',['act'=>'restore'])}>" target="main">数据库恢复</a></dd>
+      <dd><a href="<{url('database',['act'=>'maintain'])}>" target="main">数据库维护</a></dd>
+      <dd><a href="<{url('database',['act'=>'dbinfo'])}>" target="main">数据库信息</a></dd>
+    </dl>
+  </li>
+</ul>
+
+            </div>
+        </div>
+        <div id="mainer-right">
+        	<div id="content"><iframe id="main_frame" name="main" frameborder="0" src="<{url('main')}>"></iframe></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

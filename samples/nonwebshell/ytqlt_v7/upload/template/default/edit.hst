@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="template/default/css/edit.css">
+<div class="pk-container">
+	<div class="pk-background-color-white pk-padding-top-15 pk-padding-bottom-15">
+		<form name="form_post" method="post" action="index.php?c=post&type={$type}&id={$rrdata['id']}&return=json">
+			<div class="pk-row">
+				<div class="pk-w-sm-12">
+					<div class="pk-row">
+						<div class="pk-w-md-3 pk-w-sm-4 pk-margin-bottom-15 pk-padding-0">
+							<button id="showForumBtn" type="button" class="pk-btn pk-btn-block pk-btn-primary" data-data="{htmlspecialchars($_G['FORUMDATAJSON'],ENT_QUOTES)}">请选择版块</button>
+						</div>
+
+						<div class="pk-w-md-9 pk-w-sm-8 pk-margin-bottom-15 pk-padding-0">
+							<input type="hidden" name="sortid" value="{$sortid}" />
+							<input type="hidden" name="label" value="" />
+							<input type="hidden" name="titlecolor" value="" />
+							<input type="text" class="pk-textbox pk-border-left-none" name="title" value="{$rrdata['title']}" placeholder="文章标题" required autocomplete="off" />
+							<span class="_title_colorbar pk-hide" title="标题颜色"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="pk-row">
+				<div class="pk-w-sm-12">
+					<div id="forumlabel"></div>
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-15">
+				<div class="pk-w-sm-12">
+					<textarea id="container" class="pk-width-all pk-textarea pk-radius-4" name="content" style="height:425px" placeholder="您的浏览器太古董了，所以您只能裸着发布了T_T" required>{$rrdata['content']}</textarea>
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-15">
+				<div class="pk-w-sm-12 pk-text-sm">
+					阅读权限:
+					<input class="pk-textbox pk-padding-0 pk-padding-left-5 pk-display-inline pk-radius-4" type="number" name="readlevel" value="{$rrdata['readlevel']}" style="max-width:66px;height:22px" />（您的阅读权限为：{$_G['USER']['READLEVEL']}）<br>
+					<div class="pk-hide-md" style="padding-top:5px"></div>
+					<span class="pk-hide"><input type="checkbox" name="top" value="1">置顶 &nbsp;</span>
+					<span class="pk-hide"><input type="checkbox" name="high" value="1">精华 &nbsp;</span>
+					<span class="pk-hide" title="锁定后所有用户都无法回复该帖"><input type="checkbox" name="locked" value="1">锁定 &nbsp;</span>
+					<input type="checkbox" name="replyafterlook" value="1">回复后查看正文
+				</div>
+			</div>
+
+			<div style="max-width:240px">
+				{loadVerifycode('post'.$_G['GET']['TYPE'],'')}
+			</div>
+
+			<div class="pk-row">
+				<div class="pk-w-sm-12">
+					<button id="postbtn" type="button" class="pk-btn pk-btn-primary" style="margin-right:10px">发布</button>
+					<button id="previewbtn" type="button" class="pk-btn pk-btn-success">预览</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	var _labels = "{$label}",
+		_sortid = "{$sortid}",
+		_postreadtitlecolorusergroup = "{$_G['SET']['POSTREADTITLECOLORUSERGROUP']}",
+		_high = "{$rrdata['high']}",
+		_top = "{$rrdata['top']}",
+		_locked = "{$rrdata['locked']}",
+		_replyafterlook = "{$rrdata['replyafterlook']}";
+</script>
+<script src="template/default/js/edit.js"></script>

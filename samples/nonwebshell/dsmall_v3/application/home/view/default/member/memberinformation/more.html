@@ -1,0 +1,119 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+<div class="alert">
+            {$Think.lang.home_member_more_tag_list}
+        </div>
+        <div class="dsm-default-form">
+            <form method="post" id="profile_more" action="{:url('Memberinformation/more')}">
+                <input type="hidden" name="old_member_avatar" value="{$member_info.member_avatar}" />
+                <div dstype="list" class="user-tag-optional">
+                    {if $mtag_list}
+                    {foreach name="mtag_list" item="mtag"}
+                    <span dstype="able" data-param='{"id":"{$mtag.mtag_id}"}'>{$mtag.mtag_name}</span>
+                    {/foreach}
+                    {/if}
+                </div>
+                <h4 class="w90 mt20 mb10 tip" title="{$Think.lang.home_member_more_my_tag_title}">{$Think.lang.home_member_more_my_tag}</h4>
+                <div dstype="choose" class="user-tag-selected">
+                    {if $mtm_list}
+                    {foreach name="mtm_list" item="mtm"}
+                    <span dstype="able" data-param='{"id":"{$mtm.mtag_id}"}'>{$mtm.mtag_name}
+                        <a href="javascript:void(0)" dstype="delTag"><input type="hidden" name="mid[]" value="{$mtm.mtag_id}" /></a>
+                    </span>
+                    {/foreach}
+                    {/if}
+                    <span dstype="ep" class="ep">&nbsp;</span> </div>
+                <div class="bottom">
+                    <label class="submit-border">
+                        <input type="submit" class="submit" value="{$Think.lang.home_member_save_modify}" />
+                    </label>
+                </div>
+            </form>
+        </div>
+
+
+<script>
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+</script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.poshytip.min.js"></script>
+<script type="text/javascript">
+    //注册表单验证
+    $(function(){
+        var $list = $('div[dstype="list"]');
+        var $choose = $('div[dstype="choose"]');
+        var $ep = $('span[dstype="ep"]');
+        $('span[dstype="able"]', $list).draggable({
+            cancel: "a.ui-icon",
+            revert: "invalid",
+            containment: "document",
+            helper: "clone",
+            cursor: "move"
+        });
+        $('span[dstype="able"]', $choose).draggable({
+            cancel: "a.ui-icon",
+            revert: "invalid",
+            containment: "document",
+            helper: "clone",
+            cursor: "move"
+        });
+        $choose.droppable({
+            accept: 'div[dstype="list"] span',
+            activeClass: "ui-state-highlight",
+            drop: function( event, ui ) {
+                chooseTeg(ui.draggable);
+            }
+        });
+        $list.droppable({
+            accept: 'div[dstype="choose"] span',
+            activeClass: "custom-state-active",
+            drop: function( event, ui ) {
+                recycleIeg(ui.draggable);
+            }
+        });
+
+        function chooseTeg($item){
+            $item.fadeOut('fast',function(){
+                eval("data_param = "+($item.attr('data-param')));
+                $item.append('<a href="javascript:void(0)" dstype="delTag"><input type="hidden" name="mid[]" value="'+data_param.id+'" /></a>')
+                    .insertBefore($ep).fadeIn('fast').removeAttr('style');
+            });
+
+        }
+        function recycleIeg($item){
+            $item.fadeOut('fast',function(){
+                $item.find('a').remove().end().appendTo($list).fadeIn('fast').removeAttr('style');
+            });
+        }
+
+        $(document).on('click','a[dstype="delTag"]', function(){
+            recycleIeg($(this).parent());
+        });
+
+        $('div[dstype="list"]').on('click','span', function(){
+            chooseTeg($(this));
+        });
+
+        $('#profile_more').submit(function(){
+            ds_ajaxpost('profile_more');
+            return false;
+        });
+        $('.tip').poshytip({//Ajax提示
+            className: 'tip-yellowsimple',
+            showTimeout: 1,
+            alignTo: 'target',
+            alignX: 'right',
+            alignY: 'center',
+            offsetY: 5,
+            allowTipHover: false
+        });
+    });
+</script>
+
+
+
+
+
+{/block}

@@ -1,0 +1,105 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">验证码插件 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">功能开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_VERIFYCODE_LOAD']}" name="app_verifycode_load">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">开启点击验证</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_VERIFYCODE_OPENSLIDING']}" name="app_verifycode_opensliding">
+				<option value="0">关闭</option>
+				<option value="1">开启（安全系数低，根据自身情况开启）</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">需验证页面</label>
+		<div class="pk-w-sm-8 pk-text-sm">
+			<input type="hidden" name="app_verifycode_page" value="{$_G['SET']['APP_VERIFYCODE_PAGE']}" readonly class="pk-textbox">
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="login"> 登录
+						</label>
+				</div>
+				<div class="pk-w-sm-6">
+					<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="reg"> 注册
+						</label>
+				</div>
+			</div>
+			<div class="pk-row pk-padding-top-10">
+				<div class="pk-w-sm-6">
+					<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postread"> 发表主题
+						</label>
+				</div>
+				<div class="pk-w-sm-6">
+					<label class="am-checkbox-inline am-padding-top-0">
+							<input class="qx-checkbox" type="checkbox" value="postreply"> 发表回复
+						</label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">组成字符</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_verifycode_chars" placeholder="留空，为纯数字，即1234567890" value="{$_G['SET']['APP_VERIFYCODE_CHARS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">生成长度</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_verifycode_length" placeholder="默认4(位)" value="{$_G['SET']['APP_VERIFYCODE_LENGTH']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">图片宽度</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_verifycode_width" placeholder="默认88(px)" value="{$_G['SET']['APP_VERIFYCODE_WIDTH']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">图片高度</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_verifycode_height" placeholder="默认32(px)" value="{$_G['SET']['APP_VERIFYCODE_HEIGHT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">字体大小</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_verifycode_fontsize" placeholder="默认16(px)" value="{$_G['SET']['APP_VERIFYCODE_FONTSIZE']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+			<a target="_blank" href="index.php?c=app&a=verifycode:index&rnd={$_G['RND']}" class="pk-btn pk-btn-danger pk-radius-4" title="仅在设置保存后预览有效">预览</a>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		TextboxAndCheckbox("input[name='app_verifycode_page']", "input[class='qx-checkbox'][type='checkbox']");
+	});
+</script>

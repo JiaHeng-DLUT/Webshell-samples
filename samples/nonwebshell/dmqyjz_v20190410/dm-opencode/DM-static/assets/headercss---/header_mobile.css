@@ -1,0 +1,34 @@
+.headermobi .topsearchbox{display:block !important;}
+   .headerpc {display:none; }
+  .logo{background:#fff; }
+  .headermobi{height: 40px; background:#fff;border-top:1px solid #ccc; position:relative;  }
+ .topsearchbox{top:4px;left:5px;width: 60%; }
+ .topsearchbox form{width: 100%; height: 30px; }
+ .topsearchbox form button{ top:9px;right:0}
+ .topsearchbox input{border:1px solid #ccc;box-shadow:none}
+
+  .langimg{right:60px;top:8px} 
+ /*menu*/
+ .dmmenumobi{position:absolute;top:3px;right:7px;width:40px;height:30px;
+background:#2a7dcf url('../images/menumob.png');  background-position:center center;background-repeat:no-repeat;background-size:21px,100%;cursor:pointer;border:0 none; border-radius:5px;z-index:999;text-indent:-9999px}
+ .dmmenumobi:focus{ outline:none}
+.dmmenumobi.opennavmenu{background:#2a7dcf url('../images/menumobclose.png');background-position:center center;background-repeat:no-repeat;background-size:21px,100%}
+   
+
+ .menu .container{padding: 0}/*hack bootstrap container*/
+.menu{display:none;width:100%;  position:absolute;top:39px;left:0px;background:#F7F7F5;z-index:90000;height:auto}
+.menu li ul.sub{background:#e7f2fd; }
+.menu li ul.sub a{background:none; }
+ .menu li a{padding-left:10px;color:#333}
+ .menu li li a{color:#333}
+.menu a{display:block !important;height: 40px;line-height:40px; background:#F7F7F5; }
+.menu li li a{height: 30px;line-height:30px;padding-left:15px }
+.menu li li li a{padding-left:25px}
+.menu a{border-bottom:1px solid #1b253b}
+.menu li ul{display:none; }
+ .stricky-fixed .menu{top:40px}
+.sub-nav-toggle{display:block;float:right;margin-top:1px; width:36px;height:36px;cursor:pointer;background:#7ccbfc url(../images/menusub.png) center -25px no-repeat;-o-transition:all 500ms ease-in;-webkit-transition:all 500ms ease-in;-moz-transition:all 500ms ease-in;transition:all 500ms ease-in}
+.sub-nav-toggle.plus{background:#1b253b url(../images/menusub.png) center 13px no-repeat}
+
+.menu li li .sub-nav-toggle{height: 30px;background-position:center -35px ; }
+.menu li li .sub-nav-toggle.plus{background-position:center 11px ; }

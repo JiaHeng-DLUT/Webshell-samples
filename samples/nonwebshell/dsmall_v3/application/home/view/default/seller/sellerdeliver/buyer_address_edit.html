@@ -1,0 +1,105 @@
+
+<div class="eject_con">
+  <div class="adds">
+    <div id="warning"></div>
+    <form method="post" action="{:url('Sellerdeliver/buyer_address',['order_id'=>$Request.param.order_id])}" id="address_form" target="_parent">
+      <dl>
+        <dt class="required">{$Think.lang.member_address_receiver_name}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input type="text" class="text" name="new_reciver_name" id="new_reciver_name" value="{$address_info.reciver_name}"/>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required">{$Think.lang.store_deliver_area}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input type="text" class="text" name="new_area" id="new_area" value="{$address_info.reciver_info.area}"/>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required">{$Think.lang.member_address_address}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input type="text" class="text" name="new_street" id="new_street" value="{$address_info.reciver_info.street}"/>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required">{$Think.lang.store_order_mobile}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input type="text" class="text" name="new_mob_phone" id="new_mob_phone" value="{$address_info.reciver_info.mob_phone}"/>
+        </dd>
+      </dl>
+      <dl>
+        <dt class="required">{$Think.lang.store_deliver_landline}{$Think.lang.ds_colon}</dt>
+        <dd>
+          <input type="text" class="text" name="new_tel_phone" id="new_tel_phone" value="{$address_info.reciver_info.tel_phone}"/>
+        </dd>
+      </dl>
+      <div class="bottom"><label class="submit-border"><a href="javascript:void(0);" id="submit" class="submit">{$Think.lang.ds_common_button_save}</a></label></div>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#address_form').validate({
+        rules : {
+            new_reciver_name : {
+                required : true
+            },
+            new_area : {
+                required : true
+            },
+            new_mob_phone: {
+                required : true
+            }
+        },
+        messages : {
+            new_reciver_name: {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.consignee_cannot_empty}'
+            },
+            new_area: {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.region_cannot_empty}'
+            },
+            new_mob_phone: {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.mobile_phone_cannot_empty}'
+            }
+        }
+    });
+   
+	$('#submit').on('click',function(){
+		if ($('#address_form').valid()) {
+            var reciver_mob_phone = $('#new_mob_phone').val();
+            var reciver_tel_phone = $('#new_tel_phone').val();
+            var reciver_area = $('#new_area').val();
+            var reciver_street = $('#new_street').val();
+            var reciver_name = $('#new_reciver_name').val();
+            $.post("{:url('Sellerdeliver/buyer_address_save')}", {
+                order_id: {$Request.param.order_id},
+                reciver_name: reciver_name,
+                reciver_area: reciver_area,
+                reciver_street: reciver_street,
+                reciver_mob_phone: reciver_mob_phone,
+                reciver_tel_phone: reciver_tel_phone,
+                reciver_dlyp:''
+            })
+            .done(function(data) {
+                if(data == 'true') {
+                    $('#reciver_mob_phone').val(reciver_mob_phone);
+                    $('#reciver_tel_phone').val(reciver_tel_phone);
+                    $('#reciver_area').val(reciver_area);
+                    $('#reciver_street').val(reciver_street);
+                    $('#reciver_name').val(reciver_name);
+                    var content = reciver_name + '&nbsp' + reciver_mob_phone + ',' + reciver_tel_phone + '&nbsp;' + reciver_area + '&nbsp;' + reciver_street;
+                    $('#buyer_address_span').html(content);
+                    DialogManager.close('edit_buyer_address');
+                } else {
+                    layer.msg('{$Think.lang.modification_failed}');
+                }
+            });
+		}
+	});
+	$('#new_mob_phone').val($('#reciver_mob_phone').val());
+	$('#new_tel_phone').val($('#reciver_tel_phone').val());
+	$('#new_area').val($('#reciver_area').val());
+	$('#new_street').val($('#reciver_street').val());
+	$('#new_reciver_name').val($('#reciver_name').val());	
+});
+</script>

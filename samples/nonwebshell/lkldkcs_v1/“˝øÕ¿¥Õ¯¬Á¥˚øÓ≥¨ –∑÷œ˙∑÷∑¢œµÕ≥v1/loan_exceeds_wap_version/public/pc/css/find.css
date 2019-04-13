@@ -1,0 +1,62 @@
+.fingPic {
+    width: 938px;
+    height: 411px;
+}
+
+/* 发现-tab切换 */
+#tab {
+    width: 938px;
+    min-height: 600px;
+    max-height: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+.tab_nav {
+    width: 100%;
+    position: relative;
+}
+
+.tab_nav ul {
+    position: absolute;
+    width: 100%;
+    left: -1px;
+    background-color: #fff;
+    border-left: 1px solid #ededed;
+    border-bottom: 1px solid #ededed
+}
+
+.tab_nav li {
+    float: left;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+}
+
+.tab_nav li a {
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #3d3d3f;
+}
+
+.tab_nav li a.active {
+    color: #2f75ec !important;
+}
+
+.tab_nav li.active {
+    color: #2f75ec !important;
+    border-top: 4px solid #2f75ec;
+}
+/* 内容 */
+#tab_contain {
+    width: 100%;
+    position: absolute;
+    top: 86px;
+    padding-bottom: 30px;
+}
+.find_content{
+    background-color: #fff;
+    padding-bottom: 30px;
+}

@@ -1,0 +1,171 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>代金券</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <form id="add_form" method="post" action="{:url('Voucher/templateedit')}">
+        <input type="hidden" id="tid" name="tid" value="{$t_info.vouchertemplate_id}"/>
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_storename}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_storename}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>所属店铺分类{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{if isset($store_class[$t_info.vouchertemplate_sc_id]) && $t_info.vouchertemplate_sc_id gt 0}{$store_class[$t_info.vouchertemplate_sc_id]['storeclass_name']}{/if}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_title}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_title}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_enddate}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_enddate|date='Y-m-d',###}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_price}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_price}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_total}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_total}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_eachlimit}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_eachlimit}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_orderpricelimit}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_limit}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_describe}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><textarea rows="6" readonly="readonly" class="readonly tarea">{$t_info.vouchertemplate_desc}</textarea></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_image}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    <img onload="javascript:ResizeImage(this,160,160);" src="{$t_info.vouchertemplate_customimg}"/>
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_giveoutnum}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_giveout}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_usednum}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="readonly txt" value="{$t_info.vouchertemplate_used}" readonly></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_voucher_template_points}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input type="text" class="txt" id="points" name="points" value="{$t_info.vouchertemplate_points}"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.ds_status}{$Think.lang.ds_colon}</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform">
+                    {foreach name="templatestate_arr" item="v"}
+                    <input type="radio" value="{$v.0}" id="tstate_{$v.0}" name="tstate" {eq name="v.0" value="$t_info.vouchertemplate_state"}checked="checked"{/eq}>{$v.1}
+                    {/foreach}
+                </td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>是否推荐:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform onoff">
+                    <label title="{$Think.lang.ds_yes}" class="cb-enable {eq name='t_info.vouchertemplate_recommend' value='1'}selected{/eq}" for="recommend1"><span>{$Think.lang.ds_yes}</span></label>
+                    <label title="{$Think.lang.ds_no}" class="cb-disable {eq name='t_info.vouchertemplate_recommend' value='0'}selected{/eq}" for="recommend0"><span>{$Think.lang.ds_no}</span></label>
+                    <input type="radio" value="1" {eq name='t_info.vouchertemplate_recommend' value='1'}checked="checked"{/eq} name="recommend" id="recommend1">
+                    <input type="radio" value="0" {eq name='t_info.vouchertemplate_recommend' value='0'}checked="checked"{/eq} name="recommend" id="recommend0"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    //按钮先执行验证再提交表单
+    $(function(){
+        $("#submitBtn").click(function(){
+            $("#add_form").submit();
+        });
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().prev().find('td:first'));
+            },
+            rules : {
+                points: {
+                    required : true,
+                    digits : true
+                }
+            },
+            messages : {
+                points: {
+                    required : '{$Think.lang.admin_voucher_template_points_error}',
+                    digits : '{$Think.lang.admin_voucher_template_points_error}'
+                }
+            }
+        });
+
+    });
+</script> 

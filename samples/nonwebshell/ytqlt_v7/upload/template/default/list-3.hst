@@ -1,0 +1,105 @@
+</div>
+</div>
+<div class="pk-padding-45 pk-text-center">
+	<button id="loadmorereadlistbtn" type="button" class="pk-btn pk-btn-block pk-btn-default pk-radius-4">加载更多 »</button>
+</div>
+<div id="saveloadhtml" class="pk-display-none"></div>
+<script>
+	$(function() {
+		var $loadpage = parseInt("{$page}") + 1;
+		$('#loadmorereadlistbtn').click(function() {
+			$('#saveloadhtml').load("index.php?c=list&type={$type}&sortid={$sortid}&page=" + $loadpage + " #read-list div:eq(0)", function(r, s, x) {
+				if(s == "error") {
+					pkalert('加载出错！');
+				} else {
+					var $html = $('#saveloadhtml').html();
+					if($html.length > 11) {
+						$loadpage++;
+						$('#read-list').append($html);
+						ImageLaterLoading('img', '懒加载过来的图片^o^', 'this.src="template/default/img/imageloaderror.png";this.title="此图已被汪星人给吃了~汪呜汪呜~~~";this.onclick=""');
+					} else {
+						$('#loadmorereadlistbtn').prop('disabled', true);
+						$('#loadmorereadlistbtn').html('已无更多内容');
+					}
+				}
+				$('#saveloadhtml').html('');
+			});
+		});
+	});
+</script>
+<!--快速发帖-->
+{$quickpost1}
+<link rel="stylesheet" href="app/puyuetianeditor/template/css/PytEditor.css">
+<div class="pk-row pk-padding-top-15">
+	<form name="form_post" method="post" action="index.php?c=post&type=read&return=json">
+		<div class="pk-row pk-text-sm pk-margin-bottom-10">
+			<div class="pk-w-sm-12">
+				快速发帖<a href="index.php?c=edit&type=read&sortid={$forumdata['id']}" class="pk-float-right pk-text-primary pk-hover-underline">高级模式</a>
+			</div>
+		</div>
+		<input type="hidden" name="sortid" value="{$forumdata['id']}" />
+		<div class="pk-row pk-margin-bottom-10">
+			<div class="pk-w-sm-12">
+				<input type="text" class="pk-textbox pk-textbox-noshadow pk-radius-4" name="title" value="" placeholder="文章标题，发帖至“{$forumdata['title']}”版块" required />
+			</div>
+		</div>
+		<div class="pk-row pk-margin-bottom-10">
+			<div class="pk-w-sm-12">
+				<textarea id="container" class="pk-width-all pk-textarea pk-radius-4" name="content" style="height: 225px;" placeholder="您的浏览器太古董了，所以您只能裸着发布了T_T" required>{$rrdata['content']}</textarea>
+			</div>
+		</div>
+		<div class="pk-row pk-margin-bottom-10">
+			<div class="pk-w-sm-12" style="max-width: 240px;">
+				{loadVerifycode('postread','')}
+			</div>
+		</div>
+		<div class="pk-row pk-margin-bottom-20">
+			<div class="pk-w-sm-12">
+				<button id="postbtn" type="button" class="pk-btn pk-btn-primary pk-radius-4">发表</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+	$('#postbtn').click(function() {
+		if(trim(form_post.title.value).length == 0) {
+			pkalert('请输入标题！', 'js:form_post.title.focus();');
+			return false;
+		}
+		if(trim(form_post.content.value).length == 0) {
+			pkalert('请输入内容！', 'js:form_post.content.focus();');
+			return false;
+		}
+		form_post.content.value = form_post.content.value.replace(/\<div/g, '<p');
+		form_post.content.value = form_post.content.value.replace(/\<\/div\>/g, '</p>');
+		$(this).attr('disabled',true).html('正在发表...');
+		$.post($('form[name="form_post"]').attr('action'),{
+				"title":$('form[name="form_post"] input[name="title"]').val()||'',
+				"content":$('form[name="form_post"] textarea[name="content"]').val()||'',
+				"label":$('form[name="form_post"] input[name="label"]').val()||'',
+				"sortid":$('form[name="form_post"] input[name="sortid"]').val()||'',
+				"verifycode":$('form[name="form_post"] input[name="verifycode"]').val()||'',
+				"chkcsrfval":$('form[name="form_post"] input[name="chkcsrfval"]').val()||''
+			},function(data){
+				if(data['state']=='ok'){
+					pkalert(data['msg'],'js:location.href="index.php?c=read&id='+data['rid']+'"');
+				}else{
+					if(!data['msg']){
+						data['msg']='未知错误';
+					}
+					$('form[name="form_post"] input[name="verifycode"]').val('');
+					$('#verifycodeimageobject').click();
+					pkalert(data['msg']);
+				}
+				$('#postbtn').attr('disabled',false).html('发表');
+			},'json');
+	});
+</script>
+{$_G['SET']['APP_PUYUETIANEDITOR_QUICKEDITCONFIG']}
+<script src="app/puyuetianeditor/template/js/PytEditor.js"></script>
+<script>
+	$(function() {
+		InitPuyuetianEditor("form[name=form_post] textarea[name=content]", function() {});
+	});
+</script>
+{$quickpost2}

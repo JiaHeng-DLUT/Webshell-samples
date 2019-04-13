@@ -1,0 +1,129 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺动态</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch" action="">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_membername}</dt>
+                <dd><input type="text" value="{$Request.get.search_uname}" name="search_uname" id="search_uname" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_content}</dt>
+                <dd><input type="text" value="{$Request.get.search_content}" name="search_content" id="search_content" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_state}</dt>
+                <dd>
+                    <select name="search_state">
+                        <option value=''>{$Think.lang.ds_please_choose}...</option>
+                        <option value="1" {$Request.get.search_state == '1'?'selected':''}>{$Think.lang.admin_snstrace_stateshow}</option>
+                        <option value="0" {$Request.get.search_state == '0'?'selected':''}>{$Think.lang.admin_snstrace_statehide}</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_addtime}</dt>
+                <dd>
+                    <input type="text" class="txt date" value="{$Request.get.search_stime}" name="search_stime" id="search_stime" class="txt">
+                    ~
+                    <input type="text" class="txt date" value="{$Request.get.search_etime}" name="search_etime" id="search_etime" class="txt">
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.admin_snstrace_commentlisttip}</li>
+        </ul>
+    </div>
+
+
+    <table class="ds-default-table">
+        <thead>
+            <tr class="thead">
+                <th class="w24"></th>
+                <th>{$Think.lang.admin_snstrace_content}</th>
+                <th class="w150 align-center">{$Think.lang.admin_snstrace_membername}</th>
+                <th class="w150 align-center">{$Think.lang.admin_snstrace_addtime}</th>
+                <th class="w150 align-center">{$Think.lang.admin_snstrace_state}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty name="scomm_list"}
+            {foreach name="scomm_list" item="v"}
+            <tr class="hover edit">
+                <td class="w24"><input type="checkbox" name="sc_id[]" value="{$v.storesnscomm_id}" class="checkitem"></td>
+                <td>{:parsesmiles($v.storesnscomm_content)}</td>
+                <td class="w150 align-center">{$v.storesnscomm_membername}</td>
+                <td class="w150 align-center">{:date('Y-m-d H:i:s',$v.storesnscomm_time)}</td>
+                <td class="w150 align-center">{$v.storesnscomm_state == '0' ? $Think.lang.admin_snstrace_statehide:$Think.lang.admin_snstrace_stateshow}</td>
+            </tr>
+            {/foreach}
+        <tfoot>
+            <tr class="tfoot">
+                <td><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                <td colspan="16"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp;
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch();"><span>{$Think.lang.ds_del}</span></a>
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_edit_batch('hide');"><span>{$Think.lang.admin_snstrace_statehide}</span></a>
+                    <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_edit_batch('show');"><span>{$Think.lang.admin_snstrace_stateshow}</span></a>
+                </td>
+            </tr>
+        </tfoot>
+        {else /}
+        <tr class="no_data">
+            <td colspan="15">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+        </tbody>
+    </table>
+    {$show_page}
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#search_stime').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#search_etime').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+    //批量修改
+    function submit_edit_batch(type) {
+        /* 获取选中的项 */
+        var items = '';
+        $('.checkitem:checked').each(function () {
+            items += this.value + ',';
+        });
+        if (items != '') {
+            items = items.substr(0, (items.length - 1));
+            submit_edit(items,type);
+        }else{
+            layer.alert('请勾选选项', {icon: 2})  
+        }
+    }
+    function submit_edit(ids_str,type){
+        _uri = ADMINSITEURL+"/Storesnstrace/scomm_edit.html?sc_id=" + ids_str+"&type="+type;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_operation}');
+    }
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Storesnstrace/scomm_del.html?sc_id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

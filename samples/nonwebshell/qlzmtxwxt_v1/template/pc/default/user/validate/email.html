@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>激活邮箱</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="fly,layui,前端社区">
+  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+   {include file="public/css"}
+   {include file="public/js"}
+</head>
+<body>
+
+{include file="public/header"}
+
+<div class="layui-container fly-marginTop fly-user-main">
+<div class="user-left-menu" >
+{include file="public/left_menu"}
+</div>
+
+
+  <div class="fly-panel fly-panel-user user-right-content" pad20>
+    <div class="layui-tab layui-tab-brief" lay-filter="user">
+      <ul class="layui-tab-title">
+        <li class="layui-this">
+          激活邮箱
+        </li>
+      </ul>
+      <div class="layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+        <ul class="layui-form">
+          <li class="layui-form-li">
+            <label for="activate">您的邮箱：</label>
+            <span class="layui-form-text">
+          {$user.email}
+          {if $user.is_email ==1}
+           <em style="color:#999;">（已成功激活）</em>
+          {else}
+          <em style="color:#c00;">（尚未激活）</em>
+          {/if}
+             
+              
+
+            </span>
+          </li>
+          {if $user.is_email !=1}
+          <li class="layui-form-li" style="margin-top: 20px; line-height: 26px;">
+            <div>
+              1. 如果您未收到邮件，或激活链接失效，您可以
+              <a class="layui-form-a" style="color:#4f99cf;" id="activate" href="javascript:;" data-email="{$user.email}" data-status="1">发送邮件</a>，或者
+              <a class="layui-form-a" style="color:#4f99cf;" href="{:url('set/index')}">更换邮箱</a>；
+            </div>
+            <div>
+              2. 如果您始终没有收到发送的邮件，请注意查看您邮箱中的垃圾邮件。
+            </div>
+          </li>
+         {/if}
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+   <script>
+// 发送验证码
+ var id = "#activate"; //发送验证码按钮id
+$(id).on('click',function(){
+  var email = $(this).attr('data-email');
+  var status = $(this).attr('data-status');
+  if(status == 2){
+     return false;
+  }
+  $.post("{:url('validate/sendEmail')}",{email:email},
+                  function(json) {
+                    if(json.code == 0){
+                           time(id); 
+                            layer.msg(json.msg, {icon: 1,
+                            skin: 'layui-layer-molv',});
+                        
+                    }else if(json.code == -1){
+                           
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});
+                       
+                    }else{
+                            time(id,0);
+                             layer.msg(json.msg, {icon:0,
+                             skin: 'layui-layer-molv',});
+                       
+                    }
+                    
+                  });
+  return false;
+
+});
+
+/**
+ * [time 定时函数]
+ * @param  {[type]} o    [绑定的dom对象id]
+ * @param  {Number} wait [定时时间，0关闭定时 ]
+ * @return {[type]}      [无返回值]
+ */
+function time(id,wait=60) {
+  if (wait == 0) {
+      //倒计时完成解禁按钮
+      $(id).attr("data-status",1);
+      $(id).html("发送邮件");
+
+    } else {
+   // 倒计时中 禁用按钮
+      $(id).attr("data-status",2);
+      $(id).html("重新发送邮件(" + wait + ")");
+      wait--;
+   interval = setTimeout(function() {
+          time(id,wait);
+       },1000)
+    }
+ }
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<style>
+	.pk-table tr td,
+	.pk-table tr th {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+</style>
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">回收站</label>
+	<div class="pk-w-sm-8"></div>
+</div>
+
+<form name="form_del" method="post" action="index.php?c=app&a=superadmin:index&s=delete&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table={$type}">
+	<table class="pk-table pk-table-bordered pk-text-sm pk-width-all" style="margin-bottom:70px">
+		<tr class="pk-text-lg pk-padding-10 pk-text-primary">
+			<th colspan="99" style="text-align:center">正在查看被删{$nowchecktitle}</th>
+		</tr>
+		<tr class="pk-text-center pk-text-sm pk-padding-10 pk-text-primary">
+			<td colspan="99" style="text-align:center">
+				<a class="pk-btn pk-btn-sm pk-btn-success" href="index.php?c=app&a=superadmin:index&s=forum&t=recycle&type=read">查看文章</a>
+				&nbsp;&nbsp;
+				<a class="pk-btn pk-btn-sm pk-btn-success" href="index.php?c=app&a=superadmin:index&s=forum&t=recycle&type=reply">查看回复</a>
+			</td>
+		</tr>
+		<tr class="pk-text-center pk-text-xs">
+			<td colspan="99" style="text-align:center">若需查看完整内容请双击内容，安全起见所有帖子被处理为HTML代码格式</td>
+		</tr>
+		<tr class="pk-text-center">
+			<th></th>
+			<th>ID</th>
+			<th>用户</th>
+			<th>标题</th>
+			<th>时间</th>
+		</tr>
+		{$outhtml}
+	</table>
+	<div style="position:fixed;bottom:0;left:0;width:100%;padding:10px 30px;border-top:solid 1px #ccc;background-color:#eee">
+		<input type="hidden" name="delcmd" value="0">
+		<input type="checkbox" onclick="choosecheckbox('ids[]',this.checked)">
+		<span class="pk-text-sm">全选/全不选&nbsp;&nbsp;&nbsp;</span>
+		<button type="button" class="pk-btn pk-btn-sm pk-btn-success" onclick="form_del.delcmd.value='0';form_del.submit()">还原</button>
+		<button type="button" class="pk-btn pk-btn-sm pk-btn-danger" onclick="ppp({type:1,icon:3,content:'确认永久删除选中项吗？',submit:function(){form_del.delcmd.value='del';form_del.submit()}})">永久删除</button>
+	</div>
+</form>

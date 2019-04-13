@@ -1,0 +1,27 @@
+<div class="eject_con">
+  <div id="warning" class="alert alert-error"></div>
+  <form method="post" action="{:url('Sellerbill/confirm_bill',['ob_no'=>$Request.param.ob_no])}" id="bill_confirm_form" target="_parent">
+    
+    <dl>
+      <dt>{$Think.lang.ob_seller_content}{$Think.lang.ds_colon}</dt>
+      <dd>
+          <textarea name="ob_seller_content" cols="30"></textarea>
+      </dd>
+    </dl>
+    
+    <div class="bottom">
+      <label class="submit-border"><input type="button" dstype="confirm_bill_submit" class="submit" value="{$Think.lang.ds_common_button_save}" /></label>
+    </div>
+  </form>
+</div>
+<script>
+$(document).ready(function(){
+
+	$('input[dstype="confirm_bill_submit" ]').click(function(){
+		if ($('#bill_confirm_form').valid()) {
+			ds_ajaxpost('bill_confirm_form','url',"{:url('sellerbill/index')}");
+		}
+	});
+    
+});
+</script> 

@@ -1,0 +1,99 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <table class="search-form">
+        <tbody>
+            <tr><td>{$Think.lang.store_name} - {$bill_info.ob_store_name}（ID：{$bill_info.ob_store_id}） {$bill_info.ob_no} {$Think.lang.bill_phase_numbers}&emsp;
+                    {if $bill_info.ob_state == $Think.BILL_STATE_STORE_COFIRM}
+                    <a class="btn btn-mini" href="javascript:ds_get_confirm('{$Think.lang.bill_verify_explanation}','{:url('Bill/bill_check',['ob_no'=>$Request.param.ob_no])}')"><span>{$Think.lang.bill_verify_explanation}</span></a>
+                    {elseif $bill_info.ob_state == $Think.BILL_STATE_SYSTEM_CHECK /}
+                    <a class="btn btn-mini" href="{:url('Bill/bill_pay',['ob_no'=>$Request.param.ob_no])}"><span>{$Think.lang.bill_order_state_paid}</span></a>
+                    {elseif $bill_info.ob_state == $Think.BILL_STATE_SUCCESS /}
+                    <a class="btn btn-mini" target="_blank" href="{:url('Bill/bill_print',['ob_no'=>$Request.param.ob_no])}"><span>{$Think.lang.ds_export}{$Think.lang.bill_print}</span></a>
+                    {/if}
+                </td></tr>
+            <tr><td>{$Think.lang.order_time_from}{$Think.lang.bill_print_odd_numbers}{$Think.lang.ds_colon}{$bill_info.ob_no}</td></tr>
+            <tr><td>{$Think.lang.bill_start_end_date}{$Think.lang.ds_colon}{$bill_info.ob_startdate|date='Y-m-d',###} &nbsp;{$Think.lang.bill_print_zhi}&nbsp; {$bill_info.ob_enddate|date='Y-m-d',###}
+                </td></tr><tr>
+                <td>{$Think.lang.bill_out_date}{$Think.lang.ds_colon}{$bill_info.ob_createdate|date='Y-m-d',###}</td></tr><tr>
+                <td>{$Think.lang.bill_platform_pay}：{$bill_info.ob_result_totals} = {$bill_info.ob_order_totals} ({$Think.lang.order_price_from}) - {$bill_info.ob_commis_totals} ({$Think.lang.bill_print_commision}) - {$bill_info.ob_order_return_totals} ({$Think.lang.bill_refund_price}) + {$bill_info.ob_commis_return_totals} ({$Think.lang.bill_refund_commision}) - {$bill_info.ob_inviter_totals} ({$Think.lang.ob_inviter_totals}) + {$bill_info.ob_vr_order_totals} ({$Think.lang.bill_ob_vr_order_totals}) - {$bill_info.ob_vr_order_return_totals} ({$Think.lang.bill_ob_vr_order_return_totals}) - {$bill_info.ob_vr_commis_totals} ({$Think.lang.bill_ob_vr_commis_totals}) + {$bill_info.ob_vr_commis_return_totals} ({$Think.lang.bill_ob_vr_commis_return_totals}) - {$bill_info.ob_vr_inviter_totals} ({$Think.lang.bill_ob_vr_inviter_totals}) - {$bill_info.ob_store_cost_totals} ({$Think.lang.bill_print_store_promotion})</td>
+            </tr>
+            <tr><td>{$Think.lang.bill_print_state}：{:get_bill_state($bill_info['ob_state'])}
+              
+                </td></tr>
+            {if $bill_info.ob_seller_content}
+            <tr><td><b>{$Think.lang.ob_seller_content}：{$bill_info.ob_seller_content}</b>
+                </td></tr>
+            {/if}
+            {if $bill_info.ob_admin_content}
+            <tr><td><b>{$Think.lang.ob_admin_content}：{$bill_info.ob_admin_content}</b>
+                </td></tr>
+            {/if}
+        </tbody>
+    </table>
+    <form method="get" action="" name="formSearch" id="formSearch">    
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.bill_order_type}</dt>
+                <dd>
+                    <input type="hidden" name="ob_no" value="{$bill_info.ob_no}" />
+                    <select name="query_type" class="querySelect">
+                        <option value="order" {if condition="$Request.get.query_type eq 'order'"}selected{/if}>{$Think.lang.bill_order_list}</option>
+                        <option value="vrorder" {if condition="$Request.param.query_type eq 'vrorder'"}selected{/if}>{$Think.lang.bill_vrorder_list}</option>
+                        <option value="cost" {if condition="$Request.get.query_type eq 'cost'"}selected{/if}>{$Think.lang.bill_store_money}</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.bill_transaction_time}</dt>
+                <dd><input class="txt date" type="text" value="{$Request.get.query_start_date}" id="query_start_date" name="query_start_date">
+                    ~
+                    <input class="txt date" type="text" value="{$Request.get.query_end_date}" id="query_end_date" name="query_end_date"/>
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="">{$Think.lang.ds_query}</a>
+            </div>
+        </div>
+    </form>
+    
+<table class="ds-default-table">
+    <thead>
+      <tr class="thead">
+        <th class="align-center">{$Think.lang.ds_store}</th>
+        <th class="align-center">{$Think.lang.bill_storecost_remark}</th>
+        <th class="align-center">{$Think.lang.bill_storecost_price}</th>
+        <th class="align-center">{$Think.lang.storecost_time}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {notempty name="cost_list"}
+      {foreach name="cost_list" item="cost_info" }
+      <tr class="hover">
+        <td class="align-center">{$store_info.store_name}</td>
+        <td class="align-center">{$cost_info.storecost_remark}</td>
+        <td class="align-center">{:ds_price_format($cost_info['storecost_price'])}</td>
+        <td class="align-center">{$cost_info.storecost_time|date='Y-m-d',###}</td>
+      </tr>
+      {/foreach}
+      {else /}
+      <tr class="no_data">
+        <td colspan="15">{$Think.lang.ds_no_record}</td>
+      </tr>
+      {/notempty}
+    </tbody>
+    <tfoot>
+      <tr class="tfoot">
+        <td colspan="15" id="dataFuncs">{$show_page}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<script type="text/javascript">
+          $(function() {
+              $('#query_start_date').datepicker({dateFormat: 'yy-mm-dd', minDate: "{$bill_info.ob_startdate|date='Y-m-d',###}", maxDate: "{$bill_info.ob_enddate|date='Y-m-d',###}"});
+              $('#query_end_date').datepicker({dateFormat: 'yy-mm-dd', minDate: "{$bill_info.ob_startdate|date='Y-m-d',###}", maxDate: "{$bill_info.ob_enddate|date='Y-m-d',###}"});
+          });
+</script> 

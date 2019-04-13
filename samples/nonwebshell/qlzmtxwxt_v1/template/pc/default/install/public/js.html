@@ -1,0 +1,87 @@
+<!--引入JS-->
+{load href="__STATIC__/common/js/jquery.min.js" /}
+{load href="__PLUGIN__/layui/layui.js" /}
+{load href="__PLUGIN__/webuploader/webuploader.js" /}
+
+{load href="__PLUGIN__/swiper/js/swiper.min.js" /}
+
+
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+  var  element = layui.element,
+   layer = layui.layer,
+   form = layui.form ,
+   layedit = layui.layedit
+  ,laydate = layui.laydate;
+  table = layui.table;
+
+
+//全站使用，全选
+form.on('checkbox(selectAll)', function(data){
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").prop("checked",true); 
+                 form.render('checkbox'); 
+       
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").prop("checked", false);
+             form.render('checkbox');
+        } 
+
+    });
+
+});
+
+</script>
+<script>
+
+
+</script>
+<script>
+$(document).ready(function(){
+  $(".layui-header .layui-nav-item").click(function(){
+   var i =$(this).index();
+   $(".layui-nav-tree").eq(i).show().siblings('.layui-nav-tree').hide();
+  });
+});
+</script>
+
+<script>
+
+$(function(){
+  $("#clear_cache").on("click",function(){
+      layer.confirm('是否确定清理缓存！', {
+      title:'清空缓存提示',
+      btn: ['确定','取消'] //按钮
+}, function(){
+         $.post("{:url('system/clearCache')}",{"status":"clear"},function(json){
+           if(json.code == 0){
+               layer.msg(json.msg);
+           }else{
+              layer.msg(json.msg);
+           }
+       });
+}, function(){   });
+
+  });
+});
+</script>
+
+
+
+<script>
+// $(function(){
+//   $("#qilecms-admin a").on("click",function () {
+//     var  url =$(this).attr("data-href");
+//     if(url != ''){
+//     $.get(url, function (r) {
+//         $("#admin-main").html(r);
+//     }, "json");
+//     return false;
+//     }
+
+
+// });
+// });
+</script>

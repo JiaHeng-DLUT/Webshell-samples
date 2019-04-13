@@ -1,0 +1,421 @@
+{include file="public/header" /}
+
+
+<div class="page welcome">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_welcome}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <ul class="info-message">
+        {if $version_message}
+        <li>{$version_message}</li>
+        {/if}
+    </ul>
+
+    <!--会员-->
+    <div class="info-panel">
+        <div class="mt">
+            {$Think.lang.dashboard_wel_member_des}：<em id="statistics_member"></em>
+        </div>
+        <div class="mc">
+            <ul>
+                <li class="none">
+                    <a href="{:url('Member/member')}">
+                        <div class="p_header bg-79BAD0">
+                            <i class="iconfont">&#xe609;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_new_add}</div>
+                            <div class="p_num" id="statistics_week_add_member">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Predeposit/pdcash_list')}">
+                        <div class="p_header bg-EC7E7F">
+                            <i class="iconfont">&#xe642;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_predeposit_get}</div>
+                            <div class="p_num" id="statistics_cashlist">0</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--店铺-->
+    <div class="info-panel">
+        <div class="mt">
+           {$Think.lang.dashboard_wel_store_des}：<em id="statistics_store"></em>
+        </div>
+        <div class="mc">
+            <ul>
+                <li class="none">
+                    <a href="{:url('Store/store_joinin')}">
+                        <div class="p_header bg-86CE86">
+                            <i class="iconfont">&#xe63b;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_store_new}</div>
+                            <div class="p_num" id="statistics_store_joinin">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Store/store_bind_class_applay_list',['state'=>0])}">
+                        <div class="p_header bg-E9BB5F">
+                            <i class="iconfont">&#xe604;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_category_apply}</div>
+                            <div class="p_num" id="statistics_store_bind_class_applay">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Store/reopen_list',['storereopen_state'=>1])}">
+                        <div class="p_header bg-79BAD0">
+                            <i class="iconfont">&#xe660;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_reopen_apply}</div>
+                            <div class="p_num" id="statistics_store_reopen_applay">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Store/store',['store_type'=>'expired'])}">
+                        <div class="p_header bg-EC7E7F">
+                            <i class="iconfont">&#xe610;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_expired}</div>
+                            <div class="p_num" id="statistics_store_expired">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Store/store',['store_type'=>'expire'])}">
+                        <div class="p_header bg-9C6CCD">
+                            <i class="iconfont">&#xe610;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_expire}</div>
+                            <div class="p_num" id="statistics_store_expire">0</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--商品-->
+    <div class="info-panel">
+        <div class="mt">
+            {$Think.lang.dashboard_wel_total_goods}：<em id="statistics_goods"></em>
+        </div>
+        <div class="mc">
+            <ul>
+                <li class="none">
+                    <a href="{:url('Goods/index')}">
+                        <div class="p_header bg-E9BB5F">
+                            <i class="iconfont">&#xe661;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_new_add}</div>
+                            <div class="p_num" id="statistics_week_add_product">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Goods/index',['type'=>'waitverify','search_verify'=>10])}">
+                        <div class="p_header bg-79BAD0">
+                            <i class="iconfont">&#xe661;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_goods_waitverify}</div>
+                            <div class="p_num" id="statistics_product_verify">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Inform/inform_list')}">
+                        <div class="p_header bg-EC7E7F">
+                            <i class="iconfont">&#xe66b;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_inform}</div>
+                            <div class="p_num" id="statistics_inform_list">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Brand/brand_apply')}">
+                        <div class="p_header bg-9C6CCD">
+                            <i class="iconfont">&#xe66c;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_brnad_applay}</div>
+                            <div class="p_num" id="statistics_brand_apply">0</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--交易-->
+    <div class="info-panel">
+        <div class="mt">
+            {$Think.lang.dashboard_wel_trade_des}：<em id="statistics_order"></em>
+        </div>
+        <div class="mc">
+            <ul>
+                <li class="none">
+                    <a href="{:url('Refund/refund_manage')}">
+                        <div class="p_header bg-86CE86">
+                            <i class="iconfont">&#xe624;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.order_refund}</div>
+                            <div class="p_num" id="statistics_refund">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Returnmanage/return_manage')}">
+                        <div class="p_header bg-EC7E7F">
+                            <i class="iconfont">&#xe642;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.order_return}</div>
+                            <div class="p_num" id="statistics_return">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Vrrefund/refund_manage')}">
+                        <div class="p_header bg-86CE86">
+                            <i class="iconfont">&#xe654;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.ds_vrrefund}</div>
+                            <div class="p_num" id="statistics_vr_refund">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Complain/complain_new_list')}">
+                        <div class="p_header bg-79BAD0">
+                            <i class="iconfont">&#xe621;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_complain}</div>
+                            <div class="p_num" id="statistics_complain_new_list">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Complain/complain_handle_list')}">
+                        <div class="p_header bg-6C93CD">
+                            <i class="iconfont">&#xe621;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_complain_handle}</div>
+                            <div class="p_num" id="statistics_complain_handle_list">0</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--营销-->
+    <div class="info-panel">
+        <div class="mt">
+            {$Think.lang.dashboard_wel_stat_des}
+        </div>
+        <div class="mc">
+            <ul>
+                <li class="none">
+                    <a href="{:url('Groupbuy/index')}">
+                        <div class="p_header bg-E9BB5F">
+                            <i class="iconfont">&#xe634;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_groupbuy}</div>
+                            <div class="p_num" id="dashboard_wel_groupbuy">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Pointorder/pointorder_list',['porderstate'=>'waitship'])}">
+                        <div class="p_header bg-6CCDA5">
+                            <i class="iconfont">&#xe622;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_point_order}</div>
+                            <div class="p_num" id="dashboard_wel_point_order">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Bill/show_statis',['bill_state'=>'2'])}">
+                        <div class="p_header bg-6C93CD">
+                            <i class="iconfont">&#xe631;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_check_billno}</div>
+                            <div class="p_num" id="dashboard_wel_check_billno">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Bill/show_statis',['bill_state'=>'3'])}">
+                        <div class="p_header bg-6CCDA5">
+                            <i class="iconfont">&#xe674;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_pay_billno}</div>
+                            <div class="p_num" id="dashboard_wel_pay_billno">0</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="none">
+                    <a href="{:url('Mallconsult/index')}">
+                        <div class="p_header bg-86CE86">
+                            <i class="iconfont">&#xe66d;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.ds_mall_consult}</div>
+                            <div class="p_num" id="statistics_mall_consult">0</div>
+                        </div>
+                    </a>
+                </li>
+                <!--
+                <li class="none">
+                    <a href="{:url('Delivery/index',['sign'=>'verify'])}">
+                        <div class="p_header bg-9C6CCD">
+                            <i class="iconfont">&#xe676;</i>
+                        </div>
+                        <div class="p_content">
+                            <div class="p_text">{$Think.lang.dashboard_wel_delivery}</div>
+                            <div class="p_num" id="dashboard_wel_delivery">0</div>
+                        </div>
+                    </a>
+                </li>
+                -->
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="info-system">
+        <div class="mt">
+            <h3>{$Think.lang.dashboard_wel_version_info}</h3>
+        </div>
+        <div class="mc">
+            <table cellpadding="0" cellspacing="0" class="system_table">
+                <tbody>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_version}</td>
+                    <td>{$statistics['version']}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_install_date}</td>
+                    <td>{$statistics['setup_date']}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_program_development}</td>
+                    <td>{$Think.lang.dashboard_wel_deshangwangluo}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_all_right_reserved}</td>
+                    <td>{$Think.lang.dashboard_wel_piracy_must_be_studied}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_aboutus_website}:</td>
+                    <td><a href="http://www.csdeshang.com" target="_blank">{$Think.lang.dashboard_aboutus_website}</a></td>
+                    <td class="gray_bg">{$Think.lang.dashboard_aboutus_bbs}:</td>
+                    <td><a href="http://bbs.csdeshang.com" target="_blank">{$Think.lang.dashboard_wel_communication_bbs}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="info-system">
+        <div class="mt">
+            <h3>{$Think.lang.dashboard_wel_sys_info}</h3>
+        </div>
+        <div class="mc">
+            <table cellpadding="0" cellspacing="0" class="system_table">
+                <tbody>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_thinkphp_version}</td>
+                    <td>{$Think.THINK_VERSION}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_class_library_file_suffix}</td>
+                    <td>{$Think.EXT}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_server_os}</td>
+                    <td>{$statistics['os']}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_server_domain_ip}:</td>
+                    <td>{$statistics.domain} [ {$statistics.ip} ]</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">WEB {$Think.lang.dashboard_wel_server}</td>
+                    <td>{$statistics['web_server']}</td>
+                    <td class="gray_bg">PHP {$Think.lang.dashboard_wel_version}</td>
+                    <td>{$statistics['php_version']}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">MYSQL {$Think.lang.dashboard_wel_version}</td>
+                    <td>{$statistics['sql_version']}</td>
+                    <td class="gray_bg">GD {$Think.lang.dashboard_wel_version}:</td>
+                    <td>{$statistics.gdinfo}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_file_uplode_limit}:</td>
+                    <td>{$statistics.fileupload}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_max_occupied_memory}:</td>
+                    <td>{$statistics.memory_limit}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_max_ex_time}:</td>
+                    <td>{$statistics.max_ex_time}</td>
+                    <td class="gray_bg">{$Think.lang.dashboard_wel_safe_mode}:</td>
+                    <td>{$statistics.safe_mode}</td>
+                </tr>
+                <tr>
+                    <td class="gray_bg">Zlib{$Think.lang.dashboard_wel_support}:</td>
+                    <td>{$statistics.zlib}</td>
+                    <td class="gray_bg">Curl{$Think.lang.dashboard_wel_support}:</td>
+                    <td>{$statistics.curl}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var normal = [];
+        var work = ['week_add_member', 'week_add_product','store_joinin', 'store_bind_class_applay', 'store_reopen_applay', 'store_expired', 'store_expire', 'brand_apply', 'cashlist', 'groupbuy_verify_list', 'points_order', 'complain_new_list', 'complain_handle_list', 'product_verify', 'inform_list', 'refund', 'return', 'vr_refund', 'cms_article_verify', 'cms_picture_verify', 'circle_verify', 'check_billno', 'pay_billno', 'mall_consult', 'delivery_point', 'offline'];
+        $(document).ready(function () {
+            $.getJSON("{:url('Dashboard/statistics')}", function (data) {
+                $.each(data, function (k, v) {
+                    $("#statistics_" + k).html(v);
+                    console.log(k);
+                    if (v != 0 && $.inArray(k, work) !== -1) {
+                        $("#statistics_" + k).parent().parent().parent().removeClass('none').addClass('high');
+                    } else if (v == 0 && $.inArray(k, normal) !== -1) {
+                        $("#statistics_" + k).parent().parent().parent().removeClass('normal').addClass('none');
+                    }
+                });
+            });
+        });
+    </script>
+</div>

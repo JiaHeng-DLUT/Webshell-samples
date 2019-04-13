@@ -1,0 +1,63 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_complain}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <table class="ds-default-table">
+        <thead>
+            <tr class="thead">
+                <th class="w24"></th>
+                <th>{$Think.lang.complain_subject_content}</th>
+                <th>{$Think.lang.complain_subject_desc}</th>
+                <th class="w72 align-center">{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {notempty name="complainsubject_list"}
+            {foreach name="complainsubject_list" item="v"}
+            <tr class="hover" id="ds_row_{$v.complainsubject_id}">
+                <td><input type="checkbox" name='complainsubject_id' value="{$v.complainsubject_id}" class="checkitem"></td>
+                <td>{$v.complainsubject_content}</td>
+                <td>{$v.complainsubject_desc}</td>
+                <td class="align-center">
+                    <a href="javascript:dsLayerConfirm('{:url('Complain/complain_subject_drop',['complain_subject_id'=>$v.complainsubject_id])}','{$Think.lang.ds_ensure_del}',{$v.complainsubject_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else}
+            <tr class="no_data">
+                <td colspan="16">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+        </tbody>
+        <tfoot>
+            {notempty name="complainsubject_list"}
+            <tr class="tfoot">
+                <td>
+                    <input type="checkbox" class="checkall" id="checkall_1">
+                </td>
+                <td colspan="16"><label for="checkall_1">{$Think.lang.ds_select_all}</label>
+                    &nbsp;&nbsp;<a href="JavaScript:void(0);" id="btn_batch_drop" class="btn btn-small" onclick="submit_delete_batch()"><span>{$Think.lang.ds_del}</span></a>
+                </td>
+            </tr>
+            {/notempty}
+        </tfoot>
+    </table>
+    {$show_page}
+</div>
+<script type="text/javascript">
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Complain/complain_subject_drop.html?complain_subject_id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script type="text/javascript">var sitepath = '<{$site_root}>'; var rewrite = '<{$cfg.is_enabled_rewrite}>';</script>
+
+<script type="text/javascript" src="<{$site_root}>public/js/jquery.min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/editor/kindeditor-min.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/layui/layui.js"></script>
+<script type="text/javascript" src="<{$site_root}>public/js/common.js"></script>
+<link href="<{$site_root}>public/layui/css/layui.css" rel="stylesheet" type="text/css" />
+<link href="<{$smarty.const.tpl}>skin/<{$cfg.default_skin}>/member.css" rel="stylesheet" type="text/css" />
+<meta name="author" content="http://www.youke365.site" />
+
+</head>
+
+<body>
+ <div id="header">
+        <div id="topbox"> 
+            <div id="other">
+                <a href="<{$site_root}>">
+                    <img src="/public/images/logo.png">
+                </a>
+            </div>
+            <div id="others">
+                <span id="logo">会员中心</span>
+            </div>
+        </div>
+        <div id="navbar">
+            <ul>
+                <li ><a href="/">首 页</a></li>
+                <li><a href="<{url('home')}>">会员中心</a></li><li class="navline"></li>
+
+                <li><a href="<{url('claim')}>">网站认领</a></li><li class="navline"></li>
+                <li><a href="<{url('info')}>">个人资料</a></li><li class="navline"></li>
+                <li><a href="<{url('logout')}>">安全退出</a></li><li class="navline"></li>
+              
+            </ul>
+        </div>
+    </div>
+<div id="wrapper">
+<div class="left">
+
+            <ul class="layui-nav layui-nav-tree" lay-filter="demo">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;">文章管理</a>
+            <dl class="layui-nav-child">
+              <dd><a href="<{url('article')}>">文章列表</a></dd>
+              <dd><a href="<{url('article',['act'=>'add'])}>">添加文章</a></dd>
+            </dl>
+         
+          <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;">网站管理</a>
+             <dl class="layui-nav-child">
+              <dd><a href="<{url('website')}>">网站列表</a></dd>
+              <dd><a href="<{url('website',['act'=>'add'])}>">添加网站</a></dd>
+            </dl>
+             </li>
+                  <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;">链接管理</a>
+                        <dl class="layui-nav-child">
+              <dd><a href="<{url('weblink')}>">链接列表</a></dd>
+              <dd><a href="<{url('weblink',['act'=>'add'])}>">添加链接</a></dd>
+            </dl>
+             </li>
+        </ul>
+
+</div>
+   <div class="right">
+
+    <div id="mainbox" class="mtop10">

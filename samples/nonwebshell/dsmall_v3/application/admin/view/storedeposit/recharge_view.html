@@ -1,0 +1,42 @@
+{include file="public/header" /}
+<form method="post" name="remark_form" id="remark_form" action="{:url('Storedeposit/recharge_view')}">
+    <input type="hidden" value="{$Request.param.id}" name="id">
+    <table class="ds-default-table nobdb">
+        <tbody>
+            <tr class="noborder">
+                <td colspan="2" class="required"><label>{$Think.lang.admin_storedeposit_pay_state}:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop">
+                    <input id="rewrite_enabled_1" name="verify_state"  value="1" type="radio" checked="checked">
+                    <label for="rewrite_enabled_1"  class="cb-enable selected" title="{$Think.lang.admin_storedeposit_payed}>"><span>{$Think.lang.admin_storedeposit_payed}</span></label>
+                    <input id="rewrite_disabled_2" name="verify_state" value="0" type="radio">
+                    <label for="rewrite_disabled_2" class="cb-disable" title="{$Think.lang.admin_storedeposit_cancel}"><span>{$Think.lang.admin_storedeposit_cancel}</span></label>
+                    
+                    
+                </td>
+
+            </tr>
+            <tr dstype="reason">
+                <td colspan="2" class="required"><label for="verify_reason">{$Think.lang.admin_storedeposit_remark}:</label></td>
+            </tr>
+            <tr class="noborder" dstype="reason">
+                <td class="vatop rowform"><textarea rows="6" class="tarea" cols="60" name="verify_reason" id="verify_reason"></textarea></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="tfoot">
+                <td colspan="2">
+                    <a href="JavaScript:void(0);" class="btn" dstype="btn_submit">{$Think.lang.ds_submit}</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+<script>
+      $(function() {
+          $('a[dstype="btn_submit"]').click(function() {
+              $('#remark_form').submit();
+          });
+      });
+</script>

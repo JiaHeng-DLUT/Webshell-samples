@@ -1,0 +1,96 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<form method="post">
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150">商品信息：</td>
+			<td valign="top">
+				<a href="{pe_url('product-'.$info['product_id'])}" target="_blank" class="fl" style="border:1px solid #f2f2f2"><img src="{pe_thumb($info['product_logo'], 40, 40)}" width="40" height="40"></a>
+				<a href="{pe_url('product-'.$info['product_id'])}" target="_blank" class="fl mal10 cblue">{$info['product_name']}</a>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">评价日期：</td>
+			<td>{pe_date($info['comment_atime'])}</td>
+		</tr>
+		<tr>
+			<td align="right">评价用户：</td>
+			<td><a href="http://www.ip138.com/ips.asp?ip={$info['user_ip']}" target="_blank">{$info['user_name']}</a></td>
+		</tr>
+		<tr>
+			<td align="right">综合评分：</td>
+			<td>
+				<input type="hidden" name="info[comment_star]" value="{$info['comment_star']}" />
+				<span id="star" class="fl mat5"></span>
+				<span id="comment_star_show" class="fl mal10 corg"></span>
+				<div class="clear"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">评价内容：</td>
+			<td><textarea name="info[comment_text]" style="width:550px;height:120px;resize:none">{$info['comment_text']}</textarea></td>
+		</tr>
+		<tr>
+			<td align="right">评价晒图：</td>
+			<td>
+				<!--{foreach(array(0,1,2,3,4) as $k=>$v):}-->
+				<!--{$logo = $comment_logo[$k] ? pe_thumb($comment_logo[$k]) : $pe['host_tpl']."images/up_bg.jpg"}-->
+				<div class="upload_html fl">
+					<input type="hidden" name="comment_logo[]" value="{$comment_logo[$k]}" class="upload_value" />
+					<a href="javascript:;" class="upload_btn"><img src="{$logo}" class="upload_logo" style="width:125px; height:125px;" /></a>
+					<div class="upload_jindu"></div>
+					<div class="upload_bg"></div>
+					<div class="upload_do">
+						<a href="javascript:;" class="upload_left"></a>
+						<a href="javascript:;" class="upload_right"></a>
+						<a href="javascript:;" class="upload_del"></a>
+					</div>	
+				</div>
+				<!--{endforeach;}-->
+			</td>
+		</tr>
+		</table>
+	</div>
+	<div class="right_main">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat10 mab10">
+		<tr>
+			<td align="right" width="150">回复内容：</td>
+			<td><textarea name="info[comment_reply_text]" style="width:550px;height:120px">{$info['comment_reply_text']}</textarea></td>
+		</tr>
+		<tr>
+			<td align="right">回复日期：</td>
+			<td>{pe_date($info['comment_reply']?$info['comment_reply_time']:time())}</td>
+		</tr>
+		</table>
+	</div>
+	<div class="center mat20 mab20">
+		<input type="hidden" name="pe_token" value="{$pe_token}" />
+		<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+	</div>
+	</form>
+</div>
+<script type="text/javascript" src="{$pe['host_root']}include/plugin/raty/jquery.raty.js"></script>、
+<link rel="stylesheet" type="text/css" href="{$pe['host_root']}include/plugin/webuploader/webuploader.css">
+<script charset="utf-8" src="{$pe['host_root']}include/plugin/webuploader/webuploader.min.js"></script>
+<script charset="utf-8" src="{$pe['host_root']}include/plugin/webuploader/upload.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#star').raty({
+		path:"{$pe['host_root']}include/plugin/raty/images",
+		hints: ['很差', '较差', '一般', '满意', '很满意'],
+		score: {$info['comment_star']},
+		target: "#comment_star_show",
+		targetKeep: true,
+		click: function (score, evt) {
+			$(":input[name='info[comment_star]']").val(score);
+		}
+	});
+	$("body").pe_upload('pc', 5);
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

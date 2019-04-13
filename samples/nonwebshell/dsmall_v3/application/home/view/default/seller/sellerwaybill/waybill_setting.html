@@ -1,0 +1,52 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <form id="add_form" action="{:url('Sellerwaybill/waybill_setting_save')}" method="post">
+        <input type="hidden" name="storewaybill_id" value="{$storewaybill_id}">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.left_deviation}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="w60 text" name="storewaybill_left" type="text" value="{$storewaybill_left}" /><em class="add-on">mm</em> <span></span>
+                <p class="hint">{$Think.lang.print_template_left_offset}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.top_deviation}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input class="w60 text" name="storewaybill_top" type="text" value="{$storewaybill_top}" /><em class="add-on">mm</em> <span></span>
+                <p class="hint">{$Think.lang.print_template_top_offset}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.according_project}{$Think.lang.ds_colon}</dt>
+            <dd>
+                {if $storewaybill_data}
+                <ul class="dssc-form-checkbox-list">
+                    {foreach name="storewaybill_data" item="value"}
+                    <li>
+                        <input id="{$key}" type="checkbox" class="checkbox" name="data[{$key}]" {if $value.show}checked{/if}>
+                               <label for="{$key}">{$value.item_text}</label>
+                    </li>
+                    {/foreach}
+                </ul>
+                {/if}
+                <p class="hint">{$Think.lang.select_item_print}</p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.ds_common_button_submit}">
+            </label>
+        </div>
+    </form>
+</div>
+<script>
+    $('#add_form').validate({
+    submitHandler:function(form){
+        ds_ajaxpost('add_form', 'url', "{:url('Sellerwaybill/index')}");
+    }
+});
+
+</script>
+{/block}

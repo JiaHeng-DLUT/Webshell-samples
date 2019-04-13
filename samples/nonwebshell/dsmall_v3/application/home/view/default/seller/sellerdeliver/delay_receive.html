@@ -1,0 +1,64 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    {if $order_info}
+    <form id="changeform" method="post" action="{:url('Sellerdeliver/delay_receive',['order_id'=>$order_info.order_id])}">
+        <dl>
+            <dt>{$Think.lang.store_order_sn}{$Think.lang.ds_colon}</dt>
+            <dd><span class="num">{$order_info.order_sn}</span></dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_order_buyer_with}{$Think.lang.ds_colon}</dt>
+            <dd>{$order_info.buyer_name}</dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.latest_time_delivery}{$Think.lang.ds_colon}</dt>
+            <dd>{$order_info.delay_time|date="Y-m-d H:i:s",###}<br/>{$Think.lang.automatic_change_receiving_state} </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_deliver_delay}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <select name="delay_date">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select> {$Think.lang.day}
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" id="confirm_button" value="{$Think.lang.ds_ok}" /></label>
+        </div>
+    </form>
+    {else /}
+    <p style="line-height:80px;text-align:center">{$Think.lang.check_parameters_correct}</p>
+    {/if}
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#changeform').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function (form, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    $('#warning').show();
+                } else {
+                    $('#warning').hide();
+                }
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('changeform');
+            },
+            rules: {
+                order_amount: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                order_amount: {
+                    required: '{$Think.lang.store_order_modify_price_gpriceerror}',
+                    number: '{$Think.lang.store_order_modify_price_gpriceerror}'
+                }
+            }
+        });
+    });
+</script>

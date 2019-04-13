@@ -1,0 +1,374 @@
+@charset "utf-8";
+/* CSS Document */
+/* ===============
+ * 重新定义Html元素
+ * =============== */
+html, body, div, ul, ol, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, fieldset, input { padding: 0; margin: 0;}
+h1, h2, h3, h4, h5, h6, pre, code, address, caption, cite, code, em, strong, table, th, td { font-size: 1em; font-style: normal; font-weight: normal;}
+strong { font-weight: bold;}
+ul, ol { list-style: none outside none;}
+fieldset, img { border: medium none; vertical-align: middle;}
+caption, th {  text-align: left;}
+table { border-collapse: collapse; border-spacing: 0;}
+body { font: 12px/20px "microsoft yahei", Arial,Verdana,"宋体","Lucida Grande","Lucida Sans Unicode",Helvetica,sans-serif; color: #666; background: #FFF none repeat scroll 0 0; min-width: 1200px;}
+input, select, textarea { font: 12px/20px Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+i, cite, em { font-style: normal;}
+input,button,select,textarea{ outline:none}
+checkbox { margin-right: 4px; vertical-align: middle;}
+html {min-height:101%; }
+a { text-decoration: none;}
+a:hover { text-decoration: underline;}
+
+/* ==========================
+ * 为旧版本浏览器格式化Html5元素
+ * ========================== */
+article, aside, dialog, footer, header, section, footer, nav, figure, menu { display:block; }
+
+/**/
+.wrapper { width: 1000px; margin: 0 auto;}
+.w100 { width: 100px !important;}
+.w150 { width: 150px !important;}
+.w200 { width: 200px !important;}
+.w400 { width: 400px !important;}
+.mt10 { margin-top: 10px;}
+.mt15 { margin-top: 15px;}
+.mt30 { margin-top: 30px;}
+.tc { text-align: center;}
+.dsdelivery-nodata { text-align: center; margin: 100px 0;}
+
+
+.dialog_wrapper { background-color: transparent !important; padding: 0 !important; box-shadow: none !important;}
+.dialog_body { background-color: #f5f5f5 !important; border: none!important; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.25) !important;}
+.dialog_head { border: none !important;}
+.dialog_title { background-color: transparent !important;}
+.dialog_content { padding: 0 10px 20px 10px !important;}
+.dialog_content dl { font-size: 0; *word-spacing:-1px/*IE6、7*/; line-height: 20px; display: block; clear: both; overflow:hidden;}
+.dialog_content dl dt {font: 14px/24px "microsoft yahei", Arial; color: #777;  vertical-align: top; letter-spacing: normal; word-spacing: normal; text-align: right; display: inline-block; *display: inline/*IE6,7*/; width: 19%; padding: 10px 1% 10px 0; margin: 0; zoom: 1;}
+.dialog_content dl dd {font: 14px/24px "microsoft yahei", Arial;  vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE6,7*/; width: 79%; padding: 10px 0 10px 0; zoom:1;}
+.dsdelivery-change-password { width: 300px; margin: 20px auto 0 auto;}
+.dsdelivery-change-password dd { display: block; width: 300px!important; height: 68px; padding: 0!important; position: relative; z-index: 1;}
+.dsdelivery-change-password .phrases { font: 14px/24px "microsoft yahei", Arial; color:#BCBCBC; height: 24px; position:absolute; z-index: 1; top: 10px; left: 10px; cursor:text;}
+.dsdelivery-change-password .input-txt { font: 14px/24px "microsoft yahei", Arial; background-color: transparent; width: 260px; height: 24px; padding: 8px; border: solid 2px #DDD; border-radius: 22px; position:absolute; z-index: 2; top: 0; left: 0;}
+.dsdelivery-change-password span { line-height: 20px; color: #F60; width: 280px; position: absolute; z-index: 1; left: 10px; bottom: 2px;}
+.dsdelivery-change-password .submit { font: 18px/24px "microsoft yahei", Arial; color: #FFF; background-color: #50CB7B; width: 276px; padding: 8px 0; border: none; border-radius: 20px; cursor: pointer;}
+
+/* tip提示 */
+.tip-yellowsimple { color:#000; background-color:#fff9c9; text-align:left; min-width:50px; max-width:300px; border:1px solid #c7bf93; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; z-index:1000; padding:6px 8px;}
+.tip-yellowsimple .tip-inner { font:12px/16px arial,helvetica,sans-serif;}
+.tip-yellowsimple .tip-arrow-top { background:url(../images/tip-yellowsimple_arrows.gif) no-repeat; width:9px; height:6px; margin-top:-6px; margin-left:-5px; top:0; left:50%;}
+.tip-yellowsimple .tip-arrow-right { background:url(../images/tip-yellowsimple_arrows.gif) no-repeat -9px 0; width:6px; height:9px; margin-top:-4px; margin-left:0; top:50%; left:100%;}
+.tip-yellowsimple .tip-arrow-bottom { background:url(../images/tip-yellowsimple_arrows.gif) no-repeat -18px 0; width:9px; height:6px; margin-top:0; margin-left:-5px; top:100%; left:50%;}
+.tip-yellowsimple .tip-arrow-left { background:url(../images/tip-yellowsimple_arrows.gif) no-repeat -27px 0; width:6px; height:9px; margin-top:-4px; margin-left:-6px; top:50%; left:0;}
+
+
+
+/* 调试模式 */
+.trace { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color: #000; line-height: 18px; background:#FFF299; padding:8px; margin:8px; border:1px dashed silver;}
+.trace fieldset { margin:8px;}
+.trace fieldset legend { font-size: 16px; color: #000; font-weight:bold;}
+.trace fieldset div { overflow:auto; max-height: 300px; _height: 300px; text-align:left;}
+
+#footer { line-height: 20px; color: #b4baaa; text-align: center; display: block; width: 1000px; clear: both; margin: 10px auto 0 auto; padding-bottom: 10px; overflow: hidden;}
+#footer p { color: #b4baaa; word-spacing: 5px; padding: 10px 0; }
+#footer a { color: #b4baaa; text-decoration: none; }
+#footer a:hover { text-decoration: underline; }
+#footer .vol { font-family: Verdana, Geneva, sans-serif; font-weight: 600; font-style: oblique; font-size: 12px;}
+#footer .vol .b { color: #00F;}
+#footer .vol .o { color: #F60;}
+#footer .vol em { font-family: Georgia, Arial;  font-weight: 600; font-style: italic; color: #000; margin-left: 2px;}
+
+/* 翻页样式 */
+.pagination { display: inline-block; margin: 0 auto;}
+.pagination ul { font-size: 0; *word-spacing:-1px/*IE6、7*/; }
+.pagination ul li { vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; margin: 0 0 0 -1px;}
+.pagination ul li { *display: inline/*IE6、7*/; *zoom:1;}
+.pagination li span { font: normal 14px/20px "microsoft yahei"; color: #AAA; background-color: #FAFAFA; text-align: center; display: block; min-width: 20px; padding: 8px; border: 1px solid #E6E6E6; position: relative; z-index: 1;}
+.pagination li a span , 
+.pagination li a:visited span { color: #005AA0; text-decoration: none; background-color: #FFF; position: relative; z-index: 1;}
+.pagination li a:hover span, .pagination li a:active span{ color: #FFF; text-decoration: none !important; background-color: #D93600; border-color: #CA3300; position: relative; z-index: 9; cursor:pointer;}
+.pagination li a:hover { text-decoration: none;}
+.pagination li span.currentpage { color: #AAA; font-weight: bold; background-color: #FAFAFA; border-color: #E6E6E6; position: relative; z-index: 2;}
+
+
+/* 登录页面 */
+.dsdelivery-login-pics { width: 300px; height: 165px; position: absolute; z-index: 2; top:  80px; left: 50%; margin-left: -300px;}
+.dsdelivery-login-pics .add { background: url(../images/login_pic.png) no-repeat -100px 0; width: 40px; height: 53px; position: absolute; z-index: 1;}
+.dsdelivery-login-pics .add { -webkit-animation: animationsGoRight 2.5s ease-in-out; -moz-animation: animationsGoRight 2.5s ease-in-out; -o-animation: animationsGoRight 2.5s ease-in-out; animation: animationsGoRight 2.5s ease-in-out; }
+		@-webkit-keyframes animationsGoRight {
+
+			0% {-webkit-transform: translate(-500px); opacity: 0; }
+			75% {-webkit-transform: translate(-500px); opacity: 0; }
+			100% {-webkit-transform: translate(0); opacity: 1; }
+
+		}
+		@-moz-keyframes animationsGoRight {
+
+			0% {-moz-transform: translate(-500px); opacity: 0; }
+			75% {-moz-transform: translate(-500px); opacity: 0; }
+			100% {-moz-transform: translate(0); opacity: 1; }
+
+		}
+		@-o-keyframes animationsGoRight {
+
+			0% {-o-transform: translate(-500px); opacity: 0; }
+			75% {-o-transform: translate(-500px); opacity: 0; }
+			100% {-o-transform: translate(0); opacity: 1; }
+
+		}
+		@keyframes animationsGoRight {
+
+			0% {transform: translate(-500px); opacity: 0; }
+			75% {transform: translate(-500px); opacity: 0; }
+			100% {transform: translate(0); opacity: 1; }
+
+		}
+
+
+.dsdelivery-login-pics .add { top: 50px; left: 100px;}
+.dsdelivery-login-pics .marker { background: url(../images/login_pic.png) no-repeat; width: 84px; height: 26px; position: absolute; z-index: 1;}
+.dsdelivery-login-pics .marker.a { background-position: 0 0; left: 30px; bottom: 20px;}
+.dsdelivery-login-pics .marker.a { -webkit-animation: opacityMarkerA 1s ease-in; -moz-animation: opacityMarkerA 1s ease-in; -o-animation: opacityMarkerA 1s ease-in; animation: opacityMarkerA 1s ease-in;}
+		@-webkit-keyframes opacityMarkerA {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-moz-keyframes opacityMarkerA {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-o-keyframes opacityMarkerA {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@keyframes opacityMarkerA {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+
+.dsdelivery-login-pics .marker.b { background-position: 0 -30px; left: -60px; top: 60px;}
+.dsdelivery-login-pics .marker.b { -webkit-animation: opacityMarkerB 1.5s ease-in; -moz-animation: opacityMarkerB 1.5s ease-in; -o-animation: opacityMarkerB 1.5s ease-in; animation: opacityMarkerB 1.5s ease-in;}
+		@-webkit-keyframes opacityMarkerB {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-moz-keyframes opacityMarkerB {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-o-keyframes opacityMarkerB {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@keyframes opacityMarkerB {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+.dsdelivery-login-pics .marker.c { background-position: 0 -60px; right: 40px; top: 10px;}
+.dsdelivery-login-pics .marker.c { -webkit-animation: opacityMarkerC 2s ease-in; -moz-animation: opacityMarkerC 2s ease-in; -o-animation: opacityMarkerC 2s ease-in; animation: opacityMarkerC 2s ease-in;}
+		@-webkit-keyframes opacityMarkerC {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-moz-keyframes opacityMarkerC {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-o-keyframes opacityMarkerC {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@keyframes opacityMarkerC {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+.dsdelivery-login-pics .marker.d { background-position: 0 -90px; left: 20px; top: -5px;}
+.dsdelivery-login-pics .marker.d { -webkit-animation: opacityMarkerD 2.5s ease-in; -moz-animation: opacityMarkerD 2.5s ease-in; -o-animation: opacityMarkerD 2.5s ease-in; animation: opacityMarkerD 2.5s ease-in;}
+		@-webkit-keyframes opacityMarkerD {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-moz-keyframes opacityMarkerD {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@-o-keyframes opacityMarkerD {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+		@keyframes opacityMarkerD {
+	
+			0% { opacity: 0; }
+			50% { opacity: 0; }
+			100% { opacity: 1; }
+					
+		}
+.dsdelivery-login-pics .marker i { background: url(../images/login_pic.png) no-repeat -100px -60px; width: 21px; height: 31px; position: absolute;}
+.dsdelivery-login-pics .marker.a i,
+.dsdelivery-login-pics .marker.c i { top: -12px; left: 1px;}
+.dsdelivery-login-pics .marker.a i,
+.dsdelivery-login-pics .marker.b i,
+.dsdelivery-login-pics .marker.c i,
+.dsdelivery-login-pics .marker.d i { -webkit-animation: animationsMarker 3.5s ease-in; -moz-animation: animationsMarker 3.5s ease-in; -o-animation: animationsMarker 3.5s ease-in; animation: animationsMarker 3.5s ease-in; }
+		@-webkit-keyframes animationsMarker {
+
+			0% {transform: translateY(-120px); opacity: 0; }
+			80% {transform: translateY(-120px); opacity: 0; }
+			83% {transform: translateY(0); opacity: 1; }
+			86% {transform: translateY(-40px); }
+			89% {transform: translateY(0); }
+			92% {transform: translateY(-20px); }
+			95% {transform: translateY(0); }
+			98% {transform: translateY(-5px); }
+			100% {transform: translateY(0); }
+			
+		}
+		@-moz-keyframes animationsMarker {
+
+			0% {transform: translateY(-120px); opacity: 0; }
+			80% {transform: translateY(-120px); opacity: 0; }
+			83% {transform: translateY(0); opacity: 1; }
+			86% {transform: translateY(-40px); }
+			89% {transform: translateY(0); }
+			92% {transform: translateY(-20px); }
+			95% {transform: translateY(0); }
+			98% {transform: translateY(-5px); }
+			100% {transform: translateY(0); }
+			
+		}
+		@-o-keyframes animationsMarker {
+
+			0% {transform: translateY(-120px); opacity: 0; }
+			80% {transform: translateY(-120px); opacity: 0; }
+			83% {transform: translateY(0); opacity: 1; }
+			86% {transform: translateY(-40px); }
+			89% {transform: translateY(0); }
+			92% {transform: translateY(-20px); }
+			95% {transform: translateY(0); }
+			98% {transform: translateY(-5px); }
+			100% {transform: translateY(0); }
+			
+		}
+		@keyframes animationsMarker {
+
+			0% {transform: translateY(-120px); opacity: 0; }
+			80% {transform: translateY(-120px); opacity: 0; }
+			83% {transform: translateY(0); opacity: 1; }
+			86% {transform: translateY(-40px); }
+			89% {transform: translateY(0); }
+			92% {transform: translateY(-20px); }
+			95% {transform: translateY(0); }
+			98% {transform: translateY(-5px); }
+			100% {transform: translateY(0); }
+			
+		}
+
+.dsdelivery-login-pics .marker.b i,
+.dsdelivery-login-pics .marker.d i { top: -12px; right: 1px;}
+
+
+.dsdelivery-login-title { width: 270px; margin-left: -135px; position: absolute; z-index: 1; top: 140px; left: 50%;}
+.dsdelivery-login-title h1 { font: lighter 35px/40px "microsoft yahei"; color: #FFF;}
+
+.dsdelivery-login-title h4 { font: normal 12px/20px "microsoft yahei"; color: #b4baaa;}
+
+.dsdelivery-login-form { width: 300px; margin: 280px auto 50px auto;}
+
+.dsdelivery-login-form .form-item { display: block; height: 72px; position: relative; z-index: 1;}
+.dsdelivery-login-form .input-txt { font: 14px/24px "microsoft yahei", Arial; color: #FFF; background-color: transparent; text-align: center; padding: 8px 0; width: 276px; height: 24px; margin-bottom: 28px; border: solid 2px #FFF; border-radius: 22px; position:absolute; z-index: 2; top: 0; left: 0;}
+.dsdelivery-login-form .phrases {font: 14px/24px "microsoft yahei", Arial; color:#BCBCBC; text-align: center; width: 260px; height: 24px; position:absolute; z-index: 1; top: 10px; left: 10px; cursor:text;}
+
+.dsdelivery-login-form .form-item span { line-height: 20px; color: #FC0; text-align: center; width: 280px; position: absolute; z-index: 1; left: 0; bottom: 4px;}
+.dsdelivery-login-form .submit { font: 18px/24px "microsoft yahei", Arial; color: #FFF; background-color: #50CB7B; width: 276px; padding: 8px 0; border: none; border-radius: 20px; cursor: pointer;}
+.dsdelivery-login-form .register { line-height: 20px; color: #B4BAAA; text-decoration: underline; text-align: center; display: block; width: 280px; height: 20px; margin-top: 10px;}
+.dsdelivery-login-form .register:hover { color: #FFF;}
+
+/* 服务商入驻 */
+.dsdelivery-joinin { font-size: 0; background-color: #F5F5F5; *word-spacing:-1px/*IE6、7*/; width: 960px; padding: 10px; margin: 100px auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5);}
+.dsdelivery-joinin h1 { font: lighter 28px/50px "microsoft yahei", Arial; color: #777; text-align: center; margin-bottom: 20px;}
+.dsdelivery-joinin dl { font-size: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE7*/; padding: 0 20px; *zoom: 1;}
+.dsdelivery-joinin dl.r1 { width: 170px}
+.dsdelivery-joinin dl.r3 { width: 220px;}
+.dsdelivery-joinin dl.r2 { width: 450px;}
+.dsdelivery-joinin dl dt { font: 16px/20px "microsoft yahei", Arial; color: #AAA; padding: 0 0 10px 10px;}
+.dsdelivery-joinin dl dd { display: block; height: 68px; position: relative; z-index: 1;}
+.dsdelivery-joinin dl dd .phrases { font: 14px/24px "microsoft yahei", Arial; color:#BCBCBC; height: 24px; position:absolute; z-index: 1; top: 10px; left: 10px; cursor:text;}
+.dsdelivery-joinin dl dd .txt { font: 14px/44px "microsoft yahei", Arial; color:#BCBCBC; margin-top: 10px;}
+.dsdelivery-joinin dl dd select { font: 14px/24px "microsoft yahei", Arial; color:#BCBCBC; height: 34px; padding: 5px 0 5px 5px; margin-left: 5px; border: solid 2px #DDD; border-radius: 22px;}
+.dsdelivery-joinin dl dd .input-txt { font: 14px/24px "microsoft yahei", Arial; background-color: transparent; width: 150px; height: 24px; padding: 8px; border: solid 2px #DDD; border-radius: 22px; position:absolute; z-index: 2; top: 0; left: 0;}
+.dsdelivery-joinin dl dd span { line-height: 20px; color: #F60; width: 280px; position: absolute; z-index: 1; left: 10px; bottom: 2px;}
+.dsdelivery-joinin .submit { font: 18px/24px "microsoft yahei", Arial; color: #FFF; background-color: #50CB7B; width: 276px; padding: 8px 0; border: none; border-radius: 20px; cursor: pointer;}
+.dsdelivery-joinin .login { font: 12px/20px "microsoft yahei", Arial; color: #AAA; display: block; clear: both; margin-top:10px;}
+
+
+
+/*管理中心*/
+.dsdelivery-header { background: #637159 url(../images/center_top_bg.png) no-repeat center top; width: 100%; height: 110px; }
+.dsdelivery-logo { font: 24px/80px "microsoft yahei", Arial; color: #FFF; display: block; height: 80px; float: left; margin: 15px 0; text-shadow: 1px 1px 0 rgba(0,0,0,0.5);}
+.dsdelivery-logo i { background: url(../images/center_top_pic.png) no-repeat 0 0; vertical-align: bottom; display: inline-block; width: 80px; height: 80px; margin-right: 5px;}
+
+.dsdelivery-search { width: 400px; height: 40px; float: left; margin: 35px 0 auto 80px;}
+.dsdelivery-search-box { background-color: #CACEC2; width: 280px; height: 40px; float: left; border-radius: 4px 0 0 4px; position: relative; z-index: 1;}
+.dsdelivery-search-box label { font: 14px/24px "microsoft yahei", Arial; color: #637159; height: 24px; position: absolute; z-index: 1; top: 8px; left: 8px; cursor:text;}
+.dsdelivery-search-text { font: 14px/24px "microsoft yahei", Arial; background-color: transparent; width: 264px; height: 24px; border: none 0; position: absolute; z-index: 2; top: 8px; left: 8px;}
+.dsdelivery-search-submit { font: 14px/38px "microsoft yahei", Arial; color: #FFF; width: 80px; background: #ACA879; float:left; border: none 0; border-radius: 0 4px 4px 0; cursor: pointer;}
+
+.dsdelivery-user { color: #FFF; height: 50px; text-align: right; float: right; margin: 30px 0 0;}
+.dsdelivery-user h3 { margin-bottom: 10px;}
+.dsdelivery-user ul { font-size: 0; *word-spacing:-1px/*IE6、7*/; overflow: hidden;}
+.dsdelivery-user ul li { font-size: 12px; line-height: 12px; vertical-align: top; letter-spacing: normal; word-spacing: normal; display: inline-block; *display: inline/*IE7*/; margin-left: -1px; border-left: solid 1px #FFF; *zoom: 1;}
+.dsdelivery-user ul li a { color: #FFF; padding: 0 12px;}
+
+.dsdelivery-table { width: 100%;}
+.dsdelivery-table thead th { color: #FFF; background-color: #ACA879; padding: 8px; border-right: solid 2px #f0f0e1;}
+.dsdelivery-table thead td { text-align: right; padding: 8px;}
+.dsdelivery-table tbody td { background-color: #E3E2CD; padding: 8px; border-right: solid 2px #f0f0e1; border-top: solid 2px #f0f0e1;}
+.dsdelivery-table .date { font-size: 11px; color: #aca879;}
+.dsdelivery-table .express { margin-left: 10px;}
+.dsdelivery-table .link { color: #36C;}
+.dsdelivery-table .tel span { display: inline-block; width: 50%;}
+.dsdelivery-table .btn { color: #666; background: #F0F0E1; text-decoration: none; padding: 4px 12px; border-radius: 4px; box-shadow: 0 0 2px rgba(102,102,0,0.1);}

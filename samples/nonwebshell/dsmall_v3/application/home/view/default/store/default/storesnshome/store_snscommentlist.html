@@ -1,0 +1,90 @@
+<div class="comment-widget">
+  <div class="comment-edit">
+    <form id="commentform_{$stid}" method="post" action="{:url('Storesnshome/addcomment')}">
+      <input type="hidden" name="stid" value="{$stid}" />
+      <input type="hidden" name="showtype" value="{$showtype}" />
+      <div class="comment-add">
+        <textarea placeholder="{$Think.lang.sns_comment_contenttip}" resize="none" id="content_comment{$stid}" name="commentcontent"></textarea>
+        <span class="error"></span> 
+        <!-- 验证码 -->
+        <div id="commentseccode{$stid}" class="seccode">
+          <label for="captcha">{$Think.lang.ds_checkcode}{$Think.lang.ds_colon}</label>
+          <input name="captcha" class="text" type="text" size="4" maxlength="4"/>
+          <img src="{:url('Seccode/makecode')}" title="{$Think.lang.wrong_checkcode_change}" name="codeimage" onclick="this.src='{:url('Seccode/makecode')}'"/> <span>{$Think.lang.wrong_seccode}</span>
+        </div>
+        <input type="text" style="display:none;" />
+        <!-- 防止点击Enter键提交 -->
+        <div class="act"> <span class="skin-blue"><span class="btn"><a href="javascript:void(0);" ds_type="scommentbtn" data-param='{"txtid":"{$stid}"}'>{$Think.lang.sns_comment}</a></span></span> <span id="commentcharcount{$stid}" style="float:right;"></span> <a class="face" ds_type="smiliesbtn" data-param='{"txtid":"comment{$stid}"}' href="javascript:void(0);" >{$Think.lang.sns_smiles}</a> </div>
+      </div>
+    </form>
+  </div>
+  <div class="clear"></div>
+  {if count($commentlist)>0}
+  <ul class="comment-list">
+    {notempty name="commentlist"}
+    {foreach name="commentlist" item="v" key="k" }
+    <li ds_type="commentrow_{$v.storesnscomm_id}">
+      <a target="_blank" href="javascript:void(0)">
+        <img width="30" height="30" class="clogo" src="<?php if ($v['storesnscomm_memberavatar']!='') { echo UPLOAD_SITE_URL.'/'.ATTACH_AVATAR.DS.$v['storesnscomm_memberavatar']; } else {  echo UPLOAD_SITE_URL.'/'.ATTACH_COMMON.DS.config('default_user_portrait'); } ?>" onload="javascript:ResizeImage(this,30,30);"></a>
+      <div class="detail">
+        <p class="words"><a target="_blank" href="javascript:void(0)" class="name">{$v.storesnscomm_membername}</a>{$Think.lang.ds_colon}{:parsesmiles($v['storesnscomm_content'])}</p>
+        <p class="other">
+          {if session('member_id') == $v['storesnscomm_memberid']}
+          <span class="opt"><a href="javascript:void(0);" ds_type="scomment_del" data-param='{"scid":"{$v.storesnscomm_id}","stid":"{$v.stracelog_id}"}'>{$Think.lang.ds_delete}</a></span>
+          {/if}
+          <span class="time"><?php echo @date('Y-m-d H:i',$v['storesnscomm_time']);?> - <?php echo $countnum-$k;?>&nbsp;{$Think.lang.sns_comment_floor}</span> </p>
+      </div>
+    </li>
+    {/foreach}
+    {/notempty}
+  </ul>
+  {if $showtype==1 && $showmore == '1'}
+  <!--展示更多连接-->
+  <div class="more"><a target="_blank" href="{:url('Storesnshome/straceinfo',['st_id'=>$stid])}">{$Think.lang.sns_comment_more}</a></div>
+  {elseif !$showtype /}
+  <!--展示分页-->
+  <div class="pagination">{$show_page}</div>
+  {/if}
+  {/if}
+  <div style="clear:both;"></div>
+</div>
+<script type="text/javascript">
+var MAX_RECORDNUM = {$max_recordnum};
+$(function(){
+	$('#commentform_{$stid}').validate({
+		errorPlacement: function(error, element){
+		element.next('.error').append(error);
+	    },      
+	    rules : {
+	    	commentcontent : {
+	            required : true,
+	            maxlength : 140
+	        }
+	    },
+	    messages : {
+	    	commentcontent : {
+	            required : '{$Think.lang.sns_comment_null}',
+	            maxlength: '{$Think.lang.sns_content_beyond}'
+	        }
+	    }
+	});
+        {if !$showtype==1}
+	//分页绑定异步加载事件
+	$('#tracereply_{$stid}').find('.demo').ajaxContent({
+		event:'click',
+		loaderType:"img",
+		loadingMsg:"{$Think.HOME_SITE_ROOT}/images/treetable/transparent.gif",
+		target:'#tracereply_{$stid}'
+	});
+	{/if}
+	//评论字符个数动态计算
+	$("#content_comment{$stid}").charCount({
+		allowed: 140,
+		warning: 10,
+		counterContainerID:'commentcharcount{$stid}',
+		firstCounterText:'{$Think.lang.sns_charcount_tip1}',
+		endCounterText:'{$Think.lang.sns_charcount_tip2}',
+		errorCounterText:'{$Think.lang.sns_charcount_tip3}'
+	});
+});
+</script>

@@ -1,0 +1,83 @@
+
+<div class="dssc-flow-item">
+  <div class="title">{$Think.lang.relevant_commodity_transaction_information}</div>
+  <div class="item-goods">
+        {notempty name="goods_list"}
+        {foreach name="goods_list" item="val" key="key" }
+      <dl>
+        <dt>
+          <div class="dssc-goods-thumb-mini"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">
+            <img src="{:goods_thumb($val, 240)}"/></a></div>
+        </dt>
+        <dd><a target="_blank" href="{:url('Goods/index',['goods_id'=>$val.goods_id])}">{$val.goods_name}</a>
+            {$Think.lang.currency}{$val.goods_price} * {$val.goods_num} <font color="#AAA">({$Think.lang.quantity})</font>
+            <span>{:get_order_goodstype($val['goods_type'])}</span>
+        </dd>
+      </dl>
+       {/foreach}
+        {/notempty}
+  </div>
+  <div class="item-order">
+    <dl>
+      <dt>{$Think.lang.freight_space}：</dt>
+      <dd>{if $order['shipping_fee']>0}{:ds_price_format($order['shipping_fee'])}{else/}{$Think.lang.ds_common_shipping_free}{/if}</dd>
+    </dl>
+    <dl>
+      <dt>{$Think.lang.total_order}：</dt>
+      <dd><strong>{$Think.lang.currency}{:ds_price_format($order['order_amount'])}
+        {if $order.refund_amount > 0}
+        ({$Think.lang.refund_add}{$Think.lang.ds_colon}{$Think.lang.currency}{$order.refund_amount})
+        {/if}
+        </strong> </dd>
+    </dl>
+    <dl class="line">
+      <dt>{$Think.lang.refund_order_ordersn}：</dt>
+      <dd><a target="_blank" href="{:url('Sellerorder/show_order',['order_id'=>$order.order_id])} ">{$order.order_sn}</a> <a href="javascript:void(0);" class="a">{$Think.lang.ds_more}<i class="fa fa-angle-down"></i>
+        <div class="more"> <span class="arrow"></span>
+          <ul>
+             {if $order['payment_code'] != 'offline' && !in_array($order['order_state'],array(ORDER_STATE_CANCEL,ORDER_STATE_NEW))}
+            <li>{$Think.lang.payment_order_number}{$Think.lang.ds_colon}<span>{$order.pay_sn}</span></li>
+            {/if}
+            <li>{$Think.lang.store_order_pay_method}{$Think.lang.ds_colon}<span>{$order.payment_name}</span></li>
+            <li>{$Think.lang.store_order_add_time}{$Think.lang.ds_colon}<span>{$order.add_time|date="Y-m-d H:i:s",###}</span></li>
+            {if $order.payment_time > 0}
+            <li>{$Think.lang.store_show_order_pay_time}{$Think.lang.ds_colon}<span>{$order.payment_time|date="Y-m-d H:i:s",###}</span></li>
+            {/if}
+            {if $order_common.shipping_time > 0}
+            <li>{$Think.lang.store_show_order_send_time}{$Think.lang.ds_colon}<span>{$order_common.shipping_time|date="Y-m-d H:i:s",###}</span></li>
+            {/if}
+            {if $order.finnshed_time > 0}
+            <li>{$Think.lang.store_show_order_finish_time}{$Think.lang.ds_colon}<span>{$order.finnshed_time|date="Y-m-d H:i:s",###}</span></li>
+            {/if}
+          </ul>
+        </div>
+        </a> </dd>
+    </dl>
+    {notempty name="$order.shipping_code"}
+    <dl>
+      <dt>{$Think.lang.logistics_order_number}：</dt>
+      <dd>{$order.shipping_code} <a href="javascript:void(0);" class="a">{$order.express_name}</a></dd>
+    </dl>
+    {/notempty}
+    <dl class="line">
+      <dt>{$Think.lang.consignee_space}：</dt>
+      <dd>{$order_common.reciver_name}<a href="javascript:void(0);" class="a">{$Think.lang.ds_more}<i class="fa fa-angle-down"></i>
+        <div class="more"><span class="arrow"></span>
+          <ul>
+            <li>{$Think.lang.store_order_address}{$Think.lang.ds_colon}<span>{$order_common['reciver_info']['address']}</span></li>
+            <li>{$Think.lang.contact_number}：<span>{$order_common['reciver_info']['phone']}</span></li>
+          </ul>
+        </div>
+        </a>
+        <div><span member_id="{$order.buyer_id}"></span>
+          {notempty name="$member.member_qq"}
+          <a target="_blank" href="{$Think.HTTP_TYPE}wpa.qq.com/msgrd?v=3&uin={$member.member_qq}&site=qq&menu=yes" title="QQ: {$member.member_qq}"><img border="0" src="{$Think.HTTP_TYPE}wpa.qq.com/pa?p=2:{$member.member_qq}:52" style=" vertical-align: middle;"/></a>
+          {/notempty}
+          {notempty name="$member.member_ww"}
+          <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$member.member_ww}&site=cntaobao&s=2&charset=utf-8"  class="vm" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$member.member_ww}&site=cntaobao&s=2&charset=utf-8" alt="Wang Wang"  style=" vertical-align: middle;"/></a>
+          {/notempty}
+        </div>
+      </dd>
+    </dl>
+  </div>
+</div>

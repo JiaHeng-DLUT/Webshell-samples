@@ -1,0 +1,346 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('website',['act'=>'add'])}>">+添加新站点</a></span></h3>
+	<div class="listbox">
+		<form name="mform" method="post" action="<{url('website')}>">
+		<div class="search">
+			<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+			<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+                    
+		<form name="mform" method="post" action="<{url('website')}>">
+		<div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #f00;">删除选定</option>
+            <option value="move" style="color: #06c;">移动内容</option>
+            <option value="attr" style="color: #f60;">属性设置</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('web_id[]')==false){alert('请指定您要操作的站点ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status='+this.options[this.selectedIndex].value+'&user_id=<{$user_id}>&cate_id=<{$cate_id}>&sort=<{$sort}>&order=<{$order}><{$keyurl}>';}">
+			<option value="0">所有状态</option>
+			<option value="1" style="color: #333;"<{opt_selected($status, 1)}>>拉黑</option>
+			<option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option>
+			<option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option>
+			<option value="4" style=""<{opt_selected($status, 4)}>>已顶置</option>
+			<option value="5" style=""<{opt_selected($status, 5)}>>已推荐</option>
+			<option value="6" style=""<{opt_selected($status, 6)}>>已付费</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&user_id=<{$user_id}>&cate_id='+this.options[this.selectedIndex].value+'&sort=<{$sort}>&order=<{$order}><{$keyurl}>';}">
+			<option value="0" selected>所有分类</option>
+			<{$category_option}>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&user_id=<{$user_id}>&cate_id=<{$cate_id}>&sort='+this.options[this.selectedIndex].value+'<{$keyurl}>';}">
+			<option value="1"<{opt_selected($sort, 1)}>>按提交时间排列</option>
+			<!-- <option value="2"<{opt_selected($sort, 2)}>>按谷歌PR排列</option> -->
+            <option value="3"<{opt_selected($sort, 3)}>>按百度BR排列</option>
+            <option value="4"<{opt_selected($sort, 4)}>>按搜狗SR排列</option>
+			<option value="5"<{opt_selected($sort, 5)}>>按Alexa排列</option>
+<!-- 			<option value="6"<{opt_selected($sort, 6)}>>按入站排列</option>
+			<option value="7"<{opt_selected($sort, 7)}>>按出站排列</option> -->
+			<option value="8"<{opt_selected($sort, 8)}>>按浏览排列</option>
+			<!-- <option value="9"<{opt_selected($sort, 9)}>>按错误排列</option> -->
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&user_id=<{$user_id}>&cate_id=<{$cate_id}>&sort=<{$sort}>&order='+this.options[this.selectedIndex].value+'<{$keyurl}>';}">
+			<option value="DESC"<{opt_selected($order, 'DESC')}>>降序</option>
+			<option value="ASC"<{opt_selected($order, 'ASC')}>>升序</option>
+			</select>
+		</div>
+		
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>网站名称</th>
+                <th>百度BR</th>
+                <th>360R</th>
+                <th>搜狗SR</th>
+				<th>Alexa</th>
+				<th>入站次数</th>
+				<th>出站次数</th>
+				<th>浏览次数</th>
+				<th>属性状态</th>
+				<th>所 有 者</th>
+				<th>收录时间</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$website item=web}>
+			<tr>
+				<td><input name="web_id[]" type="checkbox" value="<{$web.web_id}>"></td>
+				<td><{$web.web_id}></td>
+				<td><{$web.web_cate}></td>
+				<td class="ltext" style="width:200px;overflow:hidden"><img src="<{$web.web_ico}>"><{$web.web_name}></td>
+                <td class="data"><{$web.web_brank}></td>
+                <td class="data"><{$web.web_r360}></td>
+                <td class="data"><{$web.web_srank}></td>
+				<td class="data"><{$web.web_arank}></td>
+				<td class="data"><{$web.web_instat}></td>
+				<td class="data"><{$web.web_outstat}></td>
+				<td class="data"><{$web.web_views}></td>
+				<td><{$web.web_attr}></td>
+				<td><{$web.nick_name}></td>
+				<td><{$web.web_ctime}></td>
+				<td>
+				<a href="<{url('website',['act'=>'edit','web_id'=>$web['web_id']])}>" >编辑</a>
+				
+				<a href="<{url('website',['act'=>'del','web_id'=>$web['web_id']])}>" onClick="return confirm('确认删除此内容吗？');">删除</a></td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="14">无任何网站！</td></tr>
+			<{/foreach}>
+		</table>
+        </form>
+        <div class="pagebox"><{$showpage}></div>
+    </div>
+    <{/if}>
+
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('website')}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td>
+				<{if !empty($web.cate_id)}>
+				<{foreach from=$cate_pids item=item key=key}>
+				<select name="level_<{$key}>" id="level_<{$key}>" class="sel"></select>
+				<{/foreach}>
+                <{else}>
+                	<select name="level_0" id="level_0" class="sel"></select>
+				<{/if}>
+                
+
+				<input type="hidden" name="cate_id" id="cate_id" value="<{if !empty($web.cate_id)}><{$web.cate_id}><{/if}>"></td>
+			</tr>
+			<tr>
+				<th>网站名称：</th>
+				<td><input name="web_name" type="text" class="ipt" id="web_name" size="50" maxlength="50" value="<{if !empty($web.web_name)}><{$web.web_name}><{/if}>" /></td>
+			</tr>
+			<tr>
+				<th>网站域名：</th>
+				<td><input name="web_url" type="text" placeholder="http://或者https://必须存在" class="ipt" id="web_url" size="100" maxlength="100" " value="<{if !empty($web.web_url)}><{$web.web_url}><{/if}>" /><input type="button" class="btn" id="meta_btn" value="抓取Meta" onclick="GetMeta()"><span class="tips">
+				<br>注意：https站点用http 是无法抓取的；部分站点头部信息不完整，也是不可以抓取的。可以选择手动添加</span></td>
+			</tr>
+			<tr>
+				<th>TAG标签：</th>
+				<td><input name="web_tags" type="text" class="ipt" id="web_tags" size="50" maxlength="255" value="<{if !empty($web.web_tags)}><{$web.web_tags}><{/if}>" onBlur="javascript:this.value=this.value.replace(/，/ig,',');" /><span class="tips">多个标签用英文的“,”逗号隔开</span></td>
+			</tr>
+			<tr>
+				<th valign="top">网站简介：</th>
+				<td><textarea name="web_intro" cols="55" rows="8" class="ipt" id="web_intro"><{if !empty($web.web_intro)}><{$web.web_intro}><{/if}></textarea></td>
+			</tr>
+			<tr>
+				<th valign="top">ico图标：</th>
+				<td><input name="web_ico" type="text" cols="100" size="50" rows="8" class="ipt" id="web_ico" value="<{if !empty($web.web_ico)}><{$web.web_ico}><{/if}>">
+
+				</td>
+			</tr>		
+            <tr>
+				<th>服务器IP：</th>
+				<td><input name="web_ip" type="text" class="ipt" id="web_ip" size="30" maxlength="30" value="<{if !empty($web.web_ip)}><{long2ip($web.web_ip)}><{/if}>
+				" /><input type="button" class="btn" id="data_btn" value="获取数据" onclick="GetData()"><span class="tips">例: 127.0.0.1</span></td>
+			</tr>
+ 			<tr>
+				<th>百度BR：</th>
+				<td><input name="web_brank" type="text" class="ipt" id="web_brank" size="10" maxlength="1" value="<{if isset($web.web_brank)}><{$web.web_brank}><{else}>0<{/if}>" /></td>
+			</tr>
+		    <tr>
+				<th>360R：</th>
+				<td><input name="web_r360" type="text" class="ipt" id="web_r360" size="10" maxlength="1" value="<{if isset($web.web_r360)}><{$web.web_r360}><{else}>0<{/if}>" /></td>
+			</tr>
+ 			<tr>
+				<th>搜狗SR：</th>
+				<td><input name="web_srank" type="text" class="ipt" id="web_srank" size="10" maxlength="1" value="<{if isset($web.web_srank)}><{$web.web_srank}><{else}>0<{/if}>" /></td>
+			</tr>
+ 			<tr>
+				<th>Alexa：</th>
+				<td><input name="web_arank" type="text" class="ipt" id="web_arank" size="10" maxlength="10" value="<{if isset($web.arank)}><{$web.arank}><{else}>0<{/if}>" /></td>
+			</tr>
+
+ 			<tr>
+				<th>浏览次数：</th>
+				<td><input name="web_views" type="text" class="ipt" id="web_views" size="10" maxlength="10" value="<{if isset($web.web_views)}><{$web.web_views}><{else}>0<{/if}>" /> 次</td>
+			</tr>
+
+			<tr>
+				<th>属性设置：</th>
+				<td>
+				<input name="web_ispay" type="checkbox" id="web_ispay" value="1" <{if isset($web.web_ispay)}><{opt_checked($web.web_ispay, 1)}><{/if}> /><label for="web_ispay">付费</label>
+				<input name="web_istop" type="checkbox" id="web_istop" value="1"<{if isset($web.web_istop)}><{opt_checked($web.web_istop, 1)}><{/if}> /><label for="web_istop">置顶</label>
+				<input name="web_isbest" type="checkbox" id="web_isbest" value="1"<{if isset($web.web_isbest)}><{opt_checked($web.web_isbest,1)}><{/if}> />
+				<label for="web_isbest">推荐</label></td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="web_status" id="web_status" class="sel"><option value="1" style="color: #333;"<{opt_selected($status, 1)}>>黑名单</option><option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option><option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $web.web_id}>
+					<input name="web_id" type="hidden" id="web_id" value="<{$web.web_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+        <script type="text/javascript" src="/public/js/linkage.select.js"></script>
+        <script type="text/javascript">
+        var url = '<{url("api/collect",["type"=>"category"])}>';
+		var options = {ajax :url, field_name : '[name=cate_id]', auto : true}
+		var sel = new LinkageSelect(options);
+		<{if $action == 'add'}>
+	     	sel.bind('#level_0');
+		<{else}>
+		<{foreach from=$cate_pids item=item key=key}>
+		      sel.bind('#level_<{$key}>', <{$item}>);
+		<{/foreach}>
+		<{/if}>
+        </script>
+	</div>
+	<{/if}>
+	
+	<{if $action == 'move'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$websites item=web}><a href="<{$fileurl}>&act=edit&web_id=<{$web.web_id}>"><{$web.web_name}></a><input name="web_id[]" type="hidden" value="<{$web.web_id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>将以上内容移动至：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'attr'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$websites item=web}><{$web.web_id}> - <a href="<{$fileurl}>&act=edit&web_id=<{$web.web_id}>"><{$web.web_name}></a><input name="web_id[]" type="hidden" value="<{$web.web_id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td><input name="web_istop" type="checkbox" id="web_istop" value="1" /><label for="web_istop">置顶</label>　
+				<input name="web_isbest" type="checkbox" id="web_isbest" value="1" /><label for="web_isbest">推荐</label>
+				<input name="web_ispay" type="checkbox" id="web_ispay" value="1" /><label for="web_ispay">付费</label>
+				</td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="web_status" id="web_status" class="sel"><option value="1" style="color: #333;">黑名单</option><option value="2" style="color: #f30;">待审核</option><option value="3" selected="selected" style="color: #080;">已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input name="act" type="hidden" id="act" value="<{$h_action}>">
+				<input type="submit" class="btn" value="保 存">&nbsp;
+				<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+	 <{if $action == 'down'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>注意事项：</th>
+				<td>下载远程图片，将占用一定的服务器资源，请避免在白天流量高峰期时段使用</td>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input type="button" class="btn" value="下载所有站点图片" onClick="window.location.href='<{url('webpic',['act'=>'down','type'=>'all'])}>';">&nbsp;
+				<input type="button" class="btn" value="下载失败图片" onClick="window.location.href='<{url('webpic',['act'=>'down','type'=>'part'])}>';">&nbsp;
+                <input type="button" class="btn" value="失效图片检测" onClick="window.location.href='<{url('webpic',['act'=>'check'])}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+    <{/if}>
+
+<script>
+//获取META
+function GetMeta() {
+	var url = $("#web_url").val();
+
+	if (url == '') {
+		alert('请输入网站域名！');
+		$("#web_url").focus();
+		return false;
+	}
+	$(document).ready(function(){$("#meta_btn").val('正在获取，请稍候...'); 
+		$.ajax({type: "GET", 
+			url: "<{url('website',['act'=>'metainfo'])}>", 
+			data: 'url=' + url,
+			 datatype: "script",
+			  cache: false, 
+			success: function(data){
+				if(data =='-1'){
+					alert('请输入正确的网站域名！');
+				}else if(data =='-2'){
+                   alert('请输入网站域名！');
+				}else{
+					$("body").append(data); 
+				}
+				
+		
+
+			$("#meta_btn").val('重新获取');
+		}});});		
+}
+
+
+
+//获取ip, PageRank, Sogou PageRank, Alexa
+function GetData() {
+	var url = $("#web_url").val();
+	if (url == '') {
+		alert('请输入网站域名！');
+		$("#web_url").focus();
+		return false;
+	}
+	$(document).ready(function(){$("#data_btn").val('正在获取，请稍候...');
+	$.ajax({type: "GET", url:"<{url('website',['act'=>'webdata'])}>", data: 'url=' + url, datatype: "script", cache: false, 
+		success: function(data){
+					if(data =='-1'){
+					alert('请输入正确的网站域名！');
+				}else if(data =='-2'){
+                   alert('请输入网站域名！');
+				}else{
+					$("body").append(data); 
+				}
+
+		$("#data_btn").val('重新获取');}});});		
+}
+
+
+</script>
+<{include file="footer.html"}>

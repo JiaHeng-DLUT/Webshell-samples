@@ -1,0 +1,54 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>Guestbook-{@SL_网站标题}</title>
+<link href="{@SL_安装目录}{@SL_网站ico}" rel="shortcut icon" />
+<meta name="keywords" content="{@SL_网站关键字}">
+<meta name="description" content="{@SL_网站描述}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="stylesheet" href="{@SL_安装目录}template/s95/style/css/amazeui.css">
+<link rel="stylesheet" href="{@SL_安装目录}template/s95/style/css/main.css">
+</head>
+<body>
+ 
+<script src="{@SL_安装目录}template/s95/style/js/jquery.min.js"></script> 
+{@SL_网站顶部}
+<div class="list-main">
+  <div class="am-container">
+    <div class="list-nav" data-am-sticky="">
+      <ul class="am-cf">
+{$left_list(<li id="%左侧type%-%左侧typeID%"><a href="%左侧链接%" title="%左侧标题%">%左侧标题%</a></li>,{@SL_菜单ID})}
+</ul>
+      <div class="curBg"></div>
+      <div class="cls"></div>
+    </div>
+    <div><img src="{@SL_安装目录}{@SL_留言页面}" class="am-img-responsive" alt=""></div>
+    <div class="list-pag"> Position：<a href="{@SL_首页链接}">Home</a> > <a href="">Guestbook</a> </div>
+    <div class="list-center">
+      <h1>Guestbook</h1>
+      <div class="list-single">
+        
+        <link href="{@SL_安装目录}template/s95/css/form.css" rel="stylesheet">
+<div class="form_container">
+<form action="{@SL_安装目录}booksave.asp" method="post">
+<div class="left">Title</div><div class="right"><input type="text" name="G_title" placeholder="required"></div>
+<div class="left">Name</div><div class="right"><input type="text" name="G_name" placeholder="required"></div>
+<div class="left">Phone</div><div class="right"><input type="text" name="G_phone" placeholder="required"></div>
+<div class="left">E-mail</div><div class="right"><input type="text" name="G_mail" placeholder="required"></div>
+<div class="left">Message</div><div class="right"><textarea name="G_msg"></textarea></div>
+<div class="left"></div><div class="right"><button type="submit">Send</button><button type="reset">Clear</button></div>
+</form>
+</div></div>
+</div>
+<br>
+      </div>
+    </div>
+  
+{@SL_网站底部}<script>$('#guestbook-1').attr('class','list-active');</script></body>
+</html>

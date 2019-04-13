@@ -1,0 +1,152 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="alert alert-block mt10">
+    <ul>
+        <li>{$Think.lang.store_mobile_instructions1}</li>
+        <li>{$Think.lang.store_mobile_instructions2}</li>
+        <li>{$Think.lang.store_mobile_instructions3}</li>
+        <li>{$Think.lang.store_mobile_instructions4}</li>
+    </ul>
+</div>
+<div class="dssc-form-default">
+    <form method="post" enctype="multipart/form-data" id="my_store_form">
+        <dl>
+            <dt>{$Think.lang.header_background}{$Think.lang.ds_colon}</dt>
+            <dd class="mb-sliders">
+                {if $mb_title_img}
+                <div class="img-wrapper"> <img alt="" src="{$mb_title_img}" /> </div>
+                <p>
+                    <label>
+                        <input type="checkbox" name="mb_title_img_del" value="1" />
+                        {$Think.lang.marked_delete} </label>
+                </p>
+                {else /}
+                <p>{$Think.lang.no_picture}</p>
+                {/if}
+                <p>
+                    <input type="file" name="mb_title_img" />
+                </p>
+                <p class="hint">{$Think.lang.page_header_background_picture}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.rotation}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <p class="hint">{$Think.lang.rotate_image_restrictions1}{$max_mb_sliders}{$Think.lang.rotate_image_restrictions2}</p>
+            </dd>
+        </dl>
+        
+        {if $mbSliderUrls}
+        <div class="dssc-sellerslider">
+            <ul class="bd">
+                {foreach name="mbSliderUrls" item="v"}
+                <li><a><img  src="{$v}" /></a></li>
+                {/foreach}
+            </ul>
+            <ul class="hd">
+                {foreach name="mbSliderUrls" item="v"}
+                <li></li>
+                {/foreach}
+            </ul>
+            <a class="ctrl prev" href="javascript:void(0)">&lt;</a>
+            <a class="ctrl next" href="javascript:void(0)">&gt;</a>
+        </div>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+        <script>
+        //轮播
+        jQuery(".dssc-sellerslider").slide({mainCell: "ul", autoPlay: true, delayTime: 500,interTime: 5000});
+        </script>
+        {/if}
+        
+        
+        <ul class="dssc-store-slider sortable">
+            {for start="1" end="$max_mb_sliders" name="k"}
+            <li>
+                <input type="hidden" name="mb_sliders_sort[]" value="{$k}" />
+                <div class="picture" dstype="file_{$k}">
+                    {if $mbSliders[$k]['img']}
+                    <img dstype="file_{$k}" alt="" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_STORE}/mobileslide/{$mbSliders[$k]['img']}" />
+                    {else /}
+                    <i class="fa fa-picture-o"></i>
+                    {/if}
+                    <a href="javascript:;" data-slider-drop="{$k}" class="del" title="{$Think.lang.remove}">&#215;</a> </div>
+                <div class="url">
+                    <label>
+                        <input type="radio" name="mb_sliders_type[{$k}]" value="1" {if $mbSliders[$k]['type']=='1'}checked="checked"{/if} />{$Think.lang.jump_url}</label>
+                    <label>
+                        <input type="radio" name="mb_sliders_type[{$k}]" value="2" {if $mbSliders[$k]['type']=='2'}checked="checked"{/if} />{$Think.lang.product_id}</label>
+                    <input type="text" class="text w150" name="mb_sliders_links[{$k}]" value="{$mbSliders[$k]['link']}" />
+                </div>
+                <div class="dssc-upload-btn"> <a href="javascript:;"> <span>
+                            <input type="file" hidefocus="true" size="1" class="input-file" name="file_{$k}" id="file_{$k}" file_id="{$k}" />
+                        </span>
+                        <p> <i class="fa fa-upload"></i> {$Think.lang.image_upload} </p>
+                    </a> </div>
+            </li>
+            {/for}
+        </ul>
+        <div class="bottom">
+            <label class="submit-border">
+                <input type="submit" class="submit" value="{$Think.lang.save_change}" />
+            </label>
+        </div>
+    </form>
+</div>
+<style type="text/css">
+    .mb-sliders li { width: 225px; height: 168px; display: inline-block; padding: 3px; margin: 3px; border: 1px solid #ccc; }
+    .mb-sliders img { max-width: 100%; max-height: 100%; display: block; margin: 3px auto; }
+    .img-wrapper { width: 220px; height: 80px; overflow: hidden; }
+</style>
+<script src="{$Think.PLUGINS_SITE_ROOT}/ajaxfileupload.js"></script>
+<script>
+        $(function () {
+            $(".sortable").sortable();
+            var DEFAULT_GOODS_IMAGE = "{$Think.UPLOAD_SITE_URL}/{:default_goodsimage()}";
+            var LOADING_IMAGE = "{$Think.HOME_SITE_ROOT}/images/loading.gif";
+
+            $('input.input-file').change(function () {
+                //上传文件名
+                var id = this.id;
+                //文件ID
+                var file_id = $(this).attr('file_id');
+                $('div[dstype="' + id + '"]').find('i,img').remove().end()
+                        .prepend('<img dstype="' + id + '" src="' + LOADING_IMAGE + '">');
+
+                $.ajaxFileUpload({
+                    url: "{:url('Sellersetting/store_mb_sliders')}",
+                    secureuri: false,
+                    fileElementId: id,
+                    dataType: 'json',
+                    data: {id: id,file_id:file_id},
+                    success: function (data, status) {
+                        if (data.error) {
+                            alert(data.error);
+                            $('img[dstype="' + id + '"]').attr('src', DEFAULT_GOODS_IMAGE);
+                            return;
+                        }
+                        $('img[dstype="' + id + '"]').attr('src', data.uploadedUrl);
+                    },
+                    error: function (data, status, e) {
+                        $('img[dstype="' + id + '"]').attr('src', data.uploadedUrl);
+                    }
+                });
+            });
+
+            $("a[data-slider-drop]").click(function () {
+                var id = $(this).attr('data-slider-drop');
+                var $this = $(this);
+
+                $.getJSON("{:url('Sellersetting/store_mb_sliders_drop')}", {id: id}, function (d) {
+                    if (!d.success) {
+                        alert(d.error);
+                        return;
+                    }
+                    $this.parents('div.picture').find('img,i').remove().end()
+                            .prepend('<i class="fa fa-picture-o"></i>');
+                });
+            });
+        });
+</script> 
+
+{/block}
+

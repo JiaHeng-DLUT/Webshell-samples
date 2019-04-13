@@ -1,0 +1,201 @@
+{include file="public/header" /}
+<style type="text/css">
+.layui-table td, .layui-table th{text-align:left;}
+.layui-table tbody tr.no{background-color:#f00;color:#fff;}
+</style>
+
+<div class="install-box">
+
+<div class="ui-steps-round steps-round-auto steps-4">
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>安装协议</label>
+  </div>
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">2</div>
+      <div class="bar"></div>
+    </div>
+    <label>环境检测</label>
+  </div>
+  <div class="current">
+    <div class="wrap">
+      <div class="round">3</div>
+      <div class="bar"></div>
+    </div>
+    <label>程序安装</label>
+  </div>
+  <div class="todo last">
+    <div class="wrap">
+      <div class="round">4</div>
+    </div>
+    <label>成功</label>
+  </div>
+</div>
+
+
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>数据库配置</legend>
+    </fieldset>
+    <form class="layui-form" action="" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务器地址</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostname" lay-verify="title" value="127.0.0.1">
+            </div>
+            <div class="layui-form-mid layui-word-aux">数据库服务器地址，一般为127.0.0.1</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库端口</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostport" lay-verify="title" value="3306">
+            </div>
+            <div class="layui-form-mid layui-word-aux">系统数据库端口，一般为3306</div>
+        </div>        
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库账号</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="username" lay-verify="title" value="root">
+            </div>
+            <div class="layui-form-mid layui-word-aux">连接数据库的用户名</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库密码</label>
+            <div class="layui-input-inline w200">
+                <input type="password" class="layui-input" name="password" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">连接数据库的密码</div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label">数据库名称</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="database" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">系统数据库名,必须包含字母</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据表前缀</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="prefix" lay-verify="title" value="ql_">
+            </div>
+            <div class="layui-form-mid layui-word-aux">建议使用默认,数据库前缀必须带 '_'</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">覆盖数据库</label>
+            <div class="layui-input-inline w200">
+                <input type="radio" name="cover" value="1" title="覆盖" >
+                <input type="radio" name="cover" value="0" title="不覆盖" checked>
+            </div>
+            
+            <div class="layui-form-mid layui-word-aux">选择覆盖的话,就会替换之前的</div>
+        </div>
+        <div class="layui-form-item">
+            <button type="submit" class="layui-btn layui-btn-normal fl" style="margin-left:120px;" lay-submit="" lay-filter="formTest">点击测试数据库连接</button>
+        </div>
+    </form>
+    <form class="layui-form" action="?step=5" method="post">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>管理账号设置</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员账号</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="username" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">管理员账号最少3位,最多15个位</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员密码</label>
+            <div class="layui-input-inline w200">
+                <input type="password" class="layui-input" name="password" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">保证密码最少6位</div>
+        </div>
+        <div class="step-btns">
+            <a href="?step=2" class="layui-btn layui-btn-primary layui-btn-big fl">返回上一步</a>
+            <button type="submit" class="layui-btn layui-btn-big layui-btn-normal fr" lay-submit="" lay-filter="formSubmit_install">立即安装</button>
+        </div>
+    </form>
+</div>
+
+<script>
+//安装前要先测试数据库连接
+$('.step-btns button').attr("disabled",true);
+$('.step-btns button').css({'background':'#CCC'});
+</script>
+{include file="public/footer" /}
+<script type="text/javascript">
+layui.define(['element', 'form'], function(exports) {
+    var $ = layui.jquery, layer = layui.layer, form = layui.form;
+    form.on('submit(formTest)', function(data) {
+        var _form = '';
+        if ($(this).attr('data-form')) {
+            _form = $($(this).attr('data-form'));
+        } else {
+            _form = $(this).parents('form');
+        }
+        
+       var  index = layer.msg('正在检测中', {
+          icon: 16
+          // ,shade: 0.01
+          // ,tips: [1, '#c00']
+        });
+        $.ajax({
+            type: "POST",
+            url: '?step=4',
+            data: _form.serialize(),
+            success: function(res) {
+                layer.msg(res.msg);
+                //操作测试数据库链接后
+                $('.step-btns button').attr("disabled",false);
+				$('.step-btns button').css({'background':'#F60'});
+            }
+        });
+        return false;
+    });
+
+
+ /* 监听表单提交 */
+    form.on('submit(formSubmit_install)', function(data) {
+        var _form = '';
+        if ($(this).attr('data-form')) {
+            _form = $($(this).attr('data-form'));
+        } else {
+            _form = $(this).parents('form');
+        }
+        // CKEditor专用
+        // if (typeof(CKEDITOR) != 'undefined') {
+        //     for (instance in CKEDITOR.instances) {
+        //         CKEDITOR.instances[instance].updateElement();
+        //     }
+        // }
+      var  index = layer.msg('正在导入数据库,请耐心等候...', {
+          icon: 16
+      
+          ,time:0
+        });
+        $.ajax({
+            type: "POST",
+            url: _form.attr('action'),
+            data: _form.serialize(),
+            success: function(res) {
+                
+                layer.msg(res.msg, {},function() {
+                    if (res.code == 1) {
+                        if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                             layer.close(index);
+                            location.href = res.url;
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+        return false;
+    });
+});
+</script>

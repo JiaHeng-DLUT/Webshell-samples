@@ -1,0 +1,71 @@
+<style>
+	.childforums>div {
+		border-right: solid 1px #eee;
+		border-bottom: solid 1px #eee;
+	}
+	
+	.childforums>div:hover {
+		cursor: pointer;
+		background-color: #eee;
+	}
+	
+	.childforums>div:nth-of-type(3n+1) {
+		border-left: solid 1px #eee;
+	}
+</style>
+<div class="pk-hide pk-row pk-text-primary pk-padding-top-10 pk-padding-bottom-10" style="border-bottom: solid 1px #458fce;">
+	子版块
+</div>
+<div id="zbks" class="pk-hide pk-row pk-text-sm pk-text-default pk-overflow-hidden childforums" style="border-bottom:solid 1px #458fce">{$_G['TEMP']['CFHTML']}</div>
+<script>
+	if($('#zbks').html()) {
+		$('#zbks').removeClass('pk-hide').prev().removeClass('pk-hide');
+		var $cfs = $('.childforums');
+		for(var i = 0; i < $cfs.length; i++) {
+			var $cfs2 = $($cfs[i]).find('>div');
+			if($cfs2.length) {
+				for(var i2 = 0; i2 < $cfs2.length; i2++) {
+					if($(window).width() < 1000) {
+						if(($cfs2.length - i2 <= $cfs2.length % 2) || ($cfs2.length % 2 == 0 && $cfs2.length - i2 <= 2)) {
+							$($cfs2[i2]).css('border-bottom', 'none');
+						}
+					} else {
+						if(($cfs2.length - i2 <= $cfs2.length % 3) || ($cfs2.length % 3 == 0 && $cfs2.length - i2 <= 3)) {
+							$($cfs2[i2]).css('border-bottom', 'none');
+						}
+					}
+				}
+			} else {
+				$($cfs[i]).css('border-bottom', 'none');
+			}
+		}
+		var $ftc = $('.forumtodaycount');
+		for(var i = 0; i < $ftc.length; i++) {
+			if(parseInt($ftc[i].innerHTML) > 99) {
+				$ftc[i].innerHTML = '99';
+			} else if(parseInt($ftc[i].innerHTML) == 0) {
+				$($ftc[i]).addClass('pk-hide');
+			}
+		}
+	}
+</script>
+<div class="pk-row pk-padding-top-10 pk-padding-bottom-10 pk-text-sm" style="border-bottom: solid 1px #458fce;">
+	<div class="pk-w-sm-7 pk-text-nowrap pk-padding-0">
+		<a class="pk-text-primary pk-hover-opacity" href="{ReWriteURL('list','sortid={$sortid}&page=1')}"><span class="fa fa-file-text-o">&nbsp;</span>默认</a>&nbsp;&nbsp;
+		<a class="pk-text-primary pk-hover-opacity" href="{ReWriteURL('list','type=high&sortid={$sortid}&page=1')}"><span class="fa fa-diamond">&nbsp;</span>精华</a>
+	</div>
+	<div class="pk-w-sm-5 pk-text-nowrap pk-text-right pk-padding-0">
+		<a id="listactivetimebtn" class="pk-btn pk-btn-primary pk-btn-xs pk-radius-top-left-4 pk-radius-bottom-left-4" href="{ReWriteURL('list','sortid={$sortid}&page=1','type={$type}&order=activetime')}">最后回复</a><a id="listposttimebtn" class="pk-btn pk-btn-primary pk-btn-xs pk-radius-top-right-4 pk-radius-bottom-right-4" href="{ReWriteURL('list','sortid={$sortid}&page=1','type={$type}&order=posttime')}">最新文章</a>
+	</div>
+	<script>
+		$(function() {
+			if($_GET('order')) {
+				$('#list' + $_GET('order') + 'btn').attr('disabled', true);
+			} else {
+				$("#list{Cstr($_G['SET']['READLISTORDER'],'activetime')}btn").attr('disabled', true);
+			}
+		})
+	</script>
+</div>
+<div id="read-list">
+	<div>

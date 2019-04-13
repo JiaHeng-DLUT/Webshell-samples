@@ -1,0 +1,53 @@
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_complain}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    
+    <table class="ds-default-table">
+        <thead class="thead">
+        <tr class="space">
+            <th>{$Think.lang.complain_appeal_detail}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>{$Think.lang.complain_appeal_message}</th>
+        </tr>
+        <tr class="noborder">
+            <td><ul>
+                <li><strong>{$Think.lang.complain_accused}:</strong>{$complain_info.accused_name}</li>
+                <li><strong>{$Think.lang.complain_appeal_evidence}:</strong>
+                    {if empty($complain_info.appeal_pic1) && empty($complain_info.appeal_pic2) && empty($complain_info.appeal_pic3)}
+                        {$Think.lang.complain_pic_none}
+                    {else/}
+                        {notempty name="$complain_info.appeal_pic1"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic1}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic1}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.appeal_pic2"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic2}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic2}" width="50"></a>
+                        {/notempty}
+                        {notempty name="$complain_info.appeal_pic3"}
+                        <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic3}" target="_blank" data-lightbox="lightbox-image"><img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/complain/{$complain_info.appeal_pic3}" width="50"></a>
+                        {/notempty}
+                    {/if}
+                </li>
+                <li><strong>{$Think.lang.complain_appeal_datetime}:</strong>{$complain_info.appeal_datetime|date="Y-m-d H:i:s",###}</li>
+            </ul></td>
+        </tr>
+        <tr>
+            <th>{$Think.lang.complain_appeal_content}</th>
+        </tr>
+        <tr class="noborder">
+            <td>{$complain_info.appeal_message}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>

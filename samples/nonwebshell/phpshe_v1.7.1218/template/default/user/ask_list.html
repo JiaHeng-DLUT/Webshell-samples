@@ -1,0 +1,30 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt"><a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span></a></div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>咨询详情</th>
+				<th colspan="2">商品信息</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td class="aleft" valign="top">
+					咨询：{$v['ask_text']}<p class="c999 mat5 font12">[{pe_date($v['ask_atime'])}]</p>
+					<div class="mat10 cred">
+						回复：<!--{if($v['ask_replytext']):}-->{$v['ask_replytext']}<p class="c999 mat5 font12">[{pe_date($v['ask_replytime'])}]</p><!--{endif;}-->
+					</div>
+				</td>
+				<td width="50"><a href="{pe_url('product-'.$v['product_id'])}" class="dingdan_img" target="_blank"><img src="{pe_thumb($v['product_logo'], 100, 100)}" /></a></td>
+				<td class="aleft" width="250" style="padding-left:0"><a href="{pe_url('product-'.$v['product_id'])}" target="_blank" class="cblue">{$v['product_name']}</a></td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

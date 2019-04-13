@@ -1,0 +1,36 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="130">交易日期</th>
+				<th width="150">交易积分(个)</th>
+				<th width="150">结余</th>
+				<th>说明</th>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td>{pe_date_color(pe_date($v['pointlog_atime']))}</td>
+				<td>
+					<!--{if($v['pointlog_in']>0):}-->
+					<span class="cgreen">+{$v['pointlog_in']}</span>
+					<!--{else:}-->
+					<span class="c999">-{$v['pointlog_out']}</span>
+					<!--{endif;}-->
+				</td>
+				<td><span class="c666">{$v['pointlog_now']}</span></td>
+				<td class="aleft">{$v['pointlog_text'] ? $v['pointlog_text'] : $ini['pointlog_type'][$v['pointlog_type']]}</td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

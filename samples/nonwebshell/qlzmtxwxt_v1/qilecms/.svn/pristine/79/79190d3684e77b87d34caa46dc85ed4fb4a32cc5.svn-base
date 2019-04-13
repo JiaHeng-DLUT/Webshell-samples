@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+{:search('添加规则分类',$select,'false','false',$date)}
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col >
+      <col width="110">
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>ID</th>
+        <th>分类名</th>
+        <th>状态</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr>
+        <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.id}"></td>
+        <td>{$vo.id}</td>
+        <td>{$vo.cate_name}</td>
+
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("member/edit",array("id"=>$vo["id"]))}')"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+           </td>
+      </tr>
+      
+      {volist name="$vo.children" id='vo2'}
+      <tr>
+        <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.id}"></td>
+        <td>{$vo2.id}</td>
+        <td>|— {$vo2.cate_name}</td>
+
+        <td>
+        <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("member/edit",array("id"=>$vo2["id"]))}')"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+           </td>
+      </tr>   
+
+           {volist name="$vo2.children" id='vo3'}
+          <tr>
+            <td><input type="checkbox" name="id[]" class="id " title=""  lay-skin="primary" value="{$vo.id}"></td>
+            <td>{$vo3.id}</td>
+            <td>|——|——{$vo3.cate_name}</td>
+
+            <td>
+            <div class="layui-btn-group">
+              <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("member/edit",array("id"=>$vo3["id"]))}')"> <i class="layui-icon">&#xe642;</i></button>
+              <button class="layui-btn layui-btn-sm layui-btn-primary"> <i class="layui-icon">&#xe640;</i></button>
+             </div>
+               </td>
+          </tr>   
+          {/volist}
+   {/volist}
+
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+<!-- 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+         -->  
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+    //监听全选
+    form.on('checkbox(selectAll)', function(data){
+       // layer.alert(data.elem.checked);
+
+      if (data.elem.checked == true) { 
+        $("#selectAll").addClass("layui-btn-danger");
+           $(".id").each(function() {       
+               this.checked = "checked";
+                 form.render('checkbox'); 
+            }); 
+       } else { 
+         $("#selectAll").removeClass("layui-btn-danger");
+          $(".id").each(function() { 
+             this.checked = false; 
+             form.render('checkbox');
+          }); 
+        } 
+
+    });
+
+
+
+});
+
+
+</script>
+<script>
+$(function(){
+//删除
+    var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            }); 
+             
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+           $.ajax({
+           type:'post',
+           data:{"id":id},
+           dataType:'json',
+           url:"{:url('member/del')}",
+           success:function(json){
+            if(json.code == 0){
+              layer.msg(json.msg);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+            },1000);
+            }
+           }
+        });
+       }
+  });
+
+
+});
+$("#add").on("click",function(){
+  open('{:url("ruleCategory/add")}','添加规则分类','580px','45%');
+});
+
+
+function edit(url){
+ parent.layer.open({
+          type: 2,
+          title: '用户编辑',
+          shadeClose: true,
+          shade: 0.8,
+          area: ['880px', '90%'],
+          content: url //iframe的url
+        }); 
+}
+
+</script>
+</body>
+
+</html>

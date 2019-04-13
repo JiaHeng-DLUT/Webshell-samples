@@ -1,0 +1,26 @@
+
+/*登陆页面样*/
+.login{height:80px;}
+.login .logo{width:200px;display:inline;padding:20px;}
+.login .header-right{width: 300px;font-size: 27px;display: inline;padding: 6px;border-left: 1px solid #eee;line-height: 59px;color: #7b7b7b;}
+
+.login-section{width:100%;overflow:hidden;}
+.login-section .login-main{position:relative;height:550px;padding-top:100px;}
+.login-section .login-box{width: 350px;color: #666;background: #fff;margin: 0 auto;padding: 50px 30px 10px;box-shadow: 0 0 5px 5px rgba(0,0,0,0.05);}
+.login-box .layui-form-item .layui-form-label{width:50px;}
+.login-box .layui-form-pane .layui-form-label{background-color:#fcfcfc;}
+.login-box .layui-form-item input{width:250px;border-left: 1px solid #fff;}
+.login-box button{background-color:#009966;}
+.login-box  .layui-tab-title li{width: 140px;}
+.login-box .layui-tab-content{padding:20px;}
+.login-box .other-login{height:35px;}
+.login-box .other-login a{width:100px;height:35px;line-height:35px;padding:5px;}
+.other-login .login-qq i{font-size:40px;color:#01AAED;}
+.other-login .login-weixin  i{font-size:40px;color:#5FB878;}
+.other-login .login-weibo  i{font-size:40px;color:#FF5722;}
+.login-register-account{color:#01AAED;}
+.login-register-account:hover{color:#01AAED;text-decoration: underline;}
+
+
+/*登陆页面底部*/
+.footer .footer-main{height:50px;line-height:50px;text-align:center;}

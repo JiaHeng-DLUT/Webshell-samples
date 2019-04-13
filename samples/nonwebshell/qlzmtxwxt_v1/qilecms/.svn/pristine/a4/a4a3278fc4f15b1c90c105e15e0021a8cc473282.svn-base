@@ -1,0 +1,25 @@
+<?php
+namespace app\index\controller;
+use think\Controller;
+class Common extends Controller
+{
+    public $settings;
+	  protected $beforeActionList = [
+        '_init',
+    ];
+    public function  _init()
+    {
+
+     // 获得全站设置信息
+      
+     $settings =  get_settings(true); 
+  
+      
+     // print_r($settings);
+      $this->assign('settings',$settings);
+    }
+    public function index(){
+
+    }
+
+}

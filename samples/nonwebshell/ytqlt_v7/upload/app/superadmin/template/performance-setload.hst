@@ -1,0 +1,171 @@
+<style>
+	.pk-table tr td,
+	.pk-table tr th {
+		padding: .5rem;
+		border-color: #CCCCCC !important;
+	}
+	
+	.set-yesload,
+	.set-noload,
+	.set-edit,
+	.set-del {
+		display: inline-block;
+		color: #fff;
+		padding: .125rem .5rem;
+		font-size: 12px;
+	}
+	
+	.set-noload,
+	.set-del {
+		background-color: #c03;
+	}
+	
+	.set-yesload,
+	.set-edit {
+		background-color: #0c3;
+	}
+	
+	.set-yesload:hover,
+	.set-noload:hover,
+	.set-edit:hover,
+	.set-del:hover {
+		opacity: .7;
+	}
+	
+	.set-yesload.disabled,
+	.set-noload.disabled,
+	.set-edit.disabled,
+	.set-del.disabled {
+		background-color: #777;
+		cursor: default;
+		opacity: .7;
+	}
+</style>
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary pk-text-nowrap">预加载设置项</label>
+</div>
+
+<div class="pk-row pk-padding-bottom-15">
+	<div class="pk-w-sm-12 pk-text-sm">
+		总项：{$_G['TEMP']['ZX']}个&nbsp;&nbsp;&nbsp;加载项：{$_G['TEMP']['JZX']}个&nbsp;&nbsp;&nbsp;加载项占用内存：{$_G['TEMP']['JZXZYNC']}Kb
+	</div>
+</div>
+
+<table id="p-s-main" class="pk-table pk-table-bordered pk-width-all">
+	<thead>
+		<tr>
+			<th class="pk-text-left">ID</th>
+			<th class="pk-text-left">设置名称</th>
+			<th>占用内存</th>
+			<th width="240">管理</th>
+		</tr>
+	</thead>
+	<tbody class="pk-text-sm">{$_G['TEMP']['BODY']}</tbody>
+</table>
+<script>
+	function _loadset(_url, _setname, _noload, _this) {
+		_this.addClass('disabled');
+		$.post(_url, _setname + "=" + (parseInt(_noload) || 0), function(data) {
+			if(data['state'] == 'ok') {
+				_this.html(_this.hasClass('set-noload') ? '预加载' : '禁止加载').toggleClass('set-noload set-yesload');
+				pktip(data['datas']['msg'], 'success');
+			} else {
+				pkalert(data['datas']['msg'] || '未知错误');
+			}
+			_this.removeClass('disabled');
+		}, 'json');
+	}
+
+	$(function() {
+		//通用量
+		var _url = "index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set&json=1&chkcsrfval=" + $_USER['CHKCSRFVAL'];
+		//预加载
+		//禁止加载
+		$('#p-s-main .set-load').click(function() {
+			var _t = $(this);
+			var _p = _t.parent();
+			var _url2 = _url + '&set_type=loadset';
+
+			if(_t.hasClass('set-noload')) {
+				pkalert('确认禁止加载该设置项(' + _p.data('name') + ')？<br>PS:若该项为系统项，可能会发生不可预见的问题', '警告', function() {
+					_loadset(_url2, _p.data('name'), 1, _t);
+				});
+			} else {
+				_loadset(_url2, _p.data('name'), 0, _t);
+			}
+		});
+
+		$('#p-s-main .set-edit').click(function() {
+			var _t = $(this);
+			var _p = _t.parent();
+			var _v = randomString(32);
+			var _paid = pkalert('<textarea class="pk-width-all" id="setvalue-' + _v + '" rows="7"></textarea><p class="pk-text-xs pk-text-danger">注意：请谨慎操作，若随意修改系统设置项可能导致不可预见的问题</p>', _p.data('name'), function() {
+				$.post(_url, _p.data('name') + "=" + encodeURIComponent($('#setvalue-' + _v).val()), function(data) {
+					if(data['state'] == 'ok') {
+						pktip(data['datas']['msg'], 'success');
+						_p.find('textarea:eq(0)').val($('#setvalue-' + _v).val());
+						pkalert(false, _paid);
+					} else {
+						pkalert(data['datas']['msg'] || '未知错误');
+					}
+				}, 'json');
+			}, true);
+			$('#setvalue-' + _v).val(_p.find('textarea:eq(0)').val());
+		});
+
+		$('#p-s-main .set-del').click(function() {
+			var _t = $(this);
+			var _p = _t.parent();
+			pkalert('确认删除该设置项(' + _p.data('name') + ')？<br>PS:若该项为系统项，可能会发生不可预见的问题', '警告', function() {
+				_t.addClass('disabled');
+				$.getJSON("index.php?c=app&a=superadmin:index&s=delete&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set&json=1&chkcsrfval=" + $_USER['CHKCSRFVAL'] + '&id=' + _p.data('id'), function(data) {
+					if(data['state'] == 'ok') {
+						pktip(data['datas']['msg'], 'success');
+						_p.parent().next().remove();
+						_p.parent().remove();
+					} else {
+						pkalert(data['datas']['msg'] || '未知错误');
+						_t.removeClass('disabled');
+					}
+				});
+			});
+		});
+
+		//样式处理
+		$('#p-s-main .settr').mouseover(function() {
+			$(this).css('background-color', '#eee').next().css('background-color', '#eee');
+		}).mouseout(function() {
+			$(this).css('background-color', '').next().css('background-color', '');
+		}).next().mouseover(function() {
+			$(this).css('background-color', '#eee').prev().css('background-color', '#eee');
+		}).mouseout(function() {
+			$(this).css('background-color', '').prev().css('background-color', '');
+		});
+
+		//设置说明获取
+		//setTimeout(function() {
+		if(typeof top.HadSky_CloudKey != "undefined") {
+			$.getScript('http://m.hadsky.com/index.php?c=app&a=zhanzhang:index3&s=getsetdesc&cloudkey=' + top.HadSky_CloudKey + '&domain=' + top.HadSky_CloudVars['domain'] + '&format=js', function(r, s) {
+				//console.log(r + ' ' + s);
+				if(s == 'success') {
+					if(HadSky_SetDesc['state'] == 'ok') {
+						var SetDesc = HadSky_SetDesc['datas'];
+						var _s = $('#p-s-main .set-desc');
+						for(var i = 0; i < _s.length; i++) {
+							$(_s[i]).html('说明：' + (SetDesc[$(_s[i]).data('name')] || '未知的设置项'));
+						}
+					} else {
+						$('#p-s-main .set-desc').html('说明：获取失败，原因：' + (HadSky_SetDesc['datas']['msg'] || 'CloudKey'));
+					}
+				} else {
+					$('#p-s-main .set-desc').html('说明：获取失败，原因：' + (s || '未知错误'));
+				}
+			}).error(function(e) {
+				console.log(e);
+			});
+		} else {
+			$('#p-s-main .set-desc').html('说明：未开启云服务或与云服务通讯失败；云服务开启方法：后台 - 应用 - 云服务 - 开启功能后再操作');
+		}
+		//}, 5000);
+	});
+</script>

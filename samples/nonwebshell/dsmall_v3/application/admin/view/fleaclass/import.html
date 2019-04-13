@@ -1,0 +1,75 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>分类管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+ <div class="fixed-empty"></div>
+  <form method="post" enctype="multipart/form-data" name="form1">
+    <input type="hidden" name="charset" value="gbk" />
+    <table class="ds-default-table">
+      <tbody>
+        <tr class="noborder">
+          <td colspan="2" class="required"><label>请选择文件:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><span class="type-file-box">
+            <input type="file" name="csv" id="csv" class="type-file-file"  size="30"  />
+            </span></td>
+          <td class="vatop tips">如果导入速度较慢，建议您把文件拆分为几个小文件，然后分别导入</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label>文件格式:</label>
+            <a href="{$Think.EXAMPLES_SITE_URL}/flea_class.csv" class="btn btn-mini"><span>点击下载导入例子文件</span></a></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform"><table border="1" cellpadding="3" cellspacing="3" bordercolor="#CCC">
+              <tbody>
+                <tr>
+                  <td bgcolor="#EFF8F8">排序</td>
+                  <td bgcolor="#FFFFEC">一级分类</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#EFF8F8">排序</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                  <td bgcolor="#FFFFEC">二级分类</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#EFF8F8">排序</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                  <td bgcolor="#FFFFEC">二级分类</td>
+                  <td bgcolor="#FFFFEC">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table></td>
+          <td class="vatop tips"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="tfoot">
+          <td colspan="2"><a href="JavaScript:document.form1.submit();" class="btn"><span>导入</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+       </div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+	$(function(){
+        var textButton="<input type='text' name='textfield' id='textfield1' class='type-file-text' /><input type='button' name='button' id='button1' value='' class='type-file-button' />"
+        $(textButton).insertBefore("#csv");
+        $("#csv").change(function(){
+            $("#textfield1").val($("#csv").val());
+        });
+    });
+</script>

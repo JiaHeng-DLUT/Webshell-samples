@@ -1,0 +1,10 @@
+<div class="now">
+	<a href="admin.php?mod=setting&act=base" <!--{if($mod=='setting' && $act=='base'):}-->class="sel"<!--{endif;}-->>网站设置<i></i></a>
+	<a href="admin.php?mod=setting&act=user" <!--{if($mod=='setting' && $act=='user'):}-->class="sel"<!--{endif;}-->>会员设置<i></i></a>
+	<a href="admin.php?mod=setting&act=point" <!--{if($mod=='setting' && $act=='point'):}-->class="sel"<!--{endif;}-->>积分设置<i></i></a>
+	<a href="admin.php?mod=express" <!--{if($mod=='express'):}-->class="sel"<!--{endif;}-->>运单模板<i></i></a>
+	<a href="admin.php?mod=setting&act=sms" <!--{if($mod=='setting' && $act=='sms'):}-->class="sel"<!--{endif;}-->>短信设置<i></i></a>
+	<a href="admin.php?mod=setting&act=email" <!--{if($mod=='setting' && $act=='email'):}-->class="sel"<!--{endif;}-->>邮箱设置<i></i></a>
+	<!--{if($mod=='express'):}--><a href="admin.php?mod=express&act=add" id="fabu">添加模板</a><!--{endif;}-->
+	<div class="clear"></div>
+</div>

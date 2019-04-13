@@ -1,0 +1,94 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">账号安全</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">自动登录过期时间</label>
+		<div class="pk-w-sm-4">
+			<input id="usercookieslife" class="pk-textbox" type="number" name="usercookieslife" value="{$_G['SET']['USERCOOKIESLIFE']}" placeholder="单位秒，默认86400，最小1800" title="单位秒，默认86400，最小1800">
+		</div>
+		<div class="pk-w-sm-4 pk-padding-top-5 pk-text-bold">秒</div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8">
+			<button type="button" class="pk-btn pk-btn-default pk-btn-sm " onclick="$('#usercookieslife').val('86400')">1天</button>
+			<button type="button" class="pk-btn pk-btn-default pk-btn-sm " onclick="$('#usercookieslife').val('604800')">1周</button>
+			<button type="button" class="pk-btn pk-btn-default pk-btn-sm " onclick="$('#usercookieslife').val('2592000')">1月</button>
+			<button type="button" class="pk-btn pk-btn-default pk-btn-sm " onclick="$('#usercookieslife').val('31536000')">1年</button>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">cookie作用的域名</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="cookie_domain" value="{$_G['SET']['COOKIE_DOMAIN']}" placeholder="默认为当前域名，若不懂留空即可" title="默认为当前域名，若不懂留空即可" />
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">最大尝试登录次数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="trylogincount" value="{$_G['SET']['TRYLOGINCOUNT']}" placeholder="每个IP每日每个账号可最大尝试登录次数，留空为不限制" title="每个IP每日每个账号可最大尝试登录次数，留空为不限制">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">加密方式登录</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['SECURELOGIN']}" name="securelogin">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户资料更新密码验证</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['CHANGEUSERINFOVERIFY']}" name="changeuserinfoverify">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">账号可多设备同时在线</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['USERMULTIPLEONLINE']}" name="usermultipleonline">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户登录邮件提示</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['USERLOGINEMAILTIP']}" name="userloginemailtip">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">创始人登录邮件提示</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['SUPERMANLOGINEMAILTIP']}" name="supermanloginemailtip">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

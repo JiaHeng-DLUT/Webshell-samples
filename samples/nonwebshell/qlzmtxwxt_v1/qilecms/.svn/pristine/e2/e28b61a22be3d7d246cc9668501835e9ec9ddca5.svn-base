@@ -1,0 +1,15 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Addons extends Common
+{
+	public function index(){
+		return $this->fetch();
+	}
+	public function install(){
+		return $this->fetch();
+	}
+	public function uninstall(){
+		return $this->fetch();
+	}
+}

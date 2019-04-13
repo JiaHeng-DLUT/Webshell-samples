@@ -1,0 +1,100 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "microsoft yahei";
+	box-sizing: border-box;
+}
+
+.install-read {
+	margin: 20px auto;
+	width: 680px;
+	border: solid 1px lightblue;
+	background: #F7FBFE;
+}
+
+.header {
+	width: 100%;
+	height: 100px;
+	padding: 10px;
+	background: linear-gradient(to top, #0374D5, lightblue);
+}
+
+.header .title {
+	font-size: 24px;
+	color: white;
+}
+
+.header .title span {
+	font-size: 16px;
+	font-weight: 100;
+	color: gold;
+}
+
+.header .desc {
+	margin-top: 20px;
+	color: white;
+	text-align: right;
+	font-size: 14px;
+}
+
+.body {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 14px;
+	padding: 10px;
+}
+
+.body .read {
+	width: 100%;
+	overflow-y: scroll;
+	height: 320px;
+	border: solid 1px lightgray;
+	color: #333333;
+	font-size: 12px;
+	word-break: break-all;
+	padding: 5px;
+}
+
+.body .read h1 {
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	padding: 5px;
+}
+
+.body .read h2 {
+	font-weight: bold;
+	font-size: 12px;
+	text-align: left;
+	padding: 5px;
+	color: #333333;
+}
+
+.body .read p {
+	text-indent: 2em;
+	padding: 5px 0;
+	word-break: break-all;
+}
+
+.footer {
+	padding: 10px;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.link {
+	font-size: 12px;
+	color: #666666;
+	text-align: center;
+	padding: 10px;
+	border-top: solid 1px lightgray;
+}
+
+a {
+	text-decoration: none;
+	color: #0C7CB5;
+}
+
+a:hover {
+	text-decoration: underline;
+}

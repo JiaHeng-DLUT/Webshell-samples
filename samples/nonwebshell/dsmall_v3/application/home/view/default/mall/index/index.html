@@ -1,0 +1,324 @@
+{extend name="default/base/base_home" /}
+
+{block name="mall_main"}
+<link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/index.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<style>
+    .mall_nav{border-bottom:none;}
+    .mall_nav .all_categorys .mc{display: block;}
+</style>
+<div class="clear"></div>
+<!-- HomeFocusLayout Begin-->
+<div class="home-focus-layout">
+    <div class="bd">
+        <ul>
+            {dstaglib:adv ap_id='1' limit='10' item='v'}
+            <li style="background: url({$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}) center top no-repeat rgb(35, 35, 35); display: none;background-color: {$v.adv_bgcolor|default=''}" style="{$v.adv_style|default=''}">
+                <a href="{$v.adv_link}" target="{$v.adv_target}" title="{$v.adv_title}">&nbsp;</a>
+            </li>
+            {/dstaglib:adv}
+        </ul>
+    </div>
+    <div class="hd">
+        <ul>
+            {dstaglib:adv ap_id='1' limit='10' item='v'}
+            <li class=""></li>
+            {/dstaglib:adv}
+        </ul>
+    </div>
+
+
+    <div class="right-sidebar">
+        <div class="mod_personal_center">
+            {if $Think.session.is_login}
+            <div class="avata_pic_wrap">
+                <a id="index_account_icon_login" href="{:url('Member/index')}" target="_blank"><img class="lazyload"  data-original="{:get_member_avatar($Think.session.avatar)}"></a>
+            </div>
+            <div class="info_wrap">
+                <div class="login_box">
+                    <div class="user_info clearfix">
+                        <em>Hi，{:session('member_name')}</em>
+                    </div>
+             
+                    <div class="clearfix treasure">
+                        <a href="{:url('Memberorder/index',['state_type'=>'state_new'])}" target="_blank" class="gold_coin">
+                            <em>{$member_order_info.order_nopay_count}</em>
+                            <p>{$Think.lang.pending_payment}</p>
+                        </a>
+                        <a href="{:url('Memberorder/index',['state_type'=>'state_send'])}" target="_blank" class="gold_coin">
+                            <em>{$member_order_info.order_noreceipt_count}</em>
+                            <p>{$Think.lang.pending_receipt}</p>
+                        </a>
+                        <a href="{:url('Memberorder/index',['state_type'=>'state_noeval'])}" target="_blank">
+                            <em>{$member_order_info.order_noeval_count}</em>
+                            <p>{$Think.lang.pending_comment}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {else /}
+            <div class="avata_pic_wrap">
+                <a id="index_account_icon_unlogin" href="javascript:void(0)"><img class="lazyload"  data-original="{:get_member_avatar($Think.session.avatar)}"></a>
+            </div>
+            <div class="info_wrap">
+                <div class="unlogin_box">
+                    <div class="title">Hi~{$Think.lang.hello}!</div>
+                    <div class="tips">
+                    </div>
+                    <div class="btn_wrap">
+                        <a href="{:url('Login/login')}" class="login_btn">{$Think.lang.login}</a>
+                        <a href="{:url('Login/register')}" class="regist_btn">{$Think.lang.login_index_regist_now_2}</a>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            <div class="top_line">
+                <div class="vip_list">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-heart-o" style="background:#ff9b1b"></i>
+                        <p class="vip_item_text">{$Think.lang.buyer_protection}</p>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-thumbs-o-up" style="background:#52a6ff"></i>
+                        <p class="vip_item_text">{$Think.lang.merchant_authentication}</p>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-handshake-o" style="background:#57c15b"></i>
+                        <p class="vip_item_text">{$Think.lang.secure_transaction}</p>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="notice_list">
+                {foreach $index_articles as $i_a}
+                <a title="{$i_a.article_title}" href="{if $i_a.article_url !=''}{$i_a.article_url}{else /}{:url('Article/show',['article_id'=>$i_a.article_id])}{/if}" target="_blank">
+                    <span>{$i_a.article_title}</span>
+                </a>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>
+<!--HomeFocusLayout End-->
+
+<div class="home-scroll w1200 mt10">
+    <div class="bd">
+        <ul>
+            <li>
+                {dstaglib:adv ap_id='2' limit='10' item='v'}
+                <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                    <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+                </a>
+                {/dstaglib:adv}
+            </li>
+        </ul>
+        <a class="ctrl prev" href="javascript:void(0)"><</a>
+        <a class="ctrl next" href="javascript:void(0)">></a>
+    </div>
+</div>
+
+
+
+
+<div class="home-sale-layout w1200 mt20">
+    <div class="hd">
+        <ul class="tabs-nav">
+            <li class="tabs-selected on"><i class="arrow"></i><h3>{$Think.lang.recommendation}</h3></li>
+            <li class=""><i class="arrow"></i><h3>{$Think.lang.discount}</h3></li>
+            <li class=""><i class="arrow"></i><h3>{$Think.lang.latest_hot_sale}</h3></li>
+            <li class=""><i class="arrow"></i><h3>{$Think.lang.shopping_frenzy}</h3></li>
+        </ul>
+    </div>
+    <div class="bd tabs-panel">
+        <ul style="display: block;">
+            {notempty name="recommend_list"}
+            {foreach name="recommend_list" item="goods"}
+            <li>
+                <dl>
+                    
+                    <dd class="goods-thumb">
+                        <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                            <img class="lazyload" data-original="{:goods_cthumb($goods.goods_image)}" alt="{$goods.goods_name}">
+                        </a>
+                    </dd>
+                    <dt class="goods-name"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" title="{$goods.goods_name}">{$goods.goods_name}</a></dt>
+                    <dd class="goods-price"><em>￥{$goods.goods_price}</em></dd>
+                </dl>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+        <ul style="display: none;">
+            {notempty name="promotion_list"}
+            {foreach name="promotion_list" item="goods"}
+            <li>
+                <dl>
+                    
+                    <dd class="goods-thumb">
+                        <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                            <img class="lazyload" data-original="{:goods_cthumb($goods.goods_image)}" alt="{$goods.goods_name}">
+                        </a>
+                    </dd>
+                    <dt class="goods-name"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" title="{$goods.goods_name}">{$goods.goods_name}</a></dt>
+                    <dd class="goods-price">{$Think.lang.shopping_mall_price}：<em>￥{$goods.xianshigoods_price}</em></dd>
+                </dl>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+        <ul style="display: none;">
+            {notempty name="new_list"}
+            {foreach name="new_list" item="goods"}
+            <li>
+                <dl>
+                    
+                    <dd class="goods-thumb">
+                        <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                            <img class="lazyload" data-original="{:goods_cthumb($goods.goods_image)}" alt="{$goods.goods_name}">
+                        </a>
+                    </dd>
+                    <dt class="goods-name"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" title="{$goods.goods_name}">{$goods.goods_name}</a></dt>
+                    <dd class="goods-price">{$Think.lang.shopping_mall_price}：<em>￥{$goods.goods_price}</em></dd>
+                </dl>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+        <ul style="display: none;">
+            {notempty name="groupbuy_list"}
+            {foreach name="groupbuy_list" item="goods"}
+            <li>
+                <dl>
+                    
+                    <dd class="goods-thumb">
+                        <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                            <img class="lazyload" data-original="{:groupbuy_thumb($goods.groupbuy_image)}" alt="{$goods.goods_name}">
+                        </a>
+                    </dd>
+                    <dt class="goods-name"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" title="{$goods.goods_name}">{$goods.goods_name}</a></dt>
+                    <dd class="goods-price">{$Think.lang.shopping_mall_price}：<em>￥{$goods.groupbuy_price}</em></dd>
+                </dl>
+            </li>
+            {/foreach}
+            {/notempty}
+        </ul>
+    </div>
+</div>
+<div class="floor_wrap">
+{foreach name="floor_block" item="vo" key="k" }
+<div class="{if $k>4}style2{/if} floor floor{php}echo $k+1;{/php} w1200">
+    <div class="floor-left">
+        <div class="title">
+            <h2 title="{$vo.gc_name}">{$vo.gc_name}</h2>
+        </div>
+        {if $k<5}
+        <div class="left-ads">
+            {switch name="k"}
+            {case value="0"}{php}$var2=8;{/php}{/case}
+            {case value="1"}{php}$var2=9;{/php}{/case}
+            {case value="2"}{php}$var2=10;{/php}{/case}
+            {case value="3"}{php}$var2=11;{/php}{/case}
+            {case value="4"}{php}$var2=12;{/php}{/case}
+            {/switch}
+            {if $k<5}
+            {dstaglib:adv ap_id='$var2' limit='1' item='v'}
+            <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+                <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+            </a>
+            {/dstaglib:adv}
+            {/if}
+        </div>
+        {/if}
+    </div>
+    <div class="floor-right">
+        <ul class="tabs-nav hd">
+            {foreach name="vo.goods_list" item="list"  key="list_key"}
+            <li {if condition="$list_key eq '0'"}class="on"{/if}><h3>{$list.gc_name}</h3></li>
+            {/foreach}
+        </ul>
+        <div class="goods-list bd">
+            {foreach name="vo.goods_list" item="list" key="list_key"}
+            <ul {if condition="$list_key eq '0'"}style="display:block"{/if}>
+                {notempty name="list.gc_list"}
+                {foreach name="list.gc_list" key="goods_key" item="goods"}
+                {if ($k<5 && $goods_key<8) || $k>4}
+                <li>
+                    <dl>
+                        
+                        <dd class="goods-thumb">
+                            <a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}">
+                                <img class="lazyload" data-original="{:goods_cthumb($goods.goods_image)}" alt="{$goods.goods_name}"/>
+                            </a>
+                        </dd>
+                        <dt class="goods-name"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$goods.goods_id])}" title="{$goods.goods_name}">{$goods.goods_name}</a></dt>
+                        <dd class="goods-price">
+                            <em>{$goods.goods_price}{$Think.lang.currency_zh}</em>
+                            <span class="original">{$goods.goods_marketprice}{$Think.lang.currency_zh}</span>
+                        </dd>
+                    </dl>
+                </li>
+                {/if}
+                {/foreach}
+                {/notempty}
+            </ul>
+            {/foreach}
+        </div>
+    </div>
+</div>
+
+<div class="w1200 floor-banner">
+    {switch name="k"}
+    {case value="0"}{php}$var3=3;{/php}{/case}
+    {case value="1"}{php}$var3=4;{/php}{/case}
+    {case value="2"}{php}$var3=5;{/php}{/case}
+    {case value="3"}{php}$var3=6;{/php}{/case}
+    {case value="4"}{php}$var3=7;{/php}{/case}
+    {/switch}
+    {if $k<5}
+    {dstaglib:adv ap_id='$var3' limit='1' item='v'}
+    <a href="{$v.adv_link}" target="{$v.adv_target}" title="">
+        <img class="lazyload" data-original="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_ADV}/{$v.adv_code}" style="{$v.adv_style|default=''}">
+    </a>
+    {/dstaglib:adv}
+    {/if}
+</div>
+<script>
+    jQuery(".floor{php}echo $k+1;{/php} .floor-right").slide({mainCell: ".bd", autoPlay: false, interTime: 5000});
+</script>
+{/foreach}
+</div>
+
+<div class="wrapper mt10"></div>
+<div class="index-link wrapper">
+    <dl class="website">
+        <dt>{$Think.lang.cooperative_partner} | {$Think.lang.friendship_link}<b></b></dt>
+        <dd>
+            {notempty name="link_list"}
+            {foreach name="link_list" item="val"}
+            <a href="{$val.link_url}" target="_blank" title="{$val.link_title}">{:str_cut($val.link_title,15)}</a>
+            {/foreach}
+            {/notempty}
+        </dd>
+    </dl>
+</div>
+<div class="footer-line"></div>
+<!--首页底部保障开始-->
+
+<!--首页底部保障结束-->
+<!--StandardLayout Begin-->
+
+<!--StandardLayout End-->
+
+
+
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+    //轮播
+    jQuery(".home-focus-layout").slide({mainCell: ".bd ul", autoPlay: true, delayTime: 500, interTime: 5000});
+    jQuery(".home-scroll").slide({mainCell: ".bd li", autoPage: true,autoPlay: true, delayTime: 1000, effect: "left", interTime: 5000, vis: 5});
+    jQuery(".home-sale-layout").slide({autoPlay: false, });
+</script>
+
+
+{/block}

@@ -1,0 +1,90 @@
+@charset "utf-8";
+/* ================================ */
+/* 商城前台模板页面常用样式定义     */
+/* ================================ */
+
+.sidebox {  display: block; float: left; padding-right: 12px; padding-left: 10px; margin-top:5px }
+.sidebox h5 { font-size: 12px; font-weight: normal; line-height: 28px;   float: left; margin-right:8px; }
+.selectbox { display: block; float: left; position: relative; z-index: 1; }
+.selectbox .option { background-color: #FFF; border: 1px solid #A5A5A5; position: absolute; top: 19px; left: 0px; display: none; z-index: 9999; }
+.selectbox .text { width: 40px; height: 25px; margin: 0px; padding: 0px; background:#FFF; border:1px solid #eee}
+.selectbox .btn {border-radius: 2px;font-size: 12px;background-color: #E31939;width: 44px; height: 27px; padding: 0px; line-height: 27px; text-align: center; margin: 0; border: 0; color:#fff;}
+.selectbox select{border:1px solid #eee;color:#666;height: 27px}
+
+/* 店铺分类类目 */
+.cate_attr {border: 1px solid #eee;font-size: 12px;padding: 20px;margin: 0px auto;background: #fff;	overflow:hidden;width:1158px;}
+.cate_attr .nav-tag .filter-label-ab {width: 50px;height:25px;line-height:25px;float: left;font-size: 14px;font-weight: 400;margin-left:20px;}
+.cate_attr .nav-tag .cate_attr_con {float: left;width: 1065px;}
+.cate_attr .nav-tag .cate_attr_con .filter-all-ab {width: 70px;float: left;}
+.cate_attr .nav-tag  .cate_attr_con .district-tab {width: 988px;float: left;}
+.cate_attr .nav-tag a {display: inline-block;color: #666;font-size: 12px;width: 70px;height: 25px;line-height: 25px;margin-bottom: 5px;margin-left: 9px;cursor: pointer;}
+.cate_attr .nav-tag span {padding: 3px 5px;}
+.cate_attr .nav-tag .selected span {color: #ffffff;background: #E31939;}
+/* 店铺列表展示 */
+
+/* 店铺动态评分部分 */
+.ds-store-list li dd.shop-rate { position: relative; z-index:2; color: #DD4400; cursor: pointer; }
+.ds-store-list li dd.shop-rate span { background: #FFF; vertical-align:middle; display: inline-block; width: 12px; height: 11px; border: solid 1px #AAA; border-radius: 3px; position: relative; z-index: 1; }
+.ds-store-list li dd.shop-rate span i { font-size: 0px; line-height: 0; width: 0px; height: 0px; border-width: 4px; border-color: #0063DC transparent transparent transparent; border-style:solid dashed dashed dashed; position:absolute; z-index:1; top:4px; left:2px; }
+.ds-store-list li dd.shop-rate:hover span i { border-color: transparent transparent #0063DC transparent; border-style: dashed dashed solid dashed; top:0px; }
+.ds-store-list li dd.shop-rate .shop-rate-con { background-color:#FFF; display: none; padding: 8px; border: solid 1px #AAA; position:absolute; z-index: 5; top:25px; left:-36px; box-shadow: 2px 2px 1px rgba(153,153,153,0.5); }
+.ds-store-list li dd.shop-rate:hover .shop-rate-con { display:block; }
+.ds-store-list li dd.shop-rate .shop-rate-con .arrow { background: url(../images/ds_arrows.gif) no-repeat scroll 0px -10px; width: 11px; height: 6px; margin-left:-5px; position: absolute; z-index: 2; top: -6px; left: 50%; }
+.ds-store-list li dd.shop-rate .shop-rate-con dl.rate { color: #777; line-height:24px; width: 165px; overflow: hidden; }
+.ds-store-list li dd.shop-rate .shop-rate-con dl.rate dt { width: 60px; height: 24px; float:left; clear:left; }
+.ds-store-list li dd.shop-rate .shop-rate-con dl.rate dd { width: 105px; height: 24px; float:left; }
+.ds-store-list li dd.shop-rate .shop-rate-con dl.rate dd span { border:0; backgroun:none; border-radius: 0; height:auto; width: auto; margin: 0 0 0 4px; }
+.rate-star { display: inline; }
+.rate-star em, .rate-star em i { background-image: url(../images/rate_star.gif); background-repeat: repeat-x; height: 12px; }
+.rate-star em { background-position: 0 0; display: block; width: 70px; float:left; margin: 6px 0; position: relative; z-index: 1; }
+.rate-star em i { background-position: 0 -12px; position: absolute; z-index: 1; top: 0px; left: 0px; }
+.rate-star span { display:block; float:left; margin-left:6px; _margin-left: 3px; _width: 32px; }
+
+/*大图模式列表页*/
+.down { display: block; color: #fff; text-decoration: none; padding: 2px 15px 0 8px; float: left; border: 1px solid #ff7a32; background: #ff975f; }
+.down:hover { border: 1px solid #a53a00; }
+.top_page { float: right; padding-right: 10px; }
+.top_page p { float: left; line-height: 23px; }
+/* ============ */
+/* 列表页面筛选条 */
+/* ============ */
+
+
+.sort-bar .bar-l { float:left; }
+
+/* 商品列表排序方式 */
+.sort-bar .array { display:block; float:left; padding:0 4px;height:100% }
+.sort-bar .array li { display: inline-block; margin: 0 1px;height:100%  }
+.sort-bar .array li {*display:inline/* IE7*/; _float:left; }
+.sort-bar .array li a { line-height:38px; color:#666;display:inline-block; width:80px; position: relative;text-align: center;border-left: 1px solid transparent;border-right: 1px solid transparent }
+.sort-bar .array li a:not(.nobg){text-indent: -10px}
+.sort-bar .array li a:not(.nobg):after{position: absolute;right:20px;top:12px;content: "\f0de";font: normal normal normal 14px/1 FontAwesome;color:#DDDDDD}
+.sort-bar .array li a:not(.nobg):before{position: absolute;right:20px;top:12px;content: "\f0dd";font: normal normal normal 14px/1 FontAwesome;color:#DDDDDD}
+.sort-bar .array li a.nobg{width: 60px}
+.sort-bar .array li.selected{background: #fff;}
+.sort-bar .array li.selected a{color:#E31939;border-color: #eee}
+.sort-bar .array li a:not(.nobg)[desc]:before{color:#E31939}
+.sort-bar .array li a:not(.nobg)[asc]:after{color:#E31939}
+/* ============ */
+/* 店铺索引列表页  */
+/* ============ */
+.ad_middle { display: inline; width: 240px; height: 135px; float: left; margin: 0 8px 0 0; }
+.sort_asc { background: url(../images/member/sort_asc.gif) no-repeat right 2px; padding-right: 10px; }
+.sort_desc { background: url(../images/member/sort_desc.gif) no-repeat right 2px; padding-right: 10px; }
+/* 信用度 */
+.seller-heart, .seller-diamond, .seller-crown, buyer-heart, buyer-diamond, buyer-crown { height: 16px; margin: 2px 0; display:inline-block; vertical-align: middle; }
+.seller-heart, .seller-diamond, .seller-crown, buyer-heart, buyer-diamond, buyer-crown { *display:inline;
+}
+.seller-heart { background: url(../images/heart-seller.gif) repeat-x 0 0; }
+.seller-diamond { background: url(../images/diamond-seller.gif) repeat-x 0 0; }
+.seller-crown { background: url(../images/crown_seller.gif) repeat-x 0 0; }
+.buyer-heart { background: url(../images/heart-buyer.gif) repeat-x 0 0; }
+.buyer-diamond { background: url(../images/diamond-buyer.gif) repeat-x 0 0; }
+.buyer-crown { background: url(../images/crown_buyer.gif) repeat-x 0 0; }
+.level-1 { width: 16px; }
+.level-2 { width: 32px; }
+.level-3 { width: 48px; }
+.level-4 { width: 64px; }
+.level-5 { width: 80px; }
+.sticky #main-nav { position:fixed; _position:relative; top:0; border-bottom: solid 1px #D8D8D8; box-shadow: 0 2px 2px rgba(0,0,0,0.2); z-index:999; }
+.sticky #main-nav ul { margin:0 auto; }

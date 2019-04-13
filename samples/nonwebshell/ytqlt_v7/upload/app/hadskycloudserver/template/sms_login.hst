@@ -1,0 +1,67 @@
+<div id="app-puyuetian_sms" class="pk-container">
+	<div class="pk-background-color-white pk-padding-10">
+		<div class="pk-row pk-margin-left-right-auto" style="max-width:480px;">
+			<div class="pk-text-center pk-text-lg pk-padding-25">用手机号登录</div>
+			<form name="form_sms" method="post" action="">
+				<div class="pk-row pk-margin-bottom-5">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">手机号</div>
+					<div class="pk-w-sm-8">
+						<input name="phone" type="text" class="pk-textbox" placeholder="请输入手机号" autocomplete="off" />
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-15">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">&nbsp;</div>
+					<div class="pk-w-sm-8">
+						<button type="button" id="getverifycode" class="pk-btn pk-btn-success">获取手机验证码<span></span><span></span><span></span></button>
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-15">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">短信验证码</div>
+					<div class="pk-w-sm-8">
+						<input name="code" type="text" class="pk-textbox" placeholder="请输入手机收到的验证码" autocomplete="off" />
+					</div>
+				</div>
+				<div class="pk-row pk-margin-bottom-5">
+					<div class="pk-w-sm-4 pk-padding-top-5 pk-text-right">&nbsp;</div>
+					<div class="pk-w-sm-8">
+						<button id="smbtn" type="button" class="pk-btn pk-btn-secondary">免密登录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+	var $xyyzm = "{$_G['SET']['APP_PUYUETIAN_SMS_VERIFYCODE']}";
+</script>
+<script src="app/hadskycloudserver/template/js/sms.js"></script>
+<script>
+	$('#smbtn').click(function() {
+		$('#smbtn').prop('disabled', true).html('登录中...');
+		var strings = FormDataPackaging('form[name="form_sms"]');
+		$.post('index.php?c=app&a=hadskycloudserver:index&s=sms_login&submit=yes', strings, function(data) {
+			if(data['state'] == 'ok') {
+				ppp({
+					type: 3,
+					content: "登录成功",
+					icon: 1,
+					close: function() {
+						location.href = "index.php?c=center";
+					}
+				});
+			} else {
+				ppp({
+					type: 0,
+					title: "提示",
+					content: data['msg'],
+					icon: 0,
+					close: function() {
+						$('#smbtn').prop('disabled', false).html('免密登录');
+					}
+				});
+			}
+		}, 'json').error(function(e) {
+			console.log(e);
+		});
+	});
+</script>

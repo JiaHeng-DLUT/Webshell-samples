@@ -1,0 +1,33 @@
+<?php
+namespace app\common\model;
+use think\Model;
+use think\Request;
+class AuthRule extends Base
+{
+   protected $autoCheckFields = true;
+   public function getRuleInfoById($id){
+   	 $where['id'] = $id;
+     return $this->where($where)->find();
+    }
+
+   public function add($data=[]){
+	return $this->data($data)->save();
+	}
+
+   public function edit($data=[],$where=[]){
+	return $this->save($data,$where);
+	}
+   public function del($id){
+      if(is_array($id)){
+          $idData = implode(',',$id);
+      }
+     $idData = $id;
+     $res = $this->where("id",'in',$idData)->delete();
+        if($res){
+           return true;
+        }else{
+           return false;
+        }
+	}  
+
+}

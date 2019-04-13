@@ -1,0 +1,35 @@
+<div class="topbox">
+	<div class="wrapper">
+		<div class="login-text">
+		<a href="/" target="_blank">国内最受欢迎的中文网址导航网</a>
+		</div>
+
+		<div style="width:300px;float:left;height:30px;padding-top:3px;">
+		<!-- 天气显示 -->
+<iframe allowtransparency="true" frameborder="0" width="524" height="28" scrolling="no" src="//tianqi.eastday.com/plugin/widget.html?sc=3&z=1&t=0&v=0&d=2&bd=0&k=000000&f=808080&q=1&a=1&c=54511&w=524&h=28&align=center"></iframe>
+		</div>
+		<div class="login-status">
+			<!-- <{nocache}> -->
+
+			<{if empty($user_info)}>
+			<div class="top-ulogin">
+				<a href="<{url('member/login')}>"><i class="fa fa-sign-in" aria-hidden="true"></i> 登录</a>
+				<a href="<{url('member/register')}>"><i class="fa fa-registered" aria-hidden="true"></i> 注册</a>
+				<a href="<{url('member/getpwd')}>"><i class="fa fa-envelope-o" aria-hidden="true"></i> 找回密码</a>
+		    </div>
+		    <{else}>
+
+          <div class="top-uinfo">您好 <{$user_info['nick_name']}>，
+				<a href="<{url('member/home')}>"><i class="fa fa-user-circle" aria-hidden="true"></i> 会员中心</a> | 
+				<a href="<{url('member/logout')}>"><i class="fa fa-sign-out" aria-hidden="true"></i> 退出</a>
+		  </div>
+		    <{/if}>
+			<!-- <{/nocache}> -->
+		</div>
+	</div>
+</div>
+
+
+
+
+</div>

@@ -1,0 +1,111 @@
+{extend name="default/base/base_home" /}
+{block name="mall_main"}
+<style>
+    .squares .goods-content{height: 315px}
+    .squares li:hover .goods-content{margin:3px;border: solid 1px #ff4040;}
+    .squares .goods-sales em{color:#ff4040}
+    .squares .goods-name a{color:#999}
+    .squares .list_pic li{margin :0 0 12px 12px}
+    .header .top_search_box ul{display: none}
+    .header .form_fields .keyword{margin-left: 0;padding-right: 60px}
+    .squares .list_pic li{height: auto}
+    {if !$Request.param.cate_id}
+    .tree li i.tree-parent{display: none}
+    {/if}
+</style>
+<div class="dsh-container wrapper" >
+  <div class="left">
+    {notempty name="goods_class_array"}
+    <div class="dsh-module dsh-module-style02">
+      <div class="title">
+        <h3>{$Think.lang.category_filtering}</h3>
+      </div>
+      <div class="content">
+        <ul id="files" class="tree">
+          {foreach name="goods_class_array" item="value"}
+          <li><i class="tree-parent tree-parent-collapsed"></i><a href="{:url('inviterpro/index',['cate_id'=>$value.gc_id,'keyword'=>$Request.param.keyword])}" {if condition="$value.gc_id eq $Request.param.cate_id"}class="selected"{/if}>{$value.gc_name}</a>
+            {notempty name="$value.class2"}
+            <ul>
+              {foreach name="$value.class2" item="val"}
+              <li><i class="tree-parent tree-parent-collapsed"></i><a href="{:url('inviterpro/index',['cate_id'=>$val.gc_id,'keyword'=>$Request.param.keyword])}" {if condition="$val.gc_id eq $Request.param.cate_id"}class="selected"{/if}>{$val.gc_name}</a>
+                {notempty name="$val.class3"}
+                <ul>
+                  {foreach name="$val.class3" item="v"}
+                  <li class="tree-parent tree-parent-collapsed"><i></i><a href="{:url('inviterpro/index',['cate_id'=>$v.gc_id,'keyword'=>$Request.param.keyword])}" {if condition="$v.gc_id eq $Request.param.cate_id"}class="selected"{/if}>{$v.gc_name}</a></li>
+                  {/foreach}
+                </ul>
+                {/notempty}
+              </li>
+              {/foreach}
+            </ul>
+            {/notempty}
+          </li>
+          {/foreach}
+        </ul>
+      </div>
+    </div>
+    {/notempty}
+  
+
+  </div>
+  <div class="right">
+
+    <div class="shop_con_list" id="main-nav-holder">
+      
+      <!-- 商品列表循环  -->
+
+      <div>
+          
+<div class="squares" ds_type="current_display_mode">
+    <input type="hidden" id="lockcompare" value="unlock" />
+  {notempty name="goods_list"}
+  <ul class="list_pic">
+    {foreach name="goods_list" item="value"}
+    <li class="item">
+      <div class="goods-content" dstype_goods=" {$value.goods_id}" dstype_store="{$value.store_id}">
+        <div class="goods-pic"><a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank" title="{$value.goods_name}"><img class="lazyload" data-original="{:goods_thumb($value, 240)}" title="{$value.goods_name}" src="{$Think.HOME_SITE_ROOT}/images/loading.gif" alt="{$value.goods_name}" /></a></div>
+        <div class="goods-info">
+            <div class="goods-price"> <em class="sale-price" title="{$Think.lang.goods_class_index_store_goods_price}{$Think.lang.ds_colon}{$Think.lang.currency}{$value.goods_price}">{:ds_price_format_forlist($value['goods_price'])}</em>  <span class="goods-sales">{if $value.inviter_amount>0}{$Think.lang.inviterpro_most_inviter_amount}&nbsp;<em>{:ds_price_format_forlist($value['inviter_amount'])}</em>{/if}</span></div>
+            <div class="goods-name">
+                <a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank" title="{$value.goods_advword}">{$value.goods_name}</a>
+            </div>
+          
+        </div>
+      </div>
+    </li>
+    {/foreach}
+    <div class="clear"></div>
+  </ul>
+  {else /}
+  <div class="no_results">{$Think.lang.inviterpro_no_record}</div>
+  {/notempty}
+</div>
+        
+      </div>
+      <div class="tc mt20 mb20">
+        <div class="pagination">{$show_page}</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script src="{$Think.HOME_SITE_ROOT}/js/search_category_menu.js"></script>
+
+<script>
+    $('#files').tree({
+        expanded: 'li:lt(2)'
+    });
+    $('#search-form').submit(function(){
+        $(this).attr('action',"{:url('inviterpro/index')}");
+        return true;
+    })
+    
+</script>
+
+
+
+
+
+{/block}

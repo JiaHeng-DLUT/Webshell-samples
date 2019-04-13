@@ -1,0 +1,63 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<div class="dssc-form-default">
+    <form id="add_form" action="{:url('Sellerpromotionmansong/mansong_quota_add_save')}" method="post">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.mansong_quota_add_quantity}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input id="mansong_quota_quantity" name="mansong_quota_quantity" type="text" class="text w50"/><em class="add-on">{$Think.lang.text_month}</em>
+                <span></span>
+                <p class="hint">{$Think.lang.mansong_price_explain1}</p>
+                <p class="hint">{$Think.lang.mansong_price_explain2}{$Think.config.promotion_mansong_price}{$Think.lang.ds_yuan}</p>
+                <p class="hint"><strong style="color: red">{$Think.lang.notice_package_renewal6}</strong></p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input id="submit_button" type="submit" value="{$Think.lang.ds_submit}" class="submit"></label>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function (error, element) {
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            submitHandler: function (form) {
+                var unit_price = '{$Think.config.promotion_mansong_price}';
+                var quantity = $("#mansong_quota_quantity").val();
+                var price = unit_price * quantity;
+
+                layer.confirm('{$Think.lang.mansong_quota_add_confirm}' + price + '{$Think.lang.ds_yuan}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    ds_ajaxpost('add_form', 'url', "{:url('Sellerpromotionmansong/index')}");
+                });
+
+            },
+            rules: {
+                mansong_quota_quantity: {
+                    required: true,
+                    digits: true,
+                    min: 1,
+                    max: 12
+                }
+            },
+            messages: {
+                mansong_quota_quantity: {
+                    required: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.mansong_quota_quantity_error}',
+                    digits: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.mansong_quota_quantity_error}',
+                    min: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.mansong_quota_quantity_error}',
+                    max: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.mansong_quota_quantity_error}'
+                }
+            }
+        });
+    });
+</script>
+
+{/block}
+
+

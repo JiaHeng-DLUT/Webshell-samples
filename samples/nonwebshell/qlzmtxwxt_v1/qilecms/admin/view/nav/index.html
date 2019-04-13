@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>前台导航列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+    {include file="public/css"}
+    {include file="public/js"}
+     <style>
+    input{
+      height: 30px !important;
+    }
+    </style>
+</head>
+<body>
+
+
+<!-- 后台面包导航 -->
+{:get_admin_breadcrumb()}
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：前台导航<br>
+图标：为 font awesome 字体库 类名<br>
+导航链接：控制器/方法
+</blockquote>
+<button  class="layui-btn layui-btn-normal" id="add-one-nav" lay-filter="addnav" onclick="add('{:url("nav/add",array("id"=>0))}','增加主导航','600px','80%')">增加主导航</button>
+<button class="layui-btn layui-btn-primary" id="nav-status" data-status="show">隐藏列表</button>
+<button class="layui-btn layui-btn-primary" onclick="location.reload()"><i class="layui-icon layui-icon-refresh
+"></i>刷新</button>
+
+<div class="layui-form">
+  <table class="layui-table" id="nav-table">
+    <colgroup>
+      <col width="50">
+      <col width="280">
+      <col width="300">
+      <col width="120">
+      <col width="100">
+      <col width="100">
+      <col width="100">
+      <col width="100">
+      <col width="200">
+    </colgroup>
+    <thead>
+      <tr>
+        <th><input type="checkbox" name="selectAll"  lay-skin="primary" id="selectAll" lay-filter="selectAll" ></th>
+
+        <th>导航名称</th>
+        <th>链接地址</th>
+        <th>图标</th>
+        <th>新窗口</th>
+        <th>PC显示</th>
+        <th>手机显示</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+  {volist name="list" id="vo"}
+  <!-- 一级导航 -->
+      <tr data-id="{$vo.id}" data-pid="{$vo.pid}" class="one-nav">
+        <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo.id}" title="" class="id"  > </td>
+
+        <td>
+      
+        <div class="layui-form-mid">
+          {if !empty($vo.children)}
+         <a href="javascript:;" class="one-nav-icon" data-status="show">
+           <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+        </a>
+        {else}
+          <i style="margin-left:12px;"></i>
+         {/if}
+         </div>
+       
+        <div class="layui-input-inline" style="width:120px;float:left"><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo.id}" value="{$vo.name}" ></div></td>
+
+        <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo.id}" value="{$vo.url}"></td>
+
+        <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo.id}" value="{$vo.icon}"></td>
+
+
+
+        <td><input type="checkbox" class="target_{$vo.id}"  name="target" lay-skin="switch"  lay-filter="switchTarget" {if $vo.target ==1}checked{/if} lay-text="是|否"></td>
+
+        <td><input type="checkbox" class="status_{$vo.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo.status ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="checkbox" class="is_wap_{$vo.id}" name="is_wap" lay-skin="switch"  lay-filter="switchIs_wap" {if $vo.is_wap ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="" class="layui-input sort_{$vo.id}" value="{$vo.sort}"></td>
+        <td>    <button class="layui-btn layui-btn-primary layui-btn-sm add-two-nav"><i class="fa fa-plus-circle" aria-hidden="true"></i> 添加</button>
+  
+       <button class="layui-btn layui-btn-primary layui-btn-sm del" ><i class="layui-icon"></i></button></td>
+      </tr>
+<!-- 二级导航 -->
+        {if !empty($vo.children)}
+        {volist name="vo.children" id="vo2"}
+      <tr data-id="{$vo2.id}" data-pid="{$vo2.pid}" class="two-nav two_{$vo.id}">
+        <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo2.id}" title="" class="id"  > </td>
+
+        <td><div class="layui-form-mid">|----|----</div>
+        <div class="layui-input-inline" style="width:120px;float:left"><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo2.id}" value="{$vo2.name}"></div></td>
+
+        <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo2.id}" value="{$vo2.url}"></td>
+
+        <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo2.id}" value="{$vo2.icon}"></td>
+
+
+        <td><input type="checkbox" class="target_{$vo2.id}"  name="target" lay-skin="switch"  lay-filter="switchTarget" {if $vo2.target ==1}checked{/if} lay-text="是|否"></td>
+
+        <td><input type="checkbox" class="status_{$vo2.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo2.status ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="checkbox" class="is_wap_{$vo2.id}" name="is_wap" lay-skin="switch"  lay-filter="switchIs_wap" {if $vo2.is_wap ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="" class="layui-input sort_{$vo2.id}" value="{$vo2.sort}"></td>
+        <td>    <button class="layui-btn layui-btn-primary layui-btn-sm  add-three-nav" ><i class="fa fa-plus-circle" aria-hidden="true"></i> 添加</button>
+  
+       <button class="layui-btn layui-btn-primary layui-btn-sm del"  ><i class="layui-icon"></i></button></td>
+      </tr>
+
+        {/volist}
+        {/if}
+<!-- 三级导航 -->
+        {if !empty($vo2.children)}
+        {volist name="vo2.children" id="vo3"}
+      <tr data-id="{$vo3.id}" data-pid="{$vo3.pid}" class="three-nav three_{$vo.id}">
+        <td><input type="checkbox" name="id" lay-skin="primary"  value="{$vo3.id}" title="" class="id"  > </td>
+
+        <td><div class="layui-form-mid">|----|----|----</div><div class="layui-input-inline" style="width:120px;float:left"><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name_{$vo3.id}" value="{$vo3.name}"></div></td>
+
+        <td><input type="text" name="url" lay-verify="url" autocomplete="off" placeholder="" class="layui-input url_{$vo3.id}" value="{$vo3.url}"></td>
+
+        <td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon_{$vo3.id}" value="{$vo3.icon}"></td>
+
+
+
+        <td><input type="checkbox" class="target_{$vo3.id}"  name="target" lay-skin="switch"  lay-filter="switchTarget" {if $vo3.target ==1}checked{/if} lay-text="是|否"></td>
+
+        <td><input type="checkbox" class="status_{$vo3.id}" name="status" lay-skin="switch"  lay-filter="switchStatus" {if $vo3.status ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="checkbox" class="is_wap_{$vo3.id}" name="is_wap" lay-skin="switch"  lay-filter="switchIs_wap" {if $vo3.is_wap ==1}checked{/if} lay-text="显|隐"></td>
+
+        <td><input type="text" name="sort" lay-verify="sort" autocomplete="off" placeholder="" class="layui-input sort_{$vo3.id}" value="{$vo3.sort}"></td>
+        <td>
+  
+       <button class="layui-btn layui-btn-primary layui-btn-sm del"><i class="layui-icon"></i></button></td>
+      </tr>
+        {/volist}
+        {/if}
+ {/volist}
+
+
+
+    </tbody>
+  </table>
+   <button class="layui-btn layui-btn-primary" id="del-nav" > <i class="layui-icon">&#xe640;</i> 批量删除</button>
+</div>
+
+<script>
+// 展开隐藏效果
+$(function(){
+  $(".one-nav-icon").on("click",function(){
+    var a = $(this).parents('tr').attr('data-id');
+       var status = $(this).attr('data-status');
+       if(status == 'hide'){
+          $(this).html('<i class="fa fa-minus-square-o" aria-hidden="true" ></i>');
+          $(this).attr('data-status','show');  
+          $('.two_'+a).show();
+          $('.three_'+a).show();
+       }else {
+         $(this).html('<i class="fa fa-plus-square-o" aria-hidden="true" ></i>');
+         $(this).attr('data-status','hide');
+         $('.two_'+a).hide();
+        $('.three_'+a).hide();    
+       }
+    
+  });
+  $("#nav-status").on("click",function(){
+    var a = $(this).attr('data-status');
+    if(a == 'hide'){
+     //显示全部显示-
+         $(".one-nav-icon").html('<i class="fa fa-minus-square-o" aria-hidden="true" ></i>');
+         $(".one-nav-icon").attr('data-status','show');
+         $('.two-nav').show();
+         $('.three-nav').show();
+         $(this).html('隐藏列表');
+         $(this).attr('data-status','show'); 
+      
+   
+    }else{
+         //显示全部显示+
+         $(".one-nav-icon").html('<i class="fa fa-plus-square-o" aria-hidden="true" ></i>');
+         $(".one-nav-icon").attr('data-status','hide');
+         $('.two-nav').hide();
+         $('.three-nav').hide();
+         $(this).html('显示列表'); 
+        $(this).attr('data-status','hide');    
+              
+    }
+ 
+  });
+});
+
+</script>
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+
+
+form.on('switch(switchTarget)', function(data){
+  var id =$(this).parents("tr").attr("data-id");
+  var target = data.elem.checked;
+   if(target == true ){ target =1; }else{target = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"target":target},function(json){
+        if(json.code = 1){
+         layer.msg(json.msg,{icon: 1,offset: 't'});
+        }
+     });
+
+});
+form.render();
+form.on('switch(switchStatus)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var status = data.elem.checked;
+  if(status == true ){ status =1; }else{status = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"status":status},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg,{icon: 1,offset: 't'});
+        }
+     });
+ 
+
+
+});
+
+form.render();
+form.on('switch(switchIs_wap)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var is_wap = data.elem.checked;
+   if(is_wap == true ){ is_wap =1; }else{is_wap = 0;}
+    $.post('{:url("nav/update")}',{"id":id,"is_wap":is_wap},function(json){
+        if(json.code = 1){
+         layer.msg(json.msg,{icon: 1,offset: 't'});
+        }
+     });
+
+
+});
+form.render();
+
+//监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('nav/add')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            $("form")[0].reset();
+  //添加数据成功，关闭弹出窗之前，刷新列表页面的数据
+           
+             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引      
+                // parent.window.location.reload();
+                parent.layer.close(index); 
+             layer.msg(json.msg);
+
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+
+  return false;
+ // $("#add-one-nav").bind("click",function(){
+
+ //          $("#nav-table").append('<tr class="one-nav"  style="background:#F7F7F7" data-pid="0"><td><input type="checkbox" name="id" lay-skin="primary"  value="" title="" class="id"  > </td>'
+ //            +'<td><input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input name" value=""></td>'
+ //             +'<td><input type="text"  class="layui-input url" value=""></td>'
+ //             +'<td><input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="" class="layui-input icon" value=""></td>'
+ //             +'<td><input type="checkbox" name="switch" lay-skin="switch"></td>'
+ //             +'<td><input type="checkbox" class="status"  name="status" lay-skin="switch"  lay-filter="switchTarget"  lay-text="是|否"></td>'
+ //             +'<td><input type="text"  class="layui-input sort" value="0" style="width:50px"></td>'
+ //             +'<td></td></tr>');
+ //        });
+
+});
+
+
+});
+
+
+ </script>
+
+<script>
+$(function(){
+ //全选批量删除
+        var id = []; //定义空数组
+        var url ="{:url('nav/del')}"; //请求的url
+        var data = {"id":id};   //传递的表单数据
+        var delButton = "#del-nav"; //删除节点class 或者ID
+        var checkboxClass = ".id"; //多选框class
+       
+
+         $(delButton).click(function(){
+              $(checkboxClass).each(function() {
+              if(this.checked == true){
+                   id.push($(this).val()); 
+              }
+              });              
+         if(id.length == 0){
+            parent.layer.alert('你没有选中任何分类',{title:'批量删除提示'});
+         }else{
+                     var index =parent.layer.confirm('批量删除后，数据不可恢复', {
+                      btn: ['确定删除','取消'] //按钮
+                      ,title:'是否批量删除'
+                      ,shadeClose:true
+                      ,icon: 3
+                      ,anim: 5  //动画类型
+                    }, function(){
+                      parent. layer.close(index);
+                    // 确定ajax 删除数据
+                                $.post(url,data        
+                                     ,function(json){
+                                      if(json.code == 0){
+                                          layer.msg(json.msg);
+                                               setTimeout(function(){ 
+                                                     window.location.reload();  //页面刷新
+                                                },1000);
+                                          
+                                         }else{
+                                          layer.msg(json.msg,{icon: 0,offset: 't'});
+                                         }
+                                       } 
+                                       );
+
+                    }, function(){
+                       // 取消
+
+                    });
+
+         }
+
+    });
+
+
+
+//追加二级导航
+ $("body").on('click',".add-two-nav",function(){
+     var id = $(this).parents('tr').attr('data-id');
+          $(this).parents('tr').after(
+            '<tr class="add-nav"  data-pid="'+id+'" style="background:#F7F7F7" >'
+            +'<td></td>'
+            +'<td><div class="layui-form-mid">|----|----</div><input type="text" name="name"  autocomplete="off" placeholder="" class="layui-input name" value="" style="width: 120px;float:left"></td>'
+             +'<td><input type="text"   name="url"  class="layui-input url" value=""></td>'
+             +'<td><input type="text" name="icon" autocomplete="off" placeholder="" class="layui-input icon" value=""></td>'
+             +'<td><input type="checkbox" class="target" name="target" lay-skin="switch"   checked lay-text="显|隐"></td>'
+             +'<td><input type="checkbox" class="status" name="status" lay-skin="switch"   checked lay-text="显|隐"></td>'
+             +'<td><input type="checkbox" class="is_wap" name="is_wap" lay-skin="switch"   checked lay-text="显|隐"></td>'
+
+             +'<td><input type="text"  class="layui-input sort" value="0" style="width:50px"></td>'
+             +'<td></td></tr>');
+        });
+//追加三级导航
+ $("body").on('click',".add-three-nav",function(){
+     var id = $(this).parents('tr').attr('data-id');
+          $(this).parents('tr').after(
+            '<tr class="add-nav"  data-pid="'+id+'" style="background:#F7F7F7" >'
+            +'<td><input type="checkbox" name="id" lay-skin="primary"  value="" title="" class="id"  > </td>'
+            +'<td><div class="layui-form-mid">|----|----|----</div><input type="text" name="name"  autocomplete="off" placeholder="" class="layui-input name" value="" style="width: 120px;float:left"></td>'
+             +'<td><input type="text"  name="url" class="layui-input url" value=""></td>'
+             +'<td><input type="text" name="icon"  autocomplete="off" placeholder="" class="layui-input icon" value=""></td>'
+             +'<td><input type="checkbox" class="display" name="display" lay-skin="switch"   checked lay-text="显|隐"></td>'
+             +'<td><input type="text"  class="layui-input sort" value="0" style="width:50px"></td>'
+             +'<td></td></tr>');
+        });
+
+
+
+
+//添加导航
+ $("#nav-table").on('blur','.add-nav',function(){ 
+
+  if($(this).attr("data-id")){
+
+    //id存在，不添加新导航
+     return false;
+  }
+  var pid   = $(this).attr("data-pid");
+  var name  = $(this).find(".name").val();
+  var url   = $(this).find(".url").val();
+  var icon  = $(this).find(".icon").val();
+  var sort  = $(this).find(".sort").val();
+  var obj   = $(this);
+    $.post("{:url('nav/add')}",{pid:pid,name:name,url:url,icon:icon,sort:sort},function(json){
+      if(json.code == 0){
+          
+           $(obj).find(".name").addClass('name_'+json.data.id);
+           $(obj).find(".url").addClass('url_'+json.data.id);
+           $(obj).find(".icon").addClass('icon_'+json.data.id);
+           $(obj).find(".sort").addClass('sort_'+json.data.id);
+           $(obj).attr('data-id',json.data.id);
+
+           layer.msg(json.msg,{icon: 1,offset: 't'});
+        }else{
+            layer.msg(json.msg,{icon:0,offset: 't'});
+        }
+
+    });
+
+ });
+  // 导航数据更新
+$("body").on("blur","input",function(){
+    var id   = $(this).parents("tr").attr("data-id");
+    var pid  = $(this).parents("tr").attr("data-pid");
+    var name = $(".name_"+id).val();
+    var icon = $(".icon_"+id).val();
+    var url  = $(".url_"+id).val();
+    var sort = $(".sort_"+id).val();
+  if(id ==''){
+    return false;
+  }
+    $.post('{:url("nav/update")}',{"id":id,"pid":pid,"name":name,"url":url,icon:icon,"sort":sort},function(json){
+        if(json.code == 0){
+          layer.msg(json.msg,{icon: 1,offset: 't'});
+        }
+     }
+  );
+});
+// //添加导航
+//  $("#nav-table").on('blur','.add-nav',function(){ 
+//   var pid   = $(this).attr("data-pid");
+//   var name  = $(this).find(".name").val();
+//   var url   = $(this).find(".url").val();
+//   var icon  = $(this).find(".icon").val();
+//   var sort  = $(this).find(".sort").val();
+
+//     $.post("{:url('nav/add')}",{pid:pid,name:name,url:url,icon:icon,sort:sort},function(json){
+//       if(json.code == 0){
+//            layer.msg(json.msg,{icon: 1,offset: 't'})
+//         }else{
+//             layer.msg(json.msg,{icon:0,offset: 't'})
+//         }
+
+//     });
+
+//  });
+
+
+
+//删除单个导航
+$(".del").on("click",function(){
+var id =$(this).parents("tr").attr("data-id");
+    obj = $(this).parents("tr");
+    $.post('{:url("nav/del")}',{"id":id},function(json,res){
+        if(json.code == 0){
+           layer.msg(json.msg,{icon: 1,offset: 't'});
+          $(obj).remove();
+        }else{
+           layer.msg(json.msg,{icon: 0,offset: 't'});
+        }
+   
+     }
+  );
+});
+
+});
+
+</script>
+</body>
+
+</html>

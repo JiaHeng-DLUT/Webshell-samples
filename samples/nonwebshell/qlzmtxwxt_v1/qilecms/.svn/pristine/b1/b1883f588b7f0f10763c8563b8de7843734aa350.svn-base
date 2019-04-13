@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>分类</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+{:search('添加一级分类',$keywords,$sqlTable,$customSingleField,$date)}
+
+<div class="layui-form">
+  <table class="layui-table" id="demo">
+    <colgroup>
+      <col width="50">
+      <col width="100">
+      <col width="350">
+      <col width="150">
+      <col width="130">
+      <col width="180">
+      <col width="110">
+      <col width="110">
+      <col width="310">
+      <col>
+    </colgroup>
+    <thead>
+
+      <tr>
+        <th><input type="checkbox"  id="selectAll"  lay-skin="primary" lay-filter="selectAll"></th>
+        <th>分类ID</th>
+        <th>分类名称</th>
+        <th>字母缩写</th>
+        <th>当前等级</th>
+        <th>下级</th>
+        <th>排序</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+
+{volist name='list' id='vo'}
+      <tr data-id="{$vo.cid}">
+        <td><input type="checkbox" name="cid[]" class="cid " title=""  lay-skin="primary" value="{$vo.cid}"></td>
+        <td>{$vo.cid}</td>
+        <td>{$vo.cname}</td>
+        <td>{$vo.abbr}</td>
+        <td>{if  $vo.level ==1}一级{elseif $vo.level ==2}二级{elseif $vo.level ==3}三级{/if}</td>       
+        <td>{if $vo.level < 3}<a href="{:url('category/index',array('type'=>$type,'moduleDir'=>'','module_id'=>'','pid'=>$vo['cid']))}"> 查看下级 ({$vo.childrenNum})</a>{else /}--{/if}</td>
+        <td><input name="sort" class="layui-input sort_{$vo.cid}" type="text" value="{$vo.sort}"> </td>
+        <td><input type="checkbox" class="status_{$vo.cid}" name="close" {if $vo.status ==1}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="显示|隐藏"></td>
+        <td>
+        <div class="layui-btn-group">
+
+         {if $vo.level < 3}
+            <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="add('{:url("category/add",array("type"=>$type,"cid"=>$vo["cid"]))}','添加子分类','580px','90%')"   title="添加子分类"> <i class="layui-icon">&#xe61f;</i>添加子分类</button>
+         {/if}
+          <button class="layui-btn layui-btn-sm layui-btn-normal" id="edit" onclick="edit('{:url("category/edit",array("type"=>$type,"cid"=>$vo["cid"]))}','编辑分类','580px','90%')" title="编辑分类"> <i class="layui-icon">&#xe642;</i></button>
+          <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="del('{:url("category/del",array("type"=>$type,"cid"=>$vo["cid"]))}')" title="删除分类"> <i class="layui-icon">&#xe640;</i></button>
+         </div>
+ </td>
+      </tr>
+{/volist}
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div id="pages">{$page|raw}</div>
+
+<div class="layui-btn-group demoTable">
+
+  <button class="layui-btn layui-btn-danger" id="del" data-type="getCheckData"> <i class="layui-icon">&#xe640;</i> 删除</button>
+</div>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form','table', 'layedit', 'laydate'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+var table = layui.table;
+
+//监听全选
+    form.on('checkbox(selectAll)', function(data){
+    if(data.elem.checked){   
+         $(".id[type='checkbox']").prop("checked",true); 
+     
+    }else{   
+
+       $(".id[type='checkbox']").prop("checked", false);
+        
+    } 
+     form.render('checkbox'); 
+    });
+
+// 多选框切换
+form.render();
+form.on('switch(switchStatus)', function(data){
+   var  status = data.elem.checked;
+  var id =$(this).parents("tr").attr("data-id");
+  var status = data.elem.checked;
+  if(status == true ){ status =1; }else{status = 0;}
+    $.post('{:url("category/categoryUpdate")}',{"type":"{$type}","cid":id,"status":status},function(json){
+        if(json.code = 1){
+          layer.msg(json.msg);
+        }
+     });
+});
+
+});
+
+</script>
+<script>
+$(function(){
+//全选删除
+      var id = [];
+      $("#del").click(function(){
+            $(".id").each(function() {
+            if(this.checked == true){
+                 id.push($(this).val()); 
+            }
+            });              
+       if(id.length == 0){
+          parent.layer.alert('你没有选中任何分类');
+       }else{
+        layer.msg('您确定要批量删除吗？', {
+          time: 0 //不自动关闭
+          ,btn: ['确定', '取消']
+          ,yes: function(index){
+            layer.close(index);
+                 $.post("{:url('category/del')}"
+            ,{"cid":cid,"type":"{$type}"}        
+           ,function(json){
+            if(json.code == 0){
+                layer.msg(json.msg);
+                     setTimeout(function(){ 
+                     window.location.reload();  //页面刷新
+                     },1000);
+                 }else if(json.code == -1){
+                    layer.msg(json.msg, {time: 5000, icon:5});
+                 }
+               }
+             );
+          }
+        }); 
+       }
+  });
+});
+
+$("#add").on("click",function(){
+  add('{:url("category/add",array("type"=>"$type"))}','添加分类','580px','90%');
+});
+
+
+  // 失去焦点更新表单
+$("input").on("blur",function(){
+var id =$(this).parents("tr").attr("data-id");
+var sort = $(".sort_"+id).val();
+    $.post('{:url("category/categoryUpdate")}',{"type":"{$type}","cid":id,"sort":sort},function(json){
+        if(json.code == 0){
+          layer.msg(json.msg);
+        } 
+     }
+  );
+});
+</script>
+</body>
+
+</html>

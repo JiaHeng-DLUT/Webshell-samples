@@ -1,0 +1,124 @@
+<div class="dsm-flow-item">
+    <div class="title">{$Think.lang.commodity_transaction_information}</div>
+    <div class="item-goods">
+      {notempty name="order"}
+      <dl>
+        <dt>
+          <div class="dsm-goods-thumb-mini"><a target="_blank" href="{:url('Goods/index',['goods_id'=>$order.goods_id])}">
+            <img src="{:goods_thumb($order)}"/></a></div>
+        </dt>
+        <dd><a target="_blank" href="{:url('Goods/index',['goods_id'=>$order.goods_id])}">{$order.goods_name}</a>
+          {$Think.lang.currency}{$order.goods_price} * {$order.goods_num} <font color="#AAA">({$Think.lang.quantity})</font>
+        </dd>
+      </dl>
+      {/notempty}
+    </div>
+    <div class="item-order">
+      <dl>
+        <dt>{$Think.lang.use_aging}：</dt>
+        <dd>{$Think.lang.from_now_on} {:date('Y-m-d',$order.vr_indate)}</dd>
+      </dl>
+      <dl>
+        <dt>{$Think.lang.total_order_amount}：</dt>
+        <dd><strong>{$Think.lang.currency}{:ds_price_format($order.order_amount)}
+          {if $order.refund_amount > 0}
+          ({$Think.lang.refund_add}{$Think.lang.ds_colon}{$Think.lang.currency}{$order.refund_amount})
+         {/if}
+          </strong> </dd>
+      </dl>
+      <dl class="line">
+        <dt>{$Think.lang.refund_order_ordersn}：</dt>
+        <dd><a target="_blank" href="{:url('Membervrorder/show_order',['order_id'=>$order.order_id])}">{$order.order_sn}</a>
+            <a href="javascript:void(0);" class="a">{$Think.lang.more}<i class="fa fa-angle-down"></i>
+          <div class="more"> <span class="arrow"></span>
+            <ul>
+              <li>{$Think.lang.member_order_pay_method}{$Think.lang.ds_colon}<span>{$order.payment_name}</span></li>
+              <li>{$Think.lang.member_order_time}{$Think.lang.ds_colon}<span>{:date('Y-m-d H:i:s',$order.add_time)}</span></li>
+              {if $order.payment_time}
+              <li>{$Think.lang.member_show_order_pay_time}{$Think.lang.ds_colon}<span>{:date('Y-m-d H:i:s',$order.payment_time)}</span></li>
+              {/if}
+              {if $order.finnshed_time > 0}
+              <li>{$Think.lang.member_show_order_finish_time}{$Think.lang.ds_colon}<span>{:date('Y-m-d H:i:s',$order.finnshed_time)}</span></li>
+              {/if}
+            </ul>
+          </div>
+          </a> </dd>
+      </dl>
+      <dl class="line">
+        <dt>{$Think.lang.merchant}：</dt>
+        <dd>{$order.store_name}<a href="javascript:void(0);" class="a" id="store_more">{$Think.lang.more}<i class="fa fa-angle-down"></i>
+          <div class="more"><span class="arrow"></span>
+              <ul>
+                <li> {$Think.lang.contact_number}：<span>{notempty name="store.live_store_tel"}{$store.live_store_tel} {else /} {$store.store_phone}{/notempty}</span> </li>
+                <li>{$Think.lang.address_space}： <span>{notempty name="store.live_store_address"}{$store.live_store_address}{else /}{$store.store_address}{/notempty}</span> </li>
+                <li>
+                  <div id="store_container" class="w270 h200"></div>
+                </li>
+              </ul>
+          </div>
+          </a>
+        </dd>
+      </dl>
+    </div>
+  </div>
+<script type="text/javascript">
+var cityName = '';
+{present name="store.live_store_address"}
+var address = '{:str_replace("'",'"',$store.live_store_address)}';
+var store_name = '{:str_replace("'",'"',$store.live_store_name)}';
+{/present}
+var map = "";
+var localCity = "";
+var opts = {width : 100,height: 50,title : "{$Think.lang.shop_name}"+store_name}
+function initialize() {
+    map = new BMap.Map("store_container");
+    localCity = new BMap.LocalCity();
+
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    localCity.get(function(cityResult){
+        if (cityResult) {
+            var level = cityResult.level;
+            if (level < 13) level = 13;
+            map.centerAndZoom(cityResult.center, level);
+            cityResultName = cityResult.name;
+            if (cityResultName.indexOf(cityName) >= 0) cityName = cityResult.name;
+            getPoint();
+        }
+    });
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "{$Think.HTTP_TYPE}api.map.baidu.com/api?v=1.2&callback=initialize";
+    document.body.appendChild(script);
+}
+function getPoint(){
+    var myGeo = new BMap.Geocoder();
+    myGeo.getPoint(address, function(point){
+        if (point) {
+            setPoint(point);
+        }
+    }, cityName);
+}
+function setPoint(point){
+    if (point) {
+        map.centerAndZoom(point, 16);
+        var marker = new BMap.Marker(point);
+        var infoWindow = new BMap.InfoWindow("{$Think.lang.shop_address}"+address, opts);
+        marker.addEventListener("click", function(){
+            this.openInfoWindow(infoWindow);
+        });
+        map.addOverlay(marker);
+    }
+}
+
+//加载百度地图。
+$(function(){
+    $('#store_more').one('mouseover',function(){
+        loadScript();
+    });
+});
+</script>

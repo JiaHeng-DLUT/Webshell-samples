@@ -1,0 +1,96 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">帖子显示</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">动态排序</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['READLISTORDER']}" name="readlistorder">
+				<option value="activetime">回复时间</option>
+				<option value="posttime">发布时间</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">动态置顶的文章</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="activetopreadids" placeholder="请填写文章id" value="{$_G['SET']['ACTIVETOPREADIDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">动态显示的标签</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="defaultlabel" placeholder="添加新标签" value="{$_G['SET']['DEFAULTLABEL']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">动态显示的版块</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="readlistshowbks" placeholder="请填写版块id" value="{$_G['SET']['READLISTSHOWBKS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">动态隐藏的版块</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="readlisthiddenbks" placeholder="请填写版块id" value="{$_G['SET']['READLISTHIDDENBKS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">版块页显示的版块ID</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="forumshowids" placeholder="请填写版块id" value="{$_G['SET']['FORUMSHOWIDS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">每页显示的文章数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="readlistnum" placeholder="10" value="{$_G['SET']['READLISTNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">每页显示的回复数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="replylistnum" placeholder="10" value="{$_G['SET']['REPLYLISTNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">回复正序或倒序</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['REPLYORDER']}" name="replyorder">
+				<option value="0">正序</option>
+				<option value="1">倒序</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">置顶文章显示数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="readtopnum" placeholder="10" value="{$_G['SET']['READTOPNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户消息最大显示数量</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="showmessagecount" placeholder="默认值50" value="{$_G['SET']['SHOWMESSAGECOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

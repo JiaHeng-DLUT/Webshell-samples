@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+  <meta name="format-detection" content="telephone=no" />
+  <title>下载APP</title>
+  <link rel="stylesheet" href="../../css/download.css">
+  <link rel="stylesheet" href="../../css/layer.css">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .down_app .iosbg.btn.down_android {
+    background: url(../../img/down_lan_btn.png) no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .app_logo {
+    position: absolute;
+    width: 100%;
+  }
+
+  #yxd-android,
+  #yxd-ios {
+    bottom: 0.9rem;
+    position: absolute;
+    width: 100%;
+  }
+
+  .wrapperB {
+    background: url(../../img/down_lan_bg.png) no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .down_lan_text {
+    width: 100%;
+  }
+
+  #downApp img {
+    /* display: inline-block; */
+    /* text-align: center; */
+    pointer-events: none;
+    /* width: 1.44rem;
+    margin-top: .2rem */
+  }
+
+</style>
+
+<body class="downApp">
+  <div class="container">
+    <!--main_wrapper-->
+    <section class="wrapper posb91 post88 wrapperB">
+      <div class="scroller">
+        <div class="down_app" id="downApp">
+          <div class="app_logo"><img src="../../img/down_lan_logo.png" /></div>
+          <img class="down_lan_text" src="../../img/down_lan_text.png" alt="">
+          <div class="downLoadBox" id="yxd-android">
+            <a href="javascript:;" onclick="androidWownload()" class="btn down_android iosbg">
+
+            </a>
+          </div>
+          <div class="downLoadBox" id="yxd-ios">
+            <a href="https://down.daidaihu360.com" class="btn down_android iosbg">
+
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--main_wrapper end-->
+    <!--downapp_tip-->
+    <div class="downapp_tip"></div>
+    <!--downapp_tip end-->
+  </div>
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/layer.mobile.js"></script>
+  <script src="../../js/jquery.base64.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+    var time = Date.parse(new Date()) / 1000;
+    var deviceid_ = localStorage.deviceid_;
+    if (!deviceid_ || deviceid_ == 'null' || deviceid_ == null || deviceid_ == undefined || deviceid_ == 'undefined') {
+      uuid()
+    }
+
+    var Base_url = 'https://api.daidaihu365.com/'
+    var img_url = 'http://image.daidaihu365.com/'
+    var wap_url = 'http://wap.daidaihu365.com/'
+    var header = {
+        'Device': localStorage.deviceid_, // 平台
+        'Version': '1.0.1', // 渠道下App版本
+        'System': '1.0.1', // 操作系统版本
+        'source': 'wap', // 平台
+        'Authentication': sessionStorage.token,
+         'PageId': 0,
+        'Channel': localStorage.Channel
+      },
+      com_Data = '';
+    getToken()
+
+    function getToken() {
+      $.ajax({
+        url: Base_url + 'api/v1/token',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        data: {},
+        success: function (res) {
+          if (res.code === 200) {
+            sessionStorage.token = res.data.token
+            header.Authentication = sessionStorage.token
+              if(header.Channel){
+                  getDownUrl()
+              }else {
+                  getPage()
+              }
+
+          } else if (res.code === 4002) {
+            getToken()
+          }
+        },
+        error: function () {}
+      })
+    }
+    // 获取页面信息
+    function getPage() {
+      $.ajax({
+        url: Base_url + 'api/v1/page/' + getUrlParam1(),
+        type: 'Get',
+        dataType: "json",
+        data: {},
+        headers: header,
+        success: function (res) {
+          if (res.code === 200 && res.data) {
+            header.Channel = localStorage.Channel = res.data.page.channel_code;
+            getDownUrl()
+          } else {}
+        }
+      })
+    }
+    // 获取安卓下载链接
+    function getDownUrl() {
+      $.ajax({
+        url: Base_url + 'api/v1/page/download',
+        type: 'Get',
+        dataType: "json",
+        data: {},
+        headers: header,
+        success: function (res) {
+          if (res.code === 200 && res.data) {
+            com_Data = res.data
+          } else if (res.code === 2004) {
+            com_Data = res.data
+          }
+        }
+      })
+    }
+
+    function getUrlParam1() {
+        var url=window.location.href;
+        var urlArr = url.split('?');
+        var k = urlArr[0], appU = k.split('/');
+        var L = appU[appU.length - 1];
+        var nameArr = L.split('.');
+        var t = $.base64.atob(nameArr[0]).split('=');
+        console.log(t[1]);
+        localStorage.Channel_code = appU[appU.length - 2];
+        header.Channel = localStorage.Channel_code;
+        header.PageId = decodeURI(t[1]);
+        return null != t ? decodeURI(t[1]) : null
+
+    }
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //判断访问终端
+    var browser = {
+      versions: function () {
+        var u = navigator.userAgent,
+          app = navigator.appVersion;
+        return {
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+          weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+          qq: u.match(/\sQQ/i) == " qq" //是否QQ
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+    // ru
+    if (browser.versions.android) {
+      $('#yxd-android').css('display', 'block')
+      $('#yxd-ios').css('display', 'none')
+    } else if (browser.versions.ios) {
+      $('#yxd-android').css('display', 'none')
+      $('#yxd-ios').css('display', 'block');
+    } else {
+      alert('请在移动端手机下载')
+    }
+
+    function androidWownload() {
+      if (com_Data === '') {
+        layer.open({
+          content: '请稍后',
+          skin: 'msg',
+          time: 2
+        })
+        return
+      } else if (com_Data && com_Data.download_url) {
+        if (browser.versions.weixin) {
+          $(".downapp_tip").show();
+        } else {
+          window.location.href = com_Data.download_url;
+        }
+
+      } else if (com_Data === null) {
+        layer.open({
+          content: '暂无可下载的安装包',
+          skin: 'msg',
+          time: 2
+        })
+      }
+    }
+
+    function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4";
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      localStorage.deviceid_ = uuid
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<form name="form_save" method="post" action="">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">去除前台版权 - 高级用户专属</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">去除方法</label>
+		<div class="pk-w-sm-9 pk-padding-top-5 pk-text-sm">
+			<p>标题版权：</p>
+			<p>所在文件：template/default/main.hst(或.html)</p>
+			<p>页脚版权（仅授权用户可以去除）：</p>
+			<p>您购买HS的授权后系统会发您站内信消息，里面包含了高级QQ群号码，页脚去除方法参见群置顶公告。</p>
+			<p style="color:orangered">不要用记事本或写字板编辑，建议使用Notepad++进行编辑去除。</p>
+			<p><br></p>
+			<p>希望免费用户能遵守<a target="_blank" class="pk-hover-underline pk-text-success" href="//www.hadsky.com/read-281-1.html">用户协议</a>，保留页脚版权，尊重你我。</p>
+		</div>
+	</div>
+</form>

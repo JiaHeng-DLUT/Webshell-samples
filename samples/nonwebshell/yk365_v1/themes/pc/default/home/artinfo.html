@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><{$site_title}></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<meta name="Copyright" content="Powered By 35dir.com" />
+
+
+
+<{include file="base.html"}>
+
+</head>
+
+<body>
+<{include file="topbar.html"}>
+<{include file="header.html"}>
+<div class="wrapper">
+
+    <div class="mainbox" class="clearfix">
+    	<div class="mainbox-left">
+        	<div class="artinfo">
+            	<h1 class="atitle"><{$art.art_title}></h1>
+				<div class="aattr"><a href="<{$art.copy_url}>" target="_blank" class="copyfrom"><{$art.copy_from}></a><{$art.art_ctime}> <span class="view"><i class="fa fa-eye" aria-hidden="true"></i> <{$art.art_views}></span></div>
+				<div class="content"><{$art.art_content}></div>
+          
+
+
+               
+
+                <ul class="prevnext">
+                	<li>上一篇： <{if !empty($prev)}><a href="<{$prev.art_link}>"><{$prev.art_title}></a><{else}>暂无<{/if}></li>
+                    <li>下一篇： <{if !empty($next)}><a href="<{$next.art_link}>"><{$next.art_title}></a><{else}>暂无<{/if}></li>
+                </ul>
+            </div>
+            <div class="blank10"></div>
+
+                        <{if $cfg.is_enabled_comment == 1}> 
+                        <!-- 畅言评论 开始 -->
+                  <div class="comment-form">
+                                 <!--PC版-->
+                            <div id="SOHUCS" sid="<{$art.art_id}>"></div>
+                            <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+                            <script type="text/javascript">
+                            window.changyan.api.config({
+                            appid: "<{$cfg.changyan_appid}>",
+                            conf: "<{$cfg.changyan_conf}>"
+                            });
+                            </script>
+                 </div>
+                   <!-- 畅言评论结束   -->
+                   <{/if}>
+        </div>
+    <div class="mainbox-right">
+            <div class="blank10"></div>
+            <div class="bestart">
+            	<h3>推荐资讯</h3>
+                <ul class="artlist_b">
+                	<{foreach from=get_articles(0, 10)  key=k item=art}>
+                	<li>
+					<span><{$k+1}></span><a href="<{$art.art_link}>" class="best-art-title"><{$art.art_title}></a></li>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <div class="blank10"></div>
+                      <!-- 广告开始 250x200-->
+           <div class="ad250x200">
+           <{get_adcode(10)}>
+           </div>
+          <!-- 广告结束 250x200-->
+          <div class="blank10"></div>
+            <div class="art-hot" class="mag">
+            	<h3>热门资讯</h3>
+                <ul class="art-hot-b">
+                   	<{foreach from=get_articles(0, 5,false,'views') key=k item=hot}>
+				
+                   	<li><span><{$k+1}></span><a href="<{$hot.art_link}>" title="<{$hot.art_title}>"><{$hot.art_title}></a></li>
+                   	<{/foreach}>
+               	</ul>
+            </div>
+           <div class="blank10"></div>
+                      <!-- 广告开始 250x200-->
+           <div class="ad250x200">
+           <{get_adcode(11)}>
+           </div>
+          <!-- 广告结束 250x200-->
+          <div class="blank10"></div>
+        </div>
+    </div>
+
+</div>
+    <{include file="footer.html"}>
+</body>
+</html>

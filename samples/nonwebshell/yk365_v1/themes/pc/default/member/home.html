@@ -1,0 +1,11 @@
+<{include file="header.html"}>
+
+<div id="homebox">
+	<h2><{$userinfo.nick_name}> 您好！欢迎登录<{$site_name}> 会员中心！</h2>
+    <ol>
+    	<li>1. 您现在的会员等级是 <strong><{$userinfo.user_type}></strong>，注册于 <{$userinfo.join_time}>，共登陆过 <strong><{$userinfo.login_count}></strong> 次</li>
+        <li>2. 目前您共提交 <strong><{$total}></strong> 个站点，<a href="<{url('website',['act'=>'add'])}>">继续提交>></a></li>
+        <li>3. 最后一次登录时间：<{$userinfo.login_time}>，登录IP：<{$userinfo.login_ip}></li>
+    </ol>
+</div>
+<{include file="footer.html"}>

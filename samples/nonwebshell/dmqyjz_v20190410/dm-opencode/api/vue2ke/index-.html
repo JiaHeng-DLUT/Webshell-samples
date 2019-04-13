@@ -1,0 +1,106 @@
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>专题 - vue2入门与提高视频教程 </title>
+ 
+<script src="vue.js" type="text/javascript"></script>
+ 
+
+</head>
+<body  >
+
+
+<div id="app">
+
+    <div > hello vue</div>
+    <div > {{ message | touppercase }}</div>
+     <div > {{ message2 }}</div>
+
+<input type="text" v-model="inputvalue" />
+<br /> 
+
+ 
+
+{{ inputvalue }}
+<br /><br />
+
+
+
+
+<div>test if and show:<br />
+
+   <div v-if="ifvalue">vif .....</div>
+   <div v-else-if="ifelseV">if else .....</div>
+   <div v-else>else.....</div>
+
+
+    <div v-show="showV">show .....</div>
+
+</div>
+
+
+
+<ul>
+<li v-colorchange2 v-for="list in lists">{{ list.title }}</li>
+ 
+</ul>
+
+
+
+
+
+
+</div>
+
+
+<script type="text/javascript">
+
+Vue.directive('colorchange', {
+   
+    bind: function (el, binding, vnode) {
+     el.style.color = '#'+Math.random().toString().slice(2,8);
+  }
+})
+
+  var vm = new Vue({
+       el:'#app',
+       data:{
+       		message:'hello vue.............',
+       		message2:'hello vue2222.............',
+       		inputvalue:'asdasasd',
+       		ifvalue:false,
+       		ifelseV:false,
+       		showV:false,
+       		lists:[
+		      { title: 'apple' },
+		      { title: 'xiaomi' },
+		      { title: 'huawei' }
+		    ],
+
+       },
+
+		directives:{
+				colorchange2: { 
+			     		 bind: function (el, binding, vnode) {
+			               el.style.color = '#'+Math.random().toString().slice(2,8);
+			            } 
+				} 
+		},
+		filters: {
+		  touppercase: function (value) {		    
+		    return value.toUpperCase()
+		  }
+		}
+
+
+
+
+})
+
+
+</script>
+</body>
+</html>
+ 
+ 
+
+

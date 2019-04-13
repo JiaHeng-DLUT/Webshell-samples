@@ -1,0 +1,58 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="javascript:;" class="sel">{$menutitle}<i></i></a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="tixing corg">自动升级：随消费额自动升级；手动升级：管理员手动为用户设置等级，不随消费额升级</div>
+		<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang mat20 mab20">
+		<tr>
+			<td align="right" width="150">会员等级：</td>
+			<td><input type="text" name="info[userlevel_name]" value="{$info['userlevel_name']}" class="inputall input200" /></td>
+		</tr>
+		<tr>
+			<td align="right">升级方式：</td>
+			<td>
+				<!--{foreach($ini['userlevel_up'] as $k=>$v):}-->
+				<label class="mar30"><input type="radio" name="info[userlevel_up]" value="{$k}" <!--{if($k==$info['userlevel_up']):}-->checked="checked"<!--{endif;}--> <!--{if($act=='edit'):}-->disabled="disabled"<!--{endif;}--> /> {$v}</label>
+				<!--{endforeach;}-->
+			</td>
+		</tr>
+		<tr id="auto_html">
+			<td align="right">消费额满：</td>
+			<td><input type="text" name="info[userlevel_value]" value="{$info['userlevel_value']}" class="inputall input100" <!--{if($act=='edit' && !$info['userlevel_up']):}-->disabled="disabled"<!--{endif;}--> /> 元</td>
+		</tr>
+		<tr>
+			<td align="right">享受折扣：</td>
+			<td><input type="text" name="info[userlevel_zhe]" value="{$info['userlevel_zhe']*100}" class="inputall input100" /> % <span class="cbbb">（打9折，请填90%）</span></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<input type="hidden" name="pe_token" value="{$pe_token}" />
+				<input type="submit" name="pesubmit" value="提 交" class="tjbtn" />
+			</td>
+		</tr>
+		</table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	js_uptype();
+	$(":input[name='info[userlevel_up]']").click(function(){
+		js_uptype();
+	})
+})
+function js_uptype() {
+	if ($(":input[name='info[userlevel_up]']:checked").val() == 'auto') {
+		$("#auto_html").show().find(":input").removeAttr("disabled");
+	}
+	else {
+		$("#auto_html").hide().find(":input").attr("disabled", "disabled");	
+	}
+}
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

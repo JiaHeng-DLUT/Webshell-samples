@@ -1,0 +1,35 @@
+﻿.per_login section{padding:35px 20px; font-size:14px;}
+
+
+
+.per_login .username,
+
+.per_login .pwd{padding:0 5px;}
+
+.top{-webkit-appearance:none; width:100%; height:18px; line-height:18px; padding:11px 5px; display:block; border-radius:5px; border:1px solid #C9C9C9;border-bottom:0px solid #C9C9C9; border-bottom-left-radius:0; border-bottom-right-radius:0; margin-left:-5px;}
+.middle{ -webkit-appearance:none; width:100%; height:18px; line-height:18px; padding:11px 5px; display:block; border:1px solid #C9C9C9;border-bottom:0px solid #C9C9C9; margin-left:-5px;}
+.middle2{ -webkit-appearance:none; width:100%; height:18px; line-height:18px; padding:11px 5px; display:block;border-radius:5px;  border:1px solid #C9C9C9; margin-left:-5px;}
+.foot{-webkit-appearance:none; width:100%; height:18px; line-height:18px; padding:11px 5px; display:block;  border:1px solid #C9C9C9; border-bottom-left-radius:5px; border-bottom-right-radius:5px; margin-left:-5px;}
+
+
+.per_login .login_free{height:50px; line-height:50px;}
+
+.per_login .login_free div{height:18px; line-height:18px; display:inline-block; position:relative; padding-left:3px;}
+
+.per_login .login_free input[type="checkbox"]{position:absolute; top:0; left:0; opacity:0; width:18px; height:18px;}
+
+.per_login .login_free label{height:18px; line-height:18px; padding-left:22px; background:url(../../Touch_img/icon1.png) no-repeat 0 -74px; background-size:150px 150px; display:block;}
+
+.per_login .login_free input:checked + label{background-position:0 -99px;}
+
+
+
+.per_login button{border-radius:2px; width:100%; background:#289ED7; border:0; height:38px; line-height:38px; font-size:16px; color:#FFF;}
+
+
+
+.per_login .reg_findPwd{padding-top:20px; text-align:right;}
+
+.per_login .reg_findPwd a:visited{color:#1155CD;}
+
+.per_login .reg_findPwd a:last-child{margin-left:20px;}

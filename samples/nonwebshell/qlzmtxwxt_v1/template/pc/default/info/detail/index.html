@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$info.title} - {$settings.site.sitename}</title>
+    <meta name="keywords" content="{if !empty($info.title)}{:get_keywords($info.title, $info.content)}{/if}" />
+    <meta name="description" content="{if !empty($info.content)}{:get_filter_str($info.content,255)}{/if}" />
+  {include file="public/css"}
+  <style>
+ .page-detail{
+ margin-top:20px;margin-bottom:20px;min-height:380px;border:1px solid #eee;padding:20px;	
+ }
+  .page-detail h1{text-align:center;}
+  </style>
+</head>
+<body>
+
+{include file="../portal/public/header"}
+
+<div class="layui-container page-detail" >
+<div class="layui-row">
+<h1 >{$info.title}</h1>
+</div>
+	<div class="layui-row">
+         {:htmlspecialchars_decode($info.content)}
+	</div>
+
+</div>
+
+{include file="../portal/public/footer"}
+
+</body>
+</html>

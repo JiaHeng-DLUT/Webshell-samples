@@ -1,0 +1,274 @@
+QL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.028002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` WHERE  `group_id` = 3 LIMIT 1 [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:36:06+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.111007s][吞吐率：9.01req/s] [内存消耗：2,035.55kb] [文件加载：71]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '48',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '3',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.022001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.026001s ]
+[ sql ] [ SQL ] INSERT INTO `ql_member_group` (`group_name` , `group_icon` , `sort`) VALUES ('vip2' , '' , 3) [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:36:16+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.145008s][吞吐率：6.90req/s] [内存消耗：2,035.39kb] [文件加载：71]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://127.0.0.1',
+  'cache-control' => 'max-age=0',
+  'content-length' => '49',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+  'group_name' => 'vip2',
+  'images' => 
+  array (
+    0 => '',
+  ),
+  'group_icon' => '',
+  'sort' => '32',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.020001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.033002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.028001s ]
+[ sql ] [ SQL ] INSERT INTO `ql_member_group` (`group_name` , `group_icon` , `sort`) VALUES ('vip2' , '' , kphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\index.html [ array (
+  0 => 'settings',
+  1 => 'select',
+  2 => 'page',
+  3 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member_group` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` LIMIT 0,10 [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:33:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.110006s][吞吐率：9.09req/s] [内存消耗：2,087.34kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\edit.html [ array (
+  0 => 'settings',
+  1 => 'memberGroup',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.023001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` WHERE  `group_id` = 3 LIMIT 1 [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-15T18:33:56+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/admin/member_group/edit/id/3.html
+[ info ] 127.0.0.1/index.php/admin/member_group/edit/id/3.html [运行时间：0.122007s][吞吐率：8.20req/s] [内存消耗：2,082.17kb] [文件加载：74]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.3842320119654690000.1513319287283.0059; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://127.0.0.1/index.php/admin/member_group/edit/id/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, lifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.012001s ]
+
+[ 2017-12-08T16:30:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.001000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.011001s ]
+
+[ 2017-12-08T16:31:47+08:00 ] 127.0.0.1 /admin/index/check.html
+INFO: [ route_check ] --START--
+INFO: CheckRoute Behavior ::run [ RunTime:0.000000s ]
+INFO: [ route_check ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Lib\Core\Dispatcher.class.php 第 132 行.
+NOTIC: [8192] preg_replace(): The /e modifier is deprecated, use preg_replace_callback instead D:\WWW\baocms\Core\Common\common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Extend\Driver\Session\SessionDb.class.php 第 96 行.
+NOTIC: [2048] Declaration of SettingModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.012001s ]
+
+[ 2017-12-08T16:32:47+08:00 ] 127.0.0.1 /admin/index/check.ht[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:36:42+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/index/main.html
+[ info ] 127.0.0.1/index.php/admin/index/main.html [运行时间：0.104006s][吞吐率：9.61req/s] [内存消耗：1,806.70kb] [文件加载：66]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\index\main.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.005000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.030002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:37:15+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/mobile.html
+[ info ] 127.0.0.1/index.php/admin/settings/mobile.html [运行时间：0.185010s][吞吐率：5.41req/s] [内存消耗：1,956.76kb] [文件加载：71]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\settings\mobile.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.013000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:37:16+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/wap/index.html
+[ info ] 127.0.0.1/index.php/admin/wap/index.html [运行时间：0.101006s][吞吐率：9.90req/s] [内存消耗：1,898.39kb] [文件加载：69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\wap\index.gModel::fetchAll() should be compatible with CommonModel::fetchAll($field = '*', $where = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [2048] Declaration of SettingModel::save() should be compatible with Model::save($data = '', $options = Array) D:\WWW\baocms\Bcms\Lib\Model\SettingModel.class.php 第 5 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\WWW\baocms\Core\Lib\Driver\Db\DbMysql.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `o2o_setting` [ RunTime:0.013001s ]
+
+[ 2017-12-08T16:

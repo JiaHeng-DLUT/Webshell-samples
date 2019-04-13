@@ -1,0 +1,152 @@
+{! filemanager/util/browser !}
+
+<div class="form">
+
+<form method="POST" id="{{_form}}">
+<p>{"Name"}:<br /><input type="text" name="name" size="40" value="{{ name }}" />
+<span class="notice" id="name-notice">{"You must enter a name."}</span></p>
+<p>{"Email"}:<br /><input type="text" name="email" size="40" value="{{ email }}" />
+<span class="notice" id="email-notice">{"You must enter an email address."}</span></p>
+<p>{"Password"}:<br /><input type="password" name="password" size="20" value="{{ password }}" />
+<span class="notice" id="password-notice">{"You must enter a password."}</span></p>
+<p>{"Verify password"}:<br /><input type="password" name="verify_pass" size="20" value="{{ verify_pass }}" />
+<span class="notice" id="verify_pass-notice">{"Your password doesn't match."}</span></p>
+
+{% if User::require_acl ('user/edit_roles') %}
+	<p>{"Member role"}:
+	{% if ! in_array ($data->type, $data->types) %}
+		<input type="hidden" name="type" value="{{type}}" />
+		<b>{{type|ucfirst}}</b>
+	{% else %}
+	<br />
+	<select name="type">
+	{% foreach types %}
+		<option value="{{ loop_value }}"{% if type === $data->loop_value %} selected {% end %}>{{ loop_value|ucfirst }}</option>
+	{% end %}
+	</select>
+	{% end %}
+	</p>
+{% else %}
+	<input type="hidden" name="type" value="{{type}}" />
+{% end %}
+
+<p>
+	{"Company"}:<br />
+	<input type="text" name="company" size="40" value="{{ company }}" />
+</p>
+
+<p>
+	{"Title"}:<br />
+	<input type="text" name="title" size="40" value="{{ title }}" />
+</p>
+
+<p>
+	{"Website"}:<br />
+	<input type="text" name="website" size="40" value="{{ website }}" />
+</p>
+
+<p>
+	{"Photo"}:<br />
+	<input type="text" name="photo" id="photo" size="40" value="{{ photo }}" />
+	<input type="submit" id="photo-browse" value="{"Choose"}" />
+</p>
+
+<p>
+	{"About"}:<br />
+	<textarea cols="70" rows="4" name="about">{{ about }}</textarea>
+</p>
+
+<h4>{"Contact information"}</h4>
+
+<p>
+	{"Phone"}:<br />
+	<input type="text" name="phone" size="30" value="{{ phone }}" />
+</p>
+
+<p>
+	{"Fax"}:<br />
+	<input type="text" name="fax" size="30" value="{{ fax|quotes }}" />
+</p>
+
+<p>
+	{"Address"}:<br />
+	<input type="text" name="address" size="40" value="{{ address }}" />
+</p>
+
+<p>
+	{"Address line 2"}:<br />
+	<input type="text" name="address2" size="40" value="{{ address2 }}" />
+</p>
+
+<p>
+	{"City"}:<br />
+	<input type="text" name="city" size="40" value="{{ city }}" />
+</p>
+
+<p>
+	{"State/province"}:<br />
+	<select name="state">
+		<option value="">{"- select -"}</option>
+	{% foreach _states as _state, _name %}
+		<option value="{{ _state }}"{% if state === $data->_state %} selected {% end %}>{{ _name|ucfirst }}</option>
+	{% end %}
+	</select>
+</p>
+
+<p>
+	{"Country"}:<br />
+	<select name="country">
+		<option value="">{"- select -"}</option>
+	{% foreach _countries as _country, _name %}
+		<option value="{{ _country }}"{% if country === $data->_country %} selected {% end %}>{{ _name|ucfirst }}</option>
+	{% end %}
+	</select>
+</p>
+
+<p>
+	{"Zip/postal code"}:<br />
+	<input type="text" name="zip" size="20" value="{{ zip }}" />
+</p>
+
+{! admin/util/extended?extends=User&name=Users&values=[userdata|none]&id=[id] !}
+
+<p>
+	<input type="submit" value="{"Save Member"}" />&nbsp;
+	<a href="javascript:history.go(-1)" onclick="return $.cancel_autosave ('{"Are you sure you want to cancel and lose any changes?"}')">{"Cancel"}</a>
+</p>
+</form>
+
+</div>
+
+<script type="text/javascript" src="/js/jquery.verify_values.js"></script>
+<script type="text/javascript">
+$(function () {
+	$('#{{_form}}').verify_values ({
+		handler: 'user/edit',
+		callback: function (failed) {
+			// highlight the failed elements
+			for (var i = 0; i < failed.length; i++) {
+				$('#' + failed[i] + '-notice').show ();
+			}
+		},
+		reset: function (fields) {
+			for (var i = 0; i < fields.length; i++) {
+				$('#' + fields[i] + '-notice').hide ();
+			}
+		}
+	});
+	{% foreach failed %}
+	$('#{{ loop_value }}-notice').show ();
+	{% end %}
+	
+	$('#photo-browse').click (function (e) {
+		e.preventDefault ();
+		$.filebrowser ({
+			allowed: ['jpg', 'jpeg', 'png', 'gif'],
+			set_value: '#photo',
+			title: "{"Choose an image"}",
+			thumbs: true
+		});
+	});
+});
+</script>

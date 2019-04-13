@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{notempty name="neirong.biaoti"}{$neirong.biaoti} | {/notempty}{$title} | {$subtitle}</title>
+    <meta name="keywords" content="{$keyword}">
+    <meta name="description" content="{$description}">
+    <link rel="icon" href="{notempty name="ico"}{$ico}{else /}{$domain}public/common/images/favicon.ico{/notempty}">
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        {volist name="smItem" id="svo" offset="0" length='smItem.changdu'}
+        {volist name="svo" id="vo" offset="0"}
+        <div class="col-md-4">
+            <a href="{$vo.href}" title="{$vo.biaoti}" target="_blank">
+                <h4>{$vo.biaoti}</h4>
+            </a>
+        </div>
+        {/volist}
+        {/volist}
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        {volist name="smArticle" id="vo" offset="0" length='smArticle.changdu'}
+        <div class="col-md-4">
+            <a href="{$vo.href}" title="{$vo.biaoti}" target="_blank">
+                <h4>{$vo.biaoti}</h4>
+            </a>
+        </div>
+        {/volist}
+    </div>
+</div>
+</body>
+</html>

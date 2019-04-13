@@ -1,0 +1,361 @@
+<form name="form_user" class="pk-text-default pk-text-sm" method="post" action="index.php?c=saveuser">
+	<input type="hidden" name="id" value="{$userdata['id']}" />
+	<div class="pk-row pk-padding-top-30 pk-padding-bottom-30">
+		<div class="pk-w-md-4 pk-w-sm-12 pk-text-center">
+			<img id="uploaduserheadbox" class="pk-display-block pk-margin-left-right-auto pk-cursor-pointer" src="userhead/{$userdata['id']}.png" alt="{$userdata['nickname']}" onerror="this.src='userhead/upload.png'" onclick="uploadhead()" style="width: 150px;height: 150px;">
+			<input type="hidden" name="userhead" value="" />
+			<div class="row pk-padding-top-15">
+				<button id="postmessagebtn" type="button" class="pk-btn pk-btn-xs pk-radius-2 pk-btn-danger" onclick="postmessagediv({$userdata['id']})"><span class="fa fa-envelope"></span> 发消息</button> &nbsp;
+				<button id="addfriendbtn" type="button" class="pk-btn pk-btn-xs pk-radius-2 pk-btn-danger" onclick="addfriend({$userdata['id']})"><span class="fa fa-heart"></span> 加好友</button>
+			</div>
+		</div>
+		<div class="pk-w-md-8 pk-w-sm-12">
+			<div class="pk-row pk-margin-bottom-5">
+				<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">UID</div>
+				<div class="pk-w-md-9 pk-w-sm-8" style="height:32px;line-height:32px;">
+					{$userdata['id']}
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-5">
+				<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">用户名</div>
+				<div class="pk-w-md-9 pk-w-sm-8" style="height:32px;line-height:32px;">
+					{$userdata['username']}
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-5">
+				<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">昵称</div>
+				<div class="pk-w-md-9 pk-w-sm-8">
+					<input type="text" class="pk-textbox nostyle" name="nickname" value="{$userdata['nickname']}" disabled autocomplete="off">
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-5">
+				<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">性别</div>
+				<div class="pk-w-md-9 pk-w-sm-8">
+					<select name="sex" class="pk-textbox nostyle" data-value="{$userdata['sex']}" disabled>
+						<option value="s">保密</option>
+						<option value="b">男</option>
+						<option value="g">女</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="pk-row pk-margin-bottom-5">
+				<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">签名</div>
+				<div class="pk-w-md-9 pk-w-sm-8">
+					<textarea class="pk-textarea pk-width-all nostyle" name="sign" rows="2" disabled style="resize: none;">{htmlspecialchars($userdata['sign'])}</textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<div class="pk-float-left pk-width-all" style="border-bottom: solid 1px #458fce;">
+				<span class="pk-display-block pk-background-color-primary pk-text-white pk-float-left pk-padding-5 pk-padding-left-15 pk-padding-right-15">账号信息</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="user-zhxx" class="pk-row pk-padding-top-30 pk-padding-bottom-30">
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">用户组</div>
+			<div class="pk-w-sm-9 pk-padding-top-5">
+				{$usergroupdata['usergroupname']}
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">{$_G['SET']['JIFENNAME']}</div>
+			<div id="userlv" class="pk-w-sm-9 pk-padding-top-5">
+				{$userdata['jifen']}
+			</div>
+			<script>
+				$('#userlv').html($('#userlv').html() + '（Lv' + parseInt($('#userlv').html() / 100) + '）');
+			</script>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">{$_G['SET']['TIANDOUNAME']}</div>
+			<div id="usertiandou" class="pk-w-sm-9 pk-padding-top-5">
+				{$userdata['tiandou']}
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">阅读权限</div>
+			<div class="pk-w-sm-9 pk-padding-top-5">
+				{$userdata['readlevel']}
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">关联</div>
+			<div id="usergl" class="pk-w-sm-9 pk-padding-top-5"></div>
+			<script>
+				$usergl = '';
+				if("{$userdata['email']}" != "") {
+					$usergl += '<span class="fa fa-envelope-square pk-text-warning pk-cursor-pointer" title="邮箱"></span>&nbsp;';
+				}
+				if("{$userdata['qqopenid']}" != "") {
+					$usergl += '<a target="_blank" title="换绑QQ" href="index.php?c=app&a=puyuetian_qqlogin:index"><span class="fa fa-qq pk-text-secondary"></span></a>&nbsp;';
+				} else {
+					$usergl += '<a target="_blank" title="绑定QQ" href="index.php?c=app&a=puyuetian_qqlogin:index"><span class="fa fa-qq pk-text-default"></span></a>&nbsp;';
+				}
+				if("{$userdata['wxopenid']}" != "") {
+					$usergl += '<span class="fa fa-weixin pk-text-success pk-cursor-pointer" title="微信"></span>&nbsp;';
+				}
+				$('#usergl').html($usergl);
+			</script>
+		</div>
+	</div>
+
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<div class="pk-float-left pk-width-all" style="border-bottom: solid 1px #458fce;">
+				<span class="pk-display-block pk-background-color-primary pk-text-white pk-float-left pk-padding-5 pk-padding-left-15 pk-padding-right-15">个人信息</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-top-30 pk-padding-bottom-30">
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">生日</div>
+			<div class="pk-w-sm-6 pk-padding-right-0">
+				<input type="text" class="pk-textbox nostyle pk-border-right-none" name="birthday" value="{$userdata['birthday']}" placeholder="数字，8位" disabled readonly autocomplete="off">
+			</div>
+			<div class="pk-w-sm-2 pk-padding-0">
+				<button id="chosebirthdaybtn" type="button" class="pk-btn pk-btn-block pk-btn-default pk-hide">选择日期</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<div class="pk-float-left pk-width-all" style="border-bottom: solid 1px #458fce;">
+				<span class="pk-display-block pk-background-color-primary pk-text-white pk-float-left pk-padding-5 pk-padding-left-15 pk-padding-right-15">联系方式</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-top-30 pk-padding-bottom-30">
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">邮箱</div>
+			<div class="pk-w-sm-9" style="height:32px;line-height:32px;">
+				{$userdata['email']}
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">QQ</div>
+			<div class="pk-w-sm-9">
+				<input type="text" class="pk-textbox nostyle" name="qq" value="{$userdata['qq']}" placeholder="数字，5-10位" pattern="[0-9]+" disabled autocomplete="off">
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">手机</div>
+			<div class="pk-w-sm-9">
+				<input type="text" class="pk-textbox nostyle" name="phone" value="{$userdata['phone']}" placeholder="数字，11位" pattern="[0-9]+" disabled autocomplete="off">
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-bottom-5">
+			<div class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">地址</div>
+			<div class="pk-w-sm-9">
+				<input type="text" class="pk-textbox nostyle" name="adress" value="{$userdata['adress']}" disabled placeholder="xx省（直辖市）xx市（区/县）xx小区xx楼xx室" autocomplete="off">
+			</div>
+		</div>
+	</div>
+
+	<div id="myuser" class="pk-hide">
+		<div class="pk-row">
+			<div class="pk-w-sm-12">
+				<div class="pk-float-left pk-width-all" style="border-bottom: solid 1px #458fce;">
+					<span class="pk-display-block pk-background-color-primary pk-text-white pk-float-left pk-padding-5 pk-padding-left-15 pk-padding-right-15">高级设置</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-top-30">
+			<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">隐私设置</div>
+			<div class="pk-w-md-9 pk-w-sm-8">
+				<select name="data-privacysettings" data-value="{JsonData($userdata['data'],'privacysettings')}" class="pk-textbox">
+					<option value="0">完全公开</option>
+					<option value="1">仅公开基本信息</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="pk-row pk-padding-top-5">
+			<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">新密码</div>
+			<div class="pk-w-md-9 pk-w-sm-8">
+				<input type="text" class="pk-textbox nostyle" name="password" value="" placeholder="留空为不修改" disabled autocomplete="off">
+			</div>
+		</div>
+
+		<div class="pk-row pk-padding-top-5">
+			<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right">当前用户密码</div>
+			<div class="pk-w-md-9 pk-w-sm-8">
+				<input type="password" class="pk-textbox nostyle" name="userpassword" value="" placeholder="" disabled autocomplete="off" required>
+			</div>
+		</div>
+
+		<div class="pk-row pk-margin-top-30 pk-margin-bottom-30">
+			<div class="pk-w-md-3 pk-w-sm-4 pk-padding-top-5 pk-text-bold pk-text-right"></div>
+			<div class="pk-w-md-9 pk-w-sm-8">
+				<button id="usersubmitbtn" type="button" class="pk-btn pk-btn-secondary">保存</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="pk-row">
+		<div class="pk-w-sm-12">
+			<div class="pk-float-left pk-width-all" style="border-bottom: solid 1px #458fce;">
+				<span class="pk-display-block pk-background-color-primary pk-text-white pk-float-left pk-padding-5 pk-padding-left-15 pk-padding-right-15">最新动态</span>
+			</div>
+		</div>
+	</div>
+	<div id="userreadlist" class="pk-row pk-padding-top-15">
+		<div>{$_G['TEMP']['ACTIVEHTML']}</div>
+	</div>
+	<div class="pk-padding-30 pk-text-center">
+		<button id="loadmorereadlistbtn" type="button" class="pk-btn pk-btn-block pk-btn-default pk-radius-4">加载更多 »</button>
+	</div>
+	<div id="saveloadhtml" class="pk-display-none"></div>
+	<script>
+		$(function() {
+			var $loadpage = parseInt("{$page}") + 1;
+			$('#loadmorereadlistbtn').click(function() {
+				$('#saveloadhtml').load("index.php?c=user&id={$id}&page=" + $loadpage + " #userreadlist div:eq(0)", function(r, s, x) {
+					if(s == "error") {
+						pkalert('加载出错！');
+					} else {
+						var $html = $('#saveloadhtml').html();
+						if($html.length > 11) {
+							$loadpage++;
+							$('#userreadlist').append($html);
+						} else {
+							$('#loadmorereadlistbtn').prop('disabled', true);
+							$('#loadmorereadlistbtn').html('已无更多内容');
+						}
+					}
+					$('#saveloadhtml').html('');
+				});
+			});
+		});
+	</script>
+</form>
+
+<script>
+	$(function() {
+		var $inputs = $('form[name="form_user"] :disabled');
+		var $qxs = "{$_G['USER']['QUANXIAN']}";
+		$qxs = $qxs.split(',');
+		if($qxs.indexOf('superman') != -1 || "{$_G['USER']['ID']}" == "1" || "{$_G['USER']['ID']}" == "{$id}") {
+			$('#chosebirthdaybtn').removeClass('pk-hide');
+			for(var $i = 0; $i < $inputs.length; $i++) {
+				if($inputs[$i].name == 'email' || $inputs[$i].name == 'username' || $inputs[$i].name == 'id') {
+					continue;
+				}
+				$($inputs[$i]).removeClass('nostyle').prop('disabled', false);
+				$('#myuser').removeClass('pk-hide');
+			}
+		} else {
+			$('form[name="form_user"] :input:not(button)').attr({
+				'name': ''
+			}).css({
+				'padding': '0'
+			});
+		}
+
+		if("{$_G['SET']['CHANGEUSERINFOVERIFY']}" != "1") {
+			$('input[name="userpassword"]').parent('div').parent('div').remove();
+		}
+
+		$('#chosebirthdaybtn').click(function() {
+			var html = '<div id="chosebirthdaydiv" class="pk-row pk-text-center"><select class="pk-textbox pk-textbox-noshadow pk-display-inline y" style="width:120px;border-right:none">';
+			for(var i = parseInt("{date('Y')}"); i > 1900; i--) {
+				html += '<option value="' + i + '">' + i + '年</option>';
+			}
+			html += '</select><select class="pk-textbox pk-textbox-noshadow pk-display-inline m" style="width:77px;border-right:none;border-left:none">';
+			for(var i = 1; i < 13; i++) {
+				i2 = (i < 10) ? '0' + i : i;
+				html += '<option value="' + i2 + '">' + i + '月</option>';
+			}
+			html += '</select><select class="pk-textbox pk-textbox-noshadow pk-display-inline d" style="width:77px;border-left:none">';
+			for(var i = 1; i < 32; i++) {
+				i2 = (i < 10) ? '0' + i : i;
+				html += '<option value="' + i2 + '">' + i + '日</option>';
+			}
+			html += '</select></div><script>$("#chosebirthdaydiv .y").val(form_user.birthday.value.substr(0,4)||"2015");$("#chosebirthdaydiv .m").val(form_user.birthday.value.substr(4,2)||"10");$("#chosebirthdaydiv .d").val(form_user.birthday.value.substr(6,2)||"10");<\/script>';
+			pkalert(html, '选择生日', function() {
+				$(form_user.birthday).val($('#chosebirthdaydiv .y').val() + '' + $('#chosebirthdaydiv .m').val() + '' + $('#chosebirthdaydiv .d').val());
+			});
+		});
+
+		$('#usersubmitbtn').click(function() {
+			if(trim(form_user.nickname.value) == '') {
+				pktip('昵称不能为空！', 'warning');
+				form_user.nickname.focus();
+				return false;
+			}
+			if(form_user.password.value.length > 0) {
+				if(form_user.password.value.length < 5) {
+					pktip('新密码最少5位！', 'warning');
+					form_user.password.focus();
+					return false;
+				}
+			}
+			if($(form_user.userpassword).val() == '' && "{$_G['SET']['CHANGEUSERINFOVERIFY']}" == "1") {
+				pktip('请输入当前用户密码！', 'warning');
+				form_user.userpassword.focus();
+				return false;
+			}
+			$('#usersubmitbtn').prop('disabled', true).html('提交中...');
+			var strings = FormDataPackaging('form[name="form_user"]:eq(0)');
+			$.post($('form[name="form_user"]:eq(0)').attr('action') + '&return=json', strings, function(data) {
+				if(data['state'] == 'ok') {
+					pktip('保存成功', 'success');
+					$('form[name="form_user"]:eq(0) input[name="userpassword"]').val('');
+				} else {
+					pkalert(data['msg'] || '出错');
+				}
+				$('#usersubmitbtn').prop('disabled', false).html('保存');
+			}, 'json').error(function() {
+				$('form[name="form_user"]:eq(0)').submit();
+				$('#usersubmitbtn').prop('disabled', false).html('保存');
+			});
+		});
+
+		$selects = $('select');
+		for($i = 0; $i < $selects.length; $i++) {
+			$('select[name="' + $($selects[$i]).attr('name') + '"] option[value="' + $($selects[$i]).data('value') + '"]').prop('selected', true);
+		}
+
+		//加好友优化
+		var thisuid = "{$userdata['id']}";
+		var myfriends = "{$_G['USER']['FRIENDS']}"
+		if($_USER['ID'] == thisuid || myfriends.indexOf('_' + thisuid + '_') >= 0) {
+			$('#addfriendbtn').prop('disabled', true).html('<span class="fa fa-check"></span> 加好友');
+		}
+
+		//是否为创始人
+		if($_USER['ID'] == 1) {
+			$('#usersubmitbtn').parent().append('<a target="_blank" class="pk-btn pk-btn-danger" href="index.php?c=app&a=superadmin:index&PIndex=3&CIndex=0&OData={urlencode(json_encode(array("url"=>"index.php?c=app&a=superadmin&s=user&t=seniormanagement&id={$userdata[id]}")))}">高级</a>');
+		}
+	});
+
+	function uploadhead() {
+		var $uid = parseInt("{$_G['USER']['ID']}");
+		if($uid && (parseInt($_GET('id')) == $uid || !$_GET('id') || $uid == 1)) {
+			$('#pk-dd').html('<input type="file" id="pk-file-object" value="" onchange="$(\'#uploaduserheadbox\')[0].src=getLocalFileUrl(this);$(\'#uploaduserheadbox\')[0].onload=function(){form_user.userhead.value=ImageToBase64($(\'#uploaduserheadbox\')[0],\'150\',\'150\');pkalert(\'保存后，设置的头像才会生效哦~\')}" accept="image/*">');
+			var file = $('#pk-file-object')[0];
+			file.click();
+		} else {
+			LookImage($('#uploaduserheadbox')[0]);
+		}
+	}
+</script>

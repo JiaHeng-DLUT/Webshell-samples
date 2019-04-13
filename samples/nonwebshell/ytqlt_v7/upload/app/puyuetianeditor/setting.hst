@@ -1,0 +1,320 @@
+<style>
+	._gnan_list p {
+		float: left;
+		width: 38px;
+		height: 56px;
+		margin-right: 5px;
+		border: solid 1px gray;
+		margin-top: 5px;
+	}
+	
+	._gnan_list p.pk-active {
+		border: solid 1px green;
+	}
+	
+	._gnan_list p a:nth-of-type(1) {
+		float: left;
+		width: 36px;
+		height: 36px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 24px auto;
+	}
+	
+	._gnan_list p a:nth-of-type(2),
+	._gnan_list p a:nth-of-type(3) {
+		float: left;
+		width: 18px;
+		height: 18px;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		color: #333;
+	}
+	
+	._gnan_list p a._wqy {
+		float: left;
+		width: 100%;
+		height: 18px;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		color: #333;
+	}
+	
+	._gnan_list p.pk-active a:nth-of-type(2):hover,
+	._gnan_list p.pk-active a:nth-of-type(3):hover {
+		background-color: green;
+		color: white;
+		cursor: pointer;
+	}
+</style>
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">PYT编辑器 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">功能开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_PUYUETIANEDITOR_LOAD']}" name="app_puyuetianeditor_load">
+				<option value="0">关闭</option>
+				<option value="embed">启用</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">快速发帖</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox" data-value="{$_G['SET']['APP_PUYUETIANEDITOR_QUICKPOST']}" name="app_puyuetianeditor_quickpost">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">编辑器功能区</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">PC发帖功能项</label>
+		<div class="pk-w-sm-8">
+			<input class="_gnan" type="hidden" name="app_puyuetianeditor_pceditconfig" value="{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_PCEDITCONFIG'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">快速发帖功能项</label>
+		<div class="pk-w-sm-8">
+			<input class="_gnan" type="hidden" name="app_puyuetianeditor_quickeditconfig" value="{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_QUICKEDITCONFIG'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">PC回复功能项</label>
+		<div class="pk-w-sm-8">
+			<input class="_gnan" type="hidden" name="app_puyuetianeditor_pcreadconfig" value="{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_PCREADCONFIG'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">手机发帖功能项</label>
+		<div class="pk-w-sm-8">
+			<input class="_gnan" type="hidden" name="app_puyuetianeditor_phoneeditconfig" value="{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_PHONEEDITCONFIG'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">手机回复功能项</label>
+		<div class="pk-w-sm-8">
+			<input class="_gnan" type="hidden" name="app_puyuetianeditor_phonereadconfig" value="{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_PHONEREADCONFIG'],ENT_QUOTES)}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">编辑器高度</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">PC版高度</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_puyuetianeditor_pcheight" placeholder="留空或0为自适应，举例：180px" value="{$_G['SET']['APP_PUYUETIANEDITOR_PCHEIGHT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">手机版高度</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_puyuetianeditor_phoneheight" placeholder="留空或0为自适应，举例：180px" value="{$_G['SET']['APP_PUYUETIANEDITOR_PHONEHEIGHT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">图片压缩设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 _labeltext">最大宽高(px)</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="text" name="app_puyuetianeditor_compress_wh" placeholder="留空或0为不压缩处理，格式为：正整数,正整数" value="{$_G['SET']['APP_PUYUETIANEDITOR_COMPRESS_WH']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-sm pk-text-danger">
+			提示：留空或0为不压缩处理，宽高单位为px，中间用英文逗号分开，例如：100,200，若用户上传的图片宽度大于了100px则会进行压缩处理，将图片的宽度压缩为100px，高度自适应；若用户上传的图片高度大于了200px则会进行压缩处理，将图片的高度压缩为200px，宽度自适应。
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">图片水印设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">水印文字</label>
+		<div class="pk-w-sm-8">
+			<textarea name="app_puyuetianeditor_watermark_text" class="pk-textarea pk-width-all" rows="10">{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_TEXT'])}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">文字颜色RGB</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox pk-radius-top-left-4 pk-radius-bottom-left-4 pk-float-left" type="number" name="app_puyuetianeditor_watermark_textcolor_r" placeholder="R" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_TEXTCOLOR_R']}" style="width:66px;" min="0" max="255">
+			<input class="pk-textbox pk-border-left-none pk-border-right-none pk-float-left" type="number" name="app_puyuetianeditor_watermark_textcolor_g" placeholder="G" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_TEXTCOLOR_G']}" style="width:66px;" min="0" max="255">
+			<input class="pk-textbox pk-radius-top-right-4 pk-radius-bottom-right-4 pk-float-left" type="number" name="app_puyuetianeditor_watermark_textcolor_b" placeholder="B" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_TEXTCOLOR_B']}" style="width:66px;" min="0" max="255">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-9 pk-text-sm">
+			系统默认不支持中文水印、文字坐标及文字大小设置，若需要该功能请
+			<a class="pk-text-primary pk-hover-underline" target="_blank" href="http://www.hadsky.com/read-1093-1.html">下载中文字体扩展包</a>。
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">文字角度及坐标</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox pk-radius-top-left-4 pk-radius-bottom-left-4 pk-float-left" type="number" name="app_puyuetianeditor_watermark_pp" placeholder="角度" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_PP']}" style="width:66px;" min="0">
+			<input class="pk-textbox pk-border-left-none pk-border-right-none pk-float-left" type="number" name="app_puyuetianeditor_watermark_px" placeholder="X坐标" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_PX']}" style="width:66px;" min="0">
+			<input class="pk-textbox pk-radius-top-right-4 pk-radius-bottom-right-4 pk-float-left" type="number" name="app_puyuetianeditor_watermark_py" placeholder="Y坐标" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_PY']}" style="width:66px;" min="0">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">文字大小</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox" type="number" name="app_puyuetianeditor_watermark_fontsize" placeholder="18" value="{$_G['SET']['APP_PUYUETIANEDITOR_WATERMARK_FONTSIZE']}" min="1" max="999">
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce">
+		<label class="pk-w-sm-3 _labeltext pk-text-primary">广告设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">附件页广告1</label>
+		<div class="pk-w-sm-8">
+			<textarea name="app_puyuetianeditor_showfile_ad1" class="pk-textarea _codemirrorbox" rows="10">{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_SHOWFILE_AD1'])}</textarea>
+		</div>
+	</div>
+	
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext">附件页广告2</label>
+		<div class="pk-w-sm-8">
+			<textarea name="app_puyuetianeditor_showfile_ad2" class="pk-textarea _codemirrorbox" rows="10">{htmlspecialchars($_G['SET']['APP_PUYUETIANEDITOR_SHOWFILE_AD2'])}</textarea>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 _labeltext"></label>
+		<div class="pk-w-sm-8">
+			<button id="SubmitBtn" type="button">保存</button>
+			<a target="_blank" href="index.php?c=edit&type=read" class="pk-btn pk-btn-danger" title="仅在设置保存后预览有效">预览</a>
+		</div>
+	</div>
+</form>
+<script>
+	var gnlb = 'Html:查看源码,Bold:粗体,Italic:斜体,Underline:下划线,Strikethrough:删除线,Removemarks:清除格式,Fontname:字体,Fontsize:字体大小,Forecolor:字体颜色,Backcolor:字体背景色,Justifyleft:左对齐,Justifycenter:居中,Justifyright:右对齐,Link:超链接,Unlink:取消超链接,Table:表格,Emotion:默认表情,Image:图片,File:附件,Video:视频,Music:音乐,Myfiles:用户上传过的文件,Code:代码,Replylook:回复后查看,Undo:撤销,Redo:重做'.split(','),
+		gnlb2 = [];
+	for(var i = 0; i < gnlb.length; i++) {
+		var tmp = gnlb[i].split(':');
+		gnlb2[tmp[0]] = tmp[1];
+	}
+
+	function _togglefuncbtn(This) {
+		var _p = $(This).parent();
+		_p.toggleClass('pk-active');
+		_initfuncbtn(_p.parent().data('name'));
+	}
+
+	function _leftfuncbtn(This) {
+		var _p = $(This).parent();
+		var _no = parseInt(_p.data('no')) - 1;
+		if(_no < 0 || !_p.hasClass('pk-active')) {
+			return false;
+		}
+		_p.data('no', _no).prev('p:eq(0)').data('no', _no + 1);
+		_initfuncbtn(_p.parent().data('name'));
+	}
+
+	function _rightfuncbtn(This) {
+		var _p = $(This).parent();
+		var _no = parseInt(_p.data('no')) + 1;
+		if(_no > gnlb.length - 1 || !_p.hasClass('pk-active')) {
+			return false;
+		}
+		_p.data('no', _no).next('p:eq(0)').data('no', _no - 1);
+		_initfuncbtn(_p.parent().data('name'));
+	}
+
+	function _initfuncbtn(name, initvalue) {
+		var _o = [],
+			_v = '',
+			_h = '';
+		var _l = $('div[data-name="' + name + '"]>p.pk-active');
+		//排序及保存
+		if(initvalue) {
+			_v = initvalue;
+		} else {
+			for(var i = 0; i < _l.length; i++) {
+				_o[$(_l[i]).data('no')] = $(_l[i]).data('value');
+			}
+			//console.log(_o);
+			for(var _key in _o) {
+				_v += ',' + _o[_key];
+			}
+			_v = _v.substr(1);
+		}
+		$('input[name="' + name + '"]').val('var PytConfig = \'' + _v + '\';');
+		//console.log($('input[name="' + name + '"]').val());
+		_v2 = _v.split(',');
+		//启用图标显示
+		for(var i = 0; i < _v2.length; i++) {
+			_h += '<p class="pk-active" data-no="' + i + '" data-value="' + _v2[i] + '" data-title="' + gnlb2[_v2[i]] + '"><a style="background-image:url(app/puyuetianeditor/template/img/toolicons/' + _v2[i].toLowerCase() + '.png)" href="javascript:" onclick="_togglefuncbtn(this)" title="' + gnlb2[_v2[i]] + '"></a><a href="javascript:" onclick="_leftfuncbtn(this)" title="向前挪一位">&lang;</a><a href="javascript:" onclick="_rightfuncbtn(this)" title="向后挪一位">&rang;</a></p>';
+		}
+		//未启用图标显示
+		_i = _v2.length;
+		for(var i = 0; i < gnlb.length; i++) {
+			var _tmp = gnlb[i].split(':');
+			var temp = true;
+			for(var j = 0; j < _v2.length; j++) {
+				if(_v2[j] == _tmp[0]) {
+					temp = false;
+					break;
+				}
+			}
+			if(temp) {
+				_h += '<p data-no="' + _i + '" data-value="' + _tmp[0] + '" data-title="' + _tmp[1] + '"><a style="background-image:url(app/puyuetianeditor/template/img/toolicons/' + _tmp[0].toLowerCase() + '.png)" href="javascript:" onclick="_togglefuncbtn(this)" title="' + _tmp[1] + '"></a><a class="_wqy" href="javascript:">未启用</a></p>';
+				_i++;
+			}
+			temp = true;
+		}
+		$('div[data-name="' + name + '"]').html(_h);
+	}
+
+	$(function() {
+		var l = $('form[name="form_save"] ._gnan');
+		var h = '';
+		var n = gnlb;
+		for(var i = 0; i < l.length; i++) {
+			h = '<div data-name="' + $(l[i]).attr('name') + '" class="_gnan_list"></div>';
+			$(l[i]).after(h);
+			var v = $(l[i]).val();
+			v = v.replace(/[ \=\'\"\;]/g, '').replace('varPytConfig', '');
+			console.log(v);
+			_initfuncbtn($(l[i]).attr('name'), v);
+		}
+	});
+</script>

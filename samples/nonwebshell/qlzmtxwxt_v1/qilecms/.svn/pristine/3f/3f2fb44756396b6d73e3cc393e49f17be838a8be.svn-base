@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加交易</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">全局设置</a>
+  <a href="">系统设置</a>
+  <a><cite>正文</cite></a>
+</span>
+<blockquote class="layui-elem-quote" style="margin-top:10px;">说明：</blockquote>
+
+<div class=""  style="padding:20px">
+{form:iframe name="m-iframe" display="0" }
+   
+<form class="layui-form" action="{:url('article/add')}" method="post" target="m-iframe">
+
+               <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 分类</label>
+                {:get_cate('guarantee_category')}
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 交易标题</label>
+                <div class="layui-input-inline" style="width:500px">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input"  value="">
+                </div>
+                 <div class="layui-form-mid layui-word-aux"><span class="orange">*</span> 必填</div>
+              </div>
+
+
+             <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 买家 </label>
+                <div class="layui-input-inline">
+                  <input type="text" name="keywords" lay-verify="keywords" autocomplete="off" placeholder="" class="layui-input" value="">
+                  </div>
+                   <div class="layui-input-inline">
+                  <button class="layui-btn layui-btn-normal">添加买家</button>
+                  </div>
+                  <div class="layui-form-mid layui-word-aux">{:about('必须是本站用户')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 卖家 </label>
+                <div class="layui-input-inline">
+                  <input type="text" name="keywords" lay-verify="keywords" autocomplete="off" placeholder="" class="layui-input" value="">
+                </div>
+                      <div class="layui-input-inline">
+                  <button class="layui-btn layui-btn-normal">添加卖家</button>
+                  </div>
+                 <div class="layui-form-mid layui-word-aux">{:about('必须是本站用户')}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 交易价格</label>
+                <div class="layui-input-inline" style="width:100px;">
+                  <input type="text" name="price" id="price" lay-verify="price" autocomplete="off" placeholder="" class="layui-input" value="" >
+                </div>
+                 <div class="layui-form-mid layui-word-aux">{$settings['site']['money_unit']}</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 手续费</label>
+                <div class="layui-input-inline" style="width:100px;">
+                  <input type="text" name="free_ratio" lay-verify="source_url" autocomplete="off" id="free_ratio" placeholder="" class="layui-input" value="" >
+                </div>
+                 <div class="layui-form-mid layui-word-aux">%</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 手续费支付方式 </label>
+                <div class="layui-input-block" >
+                <input type="radio" name="free_type" lay-filter="free_type" value="1" title="买家全付 ">
+                <input type="radio" name="free_type" lay-filter="free_type" value="2" checked title="卖家全付 ">
+                <input type="radio" name="free_type" lay-filter="free_type" value="3" title="双方各付一半" >
+                </div>
+                 <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 实际结算 </label>
+                <input type="hidden"  name="buyer_pay" id="buyer_pay" value="">
+                <input type="hidden"  name="seller_get" id="seller_get" value="">
+                <div class="layui-input-block" id="result" style="padding:8px">
+                   
+                </div>
+                 <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 担保内容</label>
+                <div class="layui-input-block" style="padding:20px">
+                 {form:ueditor name="content"}
+                </div>
+              </div>
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;">审核状态</label>
+                <div class="layui-input-block">
+                <input type="radio" name="status"  value="0" title="待审">
+                <input type="radio" name="status"  value="1" checked title="通过">
+                <input type="radio" name="status"  value="2" title="拒绝" >
+                </div>
+              </div>
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                   <button class="layui-btn layui-btn-normal"  lay-submit lay-filter="form">确 定</button>
+                   <button class="layui-btn layui-btn-primary"  onclick="javascript:history.go(-1);">返 回</button>
+                </div>
+              </div>
+
+
+</form>
+</div>
+
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+
+// 中介交易 
+  form.on("radio(free_type)",function(data){
+ 
+ var price = $("#price").val(); //价格
+ var free_ratio = $("#free_ratio").val(); //手续费比例
+if(free_ratio <= 0){
+  free_ratio = 0;
+}
+price = parseInt(price);
+free_ratio =  parseInt(free_ratio);
+ if(price > 0 ){
+    var free =  price * (free_ratio/100);
+    if(data.value ==1){
+ 
+      var buyer = '买家支付 <span class="orange">'+ (price+free)+'</span> 元';
+      var seller= '卖家获得 <span class="orange">'+ price+'</span> 元';
+      $("#buyer_pay").val(price+free);
+      $("#seller_get").val(price);
+      $("#result").html(buyer+' '+seller);
+    }else if(data.value ==2){
+      var buyer = '买家支付 <span class="orange">'+ (price)+'</span> 元';
+      var seller= '卖家获得 <span class="orange">'+ (price-free)+'</span> 元';
+      $("#buyer_pay").val(price);
+      $("#seller_get").val(price-free);
+      $("#result").html(buyer+' '+seller);
+    }else if(data.value ==3){
+      var buyer = '买家支付 <span class="orange">'+ (price-free/2)+'</span> 元';
+      var seller= '卖家获得 <span class="orange">'+ (price-free/2)+'</span>元';
+      $("#buyer_pay").val(price-free/2);
+      $("#seller_get").val(price-free/2);
+      $("#result").html(buyer+' '+seller);
+    }
+   
+ }else{
+    $("#result").html('<span class="orange">交易价格不能为空</span>');
+ }
+  });
+
+ 
+ //监听提交
+  form.on('submit(form)', function(data){
+    $.post("{:url('article/add')}",$("form").serialize(),function(json){
+          if(json.code == 0){
+            $("form")[0].reset();
+            layer.msg(json.msg);
+            parent.back();
+          }else{
+            layer.msg(json.msg);
+          }
+    });
+
+  });
+});
+
+</script>
+<script>
+
+</script>
+</body>
+
+</html>

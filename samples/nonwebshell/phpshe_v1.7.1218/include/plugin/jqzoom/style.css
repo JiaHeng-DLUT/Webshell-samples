@@ -1,0 +1,35 @@
+/*jQzoom插件*/  
+.jqzoom{  
+    float:left;  
+    position:relative;  
+    padding:0px;  
+    cursor:pointer;  
+}  
+div.zoomdiv {  
+    z-index:    999;  
+    position                : absolute;  
+    top:0px;  
+    left:0px;  
+    width                   : 200px;  
+    height                  : 200px;  
+    background: #ffffff;  
+    border:1px solid #CCCCCC;  
+    display:none;  
+    text-align: center;  
+    overflow: hidden;  
+}  
+div.jqZoomPup {  
+    z-index                 : 999;  
+    visibility              : hidden;  
+    position                : absolute;  
+    top:0px;  
+    left:0px;  
+    width                   : 50px;  
+    height                  : 50px;  
+    border: 1px solid #aaa;  
+    background: #ffffff url(zoomlens.gif) 50% 50%  no-repeat;  
+    opacity: 0.5;  
+    -moz-opacity: 0.5;  
+    -khtml-opacity: 0.5;  
+    filter: alpha(Opacity=50);  
+}  

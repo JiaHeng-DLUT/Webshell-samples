@@ -1,0 +1,55 @@
+{extend name="default/base/base_seller" /}
+
+{block name="seller_btn"}
+{if !check_platform_store()}
+  <a href="javascript:void(0)" class="dssc-btn dssc-btn-green" ds_type="dialog" dialog_title="{$Think.lang.apply_new_business_category}" dialog_id="my_goods_brand_apply" dialog_width="480" uri="{:url('Sellerinfo/bind_class_add')}">
+      {$Think.lang.apply_new_business_category}
+  </a>
+{/if}
+{/block}
+{block name="seller_main"}
+{if check_platform_store_bindingall_goodsclass()}
+<table class="dssc-default-table">
+    <tbody>
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><span>{$Think.lang.store_bound_all_categories}</span></div></td>
+        </tr>
+    </tbody>
+</table>
+{else/}
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w20"></th>
+            <th colspan="3">{$Think.lang.business_category}</th>
+            <th>{$Think.lang.commission_rate}</th>
+            <th>{$Think.lang.ds_state}</th>
+            <th>{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="bind_list"}
+        {foreach name="bind_list" item="val" }
+        <tr class="bd-line">
+            <td></td>
+            <td class="w180 tl">{$val.class_1_name}</td>
+            <td class="w180 tl">{if $val['class_2_name']}>{/if}&emsp;{$val.class_2_name}</td>
+            <td class="w180 tl">{if $val['class_3_name']}{/if}&emsp;{$val.class_3_name}</td>
+            <td class="w180">{$val.commis_rate} %</td>
+            <td class="w100">{if $val['storebindclass_state'] == '1'}{$Think.lang.approved}{else/}{$Think.lang.audit}{/if}</td>
+            <td class="dscs-table-handle">
+                {if $val.storebindclass_state == '0'}
+                <span><a href="javascript:void(0)" class="btn-red" onclick="ds_ajaxget_confirm('{:url('Sellerinfo/bind_class_del',['bid'=>$val.storebindclass_id])}','{$Think.lang.ds_ensure_del}');"><i class="fa fa-trash-o"></i><p>{$Think.lang.ds_del}</p></a></span>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+</table>
+{/if}
+{/block}

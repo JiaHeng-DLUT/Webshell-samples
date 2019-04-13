@@ -1,0 +1,7 @@
+/*----------仅限pc端样式 only pc style---------*/
+@media (min-width: 801px) {
+
+}
+/*----------仅限mobile端样式 only mobile style---------*/
+@media (max-width: 800px) {
+}

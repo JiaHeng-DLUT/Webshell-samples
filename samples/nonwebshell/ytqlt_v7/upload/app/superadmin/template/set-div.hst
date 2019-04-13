@@ -1,0 +1,45 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom:solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">导航相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">头部HTML代码</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _visualnaveditbox" rows="7" name="headerhtmlcode">{htmlspecialchars($_G['SET']['HEADERHTMLCODE'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">导航HTML代码</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _visualnaveditbox" rows="7" name="navhtmlcode" data-query=">li a">{htmlspecialchars($_G['SET']['NAVHTMLCODE'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">页脚HTML代码</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _visualnaveditbox" rows="7" name="footerhtmlcode">{htmlspecialchars($_G['SET']['FOOTERHTMLCODE'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">友情链接</label>
+		<div class="pk-w-sm-8">
+			<textarea class="pk-textarea _visualnaveditbox" rows="7" name="friendlinks">{htmlspecialchars($_G['SET']['FRIENDLINKS'])}</textarea>
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,74 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_delivery}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <input type="hidden" value="{$Request.get.d_id}" name="d_id">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.order_number}</dt>
+                <dd><input type="text" value="{$Request.param.order_sn}" name="order_sn" id="order_sn" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.delivery_ship_code}</dt>
+                <dd><input type="text" value="{$Request.param.shipping_code}" name="shipping_code" id="shipping_code" class="txt"></dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+            </div>
+        </div>
+    </form>
+    
+    <form method="post" id="form_article">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="thead">
+                <th>{$Think.lang.order_number}</th>
+                <th>{$Think.lang.delivery_ship_code}</th>
+                <th>{$Think.lang.delivery_consignee}</th>
+                <th>{$Think.lang.delivery_mob_phone}</th>
+                <th>{$Think.lang.delivery_telephone}</th>
+                <th class="align-center">{$Think.lang.ds_status}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="dorder_list"}
+            {foreach name="dorder_list" item="v"}
+            <tr class="hover">
+                <td>{$v.order_sn}</td>
+                <td>{$v.shipping_code}</td>
+                <td>{$v.reciver_name}</td>
+                <td>{$v.reciver_mobphone}</td>
+                <td>{$v.reciver_telphone}</td>
+                <td class="align-center">{$dorder_state[$v.dlyo_state]}</td>
+            </tr>
+            {/foreach}
+           {else /}
+            <tr class="no_data">
+                <td colspan="10">{$Think.lang.ds_no_record}</td>
+            </tr>
+           {/notempty}
+            </tbody>
+            <tfoot>
+            {notempty name="dorder_list"}
+            <tr class="tfoot">
+                <td colspan="16">
+                    {$show_page}
+                </td>
+            </tr>
+           {/notempty}
+            </tfoot>
+        </table>
+    </form>
+</div>

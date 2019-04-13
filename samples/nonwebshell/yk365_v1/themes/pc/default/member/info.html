@@ -1,0 +1,21 @@
+<{include file="header.html"}>
+
+	<div id="formbox">
+		<form name="myfrom" id="myfrom" method="post" action="">
+        <ul>
+        	<li><strong>登录帐号：</strong><{$myself.user_email}></li>
+        	<li><strong>原始密码：</strong><input type="password" name="old_pass" id="old_pass" class="ipt" size="30" maxlength="30" /></li>
+            <li><strong>新 密 码：</strong><input type="password" name="new_pass" id="new_pass" class="ipt" size="30" maxlength="30" /></li>
+            <li><strong>确认密码：</strong><input type="password" name="new_pass1" id="new_pass1" class="ipt" size="30" maxlength="30" /></li>
+            <li><strong>昵 称：</strong><input type="text" name="nick_name" id="nick_name" class="ipt" size="30" maxlength="20" value="<{$myself.nick_name}>" /></li>
+            <li><strong>QQ号码：</strong><input type="text" name="user_qq" id="user_qq" class="ipt" size="30" maxlength="20" value="<{$myself.user_qq}>" /></li>
+            <li><strong>注册时间：</strong><{$myself.join_time}></li>
+            <li><strong>最后登录时间：</strong><{$myself.login_time}></li>
+            <li><strong>最后登录IP：</strong><{$myself.login_ip}></li>
+            <li><strong>登录次数：</strong><{$myself.login_count}> 次</li>
+            <li><strong>&nbsp;</strong><input type="hidden" name="do" id="do" value="save"><input type="submit" name="submit" class="btn" value="提 交"> <input type="reset" name="reset" class="btn" value="重 填"></li>
+        </ul>
+        </form>
+    </div>
+    
+<{include file="footer.html"}>

@@ -1,0 +1,74 @@
+{include file="index/header" /}
+<link href="{$domain}public/common/confirm/jquery-confirm.css" type="text/css" rel="stylesheet">
+<div class="row bg-info text-center">
+    <h4>{:lang('All comments')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div>
+        <p>
+            <label>{:lang('Batch operation')}：</label>
+            <button type="button" id="shenhe" class="btn btn-primary btn-sm">{:lang('Approve')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+            <button type="button" id="weishenhe" class="btn btn-primary btn-sm">{:lang('Unapprove')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing_bai.gif" width="14" height="14"></span></button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="zxuan">
+                    </th>
+                    <th>{:lang('Commentator')}</th>
+                    <th>{:lang('E-mail')}</th>
+                    <th>{:lang('Head portrait')}</th>
+                    <th>{:lang('Comments')}</th>
+                    <th>{:lang('Comment time')}</th>
+                    <th>{:lang('Status')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>
+                        <input class="gouxuan" type="checkbox" value="{$vo.id}">
+                    </td>
+                    <td>{$vo.user_nicename}</td>
+                    <td>{$vo.user_email}</td>
+                    <td>{if condition="$vo.avatar neq ''"}<img src="{$vo.avatar}" width="50">{/if}</td>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.createtime}</td>
+                    <td>
+                        {if condition="($vo.status == 1)"} <h5 class="text-success"><span class="glyphicon glyphicon-ok"></span> {:lang('Audited')}</h5>
+                        {else /} <h5 class="text-muted">{:lang('Not audited')}</h5>
+                        {/if}
+                    </td>
+                    <td>
+                        <input class="hidden" value="{$vo.status}">
+                        <a class="twitter" data-title="{:lang('Confirm to delete?')}" href="#!">{:lang('Delete')}</a>
+                        &nbsp;|&nbsp;
+                        <a class="yincang{if condition="$vo.status neq 1"} hidden{/if}" href="#!">{:lang('Unapprove')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                        <a class="qiyong{if condition="$vo.status eq 1"} hidden{/if}" href="#!">{:lang('Approve')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div><br>
+<div class="hidden" id="quedingshanchu">{:lang('Confirm to delete?')}</div>
+<div class="hidden" id="yishenhe">{:lang('Audited')}</div>
+<div class="hidden" id="meishenhe">{:lang('Not audited')}</div>
+<div class="hidden" id="bukehuifu">{:lang('Are you sure you want to delete the comment? Can not be restored after deletion!')}</div>
+<div class="hidden" id="jixu">{:lang('Continue')}</div>
+<div class="hidden" id="quxiao">{:lang('Cancel')}</div>
+<div class="hidden" id="jinggao">{:lang('Warning!')}</div>
+<div class="hidden" id="zhishaoxuanyixiang">{:lang('Please select at least one!')}</div>
+<div class="hidden" id="queding">{:lang('Ok')}</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/confirm/jquery-confirm.js"></script>
+<script src="{$domain}public/common/js/comments.js"></script>
+{include file="index/footer" /}

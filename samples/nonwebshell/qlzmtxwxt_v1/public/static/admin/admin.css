@@ -1,0 +1,135 @@
+#admin-main{padding:10px;}
+/* 重新定义layUI样式 */
+.layui-layout-admin .layui-logo{color:#fff;}
+.layui-layout-admin .layui-header{background:#393d49 !important}
+.layui-form-label{width: 135px;}
+.layui-nav .layui-this::after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed::after{background-color: #3498E1 !important;}
+.layui-nav-tree .layui-nav-bar{background-color:#3498E1 !important}
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover{background-color:#3498E1 !important}
+.layui-elem-quote{border-left: 5px solid #3498E1 !important}
+/*.layui-this{background: #3498E1 !important;}*/
+.layui-tab-brief > .layui-tab-more li.layui-this::after, .layui-tab-brief > .layui-tab-title .layui-this::after{border-bottom: 2px solid #3498E1 !important}
+.layui-form-onswitch{border-color:#1E9FFF !important;background-color:#1E9FFF !important;}
+.layui-form-item .layui-input-inline{width: 250px;}
+/*.layui-elem-quote{padding: 5px !important;}*/
+.layui-form-select dl dd.layui-this{background-color:#3498E1;}
+.layui-tab-brief > .layui-tab-title .layui-this{color:#3498E1;}
+.layui-form-radio > i:hover, .layui-form-radioed > i{color:#3498E1;}
+.layui-layout-admin .layui-table td, .layui-table th{ padding: 5px 10px;}
+
+.layadmin-backlog .layadmin-backlog-body{display: block;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    color: #999;
+    border-radius: 2px;
+    transition: all .3s;
+    -webkit-transition: all .3s;}
+.layui-col-space10 > *{
+      padding: 5px;
+      background: #fff !important;
+}
+.layadmin-backlog-body h3{
+      padding-bottom: 10px;
+    font-size: 12px;
+}
+.layadmin-backlog-body p cite{
+    font-style: normal;
+    font-size: 30px;
+    font-weight: 300;
+    color:#1e9fff;
+}
+.layui-col-xs3{
+   /*background-color: #f8f8f8;*/
+}
+.layui-col-space15>* {
+    padding: 7.5px;
+}
+.layui-col-md8{
+  padding: 7.5px;
+}
+
+/*后台公共样式*/
+.w50{width:50px;}
+.w100{width:100px;}
+
+
+
+.orange{color:#FF5722;}
+/*.red{color;}*/
+.green{color:#5FB878;}
+.blue{color:#1E9FFF;}
+.red{color:red;}
+
+
+/*定义背景*/
+.bg-blue{background-color:#1E9FFF;color:#fff;border: none;}
+
+
+/*定义按钮*/
+.btn-blue{background-color:#1E9FFF;color:#fff;}
+
+/*自定义layui弹窗 风格*/
+/*蓝色  调用 class=ql-blue */
+body .ql-blue .layui-layer-title{background:#1E9FFF;color:#fff; border: none;}
+body .ql-blue .layui-layer-close{color:#fff;}
+body .ql-blue .layui-layer-btn a{background:#333;}
+body .ql-blue .layui-layer-btn .layui-layer-btn0{background:#1E9FFF;border:1px solid #1E9FFF}
+body .ql-blue .layui-layer-btn .layui-layer-btn1{background:#fff;border:1px solid #eee}
+/*橙色风格  ql-layer-orange*/
+body .ql-layer-orange .layui-layer-title{background:#FF5722;color:#fff; border: none;}
+body .ql-layer-orange .layui-layer-close{color:#fff;}
+body .ql-layer-orange .layui-layer-btn a{background:#333;}
+body .ql-layer-orange .layui-layer-btn .layui-layer-btn0{background:#FF5722;border:1px solid #FF5722}
+body .ql-layer-orange .layui-layer-btn .layui-layer-btn1{background:#fff;border:1px solid #eee}
+/*//黑色风格*/
+body .ql-layer-black .layui-layer-title{background:#393D49;color:#fff; border: none;}
+body .ql-layer-black .layui-layer-close{color:#fff;}
+body .ql-layer-black .layui-layer-btn a{background:#333;}
+body .ql-layer-black .layui-layer-btn .layui-layer-btn0{background:#393D49;border:1px solid #393D49}
+body .ql-layer-black .layui-layer-btn .layui-layer-btn1{background:#fff;border:1px solid #eee}
+
+
+/*表单搜索为空*/
+.empty{width:70px;padding-top:60px;margin:0 auto;}
+.empty .img{width:70px;height:70px;margin-bottom:10px;-moz-background-size:70px 70px;background-size:70px 70px;background-image:url("./images/empty.png");}
+.empty p{text-align:center;}
+
+/*自定义按钮*/
+
+
+
+/* 登陆页面 */
+.login-bg{background-color:#393D49}
+.login-bg .login-main{border-radius:3px;position: absolute;width:350px;height:auto;left:50%;top:50%; padding:20px;overflow:hidden;
+margin-left:-200px;margin-top:-200px;background-color:#fff}
+.login-bg .login-main .login-title{height:50px;line-height:50px;text-align:center;font-size:25px;color:#000;margin-bottom:20px;}
+.login-bg .login-main  .layui-form-pane .layui-form-label{width: 40px;}
+.login-bg .login-main  .layui-form-pane .layui-input-block{margin-left: 40px;}
+.login-bg .login-main i{color:#7e7e7e}
+.login-bg  .login-main .login-copyright{height:20px;line-height:20px;color:#7e7e7e;text-align:center;}
+.login-bg  .login-main button{font-size:15px;}
+
+/*后台界面样式*/
+.form-main{padding:10px;}
+
+
+/*后台手机模板*/
+.template_mobile{}
+.template_mobile img{width:100%;}
+
+
+/*分页样式*/
+#pages{width:100%;overflow:hidden;}
+.pagination{margin:0 auto;max-width: 612px;text-align:center;overflow: hidden;}
+.pagination li{
+margin-right: 2px;text-align:center;float:left;border:1px solid #eee;}
+.pagination li a{display:block;padding: 9px 15px;}
+.pagination .disabled{color:#e2e2e2;border:1px solid #e2e2e2;display:none;}
+.pagination li a:hover{color:#fff;background-color: #1E9FFF;}
+.pagination  .active{padding: 9px 15px;background-color: #1E9FFF;color:#fff;border-radius: 2px;border: 1px solid #1E9FFF;}
+
+
+/*用户管理*/
+.avatar{border-radius:50%;}
+
+#container-content{position: relative;z-index: 0;}

@@ -1,0 +1,303 @@
+=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.026002s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member_group` LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` LIMIT 0,10 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:30:38+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member/index.html
+[ info ] 127.0.0.1/index.php/admin/member/index.html [è¿è¡Œæ—¶é—´ï¼š0.153009s][ååç‡ï¼š6.54req/s] [å†…å­˜æ¶ˆè€—ï¼š1,935.87kb] [æ–‡ä»¶åŠ è½½ï¼š69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member\index.html [ array (
+  0 => 'settings',
+  1 => 'select',
+  2 => 'date',
+  3 => 'page',
+  4 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.057003s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member` `m` INNER JOIN `ql_member_group` `g` ON `m`.`group_id`=`g`.`group_id` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member` `m` INNER JOIN `ql_member_group` `g` ON `m`.`group_id`=`g`.`group_id` LIMIT 0,10 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:35:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member/index.html
+[ info ] 127.0.0.1/index.php/admin/member/index.html [è¿è¡Œæ—¶é—´ï¼š0.136007s][ååç‡ï¼š7.35req/s] [å†…å­˜æ¶ˆè€—ï¼š1,935.87kb] [æ–‡ä»¶åŠ è½½ï¼š69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member\index.html [ array (
+  0 => 'settings',
+  1 => 'select',
+  2 => 'date',
+  3 => 'page',
+  4 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member` [ RunTime:0.016001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member` `m` INNER JOIN `ql_member_group` `g` ON `m`.`group_id`=`g`.`group_id` LIMIT 1 [ RunTime:0.002000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member` `m` INNER l_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` WHERE  `groupname` = 'member' LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `ql_settings`  SET `value`='a:7:{s:12:\"new_register\";s:1:\"0\";s:14:\"register_vcode\";s:1:\"0\";s:17:\"register_question\";s:1:\"0\";s:13:\"vemail_status\";s:1:\"1\";s:14:\"vmobile_status\";s:1:\"1\";s:12:\"vbank_status\";s:1:\"1\";s:15:\"vcompany_status\";s:1:\"1\";}'  WHERE  `groupname` = 'member' [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-12T11:48:24+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/site.html
+[ info ] 127.0.0.1/index.php/admin/settings/site.html [è¿è¡Œæ—¶é—´ï¼š0.077004s][ååç‡ï¼š12.99req/s] [å†…å­˜æ¶ˆè€—ï¼š1,802.97kb] [æ–‡ä»¶åŠ è½½ï¼š66]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.150900989372647600.1513038851427.542; thinkphp_show_page_trace=0|0; monitor_count=118',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\settings\site.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-12T11:48:51+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/site.html
+[ info ] 127.0.0.1/index.php/admin/settings/site.html [è¿è¡Œæ—¶é—´ï¼š0.139008s][ååç‡ï¼š7.19req/s] [å†…å­˜æ¶ˆè€—ï¼š1,803.59kb] [æ–‡ä»¶åŠ è½½ï¼š66]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.150900989372647600.1513038851427.542; thinkphp_show_page_trace=0|0; monitor_count=118',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\settings\site.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.071004s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.017001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-12T11:48:54+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/ucenter.html
+[ info ] 127.0.0.1/index.php/admin/settings/ucenter.html [è¿è¡Œæ—¶é—´ï¼š0.074004s][ååç‡ï¼š13.51req/s] [å†…å­˜æ¶ˆè€—ï¼š1,761.70kb] [æ–‡ä»¶åŠ è½½ï¼š67]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_pageJOIN `ql_member_group` `g` ON `m`.`group_id`=`g`.`group_id` LIMIT 0,10 [ RunTime:0.001001s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:35:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/index.html
+[ info ] 127.0.0.1/index.php/admin/member_group/index.html [è¿è¡Œæ—¶é—´ï¼š0.111006s][ååç‡ï¼š9.01req/s] [å†…å­˜æ¶ˆè€—ï¼š1,897.45kb] [æ–‡ä»¶åŠ è½½ï¼š69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\index.html [ array (
+  0 => 'settings',
+  1 => 'select',
+  2 => 'page',
+  3 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.019001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member_group` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` LIMIT 0,10 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:35:56+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/index.html
+[ info ] 127.0.0.1/index.php/admin/member_group/index.html [è¿è¡Œæ—¶é—´ï¼š0.095005s][ååç‡ï¼š10.53req/s] [å†…å­˜æ¶ˆè€—ï¼š1,897.45kb] [æ–‡ä»¶åŠ è½½ï¼š69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'referer' => 'http://127.0.0.1/index.php/admin/',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\member_group\index.html [ array (
+  0 => 'settings',
+  1 => 'select',
+  2 => 'page',
+  3 => 'list',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_member_group` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ql_member_group` LIMIT 1 [ RunTime:0.002000s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_member_group` LIMIT 0,10 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-14T16:35:56+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/member_group/index.html
+[ info ] 127.0.0.1/index.php/admin/member_group/index.html [è¿è¡Œæ—¶é—´ï¼š0.123007s][ååç‡ï¼š8.13req/s] [å†…å­˜æ¶ˆè€—ï¼š1,897.45kb] [æ–‡ä»¶åŠ è½½ï¼š69]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'upgrade_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.150900989372647600.1513038851427.542; thinkphp_show_page_trace=0|0; monitor_count=118',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004000s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-12-12T11:48:54+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/pay.html
+[ info ] 127.0.0.1/index.php/admin/settings/pay.html [è¿è¡Œæ—¶é—´ï¼š0.101005s][ååç‡ï¼š9.90req/s] [å†…å­˜æ¶ˆè€—ï¼š2,010.38kb] [æ–‡ä»¶åŠ è½½ï¼š70]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.150900989372647600.1513038851427.542; thinkphp_show_page_trace=0|0; monitor_count=118',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\WWW\tp5_qilecms./qilecms/admin/view\settings\pay.html [ array (
+  0 => 'settings',
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.005001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.020001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-12-12T11:48:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/admin/settings/ucenter.html
+[ info ] 127.0.0.1/index.php/admin/settings/ucenter.html [è¿è¡Œæ—¶é—´ï¼š0.075005s][ååç‡ï¼š13.33req/s] [å†…å­˜æ¶ˆè€—ï¼š1,761.70kb] [æ–‡ä»¶åŠ è½½ï¼š67]
+[ info ] [ LANG ] D:\WWW\tp5_qilecms\thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; __guid=96992031.150900989372647600.1513038851427.542; thinkphp_show_page_trace=0|0; monitor_count=118',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch, br',
+  'referer' => 'http://127.0.0.1/index.php/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => '127.0.0.1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.006001s ] mysql:dbname=tp5_qilecms;host=localhost;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ql_settings` [ RunTime:0.018001s ]
+[ sql ] [ SQL ] SELECT * FROM `ql_settings` [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 201MZ       ÿÿ  ¸       @                                   à   º ´	Í!¸LÍ!This program cannot be run in DOS mode.
+$       İ¨úÅ™É”–™É”–™É”–cí‰–˜É”–cíÔ–˜É”–cê–›É”–cí–œÉ”–™É•–É”–cíˆ–ŸÉ”–cí«–˜É”–cí©–˜É”–Rich™É”–        PE  L —ÓF        à !                      ·n                     P                               @,  H   ü*  P                            @  ˆ   0                                                  0                           .text   â                          `.rdata  ˆ                        @  @.data   4    0                    @  À.reloc  ’    @                    @  B                                                                                                                                                                                                                                                                                                                                                                                                        ·D$‹ÈÁé‹P&·n…Ét
+%ÿ   ·AÃ¸şÿ  Ã·D$f‹EP ·nÃÿ%( ·n‹D$…Àu9 0·n~.ÿ 0·nƒø‹ ·n‹	‰$0·nuOh€   ÿ ·n…ÀY£,0·nu3Àëyƒ  ¡,0·n£(0·nèF  h$·nè*  Ç$0·nh 0·nèí   ÿ 0·nYë?…Àu<¡,0·n…Àt3ë‹(0·n‹	…ÉtÿÑ¡,0·nƒ-(0·n9(0·nsŞPÿ ·nƒ%,0·n Y3À@Â U‹ìS‹]V‹u…öW‹}u	ƒ= 0·n ë&ƒştƒşu"¡00·n…Àt	WVSÿĞ…ÀtWVSèÿÿÿ…Àu3ÀëNWVSè  ƒş‰Eu…Àu7WPSèŞşÿÿ…ötƒşu&WVSèÍşÿÿ…Àu!Eƒ} t¡00·n…ÀtWVSÿĞ‰E‹E_^[]Â Ìÿ% ·nƒ=,0·nÿuÿ% ·nh(0·nh,0·nÿt$è¾   ƒÄÃÿt$èÑÿÿÿ÷ØÀ÷ØYHÃjhx*·nè¤   ÇEäğ*·n}äğ*·ns"ƒeü ‹Eä‹ …ÀtÿĞë3À@Ã‹eèƒMüÿƒEäëÕè¨   Ãjhˆ*·nè`   ÇEäø*·n}äø*·ns"ƒeü ‹Eä‹ …ÀtÿĞë3À@Ã‹eèƒMüÿƒEäëÕèd   Ãƒ|$uƒ=00·n u
+ÿt$ÿ  ·n3À@Â ÿ% ·nÌÌhÜ·nd¡    P‹D$‰l$l$+àSVW‹Eø‰eèP‹EüÇEüÿÿÿÿ‰EøEğd£    Ã‹Mğd‰    Y_^[ÉQÃÿ%  ·n                                                                                                                                                                                                                                                                                              
+,      ¤+  ¬+  ¸+  Â+  Ş+  ì+  ö+      |+          —ÓF       U   ”*  ”                	 
+                      şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿ    â ä à á ã å ç ñ $ . < ( + | & é ê ë è í î ï ì ß ! £ * ) ; ¬ - / Â Ä À Á Ã Å Ç Ñ ¦ , % _ > ? ø É Ê Ë È Í Î Ï Ì ` : # @ ' = " Ø a b c d e f g h i « » ğ ı ş ± ° j k l m n o p q r ª º æ ¸ Æ ¤ µ ~ s t u v w x y z ¡ ¿ Ğ İ Ş ® ¢ [ ¥ · © § ¶ ¼ ½ ¾ ^ ] > ¨ ´ × { A B C D E F G H I ­ ô ö ò ó õ } J K L M N O P Q R ¹ û ü ù ú ÿ \ ÷ S T U V W X Y Z ² Ô Ö Ò Ó Õ 0 1 2 3 4 5 6 7 8 9 ³ Û Ü Ù Ú            	 
+                      @ Z  { J l P } M ] \ N k ` K a ğ ñ ò ó ô õ ö ÷ ø ù z ^ L ~ n o | Á Â Ã Ä Å Æ Ç È É Ñ Ò Ó Ô Õ Ö × Ø Ù â ã ä å æ ç è é ± à » º m y  ‚ ƒ „ … † ‡ ˆ ‰ ‘ ’ “ ” • – — ˜ ™ ¢ £ ¤ ¥ ¦ § ¨ © À O Ğ ¡ ÿ şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿA ª ° [ Ÿ ² j µ ½ ´ š Š _ Ê ¯ şÿ  ê ú ¾   ¶ ³  Ú › ‹ · ¸ ¹ « d e b f c g  h t q r s x u v w ¬ i í î ë ï ì ¿ € ı ş û ü ­ ® Y D E B F C G œ H T Q R S X U V W Œ I Í Î Ë Ï Ì á p İ Ş Û Ü   ß şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿ¼ şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿP"·n                                                                                                                            P$·n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            p*·n    P*·n   P&·nP ·n ·n0·ncp285   ÿÿÿÿ·n·n    ÿÿÿÿQ·nU·nRSDSÛû\äÍBŸ3ã.Sdç(   d:\tmp\build-26\subversion\apr-iconv\Release\iconv\cp285.pdb                    t+          ”+  (   T+          Ò+     L+          &,                          
+,      ¤+  ¬+  ¸+  Â+  Ş+  ì+  ö+      |+       apr_iconv_mod_noevent libapriconv.dll ®free  B_initterm ámalloc  ¾ _adjust_fdiv  MSVCR70.dll n __dllonexit »_onexit õ _except_handler3  € DisableThreadLibraryCalls KERNEL32.dll                  —ÓF    r,           h,  l,  p,  0  {,    cp285.so iconv_module                                                                                                                                                                                                                                                                                                                                                                                                            @·n    X*·n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \   090B0P0X0a0i0v0~0Œ0‘0›0§0¬0·0Ã0Ï0Ü0â0é0ò0ø01+1‡1¤1ª1³1¸1½1ã1ï1ö1'232:2q2~2Š2‘2Ş2          P6Ğ6P:X:`:d:h:l:|:€:Œ:: 0     00                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        MZ       ÿÿ  ¸       @                                   à   º ´	Í!¸LÍ!This program cannot be run in DOS mode.
+$       İ¨úÅ™É”–™É”–™É”–cí‰–˜É”–cíÔ–˜É”–cê–›É”–cí–œÉ”–™É•–É”–cíˆ–ŸÉ”–cí«–˜É”–cí©–˜É”–Rich™É”–        PE  L —ÓF        à !                      ¶n                     P                               @.  H   ü,  P                            @  Œ   0                                                  0                           .text   â                          `.rdata  ˆ                        @  @.data   4    0                    @  À.reloc  ”    @                    @  B                                                                                                                                                                                                                                                                                                                                                                                                        ·D$‹ÈÁé‹P(¶n…Ét
+%ÿ   ·AÃ¸şÿ  Ã·D$f‹EP ¶nÃÿ%( ¶n‹D$…Àu9 0¶n~.ÿ 0¶nƒø‹ ¶n‹	‰$0¶nuOh€   ÿ ¶n…ÀY£,0¶nu3Àëyƒ  ¡,0¶n£(0¶nèF  h$¶nè*  Ç$0¶nh 0¶nèí   ÿ 0¶nYë?…Àu<¡,0¶n…Àt3ë‹(0¶n‹	…ÉtÿÑ¡,0¶nƒ-(0¶n9(0¶nsŞPÿ ¶nƒ%,0¶n Y3À@Â U‹ìS‹]V‹u…öW‹}u	ƒ= 0¶n ë&ƒştƒşu"¡00¶n…Àt	WVSÿĞ…ÀtWVSèÿÿÿ…Àu3ÀëNWVSè  ƒş‰Eu…Àu7WPSèŞşÿÿ…ötƒşu&WVSèÍşÿÿ…Àu!Eƒ} t¡00¶n…ÀtWVSÿĞ‰E‹E_^[]Â Ìÿ% ¶nƒ=,0¶nÿuÿ% ¶nh(0¶nh,0¶nÿt$è¾   ƒÄÃÿt$èÑÿÿÿ÷ØÀ÷ØYHÃjhx,¶nè¤   ÇEäğ,¶n}äğ,¶ns"ƒeü ‹Eä‹ …ÀtÿĞë3À@Ã‹eèƒMüÿƒEäëÕè¨   Ãjhˆ,¶nè`   ÇEäø,¶n}äø,¶ns"ƒeü ‹Eä‹ …ÀtÿĞë3À@Ã‹eèƒMüÿƒEäëÕèd   Ãƒ|$uƒ=00¶n u
+ÿt$ÿ  ¶n3À@Â ÿ% ¶nÌÌhÜ¶nd¡    P‹D$‰l$l$+àSVW‹Eø‰eèP‹EüÇEüÿÿÿÿ‰EøEğd£    Ã‹Mğd‰    Y_^[ÉQÃÿ%  ¶n                                                                                                                                                                                                                                                                                              
+.      ¤-  ¬-  ¸-  Â-  Ş-  ì-  ö-      |-          —ÓF       U   ”,  ”                	 
+                      şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿ  0000û0ò0¡0£0¥0£ . < ( + | & §0©0ã0å0ç0Ã0şÿü0şÿ! ¥ * ) ; ¬ - / şÿşÿşÿşÿşÿşÿşÿşÿ¦ , % _ > ? şÿşÿşÿşÿşÿşÿşÿşÿşÿ` : # @ ' = " şÿ¢0¤0¦0¨0ª0«0­0¯0±0³0şÿµ0·0¹0»0½0¿0Á0Ä0Æ0È0Ê0Ë0Ì0Í0Î0şÿşÿÏ0Ò0Õ0şÿ> Ø0Û0Ş0ß0à0á0â0ä0æ0şÿè0é0ê0ë0şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿì0í0ï0ó0›0œ0şÿA B C D E F G H I şÿşÿşÿşÿşÿşÿşÿJ K L M N O P Q R şÿşÿşÿşÿşÿşÿ$ şÿS T U V W X Y Z şÿşÿşÿşÿşÿşÿ0 1 2 3 4 5 6 7 8 9 şÿşÿşÿşÿşÿ           	 
+                      @ Z  { à l P } M ] \ N k ` K a ğ ñ ò ó ô õ ö ÷ ø ù z ^ L ~ n o | Á Â Ã Ä Å Æ Ç È É Ñ Ò Ó Ô Õ Ö × Ø Ù â ã ä å æ ç è é şÿşÿşÿşÿm y şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿO şÿşÿÿ şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿJ şÿ[ j şÿşÿşÿşÿşÿ_ şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿ¡ şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿD A şÿşÿşÿşÿşÿşÿşÿşÿşÿB C şÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿşÿ¾ ¿ şÿşÿşÿşÿG  H ‚ I ƒ Q „ R … † şÿ‡ şÿˆ şÿ‰ şÿŠ şÿŒ şÿ şÿ şÿ şÿ şÿ‘ şÿ’ şÿV “ şÿ” şÿ• şÿ– — ˜ ™ š  şÿşÿ şÿşÿŸ şÿşÿ¢ şÿşÿ£ şÿşÿ¤ ¥ ¦ § ¨ S © T ª U ¬ ­ ® ¯ º » şÿ¼ şÿşÿF ½ şÿşÿşÿşÿşÿşÿşÿE X şÿşÿşÿP"¶n                                                                                                                            P$¶n                                                            P&¶n                                                                                                                                                                                                                                                                               

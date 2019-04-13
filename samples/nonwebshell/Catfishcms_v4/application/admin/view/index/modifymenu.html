@@ -1,0 +1,86 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('Edit menu')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        {empty name="cdfenlei"}
+        <h4>{:lang('You must add a menu category before you can add a menu.')}</h4>
+        <h5><a href="category">{:lang('Add menu categories now')}</a></h5>
+        {else /}
+        <form method="post" action="">
+            <h4>{:lang('With')}&nbsp;<b><span class="text-danger">*</span></b>&nbsp;{:lang('are required')}</h4>
+            <div class="form-group">
+                <label>{:lang('Menu category')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <input type="hidden" value="" name="caidanfenlei" id="caidanfenlei">
+                <select class="form-control" name="caidanfenleis" id="caidanfenleis" disabled>
+                    {volist name="cdfenlei" id="vo"}
+                    <option value="{$vo.navcid}"{if condition="$cdxiang.cid eq $vo.navcid"} selected{/if}>{$vo.nav_name}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Father')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <select class="form-control" name="fuji" id="fuji">
+                    <option value="0">{:lang('As a first-level menu')}</option>
+                    {volist name="caidan" id="vo"}
+                    <option value="{$vo.id}"{if condition="$cdxiang.parent_id eq $vo.id"} selected{/if}>{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.label}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('The name of the menu')}：&nbsp;<b><span class="text-danger">*</span></b></label>
+                <input type="text" class="form-control" name="caidanming" placeholder="{:lang('The name of the menu')}" value="{$cdxiang.label}" required>
+                <input type="hidden" name="caidanId" id="caidanId" value="{$cdxiang.id}">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Link')}：&nbsp;<b><span class="text-danger">*</span></b>({:lang('If you need to link to a custom URL, please fill out the following "Custom link"')})</label>
+                <select class="form-control" name="lianjie" id="lianjie">
+                    <option value="index"{if condition="$cdxiang.href eq 'index'"} selected{/if}>{:lang('Home')}</option>
+                    {notempty name="fenlei"}
+                    <option class="text-muted" disabled>[{:lang('Categories')}]</option>
+                    {volist name="fenlei" id="vo"}
+                    <option value="/index/Index/category/id/{$vo.id}">{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.term_name}</option>
+                    {/volist}
+                    {/notempty}
+                    {notempty name="yemian"}
+                    <option class="text-muted" disabled>[{:lang('Pages')}]</option>
+                    {volist name="yemian" id="vo"}
+                    <option value="/index/Index/page/id/{$vo.id}">{$vo.level}{if condition="$vo.level neq ''"}└&nbsp;{/if}{$vo.post_title}</option>
+                    {/volist}
+                    {/notempty}
+                </select>
+                <input type="hidden" name="oldlink" value="{$oldlink}">
+                <p class="help-block">{:lang('Custom link')}：</p>
+                <input type="text" class="form-control" value="{$zidingyi}" name="zidingyi" placeholder="http://">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Open mode')}：</label>
+                <select class="form-control" name="dakaifangshi">
+                    <option value="_self"{if condition="$cdxiang.target eq '_self'"} selected{/if}>{:lang('The original window opens')}</option>
+                    <option value="_blank"{if condition="$cdxiang.target eq '_blank'"} selected{/if}>{:lang('Opens as a new window')}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Icon')}：</label>
+                <input type="text" class="form-control" value="{$cdxiang.icon}" name="tubiao">
+            </div>
+            <div class="form-group">
+                <label>{:lang('Status')}：</label>
+                <select class="form-control" name="zhuangtai">
+                    <option value="1"{if condition="$cdxiang.status eq 1"} selected{/if}>{:lang('Display')}</option>
+                    <option value="0"{if condition="$cdxiang.status eq 0"} selected{/if}>{:lang('Hide')}</option>
+                </select>
+                <input type="hidden" name="originalstate" value="{$originalstate}">
+            </div>
+            <div class="text-center"><br>
+                <input type="hidden" name="verification" value="{$verification}">
+                <button type="submit" class="btn btn-default" id="baocun">{:lang('Save')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></button>
+            </div>
+        </form>
+        {/empty}
+    </div>
+</div>
+<div class="hidden" id="href">{$cdxiang.href}</div>
+<script src="{$domain}public/common/js/modifymenu.js"></script>
+{include file="index/footer" /}

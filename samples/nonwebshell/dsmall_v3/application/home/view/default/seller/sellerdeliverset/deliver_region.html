@@ -1,0 +1,30 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+  <div class="dssc-form-default">
+            <form method="post" action="{:url('Sellerdeliverset/deliver_region')}" id="my_store_form">
+                <dl>
+                    <dt>{$Think.lang.default_delivery_area}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <input name="region" type="hidden"  id="region" value="{$deliver_region[1]}" />
+                        <input name="area_ids" type="hidden" id="_areas" value="{$deliver_region[0]}">
+                        <p class="hint">{$Think.lang.guidelines_distribution_areas}</p>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_common_button_save}" /></label>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            $(function() {
+                $('#region').ds_region();
+            });
+            $('#my_store_form').validate({
+                submitHandler:function(form){
+                    ds_ajaxpost('my_store_form');
+                },
+            });
+        </script>
+
+
+{/block}

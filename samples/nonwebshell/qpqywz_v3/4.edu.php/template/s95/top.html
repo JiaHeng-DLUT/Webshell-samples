@@ -1,0 +1,70 @@
+﻿
+{@SL_在线客服}
+<div class="scms_bar_d">
+<div class="scms_container w1200">
+<link href="{@SL_安装目录}css/language-selector.css" rel="stylesheet" type="text/css" />
+<div id="lang_sel" style="z-index:10000;">
+{@SL_语言按钮}
+</div>
+<div class="scms_left">
+欢迎来到{@SL_网站标题}！
+</div>
+
+
+<div class="scms_right">
+
+ {$member(<a href="%登录链接%" class="scms_btn">登录</a> <a href="%注册链接%" class="scms_btn">注册</a>,欢迎您！ <a href="%会员中心%" class="scms_btn">%用户名%</a> <a href="%会员中心%" class="scms_btn">会员中心</a> <a href="%退出链接%" class="scms_btn">退出</a>)}
+</div>
+</div>
+</div>
+<div style="height: 26px;"></div>
+
+<header class="am-topbar">
+  <div class="am-container">
+    <h1 class="am-topbar-brand"> <a href="{@SL_首页链接}"> <img src="{@SL_安装目录}{@SL_网站logo}" width="396" height="76" alt=""> </a> </h1>
+    <a class="am-topbar-btn am-topbar-toggle am-show-sm-only mopen doc-oc-js" href="javascript: void(0)" data-rel="open"><span class="am-sr-only">导航切换</span> <img src="{@SL_安装目录}template/s95/style/images/mopen.png"> </a>
+    <div class="am-topbar-right">
+      <div class="wtop-r">
+        <div class="top-time"><span id="time"></span></div>
+        <div class="am-dropdown am-fl" data-am-dropdown=""> <a href="#" rel="nofollow" class="top-tel hvr-bob am-dropdown-toggle"></a>
+          <div class="am-dropdown-content">
+            <p style="margin:0"> 联系电话:<br>
+              <span style="font-size:24px; color:#515151;font-family:Arial;white-space:nowrap;"> {@SL_手机版电话}</span> </p>
+          </div>
+        </div>
+        <div class="am-dropdown am-fl" data-am-dropdown=""> <a href="#" rel="nofollow" class="top-weix hvr-bob am-dropdown-toggle"></a>
+          <div class="am-dropdown-content">
+            <p style="text-align:center;margin:0"> <img src="{@SL_安装目录}{@SL_微信二维码}" width="128" height="128" alt="二维码"> </p>
+          </div>
+        </div>
+        <a href="{@SL_微博主页}" rel="nofollow" target="_blank" class="top-weib hvr-bob"></a> </div>
+    </div>
+  </div>
+  <div class="w-nav">
+    <div class="am-container">
+      <div class="am-menu  am-menu-offcanvas1" data-am-widget="menu">
+        <div id="my-offcanvas" class="am-offcanvas">
+          <div class="am-offcanvas-bar am-offcanvas-bar-flip">
+            <ul class="am-menu-nav sm-block-grid-1">
+            <button class="mclose doc-oc-js" data-rel="close"><img src="{@SL_安装目录}template/s95/style/images/mclose.png"/></button>
+{$getmenu(<li> <a href="%主菜单链接%" title="%主菜单标题%">%主菜单标题%</a>
+                %子菜单%
+              </li>,<li> <a href="%子菜单链接%" title="%子菜单标题%">%子菜单标题%</a> </li>,<ul class="am-menu-sub am-collapse  am-avg-sm-3">
+%子菜单样式%
+</ul>)}
+</ul>
+          </div>
+        </div>
+      </div>
+      <div class="am-collapse am-topbar-collapse w-bnav">
+        <ul class="am-nav am-nav-pills am-nav-justify">
+{$getmenu(<li><a href="%主菜单链接%" title="%主菜单标题%">%主菜单标题%</a>
+            %子菜单%
+          </li>,<li><a href="%子菜单链接%" title="%子菜单标题%">%子菜单标题%</a></li>,<ul class="w-tcnav">
+%子菜单样式%
+</ul>)}
+</ul>
+      </div>
+    </div>
+  </div>
+  </header>

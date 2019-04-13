@@ -1,0 +1,97 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+  <form method="get" name="formSearch">
+      <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.store_name}</dt>
+                <dd><input type="text" value="{$Request.param.store_name}" name="store_name" id="store_name" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.store_name}ID</dt>
+                <dd><input type="text" value="{$Request.param.store_id}" name="store_id" id="store_id" class="txt"></dd>
+            </dl>
+          <dl>
+              <dt>申请状态</dt>
+              <dd>
+                  <select name="storereopen_state">
+                      <option value="">{$Think.lang.ds_please_choose}...</option>
+                      <option {if condition="$Request.param.storereopen_state eq '0'"}selected{/if} value="0">待付款</option>
+                      <option {if condition="$Request.param.storereopen_state eq '1'"}selected{/if} value="1">待审核</option>
+                      <option {if condition="$Request.param.storereopen_state eq '2'"}selected{/if} value="2">已审核</option>
+                  </select>
+              </dd>
+          </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn " title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                {if $filtered}
+                <a href="{:url('Store/reopen_list')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+                {/if}
+            </div>
+        </div>
+</form>
+  <form method="post" id="store_form" name="store_form">
+    <table class="ds-default-table">
+      <thead>
+        <tr class="thead">
+          <th>店铺/ID</th>
+          <th>收费标准(元/年)</th>
+          <th>续签时长(年)</th>
+          <th>付款金额(年)</th>
+          <th>状态</th>
+          <th>付款凭证</th>
+          <th>付款备注</th>
+          <th>{$Think.lang.ds_handle}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {notempty name="reopen_list"}
+        {foreach name="reopen_list" item="val" key="k" }
+        <tr class="hover edit">
+          <td>{$val.storereopen_store_name}/{$val.storereopen_store_id}</td>
+          <td>{$val.storereopen_grade_price} ( {$val.storereopen_grade_name} )</td>
+          <td>{$val.storereopen_year}</td>
+          <td>{if $val.storereopen_pay_amount == 0}免费{else/}{$val.storereopen_pay_amount}{/if}</td>
+          <td><?php echo str_replace(array('0','1','2'),array('待付款','待审核','通过审核'),$val['storereopen_state']);?></td>
+          <td>
+          {notempty name="$val.storereopen_pay_cert"}
+          <a data-lightbox="lightbox-image" href="{:get_store_joinin_imageurl($val['storereopen_pay_cert'])}">查看</a>
+          {/notempty}
+          </td>
+          <td>{$val.storereopen_pay_cert_explain}</td>
+          <td>
+              {if $val.storereopen_state == '1'}
+              <a href="javascript:dsLayerConfirm('{:url('Store/reopen_check',['storereopen_id'=>$val.storereopen_id])}','审核后，系统会自动将店铺的到期时间向后延续\n店铺等级不会自动变更，如果新签约的店铺等级发生变更，请手动更改店铺等级\n确认审核吗？')" class="dsui-btn-edit"><i class="iconfont"></i>审核</a>
+              {/if}
+              {if $val.storereopen_state != '2'}
+              <a href="javascript:dsLayerConfirm('{:url('Store/reopen_del',['storereopen_id'=>$val.storereopen_id,'storereopen_store_id'=>$val.storereopen_store_id])}','{$Think.lang.ds_ensure_del}')" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+              {/if}
+          </td>
+        </tr>
+       {/foreach}
+        {else /}
+        <tr class="no_data">
+          <td colspan="10">{$Think.lang.ds_no_record}</td>
+        </tr>
+        {/notempty}
+      </tbody>
+    </table>
+      {$show_page}
+  </form>
+</div>
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>

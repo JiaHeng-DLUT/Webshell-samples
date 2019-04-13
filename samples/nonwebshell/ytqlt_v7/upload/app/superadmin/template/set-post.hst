@@ -1,0 +1,111 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary pk-text-nowrap">发帖相关</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">HTML安全标签</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="bbcodemarks" placeholder="输入标签名称" value="{$_G['SET']['BBCODEMARKS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">HTML安全属性</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="bbcodeattrs" placeholder="输入属性名称" value="{$_G['SET']['BBCODEATTRS']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">标题最小字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="readtitlemin" placeholder="1" value="{$_G['SET']['READTITLEMIN']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">标题最大字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="readtitlemax" placeholder="255" value="{$_G['SET']['READTITLEMAX']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">内容最小字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="readcontentmin" placeholder="3" value="{$_G['SET']['READCONTENTMIN']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">内容最大字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="readcontentmax" placeholder="6550" value="{$_G['SET']['READCONTENTMAX']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">回复最小字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="replycontentmin" placeholder="1" value="{$_G['SET']['REPLYCONTENTMIN']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">回复最大字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="replycontentmax" placeholder="255" value="{$_G['SET']['REPLYCONTENTMAX']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">消息最大字节数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox " type="number" name="postmessagemaxnum" placeholder="默认255" value="{$_G['SET']['POSTMESSAGEMAXNUM']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">可以设置标题颜色的用户组</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox _labelsbox" type="text" name="postreadtitlecolorusergroup" placeholder="请输入用户组id，不设置该项则所有用户可用" value="{$_G['SET']['POSTREADTITLECOLORUSERGROUP']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-5">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right">发帖违禁词</label>
+		<div class="pk-w-sm-8">
+			<input type="text" class="pk-textbox _labelsbox" rows="7" name="banpostwords" placeholder="请添加违禁词" value="{htmlspecialchars($_G['SET']['BANPOSTWORDS'],ENT_QUOTES)}">
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3">&nbsp;</label>
+		<div class="pk-w-sm-8 pk-text-xs pk-text-danger">
+			文章标题和内容或回复内容包含违禁词将会被禁止发布。
+		</div>
+		<div class="pk-w-sm-1"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" id="SubmitBtn">保存</button>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		labelStrSwitch('input[name="bbcodemarks"]', '><', false, '<', '>');
+		$('#SubmitBtn').data({
+			before: function() {
+				labelStrSwitch('input[name="bbcodemarks"]', '><', true, '<', '>');
+			},
+			after: function() {
+				labelStrSwitch('input[name="bbcodemarks"]', '><', false, '<', '>');
+			}
+		});
+	});
+</script>

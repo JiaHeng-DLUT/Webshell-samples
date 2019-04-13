@@ -1,0 +1,125 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>平台可以在此处添加外驻店铺，新增的外驻店铺默认为开启状态</li>
+            <li>新增外驻店铺需手动设置绑定其经营类目,以及设置对应佣金</li>
+            <li>新增外驻店铺将自动创建店主会员账号（用于登录网站会员中心）以及商家账号（用于登录商家中心）</li>
+        </ul>
+    </div>
+    <form id="store_form" method="post">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td class="required w120"><label class="validation" for="store_name">店铺名称:</label></td>
+                    <td class="vatop rowform"><input type="text" value="" id="store_name" name="store_name" class="txt" /></td>
+                    <td class="vatop tips"></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label class="validation" for="member_name">店主账号:</label></td>
+                    <td class="vatop rowform"><input type="text" value="" id="member_name" name="member_name" class="txt" /></td>
+                    <td class="vatop tips">用于登录会员中心</td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label class="validation" for="seller_name">店主卖家账号:</label></td>
+                    <td class="vatop rowform"><input type="text" value="" id="seller_name" name="seller_name" class="txt" /></td>
+                    <td class="vatop tips">用于登录商家中心，可与店主账号不同</td>
+                </tr>
+                <tr class="noborder">
+                    <td class="required"><label class="validation" for="member_password">登录密码:</label></td>
+                    <td class="vatop rowform"><input type="password" value="" id="member_password" name="member_password" class="txt" /></td>
+                    <td class="vatop tips"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfoot">
+                    <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //按钮先执行验证再提交表单
+        $("#submitBtn").click(function () {
+            if ($("#store_form").valid()) {
+                $("#store_form").submit();
+            }
+        });
+        $('#store_form').validate({
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parentsUntil('tr').parent().find('td:last'));
+            },
+            rules: {
+                store_name: {
+                    required: true,
+                    remote : "{:url('Ownshop/ckeck_store_name')}"
+                },
+                member_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 15,
+                    remote: {
+                        url: "{:url('Ownshop/check_member_name')}",
+                        type: 'get',
+                        data: {
+                            member_name: function () {
+                                return $('#member_name').val();
+                            }
+                        }
+                    }
+                },
+                seller_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 15,
+                    remote: {
+                        url: "{:url('Ownshop/check_seller_name')}",
+                        type: 'get',
+                        data: {
+                            seller_name: function () {
+                                return $('#seller_name').val();
+                            }
+                        }
+                    }
+                },
+                member_password: {
+                    required: true,
+                    minlength: 6
+                }
+            },
+            messages: {
+                store_name: {
+                    required: '请输入店铺名称',
+                    remote: '店铺名称已存在'
+                },
+                member_name: {
+                    required: '请输入店主账号',
+                    minlength: '店主账号最短为3位',
+                    maxlength: '店主账号最长为15位',
+                    remote: '此名称已被其它店铺会员占用，请重新输入'
+                },
+                seller_name: {
+                    required: '请输入店主卖家账号',
+                    minlength: '店主卖家账号最短为3位',
+                    maxlength: '店主卖家账号最长为15位',
+                    remote: '此名称已被其它店铺占用，请重新输入'
+                },
+                member_password: {
+                    required: '请输入登录密码',
+                    minlength: '登录密码长度不能小于6'
+                }
+            }
+        });
+    });
+</script>

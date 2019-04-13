@@ -1,0 +1,54 @@
+<div class="groupbuy-gallery" dstype="store_sns_album">
+    <a class="sample_demo" id="select_s" href="{:url('Selleralbum/pic_list',['item'=>'store_sns_normal'])}" style="display:none;">{$Think.lang.ds_submit}</a>
+  <div class="nav"><span class="l">{$Think.lang.store_goods_album_users} >
+            {notempty name="class_name"}
+            {$class_name}
+            {else/}
+            {$Think.lang.store_goods_album_all_photo}
+            {/notempty}
+    </span><span class="r">
+    <select name="jumpMenu" id="jump_menu" style="width:100px;">
+      <option value="0" style="width:80px;">{$Think.lang.ds_please_choose}</option>
+      {foreach name="class_list" item="val" }
+      <option style="width:80px;" value="{$val.aclass_id}" {if condition="$val.aclass_id eq $Request.param.id"}selected{/if}>{$val.aclass_name}</option>
+      {/foreach}
+    </select>
+    </span></div>
+  <ul class="list">
+    {notempty name="pic_list"}
+    {foreach name="pic_list" item="v" }
+    <li onclick="sns_insert('{:goods_cthumb($v['apic_cover'], 240,$v['store_id'])}');" style="padding: 4px 0 4px 3px;">
+        <a href="JavaScript:void(0);">
+            <span class="thumb size90"><i></i>
+                <img src="{:goods_cthumb($v['apic_cover'], 240,session('store_id'))}" onload="javascript:ResizeImage(this,90,90);" title='{$v.apic_name}'/></span>
+        </a>
+    </li>
+    {/foreach}
+    {else /}
+    <div class="warning-option"><i class="fa fa-warning">&nbsp;</i><span>{$Think.lang.no_record}</span></div>
+    {/notempty}
+  </ul>
+  <div class="clear"></div>
+  <div class="pagination">{$show_page}</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	/* 从图片空间选择图片 */
+	$('div[dstype="store_sns_album"] .pagination a').ajaxContent({
+		event:'click', //mouseover
+		loaderType:'img',
+		loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+		target:'#get_img_ajaxContent'
+	});
+	$('#jump_menu').change(function(){
+		$('#select_s').attr('href',$('#select_s').attr('href')+"?id="+$('#jump_menu').val());
+		$('#select_s').ajaxContent({
+			event:'click', //mouseover
+			loaderType:'img',
+			loadingMsg:'{$Think.HOME_SITE_ROOT}/images/loading.gif',
+			target:'#get_img_ajaxContent'
+		});
+		$('#select_s').click();
+	});
+});
+</script>

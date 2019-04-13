@@ -1,0 +1,283 @@
+{include file="public/header" /}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>分类管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+  
+   <div class="fixed-empty"></div>
+  <form method="post" enctype="multipart/form-data" name="form1">
+    <table class="ds-default-table">
+      <tbody>
+        <tr class="noborder">
+          <td colspan="2" class="required"><label>{$Think.lang.flea_index_class_setting_digital}:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+            <select name="shuma_cid1">
+                <option value="0">{$Think.lang.ds_please_choose}...</option>
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}" {if $shuma.fcindex_id1 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                {/foreach}
+            </select>
+            <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="shuma_cname1" value="{$shuma.fcindex_name1}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="shuma_cid2">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $shuma.fcindex_id2 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+              </select>
+              <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="shuma_cname2" value="{$shuma.fcindex_name2}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="shuma_cid3">
+                <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $shuma.fcindex_id3 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="shuma_cname3" value="{$shuma.fcindex_name3}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="shuma_cid4">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                   {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $shuma.fcindex_id4 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="shuma_cname4" value="{$shuma.fcindex_name4}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label for="flea_site_title">{$Think.lang.flea_index_class_setting_beauty}:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="zhuangban_cid1">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                   {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $zhuangban.fcindex_id1 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                   {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="zhuangban_cname1" value="{$zhuangban.fcindex_name1}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="zhuangban_cid2">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $zhuangban.fcindex_id2 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="zhuangban_cname2" value="{$zhuangban.fcindex_name2}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+            <select name="zhuangban_cid3">
+                <option value="0">{$Think.lang.ds_please_choose}...</option>
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}" {if $zhuangban.fcindex_id3 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                {/foreach}
+            </select>
+            <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="zhuangban_cname3" value="{$zhuangban.fcindex_name3}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+            <select name="zhuangban_cid4">
+                <option value="0">{$Think.lang.ds_please_choose}...</option>
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}" {if $zhuangban.fcindex_id4 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                {/foreach}
+	    </select>
+	    <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="zhuangban_cname4" value="{$zhuangban.fcindex_name4}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required"><label for="flea_site_description">{$Think.lang.flea_index_class_setting_home}:</label></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="jujia_cid1">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $jujia.fcindex_id1 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                   {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="jujia_cname1" value="{$jujia.fcindex_name1}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="jujia_cid2">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                     {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $jujia.fcindex_id2 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="jujia_cname2" value="{$jujia.fcindex_name2}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="jujia_cid3">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $jujia.fcindex_id3 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+              </select>
+              <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="jujia_cname3" value="{$jujia.fcindex_name3}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="jujia_cid4">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $jujia.fcindex_id4 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="jujia_cname4" value="{$jujia.fcindex_name4}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required">{$Think.lang.flea_index_class_setting_interest}:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="xingqu_cid1">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $xingqu.fcindex_id1 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="xingqu_cname1" value="{$xingqu.fcindex_name1}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="xingqu_cid2">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $xingqu.fcindex_id2 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="xingqu_cname2" value="{$xingqu.fcindex_name2}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="xingqu_cid3">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $xingqu.fcindex_id3 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="xingqu_cname3" value="{$xingqu.fcindex_name3}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="xingqu_cid4">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $xingqu.fcindex_id4 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+              </select>
+              <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="xingqu_cname4" value="{$xingqu.fcindex_name4}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="required">{$Think.lang.flea_index_class_setting_baby}:</td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="muying_cid1">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $muying.fcindex_id1 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="muying_cname1" value="{$muying.fcindex_name1}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="muying_cid2">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $muying.fcindex_id2 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+              </select>
+              <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="muying_cname2" value="{$muying.fcindex_name2}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+                <select name="muying_cid3">
+                    <option value="0">{$Think.lang.ds_please_choose}...</option>
+                    {foreach name="goods_class" item="val"}
+                    <option value="{$val.fleaclass_id}" {if $muying.fcindex_id3 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                    {/foreach}
+                </select>
+                <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="muying_cname3" value="{$muying.fcindex_name3}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+        <tr class="noborder">
+          <td class="vatop rowform" style="width: 600px">
+            <select name="muying_cid4">
+                <option value="0">{$Think.lang.ds_please_choose}...</option>
+                {foreach name="goods_class" item="val"}
+                <option value="{$val.fleaclass_id}" {if $muying.fcindex_id4 == $val.fleaclass_id}selected="selected"{/if}>{$val.fleaclass_name}</option>
+                {/foreach}
+            </select>
+            <span style="padding:0 3px;">{$Think.lang.flea_index_class_setting_as}:</span><input type="text" name="muying_cname4" value="{$muying.fcindex_name4}" style="width: 250px" />
+          </td>
+          <td class="vatop tips"><span class="vatop rowform">页首分类名称可修改为"显示为XXX"，若不填则显示原分类名称</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="tfoot">
+          <td colspan="2" ><a href="JavaScript:void(0);" class="btn" onclick="document.form1.submit()"><span>{$Think.lang.ds_submit}</span></a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+
+        </div>
+{include file="public/footer" /}

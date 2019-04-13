@@ -1,0 +1,24 @@
+<style>
+	body {
+		background-color: #F9F9F9;
+		min-height: 100%;
+	}
+	
+	._title {
+		padding: 50px 0;
+		font-size: 24px;
+		text-align: center;
+	}
+</style>
+<div id="maindiv" class="pk-container pk-background-color-white">
+	<div class="_title">
+		<p>访量数据统计系统</p>
+	</div>
+	<div>{$_G['HTMLCODE']['OUTPUT']}</div>
+	<div class="_title" style="font-size:12px;">本次数据统计耗时{$_G['SYSTEM']['LOADTIMES']}秒，Powered by
+		<a target="_blank" class="pk-hover-underline" href="//www.hadsky.com">HadSky</a>
+	</div>
+</div>
+<script>
+	$('#maindiv>div:eq(1)').css("min-height", $(window).height() - $('#maindiv>div:eq(0)').outerHeight() - $('#maindiv>div:eq(2)').outerHeight());
+</script>

@@ -1,0 +1,37 @@
+{include file="index/header" /}
+<div class="row bg-info text-center">
+    <h4>{:lang('My comments')}</h4>
+</div><br>
+<div class="container-fluid" style="min-height: 800px;">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{:lang('Comments')}</th>
+                    <th>{:lang('Comment time')}</th>
+                    <th>{:lang('View original')}</th>
+                    <th>{:lang('Operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.createtime}</td>
+                    <td><a href="{$domain}{$root}{$vo.url}" target="_blank"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{:lang('Original')}</a></td>
+                    <td>
+                        <input type="hidden" value="{$vo.id}">
+                        <a href="#!" class="shanchu">{:lang('Delete')}<span class="hidden">&nbsp;<img src="{$domain}public/common/images/zhixing.gif" width="16" height="16"></span></a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        {$data->render()}
+    </div>
+</div>
+<div class="hidden" id="verification">{$verification}</div>
+<script src="{$domain}public/common/js/pinglun.js"></script>
+{include file="index/footer" /}

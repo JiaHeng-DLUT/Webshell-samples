@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{notempty name="ico"}{$ico}{else /}{$domain}public/common/images/favicon.ico{/notempty}">
+    <title>{$title} | {$subtitle}</title>
+    <link rel="stylesheet" href="{$domain}public/common/css/bootstrap.min.css">
+    <link href="{$domain}public/common/html/close/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    
+   
+    <div class="container">
+      
+          <div class="row pad-top text-center">
+                 <div class="col-md-6 col-md-offset-3 text-center">
+                  <h2>  {:lang('The site needs to take a break!')} </h2>
+                   <h5> {:lang('In the system maintenance, please come again tomorrow')}</h5>
+              <span id="error-link"><img src="{$domain}public/common/html/close/img/close.gif"></span>
+                     <h2>! {:lang('Temporarily closed')} !</h2>
+                 </div>
+          </div>
+
+            <div class="row text-center">
+                 <div class="col-md-8 col-md-offset-2">
+                     <div class="bigfont">
+                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                     </div>
+                     <br><br>
+                 </div>
+            </div>
+    </div>
+</body>
+</html>

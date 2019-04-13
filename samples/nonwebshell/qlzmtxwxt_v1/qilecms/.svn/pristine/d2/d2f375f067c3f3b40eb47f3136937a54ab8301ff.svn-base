@@ -1,0 +1,76 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Settings extends Common
+{
+
+	public function  update(){
+
+	     if(request()->isPost()){
+      	 $post = input('post.');  	
+	      	 if(!isset($post['groupname'])){
+	      	 	return error_json('配置错误，传参时缺少配置组');
+	      	 }
+      	 $settings = model('settings');
+         $result = $settings->updateSettings($post['groupname'],$post['data']);
+         $settings = get_settings();	
+	     return success_json('配置成功');
+        }
+
+	}
+	public function site(){
+//系统设置
+      
+      return $this->fetch();
+	}
+
+	public function member(){
+//会员设置	
+
+      return $this->fetch();
+	}
+	public function credit(){
+//积分设置	
+	
+      return $this->fetch();
+	}
+
+	public function oauth(){
+//第三方登陆设置	
+
+      return $this->fetch();
+	}	
+	public function sms(){
+//短信设置	
+		return $this->fetch();
+	}	
+	public function email(){
+//邮件设置	
+		return $this->fetch();
+	}
+	public function url(){
+//url设置	
+		return $this->fetch();
+	}
+	public function pay(){
+//支付设置	
+		return $this->fetch();
+	}
+
+	public function finance(){
+//财务设置	
+		return $this->fetch();
+	}	
+	public function mobile(){
+//wap手机/app设置	
+		return $this->fetch();
+	}
+	public function weixin(){
+//微信设置	
+		return $this->fetch();
+	}
+	public function attachments(){
+
+		return $this->fetch();
+	}		
+}

@@ -1,0 +1,71 @@
+
+<div class="tr p10">
+	<input type="hidden" id="export_type" name="export_type" data-param='{"url":"{$actionurl}?orderby={$orderby ?$orderby:''}&exporttype=excel"}' value="excel"/>
+	<a class="dssc-btn-mini" id="export_btn" href="javascript:void(0);" title="{$Think.lang.export_excel}">{$Think.lang.export_excel}</a>
+</div>
+<input type="hidden" id="orderby" name="orderby" value="{$orderby?$orderby:''}"/>
+
+<table class="dssc-default-table">
+  <thead>
+    <tr class="sortbar-array">
+      {foreach name="statheader" item="v"}
+      <th class="align-center">{$v.text}</th>
+      {/foreach}
+    </tr>
+  </thead>
+  <tbody id="datatable">
+  {notempty name="statlist"}
+  {foreach name="statlist" item="v"}
+    <tr class="bd-line">
+      {foreach name="statheader" item="h_v"}
+  		<td class="{$h_v.class?$h_v.class:'align-center'}">{$v[$h_v.key]}</td>
+      {/foreach}
+  	</tr>
+    {/foreach}
+    {else /}
+    <tr>
+      <td colspan="20" class="norecord">
+        <div class="warning-option"><i class="fa fa-warning"></i>
+          <span>{$Think.lang.no_record}</span>
+        </div>
+      </td>
+    </tr>
+    {/notempty}
+  </tbody>
+  {notempty name="statlist"}
+  <tfoot>    
+    <tr>
+      <td colspan="20">
+        <div class="pagination">{$show_page}</div>
+      </td>
+    </tr>
+  </tfoot>
+  {/notempty}
+</table>
+<script src="{$Think.PLUGINS_SITE_ROOT}/statistics.js"></script>
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#statlist').find('.demo').ajaxContent({
+        event:'click', //mouseover
+        loaderType:"img",
+        loadingMsg:"{$Think.HOME_SITE_ROOT}/images/treetable/transparent.gif",
+        target:'#statlist'
+    });
+    $("[ds_type='orderitem']").ajaxContent({
+        event:'click',
+        loaderType:"img",
+        loadingMsg:"{$Think.HOME_SITE_ROOT}/images/treetable/transparent.gif",
+        target:'#statlist'
+    });
+
+    //导出图表
+    $("#export_btn").click(function(){
+        var item = $("#export_type");
+        var type = $(item).val();
+        if(type == 'excel'){
+            download_excel(item);
+        }
+    });
+});
+</script>

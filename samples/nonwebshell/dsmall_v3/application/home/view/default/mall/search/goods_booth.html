@@ -1,0 +1,24 @@
+<div class="title">
+    <h3>{$Think.lang.promotion_goods}</h3></div>
+<div class="content" ds_type="current_display_mode">
+    {notempty name="goods_list"}
+    <ul class="dsh-booth-list squares">
+        {foreach name="goods_list" item="value"}
+        <li dstype_goods="{$value.goods_id}" dstype_store="{$value.store_id}">
+            <div class="goods-pic">
+                <a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank" title="{$value.goods_name}">
+                    <img src="{:goods_thumb($value)}" title="{$value.goods_name}" alt="{$value.goods_name}" />
+                </a>
+            </div>
+            {if config('groupbuy_allow') && $value['goods_promotion_type'] == 1}
+            <div class="goods-promotion"><span>{$Think.lang.snap_up_goods}</span></div>
+            {elseif config('promotion_allow') && $value['goods_promotion_type'] == 2 /}
+            <div class="goods-promotion"><span>{$Think.lang.limited_time_discount}</span></div>
+            {/if}
+            <div class="goods-name"><a href="{:url('Goods/index',['goods_id'=>$value.goods_id])}" target="_blank" title="{$value.goods_advword}">{$value.goods_name}</a></div>
+            <div class="goods-price" title="{$Think.lang.commodity_prices}{$Think.lang.ds_colon}{$Think.lang.currency}{$value.goods_promotion_price}">{$Think.lang.currency}{$value.goods_promotion_price}</div>
+        </li>
+        {/foreach}
+    </ul>
+    {/notempty}
+</div>

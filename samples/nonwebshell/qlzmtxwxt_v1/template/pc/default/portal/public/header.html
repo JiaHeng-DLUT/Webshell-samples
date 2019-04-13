@@ -1,0 +1,47 @@
+<div class="news-header">
+  <div class="layui-main">
+    <a id="logo" href="{:url('/')}"><img src="{$settings.site.logo}"></a>
+    <ul class="layui-nav header-nav close">
+
+      {qilecms:nav name="vo"  limit="7" }
+      <li class="layui-nav-item">
+        <a href="{$vo.url}" {if $vo.target} target="_blank" {/if} >{if $vo.icon} <i class="{$vo.icon}" style="margin-right: 2px;"></i>{/if} {$vo.name}</a>
+      </li>
+      {/qilecms:nav}
+
+      <li class="layui-nav-item more">
+        <a href="javaScript:;">更多</a>
+        <dl class="layui-nav-child">
+           {qilecms:nav name="vo" limit="8,60" }
+          <dd><a class="hida" href="{$vo.url}" {if $vo.target} target="_blank" {/if}>{if $vo.icon}<i class="{$vo.icon}" aria-hidden="true" style="margin-right: 2px;"></i>{/if}{$vo.name}</a></dd>
+           {/qilecms:nav}
+         
+        </dl>
+      </li>
+    </ul>
+    <button id="switch">
+      <span></span><span class="second"></span><span class="third"></span>
+    </button>
+    <div class="layui-form header-search">
+      <input type="text" placeholder="请输入要搜索的内容" class="layui-input" id="keywords">
+    </div>
+
+    {if !$user.uid}
+    <div class="layui-form header-login">
+      <a href="{:url('@user/login')}">登陆</a>
+   
+    </div>
+    {else}
+    <ul class="layui-nav header-login">
+      <li class="layui-nav-item">
+        <a href="javascript:;" class="layui-nav-img">{:avatar($user.uid)}</a>
+        <dl class="layui-nav-child">
+          <dd><a href="{:url('@user/index/index')}">个人中心</a></dd>
+          <dd><a href="javascript:;" id="logout" data-url="{:url('@user/logout/index')}">退出登录</a></dd>
+        </dl>
+      </li>
+    </ul>
+    {/if}
+  </div>
+</div>
+

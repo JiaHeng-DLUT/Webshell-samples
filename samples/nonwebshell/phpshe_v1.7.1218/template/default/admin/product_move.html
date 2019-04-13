@@ -1,0 +1,40 @@
+<!--{include(pe_tpl('header_dialog.html'));}-->
+<form method="post" id="form" autocomplete="off">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang_bak">
+<!--{if($_g_category_id):}-->
+<tr>
+	<td align="right" class="bgtt" width="100">商品从</td>
+	<td>
+		<select name="category_id" class="inputselect">
+		<option value="">请选择分类</option>
+		<!--{foreach($category_treelist as $v):}-->
+		<option value="{$v['category_id']}" <!--{if($_g_category_id==$v['category_id']):}-->selected="selected"<!--{endif;}-->>{$v['category_showname']}</option>
+		<!--{endforeach;}-->
+		</select>
+	</td>
+</tr>
+<!--{else:}-->
+<tr>
+	<td align="right" class="bgtt" width="100">已选择</td>
+	<td>{count(explode(',', $_g_id))}件商品</td>
+</tr>
+<!--{endif;}-->
+<tr>
+	<td align="right" class="bgtt">转移到</td>
+	<td>
+		<select name="category_newid" class="inputselect">
+		<option value="">请选择分类</option>
+		<!--{foreach($category_treelist as $v):}-->
+		<option value="{$v['category_id']}">{$v['category_showname']}</option>
+		<!--{endforeach;}-->
+		</select>
+	</td>
+</tr>
+</table>
+<div class="acenter mat20">
+	<input type="hidden" name="pesubmit" />
+	<input type="hidden" name="pe_token" value="{$pe_token}" />
+	<input type="submit" value="转 移" class="tjbtn" />
+</div>
+</form>
+<!--{include(pe_tpl('footer_dialog.html'));}-->

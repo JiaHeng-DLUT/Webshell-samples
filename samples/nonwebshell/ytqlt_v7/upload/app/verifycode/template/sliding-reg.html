@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="app/verifycode/template/css/sliding.css">
+<script src="app/verifycode/template/js/drag.js"></script>
+<script src="app/verifycode/template/js/md5.js"></script>
+<div class="pk-row pk-margin-bottom-15">
+	<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-padding-right-0 pk-text-nowrap">验证码</label>
+	<div class="pk-w-sm-9">
+		<input id="RangeVerifyCode" type="hidden" name="verifycode" />
+		<div class="SlidingVerify" style="max-width: 300px;">
+			<div></div>
+			<div>拖动滑块验证</div>
+			<div>&raquo;</div>
+		</div>
+	</div>
+</div>
+<script>
+	var type = "{$_G['APP']['VERIFYCODE']['TYPE']}";
+</script>
+<script src="app/verifycode/template/js/verify.js"></script>

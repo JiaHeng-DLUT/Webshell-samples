@@ -1,0 +1,64 @@
+{% if ! User::require_acl ('admin', 'filemanager') %}
+{% if link %}<a href="{{link}}">{% end %}<img src="{{src}}"
+	 id="photo-{{key}}"
+	 style="width: {{width}}px; height: {{height}}px"
+	 alt="{{alt}}"
+	 {% if class %} class="{{class}}"{% end %}
+/>{% if link %}</a>{% end %}
+{% else %}
+<div id="photo-{{key}}-wrapper" title="{'Edit Photo'} ({{width}}x{{height}})">
+	<img src="{{src}}"
+		 id="photo-{{key}}"
+		 style="width: {{width}}px; height: {{height}}px"
+		 alt="{{alt}}"
+		 {% if class %} class="{{class}}"{% end %}
+	/>
+	<div id="photo-{{key}}-overlay"></div>
+</div>
+<script>
+$(function () {
+	$('#photo-{{key}}').photoswitcher ({
+		key: '{{key}}',
+		src: '{{src}}',
+		width: {{width}},
+		height: {{height}},
+		title: '{"Choose an image"}'
+	});
+	
+	$('#photo-{{key}}-wrapper').on ('mouseover', function () {
+		$('#photo-{{key}}-overlay').show ();
+	});
+	
+	$('#photo-{{key}}-wrapper').on ('mouseout', function () {
+		$('#photo-{{key}}-overlay').hide ();
+	});
+});
+</script>
+<style>
+div#photo-{{key}}-wrapper {
+	position: relative;
+	display: inline-block;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+div#photo-{{key}}-overlay {
+	position: absolute;
+	display: none;
+	top: 0;
+	left: 0;
+	width: {{width}}px;
+	height: {{height}}px;
+	border: 1px solid #222;
+	padding: 0;
+	margin: 0;
+	background-image: url(/apps/admin/css/admin/editable-photo.png);
+	background-position: 100% 0px;
+	background-repeat: no-repeat;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+</style>
+{% end %}

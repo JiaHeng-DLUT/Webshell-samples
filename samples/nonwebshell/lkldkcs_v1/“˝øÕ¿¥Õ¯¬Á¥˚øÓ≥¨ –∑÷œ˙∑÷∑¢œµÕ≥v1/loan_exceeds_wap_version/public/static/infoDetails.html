@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>消息详情</title>
+</head>
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+
+  .pd40 {
+    padding: 0 .4rem;
+  }
+
+  .main {
+    height: calc(100vh);
+    box-sizing: border-box;
+    background-color: #fff;
+    letter-spacing: 1px;
+  }
+
+  .title {
+    font-size: .3rem;
+    line-height: .46rem;
+    color: #101d37;
+    font-weight: bold;
+  }
+
+  .content {
+    font-size: .28rem;
+    line-height: .42rem;
+    color: #101d37;
+  }
+
+  .content img {
+    width: 100%;
+    display: block;
+  }
+
+  .date {
+    text-align: right;
+    font-size: .24rem;
+    color: #8a9099;
+  }
+
+</style>
+
+<body>
+  <div class="main pd40">
+    <p class="title"></p>
+    <p class="date"></p>
+    <div class="content"></div>
+  </div>
+
+  <script src="./js/jquery.min.js"></script>
+  <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px'
+
+    function getUrlParam(n) {
+      var a = new RegExp("(^|&)" + n + "=([^&]*)(&|$)"),
+        t = window.location.search.substr(1).match(a);
+      return null != t ? decodeURI(t[2]) : null
+    }
+    //生成随机数
+    function guid() {
+      function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+      }
+      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
+    }
+    var header = {
+      'Device': getUrlParam('device'), // 平台
+      'Version': '1.0.1', // 渠道下App版本
+      'System': '1.0.1', // 操作系统版本
+      'source': 'wap', // 平台
+      'Authentication': getUrlParam('token')
+    }
+
+    function message_() {
+      $.ajax({
+        url: 'https://api.daidaihu365.com/api/v1/message/' + getUrlParam('id'),
+        type: 'GET',
+        dataType: 'JSON',
+        headers: header,
+        success: function (res) {
+          if (res.code === 200) {
+            console.log(res);
+            content = res.data.content
+            title = res.data.title
+            date = res.data.created_at
+            $('.date').append(date.split(" ")[0])
+            $('.title').append(title)
+            $('.content').append(content)
+          } else {
+            // console.log(res.info)
+          }
+        },
+        error: function () {
+          flag = false
+        }
+      })
+    }
+    message_();
+
+  </script>
+</body>
+
+</html>

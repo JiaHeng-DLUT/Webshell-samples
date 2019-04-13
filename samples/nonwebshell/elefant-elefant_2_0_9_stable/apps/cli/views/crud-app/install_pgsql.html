@@ -1,0 +1,11 @@
+create sequence #prefix#{{plural}}_{{pkey}}_seq;
+
+create table #prefix#{{plural}} (
+{% for key, field in fields %}
+{% if field->type === 'pkey' %}
+	{{field->name}} integer not null default nextval('#prefix#{{plural}}_{{field->name}}_seq') primary key{% if $data->key < count ($data->fields) - 1 %},{% end %} 
+{% else %}
+	{{field->name}} {{field->type|crud_pgsql_type (%s)}}{% if $data->key < count ($data->fields) - 1 %},{% end %} 
+{% end %}
+{% end %}
+);

@@ -1,0 +1,99 @@
+
+
+ <!DOCTYPE html><html lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>user add del - vue2入门与提高视频教程 </title>
+ 
+ <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.css" rel="stylesheet">
+
+<script src="vue.js" type="text/javascript"></script>
+<script src="vue-resource.js" type="text/javascript"></script>
+<!--
+ <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.6"></script>
+-->
+</head>
+<body  >
+ 
+ 
+<div id="app">
+
+<form v-on:submit="adduser">
+<div style="background:#ccc">
+ name:<input type="text"  v-model="newuser.name"   />
+ email:<input type="text"   v-model="newuser.email"   />
+ <input type="submit"   value="add" />
+ 
+</div>
+
+ <ul>
+ <li v-for="user in users">
+ <input type="button" v-on:click="deluser(user)" value="del" />
+ <input type="checkbox" class="toggle" v-model="user.contact" />
+ <div :class="{del : user.contact}">
+ {{ user.name }} :   <span style="color:blue"> {{ user.email }} <span>
+ </div>
+ 
+ </li>
+ </ul>
+
+ 
+ </form>
+ </div>
+
+ <script>
+
+ 
+ 
+ 
+
+var vm = new Vue({ 
+
+    el:'#app',
+    data:{
+      newuser:{name:'11',email:'aa@aa.com',},
+      users:[
+	  {name:'11',email:'aa@aa.com',contact:false},
+	  {name:'22',email:'aa@aa.com',contact:false},
+	  {name:'33',email:'aa@aa.com',contact:false},
+	  ]
+    },
+    methods:{
+      adduser:function(e){
+           this.users.push(
+		   {
+		     name:this.newuser.name,
+			 email:this.newuser.email,
+			 contact:true,
+		   }
+		   );
+           e.preventDefault();
+      },
+       deluser:function(user){
+	       
+			this.users.splice(this.users.indexOf(user),1);
+            
+      }
+
+    } 
+	,
+	
+
+
+
+})
+ </script>
+
+ <style>
+    li{padding-left:33px; padding-right:33px; height:33px;}
+	li input[type="button"]{float:right}
+	li input[type="checkbox"]{float:left}
+	li .del{ text-decoration:line-through}
+    .dn {display:none;}
+    .db {display:block;}
+ </style>
+</body>
+</html>
+ 
+ 
+
+

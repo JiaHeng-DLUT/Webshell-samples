@@ -1,0 +1,86 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <form id="add_form" method="post" >
+        <table class="ds-default-table">
+            <tbody>
+            <tr class="noborder">
+                <td class="required w120"><label class="validation" for="promotion_bundling_price">{$Think.lang.bundling_gold_price}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_bundling_price" name="promotion_bundling_price" value="{$setting.promotion_bundling_price}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.bundling_price_prompt}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation" for="promotion_bundling_sum">{$Think.lang.bundling_sum}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_bundling_sum" name="promotion_bundling_sum" value="{$setting.promotion_bundling_sum}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.bundling_sum_prompt}</td>
+            </tr>
+            <tr class="noborder">
+                <td class="required"><label class="validation" for="promotion_bundling_goods_sum">{$Think.lang.bundling_goods_sum}{$Think.lang.ds_colon}</label></td>
+                <td class="vatop rowform">
+                    <input type="text" id="promotion_bundling_goods_sum" name="promotion_bundling_goods_sum" value="{$setting.promotion_bundling_goods_sum}" class="txt">
+                </td>
+                <td class="vatop tips">{$Think.lang.bundling_goods_sum_prompt}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="tfoot">
+                <td colspan="15"><a href="JavaScript:void(0);" class="btn" id="submitBtn"><span>{$Think.lang.ds_submit}</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#submitBtn").click(function(){
+            $("#add_form").submit();
+        });
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                error.appendTo(element.parent().parent().find('td:last'));
+            },
+            rules : {
+                promotion_bundling_price: {
+                    required : true,
+                    digits : true,
+                    min : 1
+                },
+                promotion_bundling_sum: {
+                    required : true,
+                    digits : true
+                },
+                promotion_bundling_goods_sum: {
+                    required : true,
+                    digits : true,
+                    min : 1,
+                    max : 5
+                }
+            },
+            messages : {
+                promotion_bundling_price: {
+                    required : '{$Think.lang.bundling_price_error}',
+                    digits : '{$Think.lang.bundling_price_error}',
+                    min : '{$Think.lang.bundling_price_error}'
+                },
+                promotion_bundling_sum: {
+                    required : '{$Think.lang.bundling_sum_error}',
+                    digits : '{$Think.lang.bundling_sum_error}'
+                },
+                promotion_bundling_goods_sum: {
+                    required : '{$Think.lang.bundling_goods_sum_error}',
+                    digits : '{$Think.lang.bundling_goods_sum_error}',
+                    min : '{$Think.lang.bundling_goods_sum_error}',
+                    max : '{$Think.lang.bundling_goods_sum_error}'
+                }
+            }
+        });
+    });
+</script> 

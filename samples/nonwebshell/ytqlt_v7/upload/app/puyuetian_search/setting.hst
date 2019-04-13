@@ -1,0 +1,40 @@
+<form name="form_save" method="post" action="index.php?c=app&a=superadmin:index&s=save&os={$_G['GET']['S']}&ot={$_G['GET']['T']}&table=set">
+	<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-primary">文章搜索 应用设置</label>
+		<div class="pk-w-sm-8"></div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">应用开关</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox pk-radius-4" data-value="{$_G['SET']['APP_PUYUETIAN_SEARCH_LOAD']}" name="app_puyuetian_search_load">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">显示搜索框</label>
+		<div class="pk-w-sm-8">
+			<select class="pk-textbox pk-radius-4" data-value="{$_G['SET']['APP_PUYUETIAN_SEARCH_SHOWINPUTBOX']}" name="app_puyuetian_search_showinputbox">
+				<option value="0">关闭</option>
+				<option value="1">开启</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right pk-text-nowrap">每页显示条数</label>
+		<div class="pk-w-sm-8">
+			<input class="pk-textbox pk-radius-4" type="number" name="app_puyuetian_search_showcount" value="{$_G['SET']['APP_PUYUETIAN_SEARCH_SHOWCOUNT']}">
+		</div>
+	</div>
+
+	<div class="pk-row pk-padding-bottom-15">
+		<label class="pk-w-sm-3 pk-padding-top-5 pk-text-bold pk-text-right"></label>
+		<div class="pk-w-sm-8">
+			<button type="button" onclick="form_save.submit();this.disabled=true" class="pk-btn pk-btn-primary pk-radius-4">保存</button>
+		</div>
+	</div>
+</form>

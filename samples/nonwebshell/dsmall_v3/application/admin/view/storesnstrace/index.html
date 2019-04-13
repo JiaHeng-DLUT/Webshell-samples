@@ -1,0 +1,159 @@
+{include file="public/header" /}
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>店铺动态</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form method="get" name="formSearch">
+        <div class="ds-search-form">
+            <dl>
+                <dt>{$Think.lang.admin_snsstrace_storename}</dt>
+                <dd><input type="text" value="{$Request.get.search_sname}" name="search_sname" id="search_sname" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_title}</dt>
+                <dd><input type="text" value="{$Request.get.search_stitle}" name="search_stitle" id="search_stitle" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_content}</dt>
+                <dd><input type="text" value="{$Request.get.search_scontent}" name="search_scontent" id="search_scontent" class="txt"></dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.store_sns_trace_type}</dt>
+                <dd>
+                    <select name="search_type">
+                        <option value=''>{$Think.lang.ds_please_choose}...</option>
+                        <option value="2" {$Request.get.search_type == '2'?'selected="selected"':''}>{$Think.lang.store_sns_normal}</option>
+                        <option value="3" {$Request.get.search_type == '3'?'selected="selected"':''}>{$Think.lang.store_sns_new}</option>
+                        <option value="4" {$Request.get.search_type == '4'?'selected="selected"':''}>{$Think.lang.store_sns_coupon}</option>
+                        <option value="5" {$Request.get.search_type == '5'?'selected="selected"':''}>{$Think.lang.store_sns_xianshi}</option>
+                        <option value="6" {$Request.get.search_type == '6'?'selected="selected"':''}>{$Think.lang.store_sns_mansong}</option>
+                        <option value="7" {$Request.get.search_type == '7'?'selected="selected"':''}>{$Think.lang.store_sns_bundling}</option>
+                        <option value="8" {$Request.get.search_type == '8'?'selected="selected"':''}>{$Think.lang.store_sns_groupbuy}</option>
+                        <option value="9" {$Request.get.search_type == '9'?'selected="selected"':''}>{$Think.lang.store_sns_recommend}</option>
+                        <option value="10" {$Request.get.search_type == '10'?'selected="selected"':''}>{$Think.lang.store_sns_hotsell}</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt>{$Think.lang.admin_snstrace_addtime}</dt>
+                <dd>
+                    <input type="text" class="txt date" value="{$Request.get.search_stime}" name="search_stime" id="search_stime" class="txt">
+                    ~
+                    <input type="text" class="txt date" value="{$Request.get.search_etime}" name="search_etime" id="search_etime" class="txt">
+                </dd>
+            </dl>
+            <div class="btn_group">
+                <a href="javascript:document.formSearch.submit();" class="btn" title="{$Think.lang.ds_query}">{$Think.lang.ds_query}</a>
+                <a href="{:url('Storesnstrace/index')}" class="btn btn-default" title="{$Think.lang.ds_cancel}">{$Think.lang.ds_cancel}</a>
+            </div>
+        </div>
+    </form>
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.admin_snstrace_tracelisttip1}</li>
+            <li>{$Think.lang.admin_snstrace_tracelisttip2}</li>
+        </ul>
+    </div>
+
+    
+        <table class="ds-default-table">
+            <tbody>
+                {notempty name="storetrace_list"}
+                {foreach name="storetrace_list" item="v"}
+                <tr class="hover edit">
+                    <td style="vertical-align:top;"><input type="checkbox" name="st_id[]" value="{$v.stracelog_id}" class="checkitem"></td>
+                    <td class="fd-list">
+                        <!-- 动态列表start -->
+                    <li>
+                        <div class="fd-aside">
+                            <span class="thumb size60">
+                                <a href="{:url('home/Storesnshome/index',['sid'=>$v.stracelog_storeid])}" target="_blank">
+                                    <img onload="javascript:ResizeImage(this,60,60);" src="{:get_store_logo($v.stracelog_storelogo)}">
+                                </a>
+                            </span>
+                        </div>
+                        <dl class="fd-wrap">
+                            <dt>
+                                <h3><a href="{:url('home/Storesnshome/index',['sid'=>$v.stracelog_storeid])}" target="_blank">{$v.stracelog_storename}</a>{$Think.lang.ds_colon}</h3>
+                                <h5>{:parsesmiles($v.stracelog_title)}</h5>
+                            </dt>
+                            <dd>
+                                {:parsesmiles($v.stracelog_content)}
+                            </dd>
+                            <dd>
+                                <span class="fc-time fl">{:date('Y-m-d H:i',$v.stracelog_time)}</span>
+                                <span class="fr">{$Think.lang.admin_snstrace_forward}&nbsp;|&nbsp;
+                                    <a href="{:url('Storesnstrace/storecomment_list',['st_id'=>$v.stracelog_id])}">{$Think.lang.admin_snstrace_comment}{$v.stracelog_comment >0 ? ($v.stracelog_comment):''}</a>
+                                </span>&nbsp;&nbsp;
+                                {$Think.lang.admin_snstrace_state}{$Think.lang.ds_colon}
+                                {if $v.stracelog_state ==0}<font style='color:red;'>{$Think.lang.admin_snstrace_statehide}</font>{else}{$Think.lang.admin_snstrace_stateshow}{/if}</span>
+                            </dd>
+                            <div class="clear"></div>
+                        </dl>
+                    </li>
+                    <!-- 动态列表end -->
+                    </td>
+                </tr>
+                {/foreach}
+            <tfoot>
+                <tr class="tfoot">
+                    <td class="w24"><input type="checkbox" class="checkall" id="checkallBottom"></td>
+                    <td colspan="16"><label for="checkallBottom">{$Think.lang.ds_select_all}</label>
+                        &nbsp;&nbsp; <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_delete_batch();"><span>{$Think.lang.ds_del}</span></a>
+                        <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_edit_batch('hide');"><span>{$Think.lang.admin_snstrace_statehide}</span></a>
+                        <a href="JavaScript:void(0);" class="btn btn-small" onclick="submit_edit_batch('show');"><span>{$Think.lang.admin_snstrace_stateshow}</span></a>
+                    </td>
+                </tr>
+            </tfoot>
+            {else /}
+            <tr class="no_data">
+                <td colspan="15">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#search_stime').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#search_etime').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+    //批量修改
+    function submit_edit_batch(type) {
+        /* 获取选中的项 */
+        var items = '';
+        $('.checkitem:checked').each(function () {
+            items += this.value + ',';
+        });
+        if (items != '') {
+            items = items.substr(0, (items.length - 1));
+            submit_edit(items,type);
+        }else{
+            layer.alert('请勾选选项', {icon: 2})  
+        }
+    }
+    function submit_edit(ids_str,type){
+        _uri = ADMINSITEURL+"/Storesnstrace/strace_edit.html?st_id=" + ids_str+"&type="+type;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_operation}');
+    }
+    function submit_delete(ids_str){
+        _uri = ADMINSITEURL+"/Storesnstrace/strace_del.html?st_id=" + ids_str;
+        dsLayerConfirm(_uri,'{$Think.lang.ds_ensure_del}');
+    }
+</script>

@@ -1,0 +1,137 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="right">
+	<div class="now">
+		<a href="admin.php?mod=product" <!--{if($act=='index' && !$_g_filter):}-->class="sel"<!--{endif;}-->>出售中商品（{$tongji['all']}）<i></i></a>
+		<a href="admin.php?mod=product&filter=state|2" <!--{if($act=='index' && $_g_filter=='state|2'):}-->class="sel"<!--{endif;}-->>已下架商品（{$tongji['xiajia']}）<i></i></a>
+		<a href="admin.php?mod=product&filter=num|0" <!--{if($act=='index' && $_g_filter=='num|0'):}-->class="sel"<!--{endif;}-->>缺货商品（{$tongji['quehuo']}）<i></i></a>
+		<a href="admin.php?mod=product&filter=wlmoney|0" <!--{if($act=='index' && $_g_filter=='wlmoney|0'):}-->class="sel"<!--{endif;}-->>包邮商品（{$tongji['baoyou']}）<i></i></a>
+		<a href="admin.php?mod=product&filter=istuijian|1" <!--{if($act=='index' && $_g_filter=='istuijian|1'):}-->class="sel"<!--{endif;}-->>推荐商品（{$tongji['tuijian']}）<i></i></a>
+		<a href="admin.php?mod=product&act=add&type=normal" id="fabu">添加普通商品</a>
+		<div class="clear"></div>
+	</div>
+	<div class="right_main">
+		<div class="search">
+			<form method="get">
+			<input type="hidden" name="mod" value="{$_g_mod}" />
+			<input type="hidden" name="filter" value="{$_g_filter}" />
+			商品名称：<input type="text" name="name" value="{$_g_name}" class="inputtext input200" />
+			<select name="brand_id" class="selectmini">
+			<option value="" href="{pe_updateurl('type', '')}">商品类型</option>
+			<!--{foreach($ini['product_type'] as $k=>$v):}-->
+			<option value="{$k}" href="{pe_updateurl('type', $k)}" <!--{if($_g_type==$k):}-->selected="selected"<!--{endif;}-->>{$v}</option>
+			<!--{endforeach;}-->
+			</select>
+			<select name="category_id" class="selectmini">
+			<option value="" href="{pe_updateurl('category_id', '')}">全部分类</option>
+			<!--{foreach($category_treelist as $v):}-->
+			<option value="{$v['category_id']}" href="{pe_updateurl('category_id', $v['category_id'])}" <!--{if($_g_category_id==$v['category_id']):}-->selected="selected"<!--{endif;}-->>{$v['category_showname']}</option>
+			<!--{endforeach;}-->
+			</select>
+			<select name="brand_id" class="selectmini">
+			<option value="" href="{pe_updateurl('brand_id', '')}">全部品牌</option>
+			<!--{foreach($cache_brand as $v):}-->
+			<option value="{$v['brand_id']}" href="{pe_updateurl('brand_id', $v['brand_id'])}" <!--{if($_g_brand_id==$v['brand_id']):}-->selected="selected"<!--{endif;}-->>[{$v['brand_word']}] {$v['brand_name']}</option>
+			<!--{endforeach;}-->
+			</select>
+			<select name="orderby" class="selectmini">
+			<option value="" href="{pe_updateurl('orderby', '')}">默认排序</option>
+			<!--{foreach($orderby_arr as $k=>$v):}-->
+			<option value="{$k}" href="{pe_updateurl('orderby', $k)}" <!--{if($_g_orderby==$k):}-->selected="selected"<!--{endif;}-->>{$v}</option>
+			<!--{endforeach;}-->
+			</select>
+			<input type="submit" value="搜索" class="input_btn" />
+			</form>
+		</div>
+		<form method="post" id="form">
+		<table border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+			<th class="bgtt" width="20"><input type="checkbox" name="checkall" onclick="pe_checkall(this, 'product_id')" /></th>
+			<th class="bgtt" width="50">ID号</th>
+			<th class="bgtt" width="60">排序</th>
+			<th class="bgtt" width="40"></th>
+			<th class="bgtt">商品名称</th>
+			<th class="bgtt" width="90">分类</th>
+			<th class="bgtt" width="90">品牌</th>
+			<th class="bgtt" width="60">单价</th>
+			<th class="bgtt" width="50">库存</th>
+			<!--<th class="bgtt" width="50">浏览</td>-->
+			<th class="bgtt" width="80">销量/评价</th>
+			<th class="bgtt" width="50">上架</th>
+			<th class="bgtt" width="100">操作</th>
+		</tr>
+		<!--{foreach($info_list as $v):}-->
+		<tr>
+			<td><input type="checkbox" name="product_id[]" value="{$v['product_id']}" /></td>
+			<td>{$v['product_id']}</td>
+			<td><input type="text" name="product_order[{$v['product_id']}]" value="{$v['product_order']}" class="inputtext input40 center" /></td>
+			<td><a href="{pe_url('product-'.$v['product_id'])}" target="_blank"><img src="{pe_thumb($v['product_logo'], 100, 100)}" width="40" height="40" class="imgbg" /></a></td>
+			<td class="aleft"><!--{if($v['product_type']=='virtual'):}-->[虚拟] <!--{endif}--><a href="{pe_url('product-'.$v['product_id'])}" target="_blank" class="cblue">{$v['product_name']}</a><!--{if($v['product_istuijian']):}--><span class="corg mal5">[荐]</span><!--{endif;}--></td>
+			<td>{$cache_category[$v['category_id']]['category_name']}</td>
+			<td>{$cache_brand[$v['brand_id']]['brand_name']}</td>
+			<td><span class="corg">{$v['product_smoney']}</span></td>
+			<td><span <!--{if(!$v['product_num']):}-->class="cred strong"<!--{endif;}-->>{$v['product_num']}</span></td>
+			<!--<td class="num">{$v['product_clicknum']}</td>-->
+			<td>
+				<a href="admin.php?mod=product&act=sell&id={$v['product_id']}&{pe_fromto()}" onclick="return pe_dialog(this, '设置销量', 430, 230, 'product_sell')">{$v['product_sellnum']}</a>
+				<span class="c999">/</span>
+				<a href="admin.php?mod=product&act=comment&id={$v['product_id']}" onclick="return pe_dialog(this, '添加评价', 920, 530, 'product_comment')">{$v['product_commentnum']}</a>
+			</td>
+			<td>
+				<!--{if($v['product_state']==1):}-->
+				<a href="admin.php?mod=product&act=state&state=2&id={$v['product_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/dui.png" /></a>
+				<!--{else:}-->
+				<a href="admin.php?mod=product&act=state&state=1&id={$v['product_id']}&token={$pe_token}"><img src="{$pe['host_tpl']}images/cuo.png" /></a>
+				<!--{endif;}-->
+			</td>
+			<td>
+				<a href="admin.php?mod=product&act=edit&id={$v['product_id']}&{pe_fromto()}" class="admin_edit mar3">修改</a>
+				<a href="admin.php?mod=product&act=del&id={$v['product_id']}&token={$pe_token}" class="admin_del" onclick="return pe_cfone(this, '删除')">删除</a>
+			</td>
+		</tr>
+		<!--{endforeach;}-->
+		</table>
+		</form>
+	</div>
+	<div class="right_bottom">
+		<span class="fl mal10">
+			<input type="checkbox" name="checkall" onclick="pe_checkall(this, 'product_id')" />
+			<button href="admin.php?mod=product&act=del&token={$pe_token}" onclick="return pe_cfall(this, 'product_id', 'form', '批量删除')">批量删除</button>
+			<button href="admin.php?mod=product&act=order&token={$pe_token}" onclick="pe_doall(this,'form')">更新排序</button>
+			<button href="admin.php?mod=product&act=state&state=1&token={$pe_token}" onclick="return pe_cfall(this, 'product_id', 'form', '批量上架')">批量上架</button>
+			<button href="admin.php?mod=product&act=state&state=2&token={$pe_token}" onclick="return pe_cfall(this, 'product_id', 'form', '批量下架')">批量下架</button>
+			<button href="admin.php?mod=product&act=tuijian&tuijian=1&token={$pe_token}" onclick="return pe_cfall(this, 'product_id', 'form', '批量推荐')">批量推荐</button>
+			<button href="admin.php?mod=product&act=tuijian&tuijian=0&token={$pe_token}" onclick="return pe_cfall(this, 'product_id', 'form', '取消推荐')">取消推荐</button>
+			<button type="button" onclick="product_move()">批量转移商品</button>
+		</span>
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+function product_move() {
+	var product_id = new Array();
+	if ($("input[name='product_id[]']").filter(":checked").length == 0) {
+		alert('请先勾选需要转移的商品!');
+		return false;
+	}
+	$("input[name='product_id[]']").filter(":checked").each(function(i){
+		product_id[i] = $(this).val();
+	})
+	product_id = product_id.join(',');
+	var layer_index = layer.open({
+		type: 2,
+		title: '批量转移商品',
+		area: ['400px', '230px'],
+		fixed: false, //不固定
+		shadeClose: true,
+		shade: 0.5,
+		content: "{$pe['host_root']}admin.php?mod=product&act=move&id="+product_id //iframe的url
+	});
+}
+$(function(){
+	$("select").change(function(){
+		window.location.href = 'admin.php' + $(this).find("option:selected").attr("href");
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

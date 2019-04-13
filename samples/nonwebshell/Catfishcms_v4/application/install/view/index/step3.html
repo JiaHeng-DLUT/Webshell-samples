@@ -1,0 +1,32 @@
+{include file="index/header" /}
+<div class="row">
+    <br><br><br>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <div class="panel panel-default">
+            {include file="index/head" /}
+            <div class="panel-body">
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>1</em></span> {:lang('Environment')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>2</em></span> {:lang('Create the data')}</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary"><span class="badge" style="background-color:#428bca;"><em>3</em></span> {:lang('Finish installation')}</h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="jumbotron">
+                    <br><br>
+                    <h2 class="text-center">{:lang('Installation will be completed, rest for a while now!')}</h2>
+                    <br><br>
+                </div>
+                <div class="row text-center">
+                    <img src="{$domain}public/common/images/jiazai.gif">
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="index/footer" /}

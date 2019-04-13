@@ -1,0 +1,41 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<table class="dssc-default-table">
+    <thead>
+        <tr><th class="w30"></th>
+            <th class="tl">{$Think.lang.mansong_name}</th>
+            <th class="w250">{$Think.lang.start_time}&nbsp;-&nbsp;{$Think.lang.end_time}</th>
+
+            <th class="w300">{$Think.lang.mansong_active_content}</th>
+            <th class="w110">{$Think.lang.ds_state}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="bd-line"><td></td>
+            <td class="tl"><dl class="goods-name"><dt>{$mansong_info.mansong_name}</dt></dl></td>
+            <td><p>{$mansong_info.mansong_starttime|date="Y-m-d H:i",###}</p><p>{$Think.lang.to}</p><p>{$mansong_info.mansong_endtime|date="Y-m-d H:i",###}</p></td>
+            <td><ul class="dssc-mansong-rule-list">
+                    {notempty name="rule_list"}
+                    {foreach name="rule_list" item="val"}
+                    <li>
+                        {$Think.lang.level_price}<strong>{$val.mansongrule_price}</strong>{$Think.lang.ds_yuan}，&nbsp;
+                        {notempty name="val.mansongrule_discount"}
+                        {$Think.lang.level_discount}<strong>{$val.mansongrule_discount}</strong>{$Think.lang.ds_yuan}，&nbsp;
+                        {/notempty}
+                        {empty name="val.goods_id"}
+                        <!-- {$Think.lang.gift_name} <span>{$Think.lang.text_not_join}</span> -->
+                        {else}
+                        {$Think.lang.gift_name}<a href="{$val.goods_url}" title="{$val.mansong_goods_name}" target="_blank" class="goods-thumb"> <img src="{:goods_cthumb($val['goods_image'])}"/> </a>
+                        {/empty}
+                    </li>
+                    {/foreach}
+                    {/notempty}
+                </ul></td>
+            <td>{$mansong_info.mansong_state_text}</td>
+        </tr>
+    <tbody>
+</table>
+
+
+{/block}

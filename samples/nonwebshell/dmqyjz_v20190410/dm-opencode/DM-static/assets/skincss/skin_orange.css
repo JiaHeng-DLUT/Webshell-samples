@@ -1,0 +1,31 @@
+@charset "UTF-8";
+ body{color:#000;background:none} 
+ a{color:#F79239;text-decoration:none; } 
+ a:hover{color:#e4654e} .contentwrap,.pageregionwrap,.bannerwrap{background:#fff}    
+ 
+.footer{background:#F79239;color:#DEF0FA} .footer .blockhd{color:#DEF0FA}
+ .footer a{color:#DEF0FA} 
+ .footer a:hover{color:#2c455e}
+ 
+.sdheader,.sidebar h4.blockhd{ background:#F79239 ;color: #fff;} 
+.content_header h3{border-left: 5px solid #F79239;}
+.content_header{border-bottom: 1px solid #F79239;} 
+.dmbtn .more { background:#F79239; color:#fff}
+.news_scroll .circle{background:#F79239; }
+/*----------   only pc style---------*/
+@media (min-width: 1024px) {
+
+  .menu{background:#F79239;   } 
+  .menu li.m{background:#F79239;border-bottom:none;}  
+  .menu a{color:#fff} 
+ .menu a:hover,   .menu a.active{background:#e28a3c;color:#fff} 
+ .menu li li{background:#e28a3c; border-bottom:1px solid #ca884e;   } 
+ .menu li li a{color:#fff} 
+  .menu li li a:hover {background:#d26d14;color:#fff} 
+   li.m li .sf-sub-indicator {     background-position: 0px 0px; }
+
+}
+/*----------  only mobile style---------*/
+@media (max-width: 1025px) {
+ 
+}

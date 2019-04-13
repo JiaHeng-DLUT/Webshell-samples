@@ -1,0 +1,250 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\Db;
+use think\Request;
+class Category extends Common
+{
+  protected $beforeActionList = [
+  '_table',
+  ];
+  protected static $pageNum = 10; //分类列表分页默认显示数量
+
+  protected function _table(){
+    $param = $this->request->param();
+    // $module = $param['module'];  //模块名
+    // $module_id = $param['module_id']; //模块ID
+      $cateTable = $param['type'].'_category'; //表名
+      return $cateTable;  //返回表名
+    }
+ 
+// 分类
+public  function index(){
+      $param = request()->param(); 
+      $where = 1;
+      if($param){
+              $keywords = $param['keywords'];
+              $group_id   = $param['group_id'];
+              foreach($param['date'] as $k=>$v){
+                $param['date'][] = strtotime($v);
+              }
+                $date = $param['date'];
+               
+               if($keywords['name']){
+                   $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+                }
+
+        }else{
+              $order =  array(
+                'sort'=>'asc'
+              );
+        }   
+       $keywords  = ['cid'=>'分类ID','cname'=>'分类名称'];
+        //日期筛选   
+       $date = [];
+       // 自定义单个字段筛选，需要表名
+       $customSingleField = [];
+        //数据库某个表中的字段筛选,不需要表名
+       $sqlTable = [];
+
+       $this->assign('sqlTable',$sqlTable);
+       $this->assign('customSingleField',$customSingleField);
+       $this->assign('keywords',$keywords);
+       $this->assign('date',$date);
+
+       if(!empty($param['pid'])){
+         $pid = $param['pid'];
+         $where .= " and pid = '$pid'";
+       }else{
+         $where .= " and pid = 0";
+       }
+       $pageNum = self::$pageNum;
+       $list = DB::name($this->_table())->where($where)->order($order)->paginate($pageNum);
+       $page  = $list->render();
+       $lists = to_array($list);
+       $list = $lists['data'];
+       foreach($list as $k=> $v){  
+             $pid = $v['cid'];
+             $result = model('category')->getChildCategory($this->_table(),$pid);           
+             $list[$k]['childrenNum'] = count($result);
+       }
+
+      $this->assign('page', $page);
+      $this->assign('list', $list);
+      $this->assign('type',$param['type']);
+      $this->assign('module_id',$param['module_id']);
+      $this->assign('module_dir',$param['module_dir']);
+      return $this->fetch();
+   }
+
+   public  function add(){
+    $param = input();
+
+    if(request()->isPost()){
+//验证
+      $rule =[
+        'cname'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'cname.require' =>'分类名称不能为空',
+       'cname.chsAlpha' =>'分类名称只能是汉字或字母',
+       'cname.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+            return error_json($result);
+       }else{
+           if(isset($param['status'])){
+              $param['status'] =1;
+           }
+
+
+            $r = model('category')->isExistsCategoryName($this->_table(),$param['cname']);
+            if(!empty($r)){
+              return error_json('分类名已经存在');
+            }
+         $data['cid'] = $param['cid'];
+         $data['cname'] = $param['cname'];
+         $data['abbr'] = $param['abbr'];
+         $data['pid'] = $param['pid'];
+         $data['seotitle'] = $param['seotitle'];
+         $data['description'] = $param['description'];
+         $data['keywords'] = $param['keywords'];
+         $data['path'] = $param['path'];
+         $data['sort'] = $param['sort'];  
+         $data['status'] = $param['status'];
+         $data['path']   = get_top_pid($this->_table(),$param['cid']);
+         $data['level']   = count(explode(',',$data['path']));     
+           $res = model('category')->add($this->_table(),$data);
+           if($res){
+            $this->updateCategoryCache();
+            return success_json('添加成功');
+           }else{
+            return error_json('添加失败');
+           }
+         
+       }
+     
+
+       
+    }else{
+       $cid = !empty($param['cid'])?$param['cid']:0;
+       $list = model('category')->getCategory($this->_table(),$cid);
+       $this->assign('type',$param['type']);
+       $this->assign('pid',$cid); //父类ID
+       $this->assign('pname',$list['cname']); //父类名称
+       return $this->fetch(); 
+    }
+    
+   }
+   public  function edit(){
+    $param = input();            
+    if(request()->isPost()){
+//验证
+      $rule =[
+        'cname'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'cname.require' =>'分类名称不能为空',
+       'cname.chsAlpha' =>'分类名称只能是汉字或字母',
+       'cname.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+         return error_json($result);
+       }else{
+         if(isset($param['status'])){
+            $param['status'] =1;
+         }
+         $data['cid'] = $param['cid'];
+         $data['cname'] = $param['cname'];
+         $data['abbr'] = $param['abbr'];
+         $data['pid'] = $param['pid'];
+         $data['seotitle'] = $param['seotitle'];
+         $data['description'] = $param['description'];
+         $data['keywords'] = $param['keywords'];
+         $data['path'] = $param['path'];
+         $data['sort'] = $param['sort'];  
+         $data['status'] = $param['status'];
+         $data['path']   = get_top_pid($this->_table(),$param['cid']);
+         $data['level']   = count(get_top_pid($this->_table(),$param['cid']));
+         $data['level']   = count(explode(',',$data['path'])); 
+         $res =model('category')->edit($this->_table(),$data);
+    
+         if($res){
+          $this->updateCategoryCache();
+           return success_json('编辑成功');
+         }else{
+           return error_json('编辑失败');
+         }
+         
+       }
+     
+
+       
+    }else{
+
+        $cid = !empty($param['cid'])?$param['cid']:0;
+        $this->assign('type',$param['type']);
+        $category = model('category')->getCategory($this->_table(),$cid);
+
+         $parentcategory = model('category')->getCategory($this->_table(),$category['pid']);
+        $this->assign('pid',$category['pid']); //父类名称
+        $this->assign('pname',$parentcategory['cname']); //父类名称
+        $this->assign('category',$category); //分类名称
+        return $this->fetch();
+    }
+   }
+   public  function categoryUpdate(){
+     
+      if(request()->isPost()){
+         $param = input();
+         if(!is_null($param['status'])){
+           $data['status'] = $param['status'];
+         }
+         
+         if(!is_null($param['sort'])){
+           $data['sort'] = $param['sort'];
+         }
+         $data['cid'] = $param['cid'];
+         $res = model('category')->categoryUpdate($this->_table(),$data);
+         return success_json('更新成功');
+
+      }
+   }
+   public  function del(){
+     
+     $param = input();
+
+     if(!$param['cid']){  return error_json('请求参数错误');    }
+
+     $res = model('category')->del($this->_table(),$param['cid']);
+     if(model('category')->error == NULL){
+        $this->updateCategoryCache();
+        return success_json('删除成功');
+     }else{
+        return error_json($res);
+     }
+   }
+
+
+//生成分类缓存
+   protected function updateCategoryCache(){
+    //更新分类的js文件
+       $list = DB::name($this->_table())->select();
+       $catelist = get_tree($list);
+       cache($this->_table(),$catelist);
+  
+    }
+
+
+
+}

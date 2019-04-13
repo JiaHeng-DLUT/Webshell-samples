@@ -1,0 +1,170 @@
+<{include file="header.html"}>
+<style>
+
+.template-list{padding:20px;}
+.template-list  li{width:220px;height:300px;padding:20px;margin:10px;border:1px solid #eee;overflow:hidden;float:left;}
+.template-list  li img{width:225px;height:150px;}
+.template-title{padding: 16px 0px 0px 0px;}
+.template-list p{padding:5px 0px;}
+.layui-tab-brief > .layui-tab-title .layui-this{color:#2196F3;}
+.layui-tab-brief > .layui-tab-more li.layui-this::after, .layui-tab-brief > .layui-tab-title .layui-this::after{border-bottom: 2px solid #2196F3;}
+</style>
+<div class="template-main">
+	<div class="layui-tab layui-tab-brief" lay-filter="type">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this" lay-id="pc">本地插件</li>
+
+	    <li><a href="http://bbs.youke365.site/forum-55-1.html" >应用中心</a></li>
+
+	  </ul>
+	       <div class="layui-tab-content">
+		    <div class="layui-tab-item layui-show">
+
+		    <table class="layui-table" lay-even lay-skin="nob">
+			  <colgroup>
+			    <col width="100">
+			    <col >
+			    <col width="300">
+			  </colgroup>
+			  <thead>
+			    <tr>
+			      <th>插件名</th>
+			      <th>目录</th>
+			      <th>操作</th>
+			    </tr> 
+			  </thead>
+			  <tbody>
+			  <{if !empty($list)}>
+					<{foreach $list $vo}>
+			    <tr>
+			     <td><a href="javascript:;"><img src="/plugin/<{$vo.directory}>/logo.jpg" style="width:80px;height:80px;border-radius:5px"></a></td>
+			     <td>
+			     <h2><{$vo.name}> (<{$vo.directory}>)</h2> 
+			     版本：<{$vo.version}> 
+			     <p>作者：<a href="<{$vo.website}>"><{$vo.author}></a> <a href="<{$vo.doc_url}>">安装说明</a></p></td>
+			     <td>
+			     <{if isset($vo.status) && $vo.status >=0}>
+				                <{if $vo.status == 1}>
+					                <{if !empty($vo.is_admin) && $vo.is_admin ==1}>
+
+	                                    <a href="/plugin/<{$vo.directory}>/admin_index/act/list.html" class="layui-btn layui-btn-sm layui-btn-normal">管理后台</a>
+
+					                <{/if}>
+					                <{if !empty($vo.has_config)}>
+					                <a href="<{url('admin/plugin',['act'=>'config','id'=>$vo['id']])}>" class="layui-btn layui-btn-sm layui-btn-normal">配置</a>
+                                     <{/if}>
+							     <button class="layui-btn layui-btn-danger layui-btn-sm uninstall" style="float:right;margin-right:10px;"  data-directory="<{$vo.directory}>" data-id="<{$vo.id}>"  >卸载</button>
+							     <button class="layui-btn  layui-btn-primary layui-btn-sm close" data-directory="<{$vo.directory}>" style="float:right;margin-right:10px;" data-id="<{$vo.id}>">关闭</button>
+
+
+							      <{else}>
+							      <button class="layui-btn layui-btn-danger layui-btn-sm uninstall"  style="float:right;margin-right:10px;" data-directory="<{$vo.directory}>" data-id="<{$vo.id}>" > 卸载</button>
+							       <button class="layui-btn layui-btn-normal layui-btn-sm open"  style="float:right;margin-right:10px;" data-directory="<{$vo.directory}>"  data-id="<{$vo.id}>">启用</button>
+
+							      <{/if}>
+
+
+
+										                <{else}>
+										                    <button class="layui-btn layui-btn-normal layui-btn-sm install"  data-directory="<{$vo.directory}>"  style="float:right;margin-right:10px;">安装</button>
+										                <{/if}>
+
+										                </td>
+			    </tr>
+			                  <{/foreach}>
+			         <{else}>
+			          <tr><td colspan="3" style="text-align:center;padding:120px;">
+			          <p style="padding:10px;margin-bottom:20px;"><i class="layui-icon layui-icon-cart-simple" style="font-size:50px"></i>
+			          <p>还没有安装插件，赶快去下载吧 >> <a href="http://bbs.youke365.site/forum-55-1.html">应用中心 </a></p></td></tr>         
+					 <{/if}>
+			  </tbody>
+			</table>
+        <div class="pagebox"><{$showpage}></div>
+
+	       </div>
+		   
+		
+		  </div>
+	</div> 
+	
+
+
+	<{include file="footer.html"}>
+
+      
+<script>
+
+$(function(){
+  //安装
+   $(".install").on("click",function(){
+      $(this).html('安装中');
+      var directory =$(this).attr('data-directory');
+     
+     $.post("<{url('plugin',['act'=>'install'])}>",{directory:directory},function(json){
+        if(json.status == 0){
+               layer.msg(json.msg);
+            location.reload();
+           
+        }else{
+            layer.msg(json.msg);
+        }
+    });
+
+   });
+
+//卸载
+   $(".uninstall").on("click",function(){
+      $(this).html('卸载中');
+      var directory =$(this).attr('data-id');
+      var id =$(this).attr('data-id');
+    $.post("<{url('plugin',['act'=>'uninstall'])}>",{directory:directory,id:id},function(json){
+      if(json.status == 0){
+          layer.msg(json.msg);
+          location.reload();
+      }else{
+          layer.msg(json.msg);
+      }
+
+     });
+
+   });
+
+// 启用
+   $(".open").on("click",function(){
+      $(this).html('启用中');
+      var directory =$(this).attr('data-directory');
+       var id = $(this).attr('data-id');
+    $.post("<{url('plugin',['act'=>'open'])}>",{directory:directory,id:id},function(json){
+      if(json.status == 0){
+          layer.msg(json.msg);
+          location.reload();
+      }else{
+          layer.msg(json.msg);
+      }
+
+     });
+
+   });
+
+// 关闭
+   $(".close").on("click",function(){
+      $(this).html('关闭中');
+      var directory =$(this).attr('data-directory');
+       var id =$(this).attr('data-id');
+    $.post("<{url('plugin',['act'=>'close'])}>",{directory:directory,id:id},function(json){
+      if(json.status == 0){
+          layer.msg(json.msg);
+          location.reload();
+      }else{
+          layer.msg(json.msg);
+      }
+
+     });
+
+   });
+
+ 
+});
+
+</script>
+</div>

@@ -1,0 +1,63 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+
+<div class="dssc-form-default">
+    <form id="add_form" action="{:url('Sellerpromotionmgdiscount/mgdiscount_quota_add_save')}" method="post">
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.mgdiscount_quota_add_quantity}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input id="mgdiscount_quota_quantity" name="mgdiscount_quota_quantity" type="text" class="text w30" /><em class="add-on">{$Think.lang.text_month}</em><span></span>
+                <p class="hint">{$Think.lang.mgdiscount_price_explain1}</p>
+                <p class="hint">{$Think.lang.mgdiscount_price_explain2}{$Think.config.mgdiscount_price}{$Think.lang.ds_yuan}  </p>
+                <p class="hint"><strong style="color: red">{$Think.lang.deduction_settlement_payment_days}</strong></p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input id="submit_button" type="submit" class="submit" value="{$Think.lang.ds_submit}"></label>
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        //页面输入内容验证
+        $("#add_form").validate({
+            errorPlacement: function(error, element){
+                var error_td = element.parent('dd').children('span');
+                error_td.append(error);
+            },
+            submitHandler:function(form){
+                var unit_price = '{$Think.config.mgdiscount_price}';
+                var quantity = $("#mgdiscount_quota_quantity").val();
+                var price = unit_price * quantity;
+                layer.confirm('{$Think.lang.mgdiscount_quota_add_confirm}'+price+'{$Think.lang.ds_yuan}', {
+                    btn: ['确定', '取消'],
+                    title: false,
+                }, function () {
+                    ds_ajaxpost('add_form', 'url', "{:url('Sellerpromotionmgdiscount/mgdiscount_store')}", 1000);
+                });
+                
+                
+            },
+            rules : {
+                mgdiscount_quota_quantity : {
+                    required : true,
+                    digits : true,
+                    min : 1,
+                    max : 12
+                }
+            },
+            messages : {
+                mgdiscount_quota_quantity : {
+                    required : "<i class='fa fa-exclamation-circle'></i>{$Think.lang.mgdiscount_quota_quantity_error}",
+                    digits : "<i class='fa fa-exclamation-circle'></i>{$Think.lang.mgdiscount_quota_quantity_error}",
+                    min : "<i class='fa fa-exclamation-circle'></i>{$Think.lang.mgdiscount_quota_quantity_error}",
+                    max : "<i class='fa fa-exclamation-circle'></i>{$Think.lang.mgdiscount_quota_quantity_error}"
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

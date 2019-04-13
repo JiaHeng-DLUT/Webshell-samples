@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title><{$site_title}></title>
+<meta name="Keywords" content="<{$site_keywords}>" />
+<meta name="Description" content="<{$site_description}>" />
+<{include file="base.html"}>
+</head>
+<body>
+<{include file="topbar.html"}>
+<div class="wrapper">
+	<div class="clearfix sobox">
+    	<a href="<{$site_url}>" class="logo" title="<{$site_title}>"><h1><{$site_name}></h1></a>
+		<div class="search">
+    		<form name="sofrm" class="sofrm" method="get" action="" onSubmit="return rewrite_search()">
+				<input name="mod" type="hidden" id="mod" value="search" />
+				<input name="type" type="hidden" id="type" value="name" />
+				<div id="selopt">
+                	<div id="cursel">网站名称</div>
+					<ul id="options">
+                    	<li><a href="javascript: void(0);" name="name">网站名称</a></li>
+						<li><a href="javascript: void(0);" name="url">网站地址</a></li>
+						<li><a href="javascript: void(0);" name="tags">TAG标签</a></li>
+						<li><a href="javascript: void(0);" name="intro">网站描述</a></li>
+					</ul>
+				</div>
+				<input name="query" type="text" class="sipt" id="query" onFocus="this.value='';" />
+				<input type="submit" class="sbtn" value="搜 索" />
+			</form>
+		</div>
+	</div>
+
+</div>
+	<div class="navbox">
+		<ul class="navbar">
+			<li class="navcur"><a href="?mod=index"><span></span> 首页</a></li>
+			<li><a href="?mod=article">新闻资讯</a></li>
+			<!-- <li><a href="?mod=weblink">换链大厅</a></li> -->
+			<li><a href="?mod=webdir">分类目录</a></li>
+
+			<li><a href="?mod=update">最新收录</a></li>
+
+			<li><a href="?mod=category">网址分类</a></li>
+
+			<li><a href="?mod=top">网站排行榜</a></li>
+			<li><a href="/member/?mod=website&act=add">申请收录</a>
+
+		</ul>
+	</div>
+<div class="blank10"></div>
+
+<div class="wrapper">
+
+	
+</div>
+<{include file="footer.html"}>
+</body>
+</html>

@@ -1,0 +1,164 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+<div class="dsm-flow-layout" id="dsmComplainFlow">
+    <div class="dsm-flow-container">
+        <div class="title">
+            <h3>{$Think.lang.trade_complaint_application}</h3>
+        </div>
+        <div class="dsm-flow-step">
+            <dl id="state_new" class="step-first current">
+                <dt>{$Think.lang.complain_state_new}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_appeal" class="">
+                <dt>{$Think.lang.complain_state_appeal}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_talk" class="">
+                <dt>{$Think.lang.complain_state_talk}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_handle" class="">
+                <dt>{$Think.lang.complain_state_handle}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_finish" class="">
+                <dt>{$Think.lang.complain_state_finish}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+        </div>
+        <div class="dsm-default-form">
+            <h3>{$Think.lang.complain_message}</h3>
+            <dl>
+                <dt>{$Think.lang.complain_accused}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.accused_name}</dd>
+                <dt>{$Think.lang.complain_subject_content}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_subject_content}</dd>
+                <dt>{$Think.lang.complain_datetime}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_datetime|date="Y-m-d H:i:s",###}</dd>
+                <dt>{$Think.lang.complain_content}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.complain_content}</dd>
+                <dt>{$Think.lang.complain_evidence}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    {if $complain_pic}
+                    <ul class="dsm-evidence-pic">
+                        {foreach name="complain_pic" item="val"}
+                        {notempty name="val"}
+                        <li><a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMPLAIN}/{$val}" data-lightbox="lightbox-image">
+                                <img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMPLAIN}/{$val}"></a></li>
+                        {/notempty}
+                        {/foreach}
+                    </ul>
+                    {else /}
+                    {$Think.lang.complain_pic_none}
+                    {if $complain_info.complain_state lt '99'}
+                    <a class="dsm-btn-mini dsm-btn-orange" href="javascript:void(0);" onclick="$('#post_add_pic_form').toggle();" title="{$Think.lang.complain_add_pic}"><i class="fa fa-cloud-upload "></i>{$Think.lang.complain_add_pic}</a>
+                    <form style="display: none;" id="post_add_pic_form" method="post" action="{:url('Membercomplain/complain_add_pic',['complain_id'=>$complain_info.complain_id])}" enctype="multipart/form-data">
+                        <p>
+                            <input name="input_complain_pic1" type="file" />
+                        </p>
+                        <p>
+                            <input name="input_complain_pic2" type="file" />
+                        </p>
+                        <p>
+                            <input name="input_complain_pic3" type="file" />
+                        </p>
+                        <p>
+                            <label class="submit-border"><input id="add_pic_submit_button" type="button" class="submit" value="{$Think.lang.complain_text_submit}" ></label>
+                        </p>
+                    </form>
+                    {/if}
+                    {/if}
+                </dd>
+            </dl>
+            {egt name="complain_info.complain_state" value="30"}
+            {gt name="complain_info.appeal_datetime" value="0"}
+            <h3>{$Think.lang.complain_appeal_message}</h3>
+            <dl>
+                <dt>{$Think.lang.complain_appeal_datetime}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.appeal_datetime|date="Y-m-d H:i:s",###}</dd>
+                <dt>{$Think.lang.complain_appeal_content}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.appeal_message}</dd>
+                <dt>{$Think.lang.complain_appeal_evidence}{$Think.lang.ds_colon}</dt>
+                <dd>
+                    {notempty name="appeal_pic"}
+                    <ul class="dsm-evidence-pic">
+                        {foreach name="appeal_pic" item="val"}
+                        {notempty name="val"}
+                        <li>
+                            <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMPLAIN}/{$val}" data-lightbox="lightbox-image-1">
+                                <img class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMPLAIN}/{$val}">
+                            </a>
+                        </li>
+                        {/notempty}
+                        {/foreach}
+                    </ul>
+                    {else /}
+                    {$Think.lang.complain_pic_none}
+                    {/notempty}
+                </dd>
+            </dl>
+            {/gt}
+            {include file="default/member/membercomplain/complain_talk" /}
+            {/egt}
+            {eq name="complain_info.complain_state" value="99"}
+            <h3>{$Think.lang.final_handle_message}</h3>
+            <dl>
+                <dt>{$Think.lang.processing_opinion}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.final_handle_message}</dd>
+                <dt>{$Think.lang.final_handle_datetime}{$Think.lang.ds_colon}</dt>
+                <dd>{$complain_info.final_handle_datetime|date="Y-m-d H:i:s",###}</dd>
+            </dl>
+            {/eq}
+            <div class="bottom"><a href="javascript:history.go(-1);" class="dsm-btn"><i class="fa fa-reply"></i>{$Think.lang.return_list}</a></div>
+        </div>
+    </div>
+    {include file="default/member/membercomplain/complain_order" /}
+</div>
+
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var state = {empty name="complain_info.complain_state"}0{else}{$complain_info.complain_state}{/empty};
+        if(state == 20 ){
+            $("#state_appeal").addClass('current');
+        }
+        if(state == 30 ){
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+        }
+        if(state == 40 ){
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+            $("#state_handle").addClass('current');
+        }
+        if(state == 99 ){
+            $("#state_appeal").addClass('current');
+            $("#state_talk").addClass('current');
+            $("#state_handle").addClass('current');
+            $("#state_finish").addClass('current');
+        }
+        $("#add_pic_submit_button").click(function(){
+            if($("#post_add_pic_form").valid()){
+                $('#post_add_pic_form').submit();
+            }
+        });
+        $('#post_add_pic_form').validate({
+            errorPlacement: function(error, element){
+                $(element).next('.field_notice').hide();
+                $(element).after(error);
+            },
+        });
+    });
+</script>
+
+
+
+
+
+{/block}

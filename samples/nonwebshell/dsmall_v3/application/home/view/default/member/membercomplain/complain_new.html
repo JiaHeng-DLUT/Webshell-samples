@@ -1,0 +1,108 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+
+
+
+
+<div class="dsm-flow-layout" id=" dsmComplainFlow">
+    <div class="dsm-flow-container">
+        <div class="title">
+            <h3>{$Think.lang.trade_complaint_application}</h3>
+        </div>
+        <div class="dsm-flow-step">
+            <dl id="state_new" class="step-first current">
+                <dt>{$Think.lang.complain_state_new}</dt>
+                <dd class="bg"></dd>
+            </dl>
+            <dl id="state_appeal" class="">
+                <dt>{$Think.lang.complain_state_appeal}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_talk" class="">
+                <dt>{$Think.lang.complain_state_talk}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_handle" class="">
+                <dt>{$Think.lang.complain_state_handle}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+            <dl id="state_finish" class="">
+                <dt>{$Think.lang.complain_state_finish}</dt>
+                <dd class="bg"> </dd>
+            </dl>
+        </div>
+        <div class="dsm-default-form">
+            <form action="{:url('Membercomplain/complain_save')}" method="post" id="complain_form" enctype="multipart/form-data">
+                <input name="input_order_id" type="hidden" value="{$return_info.order_id}" />
+                <input name="input_goods_id" type="hidden" value="{$goods_id}" />
+                <dl>
+                    <dt>{$Think.lang.complain_subject_select}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        {notempty name="subject_list"}
+                        {foreach name="subject_list" item="val"}
+                        <input name="input_complain_subject" type="radio" value="{$val.complainsubject_id},{$val.complainsubject_content}" />
+                        <span class="mr30"><strong>{$val.complainsubject_content}</strong></span><p class="hint">{$val.complainsubject_desc} </p>
+                        {/foreach}
+                        {/notempty}
+                    </dd>
+                </dl>
+                <dl>
+                </dl>
+                <dl>
+                    <dt>{$Think.lang.complain_content}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <textarea name="input_complain_content" rows="3" class="textarea w400" id="input_complain_content"></textarea>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>{$Think.lang.complain_evidence_upload}{$Think.lang.ds_colon}</dt>
+                    <dd>
+                        <p>
+                            <input name="input_complain_pic1" type="file" />
+                        </p>
+                        <p>
+                            <input name="input_complain_pic2" type="file" />
+                        </p>
+                        <p>
+                            <input name="input_complain_pic3" type="file" />
+                        </p>
+                        <span class="error">({$Think.lang.complain_pic_error}) </span>
+                    </dd>
+                </dl>
+                <div class="bottom">
+                    <label class="submit-border"><input id="submit_button" type="submit" class="submit" value="{$Think.lang.complain_text_submit}" ></label>
+                    <a href="javascript:history.go(-1);" class="dsm-btn ml10">{$Think.lang.cancel_and_return}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {include file="default/member/membercomplain/complain_order"}
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        //默认选中第一个radio
+        $(":radio").first().attr("checked",true);
+
+        $("#complain_form").validate({
+            errorPlacement: function(error, element){
+                $(element).next('.field_notice').hide();
+                $(element).after(error);
+            },
+            rules : {
+                input_complain_content : {
+                    required   : true
+                }
+            },
+            messages : {
+                input_complain_content  : {
+                    required   : '{$Think.lang.please_fill_complaint}'
+                }
+            }
+        });
+    });
+</script>
+
+
+
+{/block}

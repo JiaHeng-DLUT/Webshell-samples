@@ -1,0 +1,30 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+class Bbs extends Common
+{
+	public function set(){
+	  return $this->fetch();
+	}
+
+	public function index(){
+	  return $this->fetch();
+	}
+
+	public function category(){
+	  return $this->fetch();
+	}
+	public function add(){
+
+      return $this->fetch();
+	}
+	public function edit(){
+
+      return $this->fetch();
+	}
+	public function del(){
+
+      return $this->fetch();
+	}
+
+}

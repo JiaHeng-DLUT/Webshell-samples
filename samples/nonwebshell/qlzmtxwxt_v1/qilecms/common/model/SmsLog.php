@@ -1,0 +1,35 @@
+<?php
+namespace app\common\model;
+use think\Model;
+
+class SmsLog  extends Base
+{
+
+   // public  function getlist($where='',$order='',$limit='10'){
+
+   //   return $list = $this->where($where)->order($order)->paginate($limit);
+  
+   // }
+   public function del($id){
+
+   	if(!$id){  return true; }
+   	if(is_array($id)){
+   	  $id = implode(',',$id);
+   	}
+   	 $where['id'] = $id;
+     if($this->where($where)->delete()){
+       return true;
+     }else{
+       return false;
+     }
+   }
+
+   public function delAll(){
+    $sql = 'TRUNCATE `'.config('database.prefix')."sms_log".'`';
+     if($this->query($sql)){
+       return true;
+     }else{
+       return false;
+     }
+   }
+}

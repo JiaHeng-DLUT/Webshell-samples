@@ -1,0 +1,9 @@
+
+
+如果出现mysql连接不成功的问题，请做以下操作：
+
+如果是mysql旧版本，请把mysqli5_below.php里的内容复制到mysql.php
+如果是mysql5.5以上，则不用复制，我们默认用的是mysqli5.5的内容
+--------
+if your mysql version is below 5.5,
+pls copy mysqli5_below.php  to mysql.php.

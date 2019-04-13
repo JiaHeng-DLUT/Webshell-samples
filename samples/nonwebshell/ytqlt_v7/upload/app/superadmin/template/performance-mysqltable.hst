@@ -1,0 +1,45 @@
+<style>
+	.pk-table tr td,
+	.pk-table tr th {
+		padding: .5rem;
+		border-color: #CCCCCC !important;
+	}
+</style>
+<div class="pk-row pk-padding-bottom-15 pk-margin-bottom-15" style="border-bottom: solid 1px #458fce;">
+	<label class="pk-w-sm-12 pk-padding-top-5 pk-text-bold pk-text-left pk-text-primary pk-text-nowrap">数据表信息</label>
+</div>
+
+<div class="pk-row pk-padding-bottom-15">
+	<div class="pk-w-sm-12 pk-text-sm">
+		总表数：{$_G['TEMP']['ZBS']}个&nbsp;&nbsp;&nbsp;总记录：{$_G['TEMP']['ZJL']}个&nbsp;&nbsp;&nbsp;总大小：{$_G['TEMP']['ZDX']}Mb
+	</div>
+</div>
+
+<table id="p-m-main" class="pk-table pk-table-bordered pk-width-all">
+	<thead>
+		<tr>
+			<th class="pk-text-left">表名称（不显示前缀）</th>
+			<th class="pk-text-left">引擎</th>
+			<th class="pk-text-left">字符集</th>
+			<th class="pk-text-left">记录</th>
+			<th class="pk-text-left">大小</th>
+			<th class="pk-text-left">创建时间</th>
+			<th class="pk-text-left">更新时间</th>
+		</tr>
+	</thead>
+	<tbody class="pk-text-sm">{$_G['TEMP']['BODY']}</tbody>
+</table>
+<script>
+	$(function() {
+		//样式处理
+		$('#p-m-main .infotr').mouseover(function() {
+			$(this).css('background-color', '#eee').next().css('background-color', '#eee');
+		}).mouseout(function() {
+			$(this).css('background-color', '').next().css('background-color', '');
+		}).next().mouseover(function() {
+			$(this).css('background-color', '#eee').prev().css('background-color', '#eee');
+		}).mouseout(function() {
+			$(this).css('background-color', '').prev().css('background-color', '');
+		});
+	});
+</script>

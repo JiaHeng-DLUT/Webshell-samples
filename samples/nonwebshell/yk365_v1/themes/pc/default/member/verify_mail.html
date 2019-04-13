@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+html {word-wrap: break-word;}
+body {font: 14px arial, verdana, sans-serif; line-height: 25px; margin: 0; padding: 8px 10px;}
+pre {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap; 
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
+</style>
+</head>
+
+<body>
+<table cellpadding="0" cellspacing="0" width="100%" style="font-family: verdana, arial; margin: 0 auto; width: 700px;">
+	<tr>
+		<td style="background: #08c; color: #fff; font: bold 14px normal; line-height: 35px;">&nbsp;&nbsp;欢迎加入<{$site_name}>!</td>
+	</tr>
+	<tr>
+		<td style="border: solid 1px #ccc; font-size: 13px; line-height: 180%; padding: 20px;">
+<strong><{$user_email}></strong><br>您好！<br><strong>请点击下面的链接完成E-mail验证：</strong><br>
+<a href="<{$active_link}>" target="_blank"><{$active_link}></a><br><font color="#999999">(如果无法点击该URL链接地址，请将它复制并粘帖到浏览器的地址输入框，然后单击回车即可)</font><br>注意：请您在收到邮件的48小时内进行激活，否则您的帐户将会失效。
+		</td>
+	</tr>
+	<tr>
+		<td style="background: #333; color: #fff; font-size: 12px; line-height: 180%; padding: 10px;">请注意：此邮件系&nbsp;<a href="<{$site_url}>" target="_blank" style="color: #fff;"><{$site_name}></a>&nbsp;自动发送，请勿直接回复。<br>如果此邮件不是您请求的，请忽略并删除！</td>
+	</tr>
+</table>
+</body>
+</html>

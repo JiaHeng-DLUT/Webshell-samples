@@ -1,0 +1,40 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="content">
+	<div class="now">当前位置：<a href="{$pe['host_root']}">首页</a> {$nowpath}</div>
+	<div class="danye_left">
+		<div class="danye_help">
+			<div class="danye_list">
+				<h3 class="fl_tb1"><s></s>资讯中心</h3>
+				<ul>
+				<!--{foreach((array)$cache_class_arr['news'] as $v):}-->
+				<li><a href="{pe_url('article-list-'.$v['class_id'])}" title="{$v['class_name']}" <!--{if($class_id==$v['class_id']):}-->class="sel"<!--{endif;}-->>{$v['class_name']}</a></li>
+				<!--{endforeach;}-->
+				</ul>
+			</div>
+		</div>
+		<div class="danye_help mat10">
+			<div class="danye_list">
+				<h3 class="fl_tb2"><s></s>帮助中心</h3>
+				<ul>
+				<!--{foreach((array)$cache_class_arr['help'] as $v):}-->
+				<li><a href="{pe_url('article-list-'.$v['class_id'])}" title="{$v['class_name']}" <!--{if($class_id==$v['class_id']):}-->class="sel"<!--{endif;}-->>{$v['class_name']}</a></li>
+				<!--{endforeach;}-->
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="danye_right">
+		<div class="page_tt"><span>{$menutitle}</span></div>
+		<ul class="wenzhang_list">
+			<!--{foreach($info_list as $k=>$v):}-->
+			<li <!--{if($k+1==count($info_list)):}-->style="border-bottom:0"<!--{endif}-->>
+				<a href="{pe_url('article-'.$v['article_id'])}" title="{$v['article_name']}" target="_blank">{$v['article_name']}</a>
+				<span class="fr c888">{pe_date($v['article_atime'], 'Y-m-d')}</span>
+				<div class="clear"></div>
+			</li>
+			<!--{endforeach;}-->
+		</ul>
+		<div class="fenye mat5 mab10 mar10">{$db->page->html}<div class="clear"></div></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,216 @@
+<{include file="header.html"}>
+
+	<{if $action == 'list'}>
+	<h3 class="title"><em><{$pagetitle}></em><span><a href="<{url('article',['act'=>'add'])}>">+添加文章</a></span></h3>
+    <div class="listbox">
+        <form name="mform" method="post" action="<{$fileurl}>">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="<{$keywords}>" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #FF0000;">删除选定</option>
+            <option value="move" style="color: #06c;">移动内容</option>
+            <option value="attr" style="color: #f60;">属性设置</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('art_id[]')==false){alert('请指定您要操作的文章ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status='+this.options[this.selectedIndex].value+'&cate_id=<{$cate_id}>&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0">所有状态</option>
+			<option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option>
+			<option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&cate_id='+this.options[this.selectedIndex].value+'&sort=<{$sort}>&order=<{$order}><{$key_url}>';}">
+			<option value="0" selected>所有分类</option>
+			<{$category_option}>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&cate_id=<{$cate_id}>&sort='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="1"<{opt_selected($sort, 1)}>>按时间排列</option>
+			<option value="2"<{opt_selected($sort, 2)}>>按浏览排列</option>
+			</select>
+			<select class="sel" onChange="if(this.options[this.selectedIndex].value!=''){location='<{$fileurl}>?status=<{$status}>&cate_id=<{$cate_id}>&sort=<{$sort}>&order='+this.options[this.selectedIndex].value+'<{$key_url}>';}">
+			<option value="DESC"<{opt_selected($order, 'DESC')}>>降序</option>
+			<option value="ASC"<{opt_selected($order, 'ASC')}>>升序</option>
+			</select>
+		</div>
+                    
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>文章标题</th>
+                <th>浏览次数</th>
+				<th>文章作者</th>
+                <th>属性状态</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$articles item=item}>
+			<tr>
+				<td><input name="art_id[]" type="checkbox" value="<{$item.art_id}>"></td>
+				<td><{$item.art_id}></td>
+				<td><{$item.cate_name}></td>
+
+				<td><a href="<{url('/home/artinfo',['aid'=>$item['art_id']])}>" target="_blank"><{$item.art_title}></a></td>
+           
+                <td><{$item.art_views}></td>
+                <td><{$item.nick_name}></td>
+                <td><{$item.art_attr}></td>
+				<td>
+				<a href="<{url('article',['act'=>'edit','art_id'=>$item['art_id']])}>">编辑</a>
+				&nbsp;|&nbsp;
+				<a href="<{url('article',['act'=>'del','art_id'=>$item['art_id']])}>" onClick="return confirm(\'确认删除此内容吗？\');">删除</a>
+				</td>
+			</tr>
+			<{foreachelse}>
+			<tr><td colspan="7">无任何文章！</td></tr>
+			<{/foreach}>
+		</table>
+		</form>
+        <div class="pagebox"><{$showpage}></div>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'add' || $action == 'edit'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+    	<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>所属分类：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr>
+				<th>文章标题：</th>
+				<td><input name="art_title" type="text" class="ipt" id="art_title" size="50" maxlength="100" value="<{if !empty($article.art_title)}><{$article.art_title}><{/if}>" /></td>
+			</tr>
+
+			<tr>
+				<th>内容来源：</th>
+				<td><input name="copy_from" type="text" class="ipt" id="copy_from" size="50" maxlength="50" value="<{if !empty($article.copy_from)}><{$article.copy_from}><{/if}>" /><span class="tips">如: 凤凰网</span></td>
+			</tr>
+			<tr>
+				<th>来源地址：</th>
+				<td><input name="copy_url" type="text" class="ipt" id="copy_url" size="50" maxlength="200" value="<{if !empty($article.copy_url)}><{$article.copy_url}><{/if}>" /><span class="tips">如: http://www.youke365.site/</span></td>
+			</tr>
+			<tr>
+				<th>文章内容：</th>
+				<td>
+				<!-- 加载编辑器的容器 -->
+<script name="art_content" id="art_content" type="text/plain" style="width:600px;height:400px;">
+<{if !empty($article.art_content)}><{$article.art_content}><{/if}>
+</script>
+<!-- 样式文件 -->
+<link rel="stylesheet" href="/public/umeditor/themes/default/css/umeditor.css">
+
+<!-- 配置文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/public/umeditor/umeditor.js"></script>
+
+<!-- 实例化编辑器代码 -->
+<script type="text/javascript">
+    $(function(){
+        window.um = UM.getEditor('art_content', {
+        	/* 传入配置参数,可配参数列表看umeditor.config.js */
+        });
+    });
+ </script>
+		          
+                </td>
+			</tr>
+ 			<tr>
+				<th>浏览次数：</th>
+				<td><input name="art_views" type="text" class="ipt" id="art_views" size="10" maxlength="10" value="<{if !empty($article.art_views)}><{$article.art_views}><{else}>0<{/if}>" /> 次</td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td><input name="art_ispay" type="checkbox" id="art_ispay" value="1" <{if !empty($ispay)}>
+				<{opt_checked($ispay, 1)}><{/if}> /><label for="art_ispay">付费</label>　<input name="art_istop" type="checkbox" id="art_istop" value="1" <{if !empty($istop)}>
+				<{opt_checked($istop, 1)}><{/if}> /><label for="art_istop">置顶</label>　<input name="art_isbest" type="checkbox" id="art_isbest" value="1" <{if !empty($isbest)}>
+				<{opt_checked($isbest, 1)}><{/if}>/><label for="art_isbest">推荐</label></td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="art_status" id="art_status" class="sel">
+			
+				<option value="2" style="color: #f30;"<{opt_selected($status, 2)}>>待审核</option>
+
+				<option value="3" style="color: #080;"<{opt_selected($status, 3)}>>已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<{if $action == 'edit' && $article.art_id}>
+					<input name="art_id" type="hidden" id="art_id" value="<{$article.art_id}>">
+					<{/if}>
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+        </form>
+	</div>           
+	<{/if}>
+    
+	<{if $action == 'move'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$articles item=item}><a href="<{$fileurl}>&act=edit&art_id=<{$item.art_id}>"><{$item.art_title}></a><input name="art_id[]" type="hidden" value="<{$art.art_id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>将以上内容移动至：</th>
+				<td><select name="cate_id" id="cate_id" class="sel"><{$category_option}></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+    
+	<{if $action == 'attr'}>
+    <h3 class="title"><em><{$pagetitle}></em><span><a href="<{$fileurl}>">返回列表&raquo;</a></span></h3>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th valign="top">已选定的内容：</th>
+				<td><{foreach from=$articles item=item}><{$item.art_id}> - <a href="<{$fileurl}>&act=edit&art_id=<{$item.art_id}>"><{$item.art_title}></a><input name="art_id[]" type="hidden" value="<{$item.art_id}>"><br /><{/foreach}></td>
+			</tr>
+			<tr>
+				<th>属性设置：</th>
+				<td><input name="art_ispay" type="checkbox" id="art_ispay" value="1" /><label for="art_ispay">付费</label> <input name="art_istop" type="checkbox" id="art_istop" value="1" /><label for="art_istop">置顶</label>　<input name="art_isbest" type="checkbox" id="art_isbest" value="1" /><label for="art_isbest">推荐</label></td>
+			</tr>
+			<tr>
+				<th>审核状态：</th>
+				<td><select name="art_status" id="art_status" class="sel"><option value="1" style="color: #333;">草稿</option><option value="2" style="color: #f30;">待审核</option><option value="3" selected="selected" style="color: #080;">已审核</option></select></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td colspan="2">
+				<input name="act" type="hidden" id="act" value="<{$h_action}>">
+				<input type="submit" class="btn" value="保 存">&nbsp;
+				<input type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+<{include file="footer.html"}>

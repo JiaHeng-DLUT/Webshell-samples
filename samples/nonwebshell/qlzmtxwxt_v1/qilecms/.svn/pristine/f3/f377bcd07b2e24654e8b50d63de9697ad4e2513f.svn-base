@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加分类</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {include file="public/css"}
+    {include file="public/js"}
+</head>
+<body>
+
+
+
+<div class=""  style="padding:20px">
+<form class="layui-form" action="">
+
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 父类</label>
+                <div class="layui-input-inline">
+               <div class="layui-input-inline">
+        <select name="quiz1">
+        <option value="">请选择模块</option>
+        {volist name="list" id="vo"}
+        <option value="{$vo.id}" selected="">{$vo.cate_name}</option>
+          {volist name="$vo.children" id="vo2"}
+          <option value="{$vo2.id}" selected="">|—{$vo2.cate_name}</option>
+          {/volist}
+        {/volist}
+        </select>
+
+
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"> 分类名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="cate_name" lay-verify="name" autocomplete="off" placeholder="" class="layui-input" >
+                </div>
+               <div class="layui-form-mid layui-word-aux">{:about('中文名称，如 后台')}</div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;"></label>
+                <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-normal">确 定</button>
+                </div>
+              </div>
+
+
+</form>
+</div>
+<script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer','form'], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>
+
+</body>
+
+</html>

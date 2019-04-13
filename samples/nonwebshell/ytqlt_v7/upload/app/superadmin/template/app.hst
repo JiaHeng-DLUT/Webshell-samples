@@ -1,0 +1,104 @@
+<style>
+	.table_ta>tbody>tr>td>div {
+		background-repeat: no-repeat;
+		background-size: 20px 20px;
+		background-position: 0 0;
+		line-height: 20px;
+		font-size: 14px;
+	}
+</style>
+<div id="setTemplateDiv" class="pk-padding-10 pk-hide" style="max-width:560px">
+	<div class="pk-row pk-margin-bottom-10">
+		<div class="pk-w-sm-3 _labeltext">当前电脑模板</div>
+		<div class="pk-w-sm-9">
+			<select id="templateName" class="pk-textbox"></select>
+		</div>
+	</div>
+	<div class="pk-row pk-margin-bottom-10">
+		<div class="pk-w-sm-3 _labeltext">当前手机模板</div>
+		<div class="pk-w-sm-9">
+			<select id="phoneTemplateName" class="pk-textbox"></select>
+		</div>
+	</div>
+	<div class="pk-row">
+		<div class="pk-w-sm-3 _labeltext"></div>
+		<div class="pk-w-sm-9">
+			<button type="button" class="pk-btn-primary pk-btn" id="saveTemplateBtn">保存</button>
+		</div>
+	</div>
+</div>
+<div id="searchApp" class="pk-row" style="max-width:360px;position:relative;margin-bottom:10px">
+	<input type="text" class="pk-textbox" placeholder="快速查找应用" />
+	<span class="fa fa-fw fa-search" style="position:absolute;right:0;top:0;height:38px;line-height:38px;width:38px;text-align:center;color:#ccc"></span>
+</div>
+<table id="appTable" class="pk-table pk-table-bordered table_ta" data-local="{$_G['TEMP']['DATA']}">
+	<thead>
+		<tr>
+			<th style="min-width:200px">名称</th>
+			<th width="150" class="pk-hide-sm pk-text-center">版本</th>
+			<th class="pk-hide-sm" style="min-width:400px">说明</th>
+			<th width="150" class="pk-hide-sm pk-text-center">到期日期</th>
+			<th width="100" class="pk-hide-sm pk-text-center">状态</th>
+			<th width="200" class="pk-text-center">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="pk-text-center" colspan="99">正在加载...</td>
+		</tr>
+	</tbody>
+</table>
+<script>
+	$(function() {
+		loadATInit();
+		if($_URI['TYPE'] == 'template') {
+			//读取模板
+			var h = '';
+			for(var i in localdata) {
+				h += '<option value="' + localdata[i].dir + '">' + localdata[i].title + '[' + localdata[i].dir + ']</option>';
+			}
+			$('#templateName,#phoneTemplateName').append(h);
+			$('#templateName').val($_SET['TEMPLATENAME']);
+			$('#phoneTemplateName').val($_SET['PHONETEMPLATENAME']);
+			$('#setTemplateDiv').removeClass('pk-hide');
+			$('#saveTemplateBtn').on('click', function() {
+				var pid = ppp({
+					type: 4,
+					shade: 1,
+					content: "正在保存..."
+				});
+				$.post('index.php?c=app&a=superadmin:index&s=save&table=set&json=1', {
+					templatename: $('#templateName').val(),
+					phonetemplatename: $('#phoneTemplateName').val()
+				}, function(data) {
+					pkpopup.close(pid);
+					if(data['state'] == 'ok') {
+						ppp({
+							type: 3,
+							icon: 1,
+							content: "设置成功"
+						});
+					} else {
+						ppp({
+							icon: 2,
+							content: data['datas']['msg']
+						});
+					}
+				}, 'json');
+			});
+		}
+		$('#searchApp input').on('input change click', function() {
+			var _v = $(this).val();
+			var _d = $('#appTable tbody tr');
+			_d.removeClass('pk-hide');
+			if(!_v) {
+				return true;
+			}
+			for(var i = 0; i < _d.length; i++) {
+				if($(_d[i]).text().indexOf(_v) == -1) {
+					$(_d[i]).addClass('pk-hide');
+				}
+			}
+		});
+	});
+</script>

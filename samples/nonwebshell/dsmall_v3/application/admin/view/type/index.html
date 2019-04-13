@@ -1,0 +1,39 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>类型管理</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <table class="ds-default-table">
+        <thead>
+            <tr>
+                <th>{$Think.lang.type_id}</th>
+                <th>{$Think.lang.type_name}</th>
+                <th>{$Think.lang.gc_name}</th>
+                <th>{$Think.lang.ds_handle}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach name="type_list" item="type"}
+            <tr id="ds_row_{$type.type_id}">
+                <td>{$type.type_id}</td>
+                <td>{$type.type_name}</td>
+                <td>{$type.class_name}</td>
+                <td>
+                    <a href="{:url('Type/type_edit',['type_id'=>$type.type_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Type/type_drop',['type_id'=>$type.type_id])}','{$Think.lang.ds_ensure_del}',{$type.type_id})" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    {$show_page}
+</div>

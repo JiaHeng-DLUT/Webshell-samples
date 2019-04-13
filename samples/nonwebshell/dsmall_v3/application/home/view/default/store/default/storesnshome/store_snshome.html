@@ -1,0 +1,50 @@
+{extend name="default/base/base_store" /}
+{block name="store_main"}
+
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery.charCount.js"></script> 
+<script type="text/javascript" src="{$Think.HOME_SITE_ROOT}/js/member.js"></script>
+<script type="text/javascript" src="{$Think.HOME_SITE_ROOT}/js/sns_store.js" charset="utf-8"></script>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/smilies/smilies_data.js" charset="utf-8"></script> 
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/smilies/smilies.js" charset="utf-8"></script> 
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/jquery.caretInsert.js" charset="utf-8"></script> 
+<link rel="stylesheet" href="{$Think.BASE_SITE_ROOT}/static/home/default/store/styles/default/css/storesnshome.css">
+<script>
+    var MAX_RECORDNUM = '{$max_recordnum}';
+</script>
+
+    {notempty name="strace_array"}
+    <div class="cd-container-wrap">
+<section id="cd-timeline" class="cd-container">
+    
+    {foreach name="strace_array" item="val"}
+    <div class="cd-timeline-block">
+        <div class="cd-timeline-img cd-{$val.stracelog_style}">
+            {$val.stracelog_lang}
+        </div>
+
+        <div class="cd-timeline-content">
+            <h2>{:parsesmiles($val['stracelog_title'])}</h2>
+            <div class="p">
+                {:parsesmiles($val['stracelog_content'])}
+            </div>
+            <a href="javascript:void(0);" ds_type="sd_commentbtn" data-param='{"txtid":"{$val.stracelog_id}"}' class="cd-read-more">{$Think.lang.sns_comment}{$val.stracelog_comment|default=''}</a>
+            <span class="cd-date">{$val.stracelog_time|date="Y-m-d H:i",###}</span>
+            <div class="clear"></div>
+            <!-- 评论模块start -->
+              <div id="tracereply_{$val.stracelog_id}" style="display:none;"></div>
+              <!-- 评论模块end --> 
+        </div>
+    </div>
+    {/foreach}
+</section>
+        <div class="pagination">{$show_page}</div>
+        <!-- 表情弹出层 -->
+        <div id="smilies_div" class="smilies-module"></div>
+</div>    
+    {else /}
+    <div class="w1200">
+      <div class="null">{$Think.lang.store_sns_content_null}</div>
+      </div>
+    {/notempty}
+
+{/block}

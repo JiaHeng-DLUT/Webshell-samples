@@ -1,0 +1,159 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_main"}
+<form method="get">
+    <table class="search-form">
+        <tr>
+            <td>&nbsp;</td>
+            <th class="w110">{$Think.lang.member_evaluation_goodsname}</th>
+            <td class="w160"><input type="text" class="text w150" name="goods_name" value="{$Request.param.goods_name}"/></td>
+            <th class="w110">{$Think.lang.member_evaluation_frommembertitle}</th>
+            <td class="w160"><input type="text" class="text w150" name="member_name" value="{$Request.param.member_name}"/></td>
+            <td class="w70 tc"><label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_search}" /></label></td>
+        </tr>
+    </table>
+</form>    
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w10"></th>
+            <th class="tl">{$Think.lang.evaluation_information}</th>
+            <th class="w90"> {$Think.lang.ds_search}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {notempty name="goodsevallist"}
+        {foreach name="goodsevallist" item="v" key="k" }
+        <tr>
+            <th></th>
+            <th>
+                <span class="goods-name"><a target="_blank" href=" {:url('Goods/index',['goods_id'=>$v.geval_goodsid])}">{$v.geval_goodsname}</a></span>
+                <span>{$Think.lang.product_evaluation}：<em class="raty" data-score="{$v.geval_scores}"></em></span>
+                <span>{$Think.lang.member_evaluation_frommembertitle}：{$v.geval_frommembername} <time>[{$v.geval_addtime|date="Y-m-d H:i:s",###}]</time></span>
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <td rowspan="2"></td>
+            <td class="tl">
+                <strong>{$Think.lang.member_evaluation_content}：</strong>
+                <span>{$v.geval_content}</span>
+            </td>
+            <td rowspan="2" class="dscs-table-handle vt">
+                <span><a dstype="btn_show_explain_dialog" data-geval-id="{$v.geval_id}" data-geval-content="{$v.geval_content}" href="javascript:;" class="btn-acidblue">
+                        <i class="fa fa-comments-o "></i>
+                        <p>{$Think.lang.member_evaluation_explain}</p>
+                    </a></span>
+            </td>
+        </tr>
+        <tr class="bd-line" >
+            <td class="tl" colspan="20">
+                <div {if empty($v['geval_explain'])}style="display:none;"{/if}>
+                    <strong>{$Think.lang.explain_contents}：</strong>
+                    <span dstype="explain">{$v.geval_explain}</span>
+                </div>
+            </td>
+        </tr>
+        {/foreach}
+        {else /}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/notempty}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="20">{$show_page}</td>
+        </tr>
+    </tfoot>
+</table>
+<div id="dialog_explain" style="display:none;">
+    <div class="eject_con">
+        <div id="warning" class="alert alert-error"></div>
+        <form id="explain_form">
+            <input type="hidden" id="geval_id">
+            <dl>
+                <dt>{$Think.lang.member_evaluation_content}：</dt>
+                <dd id="geval_content"></dd>
+            </dl>
+            <dl>
+                <dt><i class="required">*</i>{$Think.lang.explain_contents}：</dt>
+                <dd>
+                    <textarea id="geval_explain" name="geval_explain" cols="30" rows="10"></textarea>
+                </dd>
+            </dl>
+            <div class="bottom">
+                <a href="javascript:void(0);" id="btn_explain_submit" class="submit">{$Think.lang.ds_ok}</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.raty/jquery.raty.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.raty').raty({
+            path: "{$Think.PLUGINS_SITE_ROOT}/js/jquery.raty/img",
+            readOnly: true,
+            score: function () {
+                return $(this).attr('data-score');
+            }
+        });
+
+        var $item = {};
+
+        $('[dstype="btn_show_explain_dialog"]').on('click', function () {
+            $item = $(this).parents('tr').next('tr').find('[dstype="explain"]');
+            var geval_id = $(this).attr('data-geval-id');
+            var geval_content = $(this).attr('data-geval-content');
+            $('#geval_id').val(geval_id);
+            $('#geval_content').text(geval_content);
+            $('#geval_explain').val('');
+            $('#dialog_explain').ds_show_dialog({title: '{$Think.lang.explain_evaluation}'});
+        });
+
+        $('#btn_explain_submit').on('click', function () {
+            if ($('#explain_form').valid()) {
+                var geval_id = $('#geval_id').val();
+                var geval_explain = $('#geval_explain').val();
+                $.post(" {:url('Sellerevaluate/explain_save')}", {
+                    geval_id: geval_id,
+                    geval_explain: geval_explain
+                }, function (data) {
+                    if (data.result) {
+                        $('#dialog_explain').hide();
+                        $item.text(geval_explain);
+                        $item.parent().show();
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }, 'json');
+            }
+        });
+
+        $('#explain_form').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function (form, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors)
+                {
+                    $('#warning').show();
+                } else
+                {
+                    $('#warning').hide();
+                }
+            },
+            rules: {
+                geval_explain: {
+                    required: true
+                }
+            },
+            messages: {
+                geval_explain: {
+                    required: '<i class="fa fa-exclamation-circle"></i>'
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

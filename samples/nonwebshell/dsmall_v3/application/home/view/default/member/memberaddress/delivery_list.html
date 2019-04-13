@@ -1,0 +1,36 @@
+{notempty name="deliverypoint_list"}
+<ul>
+    {foreach name="deliverypoint_list" item="v"}
+    <li>
+        <label>
+            <input type="radio" {if $Request.get.dlyp_id == $v.dlyp_id}checked{/if} dstype="dlyp_radio" data_area="{$v.dlyp_area_info}.{$v.dlyp_address}" value="{$v.dlyp_id}" name="dlyp_id">
+                   {$v.dlyp_addressname|default='，'}{$v.dlyp_address}，{$Think.lang.phone}：{if $v.dlyp_telephony}{$v.dlyp_telephony}{else/}{$v.dlyp_mobile}{/if}
+        </label>
+        <div class="delivery-map"></div>
+    </li>
+  {/foreach}
+</ul>
+<div class="pagination">{$show_page}</div>
+{else /}
+<div class="no-delivery">{$Think.lang.region_no_self_extraction}！</div>
+{/notempty}
+<script src="{$Think.PLUGINS_SITE_ROOT}/jquery.ajaxContent.pack.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('input[dstype="dlyp_radio"]').on('click',function(){
+		$('#zt_address > ul').children().removeClass('select');
+		$(this).parent().parent().addClass('select');
+		$('.delivery-map').html('<img height="250" width="250" src="{$Think.HTTP_TYPE}api.map.baidu.com/staticimage?center=&width=250&height=250&zoom=15&markers='+$(this).attr('data_area')+'">');
+	});
+	if ($('input[type="radio"]:checked').val()) {
+		$('input[type="radio"]:checked').parent().parent().addClass('select');
+		$('.delivery-map').html('<img height="250" width="250" src="{$Think.HTTP_TYPE}api.map.baidu.com/staticimage?center=&width=250&height=250&zoom=15&markers='+$('input[type="radio"]:checked').attr('data_area')+'">');
+	}
+	$('#zt_address').find('.demo').ajaxContent({
+		event:'click', //mouseover
+		loaderType:"img",
+		loadingMsg:"{$Think.HOME_SITE_ROOT}/images/treetable/transparent.gif",
+		target:'#zt_address'
+	});
+});
+</script>

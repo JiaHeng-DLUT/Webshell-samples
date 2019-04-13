@@ -1,0 +1,91 @@
+{include file="public/header" /}
+
+
+
+
+
+<div class="page">
+    <form method="post" id='form1'>
+            <table class="ds-default-table">
+                <tbody>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.refund_order_refund}</td>
+                        <td>{:ds_price_format($refund['refund_amount'])}</td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">商品名称</td>
+                        <td>{$refund.goods_name}</td>
+			<td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.refund_buyer_message}</td>
+                        <td>{$refund.reason_info}</td>
+			<td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">退款说明</td>
+                        <td class="vatop rowform">{$refund.buyer_message}</td>
+			<td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">凭证上传</td>
+                        <td class="vatop rowform">
+                            {notempty name="pic_list"}
+                            {foreach name="pic_list" item="val" key="key" }
+                            {notempty name="val"}
+                            <a href="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}" data-lightbox="lightbox-image">
+                                <img width="64" height="64" class="show_image" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_PATH}/refund/{$val}">
+                            </a>
+                            {/notempty}
+                            {/foreach}
+                            {/notempty}
+                        </td>
+                        <td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.refund_seller_message}</td>
+                        <td class="vatop rowform">{$refund.seller_message}</td>
+			<td class="vatop tips"></td>
+                    </tr>
+                    <tr class="noborder"> 
+                        <td class="required w120">{$Think.lang.refund_message}</td>
+                        <td class="vatop rowform"><textarea id="admin_message" name="admin_message" class="tarea"></textarea></td>
+			<td class="vatop tips"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td colspan="15"><input class="btn" type='submit' name="确认提交"/></td>
+                    </tr>					
+                </tfoot>
+            </table>
+    </form>
+</div>
+
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#submitBtn").click(function() {
+            if ($("#post_form").valid()) {
+                $("#post_form").submit();
+            }
+        });
+        $('#post_form').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent().prev().find('td:first'));
+            },
+            rules: {
+                admin_message: {
+                    required: true
+                }
+            },
+            messages: {
+                admin_message: {
+                    required   : '{$Think.lang.refund_message_null}'
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,60 @@
+<{include file="header.html"}>
+
+	<{if $action == 'info'}>
+    <h3 class="title"><em><{$pagetitle}></em></h3>
+	<div class="listbox">                    
+        <form name="mform" method="post" action="<{$fileurl}>">
+        <div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="update_static">更新所有静态缓存</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="return confirm('确认执行此操作吗？');">
+        </div>
+        
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>缓存名称</th>
+				<th>缓存说明</th>
+				<th>生成时间</th>
+				<th>修改时间</th>
+				<th>缓存大小</th>
+				<th>操作选项</th>
+			</tr>
+			<{foreach from=$caches item=cache}>
+			<tr>
+				<td><{$cache.name}></td>
+				<td><{$cache.desc}></td>
+				<td><{$cache.ctime}></td>
+				<td><{$cache.mtime}></td>
+				<td><{$cache.size}></td>
+				<td><a href="<{$fileurl}>?act=show&cache_id=<{$cache.name}>">查看</a> | <a href="<{$fileurl}>?act=update&cache_id=<{$cache.name}>">更新</a></td>
+			</tr>
+			<{/foreach}>
+		</table>
+		</form>
+	</div>
+	<{/if}>
+
+	<{if $action == 'show'}>
+	<div class="formbox">
+		<form name="mform" method="post" action="<{$fileurl}>">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+        	<tr>
+            	<th>&nbsp;</th>
+            	<td><pre><{$data}></pre></td>
+            </tr>
+            <tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="<{$h_action}>">
+					<input name="cache_id" type="hidden" id="cache_id" value="<{$cache.cache_id}>">
+					<input name="submit" type="submit" class="btn" value="更 新">&nbsp;
+					<input name="reset" type="reset" class="btn" value="取 消" onClick="window.location.href='<{$fileurl}>';">
+                </td>
+            </tr>
+        </table>
+        </form>
+	</div>
+	<{/if}>
+            
+<{include file="footer.html"}>

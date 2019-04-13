@@ -1,0 +1,49 @@
+<!--引入JS-->
+{load href="__JS__/jquery.min.js" /}
+{load href="__STATIC__/layui/layui.js" /}
+{load href="__STATIC__/webuploader/webuploader.js" /}
+{load href="__STATIC__/echarts/build/dist/echarts.js" /}
+{load href="ADMIN_JS/admin.js" /}
+
+  <script>
+layui.use(['element', 'layer','form',], function(){
+   var  element = layui.element, layer = layui.layer,form = layui.form;
+  // //监听导航点击
+  // element.on('nav(nav)', function(elem){
+  // console.log(elem);
+  //   // layer.msg(elem.index());
+  // });
+});
+
+
+</script>
+<script>
+$(document).ready(function(){
+  $(".layui-header .layui-nav-item").click(function(){
+   var i =$(this).index();
+   $(".layui-nav-tree").eq(i).show().siblings('.layui-nav-tree').hide();
+  });
+});
+</script>
+
+<script>
+
+$(function(){
+  $("#clear_cache").on("click",function(){
+      layer.confirm('是否确定清理缓存！', {
+  btn: ['确定','取消'] //按钮
+}, function(){
+         $.post("{:url('system/clearCache')}",{"status":"clear"},function(json){
+           if(json.code == 1){
+             layer.msg(json.msg);
+           }else{
+              layer.msg(json.msg);
+           }
+       });
+}, function(){   });
+
+
+
+  });
+});
+</script>

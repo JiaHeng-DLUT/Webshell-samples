@@ -1,0 +1,72 @@
+<?php
+namespace app\admin\controller;
+use think\Controller;
+use think\Validate;
+use think\facade\Request;
+class Common extends Controller
+{
+    public $settings;
+	  protected $beforeActionList = [
+        '_init',
+    ];
+    private $create_fields =array();
+    public function  _init()
+    {
+      if(!IsAdmin(session('admin_id'))){ 
+        //跳转前台首页，防止非法用户发现后台登陆入口
+        $this->redirect('/');
+        }
+       // 获得全站设置信息
+      $settings =  get_settings();
+      $this->assign('settings',$settings);
+
+
+    }
+
+
+    public function checkSubmit($data=[],$rule=[],$msg=[]){
+            // $rule = [
+            //     'name'  => 'require|max:25',
+            //     'age'   => 'number|between:1,120',
+            //     'email' => 'email',
+            // ];
+
+            // $msg = [
+            //     'name.require' => '名称必须',
+            //     'name.max'     => '名称最多不能超过25个字符',
+            //     'age.number'   => '年龄必须是数字',
+            //     'age.between'  => '年龄只能在1-120之间',
+            //     'email'        => '邮箱格式错误',
+            // ];
+
+            // $data = [
+            //     'name'  => 'thinkphp',
+            //     'age'   => 10,
+            //     'email' => 'thinkphp@qq.com',
+            // ];
+
+            $validate   = Validate::make($rule,$msg);
+            $result = $validate->check($data);
+            if(!$result) {
+              return $validate->getError();
+            }
+    }
+     /**
+     * 数据库字段 网页字段转换
+     * #Date:
+     * @param $array 转化数组
+     * @return 返回数据数组
+     */
+    protected function buildParam($array=[])
+    {
+       
+        $data=[];
+        if (is_array($array) && !empty($array)){         
+            foreach( $array as $item => $value){        
+                $data[$item] = $this->request->param($value);
+            }
+        }
+        return $data;
+    }
+
+}

@@ -1,0 +1,174 @@
+<div class="pk-row">
+	<div class="pk-w-sm-12">
+		<div id="noticeDiv" class="pk-hide pk-margin-bottom-15" style="border:solid 1px #e6e6e6;background-color:#EFEFEF;padding:7px;border-radius:2px;font-size:14px"></div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12">
+		<table id="t_localhost"></table>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12">
+		<table id="t_hadsky" style="margin-bottom:39px!important"></table>
+		<table id="t_jvhuo"></table>
+	</div>
+	<div class="pk-w-sm-12">
+		<table id="t_ad"></table>
+	</div>
+	<div class="pk-w-sm-12" style="padding:10px 0;text-align:center">
+		<button class="pk-btn pk-btn-primary" onclick="_clearCache()">清空API缓存获取最新数据</button>
+	</div>
+	<div class="pk-w-sm-12" style="padding:10px 0;text-align:center">
+		<a class="pk-text-danger pk-hover-underline pk-text-xs" href="javascript:" onclick="daShangZuoZhe()">打赏作者</a>
+	</div>
+</div>
+<script>
+	function _loadTable(t, n, l) {
+		for(var i in t) {
+			if(n && i != n) {
+				continue;
+			}
+			var h = '<thead><tr><th style="text-align:right">' + t[i]['title'] + '</th></tr></thead><tbody>';
+			if(t[i]['content']) {
+				for(var k in t[i]['content']) {
+					if(l == 'ad') {
+						h += '<tr><td style="text-align:right;width:170px">' + t[i]['content'][k]['commission'] + '</td><td>' + t[i]['content'][k]['title'] + '[' + t[i]['content'][k]['type'] + '][' + t[i]['content'][k]['pattern'] + '][<a target="_blank" class="pk-text-primary pk-hover-underline" href="javascript:" onclick="zhanzhangLogin(\'https://www.hadsky.com/union.html#' + t[i]['content'][k]['id'] + '\')">获取资源</a>]</td></tr>';
+					} else {
+						h += '<tr><td style="text-align:right;width:170px">' + k + '</td><td>' + t[i]['content'][k] + '</td></tr>';
+					}
+				}
+			} else {
+				h += '<tr><td style="width:170px"></td><td><div>正在获取...</div></td></tr>';
+			}
+			h += '</tbody>';
+			$('#t_' + i).addClass('pk-table pk-table-bordered pk-margin-bottom-15').html(h);
+		}
+	}
+
+	var _info_init = function(nocache) {
+		var t = [];
+		t["localhost"] = {
+			title: "主机及社区信息",
+			content: {
+				"主机系统": "{php_uname('a')}",
+				"运行环境": "{$_SERVER['SERVER_SOFTWARE']}",
+				"PHP版本": "{$_G['TEMP']['PHP_VERSION']}",
+				"HadSky版本": "{htmlspecialchars(HADSKY_VERSION,ENT_QUOTES)}&nbsp;&nbsp;<a id=\"updateHs\" class=\"pk-text-success pk-hover-underline pk-hide\" style=\"position:relative\" href=\"javascript:\">更新<span style=\"position:absolute;top:0;right:-5px;width:6px;height:6px;background-color:red;border-radius:50%\"></span></a>",
+				"数据库版本": "{sqlQuery('select VERSION()',1)}",
+				"魔术函数状态": "{$_G['TEMP']['MAGIC_QUOTES_GPC']}",
+				"程序路径": "{str_replace('\\','\\\\',realpath($_G['SYSTEM']['PATH']))}",
+				"网站域名": "{$_G['SYSTEM']['DOMAIN']}",
+				"服务器IP": "{$_G['SYSTEM']['SERVERIP']}",
+				"客户端IP": "{$_G['SYSTEM']['CLIENTIP']}",
+				"运行方式": "{php_sapi_name()}",
+				"内存占用": "{Cnum(memory_get_usage()/1024)}K",
+				"磁盘容量": "{round(disk_total_space($_G['SYSTEM']['PATH'])/1024/1024/1024,2)}G",
+				"可用容量": "{round(disk_free_space($_G['SYSTEM']['PATH'])/1024/1024/1024,2)}G",
+				"总会员数": "{$_G['TEMP']['TOTAL_USER']}",
+				"总文章数": "{$_G['TEMP']['TOTAL_READ']}",
+				"总回复数": "{$_G['TEMP']['TOTAL_REPLY']}",
+				"待审核文章数": "<a class=\"pk-text-primary pk-hover-underline\" href=\"javascript:\" onclick=\"openIframe('index.php?c=app&a=superadmin:index&s=forum&t=postcheck&type=read','待审核文章数')\">{$_G['TEMP']['SH_READ']}</a>",
+				"待审核回复数": "<a class=\"pk-text-primary pk-hover-underline\" href=\"javascript:\" onclick=\"openIframe('index.php?c=app&a=superadmin:index&s=forum&t=postcheck&type=reply','待审核回复数')\">{$_G['TEMP']['SH_REPLY']}</a>"
+			}
+		};
+		t['hadsky'] = {
+			title: "HadSky账号信息",
+			content: false
+		};
+		$.getJSON(apiUrl('getinfo', nocache), function(data) {
+			//console.log(data);
+			if(data['state'] == 'ok') {
+				$('#noticeDiv').removeClass('pk-hide').html(data['datas']['notice']);
+				var n = 'hadsky';
+				var _d = {
+						id: "UID",
+						username: "用户名",
+						usergroupname: "用户组",
+						tiandou: "天豆数",
+						jifen: "积分数",
+						sqlx: "授权类型",
+						sqdq: "授权到期日期",
+						rmb: "账户余额",
+						union_rmb: "广告联盟余额",
+						credit: "信用得分"
+					},
+					_d2 = {};
+				if(data['datas']['userdata']['version'] != "{htmlspecialchars(HADSKY_VERSION)}") {
+					$('#updateHs').on('click', function() {
+						chkUpdateHs("{$nowversion}");
+					}).removeClass('pk-hide');
+				}
+				for(var i in data['datas']['userdata']) {
+					if(_d[i]) {
+						_d2[_d[i]] = data['datas']['userdata'][i];
+					}
+				}
+				t[n]['content'] = _d2;
+				_loadTable(t, n);
+				n = 'ad';
+				t[n]['content'] = data['datas']['adunion'];
+				_loadTable(t, n, 'ad');
+
+			} else {
+				$('#t_hadsky div,#t_hadsky ad').html(data['datas']['msg']);
+			}
+		});
+		t['jvhuo'] = {
+			title: "商城账号信息",
+			content: false
+		};
+		$.getJSON(apiUrl('http://www.jvhuo.com/api.html?apiuid={$_G["SET"]["APP_JVHUO_APIUID"]}&apicode={$_G["SET"]["APP_JVHUO_APICODE"]}&s=getuserinfo', nocache), function(data) {
+			var n = 'jvhuo';
+			if(data['state'] == 'ok') {
+				var _d = {
+						id: "账户ID",
+						vip: "VIP等级",
+						username: "用户名",
+						sales: "已出售商品数",
+						shop_title: "店铺名称",
+						shop_domain: "店铺地址",
+						rmb: "账户余额"
+					},
+					_d2 = {};
+				for(var i in data['datas']) {
+					if(_d[i]) {
+						_d2[_d[i]] = data['datas'][i];
+					}
+				}
+				t[n]['content'] = _d2;
+				_loadTable(t, n);
+			} else {
+				$('#t_' + n + ' div').html(data['datas']['msg']);
+			}
+		});
+		t['ad'] = {
+			title: '广告联盟',
+			content: false
+		};
+		_loadTable(t, false);
+	}
+
+	function _clearCache() {
+		var _pid = ppp({
+			type: 4,
+			shade: 1,
+			content: "正在处理..."
+		});
+		$.getJSON(apiUrl('') + '&clearcache=1', function() {
+			pkpopup.close(_pid);
+			ppp({
+				type: 3,
+				icon: 1,
+				content: "缓存清理完成"
+			});
+			_info_init(true);
+		});
+	}
+
+	$(function() {
+		//绑定post事件处理器
+		$(document).ajaxError(function(event, jqxhr, settings, exception) {
+			console.log(event);
+			console.log(jqxhr);
+			console.log(settings);
+		});
+		_info_init(false);
+	});
+</script>

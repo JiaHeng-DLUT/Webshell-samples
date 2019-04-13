@@ -1,0 +1,115 @@
+{extend name="default/base/base_member" /}
+{block name="member_main"}
+<div class="dsm-friend-find">
+    <!-- 搜索好友start -->
+    <form id="search_form" method="post" action="{:url('Membersnsfriend/findlist')}">
+      <div class="search-form">
+        <div class="normal">
+          {$Think.lang.snsfriend_find_keytip}<input type="text" class="text w400" name="searchname" id="searchname" value="{$Request.param.searchname}" >
+          <a class="dsm-btn dsm-btn-green" dstype="search_submit">{$Think.lang.snsfriend_search}</a> <a href="javascript:void(0);" dstype="advanced_search" class="dsm-btn">{$Think.lang.snsfriend_advanced_search}</a> </div>
+        <div class="complex" dstype="advanced_search">
+          {$Think.lang.snsfriend_home}：<select dstype="area" name="provinceid" id="provinceid">
+          </select>
+          <select dstype="area" name="cityid" id="cityid">
+            <option>{$Think.lang.snsfriend_city}</option>
+          </select>
+          <select dstype="area" name="areaid" id="areaid">
+            <option>{$Think.lang.snsfriend_county}</option>
+          </select>
+            {$Think.lang.snsfriend_age}:
+            <select name="age" id="age">
+            <option value="0">{$Think.lang.ds_please_choose}</option>
+            <option value="1">{$Think.lang.snsfriend_age_less_than_18}</option>
+            <option value="2">{$Think.lang.snsfriend_age_between_18_to_24}</option>
+            <option value="3">{$Think.lang.snsfriend_age_between_25_to_30}></option>
+            <option value="4">{$Think.lang.snsfriend_age_between_31_to_35}</option>
+            <option value="5">{$Think.lang.snsfriend_age_more_than_35}</option>
+          </select>
+            {$Think.lang.snsfriend_sex}:
+            <select name="sex" id="sex">
+            <option value="">{$Think.lang.ds_please_choose}</option>
+            <option value="1">{$Think.lang.snsfriend_man}</option>
+            <option value="2">{$Think.lang.snsfriend_woman}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <!-- 推荐标签列表start -->
+    <div class="dsm-recommend-tag">
+        {notempty name="mtag_list"}
+        {foreach name="mtag_list" item="val"}
+        <?php $param_memberlist = isset($tagmember_list[$val['mtag_id']])?array_slice($tagmember_list[$val['mtag_id']],0,20):'';?>
+        <dl>
+        <dt><i class="fa fa-tag"></i>{$val.mtag_name}</dt>
+        <dd>
+          <div class="picture">
+              <span class="thumb size100"><i></i>
+                  <img title="{$val.mtag_name}" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_MEMBERTAG}/{if $val.mtag_img}{$val.mtag_img}{else/}default_tag.gif{/if}" onload="javascript:ResizeImage(this,120,120);"/></span></div>
+          <div class="arrow"></div>
+          <div class="content" dstype="content{$val.mtag_id}">
+            <p>{$val.mtag_desc}</p>
+            <div class="friends">
+              <h5><?php printf(lang('snsfriend_recommend_members_desc'), !empty($param_memberlist)?count($param_memberlist):0);?></h5>
+                {notempty name="tagmember_list[$val.mtag_id]"}
+                <div>
+                <p class="F-prev"><a href="javascript:void(0);" title="{$Think.lang.snsfriend_prev}"></a></p>
+                <div class="list" dstype="slider_div">
+                  <ul class="F-center">
+                    <?php $param = array();foreach ($param_memberlist as $v){ $param[] = $v['member_id'];?>
+                      <li><span class="thumb size40"><i></i><a href="javascript:void(0);"><img title="{$v.member_name}" src="{:get_member_avatar($v['member_avatar'])}"  onload="javascript:ResizeImage(this,40,40);"/></a></span></li>
+                      <?php }?>
+                  </ul>
+                </div>
+                <p class="F-next"><a href="javascript:void(0);" title="{$Think.lang.snsfriend_next}"></a></p>
+                <a href="javascript:void(0);" class="care" dstype="batchFollow" data-param="{ids:'{:implode(',', $param)}'}">{$Think.lang.snsfriend_attention_them}</a> </div>
+               {else /}
+                {$Think.lang.snsfriend_null_members_tips1}
+                <a href="{:url('Memberinformation/more')}">{$Think.lang.snsfriend_null_members_tips2}</a>
+               {/notempty}
+            </div>
+          </div>
+        </dd>
+      </dl>
+        {/foreach}
+        {/notempty}
+    </div>
+    <!-- 推荐标签列表end -->
+  </div>
+
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script src="{$Think.HOME_SITE_ROOT}/js/sns_friend.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('a[dstype="search_submit"]').click(function(){
+        // 验证用户名是否为空
+        if($('#searchname').val() != ''){
+            $('#search_form').submit();
+        }else{
+            $('#searchname').addClass('error').focus();
+        }
+    });
+
+
+    // 高级搜索显示与隐藏
+    $('a[dstype="advanced_search"]').click(function(){
+        $('div[dstype="advanced_search"]').toggle('fast');
+    });
+
+    // 地区
+    areaInit($('select[dstype="area"]:first'),0);
+    $('select[dstype="area"]').change(function(){
+        $(this).nextAll('select[dstype="area"]').each(function(){
+            if ($(this).attr('id') == 'cityid') $(this).html('<option>{$Think.lang.snsfriend_city}</option>');
+            if ($(this).attr('id') == 'areaid') $(this).html('<option>{$Think.lang.snsfriend_county}</option>');
+        });
+        if($(this).next().attr('dstype') == 'area' && !isNaN(parseInt($(this).val()))){
+            $('#area_ids').val($(this).val());
+            areaInit($(this).next().html(''), $(this).val());
+        }
+    });
+});
+</script>
+
+
+{/block}
+

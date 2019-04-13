@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+    <head>
+        <title> - {$Think.lang.tenants}</title>
+        <meta charset="utf-8">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/common.css">
+        <link rel="stylesheet" href="{$Think.HOME_SITE_ROOT}/css/seller_joinin.css">
+        <link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/font-awesome/css/font-awesome.min.css">
+        <script>
+            var BASESITEROOT = "{$Think.BASE_SITE_ROOT}";
+            var BASESITEURL = "{$Think.BASE_SITE_URL}";
+            var HOMESITEURL = "{$Think.HOME_SITE_URL}";
+        </script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery-2.1.4.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/common.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery-ui/jquery-ui.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/jquery.validate.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/additional-methods.min.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/layer/layer.js"></script>
+        <script src="{$Think.PLUGINS_SITE_ROOT}/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+    </head>
+    <div id="append_parent"></div>
+    <div id="ajaxwaitid"></div>
+    <div class="public-top">
+        <div class="w1200">
+            <span class="top-link">
+                {$Think.lang.welcome_to} <em>{$Think.config.site_name}</em>
+            </span>
+            <ul class="login-regin">
+                {if $Think.session.member_id}
+                <li class="line"> <a href="{:url('Member/index')}">{$Think.session.member_name}</a></li>
+                <li> <a href="{:url('Login/Logout')}">{$Think.lang.exit}</a></li>
+                {else}
+                <li class="line"> <a href="{:url('Login/login')}">{$Think.lang.please_log}</a></li>
+                <li> <a href="{:url('Login/register')}">{$Think.lang.free_registration}</a></li>
+                {/if}
+            </ul>
+            <ul class="quick_list">
+                <li>
+                    <span class="outline"></span>
+                    <span class="blank"></span>
+                    <a href="{:url('Seller/index')}">{$Think.lang.business_center}<b></b></a>
+                    <div class="dropdown-menu">
+                        <ol>
+                            <li><a href="{:url('Showjoinin/index')}">{$Think.lang.tenants}</a></li>
+                            <li><a href="{:url('Sellerlogin/login')}">{$Think.lang.merchant_login}</a></li>
+                        </ol>
+                    </div>
+                </li>
+                <li class="moblie-qrcode">
+                    <span class="outline"></span>
+                    <span class="blank"></span>
+                    <a href="javascript:void(0)">{$Think.lang.wechat_end}</a>
+                    <div class="dropdown-menu">
+                        <img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logowx}" width="90" height="90" />
+                    </div>
+                </li>
+                <li class="app-qrcode">
+                    <span class="outline"></span>
+                    <span class="blank"></span>
+                    <a href="javascript:void(0)">APP</a>
+                    <div class="dropdown-menu">
+                        <img width="90" height="90" src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logowx}" />
+                        <h3>{$Think.lang.scan_qr_code}</h3>
+                        <p>{$Think.lang.download_mobile_client}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="header">
+        <h2 class="header_logo">
+            <a href="{$Think.HOME_SITE_URL}"><img src="{$Think.UPLOAD_SITE_URL}/{$Think.ATTACH_COMMON}/{$Think.config.site_logo}"/></a>
+        </h2>
+        <span class="header_span">{$Think.lang.tenants}</span>
+    </div>
+    <div class="header_nav">
+        <ul class="header_menu w1200">
+            <li class="{if $Request.controller=='Showjoinin'}cur{/if}"><a href="{:url('Showjoinin/index')}">{$Think.lang.homepage}</a></li>
+            <li class="{if $Request.controller=='Sellerjoinin'}cur{/if}"><a href="{:url('Sellerjoinin/index')}">{$Think.lang.merchant_entry_application}</a></li>
+            <li class="{if $Request.controller=='Seller'}cur{/if}"><a href="{:url('Seller/index')}">{$Think.lang.business_management_center}</a></li>
+            <li class="{if $Request.controller=='Showhelp'}cur{/if}"><a href="{:url('Showhelp/index')}">{$Think.lang.business_management_center}</a></li>
+        </ul>
+    </div>
+            
+        
+
+
+    {block name="joinin_main"}{/block}
+    {block name="mall_footer"}{include file='default/base/mall_footer'/}{/block}

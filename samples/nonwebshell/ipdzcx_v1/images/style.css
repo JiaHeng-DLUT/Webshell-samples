@@ -1,0 +1,50 @@
+.header{position:absolute; top:0; left:0; width:100%; height:40px; line-height:40px;     background-color: #f0f0f0;  border-bottom: 1px solid #eee;}
+.header .tianqi {
+    width: 330px;
+    float: left;
+    margin-top: 5px;
+	margin-left:10px;
+}
+.header .cms{ float:right; width:500px; margin-right:10px; text-align:right;}
+.header .cms a{ margin:0 10px; color:#208cd4; text-decoration:none; font-size:14px;}
+.main{ margin:0 auto; width:600px;}
+.main .logo{ margin-top:120px; overflow:hidden; text-align:center;}
+.main .so{ margin-top:40px; margin-left:151px;}
+.main .so .soso{
+    float: left;
+    width: 201px;
+    _width: 198px;
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #bbb;
+    border-right: none;
+    font-size: 14px;
+    color: #999;
+    
+}
+.btn:hover {
+    background-color: #3396f6;
+    color: #fff;
+}
+.btn {
+    width: 98px;
+    padding: 0;
+    background-color: #208cd4;
+    text-align: center;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    transition: none;
+    height: 38px;
+    line-height: 38px;
+    font-size: 16px;
+    color: #fff;
+    border: 0;
+}
+.main .ip{ margin:70px auto 0  auto; width:600px; line-height:40px; border:1px solid #ddd; border-bottom:none; overflow:hidden; font-size:15px; }
+.main .none{ margin:50px auto 0  auto; width:600px; line-height:40px; border:1px solid #ddd; overflow:hidden;height:80px; line-height:80px; color:#208cd4; text-align:center; font-size:15px; }
+.main .ip .libox{ border-bottom:1px solid #ddd; height:44px; line-height:44px;}
+.main .ip .libox .name{ float:left; width:27%; padding-right:4%; text-align:right; border-right:1px solid #ddd; color:#666}
+.main .ip .libox .more{ float:right;; width:66%; margin-left:2%; }
+.footer{ text-align:center; position:absolute; bottom:50px; left:0; width:100%; font-size:12px; line-height:50px; oclor:#999;}

@@ -1,0 +1,50 @@
+{! admin/util/dates !}
+{! admin/util/twemoji?body=true !}
+
+<div class="blog-post{% if full %} blog-post-full{% end %} block">
+{% if ! full %}
+<h3><a href="{{ fullurl }}">{{ title }}</a></h3>
+{% end %}
+<p class="blog-info info">{{ ts|I18n::date_time }}<span class="blog-by"> - {" by "} <a href="/blog/by/{{ author }}">{{ author }}</a></span>
+{% if User::require_acl ('admin', 'blog') %}
+<span class="hide-in-preview">&nbsp;|&nbsp; <a href="/blog/edit?id={{ id }}">{"Edit Post"}</a></span>
+{% end %}
+</p>
+{{ body|none }}
+
+{% if footer %}
+<div class="blog-footer">
+{{ footer|none }}
+</div>
+{% end %}
+
+{% if is_array ($data->tag_list) && count ($data->tag_list) > 0 %}
+<div class="blog-tags info">
+{"Tags"}: 
+{% foreach tag_list %}
+<a href="/blog/tag/{{ loop_value|trim|urlencode }}">{{ loop_value|trim|ucfirst }}</a>
+{% end %}
+</div>
+<hr />
+{% end %}
+
+<div class="blog-comments">
+{% if ! full %}{{ controller.run ('blog/commentcount', $data)|none }}{% end %}&nbsp;
+{% if social_buttons['facebook'] %}
+	{{ controller.run ('social/facebook/like', $data)|none }}
+{% end %}
+{% if social_buttons['twitter'] %}
+	{{ controller.run ('social/twitter/tweet', $data)|none }}
+{% end %}
+{% if social_buttons['google'] %}
+	{{ controller.run ('social/google/plusone', $data)|none }}
+{% end %}
+</div>
+
+{% if related %}
+<div class="blog-related">
+<h4>{"You might also like:"}</h4>
+{! blog/related?id=[id]&tags=[tags] !}
+</div>
+{% end %}
+</div>

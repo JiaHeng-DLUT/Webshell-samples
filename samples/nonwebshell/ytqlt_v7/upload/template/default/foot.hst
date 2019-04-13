@@ -1,0 +1,25 @@
+<div class="pk-container">
+	{$_G['SET']['TEMPLATE_DEFAULT_AD3HTMLCODE']}
+</div>
+<div class="pk-container pk-margin-top-15 pk-padding-sm-0">
+	<div class="pk-row pk-text-xs pk-padding-top-25 pk-padding-bottom-25 pk-background-color-white">
+		<div class="pk-w-md-4 pk-hide-sm" style="color: #666;">
+			<div>Powered by
+				<a class="pk-hover-underline pk-text-bold" target="_blank" href="http://www.hadsky.com">HadSky</a> {htmlspecialchars(HADSKY_VERSION)}</div>
+			<div>&copy; 2015-{date('Y')}
+				<a class="pk-hover-underline" target="_blank" href="http://www.puyuetian.com" style="color: #333;">PuYueTian</a>
+			</div>
+		</div>
+		<div class="pk-w-md-8 pk-w-sm-12 pk-text-right pk-text-sm-center">
+			<div class="pk-footlink">
+				{$_G['SET']['FOOTERHTMLCODE']}{$_G['SET']['BEIANHAO']}
+			</div>
+			<div class="pk-hide-sm" style="color: #666;">您的IP:{$_G['SYSTEM']['CLIENTIP']},{date('Y-m-d H:i:s',time())},Processed in {$_G['SYSTEM']['LOADTIMES']} second(s).</div>
+			<div class="pk-hide-md" style="color: #666;">Powered by
+				<a class="pk-hover-underline pk-text-bold" target="_blank" href="http://www.hadsky.com">HadSky</a>
+			</div>
+		</div>
+		<div class="pk-padding-top-25 pk-w-sm-12 pk-hide-sm pk-text-center" style="color: #666;">{$_G['SET']['QUOTES']}</div>
+	</div>
+</div>
+<div class="pk-hide-md" style="padding-top: 43px;"></div>

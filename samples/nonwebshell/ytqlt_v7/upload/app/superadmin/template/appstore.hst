@@ -1,0 +1,62 @@
+<style>
+	.table_ta>tbody>tr>td>div {
+		background-repeat: no-repeat;
+		background-size: 20px 20px;
+		background-position: 0 0;
+		line-height: 20px;
+		font-size: 14px;
+	}
+</style>
+<table id="appTable" class="pk-table pk-table-bordered table_ta" data-local="[]" data-cloud="{$_G['TEMP']['CLOUD']}">
+	<thead>
+		<tr>
+			<th style="min-width:200px">名称</th>
+			<th width="150" class="pk-hide-sm pk-text-center">版本</th>
+			<th class="pk-hide-sm" style="min-width:400px">说明</th>
+			<th width="150" class="pk-text-center">售价</th>
+			<th width="120" class="pk-hide-sm pk-text-center">来源</th>
+			<th width="100" class="pk-text-center">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="pk-text-center" colspan="99">正在加载...</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td id="_pageas" class="pk-text-center" colspan="99">
+				<a class="pk-btn pk-btn-xs pk-btn-success _prev" href="javascript:">上一页</a>
+				<span class="pk-btn pk-btn-xs pk-btn-white" disabled>1</span>
+				<a class="pk-btn pk-btn-xs pk-btn-success _next" href="javascript:">下一页</a>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<script>
+	$(function() {
+		loadAppstoreInit();
+		var page = Cnum($_URI['PAGE'], 1, true, 1);
+		$('#_pageas span').html(page + '/' + pagecount);
+		if(page <= 1) {
+			$('#_pageas a._prev').remove();
+		}
+		if(page >= pagecount) {
+			$('#_pageas a._next').remove();
+		}
+		$('#_pageas a').on('click', function() {
+			if($(this).hasClass('_prev')) {
+				var _page = page - 1;
+			}
+			if($(this).hasClass('_next')) {
+				var _page = page + 1;
+			}
+			ppp({
+				type: 4,
+				shade: 1,
+				content: "正在加载..."
+			});
+			location.href = "index.php?c=app&a=superadmin&s=appstore&t=&type=" + $_URI['TYPE'] + "&page=" + _page;
+		});
+	});
+</script>

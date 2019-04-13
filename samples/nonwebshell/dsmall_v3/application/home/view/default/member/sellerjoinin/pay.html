@@ -1,0 +1,352 @@
+{extend name="default/base/base_joinin" /}
+{block name="joinin_main"}
+
+
+
+<div class="breadcrumb"><span class="fa fa-home"></span><span><a href="">{$Think.lang.homepage}</a></span> <span class="arrow">></span> <span>{$Think.lang.merchant_entry_application}</span> </div>
+<div class="main">
+    <div class="sidebar">
+        <div class="title">
+            <h3>{$Think.lang.merchant_entry_application}</h3>
+        </div>
+        <div class="content">
+            {notempty name="help_list"}
+            {foreach name="help_list" item="val" key="key" }
+            <dl show_id="{$val.helptype_id}">
+                <dt onclick="show_list('{$val.helptype_id}');" style="cursor: pointer;"> <i class="hide"></i>{$val.helptype_name}</dt>
+                <dd style="display:none;">
+                    <ul>
+                        {notempty name="$val.help_list"}
+                        {foreach name="$val.help_list" item="v" key="k" }
+                        <li> <i></i>
+                            {notempty name="$v.help_url"}
+                            <a href="{:url('Showhelp/index',['t_id'=>$v.helptype_id,'help_id'=>$v.help_id])}" target="_blank">{$v.help_title}</a>
+                            {else /}
+                            <a href="{$v.help_url}" target="_blank">{$v.help_title}</a>
+                            {/notempty}
+                        </li>
+                        {/foreach}
+                        {/notempty}
+                    </ul>
+                </dd>
+            </dl>
+            {/foreach}
+            {/notempty}
+            <dl>
+                <dt class="{if $sub_step=='step0'}current{/if}"> <i class="hide"></i>{$Think.lang.enter_agreement}</dt>
+            </dl>
+            <dl show_id="0">
+                <dt onclick="show_list('0');" style="cursor: pointer;"> <i class="show"></i>{$Think.lang.submit_application}</dt>
+                <dd>
+                    <ul>
+                        <li class="{if $step=='1'}current{/if}"><i></i>{$Think.lang.company_qualification_information}</li>
+                        <li class="{if $step=='2'}current{/if}"><i></i>{$Think.lang.financial_qualification_information}</li>
+                        <li class="{if $step=='3'}current{/if}"><i></i>{$Think.lang.store_operation_information}</li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="{if $step=='4'}current{/if}"> <i class="hide"></i>{$Think.lang.contract_signing_payment}</dt>
+            </dl>
+            <dl>
+                <dt> <i class="hide"></i>{$Think.lang.store_opening}</dt>
+            </dl>
+        </div>
+        <div class="title">
+            <h3>{$Think.lang.platform_contact}</h3>
+        </div>
+        <div class="content">
+            <ul>
+                {notempty name="phone_array"}
+                {foreach name="phone_array" item="val" key="key" }
+                {$Think.lang.phone}{$val}
+                {/foreach}
+                {/notempty}
+                <li>{$Think.lang.email}{$Think.config.site_email}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-layout">
+        <div class="joinin-step">
+            <ul>
+                <li class="step1 {if $step >= 0}current{/if}"><span>{$Think.lang.enter_agreement}</span></li>
+                <li class="{if $step >= 1}current{/if}"><span>{$Think.lang.company_qualification_information}</span></li>
+                <li class="{if $step >= 2}current{/if}"><span>{$Think.lang.financial_qualification_information}</span></li>
+                <li class="{if $step >= 3}current{/if}"><span>{$Think.lang.store_operation_information}</span></li>
+                <li class="{if $step >= 4}current{/if}"><span>{$Think.lang.contract_signing_payment}</span></li>
+                <li class="step6"><span>{$Think.lang.store_opening}</span></li>
+            </ul>
+        </div>
+        <div class="joinin-concrete">
+            <!--区别部分 BEGIN-->
+
+
+      
+
+  <div class="joinin-pay">
+    <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+      <thead>
+        <tr>
+          <th colspan="6">{$Think.lang.company_contact_information}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{$Think.lang.company_name}：</th>
+          <td colspan="5">{$joinin_detail.company_name}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.company_location}：</th>
+          <td>{$joinin_detail.company_address}</td>
+          <th>{$Think.lang.company_address}：</th>
+          <td>{$joinin_detail.company_address_detail}</td>
+      
+
+          <th>{$Think.lang.registered_capital}：</th>
+          <td>{$joinin_detail.company_registered_capital}&nbsp;{$Think.lang.thousand_yuan} </td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.contact_name}：</th>
+          <td>{$joinin_detail.contacts_name}</td>
+          <th>{$Think.lang.contact_number}：</th>
+          <td>{$joinin_detail.contacts_phone}</td>
+          <th>{$Think.lang.email_address}：</th>
+          <td>{$joinin_detail.contacts_email}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+      <thead>
+        <tr>
+          <th colspan="2">{$Think.lang.business_license_information}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{$Think.lang.business_license_number}：</th>
+          <td>{$joinin_detail.business_licence_number}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.place_business_license}：</th>
+          <td>{$joinin_detail.business_licence_address}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.validity_business_license}：</th>
+          <td>{$joinin_detail.business_licence_start} - {$joinin_detail.business_licence_end}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.legal_scope_business}：</th>
+          <td colspan="20">{$joinin_detail.business_sphere}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.business_license}<br />
+            {$Think.lang.electronic_version}：</th>
+          <td colspan="20">
+              {notempty name="$joinin_detail.business_licence_number_electronic"}
+              <a data-lightbox="lightbox-image"  href="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}"> <img src="{:get_store_joinin_imageurl($joinin_detail['business_licence_number_electronic'])}" alt="" height="50" /> </a>
+              {else /}
+              {$Think.lang.not_uploaded}
+              {/notempty}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+
+    <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+      <thead>
+        <tr>
+          <th colspan="2">{$Think.lang.account_information}：</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{$Think.lang.bank_account_name}：</th>
+          <td>{$joinin_detail.bank_account_name}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.company_bank_account_number}：</th>
+          <td>{$joinin_detail.bank_account_number}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.bank_branch_name}：</th>
+          <td>{$joinin_detail.bank_name}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.location_bank_account}：</th>
+          <td colspan="20">{$joinin_detail.bank_address}</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+      <thead>
+        <tr>
+          <th colspan="2">{$Think.lang.settlement_account_information}：</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{$Think.lang.bank_account_name}：</th>
+          <td>{$joinin_detail.settlement_bank_account_name}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.company_bank_account_number}：</th>
+          <td>{$joinin_detail.settlement_bank_account_number}</td>
+        </tr>
+        <tr>
+          <th>{$Think.lang.bank_branch_name}：</th>
+          <td>{$joinin_detail.settlement_bank_name}</td>
+        </tr>
+   
+        <tr>
+          <th>{$Think.lang.location_bank_account}：</th>
+          <td>{$joinin_detail.settlement_bank_address}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <form id="form_paying_money_certificate" action="{:url('Sellerjoinin/pay_save')}" method="post" enctype="multipart/form-data">
+      <input id="verify_type" name="verify_type" type="hidden" />
+      <input name="member_id" type="hidden" value="{$joinin_detail.member_id}" />
+      <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+        <thead>
+          <tr>
+            <th colspan="2">{$Think.lang.store_operation_information}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>{$Think.lang.seller_account}：</th>
+            <td>{$joinin_detail.seller_name}</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.store_name}：</th>
+            <td>{$joinin_detail.store_name}</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.store_level}：</th>
+            <td>{$joinin_detail.storegrade_name}（{$Think.lang.store_opening_expenses}：{$joinin_detail.storegrade_price|default="0"}{$Think.lang.ds_yuan}/{$Think.lang.year}）</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.store_opening_hours}：</th>
+            <td>{$joinin_detail.joinin_year} {$Think.lang.year}</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.store_classification}：</th>
+            <td>{$joinin_detail.storeclass_name}（{$Think.lang.deposit}：{$joinin_detail.storeclass_bail} {$Think.lang.ds_yuan}/{$Think.lang.year}）</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.total_amount_payable}：</th>
+            <td>{$joinin_detail.paying_amount} {$Think.lang.ds_yuan}</td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.business_category}：</th>
+            <td><table border="0" cellpadding="0" cellspacing="0" id="table_category" class="type">
+                <thead>
+                  <tr>
+                    <th>{$Think.lang.ctegory_1}</th>
+                    <th>{$Think.lang.ctegory_2}</th>
+                    <th>{$Think.lang.ctegory_3}</th>
+                    <th>{$Think.lang.proportion}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notempty name="$joinin_detail.store_class_names"}
+                  {php}$store_class_names = unserialize($joinin_detail['store_class_names']);{/php}
+                  {php}$store_class_commis_rates = explode(',', $joinin_detail['store_class_commis_rates']);{/php}
+                  {notempty name="store_class_names"}
+                  <?php for($i=0, $length = count($store_class_names); $i < $length; $i++) {?>
+                  {php}@list($class1, $class2, $class3) = explode(',', $store_class_names[$i]);{/php}
+                  <tr>
+                    <td>{$class1|default='0'}</td>
+                    <td>{$class2|default='0'}</td>
+                    <td>{$class3|default='0'}</td>
+                    <td>{$store_class_commis_rates[$i]}%</td>
+                  </tr>
+                  <?php } ?>
+                  {/notempty}
+                  {/notempty}
+                </tbody>
+              </table></td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.audit_opinion}：</th>
+            <td colspan="2">{$joinin_detail.joinin_message}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+        <tbody>
+          <tr>
+            <th>{$Think.lang.upload_payment_voucher}：</th>
+            <td><input name="paying_money_certificate" type="file" />
+              <span></span></td>
+          </tr>
+          <tr>
+            <th>{$Think.lang.note}：</th>
+            <td><textarea name="paying_money_certificate_explain" rows="10" cols="30"></textarea>
+              <span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div class="bottom"><a id="btn_paying_money_certificate" href="javascript:;" class="btn">{$Think.lang.ds_submit}</a></div>
+  </div>
+            
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#form_paying_money_certificate').validate({
+            errorPlacement: function(error, element){
+                element.nextAll('span').first().after(error);
+            },
+            rules : {
+                paying_money_certificate: {
+                    required: true
+                },
+                paying_money_certificate_explain: {
+                    maxlength: 100 
+                }
+            },
+            messages : {
+                paying_money_certificate: {
+                    required: '{$Think.lang.select_upload_payment_voucher}'
+                },
+                paying_money_certificate_explain: {
+                    maxlength: jQuery.validator.format("{$Think.lang.most_words}")
+                }
+            }
+        });
+
+        $('#btn_paying_money_certificate').on('click', function() {
+            $('#form_paying_money_certificate').submit();
+        });
+
+    });
+</script>
+
+
+
+
+            
+            
+
+
+
+
+
+
+
+
+
+
+            <!--区别部分 END-->
+        </div>
+    </div>
+</div>
+
+
+
+{/block}

@@ -1,0 +1,65 @@
+{extend name="default/base/base_seller" /}
+{block name="seller_btn"}<a title="{$Think.lang.establish_template}" class="dssc-btn dssc-btn-green" href="{:url('Sellerwaybill/waybill_add')}">{$Think.lang.add_template}</a>{/block}
+{block name="seller_main"}
+
+<div class="alert alert-block mt10">
+    <ul class="mt5">
+        <li>{$Think.lang.instructions_adding_templates1}</li>
+        <li>{$Think.lang.instructions_adding_templates2}</li>
+        <li>{$Think.lang.instructions_adding_templates3}</li>
+        <li>{$Think.lang.instructions_adding_templates4}</li>
+        <li>{$Think.lang.instructions_adding_templates5}</li>
+    </ul>
+</div>
+<table class="dssc-default-table">
+    <thead>
+        <tr>
+            <th class="w30"></th>
+            <th class="w120 tl">{$Think.lang.template_name}</th>
+            <th class="w120 tl">{$Think.lang.member_show_expre_company}</th>
+            <th class="tl">{$Think.lang.waybill_legend}</th>
+            <th class="w80">{$Think.lang.top_partial_shift}</th>
+            <th class="w80">{$Think.lang.left_partial_shift}</th>
+            <th class="w80">{$Think.lang.enable}</th>
+            <th class="w200">{$Think.lang.ds_common_button_operate}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $waybill_list}
+        {foreach name="waybill_list" item="data"}
+        <tr class="bd-line">
+            <td></td>
+            <td class="tl">{$data.waybill_name}</td>
+            <td class="tl">{$data.express_name}</td>
+            <td class="tl"><div class="waybill-img-thumb"><a data-lightbox="lightbox-image" href="{$data.waybill_image_url}"><img src="{$data.waybill_image_url}"></a></div>
+                <div class="waybill-img-size">
+                    <p>{$Think.lang.width}：{$data.waybill_width}(mm)</p>
+                    <p>{$Think.lang.height}：{$data.waybill_height}(mm)</p>
+                </div></td>
+            </td>
+            <td>{$data.waybill_top}</td>
+            <td>{$data.waybill_left}</td>
+            <td>{$data.waybill_usable_text}</td>
+            <td class="dscs-table-handle"><span><a href="{:url('Sellerwaybill/waybill_design',array('waybill_id' => $data.waybill_id))}" class="btn-orange"><i class="fa fa-pencil-square"></i>
+                        <p>{$Think.lang.design}</p>
+                    </a></span><span><a href="{:url('Sellerwaybill/waybill_test',array('waybill_id' =>$data.waybill_id))}" class="btn-acidblue" target="_blank"><i class="fa fa-print"></i>
+                        <p>{$Think.lang.test}</p>
+                    </a></span><span><a href="{:url('Sellerwaybill/waybill_edit',array('waybill_id' =>$data.waybill_id))}" class="btn-blue"><i class="fa fa-pencil-square"></i>
+                        <p>{$Think.lang.ds_edit}</p>
+                    </a></span><span><a href="{:url('Sellerwaybill/waybill_del',array('waybill_id'=>$data.waybill_id))}"  class="btn-red"><i class="fa fa-trash-o"></i>
+                        <p>{$Think.lang.ds_del}</p>
+                    </a></span></td>
+        </tr>
+        {/foreach}
+        {else}
+        <tr>
+            <td colspan="20" class="norecord"><div class="warning-option"><i class="fa fa-warning"></i><span>{$Think.lang.no_record}</span></div></td>
+        </tr>
+        {/if}
+    </tbody>
+</table>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>
+
+
+{/block}

@@ -1,0 +1,92 @@
+<div class="pk-row pk-text-default pk-text-sm pk-padding-top-15">
+	<div class="pk-w-sm-12 pk-padding-0">{$_G['SET']['APP_PUYUETIANEDITOR_SHOWFILE_AD1']}</div>
+
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">附件名称</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">{$downloaddata['name']}</div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">附件类型</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">{$downloaddata['suffix']}</div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">上传用户</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">
+			<a class="pk-text-primary pk-hover-underline" target="_blank" href="{ReWriteURL('user','id={$downloaddata['uid']}')}">{$uploaduserdata['username']}</a>
+		</div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">上传时间</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">{date('Y-m-d H:i:s',{$downloaddata['uploadtime']})}</div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">文件大小</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">{$showfilesize}</div>
+	</div>
+	<div class="pk-w-md-6 pk-w-sm-12 pk-padding-0">
+		<div class="pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">下载消耗</div>
+		<div class="pk-w-sm-8 pk-text-truncate pk-margin-bottom-15">
+			{$_G['SET']['TIANDOUNAME']}:<span class="pk-text-danger">{$downloaddata['tiandou']}</span> &nbsp; {$_G['SET']['JIFENNAME']}:
+			<span class="pk-text-danger">{$downloaddata['jifen']}</span>
+		</div>
+	</div>
+
+	<div class="pk-w-sm-12 pk-margin-bottom-15 pk-text-center">
+		<button id="downloadbtn" type="button" class="pk-btn pk-btn-success pk-radius-4 pk-margin-left-right-auto pk-margin-top-15"><span class="fa fa-download"></span>&nbsp;&nbsp;立即下载&nbsp;(<span class="pk-text-xs">已被下载{$downloaddata['downloadcount']}次</span>)&nbsp;&nbsp;</button>
+		<span id="downloadtip" class="pk-display-block pk-margin-left-right-auto pk-text-xs pk-margin-top-10">您可正常下载该附件</span>
+	</div>
+
+	<div class="pk-w-md-2 pk-w-sm-4 pk-text-right pk-text-bold pk-text-nowrap pk-margin-bottom-15">下载说明</div>
+	<div class="pk-w-md-10 pk-text-xs pk-w-sm-8 pk-margin-bottom-15">
+		1.下载用户自行承担下载风险；<br> 2.若文件非法或有毒，请向管理员举报； <br>3.本次登录多次下载只会扣费一次，仅限本次登录有效。
+	</div>
+
+	<div class="pk-w-md-12 pk-w-sm-12">
+		<div class="pk-w-sm-12 pk-text-left pk-text-bold pk-text-nowrap pk-margin-bottom-15">他们已经下载了</div>
+		<div class="pk-w-sm-12 pk-margin-bottom-15">
+			{$_G['TEMP']['DOWNLOADEDUIDS']}
+		</div>
+	</div>
+
+	<div class="pk-w-sm-12 pk-padding-0">{$_G['SET']['APP_PUYUETIANEDITOR_SHOWFILE_AD2']}</div>
+</div>
+<script>
+	$(function() {
+		var btn = $('#downloadbtn');
+		var tip = $('#downloadtip');
+		var utd = parseInt("{$_G['USER']['TIANDOU']}");
+		var ujf = parseInt("{$_G['USER']['JIFEN']}");
+		if(!utd) utd = 0;
+		if(!ujf) ujf = 0;
+		if("{$_G['TEMP']['CHKJFTD']}" == "1") {
+			if(parseInt("{$downloaddata['jifen']}") > ujf || parseInt("{$downloaddata['tiandou']}") > utd) {
+				btn.prop('disabled', true).addClass('pk-cursor-not-allowed');
+				var txt = '您的账号余额不足';
+				if(typeof(AliOrWeixin_CloudPay) == "function") {
+					txt += '，请<a class="pk-hover-underline pk-text-primary" href="javascript:" onclick="AliOrWeixin_CloudPay()">点击这里充值</a>';
+				}
+				tip.html(txt).addClass('pk-text-danger');
+				if(!parseInt("{$_G['USER']['ID']}")) {
+					tip.html("请您先登录").addClass('pk-text-danger');
+				}
+			}
+		} else if(parseInt("{$downloaddata['jifen']}") || parseInt("{$downloaddata['tiandou']}")) {
+			$_time = parseInt("{$_G['TEMP']['_TIME']}") || 0;
+			$_timeout = parseInt("{$_G['SET']['ATTACHMENTTIMEOUT']}") || 0;
+			if($_time > 0 && $_timeout > 0) {
+				var _tip = "，免费无限次下载将于" + getLocalTime($_time + $_timeout, 'y年m月d日到期');
+			} else {
+				var _tip = "";
+			}
+			tip.html("此次下载不会扣费" + _tip).addClass('pk-text-danger');
+		}
+		$('#downloadbtn').click(function() {
+			var downloadurl = "index.php?c=app&a=puyuetianeditor:index&s=download&id={$downloaddata['id']}";
+			if("{$_G['TEMP']['CHKJFTD']}" == "1" && (parseInt("{$downloaddata['jifen']}") || parseInt("{$downloaddata['tiandou']}"))) {
+				pkalert("本次下载会扣除<span class='pk-text-danger'>{$downloaddata['tiandou']}{$_G['SET']['TIANDOUNAME']}</span>和<span class='pk-text-danger'>{$downloaddata['jifen']}{$_G['SET']['JIFENNAME']}</span>，确定继续？", '提示', 'location.href="' + downloadurl + '"');
+			} else {
+				location.href = downloadurl;
+			}
+		});
+	});
+</script>

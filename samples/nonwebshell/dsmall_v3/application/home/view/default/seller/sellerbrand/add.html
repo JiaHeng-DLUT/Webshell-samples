@@ -1,0 +1,104 @@
+<div class="eject_con">
+    <div id="warning" class="alert alert-error"></div>
+    <form method="post" target="_parent" action="{present name='brand_array'}{:url('Sellerbrand/brand_edit')}{else}{:url('Sellerbrand/brand_save')}{/present}"enctype="multipart/form-data" id="brand_apply_form">
+        <input type="hidden" name="brand_id" value="{present name='brand_array'}{$brand_array.brand_id}{/present}" />
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.store_goods_brand_name}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="text" name="brand_name" value="{present name='brand_array'}{$brand_array.brand_name}{/present}" id="brand_name" />
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.store_name_initials}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <input type="text" class="text" name="brand_initial" value="{present name='brand_array'}{$brand_array.brand_initial}{/present}" id="brand_initial" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>{$Think.lang.store_goods_brand_class}{$Think.lang.ds_colon}</dt>
+            <dd id="gcategory">
+                <input type="hidden" value="{present name='brand_array'}{$brand_array.gc_id}{/present}" name="class_id" class="mls_id">
+                <input type="hidden" value="{present name='brand_array'}{$brand_array.brand_class}{/present}" name="brand_class" class="mls_name">
+                {present name='brand_array'}
+                {if $brand_array.brand_id != ''}
+                <span>{$brand_array.brand_class}</span>
+                <input class="edit_gcategory" type="button" value="{$Think.lang.ds_edit}">
+                {/if}
+                {/present}
+                <select {present name='brand_array'}{if $brand_array.brand_id !=""}style="display:none;"{/if}{/present}>
+                <option value="0">{$Think.lang.ds_please_choose}</option>
+                {notempty name="gc_list"}
+                {foreach name="gc_list" item="v"}
+                <option value="{$v.gc_id}">{$v.gc_name}</option>
+                {/foreach}
+                {/notempty}
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>{$Think.lang.store_goods_brand_icon}{$Think.lang.ds_colon}</dt>
+            <dd>
+                <div class=""><span class="sign"><img src="{present name='brand_array'}{:brand_image($brand_array.brand_pic)}{/present}" onload="javascript:ResizeImage(this,150,50)" ds_type="logo1"/></span></div>
+                <div class="dssc-upload-btn"> <a href="javascript:void(0);"><span>
+                <input type="file" hidefocus="true" size="1" class="input-file" name="brand_pic" id="brand_pic" ds_type="logo"/>
+          </span>
+                    <p><i class="fa fa-upload"></i>{$Think.lang.store_goods_brand_pic_upload}</p>
+                </a> </div>
+                <p class="hint">{$Think.lang.store_goods_brand_upload_tip}</p>
+            </dd>
+        </dl>
+        <div class="bottom">
+            <label class="submit-border"><input type="submit" class="submit" value="{$Think.lang.ds_submit}"/></label>
+        </div>
+    </form>
+</div>
+<script src="{$Think.PLUGINS_SITE_ROOT}/mlselection.js"></script>
+<script>
+    $(function(){
+            gcategoryInit('gcategory');
+        jQuery.validator.addMethod("initial", function(value, element) {
+            return /^[A-Za-z0-9]$/i.test(value);
+        }, "");
+        $('#brand_apply_form').validate({
+            errorLabelContainer: $('#warning'),
+            invalidHandler: function(form, validator) {
+                $('#warning').show();
+            },
+            rules : {
+                brand_name : {
+                    required : true,
+                    rangelength: [0,100]
+                },
+                brand_initial : {
+                    initial  : true
+                }
+        {present name='brand_array'}
+        {if $brand_array.brand_id == ''}
+        ,
+            brand_pic : {
+                required : true
+            }
+       {/if}
+        {/present}
+    },
+        messages : {
+            brand_name : {
+                required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_goods_brand_input_name}',
+                    rangelength: '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_goods_brand_name_error}'
+            },
+            brand_initial : {
+                initial : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_fill_correct_initials}',
+            }
+            {present name='brand_array'}
+            {if $brand_array.brand_id == ''}
+            ,
+                brand_pic : {
+                    required : '<i class="fa fa-exclamation-circle"></i>{$Think.lang.store_goods_brand_icon_null}'
+                }
+           {/if}
+            {/present}
+        }
+    });
+    });
+
+</script> 

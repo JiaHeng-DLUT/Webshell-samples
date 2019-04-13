@@ -1,0 +1,318 @@
+<?php
+namespace app\admin\controller;
+use think\controller;
+use think\Db;
+class Guarantee extends Common
+{
+
+
+	public function index(){
+// 关键词筛选  格式：字段名称加显示名称
+     $keywords  = ['id'=>'交易ID','title'=>'交易标题','buyer'=>'买家','seller'=>'卖家'];
+
+ //日期筛选    
+     $date = [
+              ['title'=>'创建时间','start_name'=>'开始时间','end_name'=>'结束时间']
+            ];
+// 自定义单个字段筛选
+     $customSingleField =[
+                            [
+                             'field'=>'status',
+                              'data'=> [ 0 =>'等待审核',1=>'正常',2=>'审核失败']
+                              ]
+                           ]; 
+ //数据库某个表中的字段筛选
+     $sqlTable = [];
+     $this->assign('keywords',$keywords);
+     $this->assign('customSingleField',$customSingleField);
+     $this->assign('sqlTable',$sqlTable);
+     $this->assign('date',$date);
+ //表单数据显示筛选结果
+    $post = request()->param();   
+    if($post){
+            $keywords = $post['keywords'];
+            $status   =$post['status'];
+            
+             $where = 1;
+            foreach($post['date'] as $k=>$v){
+              $post['date'][] = strtotime($v);
+            }
+              $date = $post['date'];
+             
+             if($keywords['name']){
+                 $where .= " and a.".$keywords['name']." = '".$keywords['value']."'";
+              }
+              $start = $date['start'];
+              $end =  $date['end'];
+             if($start && $end ==''){
+                $end = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".strtotime($start)."' and '".$end."'";
+             }elseif($start == '' && $end){
+                $start = strtotime(date("Y-m-d",time()));
+                $where .= " and a.create_time between '".$start."' and '".strtotime($end)."'";
+             }elseif($start  && $end){
+                $where .= " and a.create_time between '".strtotime($start)."' and '".strtotime($end)."'";  
+             }
+             if($status){
+                $where .=' and a.status = '.$status;
+             }
+        
+      }else{
+           $where .='';
+           $order = "a.create_time desc";
+      }   
+     $pageNum = 10;
+     $list = DB::name('guarantee')->alias('a')
+     ->join("guarantee_category b","a.cid = b.cid","LEFT")
+     ->field("a.id,a.title,a.price,a.free_ratio,a.buyer,a.create_time,a.status,a.seller,b.cname")
+     ->where($where)
+     ->order($order)
+     ->paginate($pageNum);
+     $page = $list->render();
+     $this->assign('page', $page);
+     $this->assign('list', $list);
+     return $this->fetch();
+	}
+//增加
+	public function add(){
+
+      return $this->fetch();
+	}
+// 编辑
+	public function edit(){
+     $param = input();
+     if(request()->isPost()){
+             $param = input("post.");
+
+               //表单验证
+               $rule =[
+                  'content'=>'require',
+                ];
+                $msg= [
+                 'content.require' =>'担保交易内容不能为空',
+                
+                ];
+                 $error = $this->checkSubmit($param,$rule,$msg);  
+                if($error){
+                    return error_json($error);
+                 }
+
+                $data['content'] = $param['content'];
+                $data['id'] = $param['id'];
+                $data['create_time'] = time();
+                $data['status'] = isset($param['status'])?$param['status']:'';
+                $result =  model('guarantee')->edit($data);
+                if($result){
+                    return success_json('更新成功');
+                     
+                  }else{
+                     return error_json('更新失败');
+                  }
+                  
+
+         }else{
+               if(!$param['id']){  return error_json('请求参数错误');}
+                     $guarantee = model('guarantee')->getGuaranteeInfo($param['id']);
+              $this->assign('guarantee',$guarantee);
+              return $this->fetch();
+         }
+	}
+// 删除
+	public function del(){
+       $param = input();
+       if(!$param['id']){  return error_json('请求参数错误');    }
+       $res= model('guarantee')->del($param['id']);
+       if($res){
+        return success_json('删除成功');
+       }else{
+        return error_json('删除失败');
+       }     
+	}
+
+    //分类
+  public  function category(){
+      $post = request()->param(); 
+      $where = 1;
+      if($post){
+              $keywords = $post['keywords'];
+              $group_id   = $post['group_id'];
+              foreach($post['date'] as $k=>$v){
+                $post['date'][] = strtotime($v);
+              }
+                $date = $post['date'];
+               
+               if($keywords['name']){
+                   $where .= " and ".$keywords['name']." = '".$keywords['value']."'";
+                }
+
+        }else{
+              $order =  array(
+                'sort'=>'asc'
+              );
+        }   
+       $select  = array('cid'=>'分类ID','name'=>'分类名称');
+        //如期筛选   
+       $date = array(
+              );
+       $one_where = array(
+             // array('field'=>'status','data'=>array('0'=>'等待审核','1'=>'正常','2'=>'审核失败')),
+      );
+       $two_where = array();
+       $this->assign('two_where',$two_where);
+       $this->assign('one_where',$one_where);
+       $this->assign('select',$select);
+       $this->assign('date',$date);
+
+    
+
+       if(!empty($post['pid'])){
+         $pid = $post['pid'];
+         $where .= " and pid = '$pid'";
+       }else{
+         $where .= " and pid = 0";
+       }
+  
+       $list = DB::name('guarantee_category')->where($where)->order($order)->paginate(10);
+       $page  = $list->render();
+       $lists = to_array($list);
+       $list = $lists['data'];
+       foreach($list as $k=> $v){  
+             $pid = $v['cid'];
+             $result = model('guarantee_category')->getChildCategory($pid);        
+             $list[$k]['childrenNum'] = count($result);
+       }
+       
+   
+       $this->assign('page', $page);
+       $this->assign('list', $list);
+
+     return $this->fetch();
+   }
+
+   public  function categoryAdd(){
+    $param = input();
+
+    if(request()->isPost()){
+//验证
+      $rule =[
+        'cname'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'cname.require' =>'分类名称不能为空',
+       'cname.chsAlpha' =>'分类名称只能是汉字或字母',
+       'cname.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+            return error_json($result);
+       }else{
+           if(isset($param['status'])){
+            $param['status'] =1;
+           }
+            $r = model('guarantee_category')->isExistsCategoryName($param['cname']);
+            if(!empty($r)){
+              return error_json('分类名已经存在');
+            }
+
+           $res = model('guarantee_category')->add($param);
+           if($res){
+            $this->updateCategoryCache();
+            return success_json('添加成功');
+           }else{
+            return error_json('添加失败');
+           }
+         
+       }
+     
+
+       
+    }else{
+       $cid = !empty($param['cid'])?$param['cid']:0;
+       $list = model('guarantee_category')->getCategory($cid);
+       
+       $this->assign('pid',$cid); //父类ID
+       $this->assign('pname',$list['cname']); //父类名称
+       return $this->fetch(); 
+    }
+  
+   }
+   public  function categoryEdit(){
+    $param = input();
+
+               
+  if(request()->isPost()){
+//验证
+      $rule =[
+        'cname'=>'require|chsAlpha|max:8',
+        'abbr'=>'require|alpha|max:30',
+      ];
+      $msg= [
+       'cname.require' =>'分类名称不能为空',
+       'cname.chsAlpha' =>'分类名称只能是汉字或字母',
+       'cname.max' =>'分类名称不能超过8个字符',
+       'abbr.require' =>'分类英文缩写名称不能为空',
+       'abbr.alpha' =>'分类英文缩写必须为字母格式',
+       'abbr.max' =>'分类名称不能超过30个字符',       
+      ];
+       $result = $this->checkSubmit($param,$rule,$msg);
+       if($result){
+         return error_json($result);
+       }else{
+         if(isset($param['status'])){
+          $param['status'] =1;
+         }
+
+         $res = model('guarantee_category')->edit($param);
+         if($res){
+          $this->updateCategoryCache();
+          return success_json('编辑成功');
+         }else{
+          return error_json('编辑失败');
+         }
+         
+       }
+     
+
+       
+    }else{
+
+    $cid = $param['cid'];
+    $category = model('guarantee_category')->getCategory($cid);
+    $this->assign('category',$category); //父类名称
+    return $this->fetch();
+    }
+   }
+   public  function categoryUpdate(){
+    $param = input();
+      if(request()->isPost()){
+         $res = model('guarantee_category')->categoryUpdate($param);
+         return success_json('更新成功');
+
+      }
+   }
+   public  function categoryDel(){
+     $param = input();
+     if(!$param['id']){  return error_json('请求参数错误');    }
+
+     $res= model('guarantee_category')->del($param['id']);
+     if(!$res){
+      $this->updateCategoryCache();
+      return success_json('删除成功');
+     }else{
+      return error_json($res);
+     }
+   }
+
+   protected function updateCategoryCache(){
+    //更新分类的js文件
+       $list = model('guarantee_category')->select()->toArray();
+       $catelist = get_tree($list);
+       cache('guarantee_category',$catelist);
+  
+    }
+
+}
